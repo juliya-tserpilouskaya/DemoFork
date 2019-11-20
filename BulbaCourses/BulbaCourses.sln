@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{7D228997-A288-4517-8099-228414C63D57}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global_Admin_Users", "Global_Admin_Users", "{24B96E9F-A0FE-46D5-9465-441556C721EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAdminUsers", "GlobalAdminUsers\GlobalAdminUsers.csproj", "{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,9 +21,16 @@ Global
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1} = {24B96E9F-A0FE-46D5-9465-441556C721EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
