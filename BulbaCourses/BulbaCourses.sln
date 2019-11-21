@@ -1,15 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{7D228997-A288-4517-8099-228414C63D57}"
 EndProject
+<<<<<<< HEAD
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global_Admin_Users", "Global_Admin_Users", "{24B96E9F-A0FE-46D5-9465-441556C721EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalAdminUsers", "GlobalAdminUsers\GlobalAdminUsers.csproj", "{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}"
+=======
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Youtube", "Youtube", "{CEF33061-8E8C-41CB-936E-EA8D37BF6540}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web", "BulbaCourses.Youtube.Web\BulbaCourses.Youtube.Web.csproj", "{23092271-E8E3-47BC-B926-D2058FD4BE7F}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}"
+>>>>>>> develop
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,16 +29,32 @@ Global
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> develop
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+<<<<<<< HEAD
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1} = {24B96E9F-A0FE-46D5-9465-441556C721EF}
+=======
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+>>>>>>> develop
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
