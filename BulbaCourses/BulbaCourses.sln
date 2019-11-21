@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web", 
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analytics", "Analytics", "{99D812B3-957C-411B-A862-81A6CF59FDA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Web", "BulbaCourses.Analytics.Web\BulbaCourses.Analytics.Web.csproj", "{FA1A4ACD-BDA4-495E-80F4-38979495D414}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,10 @@ Global
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +55,7 @@ Global
 		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1} = {24B96E9F-A0FE-46D5-9465-441556C721EF}
 		{23092271-E8E3-47BC-B926-D2058FD4BE7F} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414} = {99D812B3-957C-411B-A862-81A6CF59FDA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
