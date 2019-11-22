@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  bulbacourses.youtube.web:
+    image: ${DOCKER_REGISTRY-}bulbacoursesyoutubeweb
+    build:
+      context: .\BulbaCourses.Youtube.Web
+      dockerfile: Dockerfile

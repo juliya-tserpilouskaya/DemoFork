@@ -1,11 +1,37 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{7D228997-A288-4517-8099-228414C63D57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global_Admin_Users", "Global_Admin_Users", "{24B96E9F-A0FE-46D5-9465-441556C721EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUsers.Web", "GlobalAdminUsers\BulbaCourses.GlobalAdminUsers.Web.csproj", "{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Youtube", "Youtube", "{CEF33061-8E8C-41CB-936E-EA8D37BF6540}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web", "BulbaCourses.Youtube.Web\BulbaCourses.Youtube.Web.csproj", "{23092271-E8E3-47BC-B926-D2058FD4BE7F}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Analytics", "Analytics", "{99D812B3-957C-411B-A862-81A6CF59FDA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Web", "BulbaCourses.Analytics.Web\BulbaCourses.Analytics.Web.csproj", "{FA1A4ACD-BDA4-495E-80F4-38979495D414}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GlobalSearch", "GlobalSearch", "{C611C702-E943-405F-8102-D0CA32E52F44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Web", "..\BulbaCourses.GlobalSearch.Web\BulbaCourses.GlobalSearch.Web.csproj", "{D1BAEFAE-7004-445B-A3F4-9AA0A488772A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DiscountAggregator", "DiscountAggregator", "{ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.DiscountAggregator.Web", "BulbaCourses.DiscountAggregator.Web\BulbaCourses.DiscountAggregator.Web.csproj", "{B68EE870-C1D6-4757-B1B4-72FB7942C178}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Video", "Video", "{01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourse.Video.Web", "..\BulbaCourse.Video.Web\BulbaCourse.Video.Web.csproj", "{E7A96DF3-82D8-401C-8971-E901CF8431D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TextMaterials_Presentations", "TextMaterials_Presentations", "{D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}"
 EndProject
@@ -21,6 +47,34 @@ Global
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1BAEFAE-7004-445B-A3F4-9AA0A488772A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1BAEFAE-7004-445B-A3F4-9AA0A488772A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1BAEFAE-7004-445B-A3F4-9AA0A488772A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1BAEFAE-7004-445B-A3F4-9AA0A488772A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68EE870-C1D6-4757-B1B4-72FB7942C178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68EE870-C1D6-4757-B1B4-72FB7942C178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68EE870-C1D6-4757-B1B4-72FB7942C178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68EE870-C1D6-4757-B1B4-72FB7942C178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7A96DF3-82D8-401C-8971-E901CF8431D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7A96DF3-82D8-401C-8971-E901CF8431D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7A96DF3-82D8-401C-8971-E901CF8431D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7A96DF3-82D8-401C-8971-E901CF8431D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -28,6 +82,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB17FD82-177C-4E6C-92B6-2AD0BB7C95C1} = {24B96E9F-A0FE-46D5-9465-441556C721EF}
+		{23092271-E8E3-47BC-B926-D2058FD4BE7F} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{FA1A4ACD-BDA4-495E-80F4-38979495D414} = {99D812B3-957C-411B-A862-81A6CF59FDA8}
+		{D1BAEFAE-7004-445B-A3F4-9AA0A488772A} = {C611C702-E943-405F-8102-D0CA32E52F44}
+		{B68EE870-C1D6-4757-B1B4-72FB7942C178} = {ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}
+		{E7A96DF3-82D8-401C-8971-E901CF8431D9} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DAE8514E-3D8F-49AC-8418-DFA1984226CD} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
