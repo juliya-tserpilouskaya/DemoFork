@@ -33,6 +33,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Video", "Video", "{01F60791
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourse.Video.Web", "..\BulbaCourse.Video.Web\BulbaCourse.Video.Web.csproj", "{E7A96DF3-82D8-401C-8971-E901CF8431D9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PracticalMaterialsTasks", "PracticalMaterialsTasks", "{601CB2CE-FBD0-48DF-8450-E4BF5B0D1185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTasks.Web", "BulbaCourses.PracticalMaterialsTasks.Web\BulbaCourses.PracticalMaterialsTasks.Web.csproj", "{561B18DC-239A-42A7-B9DB-84E7ADCB6B72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TextMaterials_Presentations", "TextMaterials_Presentations", "{D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations.Web", "BulbaCourses.TextMaterials_Presentations.Web\BulbaCourses.TextMaterials_Presentations.Web.csproj", "{DAE8514E-3D8F-49AC-8418-DFA1984226CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUser.Web", "..\BulbaCourses.GlobalAdminUser.Web\BulbaCourses.GlobalAdminUser.Web.csproj", "{006B24D6-2060-4273-8A08-CE5BF77094DF}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Podcasts", "Podcasts", "{69BEDF67-2025-4137-ABB3-67DC4F29B55D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Web", "..\BulbaCourses.Podcasts.Web\BulbaCourses.Podcasts.Web.csproj", "{EB66B559-66F7-4A2D-A665-5724C4BF7C47}"
@@ -79,6 +89,18 @@ Global
 		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{561B18DC-239A-42A7-B9DB-84E7ADCB6B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{561B18DC-239A-42A7-B9DB-84E7ADCB6B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{561B18DC-239A-42A7-B9DB-84E7ADCB6B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{561B18DC-239A-42A7-B9DB-84E7ADCB6B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE8514E-3D8F-49AC-8418-DFA1984226CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +114,9 @@ Global
 		{B68EE870-C1D6-4757-B1B4-72FB7942C178} = {ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}
 		{E7A96DF3-82D8-401C-8971-E901CF8431D9} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 		{EB66B559-66F7-4A2D-A665-5724C4BF7C47} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
+		{561B18DC-239A-42A7-B9DB-84E7ADCB6B72} = {601CB2CE-FBD0-48DF-8450-E4BF5B0D1185}
+		{DAE8514E-3D8F-49AC-8418-DFA1984226CD} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
+		{006B24D6-2060-4273-8A08-CE5BF77094DF} = {24B96E9F-A0FE-46D5-9465-441556C721EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
