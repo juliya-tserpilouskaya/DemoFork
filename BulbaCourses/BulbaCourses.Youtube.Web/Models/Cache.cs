@@ -9,4 +9,13 @@ namespace BulbaCourses.Youtube.Web.Models
         public SearchRequest SearchRequest { get; set; }
         public Result Result { get; set; }
     }
+
+    public class Cache1 //
+    {
+        public int Id { get; set; }
+        public int SearchRequestId { get; set; }
+        public SearchRequest SearchRequest { get; set; }
+        public int ResultId { get; set; }
+        public Result Result { get; set; }
+    }
 }
