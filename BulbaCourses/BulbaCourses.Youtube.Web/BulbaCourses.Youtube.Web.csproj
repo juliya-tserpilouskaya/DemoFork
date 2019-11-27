@@ -89,6 +89,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cache.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\CourseOwner.cs" />
+    <Compile Include="Models\FavoritesVideos.cs" />
+    <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\RecentVideos.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\SearchRequest.cs" />
+    <Compile Include="Models\SearchStory.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +119,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
