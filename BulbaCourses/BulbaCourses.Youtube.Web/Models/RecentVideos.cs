@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BulbaCourses.Youtube.Web.Models
 {
-    public class RecentVideos //
+    public class RecentVideos //пока получается в точности как FavoritesVideos
     {
         public int Id { get; set; }
         public IEnumerable<Video> Videos { get; set; }

@@ -6,7 +6,7 @@ namespace BulbaCourses.Youtube.Web.Models
 {
     public class CourseOwner : User
     {
-        public IEnumerable<string> ChannelList { get; set; }
+        public IEnumerable<Channel> ChannelList { get; set; }
         public IEnumerable<Course> Courses { get; set; }
     }
 }
