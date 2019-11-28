@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
-{
+{/// <summary>
+/// Presentation info
+/// </summary>
     public class Presentation
     {
         public string Id { get; set; }

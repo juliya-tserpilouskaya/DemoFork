@@ -7,7 +7,9 @@ using System.Web.Http;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
-{
+{/// <summary>
+/// The controller of all Users list
+/// </summary>
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {

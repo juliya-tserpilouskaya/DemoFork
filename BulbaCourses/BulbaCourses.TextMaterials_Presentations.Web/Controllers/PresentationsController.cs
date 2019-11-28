@@ -7,10 +7,16 @@ using System.Web.Http;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
-{
+{/// <summary>
+/// The controller of all Presentations list
+/// </summary>
     [RoutePrefix("api/presentations")]
     public class PresentationsController : ApiController
     {
+        /// <summary>
+        /// Get all Presentations from the all Presentations list
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         public IHttpActionResult GetAll()
         {
@@ -25,6 +31,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get Presentation from the all Presentations list by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         public IHttpActionResult GetById(string id)
         {
@@ -44,6 +55,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add Presentation to the all Presentations list
+        /// </summary>
+        /// <param name="presentation"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         public IHttpActionResult Create([FromBody]Presentation presentation)
         {
@@ -63,6 +79,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Find the Presentation whis the same Id from the all Presentations list and add new
+        /// </summary>
+        /// <param name="presentation"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         public IHttpActionResult Update([FromBody]Presentation presentation)
         {
@@ -82,6 +103,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete by Id Presentation from the all Presentations list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         public IHttpActionResult Delete(string id)
         {
