@@ -9,6 +9,6 @@ namespace BulbaCourses.Youtube.Web.Models
         public int Id { get; set; }
         public int SearchRequestId { get; set; }
         public SearchRequest SearchRequest { get; set; }
-        public List<Video> VideosList { get; set; }
+        public IEnumerable<Video> VideosList { get; set; }
     }
 }
