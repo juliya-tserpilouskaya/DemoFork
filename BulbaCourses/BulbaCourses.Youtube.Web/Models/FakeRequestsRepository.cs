@@ -21,7 +21,7 @@ namespace BulbaCourses.Youtube.Web.Models
             }
             else
             {
-                var editRequest = SearchRequests.FirstOrDefault(r => r.Id == request.Id);
+                var editRequest = SearchRequests.SingleOrDefault(r => r.Id == request.Id);
                 if (editRequest != null)
                 {
                     editRequest.Title = request.Title;
@@ -32,13 +32,18 @@ namespace BulbaCourses.Youtube.Web.Models
 
         public SearchRequest DeleteRequest(int requestId)
         {
-            var delRequest = SearchRequests.FirstOrDefault(r => r.Id == requestId);
+            var delRequest = SearchRequests.SingleOrDefault(r => r.Id == requestId);
             if (delRequest != null)
             {
                 SearchRequests.Remove(delRequest);
             }
 
             return delRequest;
+        }
+
+        public IEnumerable<SearchRequest> GetAllRequests()
+        {
+            return SearchRequests.AsReadOnly();
         }
 
         public SearchRequest GetRequestById(int requestId)

@@ -13,6 +13,8 @@ namespace BulbaCourses.Youtube.Web.Models
 
         SearchRequest DeleteRequest(int requestId);
 
+        IEnumerable<SearchRequest> GetAllRequests;
+
         SearchRequest GetRequestById(int requestId);
     }
 }
