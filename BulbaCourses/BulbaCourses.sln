@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUser.Web", "..\BulbaCourses.GlobalAdminUser.Web\BulbaCourses.GlobalAdminUser.Web.csproj", "{006B24D6-2060-4273-8A08-CE5BF77094DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMaterials_Presentations_Tests", "TextMaterials_Presentations_Tests\TextMaterials_Presentations_Tests.csproj", "{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{006B24D6-2060-4273-8A08-CE5BF77094DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

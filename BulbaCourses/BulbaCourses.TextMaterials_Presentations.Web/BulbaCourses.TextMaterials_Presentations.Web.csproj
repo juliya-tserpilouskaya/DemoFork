@@ -88,9 +88,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PresentationsController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Presentations\FavoritePresentations.cs" />
+    <Compile Include="Models\Presentations\Presentation.cs" />
+    <Compile Include="Models\Presentations\PresentationsBase.cs" />
+    <Compile Include="Models\StaffAndUsers\Employee.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff.cs" />
+    <Compile Include="Models\StaffAndUsers\User.cs" />
+    <Compile Include="Models\StaffAndUsers\UserBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
