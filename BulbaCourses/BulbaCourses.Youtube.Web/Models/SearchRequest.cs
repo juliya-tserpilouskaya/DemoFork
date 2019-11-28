@@ -7,6 +7,14 @@ namespace BulbaCourses.Youtube.Web.Models
     public class SearchRequest
     {
         public int Id { get; set; }
-        public string Text { get; set; }
+        public string UserId { get; set; }
+        public string VideoId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Author { get; set; }
+        public string Channel { get; set; }
+        public string PlayList { get; set; }
+        public DateTime PublishedAt { get; set; }
+        public string Url { get; set; }
     }
 }
