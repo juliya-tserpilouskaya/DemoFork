@@ -15,8 +15,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 
         public bool IsAccessible { get; set; }
 
-        public bool IsFavorite { get; set; }
+        public string TeacherId { get; set; }
 
-        public bool IsViewed { get; set; }
+        public string CourseId { get; set; }
+
+        public IEnumerable<Feedback> Feedback { get; set; }
     }
 }
