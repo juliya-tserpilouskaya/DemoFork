@@ -71,6 +71,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\Pterentations\PresentationsBaseTests.cs" />
+    <Compile Include="Models\Pterentations\FavoritePresentationsTests.cs" />
     <Compile Include="Models\StaffAndUsers\StaffTests.cs" />
     <Compile Include="Models\StaffAndUsers\UserBaseTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
