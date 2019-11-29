@@ -8,7 +8,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 {/// <summary>
 /// User info
 /// </summary>
-    public class Student
+    public class Student : User
     {
         public bool IsPaid { get; set; }
 

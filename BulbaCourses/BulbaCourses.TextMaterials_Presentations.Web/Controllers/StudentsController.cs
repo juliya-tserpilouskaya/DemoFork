@@ -11,7 +11,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 /// The controller of all Users list
 /// </summary>
     [RoutePrefix("api/users")]
-    public class UsersController : ApiController
+    public class StudentsController : ApiController
     {/// <summary>
      /// Get all Users from the list of Users
      /// </summary>
@@ -21,7 +21,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         {
             try
             {
-                var result = UserBase.GetAll();
+                var result = StudentsBase.GetAll();
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -44,7 +44,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = UserBase.GetById(id);
+                var result = StudentsBase.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -59,16 +59,16 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody]User user)
+        public IHttpActionResult Create([FromBody]Student student)
         {
-            if (user is null)
+            if (student is null)
             {
                 return BadRequest();
             }
 
             try
             {
-                var result = UserBase.Add(user);
+                var result = StudentsBase.Add(student);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -83,16 +83,16 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
-        public IHttpActionResult Update([FromBody]User user)
+        public IHttpActionResult Update([FromBody]Student student)
         {
-            if (user is null)
+            if (student is null)
             {
                 return BadRequest();
             }
 
             try
             {
-                var result = UserBase.Update(user);
+                var result = StudentsBase.Update(student);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -116,7 +116,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = UserBase.DeleteById(id);
+                var result = StudentsBase.DeleteById(id);
                 return (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

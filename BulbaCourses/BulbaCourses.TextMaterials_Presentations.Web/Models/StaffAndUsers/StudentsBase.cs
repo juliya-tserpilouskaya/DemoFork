@@ -7,17 +7,17 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 {/// <summary>
 /// The list of Users, static, CRUD operations
 /// </summary>
-    public static class UserBase
+    public static class StudentsBase
     {
-        private static List<User> _users = new List<User>();
+        private static List<Student> _students = new List<Student>();
 
         /// <summary>
         /// Get all Users from the list of Users, returns IEnumerable
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<User> GetAll()
+        public static IEnumerable<Student> GetAll()
         {
-            return _users.AsReadOnly();
+            return _students.AsReadOnly();
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static User GetById(string id)
+        public static Student GetById(string id)
         {
-            return _users.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return _students.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -35,11 +35,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static User Add(User user)
+        public static Student Add(Student student)
         {
-            user.Id = Guid.NewGuid().ToString();
-            _users.Add(user);
-            return user;
+            student.Id = Guid.NewGuid().ToString();
+            _students.Add(student);
+            return student;
         }
 
         /// <summary>
@@ -47,22 +47,22 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static User Update(User user)
+        public static Student Update(Student student)
         {
-            User deletedUser = _users.SingleOrDefault(p => p.Id.Equals(user.Id, StringComparison.OrdinalIgnoreCase));
+            Student deletedUser = _students.SingleOrDefault(p => p.Id.Equals(student.Id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedUser != null)
             {
-                _users.Remove(deletedUser);
-                user.Id = Guid.NewGuid().ToString();
-                _users.Add(user);
+                _students.Remove(deletedUser);
+                student.Id = Guid.NewGuid().ToString();
+                _students.Add(student);
             }
             else
             {
                 return deletedUser;
             }
 
-            return user;
+            return student;
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <returns></returns>
         public static bool DeleteById(string id)
         {
-            User deletedPresentation = _users.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            Student deletedPresentation = _students.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedPresentation != null)
             {
-                _users.Remove(deletedPresentation);
+                _students.Remove(deletedPresentation);
             }
             else
             {

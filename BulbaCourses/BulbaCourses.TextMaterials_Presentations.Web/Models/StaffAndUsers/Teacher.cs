@@ -8,7 +8,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 {/// <summary>
 /// Employee info
 /// </summary>
-    public class Teacher
+    public class Teacher : User
     {
         public IEnumerable<Presentation> ChangedPresentatons { get; set; }
     }
