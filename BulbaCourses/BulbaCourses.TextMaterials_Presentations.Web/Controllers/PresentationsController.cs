@@ -80,7 +80,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Find the Presentation whis the same Id from the all Presentations list and add new
+        /// Find the Presentation whis the same Id from the all Presentations list delete it and add new
         /// </summary>
         /// <param name="presentation"></param>
         /// <returns></returns>

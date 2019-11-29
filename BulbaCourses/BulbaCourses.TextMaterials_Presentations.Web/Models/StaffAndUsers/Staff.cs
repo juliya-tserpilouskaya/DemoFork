@@ -43,7 +43,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         }
 
         /// <summary>
-        /// Find the Employee whis the same Id from the Staff list and add new, returns added Employee
+        /// Find the Employee whis the same Id from the Staff list delete it and add new, returns added Employee
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>

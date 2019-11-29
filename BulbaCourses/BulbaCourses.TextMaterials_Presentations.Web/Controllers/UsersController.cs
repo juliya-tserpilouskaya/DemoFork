@@ -12,7 +12,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 /// </summary>
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
-    {
+    {/// <summary>
+     /// Get all Users from the list of Users
+     /// </summary>
+     /// <returns></returns>
         [HttpGet, Route("")]
         public IHttpActionResult GetAll()
         {
@@ -26,7 +29,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-
+        /// <summary>
+        /// Get User from the list of Users by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         public IHttpActionResult GetById(string id)
         {
@@ -46,6 +53,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add User to the list of Users
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         public IHttpActionResult Create([FromBody]User user)
         {
@@ -65,6 +77,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Find the User whis the same Id from the list of Users, delete it and add new
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         public IHttpActionResult Update([FromBody]User user)
         {
@@ -84,6 +101,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete by Id User from the list of Users, returns true if was deleted
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         public IHttpActionResult Delete(string id)
         {

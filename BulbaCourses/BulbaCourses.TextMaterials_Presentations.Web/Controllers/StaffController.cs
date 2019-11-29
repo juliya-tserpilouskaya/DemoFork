@@ -80,7 +80,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Find the Employee whis the same Id from the Staff list and add new
+        /// Find the Employee whis the same Id from the Staff list delete it and add new
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>

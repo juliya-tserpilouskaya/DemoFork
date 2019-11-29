@@ -43,7 +43,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        /// Find the Presentation whis the same Id from the all Presentations list and add new, returns added Presentation
+        /// Find the Presentation whis the same Id from the all Presentations list delete it and add new, returns added Presentation
         /// </summary>
         /// <param name="presentation"></param>
         /// <returns></returns>
