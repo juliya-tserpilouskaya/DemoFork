@@ -70,7 +70,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool DeletById(string id)
+        public static bool DeleteById(string id)
         {
             User deletedPresentation = _users.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 

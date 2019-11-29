@@ -94,7 +94,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = UserBase.DeletById(id);
+                var result = UserBase.DeleteById(id);
                 return (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
