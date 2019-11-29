@@ -12,21 +12,21 @@ using Bogus;
 namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
 {
     [TestFixture]
-    public class UserBaseTests
+    public class StudentsBaseTests
     {
-        Faker<User> _faker = new Faker<User>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
+        Faker<Student> _faker = new Faker<Student>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
                                                    .RuleFor(x => x.FullName, y => y.Name.FullName())
                                                    .RuleFor(x => x.UserName, y => y.Name.FirstName())
                                                    .RuleFor(x => x.Email, y => y.Internet.Email())
                                                    .RuleFor(x => x.IsPaid, y=> y.Random.Bool());
-         List<User> _fakeUsers;
+         List<Student> _fakeStudents;
 
         [SetUp]
         public void ListGenerator() //if everyone test is failed - check the Add method
         {
-            _fakeUsers = _faker.Generate(5);
+            _fakeStudents = _faker.Generate(5);
 
-            foreach (var item in _fakeUsers)
+            foreach (var item in _fakeStudents)
             {
                 StudentsBase.Add(item);
             }
@@ -35,7 +35,7 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
         [TearDown]
         public void Zeroing()
         {
-            foreach (var item in _fakeUsers)
+            foreach (var item in _fakeStudents)
             {
                 StudentsBase.DeleteById(item.Id);
             }
@@ -44,9 +44,9 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
         [Test]
         public void Add_Test()
         {
-            List<User> employees = _faker.Generate(5);
+            List<Student> students = _faker.Generate(5);
 
-            foreach (var item in employees)
+            foreach (var item in students)
             {
                 StudentsBase.Add(item).Should().BeEquivalentTo(item);
             }
@@ -55,37 +55,36 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
         [Test]
         public void GetAll_Test()
         {
-            StudentsBase.GetAll().Should().BeEquivalentTo(_fakeUsers);
+            StudentsBase.GetAll().Should().BeEquivalentTo(_fakeStudents);
         }
 
         [Test]
         public void GetById_Test()
         {
-            StudentsBase.GetById(_fakeUsers.First<User>().Id).Should().BeEquivalentTo(_fakeUsers.First<User>());
+            StudentsBase.GetById(_fakeStudents.First<User>().Id).Should().BeEquivalentTo(_fakeStudents.First<User>());
         }
 
         [Test]
         public void Update_Test()
         {
-            User userForUpdate = new User()
+            Student studentForUpdate = new Student()
             {
-                Id = _fakeUsers.First<User>().Id,
+                Id = _fakeStudents.First<User>().Id,
                 FullName = "1",
                 UserName = "1",
                 Email = "1"
             };
 
-            User employeeBeforeUpdate = StudentsBase.GetById(_fakeUsers.First<User>().Id);
-            User employeeAfterUpdate = StudentsBase.Update(userForUpdate);
+            Student studentAfterUpdate = StudentsBase.Update(studentForUpdate);
 
-            employeeAfterUpdate.UserName.Should().BeEquivalentTo(userForUpdate.UserName);
+            studentAfterUpdate.UserName.Should().BeEquivalentTo(studentForUpdate.UserName);
         }
 
         [Test]
         public void DeleteById_Test()
         {
-            StudentsBase.DeleteById(_fakeUsers.First<User>().Id).Should().BeTrue();
-            StudentsBase.GetById(_fakeUsers.First<User>().Id).Should().BeNull();
+            StudentsBase.DeleteById(_fakeStudents.First<User>().Id).Should().BeTrue();
+            StudentsBase.GetById(_fakeStudents.First<User>().Id).Should().BeNull();
         }
     }
 }

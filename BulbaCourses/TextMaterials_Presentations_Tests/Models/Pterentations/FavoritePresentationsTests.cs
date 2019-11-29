@@ -16,9 +16,8 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
     {
         Faker<Presentation> _faker = new Faker<Presentation>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
                                                    .RuleFor(x => x.IsAccessible, y => y.Random.Bool())
-                                                   .RuleFor(x => x.IsFavorite, y => y.Random.Bool())
-                                                   .RuleFor(x => x.IsViewed, y => y.Random.Bool())
-                                                   .RuleFor(x => x.Title, y => y.Name.JobTitle());
+                                                   .RuleFor(x => x.CourseId, y => y.Random.Byte(0, 250).ToString());
+
         List<Presentation> _fakePresentations;
         FavoritePresentations _favorite;
 
