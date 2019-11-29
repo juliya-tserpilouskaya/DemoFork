@@ -28,7 +28,7 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
 
             foreach (var item in _fakeUsers)
             {
-                UserBase.Add(item);
+                StudentsBase.Add(item);
             }
         }
 
@@ -37,7 +37,7 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
         {
             foreach (var item in _fakeUsers)
             {
-                UserBase.DeleteById(item.Id);
+                StudentsBase.DeleteById(item.Id);
             }
         }
 
@@ -48,20 +48,20 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
 
             foreach (var item in employees)
             {
-                UserBase.Add(item).Should().BeEquivalentTo(item);
+                StudentsBase.Add(item).Should().BeEquivalentTo(item);
             }
         }
 
         [Test]
         public void GetAll_Test()
         {
-            UserBase.GetAll().Should().BeEquivalentTo(_fakeUsers);
+            StudentsBase.GetAll().Should().BeEquivalentTo(_fakeUsers);
         }
 
         [Test]
         public void GetById_Test()
         {
-            UserBase.GetById(_fakeUsers.First<User>().Id).Should().BeEquivalentTo(_fakeUsers.First<User>());
+            StudentsBase.GetById(_fakeUsers.First<User>().Id).Should().BeEquivalentTo(_fakeUsers.First<User>());
         }
 
         [Test]
@@ -75,8 +75,8 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
                 Email = "1"
             };
 
-            User employeeBeforeUpdate = UserBase.GetById(_fakeUsers.First<User>().Id);
-            User employeeAfterUpdate = UserBase.Update(userForUpdate);
+            User employeeBeforeUpdate = StudentsBase.GetById(_fakeUsers.First<User>().Id);
+            User employeeAfterUpdate = StudentsBase.Update(userForUpdate);
 
             employeeAfterUpdate.UserName.Should().BeEquivalentTo(userForUpdate.UserName);
         }
@@ -84,8 +84,8 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
         [Test]
         public void DeleteById_Test()
         {
-            UserBase.DeleteById(_fakeUsers.First<User>().Id).Should().BeTrue();
-            UserBase.GetById(_fakeUsers.First<User>().Id).Should().BeNull();
+            StudentsBase.DeleteById(_fakeUsers.First<User>().Id).Should().BeTrue();
+            StudentsBase.GetById(_fakeUsers.First<User>().Id).Should().BeNull();
         }
     }
 }

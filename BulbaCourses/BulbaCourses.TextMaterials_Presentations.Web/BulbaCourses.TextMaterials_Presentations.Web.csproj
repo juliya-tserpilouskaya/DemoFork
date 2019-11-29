@@ -99,7 +99,7 @@
     <Compile Include="Models\Presentations\PresentationsBase.cs" />
     <Compile Include="Models\StaffAndUsers\Teacher.cs" />
     <Compile Include="Models\StaffAndUsers\Staff.cs" />
-    <Compile Include="Models\StaffAndUsers\User.cs" />
+    <Compile Include="Models\StaffAndUsers\Student.cs" />
     <Compile Include="Models\StaffAndUsers\UserBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

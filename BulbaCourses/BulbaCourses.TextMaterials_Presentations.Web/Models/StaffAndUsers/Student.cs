@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 {/// <summary>
 /// User info
 /// </summary>
-    public class User
+    public class Student
     {
-        public string Id { get; set; }
-
-        public string FullName { get; set; }
-
-        public string UserName { get; set; }
-
-        public string Email { get; set; }
-
         public bool IsPaid { get; set; }
+
+        public IEnumerable<FavoritePresentations> FavoritePresentations { get; set; }
     }
 }
