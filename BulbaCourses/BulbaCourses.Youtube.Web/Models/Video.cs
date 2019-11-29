@@ -10,8 +10,8 @@ namespace BulbaCourses.Youtube.Web.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public CourseOwner Author { get; set; }
-        public string ChannelId { get; set; }
-        public string PlayListId { get; set; }
+        public int ChannelId { get; set; }
+        public int PlayListId { get; set; }
         public DateTime PublishedAt { get; set; }
         public string Url { get; set; }
         public Course Course { get; set; }
