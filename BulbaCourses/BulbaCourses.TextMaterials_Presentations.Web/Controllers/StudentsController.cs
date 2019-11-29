@@ -56,7 +56,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <summary>
         /// Add User to the list of Users
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="student"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
         public IHttpActionResult Create([FromBody]Student student)
@@ -80,7 +80,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <summary>
         /// Find the User whis the same Id from the list of Users, delete it and add new
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="student"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
         public IHttpActionResult Update([FromBody]Student student)

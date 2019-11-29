@@ -58,19 +58,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <summary>
         /// Add Employee to the Staff list, returns added Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="teacher"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody]Teacher employee)
+        public IHttpActionResult Create([FromBody]Teacher teacher)
         {
-            if (employee is null)
+            if (teacher is null)
             {
                 return BadRequest();
             }
 
             try
             {
-                var result = Staff.Add(employee);
+                var result = Staff.Add(teacher);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -82,19 +82,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <summary>
         /// Find the Employee whis the same Id from the Staff list delete it and add new
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="teacher"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
-        public IHttpActionResult Update([FromBody]Teacher  employee)
+        public IHttpActionResult Update([FromBody]Teacher teacher)
         {
-            if (employee is null)
+            if (teacher is null)
             {
                 return BadRequest();
             }
 
             try
             {
-                var result = Staff.Update(employee);
+                var result = Staff.Update(teacher);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

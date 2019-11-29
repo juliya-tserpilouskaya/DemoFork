@@ -33,7 +33,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <summary>
         /// Add User to the list of Users, returns added User
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="student"></param>
         /// <returns></returns>
         public static Student Add(Student student)
         {
@@ -45,7 +45,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <summary>
         /// Find the User whis the same Id from the list of Users delete it and add new, returns added User
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="student"></param>
         /// <returns></returns>
         public static Student Update(Student student)
         {

@@ -9,7 +9,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 /// </summary>
     public static class Staff
     {
-        private static List<Teacher> _employees = new List<Teacher>();
+        private static List<Teacher> _teachers = new List<Teacher>();
 
         /// <summary>
         /// Get all Staff from the Staff list, returns IEnumerable
@@ -17,7 +17,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <returns></returns>
         public static IEnumerable<Teacher> GetAll()
         {
-            return _employees.AsReadOnly();
+            return _teachers.AsReadOnly();
         }
 
         /// <summary>
@@ -27,42 +27,42 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <returns></returns>
         public static Teacher GetById(string id)
         {
-            return _employees.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return _teachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// Add Employee to the Staff list, returns added Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="teacher"></param>
         /// <returns></returns>
-        public static Teacher Add(Teacher employee)
+        public static Teacher Add(Teacher teacher)
         {
-            employee.Id = Guid.NewGuid().ToString();
-            _employees.Add(employee);
-            return employee;
+            teacher.Id = Guid.NewGuid().ToString();
+            _teachers.Add(teacher);
+            return teacher;
         }
 
         /// <summary>
         /// Find the Employee whis the same Id from the Staff list delete it and add new, returns added Employee
         /// </summary>
-        /// <param name="employee"></param>
+        /// <param name="teacher"></param>
         /// <returns></returns>
-        public static Teacher Update(Teacher employee)
+        public static Teacher Update(Teacher teacher)
         {
-            Teacher deletedEmployee = _employees.SingleOrDefault(p => p.Id.Equals(employee.Id, StringComparison.OrdinalIgnoreCase));
+            Teacher deletedEmployee = _teachers.SingleOrDefault(p => p.Id.Equals(teacher.Id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedEmployee != null)
             {
-                _employees.Remove(deletedEmployee);
-                employee.Id = Guid.NewGuid().ToString();
-                _employees.Add(employee);
+                _teachers.Remove(deletedEmployee);
+                teacher.Id = Guid.NewGuid().ToString();
+                _teachers.Add(teacher);
             }
             else
             {
                 return deletedEmployee;
             }
 
-            return employee;
+            return teacher;
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         /// <returns></returns>
         public static bool DeleteById(string id)
         {
-            Teacher deletedStaffPerson = _employees.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            Teacher deletedStaffPerson = _teachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedStaffPerson != null)
             {
-                _employees.Remove(deletedStaffPerson);
+                _teachers.Remove(deletedStaffPerson);
             }
             else
             {
