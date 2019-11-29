@@ -47,7 +47,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool DeletById(string id)
+        public bool DeleteById(string id)
         {
             Presentation deletedPresentation = _favoritePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 

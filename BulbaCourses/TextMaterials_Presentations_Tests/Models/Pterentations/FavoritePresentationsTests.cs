@@ -14,9 +14,55 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
     [TestFixture]
     public class FavoritePresentationsTests
     {
-        [TestMethod]
-        public void TestMethod1()
+        Faker<Presentation> _faker = new Faker<Presentation>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
+                                                   .RuleFor(x => x.IsAccessible, y => y.Random.Bool())
+                                                   .RuleFor(x => x.IsFavorite, y => y.Random.Bool())
+                                                   .RuleFor(x => x.IsViewed, y => y.Random.Bool())
+                                                   .RuleFor(x => x.Title, y => y.Name.JobTitle());
+        List<Presentation> _fakePresentations;
+        FavoritePresentations _favorite;
+
+        [OneTimeSetUp]
+        public void ListGenerator()
         {
+            _favorite = new FavoritePresentations();
+
+            _fakePresentations = _faker.Generate(5);
+
+            foreach (var item in _fakePresentations)
+            {
+                _favorite.Add(item);
+            }
+        }
+
+        [Test]
+        public void Add_Test()
+        {
+            List<Presentation> presentations = _faker.Generate(5);
+
+            foreach (var item in presentations)
+            {
+                _favorite.Add(item).Should().BeEquivalentTo(item);
+            }
+        }
+
+        [Test]
+        public void GetAll_Test()
+        {
+            _favorite.GetAll().Should().BeEquivalentTo(_fakePresentations);
+        }
+
+        [Test]
+        public void GetById_Test()
+        {
+            _favorite.GetById(_fakePresentations.First<Presentation>().Id).Should().BeEquivalentTo(_fakePresentations.First<Presentation>());
+        }
+
+        [Test]
+        public void DeleteById_Test()
+        {
+            _favorite.DeleteById(_fakePresentations.First<Presentation>().Id).Should().BeTrue();
+            _favorite.GetById(_fakePresentations.First<Presentation>().Id).Should().BeNull();
         }
     }
 }
