@@ -12,23 +12,23 @@ namespace BulbaCourses.Youtube.Web.Controllers
     public class RequestController : ApiController
     {
         //FakeRequestsRepository fakedb = new FakeRequestsRepository();
-        private IRequestRepository fakedb;
-        public RequestController(IRequestRepository repo)
+        private IRequestsRepository fakedb;
+        public RequestController(IRequestsRepository repo)
         {
             fakedb = repo;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<SearchRequest> GetRequests()
+        public IHttpActionResult GetRequests()
         {
             var requests = fakedb.GetAllRequests();
-            return requests == null ? NotFound() : (IHttpActionResult)Ok(result);
+            return requests == null ? NotFound() : (IHttpActionResult)Ok(requests);
         }
 
         // GET api/<controller>/5
         [HttpGet, Route("{id})")]
-        public SearchRequest GetRequest(int id)
+        public IHttpActionResult GetRequest(string id)
         {
             //validate id
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
@@ -38,7 +38,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             try
             {
                 var request = fakedb.GetRequestById(id);
-                return request == null ? NotFound() : (IHttpActionResult)Ok(result);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
             }
             catch (InvalidOperationException ex) //server error
             {
@@ -48,15 +48,16 @@ namespace BulbaCourses.Youtube.Web.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]SearchRequest request)
+        public IHttpActionResult Post([FromBody]SearchRequest request)
         {
-            if(!SearchRequest.IsValid)//пока нет валидации
+            if(!ModelState.IsValid)//пока нет валидации
             {
                 return BadRequest();
             }
             try
             {
                 fakedb.SaveRequest(request);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
             }
             catch (InvalidOperationException ex) //server error
             {
@@ -66,7 +67,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
 
         // PUT api/<controller>/5
         [HttpPut, Route("{id})")]
-        public void Put(int id, [FromBody]SearchRequest request)
+        public IHttpActionResult Put(string id, [FromBody]SearchRequest request)
         {
             //validate id
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
@@ -77,6 +78,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             {
                 request.Id = id;
                 fakedb.SaveRequest(request);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
             }
             catch (InvalidOperationException ex) //server error
             {
@@ -86,7 +88,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete, Route("{id})")]
-        public void Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
             //validate id
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
@@ -95,7 +97,9 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
             try
             {
+                var request = fakedb.GetRequestById(id);
                 fakedb.DeleteRequest(id);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
             }
             catch (InvalidOperationException ex) //server error
             {
