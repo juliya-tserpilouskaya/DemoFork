@@ -9,30 +9,32 @@ namespace BulbaCourses.Youtube.Web.Models
     {
         public List<SearchRequest> SearchRequests => new List<SearchRequest>
         {
-            new SearchRequest() { Id =  1, Title = "request1", VideoId = "1", UserId = "1", Url = "url1", Author = "author1", Description = "description1", Channel = "1", PlayList = "1", PublishedAt = DateTime.Now},
-            new SearchRequest() { Id =  2, Title = "request2", VideoId = "2", UserId = "2", Url = "url2", Author = "author1", Description = "description2", Channel = "2", PlayList = "2", PublishedAt = DateTime.Now}
+            new SearchRequest() { Id =  "1", Title = "request1", VideoId = "1", UserId = "1", Url = "url1", Author = "author1", Description = "description1", Channel = "1", PlayList = "1", PublishedAt = DateTime.Now},
+            new SearchRequest() { Id =  "2", Title = "request2", VideoId = "2", UserId = "2", Url = "url2", Author = "author1", Description = "description2", Channel = "2", PlayList = "2", PublishedAt = DateTime.Now}
         };
 
-        public void SaveRequest(SearchRequest request)
+        public SearchRequest SaveRequest(SearchRequest request)
         {
-            if (request.Id == 0)
+            if (string.IsNullOrEmpty(request.Id))
             {
                 SearchRequests.Add(request);
             }
             else
             {
-                var editRequest = SearchRequests.FirstOrDefault(r => r.Id == request.Id);
+                var editRequest = SearchRequests.SingleOrDefault(r => r.Id == request.Id);
                 if (editRequest != null)
                 {
                     editRequest.Title = request.Title;
                     editRequest.Description = request.Description;
                 }                
             }
+
+            return request;
         }
 
-        public SearchRequest DeleteRequest(int requestId)
+        public SearchRequest DeleteRequest(string requestId)
         {
-            var delRequest = SearchRequests.FirstOrDefault(r => r.Id == requestId);
+            var delRequest = SearchRequests.SingleOrDefault(r => r.Id == requestId);
             if (delRequest != null)
             {
                 SearchRequests.Remove(delRequest);
@@ -41,7 +43,12 @@ namespace BulbaCourses.Youtube.Web.Models
             return delRequest;
         }
 
-        public SearchRequest GetRequestById(int requestId)
+        public IEnumerable<SearchRequest> GetAllRequests()
+        {
+            return SearchRequests.AsReadOnly();
+        }
+
+        public SearchRequest GetRequestById(string requestId)
         {
             return SearchRequests.SingleOrDefault(r => r.Id == requestId);
         }

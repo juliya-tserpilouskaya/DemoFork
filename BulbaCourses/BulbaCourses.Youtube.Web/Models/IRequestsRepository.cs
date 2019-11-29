@@ -9,10 +9,12 @@ namespace BulbaCourses.Youtube.Web.Models
     {
         List<SearchRequest> SearchRequests { get; }
 
-        void SaveRequest(SearchRequest request);
+        SearchRequest SaveRequest(SearchRequest request);
 
-        SearchRequest DeleteRequest(int requestId);
+        SearchRequest DeleteRequest(string requestId);
 
-        SearchRequest GetRequestById(int requestId);
+        IEnumerable<SearchRequest> GetAllRequests();
+
+        SearchRequest GetRequestById(string requestId);
     }
 }

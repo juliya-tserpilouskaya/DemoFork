@@ -8,35 +8,103 @@ using BulbaCourses.Youtube.Web.Models;
 
 namespace BulbaCourses.Youtube.Web.Controllers
 {
+    [RoutePrefix("api/requests")]
     public class RequestController : ApiController
     {
-        FakeRequestsRepository fakedb = new FakeRequestsRepository();
-        
-        // GET api/<controller>
-        public IEnumerable<SearchRequest> GetRequests()
+        //FakeRequestsRepository fakedb = new FakeRequestsRepository();
+        private IRequestsRepository fakedb;
+        public RequestController(IRequestsRepository repo)
         {
-            return fakedb.SearchRequests;
+            fakedb = repo;
+        }
+
+        // GET api/<controller>
+        [HttpGet]
+        public IHttpActionResult GetRequests()
+        {
+            var requests = fakedb.GetAllRequests();
+            return requests == null ? NotFound() : (IHttpActionResult)Ok(requests);
         }
 
         // GET api/<controller>/5
-        public SearchRequest GetRequest(int id)
+        [HttpGet, Route("{id})")]
+        public IHttpActionResult GetRequest(string id)
         {
-            return fakedb.GetRequestById(id);
+            //validate id
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var request = fakedb.GetRequestById(id);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
+            }
+            catch (InvalidOperationException ex) //server error
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]SearchRequest request)
         {
+            if(!ModelState.IsValid)//пока нет валидации
+            {
+                return BadRequest();
+            }
+            try
+            {
+                fakedb.SaveRequest(request);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
+            }
+            catch (InvalidOperationException ex) //server error
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut, Route("{id})")]
+        public IHttpActionResult Put(string id, [FromBody]SearchRequest request)
         {
+            //validate id
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
+            {
+                return BadRequest();
+            }
+            try
+            {
+                request.Id = id;
+                fakedb.SaveRequest(request);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
+            }
+            catch (InvalidOperationException ex) //server error
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpDelete, Route("{id})")]
+        public IHttpActionResult Delete(string id)
         {
+            //validate id
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))  // empty or text
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var request = fakedb.GetRequestById(id);
+                fakedb.DeleteRequest(id);
+                return request == null ? NotFound() : (IHttpActionResult)Ok(request);
+            }
+            catch (InvalidOperationException ex) //server error
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }
