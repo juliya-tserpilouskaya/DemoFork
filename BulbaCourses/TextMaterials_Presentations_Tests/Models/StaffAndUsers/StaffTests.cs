@@ -14,11 +14,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
     [TestFixture]
     public class StaffTests
     {
-        Faker<Employee> _faker = new Faker<Employee>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
+        Faker<Teacher> _faker = new Faker<Teacher>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
                                                         .RuleFor(x => x.FullName, y => y.Name.FullName())
                                                         .RuleFor(x => x.UserName, y => y.Name.FirstName())
                                                         .RuleFor(x => x.Email, y => y.Internet.Email());
-        List<Employee> _fakeEmployees;
+        List<Teacher> _fakeEmployees;
 
         [SetUp]
         public void ListGenerator() //if everyone test is failed - check the Add method
@@ -43,7 +43,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
         [Test]
         public void Add_Test()
         {
-            List<Employee> employees = _faker.Generate(5);
+            List<Teacher> employees = _faker.Generate(5);
 
             foreach (var item in employees)
             {
@@ -60,22 +60,22 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
         [Test]
         public void GetById_Test()
         {
-            Staff.GetById(_fakeEmployees.First<Employee>().Id).Should().BeEquivalentTo(_fakeEmployees.First<Employee>());
+            Staff.GetById(_fakeEmployees.First<Teacher>().Id).Should().BeEquivalentTo(_fakeEmployees.First<Teacher>());
         }
 
         [Test]
         public void Update_Test()
         {
-            Employee employeeForUpdate = new Employee()
+            Teacher employeeForUpdate = new Teacher()
             {
-                Id = _fakeEmployees.First<Employee>().Id,
+                Id = _fakeEmployees.First<Teacher>().Id,
                 FullName = "1",
                 UserName = "1",
                 Email = "1"
             };
 
-            Employee employeeBeforeUpdate = Staff.GetById(_fakeEmployees.First<Employee>().Id);
-            Employee employeeAfterUpdate = Staff.Update(employeeForUpdate);
+            Teacher employeeBeforeUpdate = Staff.GetById(_fakeEmployees.First<Teacher>().Id);
+            Teacher employeeAfterUpdate = Staff.Update(employeeForUpdate);
 
             employeeAfterUpdate.UserName.Should().BeEquivalentTo(employeeForUpdate.UserName);
         }
@@ -83,8 +83,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
         [Test]
         public void DeleteById_Test()
         {
-            Staff.DeleteById(_fakeEmployees.First<Employee>().Id).Should().BeTrue();
-            Staff.GetById(_fakeEmployees.First<Employee>().Id).Should().BeNull();
+            Staff.DeleteById(_fakeEmployees.First<Teacher>().Id).Should().BeTrue();
+            Staff.GetById(_fakeEmployees.First<Teacher>().Id).Should().BeNull();
         }
     }
 }

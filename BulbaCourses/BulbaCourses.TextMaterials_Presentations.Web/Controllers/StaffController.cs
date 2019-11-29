@@ -61,7 +61,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="employee"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody]Employee employee)
+        public IHttpActionResult Create([FromBody]Teacher employee)
         {
             if (employee is null)
             {
@@ -85,7 +85,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="employee"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
-        public IHttpActionResult Update([FromBody]Employee  employee)
+        public IHttpActionResult Update([FromBody]Teacher  employee)
         {
             if (employee is null)
             {
