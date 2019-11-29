@@ -21,14 +21,23 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
                                                    .RuleFor(x => x.IsPaid, y=> y.Random.Bool());
          List<User> _fakeUsers;
 
-        [OneTimeSetUp]
-        public void ListGenerator()
+        [SetUp]
+        public void ListGenerator() //if everyone test is failed - check the Add method
         {
             _fakeUsers = _faker.Generate(5);
 
             foreach (var item in _fakeUsers)
             {
                 UserBase.Add(item);
+            }
+        }
+
+        [TearDown]
+        public void Zeroing()
+        {
+            foreach (var item in _fakeUsers)
+            {
+                UserBase.DeleteById(item.Id);
             }
         }
 

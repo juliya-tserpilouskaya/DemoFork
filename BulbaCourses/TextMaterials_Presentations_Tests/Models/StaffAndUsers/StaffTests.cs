@@ -20,14 +20,23 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
                                                         .RuleFor(x => x.Email, y => y.Internet.Email());
         List<Employee> _fakeEmployees;
 
-        [OneTimeSetUp]
-        public void ListGenerator()
+        [SetUp]
+        public void ListGenerator() //if everyone test is failed - check the Add method
         {
             _fakeEmployees = _faker.Generate(5);
 
             foreach (var item in _fakeEmployees)
             {
                 Staff.Add(item);
+            }
+        }
+
+        [TearDown]
+        public void Zeroing()
+        {
+            foreach (var item in _fakeEmployees)
+            {
+                Staff.DeleteById(item.Id);
             }
         }
 

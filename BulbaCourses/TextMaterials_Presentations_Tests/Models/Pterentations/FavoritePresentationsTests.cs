@@ -22,8 +22,8 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
         List<Presentation> _fakePresentations;
         FavoritePresentations _favorite;
 
-        [OneTimeSetUp]
-        public void ListGenerator()
+        [SetUp]
+        public void ListGenerator() //if everyone test is failed - check the Add method
         {
             _favorite = new FavoritePresentations();
 

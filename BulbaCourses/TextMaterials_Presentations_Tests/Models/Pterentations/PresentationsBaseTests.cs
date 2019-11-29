@@ -21,14 +21,23 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
                                                    .RuleFor(x => x.Title, y => y.Name.JobTitle());
         List<Presentation> _fakePresentations;
 
-        [OneTimeSetUp]
-        public void ListGenerator()
+        [SetUp]
+        public void ListGenerator() //if everyone test is failed - check the Add method
         {
             _fakePresentations = _faker.Generate(5);
 
             foreach (var item in _fakePresentations)
             {
                 PresentationsBase.Add(item);
+            }
+        }
+
+        [TearDown]
+        public void Zeroing()
+        {
+            foreach (var item in _fakePresentations)
+            {
+                PresentationsBase.DeleteById(item.Id);
             }
         }
 
