@@ -103,6 +103,7 @@
     <Compile Include="Models\StaffAndUsers\Staff\Staff.cs" />
     <Compile Include="Models\StaffAndUsers\Students\Student.cs" />
     <Compile Include="Models\StaffAndUsers\Students\StudentsBase.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\ViewedPresentationsOperations.cs" />
     <Compile Include="Models\StaffAndUsers\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

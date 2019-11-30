@@ -10,8 +10,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 /// </summary>
     public static class FavoritePresentationsOperations
     {
-        //private List<Presentation> _favoritePresentations = new List<Presentation>();
-
         /// <summary>
         /// Get all Presentations from the Favorite Presentations list, returns IEnumerable
         /// </summary>

@@ -14,6 +14,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 
         public List<Presentation> FavoritePresentations { get; set; }
 
-        public IEnumerable<Presentation> ViewedPresentations { get; set; }
+        public List<Presentation> ViewedPresentations { get; set; }
     }
 }
