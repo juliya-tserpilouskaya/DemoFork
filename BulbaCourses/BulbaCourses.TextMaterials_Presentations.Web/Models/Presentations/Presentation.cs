@@ -16,6 +16,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 
         public bool IsAccessible { get; set; }
 
+        public bool IsChanged { get; set; }
+
         public string TeacherId { get; set; }
 
         public string CourseId { get; set; }
