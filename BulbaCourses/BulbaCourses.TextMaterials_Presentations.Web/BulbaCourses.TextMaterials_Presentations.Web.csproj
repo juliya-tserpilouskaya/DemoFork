@@ -95,7 +95,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Presentations\Course.cs" />
-    <Compile Include="Models\Presentations\FavoritePresentations.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\FavoritePresentationsOperations.cs" />
     <Compile Include="Models\Presentations\Presentation.cs" />
     <Compile Include="Models\Presentations\PresentationsBase.cs" />
     <Compile Include="Models\StaffAndUsers\Students\Feedback.cs" />

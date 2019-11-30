@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 {/// <summary>
 /// The list of Favorite Presentations, GetAll, GetById, Add, DeletById methods
 /// </summary>
-    public class FavoritePresentations
+    public static class FavoritePresentationsOperations
     {
-        private List<Presentation> _favoritePresentations = new List<Presentation>();
+        //private List<Presentation> _favoritePresentations = new List<Presentation>();
 
         /// <summary>
         /// Get all Presentations from the Favorite Presentations list, returns IEnumerable
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Presentation> GetAll()
+        public static IEnumerable<Presentation> GetAll(Student student)
         {
-            return _favoritePresentations.AsReadOnly();
+            return student.FavoritePresentations.AsReadOnly();
         }
 
         /// <summary>
@@ -25,9 +26,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Presentation GetById(string id)
+        public static Presentation GetById(Student student, string id)
         {
-            return _favoritePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return student.FavoritePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -35,10 +36,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// </summary>
         /// <param name="presentation"></param>
         /// <returns></returns>
-        public Presentation Add(Presentation presentation)
+        public static Presentation Add(Student student, Presentation presentation)
         {
             presentation.Id = Guid.NewGuid().ToString();
-            _favoritePresentations.Add(presentation);
+            student.FavoritePresentations.Add(presentation);
             return presentation;
         }
 
@@ -47,13 +48,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool DeleteById(string id)
+        public static bool DeleteById(Student student, string id)
         {
-            Presentation deletedPresentation = _favoritePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            Presentation deletedPresentation = student.FavoritePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedPresentation != null)
             {
-                _favoritePresentations.Remove(deletedPresentation);
+                student.FavoritePresentations.Remove(deletedPresentation);
             }
             else
             {

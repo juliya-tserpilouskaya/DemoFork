@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,19 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
                                                    .RuleFor(x => x.CourseId, y => y.Random.Byte(0, 250).ToString());
 
         List<Presentation> _fakePresentations;
-        FavoritePresentations _favorite;
+        Student _student;
 
         [SetUp]
         public void ListGenerator() //if everyone test is failed - check the Add method
         {
-            _favorite = new FavoritePresentations();
+            _student = new Student();
+            _student.FavoritePresentations = new List<Presentation>();
 
             _fakePresentations = _faker.Generate(5);
 
             foreach (var item in _fakePresentations)
             {
-                _favorite.Add(item);
+                FavoritePresentationsOperations.Add(_student, item);
             }
         }
 
@@ -41,27 +43,27 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
 
             foreach (var item in presentations)
             {
-                _favorite.Add(item).Should().BeEquivalentTo(item);
+                FavoritePresentationsOperations.Add(_student, item).Should().BeEquivalentTo(item);
             }
         }
 
         [Test]
         public void GetAll_Test()
         {
-            _favorite.GetAll().Should().BeEquivalentTo(_fakePresentations);
+            FavoritePresentationsOperations.GetAll(_student).Should().BeEquivalentTo(_fakePresentations);
         }
 
         [Test]
         public void GetById_Test()
         {
-            _favorite.GetById(_fakePresentations.First<Presentation>().Id).Should().BeEquivalentTo(_fakePresentations.First<Presentation>());
+            FavoritePresentationsOperations.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeEquivalentTo(_fakePresentations.First<Presentation>());
         }
 
         [Test]
         public void DeleteById_Test()
         {
-            _favorite.DeleteById(_fakePresentations.First<Presentation>().Id).Should().BeTrue();
-            _favorite.GetById(_fakePresentations.First<Presentation>().Id).Should().BeNull();
+            FavoritePresentationsOperations.DeleteById(_student, _fakePresentations.First<Presentation>().Id).Should().BeTrue();
+            FavoritePresentationsOperations.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeNull();
         }
     }
 }
