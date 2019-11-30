@@ -7,5 +7,14 @@ namespace BulbaCourses.GlobalSearch.Web.Models
 {
     public class LearningCourse
     {
+        public string Id { get; set; }
+        public List<LearningCourseItem> Items { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public double Cost { get; set; }
+        public string Complexity { get; set; }
+        public string Language { get; set; }
+        public int AuthorId { get; set; }
+        public string Description { get; set; }
     }
 }
