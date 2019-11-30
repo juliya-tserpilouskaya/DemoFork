@@ -88,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CourseBaseController.cs" />
+    <Compile Include="Controllers\CoursePresentationsOperationsController.cs" />
+    <Compile Include="Controllers\CourseTeachersOperationsController.cs" />
+    <Compile Include="Controllers\FavoritePresentationsOperationsController.cs" />
     <Compile Include="Controllers\PresentationsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
