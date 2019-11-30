@@ -13,6 +13,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <summary>
         /// Get all Presentations from the Favorite Presentations list, returns IEnumerable
         /// </summary>
+        /// <param name="student"></param>
         /// <returns></returns>
         public static IEnumerable<Presentation> GetAll(Student student)
         {
@@ -20,8 +21,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        ///  Get Presentation from the Favorite Presentations list by Id, returns Presentation
+        /// Get Presentation from the Favorite Presentations list by Id, returns Presentation
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static Presentation GetById(Student student, string id)
@@ -30,8 +32,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        ///  Add Presentation to the Favorite Presentations list, returns added Presentation
+        /// Add Presentation to the Favorite Presentations list, returns added Presentation
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="presentation"></param>
         /// <returns></returns>
         public static Presentation Add(Student student, Presentation presentation)
@@ -44,6 +47,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <summary>
         /// Delete by Id Presentation from the Favorite Presentations list, returns true if was deleted
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static bool DeleteById(Student student, string id)

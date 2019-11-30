@@ -6,7 +6,7 @@ using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 {/// <summary>
-/// Employee info
+/// Teacher info
 /// </summary>
     public class Teacher : User
     {

@@ -5,7 +5,9 @@ using System.Web;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
-{
+{/// <summary>
+/// Have id, name, Teachers and Presentations Lists
+/// </summary>
     public class Course
     {
         public string Id { get; set; }

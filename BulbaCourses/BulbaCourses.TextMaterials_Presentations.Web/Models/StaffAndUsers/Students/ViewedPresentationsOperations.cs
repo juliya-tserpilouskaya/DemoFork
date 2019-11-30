@@ -8,18 +8,20 @@ using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Students
 {
     public static class ViewedPresentationsOperations
-    {        /// <summary>
-             /// Get all Presentations from the Viewed Presentations list, returns IEnumerable
-             /// </summary>
-             /// <returns></returns>
+    {  /// <summary>
+       /// Get all Presentations from the Viewed Presentations list, returns IEnumerable
+       /// </summary>
+       /// <param name="student"></param>
+       /// <returns></returns>
         public static IEnumerable<Presentation> GetAll(Student student)
         {
             return student.ViewedPresentations.AsReadOnly();
         }
 
         /// <summary>
-        ///  Get Presentation from the Viewed Presentations list by Id, returns Presentation
+        /// Get Presentation from the Viewed Presentations list by Id, returns Presentation
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static Presentation GetById(Student student, string id)
@@ -28,8 +30,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Stud
         }
 
         /// <summary>
-        ///  Add Presentation to the Viewed Presentations list, returns added Presentation
+        /// Add Presentation to the Viewed Presentations list, returns added Presentation
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="presentation"></param>
         /// <returns></returns>
         public static Presentation Add(Student student, Presentation presentation)
@@ -42,6 +45,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Stud
         /// <summary>
         /// Delete by Id Presentation from the Viewed Presentations list, returns true if was deleted
         /// </summary>
+        /// <param name="student"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static bool DeleteById(Student student, string id)

@@ -12,7 +12,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         private static List<Student> _students = new List<Student>();
 
         /// <summary>
-        /// Get all Users from the list of Users, returns IEnumerable
+        /// Get all Students from the list of Students, returns IEnumerable
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<Student> GetAll()
@@ -21,7 +21,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         }
 
         /// <summary>
-        /// Get User from the list of Users by Id, returns User
+        /// Get Student from the list of Students by Id, returns Student
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -31,7 +31,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         }
 
         /// <summary>
-        /// Add User to the list of Users, returns added User
+        /// Add Student to the list of Students, returns added Student
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
@@ -43,7 +43,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         }
 
         /// <summary>
-        /// Find the User whis the same Id from the list of Users delete it and add new, returns added User
+        /// Find the Student whis the same Id from the list of Students delete it and add new, returns added Student
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
@@ -66,7 +66,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         }
 
         /// <summary>
-        /// Delete by Id User from the list of Users, returns true if was deleted
+        /// Delete by Id Student from the list of Students, returns true if was deleted
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

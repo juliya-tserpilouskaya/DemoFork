@@ -6,18 +6,20 @@ using System.Web;
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 {
     public class CoursePresentationsOperations
-    {        /// <summary>
-             /// Get all Presentations from the Course Presentations list, returns IEnumerable
-             /// </summary>
-             /// <returns></returns>
+    {   /// <summary>
+        /// Get all Presentations from the Course Presentations list, returns IEnumerable
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public static IEnumerable<Presentation> GetAll(Course course)
         {
             return course.CoursePresentations.AsReadOnly();
         }
 
         /// <summary>
-        ///  Get Presentation from the Course Presentations list by Id, returns Presentation
+        /// Get Presentation from the Course Presentations list by Id, returns Presentation
         /// </summary>
+        /// <param name="course"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static Presentation GetById(Course course, string id)
@@ -26,8 +28,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        ///  Add Presentation to the Course Presentations list, returns added Presentation
+        /// Add Presentation to the Course Presentations list, returns added Presentation
         /// </summary>
+        /// <param name="course"></param>
         /// <param name="presentation"></param>
         /// <returns></returns>
         public static Presentation Add(Course course, Presentation presentation)
@@ -40,6 +43,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <summary>
         /// Delete by Id Presentation from the Course Presentations list, returns true if was deleted
         /// </summary>
+        /// <param name="course"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         public static bool DeleteById(Course course, string id)

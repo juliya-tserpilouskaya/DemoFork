@@ -10,7 +10,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         private static List<Course> _courses = new List<Course>();
 
         /// <summary>
-        /// Get all Presentations from the all Presentations list, returns IEnumerable
+        /// Get all Courses from the all Courses list, returns IEnumerable
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<Course> GetAll()
@@ -19,7 +19,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        /// Get Presentation from the all Presentations list by Id, returns Presentation
+        /// Get Course by Id from the all Courses list, returns Course
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -29,9 +29,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        /// Add Presentation to the all Presentations list, returns added Presentation
+        /// Add Course in the all Courses list, returns added Course
         /// </summary>
-        /// <param name="presentation"></param>
+        /// <param name="course"></param>
         /// <returns></returns>
         public static Course Add(Course course)
         {
@@ -41,9 +41,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        /// Find the Presentation whis the same Id from the all Presentations list delete it and add new, returns added Presentation
+        /// Update Course in the all Courses list, returns updated Course or null if isn't course whis the same Id
         /// </summary>
-        /// <param name="presentation"></param>
+        /// <param name="course"></param>
         /// <returns></returns>
         public static Course Update(Course course)
         {
@@ -64,7 +64,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         }
 
         /// <summary>
-        /// Delete by Id Presentation from the all Presentations list, returns true if was deleted
+        /// Delete by Id Course from the all Courses list, returns true if was deleted
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
