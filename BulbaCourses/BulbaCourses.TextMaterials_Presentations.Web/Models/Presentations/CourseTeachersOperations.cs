@@ -13,7 +13,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
              /// <returns></returns>
         public static IEnumerable<Teacher> GetAll(Course course)
         {
-            return course.Teachers.AsReadOnly();
+            return course.CourseTeachers.AsReadOnly();
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <returns></returns>
         public static Teacher GetById(Course course, string id)
         {
-            return course.Teachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return course.CourseTeachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         public static Teacher Add(Course course, Teacher teacher)
         {
             teacher.Id = Guid.NewGuid().ToString();
-            course.Teachers.Add(teacher);
+            course.CourseTeachers.Add(teacher);
             return teacher;
         }
 
@@ -45,11 +45,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <returns></returns>
         public static bool DeleteById(Course course, string id)
         {
-            Teacher deletedTeacher = course.Teachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            Teacher deletedTeacher = course.CourseTeachers.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedTeacher != null)
             {
-                course.Teachers.Remove(deletedTeacher);
+                course.CourseTeachers.Remove(deletedTeacher);
             }
             else
             {

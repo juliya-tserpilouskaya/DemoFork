@@ -12,8 +12,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 
         public string Name { get; set; }
 
-        public List<Teacher> Teachers { get; set; }
+        public List<Teacher> CourseTeachers { get; set; }
 
-        public List<Presentation> Presentations { get; set; }
+        public List<Presentation> CoursePresentations { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
              /// <returns></returns>
         public static IEnumerable<Presentation> GetAll(Course course)
         {
-            return course.Presentations.AsReadOnly();
+            return course.CoursePresentations.AsReadOnly();
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <returns></returns>
         public static Presentation GetById(Course course, string id)
         {
-            return course.Presentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return course.CoursePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         public static Presentation Add(Course course, Presentation presentation)
         {
             presentation.Id = Guid.NewGuid().ToString();
-            course.Presentations.Add(presentation);
+            course.CoursePresentations.Add(presentation);
             return presentation;
         }
 
@@ -44,11 +44,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
         /// <returns></returns>
         public static bool DeleteById(Course course, string id)
         {
-            Presentation deletedPresentation = course.Presentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            Presentation deletedPresentation = course.CoursePresentations.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (deletedPresentation != null)
             {
-                course.Presentations.Remove(deletedPresentation);
+                course.CoursePresentations.Remove(deletedPresentation);
             }
             else
             {
