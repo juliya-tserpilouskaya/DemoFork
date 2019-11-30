@@ -5,7 +5,8 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class Podcast
+    public class Podcast : LearningCourseItem
     {
+        public string Duration { get; set; }
     }
 }

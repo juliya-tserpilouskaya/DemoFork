@@ -5,7 +5,8 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class Text
+    public class Text : LearningCourseItem
     {
+        public byte MinutesRead { get; set; }
     }
 }

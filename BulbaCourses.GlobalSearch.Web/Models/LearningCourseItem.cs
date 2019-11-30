@@ -5,7 +5,10 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class LearningCourseItem
+    public abstract class LearningCourseItem
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

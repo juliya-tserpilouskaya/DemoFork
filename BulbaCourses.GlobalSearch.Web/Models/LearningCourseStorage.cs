@@ -7,5 +7,6 @@ namespace BulbaCourses.GlobalSearch.Web.Models
 {
     public class LearningCourseStorage
     {
+
     }
 }

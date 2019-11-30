@@ -5,7 +5,8 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class Excercise
+    public class Excercise : LearningCourseItem
     {
+
     }
 }

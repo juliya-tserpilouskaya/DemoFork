@@ -5,7 +5,8 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class Test
+    public class Test : LearningCourseItem
     {
+        public byte NumberOfQuestions { get; set; }
     }
 }
