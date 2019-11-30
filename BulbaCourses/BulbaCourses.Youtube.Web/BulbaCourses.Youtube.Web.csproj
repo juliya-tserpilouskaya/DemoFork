@@ -93,11 +93,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\IRepository.cs" />
+    <Compile Include="Models\IRepository.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
-    <Compile Include="Controllers\VideoRepository.cs" />
-    <Compile Include="Controllers\VideoContext.cs" />
+    <Compile Include="Models\VideoRepository.cs" />
+    <Compile Include="Models\VideoContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
