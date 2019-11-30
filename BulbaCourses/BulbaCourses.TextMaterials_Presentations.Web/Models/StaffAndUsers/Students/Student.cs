@@ -13,5 +13,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
         public bool IsPaid { get; set; }
 
         public IEnumerable<FavoritePresentations> FavoritePresentations { get; set; }
+
+        public IEnumerable<Presentation> ViewedPresentations { get; set; }
     }
 }

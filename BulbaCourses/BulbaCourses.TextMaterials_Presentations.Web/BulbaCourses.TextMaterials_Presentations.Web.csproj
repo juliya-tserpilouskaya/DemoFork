@@ -98,11 +98,11 @@
     <Compile Include="Models\Presentations\FavoritePresentations.cs" />
     <Compile Include="Models\Presentations\Presentation.cs" />
     <Compile Include="Models\Presentations\PresentationsBase.cs" />
-    <Compile Include="Models\StaffAndUsers\Feedback.cs" />
-    <Compile Include="Models\StaffAndUsers\Teacher.cs" />
-    <Compile Include="Models\StaffAndUsers\Staff.cs" />
-    <Compile Include="Models\StaffAndUsers\Student.cs" />
-    <Compile Include="Models\StaffAndUsers\StudentsBase.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\Feedback.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\Teacher.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\Staff.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\Student.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsBase.cs" />
     <Compile Include="Models\StaffAndUsers\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
