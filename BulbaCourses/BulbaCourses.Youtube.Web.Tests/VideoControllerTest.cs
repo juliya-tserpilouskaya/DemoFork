@@ -10,6 +10,12 @@ using BulbaCourses.Youtube.Web.Models;
 using System.Web.Http;
 using System.Linq;
 using System.Collections.Generic;
+using BulbaCourses.Youtube.Web.Logic.Services;
+using BulbaCourses.Youtube.Web.DataAccess.Models;
+using Video = BulbaCourses.Youtube.Web.DataAccess.Models.Video;
+using Course = BulbaCourses.Youtube.Web.DataAccess.Models.Course;
+using CourseOwner = BulbaCourses.Youtube.Web.DataAccess.Models.CourseOwner;
+using Channel = BulbaCourses.Youtube.Web.DataAccess.Models.Channel;
 
 namespace BulbaCourses.Youtube.Web.Tests
 {
@@ -59,7 +65,7 @@ namespace BulbaCourses.Youtube.Web.Tests
         [Test]
         public void Test_GetById()
         {
-            var mock = new Mock<IRepository>();
+            var mock = new Mock<IVideoService>();
             mock.Setup(v => v.GetById(1)).Returns(videos.First());
 
             VideoController videoController = new VideoController(mock.Object);
@@ -70,7 +76,7 @@ namespace BulbaCourses.Youtube.Web.Tests
         [Test]
         public void Test_GetAll()
         {
-            var mock = new Mock<IRepository>();
+            var mock = new Mock<IVideoService>();
             mock.Setup(v => v.GetAll()).Returns((IEnumerable<Video>)videos.AsReadOnly());
 
             VideoController videoController = new VideoController(mock.Object);

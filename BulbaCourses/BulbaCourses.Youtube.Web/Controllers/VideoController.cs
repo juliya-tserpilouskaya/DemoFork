@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BulbaCourses.Youtube.Web.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,15 +10,15 @@ namespace BulbaCourses.Youtube.Web.Controllers
     [RoutePrefix("api/videos")]
     public class VideoController : ApiController
     {
-        IRepository _repo;
-        public VideoController(IRepository repository)
+        IVideoService _videoService;
+        public VideoController(IVideoService repository)
         {
-            _repo = repository;
+            _videoService = repository;
         }
 
         public VideoController()
         {
-            _repo = new VideoRepository();
+            _videoService = new VideoService();
         }
 
         [HttpGet,Route("{id}")]
@@ -27,7 +28,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
                 return BadRequest();
             try
             {
-                var resultVideo = _repo.GetById(id);
+                var resultVideo = _videoService.GetById(id);
                 return resultVideo == null ? NotFound() : (IHttpActionResult)Ok(resultVideo);
             }
             catch (InvalidOperationException ex)
@@ -40,7 +41,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         {
             try
             {
-                var resultVideo = _repo.GetAll();
+                var resultVideo = _videoService.GetAll();
                 return resultVideo == null ? NotFound() : (IHttpActionResult)Ok(resultVideo);
             }
             catch (InvalidOperationException ex)
@@ -48,12 +49,6 @@ namespace BulbaCourses.Youtube.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-
-
-        protected override void Dispose(bool disposing)
-        {
-            _repo.Dispose();
-            base.Dispose(disposing);
-        }
+      
     }
 }
