@@ -25,7 +25,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {

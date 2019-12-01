@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Swashbuckle.Swagger.Annotations;
 using System.Web.Http;
 using Presentations.Logic.Models.Presentations;
 using Presentations.Logic.Models.Presentations.InterfacesPresentations;
@@ -26,6 +27,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentations doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Presentation))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
             try
@@ -45,6 +49,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation found", typeof(Presentation))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -69,6 +77,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="presentation"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation added", typeof(Presentation))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Create([FromBody]Presentation presentation)
         {
             if (presentation is null)
@@ -93,6 +105,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="presentation"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation updated", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Update([FromBody]Presentation presentation)
         {
             if (presentation is null)
@@ -117,6 +133,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))

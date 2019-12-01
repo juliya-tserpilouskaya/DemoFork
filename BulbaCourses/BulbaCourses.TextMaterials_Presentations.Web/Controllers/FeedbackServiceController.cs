@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Swashbuckle.Swagger.Annotations;
 using System.Net.Http;
 using System.Web.Http;
 using Presentations.Logic.Models.Presentations.InterfacesPresentations;
@@ -21,6 +22,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -49,6 +54,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         [HttpGet, Route("{idPresentation}Presentation/{idFeedback}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback found", typeof(Feedback))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string idPresentation, string idFeedback)
         {
             if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)
@@ -78,6 +87,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         [HttpPost, Route("{idPresentation}Presentation/{idFeedback}/{idUser}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback added", typeof(Feedback))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Create(string idPresentation, string idFeedback, string idUser)
         {
             if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)
@@ -110,6 +123,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         [HttpDelete, Route("{idPresentation}Presentation/{idFeedback}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback deleted", typeof(Feedback))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string idPresentation, string idFeedback)
         {
             if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)

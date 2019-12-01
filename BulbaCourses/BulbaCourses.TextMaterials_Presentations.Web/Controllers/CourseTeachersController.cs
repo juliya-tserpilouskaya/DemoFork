@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Swashbuckle.Swagger.Annotations;
 using Presentations.Logic.Models.Course;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Staff;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
@@ -27,6 +28,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Teachers found", typeof(IEnumerable<Teacher>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -61,6 +66,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="idTeacher"></param>
         /// <returns></returns>
         [HttpGet, Route("{idCourse}Course/{idTeacher}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course or Teacher doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Teacher found", typeof(Teacher))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string idCourse, string idTeacher)
         {
             if (string.IsNullOrEmpty(idCourse) || !Guid.TryParse(idCourse, out var _)
@@ -96,6 +105,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="idTeacher"></param>
         /// <returns></returns>
         [HttpPost, Route("{idCourse}Course/{idTeacher}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course or Teacher doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Teacher added", typeof(Teacher))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Create(string idCourse, string idTeacher)
         {
             if (string.IsNullOrEmpty(idCourse) || !Guid.TryParse(idCourse, out var _)
@@ -132,6 +145,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="idTeacher"></param>
         /// <returns></returns>
         [HttpDelete, Route("{idCourse}Course/{idTeacher}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course or Teacher doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Teacher deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string idCourse, string idTeacher)
         {
             if (string.IsNullOrEmpty(idCourse) || !Guid.TryParse(idCourse, out var _)
