@@ -34,6 +34,12 @@ namespace BulbaCourses.GlobalSearch.Web.Models
             return _queries.AsReadOnly();
         }
 
+        public static SearchQuery GetById(string id)
+        {
+            return _queries.SingleOrDefault(q => q.Id.Equals(id,
+                StringComparison.OrdinalIgnoreCase));
+        }
+
         public static SearchQuery Add(SearchQuery query)
         {
             query.Id = Guid.NewGuid().ToString();
