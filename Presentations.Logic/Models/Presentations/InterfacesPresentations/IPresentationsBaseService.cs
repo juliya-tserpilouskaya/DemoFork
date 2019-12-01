@@ -6,5 +6,14 @@ namespace Presentations.Logic.Models.Presentations.InterfacesPresentations
 {
     interface IPresentationsBaseService
     {
+        IEnumerable<Presentation> GetAll();
+
+        Presentation GetById(string id);
+
+        Presentation Add(Presentation presentation);
+
+        Presentation Update(Presentation presentation);
+
+        bool DeleteById(string id);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Presentations.Logic.Models.Presentations.InterfacesPresentations;
 
 namespace Presentations.Logic.Models.Presentations
 {
@@ -10,13 +11,13 @@ namespace Presentations.Logic.Models.Presentations
     /// The list of Feedbacks, GetAll, GetById, Add, DeletById methods
     /// </summary>
     /// 
-    public class FeedbackOperations
+    public class FeedbackService : IFeedbackService
     {
         /// <summary>
         /// Get all Feedbacks from the Presentation, returns IEnumerable
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Feedback> GetAll(Presentation presentation)
+        public IEnumerable<Feedback> GetAll(Presentation presentation)
         {
             return presentation.Feedback.AsReadOnly();
         }
@@ -26,7 +27,7 @@ namespace Presentations.Logic.Models.Presentations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Feedback GetById(Presentation presentation, string id)
+        public Feedback GetById(Presentation presentation, string id)
         {
             return presentation.Feedback.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
@@ -35,7 +36,7 @@ namespace Presentations.Logic.Models.Presentations
         ///  Add Feedback to the Presentations Feedbacks list, returns added Feedback
         /// </summary>
         /// <returns></returns>
-        public static Feedback Add(Feedback feedback, Presentation presentation, User user)
+        public Feedback Add(Feedback feedback, Presentation presentation, User user)
         {
             feedback.Id = Guid.NewGuid().ToString();
             feedback.User = user;
@@ -48,7 +49,7 @@ namespace Presentations.Logic.Models.Presentations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool DeleteById(Presentation presentation, string id)
+        public bool DeleteById(Presentation presentation, string id)
         {
             Feedback deletedPresentation = presentation.Feedback.SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
@@ -63,7 +64,5 @@ namespace Presentations.Logic.Models.Presentations
 
             return true;
         }
-
-
     }
 }

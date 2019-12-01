@@ -124,22 +124,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Course\Course.cs" />
-    <Compile Include="Models\Course\CourseBase.cs" />
-    <Compile Include="Models\Course\CoursePresentationsOperations.cs" />
-    <Compile Include="Models\Course\CourseTeachersOperations.cs" />
-    <Compile Include="Models\Presentations\FeedbackOperations.cs" />
-    <Compile Include="Models\StaffAndUsers\Staff\ChangedPresentationsOperations.cs" />
-    <Compile Include="Models\StaffAndUsers\Students\FavoritePresentationsOperations.cs" />
-    <Compile Include="Models\Presentations\Presentation.cs" />
-    <Compile Include="Models\Presentations\PresentationsBase.cs" />
-    <Compile Include="Models\Presentations\Feedback.cs" />
-    <Compile Include="Models\StaffAndUsers\Staff\Teacher.cs" />
-    <Compile Include="Models\StaffAndUsers\Staff\Staff.cs" />
-    <Compile Include="Models\StaffAndUsers\Students\Student.cs" />
-    <Compile Include="Models\StaffAndUsers\Students\StudentsBase.cs" />
-    <Compile Include="Models\StaffAndUsers\Students\ViewedPresentationsOperations.cs" />
-    <Compile Include="Models\StaffAndUsers\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
