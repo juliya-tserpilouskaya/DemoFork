@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
+using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 
-namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
+namespace Presentations.Logic.Models.Course
 {/// <summary>
 /// Have id, name, Teachers and Presentations Lists
 /// </summary>
