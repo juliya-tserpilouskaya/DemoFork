@@ -98,6 +98,8 @@
     <Compile Include="Models\LearningCourseItem.cs" />
     <Compile Include="Models\LearningCourseStorage.cs" />
     <Compile Include="Models\Podcast.cs" />
+    <Compile Include="Models\SearchQuery.cs" />
+    <Compile Include="Models\SearchQueryStorage.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\Text.cs" />
     <Compile Include="Models\Video.cs" />
