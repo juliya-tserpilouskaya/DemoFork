@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Presentations.Logic.Models.Presentations;
+using Presentations.Logic.Models.Presentations.InterfacesPresentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {/// <summary>
@@ -13,6 +14,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
     [RoutePrefix("api/presentations")]
     public class PresentationsController : ApiController
     {
+        private readonly IPresentationsBaseService _presentationsBase;
+
+        public PresentationsController(IPresentationsBaseService presentationsBase)
+        {
+            _presentationsBase = presentationsBase;
+        }
+
         /// <summary>
         /// Get all Presentations from the all Presentations list
         /// </summary>
@@ -22,7 +30,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         {
             try
             {
-                var result = PresentationsBase.GetAll();
+                var result = _presentationsBase.GetAll();
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -46,7 +54,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = PresentationsBase.GetById(id);
+                var result = _presentationsBase.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -70,7 +78,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = PresentationsBase.Add(presentation);
+                var result = _presentationsBase.Add(presentation);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -94,7 +102,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = PresentationsBase.Update(presentation);
+                var result = _presentationsBase.Update(presentation);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -118,7 +126,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = PresentationsBase.DeleteById(id);
+                var result = _presentationsBase.DeleteById(id);
                 return (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

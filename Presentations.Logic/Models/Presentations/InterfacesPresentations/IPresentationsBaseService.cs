@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Presentations.Logic.Models.Presentations.InterfacesPresentations
 {
-    interface IPresentationsBaseService
+    public interface IPresentationsBaseService
     {
         IEnumerable<Presentation> GetAll();
 

@@ -5,7 +5,7 @@ using Presentations.Logic.Models.Course;
 
 namespace Presentations.Logic.Models.Course.InterfacesCourse
 {
-    interface ICourseBaseService
+    public interface ICourseBaseService
     {
         IEnumerable<Course> GetAll();
 
