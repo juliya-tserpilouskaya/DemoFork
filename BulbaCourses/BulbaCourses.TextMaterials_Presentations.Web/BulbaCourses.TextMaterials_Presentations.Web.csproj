@@ -116,7 +116,7 @@
     <Compile Include="Controllers\CoursePresentationsController.cs" />
     <Compile Include="Controllers\CourseTeachersController.cs" />
     <Compile Include="Controllers\FavoritePresentationsOperationsController.cs" />
-    <Compile Include="Controllers\FeedbackOperationsController.cs" />
+    <Compile Include="Controllers\FeedbackServiceController.cs" />
     <Compile Include="Controllers\PresentationsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />

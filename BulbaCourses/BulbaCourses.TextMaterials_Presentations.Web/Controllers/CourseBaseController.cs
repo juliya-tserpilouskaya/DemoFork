@@ -74,6 +74,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="course"></param>
         /// <returns></returns>
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Create([FromBody]Course course)
         {
             if (course is null)
@@ -98,6 +102,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="course"></param>
         /// <returns></returns>
         [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Update([FromBody]Course course)
         {
             if (course is null)
@@ -122,6 +130,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -132,7 +144,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             try
             {
                 var result = _courseBase.DeleteById(id);
-                return (IHttpActionResult)Ok(result);
+                return result == false ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {
