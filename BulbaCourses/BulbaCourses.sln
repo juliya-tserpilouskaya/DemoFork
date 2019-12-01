@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMaterials_Presentations_Tests", "TextMaterials_Presentations_Tests\TextMaterials_Presentations_Tests.csproj", "{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentations.Logic", "..\Presentations.Logic\Presentations.Logic.csproj", "{20313166-61E2-463C-B344-F1FB683143BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20313166-61E2-463C-B344-F1FB683143BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20313166-61E2-463C-B344-F1FB683143BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20313166-61E2-463C-B344-F1FB683143BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20313166-61E2-463C-B344-F1FB683143BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
