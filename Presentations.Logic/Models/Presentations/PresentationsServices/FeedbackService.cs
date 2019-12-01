@@ -5,13 +5,13 @@ using System.Linq;
 using System.Web;
 using Presentations.Logic.Models.Presentations.InterfacesPresentations;
 
-namespace Presentations.Logic.Models.Presentations
-{
+namespace Presentations.Logic.Models.Presentations.PresentationsServices
+{ 
     /// <summary>
     /// The list of Feedbacks, GetAll, GetById, Add, DeletById methods
     /// </summary>
     /// 
-    public class FeedbackService : IFeedbackService
+public class FeedbackService : IFeedbackService
     {
         /// <summary>
         /// Get all Feedbacks from the Presentation, returns IEnumerable

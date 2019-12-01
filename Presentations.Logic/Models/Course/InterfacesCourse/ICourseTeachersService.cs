@@ -5,7 +5,7 @@ using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
 namespace Presentations.Logic.Models.Course.InterfacesCourse
 {
-    interface ICourseTeachersService
+    public interface ICourseTeachersService
     {
         IEnumerable<Teacher> GetAll(Course course);
 

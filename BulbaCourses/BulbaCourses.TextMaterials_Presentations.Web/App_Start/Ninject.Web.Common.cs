@@ -11,6 +11,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
+    using Presentations.Logic;
 
     public static class NinjectWebCommon 
     {
@@ -61,6 +62,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Load<LogicModule>();
+        }
     }
 }

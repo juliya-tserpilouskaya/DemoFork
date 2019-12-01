@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Swashbuckle.Swagger.Annotations;
 using System.Web.Http;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Course;
+using Presentations.Logic.Models.Presentations;
+using Presentations.Logic.Models.Course.InterfacesCourse;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
     [RoutePrefix("api/coursePresentations")]
-    public class CoursePresentationsOperationsController : ApiController
+    public class CoursePresentationsController : ApiController
     {
+        private readonly ICoursePresentationsService _coursePresentationsService;
+
+        public CoursePresentationsController(ICoursePresentationsService coursePresentations)
+        {
+            _coursePresentationsService = coursePresentations;
+        }
+
         /// <summary>
         /// Get all Presentations from the Course with the same Id
         /// </summary>
@@ -30,7 +40,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null)
                 {
-                    var result = CoursePresentationsOperations.GetAll(course);
+                    var result = _coursePresentationsService.GetAll(course);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -65,7 +75,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null)
                 {
-                    var result = CoursePresentationsOperations.GetById(course, idPresentation);
+                    var result = _coursePresentationsService.GetById(course, idPresentation);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -101,7 +111,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null && presentationToAdd != null)
                 {
-                    var result = CoursePresentationsOperations.Add(course, presentationToAdd);
+                    var result = _coursePresentationsService.Add(course, presentationToAdd);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -137,7 +147,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null && presentationToDelete != null)
                 {
-                    var result = CoursePresentationsOperations.DeleteById(course, presentationToDelete.Id);
+                    var result = _coursePresentationsService.DeleteById(course, presentationToDelete.Id);
                     return (IHttpActionResult)Ok(result);
                 }
                 else

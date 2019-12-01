@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
+using Presentations.Logic.Models.Presentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {

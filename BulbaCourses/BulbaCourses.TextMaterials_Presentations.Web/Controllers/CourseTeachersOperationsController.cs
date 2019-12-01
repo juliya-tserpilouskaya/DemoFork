@@ -4,19 +4,28 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Course;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Staff;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
+using Presentations.Logic.Models.Course.InterfacesCourse;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
     [RoutePrefix("api/courseTeachers")]
-    public class CourseTeachersOperationsController : ApiController
-    {        /// <summary>
-             /// Get all Teachers from the Course with the same Id
-             /// </summary>
-             /// <param name="id"></param>
-             /// <returns></returns>
+    public class CourseTeachersController : ApiController
+    {
+        private readonly ICourseTeachersService _courseTeachers;
+
+        public CourseTeachersController(ICourseTeachersService courseTeachers)
+        {
+            _courseTeachers = courseTeachers;
+        }
+
+        /// <summary>
+        /// Get all Teachers from the Course with the same Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         public IHttpActionResult GetAll(string id)
         {
@@ -31,7 +40,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null)
                 {
-                    var result = CourseTeachersOperations.GetAll(course);
+                    var result = _courseTeachers.GetAll(course);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -66,7 +75,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null)
                 {
-                    var result = CourseTeachersOperations.GetById(course, idTeacher);
+                    var result = _courseTeachers.GetById(course, idTeacher);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -102,7 +111,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null && teacherToAdd != null)
                 {
-                    var result = CourseTeachersOperations.Add(course, teacherToAdd);
+                    var result = _courseTeachers.Add(course, teacherToAdd);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -138,7 +147,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (course != null && teacherToDelete != null)
                 {
-                    var result = CourseTeachersOperations.DeleteById(course, teacherToDelete.Id);
+                    var result = _courseTeachers.DeleteById(course, teacherToDelete.Id);
                     return (IHttpActionResult)Ok(result);
                 }
                 else

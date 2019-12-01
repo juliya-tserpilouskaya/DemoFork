@@ -5,7 +5,7 @@ using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
 namespace Presentations.Logic.Models.Presentations.InterfacesPresentations
 {
-    interface IFeedbackService
+    public interface IFeedbackService
     {
         IEnumerable<Feedback> GetAll(Presentation presentation);
 

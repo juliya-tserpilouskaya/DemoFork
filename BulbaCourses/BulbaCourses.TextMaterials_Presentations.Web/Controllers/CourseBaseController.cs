@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Course;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
