@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BulbaCourses.GlobalSearch.Web.Models;
+using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -12,6 +13,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class LearningCourseController : ApiController
     {
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "The course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "The course is found", typeof(LearningCourse))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -29,6 +34,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
         [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         public IHttpActionResult GetAll()
         {
             var result = LearningCourseStorage.GetAllCourses();
@@ -36,6 +43,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("category/{domain}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid domain")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses in that category")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetByCategory(string domain)
         {
             if (string.IsNullOrEmpty(domain))
@@ -54,6 +65,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("author/{id:int}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid author id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses of author found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses of author are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetByAuthor(int id)
         {
             if (id <= 0)
@@ -72,6 +87,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("{id}/items")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "The course is not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Items of the course are found", typeof(IEnumerable<LearningCourseItem>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetItems(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -90,6 +109,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("complexity/{level}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid complexity level parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses with complexity level are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetByComplexity(string level)
         {
             if (string.IsNullOrEmpty(level))
@@ -108,6 +131,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("language/{lang}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid language parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses in specified language are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetByLanguage(string lang)
         {
             if (string.IsNullOrEmpty(lang))
@@ -126,6 +153,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("search/{query}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult Search(string query)
         {
             if (string.IsNullOrEmpty(query))
