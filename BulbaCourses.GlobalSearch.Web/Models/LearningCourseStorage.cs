@@ -139,5 +139,9 @@ namespace BulbaCourses.GlobalSearch.Web.Models
             return _courses.Where(course => course.Language.Contains(complexity));
         }
 
+        public static IEnumerable<LearningCourse> GetCourseByQuery(string query)
+        {
+            return _courses.Where(course => course.Description.ToLower().Contains(query.ToLower()));
+        }
     }
 }
