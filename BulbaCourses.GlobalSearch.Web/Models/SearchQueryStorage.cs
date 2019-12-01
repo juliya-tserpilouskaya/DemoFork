@@ -47,7 +47,7 @@ namespace BulbaCourses.GlobalSearch.Web.Models
             _queries.Remove(query);
         }
 
-        public static void RemoveAll(string id)
+        public static void RemoveAll()
         {
             _queries.Clear();
         }
