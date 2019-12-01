@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 
-namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
+namespace Presentations.Logic.Models.Presentations
 {   /// <summary>
     /// Presentation info
     /// </summary>

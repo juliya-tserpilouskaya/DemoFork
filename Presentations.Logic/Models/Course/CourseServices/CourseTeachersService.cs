@@ -5,7 +5,7 @@ using System.Web;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
 using Presentations.Logic.Models.Course.InterfacesCourse;
 
-namespace Presentations.Logic.Models.Course
+namespace Presentations.Logic.Models.Course.CourseServices
 {
     public class CourseTeachersService : ICourseTeachersService
     {   /// <summary>

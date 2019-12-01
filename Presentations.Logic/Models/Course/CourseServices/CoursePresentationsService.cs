@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Presentations;
 using Presentations.Logic.Models.Course.InterfacesCourse;
 
-namespace Presentations.Logic.Models.Course
+namespace Presentations.Logic.Models.Course.CourseServices
 {
     public class CoursePresentationsService : ICoursePresentationsService
     {   /// <summary>

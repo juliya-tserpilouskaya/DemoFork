@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Presentations;
 
 namespace Presentations.Logic.Models.Course.InterfacesCourse
 {

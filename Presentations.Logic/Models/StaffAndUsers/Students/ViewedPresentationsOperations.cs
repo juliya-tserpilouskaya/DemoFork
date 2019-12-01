@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+using Presentations.Logic.Models.Presentations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Students
 {

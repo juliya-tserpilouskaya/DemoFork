@@ -1,4 +1,4 @@
-﻿using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
+﻿using Presentations.Logic.Models.Presentations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

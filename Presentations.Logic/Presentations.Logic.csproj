@@ -8,4 +8,9 @@
     <PackageReference Include="Ninject" Version="3.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Presentations\InterfacesPresentations\" />
+    <Folder Include="Models\Presentations\PresentationsServices\" />
+  </ItemGroup>
+
 </Project>
