@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
+namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Staff
 {/// <summary>
 /// The list of Stuff, static, CRUD operations
 /// </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
              /// </summary>
              /// <returns></returns>
         [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
             try
@@ -34,6 +38,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))

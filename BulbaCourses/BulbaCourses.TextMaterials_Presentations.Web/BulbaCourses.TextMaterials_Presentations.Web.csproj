@@ -111,24 +111,29 @@
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ChangedPresentationsOperationsController.cs" />
     <Compile Include="Controllers\CourseBaseController.cs" />
     <Compile Include="Controllers\CoursePresentationsOperationsController.cs" />
     <Compile Include="Controllers\CourseTeachersOperationsController.cs" />
     <Compile Include="Controllers\FavoritePresentationsOperationsController.cs" />
+    <Compile Include="Controllers\FeedbackOperationsController.cs" />
     <Compile Include="Controllers\PresentationsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\ViewedPresentationsOperationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Presentations\Course.cs" />
-    <Compile Include="Models\Presentations\CourseBase.cs" />
-    <Compile Include="Models\Presentations\CoursePresentationsOperations.cs" />
-    <Compile Include="Models\Presentations\CourseTeachersOperations.cs" />
+    <Compile Include="Models\Course\Course.cs" />
+    <Compile Include="Models\Course\CourseBase.cs" />
+    <Compile Include="Models\Course\CoursePresentationsOperations.cs" />
+    <Compile Include="Models\Course\CourseTeachersOperations.cs" />
+    <Compile Include="Models\Presentations\FeedbackOperations.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\ChangedPresentationsOperations.cs" />
     <Compile Include="Models\StaffAndUsers\Students\FavoritePresentationsOperations.cs" />
     <Compile Include="Models\Presentations\Presentation.cs" />
     <Compile Include="Models\Presentations\PresentationsBase.cs" />
-    <Compile Include="Models\StaffAndUsers\Students\Feedback.cs" />
+    <Compile Include="Models\Presentations\Feedback.cs" />
     <Compile Include="Models\StaffAndUsers\Staff\Teacher.cs" />
     <Compile Include="Models\StaffAndUsers\Staff\Staff.cs" />
     <Compile Include="Models\StaffAndUsers\Students\Student.cs" />

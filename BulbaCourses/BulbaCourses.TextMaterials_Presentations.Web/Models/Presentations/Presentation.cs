@@ -22,6 +22,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations
 
         public string CourseId { get; set; }
 
-        public IEnumerable<Feedback> Feedback { get; set; }
+        public List<Feedback> Feedback { get; set; }
     }
 }

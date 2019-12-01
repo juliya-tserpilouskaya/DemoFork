@@ -10,6 +10,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers
 /// </summary>
     public class Teacher : User
     {
-        public IEnumerable<Presentation> ChangedPresentatons { get; set; }
+        public List<Presentation> ChangedPresentatons { get; set; }
     }
 }
