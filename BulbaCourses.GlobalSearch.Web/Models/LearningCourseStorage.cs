@@ -101,47 +101,85 @@ namespace BulbaCourses.GlobalSearch.Web.Models
                 AuthorId = 2,
             },
         };
+        /// <summary>
+        /// Get all courses from the storage
+        /// </summary>
+        /// <returns>Readonly collection of courses</returns>
         public static IEnumerable<LearningCourse> GetAllCourses()
         {
             return _courses.AsReadOnly();
         }
 
+        /// <summary>
+        /// Get specific course from the storage by id
+        /// </summary>
+        /// <param name="id">Guid of specific course</param>
+        /// <returns>Specific course</returns>
         public static LearningCourse GetById(string id)
         {
             return _courses.SingleOrDefault(c => c.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase));
         }
 
+        /// <summary>
+        /// Get courses from the storage by category
+        /// </summary>
+        /// <param name="category">Category</param>
+        /// <returns>Readonly collection of courses</returns>
         public static IEnumerable<LearningCourse> GetByCategory(string category)
         {
-            return _courses.Where(course => course.Category.Contains(category));
+            return _courses.AsReadOnly().Where(course => course.Category.Contains(category));
         }
 
+        /// <summary>
+        /// Get courses from the storage by author
+        /// </summary>
+        /// <param name="id">Author id</param>
+        /// <returns>Readonly collection of courses</returns>
         public static IEnumerable<LearningCourse> GetByAuthorId(int id)
         {
-            return _courses.Where(course => course.AuthorId == id);
+            return _courses.AsReadOnly().Where(course => course.AuthorId == id);
         }
 
+        /// <summary>
+        /// Get learning items of specific course
+        /// </summary>
+        /// <param name="id">Guid of specific course</param>
+        /// <returns>Readonly collection of learning items</returns>
         public static IEnumerable<LearningCourseItem> GetLearningItemsByCourseId(string id)
         {
-            return _courses.SingleOrDefault(c => c.Id.Equals(id,
+            return _courses.AsReadOnly().SingleOrDefault(c => c.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase)).Items;
         }
 
+        /// <summary>
+        /// Get courses from the storage by complexity
+        /// </summary>
+        /// <param name="complexity">Complexity level</param>
+        /// <returns>Readonly collection of courses</returns>
         public static IEnumerable<LearningCourse> GetCourseByComplexity(string complexity)
         {
-            return _courses.Where(course => course.Complexity.Contains(complexity));
+            return _courses.AsReadOnly().Where(course => course.Complexity.Contains(complexity));
         }
 
-
-        public static IEnumerable<LearningCourse> GetCourseByLanguage(string complexity)
+        /// <summary>
+        /// Get courses from the storage by language
+        /// </summary>
+        /// <param name="lang">Language</param>
+        /// <returns>Readonly collection of courses</returns>
+        public static IEnumerable<LearningCourse> GetCourseByLanguage(string lang)
         {
-            return _courses.Where(course => course.Language.Contains(complexity));
+            return _courses.AsReadOnly().Where(course => course.Language.Contains(lang));
         }
 
+        /// <summary>
+        /// Get courses from the storage by search query
+        /// </summary>
+        /// <param name="query">Search query</param>
+        /// <returns>Readonly collection of courses</returns>
         public static IEnumerable<LearningCourse> GetCourseByQuery(string query)
         {
-            return _courses.Where(course => course.Description.ToLower().Contains(query.ToLower()));
+            return _courses.AsReadOnly().Where(course => course.Description.ToLower().Contains(query.ToLower()));
         }
     }
 }
