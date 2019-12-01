@@ -104,6 +104,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Enums\Category.cs" />
+    <Compile Include="Models\Enums\Complexity.cs" />
+    <Compile Include="Models\Enums\Section.cs" />
+    <Compile Include="Models\Enums\SortingType.cs" />
     <Compile Include="Models\Excercise.cs" />
     <Compile Include="Models\LearningCourse.cs" />
     <Compile Include="Models\LearningCourseItem.cs" />
