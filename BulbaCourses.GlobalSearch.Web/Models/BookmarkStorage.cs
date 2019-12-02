@@ -36,7 +36,7 @@ namespace BulbaCourses.GlobalSearch.Web.Models
         /// <returns>ID bookmark</returns>
         public static Bookmark GetById(string id)
         {
-            return _bookmarks.SingleOrDefault(bookmark => bookmark.Id.Equals(id, StringComparison.OrdinalIgnoreCase)); 
+            return _bookmarks.SingleOrDefault(bookmark => bookmark.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace BulbaCourses.GlobalSearch.Web.Models
         /// <returns>Added bookmark</returns>
         public static Bookmark Add(Bookmark bookmark)
         {
-            bookmark.Id = Guid.NewGuid().ToString(); 
-            _bookmarks.Add(bookmark); 
+            bookmark.Id = Guid.NewGuid().ToString();
+            _bookmarks.Add(bookmark);
             return bookmark;
         }
 
@@ -79,5 +79,4 @@ namespace BulbaCourses.GlobalSearch.Web.Models
             _bookmarks.Clear();
         }
     }
-
 }
