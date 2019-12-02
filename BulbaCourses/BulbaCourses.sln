@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
@@ -54,6 +54,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web.Logic", "BulbaCourses.Youtube.Web.Logic\BulbaCourses.Youtube.Web.Logic.csproj", "{578FF0D7-D576-4C6B-863F-128B3836C0BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web.Tests", "BulbaCourses.Youtube.Web.Tests\BulbaCourses.Youtube.Web.Tests.csproj", "{ADEDAA35-C807-48CB-8A37-343C3B751112}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscountAggregator.Logic", "DiscountAggregator\DiscountAggregator.Logic\DiscountAggregator.Logic.csproj", "{C1BCBD49-D545-4E18-97B7-B345A471BFBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,10 +115,6 @@ Global
 		{624F93A8-CA36-44F1-B3F3-E2BB887CE784}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{624F93A8-CA36-44F1-B3F3-E2BB887CE784}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{624F93A8-CA36-44F1-B3F3-E2BB887CE784}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB66B559-66F7-4A2D-A665-5724C4BF7C47}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B9F7A0D-E6EF-4218-8823-5431700500F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B9F7A0D-E6EF-4218-8823-5431700500F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B9F7A0D-E6EF-4218-8823-5431700500F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -129,6 +127,10 @@ Global
 		{ADEDAA35-C807-48CB-8A37-343C3B751112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADEDAA35-C807-48CB-8A37-343C3B751112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADEDAA35-C807-48CB-8A37-343C3B751112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1BCBD49-D545-4E18-97B7-B345A471BFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1BCBD49-D545-4E18-97B7-B345A471BFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1BCBD49-D545-4E18-97B7-B345A471BFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1BCBD49-D545-4E18-97B7-B345A471BFBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,10 +148,10 @@ Global
 		{EB66B559-66F7-4A2D-A665-5724C4BF7C47} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
 		{75848CD2-8042-46C8-B14D-3D7B8878FE1B} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 		{624F93A8-CA36-44F1-B3F3-E2BB887CE784} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
-		{EB66B559-66F7-4A2D-A665-5724C4BF7C47} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
 		{6B9F7A0D-E6EF-4218-8823-5431700500F5} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{578FF0D7-D576-4C6B-863F-128B3836C0BB} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{ADEDAA35-C807-48CB-8A37-343C3B751112} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{C1BCBD49-D545-4E18-97B7-B345A471BFBB} = {ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
