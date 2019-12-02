@@ -105,7 +105,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnonymousUser.cs" />
     <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\BookmarkStorage.cs" />
     <Compile Include="Models\Enums\Category.cs" />
     <Compile Include="Models\Enums\Complexity.cs" />
     <Compile Include="Models\Enums\Section.cs" />
@@ -115,10 +118,12 @@
     <Compile Include="Models\LearningCourseItem.cs" />
     <Compile Include="Models\LearningCourseStorage.cs" />
     <Compile Include="Models\Podcast.cs" />
+    <Compile Include="Models\RegisteredUser.cs" />
     <Compile Include="Models\SearchQuery.cs" />
     <Compile Include="Models\SearchQueryStorage.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\Text.cs" />
+    <Compile Include="Models\UserStorage.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

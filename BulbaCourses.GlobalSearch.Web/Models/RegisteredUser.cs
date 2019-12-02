@@ -13,6 +13,5 @@ namespace BulbaCourses.GlobalSearch.Web.Models
         public string Email { get; set; }
         public List<Bookmark> Items { get; set; }
         //public List<SearchQueries> Items { get; set; }
-
     }
 }
