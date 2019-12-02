@@ -9,8 +9,8 @@ namespace BulbaCourses.Youtube.Web.Models
     {
         public List<SearchRequest> SearchRequests => new List<SearchRequest>
         {
-            new SearchRequest() { Id =  "1", Title = "request1", VideoId = "1", UserId = "1", Url = "url1", Author = "author1", Description = "description1", Channel = "1", PlayList = "1", PublishedAt = DateTime.Now},
-            new SearchRequest() { Id =  "2", Title = "request2", VideoId = "2", UserId = "2", Url = "url2", Author = "author1", Description = "description2", Channel = "2", PlayList = "2", PublishedAt = DateTime.Now}
+            new SearchRequest() { Id =  "a", Title = "request1", VideoId = "1", UserId = "1", Url = "url1", Author = "author1", Description = "description1", Channel = "1", PlayList = "1", PublishedAt = DateTime.Now},
+            new SearchRequest() { Id =  "b", Title = "request2", VideoId = "2", UserId = "2", Url = "url2", Author = "author1", Description = "description2", Channel = "2", PlayList = "2", PublishedAt = DateTime.Now}
         };
 
         public SearchRequest SaveRequest(SearchRequest request)

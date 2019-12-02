@@ -10,5 +10,6 @@ namespace BulbaCourses.Youtube.Web.DataAccess
     public class YoutubeContext : DbContext
     {
         public DbSet<Video> Videos { get; set; }
+        public DbSet<SearchRequest> SearchRequests { get; set; }
     }
 }

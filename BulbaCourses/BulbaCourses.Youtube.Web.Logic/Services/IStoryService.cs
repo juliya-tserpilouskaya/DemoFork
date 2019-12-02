@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulbaCourses.Youtube.Web.Logic
+namespace BulbaCourses.Youtube.Web.Logic.Services
 {
-    public class Class1
+    public interface IStoryService
     {
     }
 }
