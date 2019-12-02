@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalSearch.Web.Models;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class BookmarkController : ApiController
     {
         [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<Bookmark>))]
         public IHttpActionResult GetAll()
         {
             var result = BookmarkStorage.GetAll();
@@ -19,6 +22,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark was found", typeof(Bookmark))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -37,6 +44,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("user/{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid UserId")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark wasn't found")]
+        [SwaggerResponse(HttpStatusCode.OK, "ID users bookmarks were found", typeof(IEnumerable<Bookmark>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult GetByUserId(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -55,6 +66,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         public IHttpActionResult Create([FromBody]Bookmark bookmark)
         {
             //validate here
@@ -62,6 +74,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid ID")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark deleted")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult RemoveById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || BookmarkStorage.GetById(id) == null)
@@ -80,6 +96,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpDelete, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks removed")]
         public IHttpActionResult ClearAll()
         {
             BookmarkStorage.RemoveAll();

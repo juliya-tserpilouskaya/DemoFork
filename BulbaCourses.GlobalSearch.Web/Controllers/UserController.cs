@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalSearch.Web.Models;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class UserController : ApiController
     {
         [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
+        [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(IEnumerable<RegisteredUser>))]
         public IHttpActionResult GetAll()
         {
             var result = UserStorage.GetAll();
@@ -19,6 +22,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid user id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "User was found", typeof(RegisteredUser))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -37,6 +44,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "User added")]
         public IHttpActionResult Create([FromBody]RegisteredUser registeredUser)
         {
             //validate here
@@ -44,6 +52,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid ID")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "User deleted")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult RemoveById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || UserStorage.GetById(id) == null)
@@ -62,6 +74,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpDelete, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Users removed")]
         public IHttpActionResult ClearAll()
         {
             UserStorage.RemoveAll();
