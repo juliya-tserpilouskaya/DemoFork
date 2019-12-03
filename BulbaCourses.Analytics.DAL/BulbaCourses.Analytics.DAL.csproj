@@ -85,7 +85,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\AContext.cs" />
+    <Compile Include="Context\AlfaContext.cs" />
+    <Compile Include="Context\Configurations\DashboardConfigurations.cs" />
+    <Compile Include="Context\Configurations\ReportConfigurations.cs" />
+    <Compile Include="Interfaces\IAuditModel.cs" />
+    <Compile Include="Models\DashboardDb.cs" />
     <Compile Include="Models\ReportDb.cs" />
     <Compile Include="Storage\DashboardStorage.cs" />
     <Compile Include="Storage\LinksStorage.cs" />
