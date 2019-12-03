@@ -7,12 +7,20 @@ using System.Web.Http;
 using BulbaCourses.GlobalSearch.Web.Models;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
+
     [RoutePrefix("api/courses")]
     public class LearningCourseController : ApiController
     {
+        private readonly ILearningCourseService _learningCourseService;
+        public LearningCourseController(ILearningCourseService learningCourseService)
+        {
+            _learningCourseService = learningCourseService;
+        }
+
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The course doesn't exists")]
@@ -26,7 +34,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetById(id);
+                var result = _learningCourseService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex) 
@@ -39,7 +47,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         public IHttpActionResult GetAll()
         {
-            var result = LearningCourseStorage.GetAllCourses();
+            var result = _learningCourseService.GetAllCourses();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -56,7 +64,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetByCategory(domain);
+                var result = _learningCourseService.GetByCategory(domain);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -78,7 +86,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetByAuthorId(id);
+                var result = _learningCourseService.GetByAuthorId(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -100,7 +108,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetLearningItemsByCourseId(id);
+                var result = _learningCourseService.GetLearningItemsByCourseId(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -122,7 +130,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetCourseByComplexity(level);
+                var result = _learningCourseService.GetCourseByComplexity(level);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -144,7 +152,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetCourseByLanguage(lang);
+                var result = _learningCourseService.GetCourseByLanguage(lang);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -166,7 +174,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = LearningCourseStorage.GetCourseByQuery(query);
+                var result = _learningCourseService.GetCourseByQuery(query);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
