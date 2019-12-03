@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BulbaCourses.GlobalSearch.Web.Models
 {
-    public class UserStorage
+    public class RegisteredUserStorage
     {
         private static List<RegisteredUser> _users = new List<RegisteredUser>() {
         new RegisteredUser()
@@ -26,6 +26,21 @@ namespace BulbaCourses.GlobalSearch.Web.Models
                         BookmarkDescription = "My new Bookmark 4"
                     },
                 },
+            SearchQueryItems = new List<SearchQuery>()
+            {
+                new SearchQuery
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Query = "Basics PHP",
+                    Date = DateTime.Now,
+                },
+                new SearchQuery
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Query = "Advanced PHP",
+                    Date = DateTime.Now,
+                },
+            }
         },
         new RegisteredUser()
         {
@@ -45,6 +60,21 @@ namespace BulbaCourses.GlobalSearch.Web.Models
                         BookmarkDescription = "My new Bookmark 6"
                     },
                 },
+            SearchQueryItems = new List<SearchQuery>()
+            {
+                new SearchQuery
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Query = "Basics Java",
+                    Date = DateTime.Now,
+                },
+                new SearchQuery
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Query = "Advanced Java",
+                    Date = DateTime.Now,
+                },
+            }
         }
         };
 

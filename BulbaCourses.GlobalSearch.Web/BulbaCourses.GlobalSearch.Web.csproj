@@ -106,6 +106,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AnonymousUser.cs" />
+    <Compile Include="Models\AnonymousUserStorage.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Models\BookmarkStorage.cs" />
@@ -123,7 +124,7 @@
     <Compile Include="Models\SearchQueryStorage.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\Text.cs" />
-    <Compile Include="Models\UserStorage.cs" />
+    <Compile Include="Models\RegisteredUserStorage.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -7,8 +7,8 @@ namespace BulbaCourses.GlobalSearch.Web.Models
 {
     public class AnonymousUser
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
+        public string AnonymousUserId { get; set; } = Guid.NewGuid().ToString();
 
-        //public List<SearchQueries> Items { get; set; }
+        public List<SearchQuery> Items { get; set; }
     }
 }
