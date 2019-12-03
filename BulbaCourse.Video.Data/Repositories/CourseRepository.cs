@@ -18,32 +18,32 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public Course GetCourseById(string courseId)
+        public CourseDb GetCourseById(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             return course;
         }
 
-        public Course AddCourse(Course course)
+        public CourseDb AddCourse(CourseDb course)
         {
             videoDbContext.Courses.Add(course);
             videoDbContext.SaveChanges();
             return course;
         }
 
-        public Course GetCourseByName(string courseName)
+        public CourseDb GetCourseByName(string courseName)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.Name.Equals(courseName));
             return course;
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<CourseDb> GetAll()
         {
             var courseList = videoDbContext.Courses.ToList().AsReadOnly();
             return courseList;
         }
 
-        public void Delete(Course course)
+        public void Delete(CourseDb course)
         {
             videoDbContext.Courses.Remove(course);
             videoDbContext.SaveChanges();
@@ -55,7 +55,7 @@ namespace BulbaCourse.Video.Data.Repositories
             videoDbContext.SaveChanges();
         }
 
-        public Tag CheckTag(Tag tag)
+        public TagDb CheckTag(TagDb tag)
         {
             var result = videoDbContext.Tags.FirstOrDefault(p => p.Content == tag.Content);
             if (result == null)
@@ -67,7 +67,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+        public ICollection<TagDb> GetTags(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(p => p.CourseId.Equals(courseId));
             var tags = course.Tags;
@@ -89,14 +89,14 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             var videos = course.Videos;
             return videos;
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             var videos = course.Videos;

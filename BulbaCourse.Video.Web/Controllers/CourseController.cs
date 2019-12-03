@@ -25,7 +25,7 @@ namespace BulbaCourse.Video.Controllers
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Get(string id)
         {
@@ -46,7 +46,7 @@ namespace BulbaCourse.Video.Controllers
         }
 
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<Course>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseDb>))]
         public IHttpActionResult GetAll()
         {
             return Ok(courseService.GetAll());
@@ -54,9 +54,9 @@ namespace BulbaCourse.Video.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Post([FromBody]Course course)
+        public IHttpActionResult Post([FromBody]CourseDb course)
         {
             if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
             {
@@ -77,9 +77,9 @@ namespace BulbaCourse.Video.Controllers
 
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Put(string id, [FromBody]Course course)
+        public IHttpActionResult Put(string id, [FromBody]CourseDb course)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -107,7 +107,7 @@ namespace BulbaCourse.Video.Controllers
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {

@@ -17,7 +17,7 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public User Add(User user)
+        public UserDb Add(UserDb user)
         {
             videoDbContext.Users.Add(user);
             videoDbContext.SaveChanges();
@@ -44,7 +44,7 @@ namespace BulbaCourse.Video.Data.Repositories
             var role = videoDbContext.Roles.FirstOrDefault(b => b.RoleName.Equals(newRole));
             if (role == null)
             {
-                role = new Role { RoleName = newRole };
+                role = new RoleDb { RoleName = newRole };
                 videoDbContext.Roles.Add(role);
                 videoDbContext.SaveChanges();
                 return true;
@@ -55,7 +55,7 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public Role CheckRole(Role role)
+        public RoleDb CheckRole(RoleDb role)
         {
             var result = videoDbContext.Roles.FirstOrDefault(b => b.RoleName.Equals(role.RoleName));
             if (result == null)
@@ -67,7 +67,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public void Delete(User user)
+        public void Delete(UserDb user)
         {
             videoDbContext.Users.Remove(user);
             videoDbContext.SaveChanges();
@@ -96,25 +96,25 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserDb> GetAll()
         {
             var userList = videoDbContext.Users.ToList().AsReadOnly();
             return userList;
         }
 
-        public User GetByLogin(string userName)
+        public UserDb GetByLogin(string userName)
         {
             var user = videoDbContext.Users.FirstOrDefault(b => b.Login.Equals(userName));
             return user;
         }
 
-        public User GetUserById(string id)
+        public UserDb GetUserById(string id)
         {
             var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
             return user;
         }
 
-        public ICollection<Course> GetUserCourse(string userId)
+        public ICollection<CourseDb> GetUserCourse(string userId)
         {
             var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(userId));
             var courses = user.Courses;

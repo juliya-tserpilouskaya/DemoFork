@@ -11,13 +11,13 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
 {
     public  class FakeCourseRepository: ICourseRepository
     {
-        private List<Course> _courses;
+        private List<CourseDb> _courses;
 
         public FakeCourseRepository()
         {
-            _courses = new List<Course>() 
+            _courses = new List<CourseDb>() 
             {
-               new Course() 
+               new CourseDb() 
                { 
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_1",
@@ -25,14 +25,14 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
                    Level = CourseLevel.Beginner
                },
 
-               new Course()
+               new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_2",
                    CreatorId = "Creator_2",
                    Level = CourseLevel.Beginner
                }, 
-               new Course()
+               new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_3",
@@ -42,7 +42,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             };
         }
 
-        public Course AddCourse(Course course)
+        public CourseDb AddCourse(CourseDb course)
         {
             _courses.Add(course);
             return course;
@@ -58,12 +58,12 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public Tag CheckTag(Tag tag)
+        public TagDb CheckTag(TagDb tag)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Course course)
+        public void Delete(CourseDb course)
         {
             throw new NotImplementedException();
         }
@@ -73,17 +73,17 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<CourseDb> GetAll()
         {
             return _courses.ToList();
         }
 
-        public Course GetCourseById(string courseId)
+        public CourseDb GetCourseById(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public Course GetCourseByName(string courseName)
+        public CourseDb GetCourseByName(string courseName)
         {
             throw new NotImplementedException();
         }
@@ -93,17 +93,17 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+        public ICollection<TagDb> GetTags(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
         {
             throw new NotImplementedException();
         }

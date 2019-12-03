@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Video.Data.Models
 {
-    public class Course
+    public class CourseDb
     {
         public string CourseId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
@@ -19,8 +19,8 @@ namespace Video.Data.Models
         public int Duration { get; set; }
         public double Price { get; set; }
 
-        public ICollection<VideoMaterial> Videos { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public ICollection<VideoMaterialDb> Videos { get; set; }
+        public ICollection<CommentDb> Comments { get; set; }
+        public ICollection<TagDb> Tags { get; set; }
     }
 }

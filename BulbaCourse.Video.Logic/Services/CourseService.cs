@@ -19,7 +19,7 @@ namespace BulbaCourse.Video.Logic.Services
             this.courseRepository = courseRepository;
         }
 
-        public Course AddCourse(Course course)
+        public CourseDb AddCourse(CourseDb course)
         {
             return courseRepository.AddCourse(course);
         }
@@ -37,31 +37,31 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public Tag CheckTag(Tag tag)
+        public TagDb CheckTag(TagDb tag)
         {
             var result = courseRepository.CheckTag(tag);
             return result;
         }
 
-        public Course GetCourseById(string courseId)
+        public CourseDb GetCourseById(string courseId)
         {
             var result = courseRepository.GetCourseById(courseId);
             return result;
         }
 
-        public Course GetCourseByName(string courseName)
+        public CourseDb GetCourseByName(string courseName)
         {
             var result = courseRepository.GetCourseByName(courseName);
             return result;
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<CourseDb> GetAll()
         {
             var result = courseRepository.GetAll();
             return result;
         }
 
-        public void Delete(Course course)
+        public void Delete(CourseDb course)
         {
             courseRepository.Delete(course);
         }
@@ -77,19 +77,19 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             var result = courseRepository.GetCourseVideos(courseId);
             return result;
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+        public ICollection<TagDb> GetTags(string courseId)
         {
             var result = courseRepository.GetTags(courseId);
             return result;
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
         {
             var result = courseRepository.GetVideoByOrder(courseId, videoOrder);
             return result;

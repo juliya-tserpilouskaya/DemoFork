@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Video.Data.Models
 {
-    public class Transaction
+    public class TransactionDb
     {
         public string TransactionId { get; set; } = Guid.NewGuid().ToString();
         public DateTime TransactionDate { get; set; }

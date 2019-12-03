@@ -17,7 +17,7 @@ namespace BulbaCourse.Video.Logic.Services
         {
             this.userRepository = userRepository;
         }
-        public User Add(User user)
+        public UserDb Add(UserDb user)
         {
             var result = userRepository.Add(user);
             return result;
@@ -35,13 +35,13 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public Role CheckRole(Role role)
+        public RoleDb CheckRole(RoleDb role)
         {
             var result = userRepository.CheckRole(role);
             return result;
         }
 
-        public void Delete(User user)
+        public void Delete(UserDb user)
         {
             userRepository.Delete(user);
         }
@@ -57,25 +57,25 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserDb> GetAll()
         {
             var result = userRepository.GetAll();
             return result;
         }
 
-        public User GetByLogin(string userName)
+        public UserDb GetByLogin(string userName)
         {
             var result = userRepository.GetByLogin(userName);
             return result;
         }
 
-        public User GetUserById(string id)
+        public UserDb GetUserById(string id)
         {
             var result = userRepository.GetUserById(id);
             return result;
         }
 
-        public ICollection<Course> GetUserCourse(string userId)
+        public ICollection<CourseDb> GetUserCourse(string userId)
         {
             var result = userRepository.GetUserCourse(userId);
             return result;

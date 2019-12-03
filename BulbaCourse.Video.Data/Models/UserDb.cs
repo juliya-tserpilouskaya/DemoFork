@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Video.Data.Models
 {
-    public class User
+    public class UserDb
     {
         public string UserId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
@@ -20,8 +20,8 @@ namespace Video.Data.Models
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
 
-        public ICollection<Role> Roles { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<RoleDb> Roles { get; set; }
+        public ICollection<TransactionDb> Transactions { get; set; }
+        public ICollection<CourseDb> Courses { get; set; }
     }
 }
