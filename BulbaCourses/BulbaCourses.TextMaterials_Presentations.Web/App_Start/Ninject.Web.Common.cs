@@ -5,6 +5,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Http;
+    using System.Web.UI.WebControls;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -12,6 +14,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using Presentations.Logic;
+    using Ninject.Web.WebApi;
 
     public static class NinjectWebCommon 
     {
@@ -46,6 +49,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 RegisterServices(kernel);
                 return kernel;
             }

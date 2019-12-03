@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
+using Presentations.Logic.Repositories;
+using Presentations.Logic.Interfaces;
+using Presentations.Logic.Services;
+using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {/// <summary>
@@ -12,16 +15,28 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 /// </summary>
     [RoutePrefix("api/users")]
     public class StudentsController : ApiController
-    {/// <summary>
-     /// Get all Users from the list of Users
-     /// </summary>
-     /// <returns></returns>
+    {
+
+        private readonly IStudentBaseService _studentService;
+        public StudentsController(IStudentBaseService studentService)
+        {
+            _studentService = studentService;
+        }
+
+        /// <summary>
+        /// Get all Users from the list of Users
+        /// </summary>
+        /// <returns></returns>
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Student>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpGet, Route("")]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var result = StudentsBase.GetAll();
+                var result = _studentService.GetAll();
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -34,6 +49,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpGet, Route("{id}")]
         public IHttpActionResult GetById(string id)
         {
@@ -44,7 +63,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = StudentsBase.GetById(id);
+                var result = _studentService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -58,6 +77,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpPost, Route("")]
         public IHttpActionResult Create([FromBody]Student student)
         {
@@ -68,7 +91,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = StudentsBase.Add(student);
+                var result = _studentService.Add(student);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -82,6 +105,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpPut, Route("")]
         public IHttpActionResult Update([FromBody]Student student)
         {
@@ -92,7 +119,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = StudentsBase.Update(student);
+                var result = _studentService.Update(student);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -106,6 +133,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpDelete, Route("{id}")]
         public IHttpActionResult Delete(string id)
         {
@@ -116,7 +147,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = StudentsBase.DeleteById(id);
+                var result = _studentService.DeleteById(id);
                 return (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

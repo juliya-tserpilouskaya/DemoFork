@@ -5,10 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
-using Presentations.Logic.Models.Course;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers.Staff;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
-using Presentations.Logic.Models.Course.InterfacesCourse;
+using Presentations.Logic.Repositories;
+using Presentations.Logic.Interfaces;
+using Presentations.Logic.Services;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {

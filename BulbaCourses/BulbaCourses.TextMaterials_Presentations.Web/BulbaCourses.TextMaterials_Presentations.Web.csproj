@@ -143,9 +143,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Presentations.Logic\Presentations.Logic.csproj">
-      <Project>{20313166-61e2-463c-b344-f1fb683143bf}</Project>
-      <Name>Presentations.Logic</Name>
+    <ProjectReference Include="..\BulbaCourses.TextMaterials_Presentations.Logic\BulbaCourses.TextMaterials_Presentations.Logic.csproj">
+      <Project>{6335f50b-20df-493f-afb0-02b09123521f}</Project>
+      <Name>BulbaCourses.TextMaterials_Presentations.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
