@@ -17,5 +17,10 @@ namespace BulbaCourses.Analytics.DAL.Repositories
         public IRepository<Dashboard> Dashboards { get; }
 
         public IRepository<Links> Links { get; }
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

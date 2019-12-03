@@ -16,5 +16,7 @@ namespace BulbaCourses.Analytics.DAL.Interfaces
         IRepository<Dashboard> Dashboards { get; }
 
         IRepository<Links> Links { get; }
+
+        void Dispose();
     }
 }

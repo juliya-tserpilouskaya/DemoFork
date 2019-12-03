@@ -14,15 +14,15 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
-    public class ReportService : IReportService
+    internal partial class ReportService : IReportService
     {
-        private IDataBase _dataBase;
+        private IDataBase _context;
 
-        public ReportService(IDataBase dataBase, IDashboardService dashboardService, IRepository<Report> repositoryReport)
+        public ReportService(IDataBase context, IDashboardService dashboardService, IRepository<Report> repositoryReport)
         {
             DashboardService = dashboardService;
-            _dataBase = dataBase;
-            _dataBase.Reports = repositoryReport; 
+            _context = context;
+            _context.Reports = repositoryReport; 
         }
 
         public IDashboardService DashboardService { get; }
@@ -47,7 +47,7 @@ namespace BulbaCourses.Analytics.BLL.Services
         {
             Checked(Id);
 
-            var report = _dataBase.Reports.Read(_ => _.Id == Id);
+            var report = _context.Reports.Read(_ => _.Id == Id);
 
             Checked(report);
 
@@ -62,7 +62,7 @@ namespace BulbaCourses.Analytics.BLL.Services
         public IEnumerable<ReportShortDTO> GetReportsShort()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Report, ReportShortDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Report>, List<ReportShortDTO>>(_dataBase.Reports.ReadAll());
+            return mapper.Map<IEnumerable<Report>, List<ReportShortDTO>>(_context.Reports.ReadAll());
 
         }
 
@@ -70,12 +70,12 @@ namespace BulbaCourses.Analytics.BLL.Services
         {
             Checked(Id);
 
-            var reports = _dataBase.Reports.Find(_ => _.Id == Id);
+            var reports = _context.Reports.Find(_ => _.Id == Id);
 
             if (reports.ToList().Count == 0)
                 throw new ValidationException("Not fount Id Report", "Id");
 
-            _dataBase.Reports.Delete(_ => _.Id == Id);
+            _context.Reports.Delete(_ => _.Id == Id);
         }
     }
 }

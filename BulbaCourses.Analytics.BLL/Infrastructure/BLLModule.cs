@@ -26,9 +26,7 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure
             Bind<IDataBase>().To<DataBase>();
             Bind<IDashboardService>().To<DashboardService>();
 
-            //Bind<ReportService>().ToSelf();
-            //Bind<IReportService>().To<ReportService>();
-
+            Bind<IReportService>().To<ReportService>();
         }
     }
 }
