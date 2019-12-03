@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
     [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    public class RegisteredUserController : ApiController
     {
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
