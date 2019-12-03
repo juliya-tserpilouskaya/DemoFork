@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BulbaCourses.GlobalSearch.Web.Models;
+using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
