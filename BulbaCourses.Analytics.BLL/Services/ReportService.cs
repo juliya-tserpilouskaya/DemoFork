@@ -18,12 +18,11 @@ namespace BulbaCourses.Analytics.BLL.Services
     {
         private IDataBase _dataBase;
 
-        public ReportService()//IDataBase dataBase, IDashboardService dashboardService
+        public ReportService(IDataBase dataBase, IDashboardService dashboardService, IRepository<Report> repositoryReport)
         {
-            DashboardService = new DashboardService();
-            _dataBase = new DataBase();
-            _dataBase.Reports = new ReportRepository(new ReportStorage());          
-
+            DashboardService = dashboardService;
+            _dataBase = dataBase;
+            _dataBase.Reports = repositoryReport; 
         }
 
         public IDashboardService DashboardService { get; }

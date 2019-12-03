@@ -19,10 +19,9 @@ namespace BulbaCourses.Analytics.Web.Controllers
     {
         private IReportService _reportService;
 
-        public ReportsController(/*IReportService reportService*/)
+        public ReportsController(IReportService reportService)
         {
-            //_reportService = reportService;
-            _reportService = new ReportService();
+            _reportService = reportService;
         }
 
         [HttpGet, Route("")]
