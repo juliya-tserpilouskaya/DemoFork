@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class DashboardDb: IAuditModel
+    public class DashboardDb : IAuditModel
     {
         public string Id { get; set; }
 
@@ -20,9 +20,11 @@ namespace BulbaCourses.Analytics.DAL.Models
         public string Creator { get; set; }
 
         public string Modifier { get; set; }
-        
+
+        public int ChartId { get; set; }
+
         public string ReportId { get; set; }
-        
-        public ReportDb Report { get; set; }        
+
+        public ReportDb Report { get; set; }
     }
 }
