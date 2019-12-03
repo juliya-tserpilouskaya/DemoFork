@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUser.Web", "..\BulbaCourses.GlobalAdminUser.Web\BulbaCourses.GlobalAdminUser.Web.csproj", "{006B24D6-2060-4273-8A08-CE5BF77094DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMaterials_Presentations_Tests", "TextMaterials_Presentations_Tests\TextMaterials_Presentations_Tests.csproj", "{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations_Tests", "TextMaterials_Presentations_Tests\BulbaCourses.TextMaterials_Presentations_Tests.csproj", "{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Podcasts", "Podcasts", "{69BEDF67-2025-4137-ABB3-67DC4F29B55D}"
 EndProject
@@ -54,6 +54,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web.Tests", "BulbaCourses.Youtube.Web.Tests\BulbaCourses.Youtube.Web.Tests.csproj", "{ADEDAA35-C807-48CB-8A37-343C3B751112}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations.Logic", "BulbaCourses.TextMaterials_Presentations.Logic\BulbaCourses.TextMaterials_Presentations.Logic.csproj", "{6335F50B-20DF-493F-AFB0-02B09123521F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations.Data", "BulbaCourses.TextMaterials_Presentations.Data\BulbaCourses.TextMaterials_Presentations.Data.csproj", "{829CFF17-45EB-489F-A56D-FF3A4B4EFD42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +127,10 @@ Global
 		{6335F50B-20DF-493F-AFB0-02B09123521F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6335F50B-20DF-493F-AFB0-02B09123521F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6335F50B-20DF-493F-AFB0-02B09123521F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{578FF0D7-D576-4C6B-863F-128B3836C0BB} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{ADEDAA35-C807-48CB-8A37-343C3B751112} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{6335F50B-20DF-493F-AFB0-02B09123521F} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
+		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}

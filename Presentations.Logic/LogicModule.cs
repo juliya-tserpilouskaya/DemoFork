@@ -15,7 +15,12 @@ namespace Presentations.Logic
             Bind<ICoursePresentationsService>().To<CoursePresentationsService>();
             Bind<ICourseTeachersService>().To<CourseTeachersService>();
             Bind<IFeedbackService>().To<FeedbackService>();
-            Bind<IPresentationsBaseService>().To<PresentationsBaseService>();
+            Bind<IPresentationsBaseService>().To<PresentationsBaseService>(); 
+            Bind<IFavoritePresentationsService>().To<FavoritePresentationsService>();
+            Bind<IStudentBaseService>().To<StudentBaseService>();
+            Bind<IViewedPresentationsService>().To<ViewedPresentationsService>();
+            Bind<IChangedPresentationsService>().To<ChangedPresentationsService>();
+            Bind<IStaffService>().To<StaffService>();
         }
     }
 }

@@ -15,10 +15,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
     {
         private readonly IFavoritePresentationsService _favoritePresentationsService;
         private readonly IStudentBaseService _studentService;
-        public FavoritePresentationsOperationsController(IFavoritePresentationsService favoritePresentationsService, IStudentBaseService studentService)
+        private readonly IPresentationsBaseService _presentationsBaseService;
+
+        public FavoritePresentationsOperationsController(IFavoritePresentationsService favoritePresentationsService, IStudentBaseService studentService, IPresentationsBaseService presentationsBase)
         {
             _favoritePresentationsService = favoritePresentationsService;
             _studentService = studentService;
+            _presentationsBaseService = presentationsBase;
         }
 
         /// <summary>
@@ -118,7 +121,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToAdd = PresentationsBase.GetById(idPresentation);
+                Presentation presentationToAdd = _presentationsBaseService.GetById(idPresentation);
                 Student student = _studentService.GetById(idStudent);
 
                 if (student != null && presentationToAdd != null)
@@ -158,7 +161,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToDelete = PresentationsBase.GetById(idPresentation);
+                Presentation presentationToDelete = _presentationsBaseService.GetById(idPresentation);
                 Student student = _studentService.GetById(idStudent);
 
                 if (student != null && presentationToDelete != null)

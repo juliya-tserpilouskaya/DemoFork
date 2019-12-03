@@ -15,10 +15,15 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
     public class CourseTeachersController : ApiController
     {
         private readonly ICourseTeachersService _courseTeachers;
+        private readonly ICourseBaseService _courseBaseService;
+        private readonly IStaffService _staffService;
 
-        public CourseTeachersController(ICourseTeachersService courseTeachers)
+        public CourseTeachersController(ICourseTeachersService courseTeachers, ICourseBaseService courseBase, IStaffService staff)
         {
             _courseTeachers = courseTeachers;
+            _courseBaseService = courseBase;
+            _staffService = staff;
+
         }
 
         /// <summary>
@@ -40,7 +45,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Course course = CourseBase.GetById(id);
+                Course course = _courseBaseService.GetById(id);
 
                 if (course != null)
                 {
@@ -79,7 +84,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Course course = CourseBase.GetById(idCourse);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null)
                 {
@@ -118,8 +123,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Teacher teacherToAdd = Staff.GetById(idTeacher);
-                Course course = CourseBase.GetById(idCourse);
+                Teacher teacherToAdd = _staffService.GetById(idTeacher);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null && teacherToAdd != null)
                 {
@@ -158,8 +163,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Teacher teacherToDelete = Staff.GetById(idTeacher);
-                Course course = CourseBase.GetById(idCourse);
+                Teacher teacherToDelete = _staffService.GetById(idTeacher);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null && teacherToDelete != null)
                 {

@@ -15,10 +15,14 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
     public class CoursePresentationsController : ApiController
     {
         private readonly ICoursePresentationsService _coursePresentationsService;
+        private readonly ICourseBaseService _courseBaseService;
+        private readonly IPresentationsBaseService _presentationsBaseService;
 
-        public CoursePresentationsController(ICoursePresentationsService coursePresentations)
+        public CoursePresentationsController(ICoursePresentationsService coursePresentations, ICourseBaseService courseBase, IPresentationsBaseService presentationsBase)
         {
             _coursePresentationsService = coursePresentations;
+            _courseBaseService = courseBase;
+            _presentationsBaseService = presentationsBase;
         }
 
         /// <summary>
@@ -40,7 +44,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Course course = CourseBase.GetById(id);
+                Course course = _courseBaseService.GetById(id);
 
                 if (course != null)
                 {
@@ -79,7 +83,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Course course = CourseBase.GetById(idCourse);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null)
                 {
@@ -118,8 +122,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToAdd = PresentationsBase.GetById(idPresentation);
-                Course course = CourseBase.GetById(idCourse);
+                Presentation presentationToAdd = _presentationsBaseService.GetById(idPresentation);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null && presentationToAdd != null)
                 {
@@ -158,8 +162,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToDelete = PresentationsBase.GetById(idPresentation);
-                Course course = CourseBase.GetById(idCourse);
+                Presentation presentationToDelete = _presentationsBaseService.GetById(idPresentation);
+                Course course = _courseBaseService.GetById(idCourse);
 
                 if (course != null && presentationToDelete != null)
                 {
