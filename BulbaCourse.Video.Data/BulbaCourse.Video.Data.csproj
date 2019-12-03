@@ -88,6 +88,7 @@
     <Compile Include="DatabaseContex\VideoDbContext.cs" />
     <Compile Include="Enums\CourseLevel.cs" />
     <Compile Include="Enums\Subscription.cs" />
+    <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\ICourseRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Models\CommentDb.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Models\UserDb.cs" />
     <Compile Include="Models\VideoMaterialDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\CourseRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

@@ -66,6 +66,9 @@ namespace BulbaCourse.Video.Web.App_Start
            kernel.Bind<ICourseRepository>().To<Logic.FakeRepositories.FakeCourseRepository>();
             kernel.Bind<IUserService>().To<Logic.Services.UserService>();
             kernel.Bind<IUserRepository>().To<Logic.FakeRepositories.FakeUserRepository>();
+            kernel.Bind<ICommentService>().To<Logic.Services.CommentService>();
+            kernel.Bind<ICommentRepository>().To<Logic.FakeRepositories.FakeCommentRepository>();
+
         }        
     }
 }

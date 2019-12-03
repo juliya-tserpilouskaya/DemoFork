@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Video.Data.Models;
 
-namespace BulbaCourse.Video.Data.Interfaces
+namespace BulbaCourse.Video.Logic.InterfaceServices
 {
-    public interface ICommentRepository
+    public interface ICommentService
     {
         CommentDb GetById(string commentId);
         IEnumerable<CommentDb> GetAll();
