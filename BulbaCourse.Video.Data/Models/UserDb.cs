@@ -17,11 +17,12 @@ namespace Video.Data.Models
         public string Email { get; set; }
         public string AvatarPath { get; set; }
         public Subscription SubscriptionType { get; set; }
-        public DateTime SubscriptionStartDate { get; set; }
-        public DateTime SubscriptionEndDate { get; set; }
+        public DateTime? SubscriptionStartDate { get; set; }
+        public DateTime? SubscriptionEndDate { get; set; }
 
         public ICollection<RoleDb> Roles { get; set; }
         public ICollection<TransactionDb> Transactions { get; set; }
         public ICollection<CourseDb> Courses { get; set; }
+        public ICollection<CommentDb> Comments { get; set; }
     }
 }

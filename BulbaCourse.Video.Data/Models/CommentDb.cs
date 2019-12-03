@@ -10,7 +10,7 @@ namespace Video.Data.Models
     {
         public string CommentId { get; set; } = Guid.NewGuid().ToString();
         public string Text { get; set; }
-        public string UserId { get; set; }
+        public UserDb UserId { get; set; }
         public DateTime Date { get; set; }
     }
 }

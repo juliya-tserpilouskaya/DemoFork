@@ -11,11 +11,11 @@ namespace Video.Data.Models
     {
         public string CourseId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
-        public string CreatorId { get; set; }
+        public UserDb Author { get; set; }
         public CourseLevel Level { get; set; }
         public double Raiting { get; set; }
         public string Description { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public int Duration { get; set; }
         public double Price { get; set; }
 

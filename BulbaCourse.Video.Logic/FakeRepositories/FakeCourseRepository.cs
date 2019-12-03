@@ -12,16 +12,38 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
     public  class FakeCourseRepository: ICourseRepository
     {
         private List<CourseDb> _courses;
-
         public FakeCourseRepository()
         {
+            UserDb user1 = new UserDb()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user1",
+                Password = "1111",
+                Email = "1@gmail.com"
+            };
+            UserDb user2 = new UserDb()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user2",
+                Password = "2222",
+                Email = "3@gmail.com"
+            };
+
+            UserDb user3 = new UserDb()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user3",
+                Password = "3333",
+                Email = "3@gmail.com"
+            };
+
             _courses = new List<CourseDb>() 
             {
                new CourseDb() 
                { 
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_1",
-                   CreatorId = "Creator_1",
+                   Author = user1,
                    Level = CourseLevel.Beginner
                },
 
@@ -29,14 +51,14 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_2",
-                   CreatorId = "Creator_2",
+                   Author = user2,
                    Level = CourseLevel.Beginner
                }, 
                new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_3",
-                   CreatorId = "Creator_3",
+                   Author = user3,
                    Level = CourseLevel.Advanced
                },
             };
