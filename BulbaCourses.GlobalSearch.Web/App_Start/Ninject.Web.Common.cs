@@ -10,6 +10,11 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Ninject.Web.Common.WebHost;
+
+    using BulbaCourses.GlobalSearch.Logic;
+    using System.Web.Http;
+    using Ninject.Web.WebApi;
 
     public static class NinjectWebCommon 
     {
@@ -44,6 +49,7 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -60,6 +66,7 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Load<LogicModule>();
+        }
     }
 }
