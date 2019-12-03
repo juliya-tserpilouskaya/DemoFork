@@ -1,33 +1,33 @@
-﻿using System;
+﻿using Presentations.Logic.Repositories;
+using Presentations.Logic.Interfaces;
+using Presentations.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Presentations.Logic.Services;
-using Presentations.Logic.Repositories;
-using Presentations.Logic.Interfaces;
 using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
-    public class FavoritePresentationsOperationsController : ApiController
+    [RoutePrefix("api/studentViewedPresentations")]
+    public class ViewedPresentationsController : ApiController
     {
-        private readonly IFavoritePresentationsService _favoritePresentationsService;
         private readonly IStudentBaseService _studentService;
+        private readonly IViewedPresentationsService _viewedPresentationsService;
         private readonly IPresentationsBaseService _presentationsBaseService;
 
-        public FavoritePresentationsOperationsController(IFavoritePresentationsService favoritePresentationsService, IStudentBaseService studentService, IPresentationsBaseService presentationsBase)
+        public ViewedPresentationsController(IStudentBaseService studentService, IPresentationsBaseService presentationsBaseService, IViewedPresentationsService viewedPresentationsService)
         {
-            _favoritePresentationsService = favoritePresentationsService;
             _studentService = studentService;
-            _presentationsBaseService = presentationsBase;
+            _viewedPresentationsService = viewedPresentationsService;
+            _presentationsBaseService = presentationsBaseService;
         }
 
         /// <summary>
-        /// Get all Presentations from the Favorite Presentations list from Student with the same Id
+        /// Get all Presentations from the list of Viewed Presentations
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -47,7 +47,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (student != null)
                 {
-                    var result = _favoritePresentationsService.GetAll(student);
+                    var result = _viewedPresentationsService.GetAll(student);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -62,7 +62,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Get Presentation by the Id from the FavoritePresentations list from Student by the Student Id
+        /// Get Presentations from the list of Viewed Presentations by Id
         /// </summary>
         /// <param name="idStudent"></param>
         /// <param name="idPresentation"></param>
@@ -86,7 +86,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (student != null)
                 {
-                    var result = _favoritePresentationsService.GetById(student, idPresentation);
+                    var result = _viewedPresentationsService.GetById(student, idPresentation);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -101,7 +101,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Add Presentation by the Id to the FavoritePresentations list from Student by the Student Id
+        /// Add Presentations to the list of Viewed Presentations
         /// </summary>
         /// <param name="idStudent"></param>
         /// <param name="idPresentation"></param>
@@ -126,7 +126,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (student != null && presentationToAdd != null)
                 {
-                    var result = _favoritePresentationsService.Add(student, presentationToAdd);
+                    var result = _viewedPresentationsService.Add(student, presentationToAdd);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -141,8 +141,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Delete Presentation by the Id from the FavoritePresentations list from Student by the Student Id
-        /// </summary>
+        /// Delete by Id Presentations from the list of Viewed Presentations, returns true if was deleted
+        /// </summary> 
         /// <param name="idStudent"></param>
         /// <param name="idPresentation"></param>
         /// <returns></returns>
@@ -166,7 +166,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
                 if (student != null && presentationToDelete != null)
                 {
-                    var result = _favoritePresentationsService.DeleteById(student, presentationToDelete.Id);
+                    var result = _viewedPresentationsService.DeleteById(student, presentationToDelete.Id);
                     return (IHttpActionResult)Ok(result);
                 }
                 else

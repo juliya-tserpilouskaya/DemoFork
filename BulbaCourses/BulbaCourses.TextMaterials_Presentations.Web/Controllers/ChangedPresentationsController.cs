@@ -1,36 +1,40 @@
 ﻿using Presentations.Logic.Repositories;
 using Presentations.Logic.Interfaces;
 using Presentations.Logic.Services;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
-    [RoutePrefix("api/studentViewedPresentations")]
-    public class ViewedPresentationsOperationsController : ApiController
+    [RoutePrefix("api/teacherChangedPresentations")]
+    public class ChangedPresentationsController : ApiController
     {
-        private readonly IStudentBaseService _studentService;
-        private readonly IViewedPresentationsService _viewedPresentationsService;
+        private readonly IChangedPresentationsService _changedPresentationsService;
+        private readonly IStaffService _staffService;
+        private readonly IPresentationsBaseService _presentationsBaseService;
 
-        public ViewedPresentationsOperationsController(IStudentBaseService studentService, IViewedPresentationsService viewedPresentationsService)
+        public ChangedPresentationsController(IStaffService staffService, IPresentationsBaseService presentationsBaseService, IChangedPresentationsService changedPresentationsService)
         {
-            _studentService = studentService;
-            _viewedPresentationsService = viewedPresentationsService;
+            _staffService = staffService;
+            _presentationsBaseService = presentationsBaseService;
+            _changedPresentationsService = changedPresentationsService;
         }
 
         /// <summary>
-        /// Get all Presentations from the list of Viewed Presentations
+        /// Get all Presentations from the ChangedPresentations list from Student with the same Id
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+
         [HttpGet, Route("{id}")]
         public IHttpActionResult GetAll(string id)
         {
@@ -41,11 +45,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Student student = _studentService.GetById(id);
+                Teacher teacher = _staffService.GetById(id);
 
-                if (student != null)
+                if (teacher != null)
                 {
-                    var result = _viewedPresentationsService.GetAll(student);
+                    var result = _changedPresentationsService.GetAll(teacher);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -60,19 +64,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Get Presentations from the list of Viewed Presentations by Id
+        /// Get Presentation by the Id from the ChangedPresentations list from Teacher by the Teacher Id
         /// </summary>
-        /// <param name="idStudent"></param>
+        /// <param name="idTeacher"></param>
         /// <param name="idPresentation"></param>
         /// <returns></returns>
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Presentation))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [HttpGet, Route("{idStudent}Student/{idPresentation}")]
-        public IHttpActionResult GetById(string idStudent, string idPresentation)
+        [HttpGet, Route("{idTeacher}Teacher/{idPresentation}")]
+        public IHttpActionResult GetById(string idTeacher, string idPresentation)
         {
-            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+            if (string.IsNullOrEmpty(idTeacher) || !Guid.TryParse(idTeacher, out var _)
                 || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
             {
                 return BadRequest();
@@ -80,11 +84,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Student student = _studentService.GetById(idStudent);
+                Teacher teacher = _staffService.GetById(idTeacher);
 
-                if (student != null)
+                if (teacher != null)
                 {
-                    var result = _viewedPresentationsService.GetById(student, idPresentation);
+                    var result = _changedPresentationsService.GetById(teacher, idPresentation);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -99,19 +103,20 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Add Presentations to the list of Viewed Presentations
+        /// Add Presentation by the Id to the ChangedPresentations list from Teacher by the Teacher Id
         /// </summary>
-        /// <param name="idStudent"></param>
+        /// <param name="idTeacher"></param>
         /// <param name="idPresentation"></param>
         /// <returns></returns>
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Presentation))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [HttpPost, Route("{idStudent}Student/{idPresentation}")]
-        public IHttpActionResult Create(string idStudent, string idPresentation)
+
+        [HttpPost, Route("{idTeacher}Teacher/{idPresentation}")]
+        public IHttpActionResult Create(string idTeacher, string idPresentation)
         {
-            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+            if (string.IsNullOrEmpty(idTeacher) || !Guid.TryParse(idTeacher, out var _)
                 || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
             {
                 return BadRequest();
@@ -119,12 +124,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToAdd = PresentationsBase.GetById(idPresentation);
-                Student student = _studentService.GetById(idStudent);
+                Presentation presentationToAdd = _presentationsBaseService.GetById(idPresentation);
+                Teacher teacher = _staffService.GetById(idTeacher);
 
-                if (student != null && presentationToAdd != null)
+                if (teacher != null && presentationToAdd != null)
                 {
-                    var result = _viewedPresentationsService.Add(student, presentationToAdd);
+                    var result = _changedPresentationsService.Add(teacher, presentationToAdd);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 else
@@ -139,19 +144,20 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Delete by Id Presentations from the list of Viewed Presentations, returns true if was deleted
-        /// </summary> 
-        /// <param name="idStudent"></param>
+        /// Delete Presentation by the Id from the ChangedPresentations list from Teacher by the Teacher Id
+        /// </summary>
+        /// <param name="idTeacher"></param>
         /// <param name="idPresentation"></param>
         /// <returns></returns>
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Boolean))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [HttpDelete, Route("{idStudent}Student/{idPresentation}")]
-        public IHttpActionResult Delete(string idStudent, string idPresentation)
+
+        [HttpDelete, Route("{idTeacher}Teacher/{idPresentation}")]
+        public IHttpActionResult Delete(string idTeacher, string idPresentation)
         {
-            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+            if (string.IsNullOrEmpty(idTeacher) || !Guid.TryParse(idTeacher, out var _)
                 || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
             {
                 return BadRequest();
@@ -159,12 +165,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentationToDelete = PresentationsBase.GetById(idPresentation);
-                Student student = _studentService.GetById(idStudent);
+                Presentation presentationToDelete = _presentationsBaseService.GetById(idPresentation);
+                Teacher teacher = _staffService.GetById(idTeacher);
 
-                if (student != null && presentationToDelete != null)
+                if (teacher != null && presentationToDelete != null)
                 {
-                    var result = _viewedPresentationsService.DeleteById(student, presentationToDelete.Id);
+                    var result = _changedPresentationsService.DeleteById(teacher, presentationToDelete.Id);
                     return (IHttpActionResult)Ok(result);
                 }
                 else

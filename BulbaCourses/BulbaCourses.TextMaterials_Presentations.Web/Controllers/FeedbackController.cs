@@ -12,13 +12,17 @@ using System.Web.Http;
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
     [RoutePrefix("api/presentationFeadbacks")]
-    public class FeedbackServiceController : ApiController
+    public class FeedbackController : ApiController
     {
         private readonly IFeedbackService _feedbackService;
+        private readonly IPresentationsBaseService _presentationsBaseService;
+        private readonly IStudentBaseService _studentBaseService;
 
-        public FeedbackServiceController(IFeedbackService feedbackService)
+        public FeedbackController(IFeedbackService feedbackService, IPresentationsBaseService presentationsBaseService, IStudentBaseService studentBaseService)
         {
             _feedbackService = feedbackService;
+            _presentationsBaseService = presentationsBaseService;
+            _studentBaseService = studentBaseService;
         }
 
         [HttpGet, Route("{id}")]
@@ -35,7 +39,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentation = PresentationsBase.GetById(id);
+                Presentation presentation = _presentationsBaseService.GetById(id);
 
                 if (presentation != null)
                 {
@@ -68,7 +72,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentation = PresentationsBase.GetById(idPresentation);
+                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
 
                 if (presentation != null)
                 {
@@ -102,9 +106,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentation = PresentationsBase.GetById(idPresentation);
+                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
                 Feedback feedbackToAdd = _feedbackService.GetById(presentation, idFeedback);
-                User user = StudentsBase.GetById(idUser);
+                User user = _studentBaseService.GetById(idUser);
 
                 if (presentation != null && user != null && feedbackToAdd != null)
                 {
@@ -137,7 +141,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentation = PresentationsBase.GetById(idPresentation);
+                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
                 Feedback feedbackToDelete = _feedbackService.GetById(presentation, idFeedback);
 
                 if (presentation != null && feedbackToDelete != null)
