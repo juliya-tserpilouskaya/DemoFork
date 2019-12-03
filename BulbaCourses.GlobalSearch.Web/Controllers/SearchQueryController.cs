@@ -8,18 +8,25 @@ using BulbaCourses.GlobalSearch.Web.Models;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using BulbaCourses.GlobalSearch.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
     [RoutePrefix("api/queries")]
     public class SearchQueryController : ApiController
     {
+        private readonly ISearchQueryService _searchQueryService;
+        public SearchQueryController(ISearchQueryService searchQueryService)
+        {
+            _searchQueryService = searchQueryService;
+        }
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no queries stored")]
         [SwaggerResponse(HttpStatusCode.OK, "Queries are found", typeof(IEnumerable<SearchQuery>))]
         public IHttpActionResult GetAll()
         {
-            var result = SearchQueryStorage.GetAll();
+            var result = _searchQueryService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -36,7 +43,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = SearchQueryStorage.GetById(id);
+                var result = _searchQueryService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -50,14 +57,14 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult Create([FromBody]SearchQuery query)
         {
             //validate here
-            return Ok(SearchQueryStorage.Add(query));
+            return Ok(_searchQueryService.Add(query));
         }
 
         [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The queries are removed")]
         public IHttpActionResult ClearAll()
         {
-            SearchQueryStorage.RemoveAll();
+            _searchQueryService.RemoveAll();
             return Ok();
         }
 
@@ -74,7 +81,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                SearchQueryStorage.RemoveById(id);
+                _searchQueryService.RemoveById(id);
                 return Ok();
             }
             catch (InvalidOperationException ex)
