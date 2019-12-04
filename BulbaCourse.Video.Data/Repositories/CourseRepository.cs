@@ -1,5 +1,4 @@
 ﻿using BulbaCourse.Video.Data.DatabaseContex;
-using BulbaCourse.Video.Data.Enums;
 using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -119,14 +118,14 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public int GetCourseLevel(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
-            CourseLevel level = course.Level;
+            int level = course.Level;
             return level;
         }
 
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
+        public void UpdateCourseLevel(string courseId, int level)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             course.Level = level;

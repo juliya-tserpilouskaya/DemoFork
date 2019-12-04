@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using BulbaCourse.Video.Data.Interfaces;
+﻿using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +43,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_1",
                    Author = user1,
-                   Level = CourseLevel.Beginner
+                   Level = 1
                },
 
                new CourseDb()
@@ -52,14 +51,14 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_2",
                    Author = user2,
-                   Level = CourseLevel.Beginner
+                   Level = 1
                }, 
                new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_3",
                    Author = user3,
-                   Level = CourseLevel.Advanced
+                   Level = 3
                },
             };
         }
@@ -110,7 +109,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public int GetCourseLevel(string courseId)
         {
             throw new NotImplementedException();
         }
@@ -130,7 +129,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
+        public void UpdateCourseLevel(string courseId, int level)
         {
             throw new NotImplementedException();
         }

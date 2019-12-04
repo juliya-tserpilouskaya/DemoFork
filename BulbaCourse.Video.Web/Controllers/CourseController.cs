@@ -1,6 +1,6 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using BulbaCourse.Video.Logic.InterfaceServices;
+﻿using BulbaCourse.Video.Logic.InterfaceServices;
 using BulbaCourse.Video.Logic.Services;
+using BulbaCourse.Video.Web.Enums;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;

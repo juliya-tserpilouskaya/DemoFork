@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +19,8 @@ namespace BulbaCourse.Video.Data.Interfaces
         ICollection<TagDb> GetTags(string courseId);
         ICollection<VideoMaterialDb> GetCourseVideos(string courseId);
         VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder);
-        CourseLevel GetCourseLevel(string courseId);
-        void UpdateCourseLevel(string courseId, CourseLevel level);
+        int GetCourseLevel(string courseId);
+        void UpdateCourseLevel(string courseId, int level);
         bool AddVideoToCourse(string courseId, string videoId);
         bool AddDiscription(string courseId, string discription);
     }

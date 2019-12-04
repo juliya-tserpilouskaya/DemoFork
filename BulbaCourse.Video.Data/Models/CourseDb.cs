@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +11,7 @@ namespace Video.Data.Models
         public string CourseId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public UserDb Author { get; set; }
-        public CourseLevel Level { get; set; }
+        public int Level { get; set; }
         public double Raiting { get; set; }
         public string Description { get; set; }
         public DateTime? UpdateDate { get; set; }

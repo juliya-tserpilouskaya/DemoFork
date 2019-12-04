@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using BulbaCourse.Video.Data.Interfaces;
+﻿using BulbaCourse.Video.Data.Interfaces;
 using BulbaCourse.Video.Logic.InterfaceServices;
 using System;
 using System.Collections.Generic;
@@ -71,7 +70,7 @@ namespace BulbaCourse.Video.Logic.Services
             courseRepository.DeleteById(courseId);
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public int GetCourseLevel(string courseId)
         {
             var result = courseRepository.GetCourseLevel(courseId);
             return result;
@@ -95,7 +94,7 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
+        public void UpdateCourseLevel(string courseId, int level)
         {
             courseRepository.UpdateCourseLevel(courseId, level);
         }

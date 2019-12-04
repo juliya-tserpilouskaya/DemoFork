@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +15,7 @@ namespace Video.Data.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string AvatarPath { get; set; }
-        public Subscription SubscriptionType { get; set; }
+        public int SubscriptionType { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }
         public DateTime? SubscriptionEndDate { get; set; }
 
