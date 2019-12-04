@@ -7,7 +7,7 @@ namespace Presentations.Logic.Repositories
 { 
     public class Feedback
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public string Text { get; set; }
 
