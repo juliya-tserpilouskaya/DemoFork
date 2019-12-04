@@ -1,11 +1,6 @@
 ﻿using BulbaCourses.Analytics.DAL.Context.Configurations;
 using BulbaCourses.Analytics.DAL.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Context
 {
@@ -13,7 +8,7 @@ namespace BulbaCourses.Analytics.DAL.Context
     {
         public AlfaContext() : base("AnalyticsDbConnection")
         {
-
+            
         }
 
         public DbSet<ReportDb> Reports { get; set; }
