@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.DTO;
 using BulbaCourses.Analytics.BLL.Infrastructure;
+using BulbaCourses.Analytics.BLL.Infrastructure.Exceptions;
 using BulbaCourses.Analytics.BLL.Interfaces;
 using BulbaCourses.Analytics.BLL.Services;
 using BulbaCourses.Analytics.Web.Models;
@@ -29,24 +30,32 @@ namespace BulbaCourses.Analytics.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Reports found", typeof(ReportViewModel))]
         public IHttpActionResult ShowAll()
         {
-            IEnumerable<ReportShortDTO> reportDTOs = _reportService.GetReportsShort();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportShortDTO, ReportViewModel>()).CreateMapper();
-            var reports = mapper.Map<IEnumerable<ReportShortDTO>, List<ReportViewModel>>(reportDTOs);
+            try
+            {
+                IEnumerable<ReportShortDTO> reportDTOs = _reportService.GetReportsShort();
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportShortDTO, ReportViewModel>()).CreateMapper();
+                var reports = mapper.Map<IEnumerable<ReportShortDTO>, List<ReportViewModel>>(reportDTOs);
 
-            return reports == null ? NotFound() : (IHttpActionResult)Ok(reports);
+                return Ok(reports);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+
         }
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Report doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.OK, "Report found", typeof(ReportViewModel))]
         public IHttpActionResult ShowReportById(string Id)
-        {   
+        {
             try
             {
                 var reportDTO = _reportService.GetReportById(Id);
                 return Ok(reportDTO);
             }
-            catch (ValidationException)
+            catch (NotFoundException)
             {
                 return NotFound();
             }
@@ -62,7 +71,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
                 _reportService.RemoveReport(Id);
                 return Ok(Id);
             }
-            catch (ValidationException)
+            catch (NotFoundException)
             {
                 return NotFound();
             }
