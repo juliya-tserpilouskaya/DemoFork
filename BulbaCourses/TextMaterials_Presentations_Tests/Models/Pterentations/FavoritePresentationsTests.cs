@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.Presentations;
-using BulbaCourses.TextMaterials_Presentations.Web.Models.StaffAndUsers;
+using Presentations.Logic.Repositories;
+using Presentations.Logic.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +15,14 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
     [TestFixture]
     public class FavoritePresentationsTests
     {
+        List<Presentation> _fakePresentations;
+        Student _student;
+
+        FavoritePresentationsService _favoritePresentationsService = new FavoritePresentationsService();
+
         Faker<Presentation> _faker = new Faker<Presentation>().RuleFor(x => x.Id, y => y.Random.Byte(0, 250).ToString())
                                                    .RuleFor(x => x.IsAccessible, y => y.Random.Bool())
                                                    .RuleFor(x => x.CourseId, y => y.Random.Byte(0, 250).ToString());
-
-        List<Presentation> _fakePresentations;
-        Student _student;
 
         [SetUp]
         public void ListGenerator() //if everyone test is failed - check the Add method
@@ -32,7 +34,7 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
 
             foreach (var item in _fakePresentations)
             {
-                FavoritePresentationsOperations.Add(_student, item);
+                _favoritePresentationsService.Add(_student, item);
             }
         }
 
@@ -43,27 +45,27 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
 
             foreach (var item in presentations)
             {
-                FavoritePresentationsOperations.Add(_student, item).Should().BeEquivalentTo(item);
+                _favoritePresentationsService.Add(_student, item).Should().BeEquivalentTo(item);
             }
         }
 
         [Test]
         public void GetAll_Test()
         {
-            FavoritePresentationsOperations.GetAll(_student).Should().BeEquivalentTo(_fakePresentations);
+            _favoritePresentationsService.GetAll(_student).Should().BeEquivalentTo(_fakePresentations);
         }
 
         [Test]
         public void GetById_Test()
         {
-            FavoritePresentationsOperations.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeEquivalentTo(_fakePresentations.First<Presentation>());
+            _favoritePresentationsService.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeEquivalentTo(_fakePresentations.First<Presentation>());
         }
 
         [Test]
         public void DeleteById_Test()
         {
-            FavoritePresentationsOperations.DeleteById(_student, _fakePresentations.First<Presentation>().Id).Should().BeTrue();
-            FavoritePresentationsOperations.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeNull();
+            _favoritePresentationsService.DeleteById(_student, _fakePresentations.First<Presentation>().Id).Should().BeTrue();
+            _favoritePresentationsService.GetById(_student, _fakePresentations.First<Presentation>().Id).Should().BeNull();
         }
     }
 }

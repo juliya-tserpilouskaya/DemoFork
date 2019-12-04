@@ -82,9 +82,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BulbaCourses.TextMaterials_Presentations.Web\BulbaCourses.TextMaterials_Presentations.Web.csproj">
-      <Project>{DAE8514E-3D8F-49AC-8418-DFA1984226CD}</Project>
-      <Name>BulbaCourses.TextMaterials_Presentations.Web</Name>
+    <ProjectReference Include="..\BulbaCourses.TextMaterials_Presentations.Logic\BulbaCourses.TextMaterials_Presentations.Logic.csproj">
+      <Project>{6335f50b-20df-493f-afb0-02b09123521f}</Project>
+      <Name>BulbaCourses.TextMaterials_Presentations.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

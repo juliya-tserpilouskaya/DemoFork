@@ -111,16 +111,16 @@
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ChangedPresentationsOperationsController.cs" />
+    <Compile Include="Controllers\ChangedPresentationsController.cs" />
     <Compile Include="Controllers\CourseBaseController.cs" />
     <Compile Include="Controllers\CoursePresentationsController.cs" />
     <Compile Include="Controllers\CourseTeachersController.cs" />
-    <Compile Include="Controllers\FavoritePresentationsOperationsController.cs" />
-    <Compile Include="Controllers\FeedbackServiceController.cs" />
+    <Compile Include="Controllers\FavoritePresentationsController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\PresentationsController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
-    <Compile Include="Controllers\ViewedPresentationsOperationsController.cs" />
+    <Compile Include="Controllers\ViewedPresentationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
