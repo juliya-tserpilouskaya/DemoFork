@@ -53,7 +53,10 @@ namespace BulbaCourses.Analytics.Web.Controllers
             try
             {
                 var reportDTO = _reportService.GetReportById(Id);
-                return Ok(reportDTO);
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportDTO, ReportViewModel>()).CreateMapper();
+                var report = mapper.Map<ReportDTO, ReportViewModel>(reportDTO);
+
+                return Ok(report);
             }
             catch (NotFoundException)
             {
