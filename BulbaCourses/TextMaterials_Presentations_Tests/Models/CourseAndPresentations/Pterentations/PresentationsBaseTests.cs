@@ -74,7 +74,6 @@ namespace TextMaterials_Presentations_Tests.Models.Pterentations
                 IsAccessible = true,
             };
 
-            Presentation presentationBeforeUpdate = PresentationsBase.GetById(_fakePresentations.First<Presentation>().Id);
             Presentation presentationAfterUpdate = PresentationsBase.Update(presentationForUpdate);
 
             presentationAfterUpdate.Title.Should().BeEquivalentTo(presentationForUpdate.Title);

@@ -6,7 +6,7 @@ using Presentations.Logic.Repositories;
 
 namespace Presentations.Logic.Services
 {
-    class CourseBaseService : ICourseBaseService
+    public class CourseBaseService : ICourseBaseService
     {
         public Course Add(Course course)
         {
