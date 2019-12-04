@@ -17,36 +17,23 @@ namespace BulbaCourses.Analytics.DAL.Repositories
         }
 
         public void Create(T item)
-        {            
+        {
             _context.Add(item);
         }
 
-        public void Delete(Predicate<T> predicate)
+        public void Delete(T item)
         {
-            T item = _context.Find(predicate);
-
-            if (item != null)
-                _context.Remove(item);
+            _context.Remove(item);
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
-            return _context.Where(predicate).ToList();
+            return _context.Where(predicate).ToList().AsReadOnly();
         }
 
-        public T Read(Predicate<T> predicate)
+        public void Update(T item)
         {
-            return _context.Find(predicate);
-        }
-
-        public IEnumerable<T> ReadAll()
-        {
-            return _context.AsReadOnly();
-        }
-
-        public void Update(T item, Predicate<T> predicate)
-        {
-            Delete(predicate);
+            Delete(item);
             Create(item);
         }
     }

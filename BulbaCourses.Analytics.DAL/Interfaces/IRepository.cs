@@ -13,14 +13,11 @@ namespace BulbaCourses.Analytics.DAL.Interfaces
     public interface IRepository<T> where T : class
     {
         void Create(T item);
-        T Read(Predicate<T> predicate);
-
-        IEnumerable<T> ReadAll();               
-
-        void Update(T item, Predicate<T> predicate);
-
-        void Delete(Predicate<T> predicate);
 
         IEnumerable<T> Find(Func<T, bool> predicate);
+
+        void Update(T item);
+
+        void Delete(T item); 
     }
 }
