@@ -6,7 +6,7 @@ using Presentations.Logic.Repositories;
 
 namespace Presentations.Logic.Services
 {
-    class PresentationsBaseService : IPresentationsBaseService
+    public class PresentationsBaseService : IPresentationsBaseService
     {
         public Presentation Add(Presentation presentation)
         {

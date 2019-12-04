@@ -24,7 +24,7 @@ namespace TextMaterials_Presentations_Tests.Models.CourseAndPresentations.Course
                                                    .RuleFor(x => x.FullName, y => y.Name.FullName());
 
         [SetUp]
-        public void ListGenerator() //if everyone test is failed - check the Add method
+        public void ListGenerator() //if everyone test are failed - check the Add method
         {
             _course = new Course();
             _course.CourseTeachers = new List<Teacher>();

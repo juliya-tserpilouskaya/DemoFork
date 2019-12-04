@@ -22,7 +22,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Tests
         List<Teacher> _fakeTeachers;
 
         [SetUp]
-        public void ListGenerator() //if everyone test is failed - check the Add method
+        public void ListGenerator() //if everyone test are failed - check the Add method
         {
             _fakeTeachers = _faker.Generate(5);
 

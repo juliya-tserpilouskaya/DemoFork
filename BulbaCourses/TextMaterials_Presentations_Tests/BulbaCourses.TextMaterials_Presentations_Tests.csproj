@@ -76,6 +76,8 @@
     <Compile Include="Models\CourseAndPresentations\Courses\CourseTeachersServiceTest.cs" />
     <Compile Include="Models\CourseAndPresentations\Courses\CourseBaseServiceTest.cs" />
     <Compile Include="Models\CourseAndPresentations\Pterentations\PresentationsBaseTests.cs" />
+    <Compile Include="Models\CourseAndPresentations\Pterentations\FeedbackServiceTest.cs" />
+    <Compile Include="Models\CourseAndPresentations\Pterentations\PresentationsBaseServiceTest.cs" />
     <Compile Include="Models\StaffAndUsers\FavoritePresentationsTests.cs" />
     <Compile Include="Models\StaffAndUsers\StaffTests.cs" />
     <Compile Include="Models\StaffAndUsers\StudentsBaseTests.cs" />

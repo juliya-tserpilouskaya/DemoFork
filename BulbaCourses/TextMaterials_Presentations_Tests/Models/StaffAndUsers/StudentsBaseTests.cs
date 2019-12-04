@@ -23,7 +23,7 @@ namespace TextMaterials_Presentations_Tests.Models.StaffAndUsers
          List<Student> _fakeStudents;
 
         [SetUp]
-        public void ListGenerator() //if everyone test is failed - check the Add method
+        public void ListGenerator() //if everyone test are failed - check the Add method
         {
             _fakeStudents = _faker.Generate(5);
 
