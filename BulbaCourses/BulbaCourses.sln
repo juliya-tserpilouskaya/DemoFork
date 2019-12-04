@@ -49,11 +49,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Podcasts", "Podcasts", "{69
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Web", "..\BulbaCourses.Podcasts.Web\BulbaCourses.Podcasts.Web.csproj", "{EB66B559-66F7-4A2D-A665-5724C4BF7C47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.DAL", "..\BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj", "{53FA5E2C-5698-4F83-B190-71AA652DAE01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.DAL", "BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj", "{53FA5E2C-5698-4F83-B190-71AA652DAE01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.BLL", "..\BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj", "{09826433-98BD-45C2-AF11-1779CDFABE25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.BLL", "BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj", "{09826433-98BD-45C2-AF11-1779CDFABE25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Tests", "..\BulbaCourses.Analytics.Tests\BulbaCourses.Analytics.Tests.csproj", "{FA0DB9FD-0B07-400A-B370-7238686EA785}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Tests", "BulbaCourses.Analytics.Tests\BulbaCourses.Analytics.Tests.csproj", "{FA0DB9FD-0B07-400A-B370-7238686EA785}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourse.Video.Logic", "..\BulbaCourse.Video.Logic\BulbaCourse.Video.Logic.csproj", "{75848CD2-8042-46C8-B14D-3D7B8878FE1B}"
 EndProject
