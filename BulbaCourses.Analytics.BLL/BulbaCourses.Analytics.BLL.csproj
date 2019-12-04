@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ChartDTO.cs" />
     <Compile Include="DTO\DashboardDTO.cs" />
     <Compile Include="DTO\ReportDTO.cs" />
     <Compile Include="DTO\ReportShortDTO.cs" />
