@@ -51,11 +51,19 @@
     <Compile Include="DTO\ReportDTO.cs" />
     <Compile Include="DTO\ReportShortDTO.cs" />
     <Compile Include="Infrastructure\BLLModule.cs" />
-    <Compile Include="Infrastructure\ValidationException.cs" />
+    <Compile Include="Infrastructure\Exceptions\ExceptionMessage.cs" />
+    <Compile Include="Infrastructure\Exceptions\AbstractException.cs" />
+    <Compile Include="Infrastructure\Exceptions\NotFoundException.cs" />
+    <Compile Include="Infrastructure\ThrowException.cs" />
     <Compile Include="Interfaces\ICheckable.cs" />
     <Compile Include="Interfaces\IDashboardService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\DashboardService.cs" />
     <Compile Include="Services\Dispose\DashboardService.cs" />
     <Compile Include="Services\Dispose\ReportService.cs" />
@@ -72,5 +80,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
