@@ -4,16 +4,17 @@ using System.Linq;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
-    public class Video
+    public class VideoDb
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public CourseOwner Author { get; set; }
-        public int ChannelId { get; set; }
-        public int PlayListId { get; set; }
-        public DateTime PublishedAt { get; set; }
+        public string Etag { get; set; }
         public string Url { get; set; }
+        public string Title { get; set; }
+        public CourseOwner Author { get; set; }
+        public string Description { get; set; }
+        public int ChannelId { get; set; }
+        //public int PlayListId { get; set; }
+        public DateTime PublishedAt { get; set; }
         public Course Course { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using BulbaCourses.Youtube.Web.Logic.Services;
 using BulbaCourses.Youtube.Web.DataAccess.Models;
-using Video = BulbaCourses.Youtube.Web.DataAccess.Models.Video;
+using VideoDb = BulbaCourses.Youtube.Web.DataAccess.Models.VideoDb;
 using Course = BulbaCourses.Youtube.Web.DataAccess.Models.Course;
 using CourseOwner = BulbaCourses.Youtube.Web.DataAccess.Models.CourseOwner;
 using Channel = BulbaCourses.Youtube.Web.DataAccess.Models.Channel;
@@ -22,7 +22,7 @@ namespace BulbaCourses.Youtube.Web.Tests
     [TestFixture]
     public class VideoControllerTest
     {
-        List<Video> videos;
+        List<VideoDb> videos;
 
         [OneTimeSetUp]
         public void Init()
@@ -47,13 +47,13 @@ namespace BulbaCourses.Youtube.Web.Tests
 
             //Faker for Video
             int? videoIds = 0;
-            Faker<Video> fakerV = new Faker<Video>();
+            Faker<VideoDb> fakerV = new Faker<VideoDb>();
             fakerV.RuleFor(v => v.Id, f => videoIds+1)
                 .RuleFor(v => v.Title, f => f.Random.Word())
                 .RuleFor(v => v.Description, f => f.Random.Words(5))
                 .RuleFor(v => v.Author, f => fakerCO.Generate())
                 .RuleFor(v => v.ChannelId, f => f.Random.Number(1, 5))
-                .RuleFor(v => v.PlayListId, f => f.Random.Number(1, 10))
+              //  .RuleFor(v => v.PlayListId, f => f.Random.Number(1, 10))
                 .RuleFor(v => v.PublishedAt, f => f.Date.Past(2))
                 .RuleFor(v => v.Url, f => f.Internet.Url())
                 .RuleFor(v => v.Course, f => fakerC.Generate());
@@ -70,19 +70,19 @@ namespace BulbaCourses.Youtube.Web.Tests
 
             VideoController videoController = new VideoController(mock.Object);
 
-            var result = (OkNegotiatedContentResult<Video>)videoController.GetById(1);
+            var result = (OkNegotiatedContentResult<VideoDb>)videoController.GetById(1);
             result.Content.Should().Be(videos.First());
         }
         [Test]
         public void Test_GetAll()
         {
             var mock = new Mock<IVideoService>();
-            mock.Setup(v => v.GetAll()).Returns((IEnumerable<Video>)videos.AsReadOnly());
+            mock.Setup(v => v.GetAll()).Returns((IEnumerable<VideoDb>)videos.AsReadOnly());
 
             VideoController videoController = new VideoController(mock.Object);
 
-            var result = (OkNegotiatedContentResult<IEnumerable<Video>>)videoController.GetAll();
-            result.Content.Should().BeEquivalentTo((IEnumerable<Video>)videos.AsReadOnly());
+            var result = (OkNegotiatedContentResult<IEnumerable<VideoDb>>)videoController.GetAll();
+            result.Content.Should().BeEquivalentTo((IEnumerable<VideoDb>)videos.AsReadOnly());
         }
 
     }
