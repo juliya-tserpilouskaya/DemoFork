@@ -10,7 +10,7 @@ namespace BulbaCourses.Analytics.BLL.Interfaces
     /// <summary>
     /// Provides a mechanism for working Report.
     /// </summary>
-    public interface IReportService: ICheckable, IDisposable
+    public interface IReportService: IDisposable
     {
         /// <summary>
         /// Getting DashboardService
