@@ -10,7 +10,7 @@ namespace BulbaCourses.Analytics.BLL.Interfaces
     /// <summary>
     /// Provides a mechanism for working Dashboard.
     /// </summary>
-    public interface IDashboardService: ICheckable, IDisposable
+    public interface IDashboardService: IDisposable
     {
         /// <summary>
         /// Showing Dashboard

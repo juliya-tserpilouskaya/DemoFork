@@ -56,7 +56,6 @@
     <Compile Include="Infrastructure\Exceptions\AbstractException.cs" />
     <Compile Include="Infrastructure\Exceptions\NotFoundException.cs" />
     <Compile Include="Infrastructure\ThrowException.cs" />
-    <Compile Include="Interfaces\ICheckable.cs" />
     <Compile Include="Interfaces\IDashboardService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
