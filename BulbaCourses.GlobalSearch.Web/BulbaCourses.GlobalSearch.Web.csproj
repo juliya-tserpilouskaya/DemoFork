@@ -47,6 +47,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\BulbaCourses\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\BulbaCourses\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -64,6 +70,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\BulbaCourses\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -87,10 +96,37 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AnonymousUserController.cs" />
+    <Compile Include="Controllers\LearningCourseController.cs" />
+    <Compile Include="Controllers\SearchQueryController.cs" />
+    <Compile Include="Controllers\BookmarkController.cs" />
+    <Compile Include="Controllers\RegisteredUserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnonymousUser.cs" />
+    <Compile Include="Models\AnonymousUserStorage.cs" />
+    <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Bookmark.cs" />
+    <Compile Include="Models\BookmarkStorage.cs" />
+    <Compile Include="Models\Enums\Category.cs" />
+    <Compile Include="Models\Enums\Complexity.cs" />
+    <Compile Include="Models\Enums\Section.cs" />
+    <Compile Include="Models\Enums\SortingType.cs" />
+    <Compile Include="Models\Excercise.cs" />
+    <Compile Include="Models\LearningCourse.cs" />
+    <Compile Include="Models\LearningCourseItem.cs" />
+    <Compile Include="Models\LearningCourseStorage.cs" />
+    <Compile Include="Models\Podcast.cs" />
+    <Compile Include="Models\RegisteredUser.cs" />
+    <Compile Include="Models\SearchQuery.cs" />
+    <Compile Include="Models\SearchQueryStorage.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Models\Text.cs" />
+    <Compile Include="Models\RegisteredUserStorage.cs" />
+    <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -108,8 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
