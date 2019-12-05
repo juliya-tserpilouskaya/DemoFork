@@ -42,8 +42,8 @@ namespace BulbaCourses.GlobalSearch.Data
         public virtual DbSet<PodcastCourseDB> PodcastCourses { get; set; }
         public virtual DbSet<TestCourseDB> TestCourses { get; set; }
         public virtual DbSet<TestDB> Tests { get; set; }
-        public virtual DbSet<ArticleCourseDB> TextCourses { get; set; }
-        public virtual DbSet<ArticleDB> Texts { get; set; }
+        public virtual DbSet<ArticleCourseDB> ArticleCourses { get; set; }
+        public virtual DbSet<ArticleDB> Articles { get; set; }
         public virtual DbSet<VideoCourseDB> VideoCourses { get; set; }
         public virtual DbSet<VideoDB> Videos { get; set; }
     }
