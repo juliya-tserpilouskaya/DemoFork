@@ -92,7 +92,10 @@
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\ICourseRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />
+    <Compile Include="Interfaces\ITegRepository.cs" />
+    <Compile Include="Interfaces\ITransactionRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IVideoRepository.cs" />
     <Compile Include="Models\CommentDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\RoleDb.cs" />
@@ -104,7 +107,10 @@
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\CourseRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\TegRepository.cs" />
+    <Compile Include="Repositories\TransactionRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\VideoRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
