@@ -7,7 +7,6 @@ namespace BulbaCourses.Analytics.Web.App_Start
     using System.Web;
     using System.Web.Http;
     using BulbaCourses.Analytics.BLL.Infrastructure;
-    using BulbaCourses.Analytics.DAL.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
