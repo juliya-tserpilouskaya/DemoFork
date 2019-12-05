@@ -163,10 +163,6 @@
       <Project>{09826433-98bd-45c2-af11-1779cdfabe25}</Project>
       <Name>BulbaCourses.Analytics.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj">
-      <Project>{53fa5e2c-5698-4f83-b190-71aa652dae01}</Project>
-      <Name>BulbaCourses.Analytics.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
