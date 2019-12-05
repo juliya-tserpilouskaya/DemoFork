@@ -1,4 +1,6 @@
-﻿using BulbaCourses.GlobalSearch.Data.Models;
+﻿using BulbaCourses.GlobalSearch.Data.EntitiesConfiguration;
+using BulbaCourses.GlobalSearch.Data.EntitiesConfiguration.CoursesConfiguration;
+using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Models.Courses;
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,17 @@ namespace BulbaCourses.GlobalSearch.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Configurations.Add(new AuthorConfiguration());
+            modelBuilder.Configurations.Add(new ExcerciseCourseConfiguration());
+            modelBuilder.Configurations.Add(new PodcastCourseConfiguration());
+            modelBuilder.Configurations.Add(new TestCourseConfiguration());
+            modelBuilder.Configurations.Add(new ArticleCourseConfiguration());
+            modelBuilder.Configurations.Add(new VideoCourseConfiguration());
+            modelBuilder.Configurations.Add(new ExcerciseConfiguration());
+            modelBuilder.Configurations.Add(new PodcastConfiguration());
+            modelBuilder.Configurations.Add(new TestConfiguration());
+            modelBuilder.Configurations.Add(new ArticleConfiguration());
+            modelBuilder.Configurations.Add(new VideoConfiguration());
         }
 
 
