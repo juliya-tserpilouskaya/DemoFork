@@ -4,7 +4,11 @@ services:
   bulbacourses.youtube.web:
     ports:
       - "80"
+  bulbacourses.practicalmaterialstests.web:
+    ports:
+      - "80"
 networks:
   default:
     external:
       name: nat
+
