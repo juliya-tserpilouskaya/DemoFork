@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Models.Courses
 {
-    class ArticleCourseDB
+    public class ArticleCourseDB
     {
         public string Id { get; set; }
         public ICollection<ArticleDB> Items { get; set; }
