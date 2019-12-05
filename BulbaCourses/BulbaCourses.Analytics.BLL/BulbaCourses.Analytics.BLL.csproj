@@ -53,19 +53,13 @@
     <Compile Include="DTO\ReportDTO.cs" />
     <Compile Include="DTO\ReportShortDTO.cs" />
     <Compile Include="Infrastructure\BLLModule.cs" />
-    <Compile Include="Infrastructure\Exceptions\ExceptionMessage.cs" />
-    <Compile Include="Infrastructure\Exceptions\AbstractException.cs" />
-    <Compile Include="Infrastructure\Exceptions\NotFoundException.cs" />
-    <Compile Include="Infrastructure\ThrowException.cs" />
-    <Compile Include="Interfaces\IDashboardService.cs" />
-    <Compile Include="Interfaces\IReportService.cs" />
+    <Compile Include="Infrastructure\Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\DashboardService.cs" />
     <Compile Include="Services\Dispose\DashboardService.cs" />
     <Compile Include="Services\Dispose\ReportService.cs" />
     <Compile Include="Services\ReportService.cs" />
@@ -79,6 +73,10 @@
       <Project>{53fa5e2c-5698-4f83-b190-71aa652dae01}</Project>
       <Name>BulbaCourses.Analytics.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj">
+      <Project>{12B86A99-3216-441C-BDAC-C8CD95DA5189}</Project>
+      <Name>BulbaCourses.Analytics.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.resx">
@@ -86,5 +84,6 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

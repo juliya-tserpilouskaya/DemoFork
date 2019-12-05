@@ -1,11 +1,13 @@
-﻿using BulbaCourses.Analytics.BLL.Interfaces;
+﻿using BulbaCourses.Analytics.BLL.DTO;
 using BulbaCourses.Analytics.BLL.Services;
-using BulbaCourses.Analytics.DAL.Entities.Coupling;
-using BulbaCourses.Analytics.DAL.Entities.Dashboards;
-using BulbaCourses.Analytics.DAL.Entities.Reports;
 using BulbaCourses.Analytics.DAL.Interfaces;
+using BulbaCourses.Analytics.DAL.Models;
 using BulbaCourses.Analytics.DAL.Repositories;
 using BulbaCourses.Analytics.DAL.Storage;
+using BulbaCourses.Analytics.Infrastructure.BLL.Models;
+using BulbaCourses.Analytics.Infrastructure.BLL.Services;
+using BulbaCourses.Analytics.Infrastructure.DAL;
+using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using Ninject.Modules;
 
 namespace BulbaCourses.Analytics.BLL.Infrastructure
@@ -14,19 +16,21 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure
     {
         public override void Load()
         {
+            // Bind BLL
+            Bind<IReportDto>().To<ReportDto>();
+            Bind<IReportService>().To<ReportService>();
+
+            // Bind DAL
+            Bind<IReportDb>().To<ReportDb>();
+            Bind<IDashboardDb>().To<DashboardDb>();
+
             Bind<IReportStorage>().To<ReportStorage>();
-            Bind<IRepository<Report>>().To<ReportRepository>();
+            Bind<IReportRepository>().To<ReportRepository>();
 
             Bind<IDashboardStorage>().To<DashboardStorage>();
-            Bind<IRepository<Dashboard>>().To<DashboardRepository>();
-
-            Bind<ILinksStorage>().To<LinksStorage>();
-            Bind<IRepository<Links>>().To<LinksRepository>();
+            Bind<IDashboardRepository>().To<DashboardRepository>();
 
             Bind<IDataBase>().To<DataBase>();
-            Bind<IDashboardService>().To<DashboardService>();
-
-            Bind<IReportService>().To<ReportService>();
         }
     }
 }

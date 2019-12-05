@@ -89,36 +89,31 @@
     <Compile Include="Context\Configurations\ChartConfigurations.cs" />
     <Compile Include="Context\Configurations\DashboardConfigurations.cs" />
     <Compile Include="Context\Configurations\ReportConfigurations.cs" />
-    <Compile Include="Interfaces\IAuditModel.cs" />
     <Compile Include="Models\ChartDb.cs" />
     <Compile Include="Models\DashboardDb.cs" />
     <Compile Include="Models\ReportDb.cs" />
     <Compile Include="Storage\DashboardStorage.cs" />
-    <Compile Include="Storage\LinksStorage.cs" />
     <Compile Include="Storage\ReportStorage.cs" />
     <Compile Include="Entities\Actors\Analyst.cs" />
     <Compile Include="Entities\Actors\Person.cs" />
-    <Compile Include="Entities\Coupling\Links.cs" />
-    <Compile Include="Entities\Dashboards\Dashboard.cs" />
-    <Compile Include="Entities\Reports\Report.cs" />
-    <Compile Include="Infrastructure\DALModule.cs" />
     <Compile Include="Interfaces\IDashboardStorage.cs" />
     <Compile Include="Interfaces\IDataBase.cs" />
-    <Compile Include="Interfaces\ILinksStorage.cs" />
     <Compile Include="Interfaces\IReportStorage.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\AbstractRepository.cs" />
     <Compile Include="Repositories\DashboardRepository.cs" />
     <Compile Include="Repositories\DataBase.cs" />
-    <Compile Include="Repositories\LinksRepository.cs" />
     <Compile Include="Repositories\ReportRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj">
+      <Project>{12B86A99-3216-441C-BDAC-C8CD95DA5189}</Project>
+      <Name>BulbaCourses.Analytics.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

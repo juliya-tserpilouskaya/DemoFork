@@ -1,13 +1,10 @@
-﻿using BulbaCourses.Analytics.DAL.Interfaces;
+﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class ReportDb: IAuditModel
+    public class ReportDb : IReportDb
     {
         public string Id { get; set; }
 
@@ -23,6 +20,6 @@ namespace BulbaCourses.Analytics.DAL.Models
 
         public string Modifier { get; set; }
 
-        public ICollection<DashboardDb> Dashboards { get; set; }
+        public ICollection<IDashboardDb> Dashboards { get; set; }
     }
 }

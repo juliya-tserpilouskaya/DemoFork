@@ -1,30 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
 using Bogus;
 using BulbaCourses.Analytics.BLL.DTO;
-using BulbaCourses.Analytics.BLL.Interfaces;
-using BulbaCourses.Analytics.DAL.Entities.Reports;
+using BulbaCourses.Analytics.Infrastructure.BLL.Services;
 using BulbaCourses.Analytics.Web.Controllers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BulbaCourses.Analytics.Web.Models;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System.Web.Http.Results;
-using FluentAssertions;
-using BulbaCourses.Analytics.Web.Models;
+using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
+using System.Web.Http.Results;
 
 namespace BulbaCourses.Analytics.Tests
 {
     [TestFixture]
     public class ReportControllerTest
     {
-        private IEnumerable<ReportShortDTO> _reportsShorts;
-        private IEnumerable<ReportDTO> _reports;
+        private IEnumerable<ReportDto> _reportsShorts;
+        private IEnumerable<ReportDto> _reports;
 
         [OneTimeSetUp]
         public void InitShorts()
         {
-            var generator = new Faker<ReportShortDTO>()
+            var generator = new Faker<ReportDto>()
                 .StrictMode(true)
                 .RuleFor(d => d.Id, _ => "")
                 .RuleFor(d => d.Name, _ => _.Commerce.Department());
@@ -39,13 +37,13 @@ namespace BulbaCourses.Analytics.Tests
                 number++;
             }
 
-            _reportsShorts = (IEnumerable<ReportShortDTO>)reports;
+            _reportsShorts = (IEnumerable<ReportDto>)reports;
         }
 
         [OneTimeSetUp]
         public void Init()
         {
-            var generator = new Faker<ReportDTO>()
+            var generator = new Faker<ReportDto>()
                 .StrictMode(true)
                 .RuleFor(d => d.Id, _ => "")
                 .RuleFor(d => d.Name, _ => _.Commerce.Department())
@@ -62,34 +60,34 @@ namespace BulbaCourses.Analytics.Tests
                 number++;
             }
 
-            _reports = (IEnumerable<ReportDTO>)reports;
+            _reports = (IEnumerable<ReportDto>)reports;
         }
 
         [Test]
         public void ShowReportById()
         {
-            var mock = new Mock<IReportService>();
-            mock.Setup(_ => _.GetReportById("1")).Returns(_reports.First());
+            var mock = new Mock<ReportService>();
+            mock.Setup(_ => _.GetById("1")).Returns(_reports.First());
 
             ReportsController reportController = new ReportsController(mock.Object);
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportDTO, ReportViewModel>()).CreateMapper();
-            var report = mapper.Map<ReportDTO, ReportViewModel>(mock.Object.GetReportById("1"));
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportDto, ReportVm>()).CreateMapper();
+            var report = mapper.Map<ReportDto, ReportVm>(mock.Object.GetById("1"));
 
-            var result = ((OkNegotiatedContentResult<ReportViewModel>)reportController.ShowReportById("1"));
-            
+            var result = ((OkNegotiatedContentResult<ReportVm>)reportController.ShowReportById("1"));
+
             result.Content.Name.Should().Be(_reports.First().Name);
         }
 
         [Test]
         public void TestShowAll()
         {
-            var mock = new Mock<IReportService>();
-            mock.Setup(_ => _.GetReportsShort()).Returns(_reportsShorts);
+            var mock = new Mock<ReportService>();
+            mock.Setup(_ => _.GetAll()).Returns(_reportsShorts);
 
             ReportsController reportController = new ReportsController(mock.Object);
 
-            var result = (OkNegotiatedContentResult<List<ReportViewModel>>)reportController.ShowAll();
+            var result = (OkNegotiatedContentResult<List<ReportVm>>)reportController.ShowAll();
 
             result.Content.Should().BeEquivalentTo(_reportsShorts);
 

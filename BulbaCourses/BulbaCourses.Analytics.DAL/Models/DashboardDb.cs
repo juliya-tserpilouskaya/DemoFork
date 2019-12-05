@@ -1,17 +1,19 @@
-﻿using BulbaCourses.Analytics.DAL.Interfaces;
+﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class DashboardDb : IAuditModel
+    public class DashboardDb : IDashboardDb
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public int ChartId { get; set; }
+
+        public string ReportId { get; set; }
+
+        public IReportDb Report { get; set; }
 
         public DateTime? Created { get; set; }
 
@@ -20,11 +22,5 @@ namespace BulbaCourses.Analytics.DAL.Models
         public string Creator { get; set; }
 
         public string Modifier { get; set; }
-
-        public int ChartId { get; set; }
-
-        public string ReportId { get; set; }
-
-        public ReportDb Report { get; set; }
     }
 }

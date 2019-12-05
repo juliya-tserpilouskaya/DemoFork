@@ -1,20 +1,16 @@
-﻿using BulbaCourses.Analytics.DAL.Entities.Dashboards;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bogus;
+﻿using Bogus;
 using BulbaCourses.Analytics.DAL.Interfaces;
+using BulbaCourses.Analytics.Infrastructure.DAL.Models;
+using System.Collections.Generic;
 
 namespace BulbaCourses.Analytics.DAL.Storage
-{  
+{
 
     public class DashboardStorage : IDashboardStorage
     {
-        private List<Dashboard> _dashboards = null;
+        private List<IDashboardDb> _dashboards = null;
 
-        public List<Dashboard> Storage
+        public List<IDashboardDb> Storage
         {
             get
             {
@@ -26,9 +22,9 @@ namespace BulbaCourses.Analytics.DAL.Storage
             }
         }
 
-        private static List<Dashboard> GetDashboards()
+        private static List<IDashboardDb> GetDashboards()
         {
-            var generator = new Faker<Dashboard>()
+            var generator = new Faker<IDashboardDb>()
                 .StrictMode(true)
                 .RuleFor(d => d.Id, _ => "")
                 .RuleFor(d => d.Name, _ => "Analysis of " + _.Commerce.Product());
@@ -36,10 +32,13 @@ namespace BulbaCourses.Analytics.DAL.Storage
             int count = 15;
             var dashboards = generator.Generate(count);
 
+            List<IDashboardDb> ireports = new List<IDashboardDb>();
+
             int number = 1;
             foreach (var dashboard in dashboards)
             {
                 dashboard.Id = number.ToString();
+                ireports.Add(dashboard);
                 number++;
             }
 

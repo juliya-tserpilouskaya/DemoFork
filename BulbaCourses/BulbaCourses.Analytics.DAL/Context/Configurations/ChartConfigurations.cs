@@ -1,9 +1,9 @@
-﻿using BulbaCourses.Analytics.DAL.Models;
+﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.Analytics.DAL.Context.Configurations
 {
-    internal class ChartConfigurations : EntityTypeConfiguration<ChartDb>
+    internal class ChartConfigurations : EntityTypeConfiguration<IChartDb>
     {
         public ChartConfigurations()
         {

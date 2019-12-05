@@ -1,73 +1,72 @@
 ﻿using AutoMapper;
-using BulbaCourses.Analytics.BLL.DTO;
 using BulbaCourses.Analytics.BLL.Infrastructure;
-using BulbaCourses.Analytics.BLL.Interfaces;
 using BulbaCourses.Analytics.BLL.Resources;
-using BulbaCourses.Analytics.DAL.Entities.Reports;
 using BulbaCourses.Analytics.DAL.Interfaces;
-using BulbaCourses.Analytics.DAL.Repositories;
-using BulbaCourses.Analytics.DAL.Storage;
+using BulbaCourses.Analytics.Infrastructure.BLL.Models;
+using BulbaCourses.Analytics.Infrastructure.BLL.Services;
+using BulbaCourses.Analytics.Infrastructure.DAL;
+using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
     internal partial class ReportService : IReportService
     {
-        private IDataBase _context;
+        private readonly IDataBase _context;
 
-        public ReportService(IDataBase context, IDashboardService dashboardService, IRepository<Report> repositoryReport)
-        {
-            DashboardService = dashboardService;
+        public ReportService(IDataBase context, IReportRepository repositoryReport)
+        {            
             _context = context;
             _context.Reports = repositoryReport;
-        }
+        }              
 
-        public IDashboardService DashboardService { get; }
-
-        public ReportDTO ChangeReport(ReportDTO reportDTO)
+        public IReportDto Update(IReportDto reportDTO)
         {
             throw new NotImplementedException();
         }        
 
-        public ReportDTO CreateReport(ReportDTO reportDTO)
+        public IReportDto Create(IReportDto reportDTO)
         {
             throw new NotImplementedException();
         }
 
-        public ReportDTO GetReportById(string Id)
+        public IReportDto GetById(string id)
         {
-            ThrowException.IsNull(Id, Resource.NotFoundReportById);
+            if (Validation.IsNull(id, "Id", Resource.NotFoundReportById))
+                return null;
 
-            var report = _context.Reports.Find(_ => _.Id == Id).FirstOrDefault();
+            var report = _context.Reports.Find(_ => _.Id == id).FirstOrDefault();
 
-            ThrowException.IsNull(report, Resource.NotFoundReport);
+            if (Validation.IsNull(report, "Report", Resource.NotFoundReport))
+                return null;
 
-            return new ReportDTO { Id = report.Id, Name = report.Name, Description = report.Description };
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<IReportDb, IReportDto>()).CreateMapper();
+            return mapper.Map<IReportDb, IReportDto>(report);
         }
 
-        public ReportDTO GetReportByName(string name)
+        public IReportDto GetByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ReportShortDTO> GetReportsShort()
+        public IEnumerable<IReportDto> GetAll()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Report, ReportShortDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Report>, List<ReportShortDTO>>(_context.Reports.Find(_ => true));
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<IReportDb, IReportDto>()).CreateMapper();
+            return mapper.Map<IEnumerable<IReportDb>, List<IReportDto>>(_context.Reports.Find(_ => true)); // TODO: need refactoring!!
 
         }
 
-        public void RemoveReport(string Id)
+        public void Remove(string id)
         {
-            ThrowException.IsNull(Id, Resource.NotFoundReportById);
+            if (Validation.IsNull(id, "Id", Resource.NotFoundReportById))
+                return;
 
-            var reports = _context.Reports.Find(_ => _.Id == Id);            
+            var reports = _context.Reports.Find(_ => _.Id == id);
 
-            ThrowException.IsEmty(!reports.Any(), Resource.NotFoundReportById);
+            if (Validation.IsEmty(!reports.Any(), "Report", Resource.NotFoundReportById))
+                return;
 
             _context.Reports.Delete(reports.FirstOrDefault());
         }        

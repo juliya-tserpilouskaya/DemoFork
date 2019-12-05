@@ -68,7 +68,6 @@ namespace BulbaCourses.Analytics.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<BLLModule>();
-            //kernel.Load<DALModule>();                
         }
     }
 }

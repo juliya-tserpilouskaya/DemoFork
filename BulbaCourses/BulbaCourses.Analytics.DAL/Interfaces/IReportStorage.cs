@@ -1,9 +1,5 @@
-﻿using BulbaCourses.Analytics.DAL.Entities.Reports;
-using System;
+﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Interfaces
 {
@@ -15,6 +11,6 @@ namespace BulbaCourses.Analytics.DAL.Interfaces
         /// <summary>
         /// Getts a report repository
         /// </summary>
-        List<Report> Storage { get; }
+        List<IReportDb> Storage { get; }
     }
 }
