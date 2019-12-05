@@ -55,9 +55,13 @@
     <Compile Include="Enums\SortingType.cs" />
     <Compile Include="Models\ArticleDB.cs" />
     <Compile Include="Models\AuthorDB.cs" />
+    <Compile Include="Models\Courses\ArticleCourseDB.cs" />
+    <Compile Include="Models\Courses\ExcerciseCourseDB.cs" />
+    <Compile Include="Models\Courses\PodcastCourseDB.cs" />
+    <Compile Include="Models\Courses\TestCourseDB.cs" />
+    <Compile Include="Models\Courses\VideoCourseDB.cs" />
     <Compile Include="Models\ExcerciseDB.cs" />
     <Compile Include="Models\ILearningCourseItem.cs" />
-    <Compile Include="Models\LearningCourse.cs" />
     <Compile Include="Models\PodcastDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
     <Compile Include="Models\TestDB.cs" />
