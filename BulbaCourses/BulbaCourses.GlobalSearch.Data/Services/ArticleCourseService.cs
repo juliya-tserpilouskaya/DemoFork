@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Models.Courses;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services
 {
-    class ArticleCourseService
+    class ArticleCourseService : IArticleCourseService
     {
         private GlobalSearchContext _context = new GlobalSearchContext();
 
@@ -17,13 +20,47 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             Dispose(true);
         }
 
+        public IEnumerable<ArticleCourseDB> GetAllCourses()
+        {
+            return _context.ArticleCourses;
+        }
 
+        public ArticleCourseDB GetById(string id)
+        {
+            return _context.ArticleCourses.SingleOrDefault(c => c.Id.Equals(id,
+                StringComparison.OrdinalIgnoreCase));
+        }
 
-        //public BookDb GetById(string id)
-        //{
-        //    var course = _context.Books.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
-        //    return course;
-        //}
+        public IEnumerable<ArticleCourseDB> GetByCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ArticleCourseDB> GetByAuthorId(int id)
+        {
+            return _context.ArticleCourses.Where(course => course.AuthorId == id);
+        }
+
+        public IEnumerable<ArticleDB> GetLearningItemsByCourseId(string id)
+        {
+            return _context.ArticleCourses.SingleOrDefault(c => c.Id.Equals(id,
+                StringComparison.OrdinalIgnoreCase)).Items;
+        }
+
+        public IEnumerable<ArticleCourseDB> GetCourseByComplexity(string complexity)
+        {
+            return _context.ArticleCourses.Where(course => course.Complexity.ToString().Equals(complexity));
+        }
+
+        public IEnumerable<ArticleCourseDB> GetCourseByLanguage(string lang)
+        {
+            return _context.ArticleCourses.Where(course => course.Language.Contains(lang));
+        }
+
+        public IEnumerable<ArticleCourseDB> GetCourseByQuery(string query)
+        {
+            return _context.ArticleCourses.Where(course => course.Description.ToLower().Contains(query.ToLower()));
+        }
 
         ~ArticleCourseService()
         {

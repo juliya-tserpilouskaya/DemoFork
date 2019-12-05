@@ -10,7 +10,7 @@ namespace BulbaCourses.GlobalSearch.Data.Models.Courses
     public class ExcerciseCourseDB
     {
         public string Id { get; set; }
-        public ICollection<PodcastDB> Items { get; set; }
+        public ICollection<ExcerciseDB> Items { get; set; }
         public string Name { get; set; }
         public double Cost { get; set; }
         public Complexity Complexity { get; set; }
