@@ -1,4 +1,5 @@
 ﻿using BulbaCourse.Video.Logic.InterfaceServices;
+using BulbaCourse.Video.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace BulbaCourse.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Post([FromBody]CommentDb comment)
+        public IHttpActionResult Post([FromBody]CommentLogic comment)
         {
             if (comment == null)
             {
@@ -77,7 +78,7 @@ namespace BulbaCourse.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Put(string id, [FromBody]CommentDb comment)
+        public IHttpActionResult Put(string id, [FromBody]CommentLogic comment)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
