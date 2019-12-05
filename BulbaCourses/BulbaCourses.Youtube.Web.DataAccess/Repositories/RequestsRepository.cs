@@ -15,9 +15,9 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             context = ctx;
         }
 
-        public IQueryable<SearchRequest> SearchRequests => context.SearchRequests;
+        public IQueryable<SearchRequestDb> SearchRequests => context.SearchRequests;
 
-        public SearchRequest SaveRequest(SearchRequest request)
+        public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
             if (string.IsNullOrEmpty(request.Id))
             {
@@ -29,7 +29,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 if (editRequest != null)
                 {
                     editRequest.Title = request.Title;
-                    editRequest.Description = request.Description;
+                    //editRequest.Description = request.Description;
                 }                
             }
 
@@ -37,7 +37,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return request;
         }
 
-        public SearchRequest DeleteRequest(string requestId)
+        public SearchRequestDb DeleteRequest(string requestId)
         {
             var delRequest = context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
             if (delRequest != null)
@@ -49,12 +49,12 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return delRequest;
         }
 
-        public IEnumerable<SearchRequest> GetAllRequests()
+        public IEnumerable<SearchRequestDb> GetAllRequests()
         {
             return context.SearchRequests.ToList().AsReadOnly();
         }
 
-        public SearchRequest GetRequestById(string requestId)
+        public SearchRequestDb GetRequestById(string requestId)
         {
             return context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
         }

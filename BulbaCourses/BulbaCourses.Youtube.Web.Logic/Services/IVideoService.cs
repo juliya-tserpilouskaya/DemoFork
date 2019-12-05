@@ -10,8 +10,8 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
     public interface IVideoService
     {
         IEnumerable<string> GetSearchListResponse(string searchTerm);
-        IEnumerable<VideoDb> GetAll();
-        VideoDb GetById(int? id);
+        IEnumerable<ResultVideoDb> GetAll();
+        ResultVideoDb GetById(int? id);
 
     }
 }

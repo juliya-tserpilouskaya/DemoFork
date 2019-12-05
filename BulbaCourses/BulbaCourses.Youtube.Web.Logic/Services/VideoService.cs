@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BulbaCourses.Youtube.Web.DataAccess.Repositories;
 using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.DataAccess.Models;
-using VideoDb = BulbaCourses.Youtube.Web.DataAccess.Models.VideoDb;
+using ResultVideoDb = BulbaCourses.Youtube.Web.DataAccess.Models.ResultVideoDb;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 
@@ -76,12 +76,12 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return videos.AsReadOnly();
         }
 
-        public IEnumerable<VideoDb> GetAll()
+        public IEnumerable<ResultVideoDb> GetAll()
         {
             return _videoRepository.GetAll();
         }
 
-        public VideoDb GetById(int? id)
+        public ResultVideoDb GetById(int? id)
         {
             return _videoRepository.GetById(id);
         }

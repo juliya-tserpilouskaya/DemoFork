@@ -8,14 +8,14 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
     public interface IRequestsRepository
     {
-        IQueryable<SearchRequest> SearchRequests { get; }
+        IQueryable<SearchRequestDb> SearchRequests { get; }
 
-        SearchRequest SaveRequest(SearchRequest request);
+        SearchRequestDb SaveRequest(SearchRequestDb request);
 
-        SearchRequest DeleteRequest(string requestId);
+        SearchRequestDb DeleteRequest(string requestId);
 
-        IEnumerable<SearchRequest> GetAllRequests();
+        IEnumerable<SearchRequestDb> GetAllRequests();
 
-        SearchRequest GetRequestById(string requestId);
+        SearchRequestDb GetRequestById(string requestId);
     }
 }

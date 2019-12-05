@@ -16,7 +16,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _requestRepository = requestRepository;
         }
 
-        public SearchRequest SaveRequest(SearchRequest request)
+        public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
             if (string.IsNullOrEmpty(request.Id))
             {
@@ -29,7 +29,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             }
         }
 
-        public SearchRequest EditRequest(SearchRequest request)
+        public SearchRequestDb EditRequest(SearchRequestDb request)
         {
             var editRequest = _requestRepository.GetRequestById(request.Id);
 
@@ -44,7 +44,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return editRequest;
         }
 
-        public SearchRequest DeleteRequest(string requestId)
+        public SearchRequestDb DeleteRequest(string requestId)
         {
             var delRequest = _requestRepository.GetRequestById(requestId);
             if (delRequest != null)
@@ -55,12 +55,12 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return delRequest;
         }
 
-        public IEnumerable<SearchRequest> GetAllRequests()
+        public IEnumerable<SearchRequestDb> GetAllRequests()
         {
             return _requestRepository.GetAllRequests();
         }
 
-        public SearchRequest GetRequestById(string requestId)
+        public SearchRequestDb GetRequestById(string requestId)
         {
             if (!string.IsNullOrEmpty(requestId))
                 return _requestRepository.GetRequestById(requestId);

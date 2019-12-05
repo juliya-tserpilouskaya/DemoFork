@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
-    public class SearchStory
+    public class SearchStoryDb
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
         public DateTime? SearchDate { get; set; }
-        public SearchRequest SearchRequest { get; set; }
+        public UserDb User { get; set; } //reference
+        public SearchRequestDb SearchRequest { get; set; } //reference
     }
 }

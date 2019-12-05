@@ -9,14 +9,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 {
     public interface IRequestService
     {
-        SearchRequest SaveRequest(SearchRequest request);
+        SearchRequestDb SaveRequest(SearchRequestDb request);
 
-        SearchRequest EditRequest(SearchRequest request);
+        SearchRequestDb EditRequest(SearchRequestDb request);
 
-        SearchRequest DeleteRequest(string requestId);
+        SearchRequestDb DeleteRequest(string requestId);
 
-        IEnumerable<SearchRequest> GetAllRequests();
+        IEnumerable<SearchRequestDb> GetAllRequests();
 
-        SearchRequest GetRequestById(string requestId);
+        SearchRequestDb GetRequestById(string requestId);
     }
 }

@@ -16,24 +16,24 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             _db = new YoutubeContext();
         }
         //GetById
-        public VideoDb GetById(int? id)
+        public ResultVideoDb GetById(int? id)
         {
             return _db.Videos.Find(id);
         }
         //GetAll
-        public IEnumerable<VideoDb> GetAll()
+        public IEnumerable<ResultVideoDb> GetAll()
         {
             return _db.Videos.ToList().AsReadOnly();
         }
 
         //Create
-        public void Create(VideoDb videoEntity)
+        public void Create(ResultVideoDb videoEntity)
         {
             _db.Videos.Add(videoEntity);
         }
 
         //Update
-        public void Update(VideoDb videoEntity)
+        public void Update(ResultVideoDb videoEntity)
         {
             _db.Entry(videoEntity).State = EntityState.Modified;
         }

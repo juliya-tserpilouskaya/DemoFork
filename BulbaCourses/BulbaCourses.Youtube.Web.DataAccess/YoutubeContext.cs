@@ -14,34 +14,60 @@ namespace BulbaCourses.Youtube.Web.DataAccess
         {
         }
 
-        public DbSet<VideoDb> Videos { get; set; }
+        public DbSet<ResultVideoDb> Videos { get; set; }
+        public DbSet<ChannelDb> Channels { get; set; }
+        public DbSet<MentorDb> Mentors { get; set; }
+        public DbSet<UserDb> Users { get; set; }
+        public DbSet<SearchRequestDb> SearchRequests { get; set; }
+        public DbSet<SearchStoryDb> SearchStories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
 
-            var entity = modelBuilder.Entity<VideoDb>();
-            entity.HasKey(x => x.Id);
-            entity.Property(x => x.Etag).IsRequired();
-            entity.Property(x => x.Url).IsRequired().IsUnicode();
-            entity.Property(x => x.Title).IsRequired().HasMaxLength(200).IsUnicode();
-            entity.Property(x => x.Description).IsRequired().IsUnicode();
-            entity.Property(x => x.ChannelId).IsRequired();
-            entity.Property(x => x.PublishedAt).IsRequired();
-            //entity.HasRequired<CourseOwner>(v => v.Author).WithRequiredDependent(co => co.Id).Map(v => v.MapKey("CourseOwnerId"));
-           // entity.HasRequired<Course>(v => v.Course).WithRequiredDependent(co => co.Id).Map(v=>v.MapKey("CourseId"));
-        }
+            //ResultVideoDb
+            var ResultVideoDbEntity = modelBuilder.Entity<ResultVideoDb>();
+            ResultVideoDbEntity.HasKey(x => x.Id);
+            ResultVideoDbEntity.Property(x => x.Etag).IsRequired().IsUnicode(); ;
+            ResultVideoDbEntity.Property(x => x.Url).IsRequired().IsUnicode();
+            ResultVideoDbEntity.Property(x => x.Title).IsRequired().HasMaxLength(200).IsUnicode();
+            ResultVideoDbEntity.Property(x => x.PublishedAt).IsRequired();
+            ResultVideoDbEntity.Property(x => x.Description).IsRequired().IsUnicode();
+            ResultVideoDbEntity.HasMany<SearchRequestDb>(x => x.SearchRequests).WithMany(x=>x.Videos);
 
-        public DbSet<SearchRequest> SearchRequests { get; set; }
+            //ChannelDb
+            var ChannelDbEentity = modelBuilder.Entity<ChannelDb>();
+            ChannelDbEentity.HasKey(x => x.Id);
+            ChannelDbEentity.Property(x => x.Name).IsRequired().HasMaxLength(200).IsUnicode(); ;
+            ChannelDbEentity.HasMany<ResultVideoDb>(x => x.Videos).WithRequired(x=>x.Channel);
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+            //MentorDb
+            var MentorDbEentity = modelBuilder.Entity<MentorDb>();
+            MentorDbEentity.HasMany<ChannelDb>(x => x.Channels).WithRequired(x=>x.Mentor);
+
+            //UserDb
+            var UserDbEentity = modelBuilder.Entity<UserDb>();
+            UserDbEentity.HasKey(x => x.Id);
+            UserDbEentity.Property(x => x.Login).IsRequired().HasMaxLength(20).IsUnicode();
+            UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(20).IsUnicode();
+            UserDbEentity.Property(x => x.FirstName).IsRequired().HasMaxLength(100).IsUnicode();
+            UserDbEentity.Property(x => x.LastName).IsRequired().HasMaxLength(100).IsUnicode();
+            UserDbEentity.Property(x => x.FullName).IsRequired().HasMaxLength(100).IsUnicode();
+            UserDbEentity.Property(x => x.NumberPhone).IsRequired().HasMaxLength(20).IsUnicode();
+            UserDbEentity.Property(x => x.Email).IsRequired().HasMaxLength(200).IsUnicode();
+            UserDbEentity.Property(x => x.ReserveEmail).IsRequired().HasMaxLength(200).IsUnicode();
+            UserDbEentity.HasMany<SearchStoryDb>(x => x.SearchStories).WithRequired(x => x.User);
+
+            //SearchStoryDb
             modelBuilder.Configurations.Add(new StoryConfiguration());
-            modelBuilder.Configurations.Add(new ResultConfiguration());
+
+            //SearchRequestDb
+            modelBuilder.Configurations.Add(new SearchRequestConfiguration());
         }
     }
 
-    public class StoryConfiguration : EntityTypeConfiguration<SearchStory>
+    //SearchStoryDb
+    public class StoryConfiguration : EntityTypeConfiguration<SearchStoryDb>
     {
         public StoryConfiguration()
         {
@@ -49,13 +75,12 @@ namespace BulbaCourses.Youtube.Web.DataAccess
         }
     }
 
-    public class ResultConfiguration : EntityTypeConfiguration<Result>
+    //SearchRequestDb
+    public class SearchRequestConfiguration : EntityTypeConfiguration<SearchRequestDb>
     {
-        public ResultConfiguration()
+        public SearchRequestConfiguration()
         {
-            ToTable("SearchResults").HasKey(p => p.Id);
-            HasRequired(r => r.SearchRequest);
-   
+            ToTable("SearchRequest").HasKey(p => p.Id);
         }
     }
 }
