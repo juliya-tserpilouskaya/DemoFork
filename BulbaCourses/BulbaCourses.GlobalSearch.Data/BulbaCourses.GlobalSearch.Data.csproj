@@ -53,6 +53,15 @@
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
     <Compile Include="Enums\SortingType.cs" />
+    <Compile Include="Models\ArticleDB.cs" />
+    <Compile Include="Models\AuthorDB.cs" />
+    <Compile Include="Models\ExcerciseDB.cs" />
+    <Compile Include="Models\ILearningCourseItem.cs" />
+    <Compile Include="Models\LearningCourse.cs" />
+    <Compile Include="Models\PodcastDB.cs" />
+    <Compile Include="Models\SearchQueryDB.cs" />
+    <Compile Include="Models\TestDB.cs" />
+    <Compile Include="Models\VideoDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.GlobalSearch.Data.Models.Enums
+namespace BulbaCourses.GlobalSearch.Data.Enums
 {
     /// <summary>
     /// Contains the values of categories defined for learning items
