@@ -48,6 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntitiesConfiguration\ArticleConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\AuthorConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\CoursesConfiguration\ArticleCourseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\CoursesConfiguration\ExcerciseCourseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\CoursesConfiguration\PodcastCourseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\CoursesConfiguration\TestCourseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\CoursesConfiguration\VideoCourseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\ExcerciseConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\PodcastConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\TestConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\VideoConfiguration.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
@@ -72,5 +83,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
