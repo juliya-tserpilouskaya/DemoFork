@@ -71,6 +71,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PracticalMaterialsTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Web", "BulbaCourses.PracticalMaterialsTests.Web\BulbaCourses.PracticalMaterialsTests.Web.csproj", "{7AEEDB39-CF59-4363-930F-557B6EC9FFCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Tests", "BulbaCourses.PracticalMaterialsTests.Tests\BulbaCourses.PracticalMaterialsTests.Tests.csproj", "{8153995A-DC00-4EEE-B193-3F86393D4199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Logic", "BulbaCourses.PracticalMaterialsTests.Logic\BulbaCourses.PracticalMaterialsTests.Logic.csproj", "{BE04F720-8B4F-4B3E-9C58-5400934EED91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Data", "BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj", "{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +177,18 @@ Global
 		{7AEEDB39-CF59-4363-930F-557B6EC9FFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AEEDB39-CF59-4363-930F-557B6EC9FFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AEEDB39-CF59-4363-930F-557B6EC9FFCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8153995A-DC00-4EEE-B193-3F86393D4199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8153995A-DC00-4EEE-B193-3F86393D4199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8153995A-DC00-4EEE-B193-3F86393D4199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8153995A-DC00-4EEE-B193-3F86393D4199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE04F720-8B4F-4B3E-9C58-5400934EED91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE04F720-8B4F-4B3E-9C58-5400934EED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE04F720-8B4F-4B3E-9C58-5400934EED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE04F720-8B4F-4B3E-9C58-5400934EED91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +217,9 @@ Global
 		{6335F50B-20DF-493F-AFB0-02B09123521F} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
 		{829CFF17-45EB-489F-A56D-FF3A4B4EFD42} = {D5D6A0D1-A27A-402B-8D0C-F9BE0804133E}
 		{7AEEDB39-CF59-4363-930F-557B6EC9FFCF} = {311F5F9E-C078-4585-876B-AD613F87FE29}
+		{8153995A-DC00-4EEE-B193-3F86393D4199} = {311F5F9E-C078-4585-876B-AD613F87FE29}
+		{BE04F720-8B4F-4B3E-9C58-5400934EED91} = {311F5F9E-C078-4585-876B-AD613F87FE29}
+		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
