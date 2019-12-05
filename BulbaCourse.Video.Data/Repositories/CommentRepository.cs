@@ -29,11 +29,10 @@ namespace BulbaCourse.Video.Data.Repositories
             return commentList;
         }
 
-        public CommentDb AddComment(CommentDb comment)
+        public void Add(CommentDb comment)
         {
             videoDbContext.Comments.Add(comment);
             videoDbContext.SaveChanges();
-            return comment;
         }
 
         public ICollection<CommentDb> GetCourseComments(int courseId)
@@ -50,19 +49,24 @@ namespace BulbaCourse.Video.Data.Repositories
             return comments;
         }
 
-        public bool RemoveById(string commentId)
+        public void RemoveById(string commentId)
         {
             var deletedComment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
-            if (deletedComment != null)
-            {
-                videoDbContext.Comments.Remove(deletedComment);
-                videoDbContext.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            videoDbContext.Comments.Remove(deletedComment);
+            videoDbContext.SaveChanges();
+        }
+
+        public void Remove(CommentDb comment)
+        {
+            videoDbContext.Comments.Remove(comment);
+            videoDbContext.SaveChanges();
+        }
+
+        public void Update(CommentDb comment)
+        {
+            var oldComment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(comment.CommentId));
+            oldComment = comment;
+            videoDbContext.SaveChanges();
         }
 
         public CommentDb UpdateCommentText(string commentId, string newText)

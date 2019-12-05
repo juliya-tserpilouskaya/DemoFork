@@ -17,11 +17,10 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public UserDb Add(UserDb user)
+        public void Add(UserDb user)
         {
             videoDbContext.Users.Add(user);
             videoDbContext.SaveChanges();
-            return user;
         }
 
         public bool AddCourseToUser(string userId, string courseId)
@@ -67,13 +66,13 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public void Delete(UserDb user)
+        public void Remove(UserDb user)
         {
             videoDbContext.Users.Remove(user);
             videoDbContext.SaveChanges();
         }
 
-        public void DeleteById(string userId)
+        public void RemoveById(string userId)
         {
             var deletedUser = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(userId));
             videoDbContext.Users.Remove(deletedUser);
@@ -108,7 +107,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return user;
         }
 
-        public UserDb GetUserById(string id)
+        public UserDb GetById(string id)
         {
             var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
             return user;
@@ -119,6 +118,13 @@ namespace BulbaCourse.Video.Data.Repositories
             var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(userId));
             var courses = user.Courses;
             return courses;
+        }
+
+        public void Update(UserDb user)
+        {
+            var upUser = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(user.UserId));
+            user = upUser;
+            videoDbContext.SaveChanges();
         }
     }
 }

@@ -9,12 +9,13 @@ namespace BulbaCourse.Video.Data.Interfaces
 {
     public interface ICourseRepository
     {
-        CourseDb GetCourseById(string courseId);
-        CourseDb GetCourseByName(string courseName);
+        CourseDb GetById(string courseId);
+        CourseDb GetByName(string courseName);
         IEnumerable<CourseDb> GetAll();
-        CourseDb AddCourse(CourseDb course);
-        void Delete(CourseDb course);
-        void DeleteById(string courseId);
+        void Add(CourseDb course);
+        void Update(CourseDb course);
+        void Remove(CourseDb course);
+        void RemoveById(string courseId);
         TagDb CheckTag(TagDb tag);
         ICollection<TagDb> GetTags(string courseId);
         ICollection<VideoMaterialDb> GetCourseVideos(string courseId);

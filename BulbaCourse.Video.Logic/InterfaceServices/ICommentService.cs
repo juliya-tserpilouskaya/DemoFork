@@ -11,10 +11,10 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
     {
         CommentDb GetById(string commentId);
         IEnumerable<CommentDb> GetAll();
-        CommentDb AddComment(CommentDb comment);
+        void Add(CommentDb comment);
         ICollection<CommentDb> GetCourseComments(int courseId);
         ICollection<CommentDb> GetVideoComments(int videoId);
         CommentDb UpdateCommentText(string commentId, string newText);
-        bool RemoveById(string commentId);
+        void RemoveById(string commentId);
     }
 }

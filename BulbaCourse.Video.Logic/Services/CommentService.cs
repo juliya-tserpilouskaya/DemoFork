@@ -29,10 +29,9 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public CommentDb AddComment(CommentDb comment)
+        public void Add(CommentDb comment)
         {
-            var result = commentRepository.AddComment(comment);
-            return result;
+            commentRepository.Add(comment);
         }
 
         public ICollection<CommentDb> GetCourseComments(int courseId)
@@ -47,10 +46,9 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public bool RemoveById(string commentId)
+        public void RemoveById(string commentId)
         {
-            var result = commentRepository.RemoveById(commentId);
-            return result;
+            commentRepository.RemoveById(commentId);
         }
 
         public CommentDb UpdateCommentText(string commentId, string newText)

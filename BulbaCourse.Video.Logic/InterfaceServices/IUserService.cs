@@ -12,7 +12,7 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
         UserDb GetByLogin(string userName);
         UserDb GetUserById(string id);
         IEnumerable<UserDb> GetAll();
-        UserDb Add(UserDb user);
+        void Add(UserDb user);
         void Delete(UserDb user);
         void DeleteById(string userId);
         ICollection<CourseDb> GetUserCourse(string userId);

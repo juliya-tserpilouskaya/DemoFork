@@ -63,8 +63,8 @@ namespace BulbaCourse.Video.Web.Controllers
 
             try
             {
-                var id = commentService.AddComment(comment);
-                return Ok(id);
+                commentService.Add(comment);
+                return Ok(comment);
             }
 
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace BulbaCourse.Video.Web.Controllers
 
             try
             {
-                commentService.AddComment(comment);
+                commentService.Add(comment);
                 return Ok();
             }
 

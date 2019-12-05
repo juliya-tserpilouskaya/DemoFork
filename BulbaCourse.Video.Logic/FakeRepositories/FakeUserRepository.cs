@@ -37,10 +37,10 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             };
 
         }
-        public UserDb Add(UserDb user)
+
+        public void Add(UserDb user)
         {
             _users.Add(user);
-            return user;
         }
 
         public bool AddCourseToUser(string userId, string courseId)
@@ -58,16 +58,6 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public void Delete(UserDb user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool DeleteCourseFromUser(string userId, string courseId)
         {
             throw new NotImplementedException();
@@ -75,7 +65,12 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
 
         public IEnumerable<UserDb> GetAll()
         {
-            return _users.ToList().AsReadOnly();
+            throw new NotImplementedException();
+        }
+
+        public UserDb GetById(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public UserDb GetByLogin(string userName)
@@ -83,12 +78,22 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public UserDb GetUserById(string id)
+        public ICollection<CourseDb> GetUserCourse(string userId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<CourseDb> GetUserCourse(string userId)
+        public void Remove(UserDb user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveById(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserDb user)
         {
             throw new NotImplementedException();
         }

@@ -17,20 +17,19 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public CourseDb GetCourseById(string courseId)
+        public CourseDb GetById(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             return course;
         }
 
-        public CourseDb AddCourse(CourseDb course)
+        public void Add(CourseDb course)
         {
             videoDbContext.Courses.Add(course);
             videoDbContext.SaveChanges();
-            return course;
         }
 
-        public CourseDb GetCourseByName(string courseName)
+        public CourseDb GetByName(string courseName)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.Name.Equals(courseName));
             return course;
@@ -42,12 +41,19 @@ namespace BulbaCourse.Video.Data.Repositories
             return courseList;
         }
 
-        public void Delete(CourseDb course)
+        public void Update(CourseDb course)
+        {
+            var oldCourse = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(course.CourseId));
+            oldCourse = course;
+            videoDbContext.SaveChanges();
+        }
+
+        public void Remove(CourseDb course)
         {
             videoDbContext.Courses.Remove(course);
             videoDbContext.SaveChanges();
         }
-        public void DeleteById(string courseId)
+        public void RemoveById(string courseId)
         {
             var deleteCourse = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             videoDbContext.Courses.Remove(deleteCourse);

@@ -63,10 +63,9 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             };
         }
 
-        public CourseDb AddCourse(CourseDb course)
+        public void Add(CourseDb course)
         {
             _courses.Add(course);
-            return course;
         }
 
         public bool AddDiscription(string courseId, string discription)
@@ -84,27 +83,17 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public void Delete(CourseDb course)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(string courseId)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<CourseDb> GetAll()
         {
-            return _courses.ToList();
+            throw new NotImplementedException();
         }
 
-        public CourseDb GetCourseById(string courseId)
+        public CourseDb GetById(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public CourseDb GetCourseByName(string courseName)
+        public CourseDb GetByName(string courseName)
         {
             throw new NotImplementedException();
         }
@@ -125,6 +114,21 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
         }
 
         public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(CourseDb course)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveById(string courseId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(CourseDb course)
         {
             throw new NotImplementedException();
         }

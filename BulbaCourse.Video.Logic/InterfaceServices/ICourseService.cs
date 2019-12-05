@@ -12,7 +12,7 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
         CourseDb GetCourseById(string courseId);
         CourseDb GetCourseByName(string courseName);
         IEnumerable<CourseDb> GetAll();
-        CourseDb AddCourse(CourseDb course);
+        void AddCourse(CourseDb course);
         void Delete(CourseDb course);
         void DeleteById(string courseId);
         TagDb CheckTag(TagDb tag);

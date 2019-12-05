@@ -18,9 +18,9 @@ namespace BulbaCourse.Video.Logic.Services
             this.courseRepository = courseRepository;
         }
 
-        public CourseDb AddCourse(CourseDb course)
+        public void AddCourse(CourseDb course)
         {
-            return courseRepository.AddCourse(course);
+            courseRepository.Add(course);
         }
 
         public bool AddDiscription(string courseId, string discription)
@@ -44,13 +44,13 @@ namespace BulbaCourse.Video.Logic.Services
 
         public CourseDb GetCourseById(string courseId)
         {
-            var result = courseRepository.GetCourseById(courseId);
+            var result = courseRepository.GetById(courseId);
             return result;
         }
 
         public CourseDb GetCourseByName(string courseName)
         {
-            var result = courseRepository.GetCourseByName(courseName);
+            var result = courseRepository.GetByName(courseName);
             return result;
         }
 
@@ -62,12 +62,12 @@ namespace BulbaCourse.Video.Logic.Services
 
         public void Delete(CourseDb course)
         {
-            courseRepository.Delete(course);
+            courseRepository.Remove(course);
         }
 
         public void DeleteById(string courseId)
         {
-            courseRepository.DeleteById(courseId);
+            courseRepository.RemoveById(courseId);
         }
 
         public int GetCourseLevel(string courseId)

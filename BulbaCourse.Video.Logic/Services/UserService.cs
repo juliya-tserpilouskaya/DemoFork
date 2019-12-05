@@ -17,10 +17,9 @@ namespace BulbaCourse.Video.Logic.Services
         {
             this.userRepository = userRepository;
         }
-        public UserDb Add(UserDb user)
+        public void Add(UserDb user)
         {
-            var result = userRepository.Add(user);
-            return result;
+            userRepository.Add(user);
         }
 
         public bool AddCourseToUser(string userId, string courseId)
@@ -43,12 +42,12 @@ namespace BulbaCourse.Video.Logic.Services
 
         public void Delete(UserDb user)
         {
-            userRepository.Delete(user);
+            userRepository.Remove(user);
         }
 
         public void DeleteById(string userId)
         {
-            userRepository.DeleteById(userId);
+            userRepository.RemoveById(userId);
         }
 
         public bool DeleteCourseFromUser(string userId, string courseId)
@@ -71,7 +70,7 @@ namespace BulbaCourse.Video.Logic.Services
 
         public UserDb GetUserById(string id)
         {
-            var result = userRepository.GetUserById(id);
+            var result = userRepository.GetById(id);
             return result;
         }
 

@@ -62,10 +62,10 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
                },
             };
         }
-        public CommentDb AddComment(CommentDb comment)
+
+        public void Add(CommentDb comment)
         {
             _comments.Add(comment);
-            return comment;
         }
 
         public IEnumerable<CommentDb> GetAll()
@@ -88,7 +88,17 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public bool RemoveById(string commentId)
+        public void Remove(CommentDb comment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveById(string commentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(CommentDb comment)
         {
             throw new NotImplementedException();
         }

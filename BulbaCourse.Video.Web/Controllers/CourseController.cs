@@ -65,8 +65,8 @@ namespace BulbaCourse.Video.Controllers
 
             try
             {
-                var id = courseService.AddCourse(course);
-                return Ok(id);
+                courseService.AddCourse(course);
+                return Ok(course);
             }
 
             catch (Exception ex)

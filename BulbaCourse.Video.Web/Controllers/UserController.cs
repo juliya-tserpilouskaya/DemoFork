@@ -60,8 +60,8 @@ namespace BulbaCourse.Video.Web.Controllers
             }
             try
             {
-                var addUser = userService.Add(user);
-                return Ok(addUser);
+                userService.Add(user);
+                return Ok(user);
             }
             catch (Exception ex)
             {
