@@ -48,11 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
     <Compile Include="Enums\SortingType.cs" />
+    <Compile Include="GlobalSearchContext.cs" />
     <Compile Include="Models\ArticleDB.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\Courses\ArticleCourseDB.cs" />
