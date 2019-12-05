@@ -49,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Enums\Category.cs" />
+    <Compile Include="Enums\Complexity.cs" />
+    <Compile Include="Enums\Section.cs" />
+    <Compile Include="Enums\SortingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
