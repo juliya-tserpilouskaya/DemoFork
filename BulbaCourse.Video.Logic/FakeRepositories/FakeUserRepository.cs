@@ -78,7 +78,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public ICollection<CourseDb> GetUserCourse(string userId)
+        public IEnumerable<CourseDb> GetUserCourse(string userId)
         {
             throw new NotImplementedException();
         }

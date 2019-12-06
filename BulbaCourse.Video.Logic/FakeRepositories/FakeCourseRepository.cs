@@ -73,12 +73,12 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public bool AddVideoToCourse(string courseId, string videoId)
+        public TagDb AddTag(string content)
         {
             throw new NotImplementedException();
         }
 
-        public TagDb CheckTag(TagDb tag)
+        public bool AddVideoToCourse(string courseId, string videoId)
         {
             throw new NotImplementedException();
         }
@@ -103,12 +103,12 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<TagDb> GetTags(string courseId)
+        public IEnumerable<TagDb> GetTags(string courseId)
         {
             throw new NotImplementedException();
         }

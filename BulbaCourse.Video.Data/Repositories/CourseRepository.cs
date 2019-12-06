@@ -60,11 +60,15 @@ namespace BulbaCourse.Video.Data.Repositories
             videoDbContext.SaveChanges();
         }
 
-        public TagDb CheckTag(TagDb tag)
+        public TagDb AddTag(string content)
         {
-            var result = videoDbContext.Tags.FirstOrDefault(p => p.Content == tag.Content);
+            var result = videoDbContext.Tags.FirstOrDefault(p => p.Content.Equals(content));
             if (result == null)
             {
+                TagDb tag = new TagDb()
+                {
+                    Content = content
+                };
                 videoDbContext.Tags.Add(tag);
                 videoDbContext.SaveChanges();
                 result = tag;
@@ -72,7 +76,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public IEnumerable<TagDb> GetTags(string courseId)
+            public IEnumerable<TagDb> GetTags(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(p => p.CourseId.Equals(courseId));
             var tags = course.Tags;

@@ -78,12 +78,12 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public ICollection<CommentDb> GetCourseComments(int courseId)
+        public IEnumerable<CommentDb> GetCourseComments(int courseId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<CommentDb> GetVideoComments(int videoId)
+        public IEnumerable<CommentDb> GetVideoComments(int videoId)
         {
             throw new NotImplementedException();
         }

@@ -36,9 +36,9 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public TagDb CheckTag(TagDb tag)
+        public TagDb AddTag(string content)
         {
-            var result = courseRepository.CheckTag(tag);
+            var result = courseRepository.AddTag(content);
             return result;
         }
 

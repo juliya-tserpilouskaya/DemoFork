@@ -16,7 +16,7 @@ namespace BulbaCourse.Video.Data.Interfaces
         void Update(CourseDb course);
         void Remove(CourseDb course);
         void RemoveById(string courseId);
-        TagDb CheckTag(TagDb tag);
+        TagDb AddTag(string content);
         IEnumerable<TagDb> GetTags(string courseId);
         IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId);
         VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder);
