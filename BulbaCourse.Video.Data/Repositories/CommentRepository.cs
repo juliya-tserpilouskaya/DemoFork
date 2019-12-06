@@ -36,14 +36,7 @@ namespace BulbaCourse.Video.Data.Repositories
             videoDbContext.SaveChanges();
         }
 
-        public IEnumerable<CommentDb> GetCourseComments(int courseId)
-        {
-            var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
-            var comments = course.Comments.ToList().AsReadOnly();
-            return comments;
-        }
-
-        public IEnumerable<CommentDb> GetVideoComments(int videoId)
+        public IEnumerable<CommentDb> GetVideoComments(string videoId)
         {
             var video = videoDbContext.VideoMaterials.FirstOrDefault(b => b.VideoId.Equals(videoId));
             var comments = video.Comments.ToList().AsReadOnly();

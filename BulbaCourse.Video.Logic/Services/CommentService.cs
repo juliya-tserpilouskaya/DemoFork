@@ -34,27 +34,18 @@ namespace BulbaCourse.Video.Logic.Services
             commentRepository.Add(comment);
         }
 
-        public IEnumerable<CommentDb> GetCourseComments(int courseId)
-        {
-            var result = commentRepository.GetCourseComments(courseId);
-            return result;
-        }
-
-        public IEnumerable<CommentDb> GetVideoComments(int videoId)
-        {
-            var result = commentRepository.GetVideoComments(videoId);
-            return result;
-        }
-
         public void RemoveById(string commentId)
         {
-            commentRepository.RemoveById(commentId);
+            var comment = commentRepository.GetById(commentId);
+            commentRepository.Remove(comment);
         }
 
         public CommentDb UpdateCommentText(string commentId, string newText)
         {
-            var result = commentRepository.UpdateCommentText(commentId, newText);
-            return result;
+            var comment = commentRepository.GetById(commentId);
+            comment.Text = newText;
+            commentRepository.Update(comment);
+            return comment;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace BulbaCourse.Video.Data.Interfaces
         IEnumerable<TransactionDb> GetAll();
         void Add(TransactionDb transaction);
         void Update(TransactionDb transaction);
-        void RemoveById(string transactionId);
         void Remove(TransactionDb transaction);
     }
 }

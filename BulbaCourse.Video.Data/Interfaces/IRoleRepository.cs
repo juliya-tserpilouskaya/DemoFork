@@ -13,7 +13,6 @@ namespace BulbaCourse.Video.Data.Interfaces
         IEnumerable<RoleDb> GetAll();
         void Add(RoleDb role);
         void Update(RoleDb role);
-        void RemoveById(string role);
         void Remove(RoleDb role);
     }
 }

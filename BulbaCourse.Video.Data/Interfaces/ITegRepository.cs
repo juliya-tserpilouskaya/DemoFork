@@ -13,7 +13,6 @@ namespace BulbaCourse.Video.Data.Interfaces
         IEnumerable<TagDb> GetAll();
         void Add(TagDb tag);
         void Update(TagDb tag);
-        void RemoveById(string tagId);
         void Remove(TagDb tag);
     }
 }

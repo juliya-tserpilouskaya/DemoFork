@@ -22,22 +22,16 @@ namespace BulbaCourse.Video.Logic.Services
             userRepository.Add(user);
         }
 
-        public bool AddCourseToUser(string userId, string courseId)
+        public void AddCourseToUser(string userId, CourseDb course)
         {
-            var result = userRepository.AddCourseToUser(userId, courseId);
-            return result;
+            var userCourses = userRepository.GetById(userId).Courses;
+            userCourses.Add(course);
         }
 
-        public bool AddRole(string newRole)
+        public void AddRoleToUser(string userId, RoleDb role)
         {
-            var result = userRepository.AddRole(newRole);
-            return result;
-        }
-
-        public RoleDb CheckRole(RoleDb role)
-        {
-            var result = userRepository.CheckRole(role);
-            return result;
+            var userRoles = userRepository.GetById(userId).Roles;
+            userRoles.Add(role);
         }
 
         public void Delete(UserDb user)
@@ -47,13 +41,15 @@ namespace BulbaCourse.Video.Logic.Services
 
         public void DeleteById(string userId)
         {
-            userRepository.RemoveById(userId);
+            var user = userRepository.GetById(userId);
+            userRepository.Remove(user);
         }
 
-        public bool DeleteCourseFromUser(string userId, string courseId)
+        public void DeleteCourseFromUser(string userId, string courseId)
         {
-            var result = userRepository.DeleteCourseFromUser(userId, courseId);
-            return result;
+            var courses = userRepository.GetById(userId).Courses;
+            var courseToDel = courses.FirstOrDefault(c => c.CourseId.Equals(courseId));
+            courses.Remove(courseToDel);
         }
 
         public IEnumerable<UserDb> GetAll()
@@ -64,8 +60,8 @@ namespace BulbaCourse.Video.Logic.Services
 
         public UserDb GetByLogin(string userName)
         {
-            var result = userRepository.GetByLogin(userName);
-            return result;
+            var user = userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(userName));
+            return user;
         }
 
         public UserDb GetUserById(string id)
@@ -76,8 +72,9 @@ namespace BulbaCourse.Video.Logic.Services
 
         public IEnumerable<CourseDb> GetUserCourse(string userId)
         {
-            var result = userRepository.GetUserCourse(userId);
-            return result;
+            var user = userRepository.GetById(userId);
+            var couses = user.Courses.ToList().AsReadOnly();
+            return couses;
         }
     }
 }

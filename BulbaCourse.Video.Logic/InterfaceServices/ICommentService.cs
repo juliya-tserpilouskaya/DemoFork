@@ -12,8 +12,6 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
         CommentDb GetById(string commentId);
         IEnumerable<CommentDb> GetAll();
         void Add(CommentDb comment);
-        IEnumerable<CommentDb> GetCourseComments(int courseId);
-        IEnumerable<CommentDb> GetVideoComments(int videoId);
         CommentDb UpdateCommentText(string commentId, string newText);
         void RemoveById(string commentId);
     }

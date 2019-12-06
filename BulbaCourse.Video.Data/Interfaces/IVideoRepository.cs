@@ -13,7 +13,6 @@ namespace BulbaCourse.Video.Data.Interfaces
         IEnumerable<VideoMaterialDb> GetAll();
         void Add(VideoMaterialDb video);
         void Update(VideoMaterialDb video);
-        void RemoveById(string videoId);
         void Remove(VideoMaterialDb video);
     }
 }
