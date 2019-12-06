@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using HtmlAgilityPack;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,20 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
+                //var res = Logic.;
+                var html = @"https://www.it-academy.by/specialization/programmirovanie/";
+                HtmlWeb web = new HtmlWeb();
+                var htmlDoc = web.Load(html);
+
+                var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='programm-card-wrap ']/a");
+
+                List<string> res = new List<string>();
+                foreach (var node in htmlNodes)
+                {
+                    //Console.WriteLine(node.InnerHtml + "  -  " + node.Attributes["href"].Value);
+                    //Console.WriteLine(node.Attributes["href"].Value);
+                    res.Add(node.Attributes["href"].Value);
+                }
                 var result = Courseware.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
