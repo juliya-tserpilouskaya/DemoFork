@@ -13,17 +13,18 @@ namespace BulbaCourse.Video.Logic.Services
 {
     public class CommentService : ICommentService
     {
+        private readonly IMapper mapper;
         private readonly ICommentRepository commentRepository;
 
-        public CommentService(ICommentRepository commentRepository)
+        public CommentService(IMapper mapper, ICommentRepository commentRepository)
         {
+            this.mapper = mapper;
             this.commentRepository = commentRepository;
         }
 
         public CommentLogic GetById(string commentId)
         {
             var comment = commentRepository.GetById(commentId);
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentDb, CommentLogic>()).CreateMapper();
             var commentLogic = mapper.Map<CommentDb, CommentLogic>(comment);
             return commentLogic;
         }
@@ -31,7 +32,6 @@ namespace BulbaCourse.Video.Logic.Services
         {
             var commentList = commentRepository.GetAll();
             var commentListLogic = new List<CommentLogic>();
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentDb, CommentLogic>()).CreateMapper();
             foreach (CommentDb comment in commentList)
             {
                 commentListLogic.Add(mapper.Map<CommentDb, CommentLogic>(comment));
@@ -41,7 +41,6 @@ namespace BulbaCourse.Video.Logic.Services
 
         public void Add(CommentLogic comment)
         {
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentLogic, CommentDb>()).CreateMapper();
             var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
             commentRepository.Add(commentDb);
         }
@@ -50,7 +49,6 @@ namespace BulbaCourse.Video.Logic.Services
         {
             var courseCommentDb = commentRepository.GetCourseComments(courseId);
             var courseCommentLog = new List<CommentLogic>();
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentDb, CommentLogic>()).CreateMapper();
             foreach (CommentDb comment in courseCommentDb)
             {
                 courseCommentLog.Add(mapper.Map<CommentDb, CommentLogic>(comment));
@@ -62,7 +60,6 @@ namespace BulbaCourse.Video.Logic.Services
         {
             var courseCommentDb = commentRepository.GetVideoComments(videoId);
             var courseCommentLog = new List<CommentLogic>();
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentDb, CommentLogic>()).CreateMapper();
             foreach (CommentDb comment in courseCommentDb)
             {
                 courseCommentLog.Add(mapper.Map<CommentDb, CommentLogic>(comment));
@@ -78,7 +75,6 @@ namespace BulbaCourse.Video.Logic.Services
         public CommentLogic UpdateCommentText(string commentId, string newText)
         {
             var commentDb = commentRepository.UpdateCommentText(commentId, newText);
-            var mapper = new MapperConfiguration(c => c.CreateMap<CommentDb, CommentLogic>()).CreateMapper();
             var commentLogic = mapper.Map<CommentDb, CommentLogic>(commentDb);
             return commentLogic;
         }
