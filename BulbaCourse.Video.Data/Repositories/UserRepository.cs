@@ -123,6 +123,10 @@ namespace BulbaCourse.Video.Data.Repositories
 
         public void Update(UserDb user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
             videoDbContext.Entry(user).State = EntityState.Modified;
             videoDbContext.SaveChanges();
         }

@@ -65,6 +65,10 @@ namespace BulbaCourse.Video.Data.Repositories
 
         public void Update(CommentDb comment)
         {
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
             videoDbContext.Entry(comment).State = EntityState.Modified;
             videoDbContext.SaveChanges();
         }

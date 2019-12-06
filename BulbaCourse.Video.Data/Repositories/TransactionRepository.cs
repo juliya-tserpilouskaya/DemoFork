@@ -50,6 +50,10 @@ namespace BulbaCourse.Video.Data.Repositories
 
         public void Update(TransactionDb transaction)
         {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException("transaction");
+            }
             videoDbContext.Entry(transaction).State = EntityState.Modified;
             videoDbContext.SaveChanges();
         }
