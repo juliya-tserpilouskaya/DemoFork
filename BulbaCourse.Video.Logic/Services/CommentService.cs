@@ -34,13 +34,13 @@ namespace BulbaCourse.Video.Logic.Services
             commentRepository.Add(comment);
         }
 
-        public ICollection<CommentDb> GetCourseComments(int courseId)
+        public IEnumerable<CommentDb> GetCourseComments(int courseId)
         {
             var result = commentRepository.GetCourseComments(courseId);
             return result;
         }
 
-        public ICollection<CommentDb> GetVideoComments(int videoId)
+        public IEnumerable<CommentDb> GetVideoComments(int videoId)
         {
             var result = commentRepository.GetVideoComments(videoId);
             return result;

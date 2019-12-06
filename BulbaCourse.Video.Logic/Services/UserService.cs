@@ -74,7 +74,7 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public ICollection<CourseDb> GetUserCourse(string userId)
+        public IEnumerable<CourseDb> GetUserCourse(string userId)
         {
             var result = userRepository.GetUserCourse(userId);
             return result;

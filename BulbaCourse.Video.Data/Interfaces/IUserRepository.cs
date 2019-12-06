@@ -16,7 +16,7 @@ namespace BulbaCourse.Video.Data.Interfaces
         void Update(UserDb user);
         void Remove(UserDb user);
         void RemoveById(string userId);
-        ICollection<CourseDb> GetUserCourse(string userId);
+        IEnumerable<CourseDb> GetUserCourse(string userId);
         RoleDb CheckRole(RoleDb role);
         bool AddRole(string newRole);
         bool AddCourseToUser(string userId, string courseId);

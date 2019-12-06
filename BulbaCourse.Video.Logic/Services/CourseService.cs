@@ -76,13 +76,13 @@ namespace BulbaCourse.Video.Logic.Services
             return result;
         }
 
-        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             var result = courseRepository.GetCourseVideos(courseId);
             return result;
         }
 
-        public ICollection<TagDb> GetTags(string courseId)
+        public IEnumerable<TagDb> GetTags(string courseId)
         {
             var result = courseRepository.GetTags(courseId);
             return result;

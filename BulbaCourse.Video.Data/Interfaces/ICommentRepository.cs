@@ -15,8 +15,8 @@ namespace BulbaCourse.Video.Data.Interfaces
         void Update(CommentDb comment);
         void RemoveById(string commentId);
         void Remove(CommentDb comment);
-        ICollection<CommentDb> GetCourseComments(int courseId);
-        ICollection<CommentDb> GetVideoComments(int videoId);
+        IEnumerable<CommentDb> GetCourseComments(int courseId);
+        IEnumerable<CommentDb> GetVideoComments(int videoId);
         CommentDb UpdateCommentText(string commentId, string newText);
     }
 }

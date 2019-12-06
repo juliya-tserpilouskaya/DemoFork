@@ -114,7 +114,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return user;
         }
 
-        public ICollection<CourseDb> GetUserCourse(string userId)
+        public IEnumerable<CourseDb> GetUserCourse(string userId)
         {
             var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(userId));
             var courses = user.Courses;

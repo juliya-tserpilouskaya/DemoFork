@@ -72,7 +72,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public ICollection<TagDb> GetTags(string courseId)
+        public IEnumerable<TagDb> GetTags(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(p => p.CourseId.Equals(courseId));
             var tags = course.Tags;
@@ -94,7 +94,7 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public ICollection<VideoMaterialDb> GetCourseVideos(string courseId)
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             var videos = course.Videos;

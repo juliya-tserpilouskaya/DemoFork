@@ -16,8 +16,8 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
         void Delete(CourseDb course);
         void DeleteById(string courseId);
         TagDb CheckTag(TagDb tag);
-        ICollection<TagDb> GetTags(string courseId);
-        ICollection<VideoMaterialDb> GetCourseVideos(string courseId);
+        IEnumerable<TagDb> GetTags(string courseId);
+        IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId);
         VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder);
         int GetCourseLevel(string courseId);
         void UpdateCourseLevel(string courseId, int level);

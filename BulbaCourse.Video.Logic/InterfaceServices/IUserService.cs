@@ -15,7 +15,7 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
         void Add(UserDb user);
         void Delete(UserDb user);
         void DeleteById(string userId);
-        ICollection<CourseDb> GetUserCourse(string userId);
+        IEnumerable<CourseDb> GetUserCourse(string userId);
         RoleDb CheckRole(RoleDb role);
         bool AddRole(string newRole);
         bool AddCourseToUser(string userId, string courseId);
