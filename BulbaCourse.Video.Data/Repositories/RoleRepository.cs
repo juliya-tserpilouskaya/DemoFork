@@ -2,6 +2,7 @@
 using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,8 +49,7 @@ namespace BulbaCourse.Video.Data.Repositories
 
         public void Update(RoleDb role)
         {
-            var oldRole = videoDbContext.Roles.FirstOrDefault(b => b.RoleId.Equals(role.RoleId));
-            oldRole = role;
+            videoDbContext.Entry(role).State = EntityState.Modified;
             videoDbContext.SaveChanges();
         }
     }

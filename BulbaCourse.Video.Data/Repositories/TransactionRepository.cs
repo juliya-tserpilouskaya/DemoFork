@@ -2,6 +2,7 @@
 using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,8 +50,7 @@ namespace BulbaCourse.Video.Data.Repositories
 
         public void Update(TransactionDb transaction)
         {
-            var oldTransaction = videoDbContext.Transactions.FirstOrDefault(b => b.TransactionId.Equals(transaction.TransactionId));
-            oldTransaction = transaction;
+            videoDbContext.Entry(transaction).State = EntityState.Modified;
             videoDbContext.SaveChanges();
         }
     }
