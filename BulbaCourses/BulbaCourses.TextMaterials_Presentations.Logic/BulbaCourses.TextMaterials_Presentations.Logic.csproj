@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6335F50B-20DF-493F-AFB0-02B09123521F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BulbaCourses.TextMaterials_Presentations.Logic</RootNamespace>
+    <AssemblyName>BulbaCourses.TextMaterials_Presentations.Logic</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LogicModule.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\CoursePepository\Course.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\CoursePepository\CourseBase.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\CourseServices\CourseBaseService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\CourseServices\CoursePresentationsService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\CourseServices\CourseTeachersService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\InterfacesCourse\ICourseBaseService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\InterfacesCourse\ICoursePresentationsService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Course\InterfacesCourse\ICourseTeachersService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\InterfacesPresentations\IFeedbackService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\InterfacesPresentations\IPresentationsBaseService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\PresentationsRepository\Feedback.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\PresentationsRepository\Presentation.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\PresentationsRepository\PresentationsBase.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\PresentationsServices\FeedbackService.cs" />
+    <Compile Include="Models\CourseAndPresentations\Presentations\PresentationsServices\PresentationsBaseService.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\InterfacesStaff\IChangedPresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\InterfacesStaff\IStaffService.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\StaffRepository\Staff.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\StaffRepository\Teacher.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\StaffServices\ChangedPresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\Staff\StaffServices\StaffService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\InterfacesStudents\IFavoritePresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\InterfacesStudents\IStudentBaseService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\InterfacesStudents\IViewedPresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsRepository\Student.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsRepository\StudentsBase.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsServices\FavoritePresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsServices\StudentBaseService.cs" />
+    <Compile Include="Models\StaffAndUsers\Students\StudentsServices\ViewedPresentationsService.cs" />
+    <Compile Include="Models\StaffAndUsers\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
