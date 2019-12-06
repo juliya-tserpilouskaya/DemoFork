@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using BulbaCourse.Video.Data.Interfaces;
+﻿using BulbaCourse.Video.Data.Interfaces;
 using BulbaCourse.Video.Logic.InterfaceServices;
-using BulbaCourse.Video.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,58 +11,39 @@ namespace BulbaCourse.Video.Logic.Services
 {
     public class CommentService : ICommentService
     {
-        private readonly IMapper mapper;
         private readonly ICommentRepository commentRepository;
 
-        public CommentService(IMapper mapper, ICommentRepository commentRepository)
+        public CommentService(ICommentRepository commentRepository)
         {
-            this.mapper = mapper;
             this.commentRepository = commentRepository;
         }
 
-        public CommentLogic GetById(string commentId)
+        public CommentDb GetById(string commentId)
         {
-            var comment = commentRepository.GetById(commentId);
-            var commentLogic = mapper.Map<CommentDb, CommentLogic>(comment);
-            return commentLogic;
+            var result = commentRepository.GetById(commentId);
+            return result;
         }
-        public IEnumerable<CommentLogic> GetAll()
+        public IEnumerable<CommentDb> GetAll()
         {
-            var commentList = commentRepository.GetAll();
-            var commentListLogic = new List<CommentLogic>();
-            foreach (CommentDb comment in commentList)
-            {
-                commentListLogic.Add(mapper.Map<CommentDb, CommentLogic>(comment));
-            }
-            return commentListLogic;
+            var result = commentRepository.GetAll();
+            return result;
         }
 
-        public void Add(CommentLogic comment)
+        public void Add(CommentDb comment)
         {
-            var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-            commentRepository.Add(commentDb);
+            commentRepository.Add(comment);
         }
 
-        public ICollection<CommentLogic> GetCourseComments(int courseId)
+        public ICollection<CommentDb> GetCourseComments(int courseId)
         {
-            var courseCommentDb = commentRepository.GetCourseComments(courseId);
-            var courseCommentLog = new List<CommentLogic>();
-            foreach (CommentDb comment in courseCommentDb)
-            {
-                courseCommentLog.Add(mapper.Map<CommentDb, CommentLogic>(comment));
-            }
-                return courseCommentLog;
+            var result = commentRepository.GetCourseComments(courseId);
+            return result;
         }
 
-        public ICollection<CommentLogic> GetVideoComments(int videoId)
+        public ICollection<CommentDb> GetVideoComments(int videoId)
         {
-            var courseCommentDb = commentRepository.GetVideoComments(videoId);
-            var courseCommentLog = new List<CommentLogic>();
-            foreach (CommentDb comment in courseCommentDb)
-            {
-                courseCommentLog.Add(mapper.Map<CommentDb, CommentLogic>(comment));
-            }
-            return courseCommentLog;
+            var result = commentRepository.GetVideoComments(videoId);
+            return result;
         }
 
         public void RemoveById(string commentId)
@@ -72,11 +51,10 @@ namespace BulbaCourse.Video.Logic.Services
             commentRepository.RemoveById(commentId);
         }
 
-        public CommentLogic UpdateCommentText(string commentId, string newText)
+        public CommentDb UpdateCommentText(string commentId, string newText)
         {
-            var commentDb = commentRepository.UpdateCommentText(commentId, newText);
-            var commentLogic = mapper.Map<CommentDb, CommentLogic>(commentDb);
-            return commentLogic;
+            var result = commentRepository.UpdateCommentText(commentId, newText);
+            return result;
         }
     }
 }
