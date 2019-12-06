@@ -47,6 +47,7 @@
     <Compile Include="InterfaceServices\IAnonymousUserService.cs" />
     <Compile Include="InterfaceServices\IBookmarkService.cs" />
     <Compile Include="InterfaceServices\ILearningCourseService.cs" />
+    <Compile Include="InterfaceServices\IRegisteredUserService.cs" />
     <Compile Include="InterfaceServices\ISearchQueryService.cs" />
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\AnonymousUser.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Services\AnonymousUserService.cs" />
     <Compile Include="Services\BookmarkService.cs" />
     <Compile Include="Services\LearningCourseService.cs" />
+    <Compile Include="Services\RegisteredUserService.cs" />
     <Compile Include="Services\SearchQueryService.cs" />
   </ItemGroup>
   <ItemGroup>
