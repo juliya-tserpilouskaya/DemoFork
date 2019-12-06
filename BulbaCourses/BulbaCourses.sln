@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Web.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Logic", "BulbaCourses.GlobalSearch.Logic\BulbaCourses.GlobalSearch.Logic.csproj", "{8508CAEE-D963-48BA-9B66-096F6E604804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Data", "BulbaCourses.GlobalSearch.Data\BulbaCourses.GlobalSearch.Data.csproj", "{14E229BA-727C-43A1-8CAD-00158F4CEB05}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{8508CAEE-D963-48BA-9B66-096F6E604804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8508CAEE-D963-48BA-9B66-096F6E604804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8508CAEE-D963-48BA-9B66-096F6E604804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{578FF0D7-D576-4C6B-863F-128B3836C0BB} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{ADEDAA35-C807-48CB-8A37-343C3B751112} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{8508CAEE-D963-48BA-9B66-096F6E604804} = {C611C702-E943-405F-8102-D0CA32E52F44}
+		{14E229BA-727C-43A1-8CAD-00158F4CEB05} = {C611C702-E943-405F-8102-D0CA32E52F44}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
