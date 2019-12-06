@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
 {
-    interface IRegisteredUserService
+    public interface IRegisteredUserService
     {
         IEnumerable<RegisteredUser> GetAll();
         RegisteredUser GetById(string id);

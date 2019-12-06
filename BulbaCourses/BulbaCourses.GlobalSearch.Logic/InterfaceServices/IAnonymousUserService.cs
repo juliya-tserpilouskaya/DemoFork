@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
 {
-    interface IAnonymousUserService
+    public interface IAnonymousUserService
     {
         IEnumerable<AnonymousUser> GetAll();
         AnonymousUser GetById(string id);
