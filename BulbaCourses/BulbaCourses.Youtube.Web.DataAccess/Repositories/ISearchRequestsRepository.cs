@@ -2,16 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace BulbaCourses.Youtube.Web.Logic.Services
+namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
-    public interface IRequestService
+    public interface ISearchRequestsRepository : IDisposable
     {
-        SearchRequestDb SaveRequest(SearchRequestDb request);
+        IQueryable<SearchRequestDb> SearchRequests { get; }
 
-        SearchRequestDb EditRequest(SearchRequestDb request);
+        SearchRequestDb SaveRequest(SearchRequestDb request);
 
         SearchRequestDb DeleteRequest(string requestId);
 

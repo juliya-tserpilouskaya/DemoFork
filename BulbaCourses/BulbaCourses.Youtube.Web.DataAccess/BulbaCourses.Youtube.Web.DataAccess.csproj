@@ -87,9 +87,9 @@
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\MentorDb.cs" />
     <Compile Include="Repositories\IStoryRepository.cs" />
-    <Compile Include="Repositories\RequestsRepository.cs" />
+    <Compile Include="Repositories\SearchRequestsRepository.cs" />
     <Compile Include="Repositories\IVideoRepository.cs" />
-    <Compile Include="Repositories\IRequestsRepository.cs" />
+    <Compile Include="Repositories\ISearchRequestsRepository.cs" />
     <Compile Include="Models\SearchRequestDb.cs" />
     <Compile Include="Models\SearchStoryDb.cs" />
     <Compile Include="Models\StudentDb.cs" />

@@ -41,14 +41,12 @@ namespace BulbaCourses.Youtube.Web.Tests
                 //.RuleFor(v => v.Courses, f => new List<Course>());
 
             //Faker for Video
-            int? videoIds = 0;
             Faker<ResultVideoDb> fakerV = new Faker<ResultVideoDb>();
-            fakerV.RuleFor(v => v.Id, f => videoIds + 1)
+            fakerV.RuleFor(v => v.Id, f => f.Random.String(8))
                 .RuleFor(v => v.Title, f => f.Random.Word())
                 .RuleFor(v => v.Description, f => f.Random.Words(5))
                 .RuleFor(v => v.Channel, f => new ChannelDb())
-                .RuleFor(v => v.PublishedAt, f => f.Date.Past(2))
-                .RuleFor(v => v.Url, f => f.Internet.Url());
+                .RuleFor(v => v.PublishedAt, f => f.Date.Past(2));
                 // .RuleFor(v => v.PlayListId, f => f.Random.Number(1, 10))
                 // .RuleFor(v => v.Author, f => fakerCO.Generate())
                 // .RuleFor(v => v.Course, f => fakerC.Generate());

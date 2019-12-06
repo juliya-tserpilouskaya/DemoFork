@@ -29,7 +29,6 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             var ResultVideoDbEntity = modelBuilder.Entity<ResultVideoDb>();
             ResultVideoDbEntity.HasKey(x => x.Id);
             ResultVideoDbEntity.Property(x => x.Etag).IsRequired().IsUnicode(); ;
-            ResultVideoDbEntity.Property(x => x.Url).IsRequired().IsUnicode();
             ResultVideoDbEntity.Property(x => x.Title).IsRequired().HasMaxLength(200).IsUnicode();
             ResultVideoDbEntity.Property(x => x.PublishedAt).IsRequired();
             ResultVideoDbEntity.Property(x => x.Description).IsRequired().IsUnicode();

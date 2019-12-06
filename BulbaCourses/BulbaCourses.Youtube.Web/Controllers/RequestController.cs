@@ -9,7 +9,7 @@ using BulbaCourses.Youtube.Web.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.Youtube.Web.Controllers
-{
+{/*
     [RoutePrefix("api/requests")]
     public class RequestController : ApiController
     {        
@@ -137,4 +137,5 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
     }
+    */
 }
