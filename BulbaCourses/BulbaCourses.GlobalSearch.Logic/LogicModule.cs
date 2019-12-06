@@ -15,6 +15,9 @@ namespace BulbaCourses.GlobalSearch.Logic
         {
             Bind<ILearningCourseService>().To<LearningCourseService>();
             Bind<ISearchQueryService>().To<SearchQueryService>();
+            Bind<IBookmarkService>().To<BookmarkService>();
+            Bind<IAnonymousUserService>().To<AnonymousUserService>();
+            Bind<IRegisteredUserService>().To<RegisteredUserService>();
         }
     }
 }
