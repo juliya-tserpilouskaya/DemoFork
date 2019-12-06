@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DiscountAggregator.Logic")]
+[assembly: AssemblyTitle("BulbaCourses.DiscountAggregator.Data")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DiscountAggregator.Logic")]
+[assembly: AssemblyProduct("BulbaCourses.DiscountAggregator.Data")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c1bcbd49-d545-4e18-97b7-b345a471bfbb")]
+[assembly: Guid("02ebd441-46f9-45a8-8998-705ea01d8caa")]
 
 // Version information for an assembly consists of the following four values:
 //

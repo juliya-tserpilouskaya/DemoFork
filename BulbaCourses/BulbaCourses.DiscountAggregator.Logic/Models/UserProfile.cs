@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscountAggregator.Logic.Models
+namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    class CourseCategory
+    class UserProfile
     {
     }
 }

@@ -278,9 +278,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DiscountAggregator\DiscountAggregator.Logic\DiscountAggregator.Logic.csproj">
-      <Project>{c1bcbd49-d545-4e18-97b7-b345a471bfbb}</Project>
-      <Name>DiscountAggregator.Logic</Name>
+    <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Logic\BulbaCourses.DiscountAggregator.Logic.csproj">
+      <Project>{f7e7a6e5-399f-40f7-ac7c-1293b7a071a0}</Project>
+      <Name>BulbaCourses.DiscountAggregator.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,28 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
+        private readonly ICourseServices courseService;
+
+        //public CourseController()
+        //{
+        //    this.courseService = new CourseServices();
+
+        //}
+
+        public CourseController(ICourseServices courseService)
+        {
+            this.courseService = courseService;
+        }
+
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
-            var result = Courseware.GetAll();
+            var result = courseService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -41,7 +55,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                var result = Courseware.GetById(id);
+                var result = courseService.GetById(id); //Courseware.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

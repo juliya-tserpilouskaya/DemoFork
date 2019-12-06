@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
@@ -10,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public string URL { get; set; } 
+        public string URL { get; set; }
         public string Category { get; set; }
 
         public string Title { get; set; }
@@ -24,7 +25,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
     public static class Courseware
     {
-        private static List<Course> _course = new List<Course>();
+        private readonly static List<Course> _course = new List<Course>();
 
         static Courseware()
         {

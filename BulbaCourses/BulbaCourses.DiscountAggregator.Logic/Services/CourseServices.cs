@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BulbaCourses.DiscountAggregator.Logic.Models;
 
-namespace DiscountAggregator.Logic.Services
+namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    class CourseServices : ICourseServices
+    public class CourseServices : ICourseServices
     {
         //getById, GetAll... methods
         public Course GetById(string id)
