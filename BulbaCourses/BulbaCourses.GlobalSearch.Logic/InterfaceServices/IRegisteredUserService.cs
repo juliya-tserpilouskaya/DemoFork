@@ -11,6 +11,7 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
     {
         IEnumerable<RegisteredUser> GetAll();
         RegisteredUser GetById(string id);
+        RegisteredUser Add(RegisteredUser registeredUser);
         void RemoveById(string id);
         void RemoveAll();
     }

@@ -10,6 +10,11 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     class RegisteredUserService : IRegisteredUserService
     {
+        public RegisteredUser Add(RegisteredUser registeredUser)
+        {
+            return RegisteredUserStorage.Add(registeredUser);
+        }
+
         public IEnumerable<RegisteredUser> GetAll()
         {
             return RegisteredUserStorage.GetAll();
