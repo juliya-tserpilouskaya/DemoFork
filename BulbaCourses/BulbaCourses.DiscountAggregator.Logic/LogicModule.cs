@@ -13,6 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
         public override void Load()
         {
             Bind<ICourseServices>().To<CourseServices>();
+            Bind<ICourseITAcademyServices>().To<CourseITAcademyServices>();
         }
     }
 }

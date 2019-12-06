@@ -19,6 +19,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         public CourseController()
         {
             this.courseService = new CourseServices();
+
         }
 
         public CourseController(ICourseServices courseService)
