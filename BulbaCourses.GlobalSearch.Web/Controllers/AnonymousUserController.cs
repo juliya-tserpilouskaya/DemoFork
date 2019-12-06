@@ -1,5 +1,4 @@
-﻿using BulbaCourses.GlobalSearch.Web.Models;
-using BulbaCourses.GlobalSearch.Logic.Models;
+﻿using BulbaCourses.GlobalSearch.Logic.Models;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -15,12 +14,16 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class AnonymousUserController : ApiController
     {
         private readonly IAnonymousUserService _anonymousUserService;
+        public AnonymousUserController(IAnonymousUserService anonymousUserService)
+        {
+            _anonymousUserService = anonymousUserService;
+        }
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
-        [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(IEnumerable<AnonymousUser>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(AnonymousUser))]
         public IHttpActionResult GetAll()
         {
-            var result = AnonymousUserStorage.GetAll();
+            var result = _anonymousUserService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -37,7 +40,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = AnonymousUserStorage.GetById(id);
+                var result = _anonymousUserService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -51,7 +54,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult Create([FromBody]AnonymousUser anonymousUser)
         {
             //validate here
-            return Ok(AnonymousUserStorage.Add(anonymousUser));
+            return Ok(_anonymousUserService.Add(anonymousUser));
         }
 
         [HttpDelete, Route("{id}")]
@@ -61,13 +64,13 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult RemoveById(string id)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || AnonymousUserStorage.GetById(id) == null)
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || _anonymousUserService.GetById(id) == null)
             {
                 return BadRequest();
             }
             try
             {
-                AnonymousUserStorage.RemoveById(id);
+                _anonymousUserService.RemoveById(id);
                 return Ok();
             }
             catch (InvalidOperationException ex)
@@ -80,7 +83,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Users removed")]
         public IHttpActionResult ClearAll()
         {
-            AnonymousUserStorage.RemoveAll();
+            _anonymousUserService.RemoveAll();
             return Ok();
         }
     }
