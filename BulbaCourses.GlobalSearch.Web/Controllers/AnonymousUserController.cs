@@ -1,4 +1,6 @@
 ﻿using BulbaCourses.GlobalSearch.Web.Models;
+using BulbaCourses.GlobalSearch.Logic.Models;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     [RoutePrefix("api/anonymous")]
     public class AnonymousUserController : ApiController
     {
+        private readonly IAnonymousUserService _anonymousUserService;
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(IEnumerable<AnonymousUser>))]
