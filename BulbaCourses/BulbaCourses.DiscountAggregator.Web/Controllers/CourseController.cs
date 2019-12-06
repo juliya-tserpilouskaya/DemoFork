@@ -16,11 +16,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     {
         private readonly ICourseServices courseService;
 
-        //public CourseController()
-        //{
-        //    this.courseService = new CourseServices();
+        public CourseController()
+        {
+            this.courseService = new CourseServices();
 
-        //}
+        }
 
         public CourseController(ICourseServices courseService)
         {
