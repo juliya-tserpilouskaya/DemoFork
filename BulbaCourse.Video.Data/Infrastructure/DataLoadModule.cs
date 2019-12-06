@@ -17,6 +17,9 @@ namespace BulbaCourse.Video.Data.Infrastructure
             Bind<ICourseRepository>().To<CourseRepository>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IRoleRepository>().To<RoleRepository>();
+            Bind<ITegRepository>().To<TegRepository>();
+            Bind<ITransactionRepository>().To<TransactionRepository>();
+            Bind<IVideoRepository>().To<VideoRepository>();
         }
     }
 }

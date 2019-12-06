@@ -5,6 +5,7 @@ namespace BulbaCourse.Video.Web.App_Start
 {
     using System;
     using System.Web;
+    using BulbaCourse.Video.Data.Infrastructure;
     using BulbaCourse.Video.Data.Interfaces;
     using BulbaCourse.Video.Logic.InterfaceServices;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -62,7 +63,9 @@ namespace BulbaCourse.Video.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-           kernel.Bind<ICourseService>().To<Logic.Services.CourseService>();
+            kernel.Load<DataLoadModule>();
+
+            kernel.Bind<ICourseService>().To<Logic.Services.CourseService>();
            kernel.Bind<ICourseRepository>().To<Logic.FakeRepositories.FakeCourseRepository>();
             kernel.Bind<IUserService>().To<Logic.Services.UserService>();
             kernel.Bind<IUserRepository>().To<Logic.FakeRepositories.FakeUserRepository>();
