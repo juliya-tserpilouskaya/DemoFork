@@ -119,16 +119,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AnonymousUser.cs" />
-    <Compile Include="Models\AnonymousUserStorage.cs" />
-    <Compile Include="Models\Bookmark.cs" />
-    <Compile Include="Models\BookmarkStorage.cs" />
     <Compile Include="Models\Enums\Category.cs" />
     <Compile Include="Models\Enums\Complexity.cs" />
     <Compile Include="Models\Enums\Section.cs" />
     <Compile Include="Models\Enums\SortingType.cs" />
-    <Compile Include="Models\RegisteredUser.cs" />
-    <Compile Include="Models\RegisteredUserStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
