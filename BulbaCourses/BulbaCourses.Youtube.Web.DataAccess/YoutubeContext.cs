@@ -71,7 +71,8 @@ namespace BulbaCourses.Youtube.Web.DataAccess
     {
         public StoryConfiguration()
         {
-            ToTable("SearchStories").HasKey(p => p.Id);           
+            ToTable("SearchStories").HasKey(p => p.Id);
+            Property(p => p.SearchDate).IsRequired();
         }
     }
 
@@ -80,7 +81,12 @@ namespace BulbaCourses.Youtube.Web.DataAccess
     {
         public SearchRequestConfiguration()
         {
-            ToTable("SearchRequest").HasKey(p => p.Id);
+            ToTable("SearchRequests").HasKey(p => p.Id);
+            Property(p => p.Title).IsRequired().HasMaxLength(200);
+            Property(p => p.Author).HasMaxLength(50);
+            Property(p => p.VideoId).HasMaxLength(100);
+            HasMany(s => s.SearchStories).WithRequired(r => r.SearchRequest);
+            HasMany(v => v.Videos).WithMany(r => r.SearchRequests);
         }
     }
 }

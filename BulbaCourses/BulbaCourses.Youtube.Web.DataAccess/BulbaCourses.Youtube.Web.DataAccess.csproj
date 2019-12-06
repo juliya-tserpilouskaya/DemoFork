@@ -86,6 +86,7 @@
     <Compile Include="Models\ChannelDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\MentorDb.cs" />
+    <Compile Include="Repositories\IStoryRepository.cs" />
     <Compile Include="Repositories\RequestsRepository.cs" />
     <Compile Include="Repositories\IVideoRepository.cs" />
     <Compile Include="Repositories\IRequestsRepository.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Models\StudentDb.cs" />
     <Compile Include="Models\UserDb.cs" />
     <Compile Include="Models\ResultVideoDb.cs" />
+    <Compile Include="Repositories\StoryRepository.cs" />
     <Compile Include="YoutubeContext.cs" />
     <Compile Include="Repositories\VideoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
