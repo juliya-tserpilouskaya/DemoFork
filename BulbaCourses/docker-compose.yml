@@ -6,3 +6,10 @@ services:
     build:
       context: .\BulbaCourses.Youtube.Web
       dockerfile: Dockerfile
+
+  bulbacourses.practicalmaterialstests.web:
+    image: ${DOCKER_REGISTRY-}bulbacoursespracticalmaterialstestsweb
+    build:
+      context: .\BulbaCourses.PracticalMaterialsTests.Web
+      dockerfile: Dockerfile
+
