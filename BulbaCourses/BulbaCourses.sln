@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
@@ -76,6 +76,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Logic", "BulbaCourses.PracticalMaterialsTests.Logic\BulbaCourses.PracticalMaterialsTests.Logic.csproj", "{BE04F720-8B4F-4B3E-9C58-5400934EED91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Data", "BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj", "{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Logic", "..\BulbaCourses.Podcasts.Logic\BulbaCourses.Podcasts.Logic.csproj", "{E3624382-51E9-4CAE-B3C0-D9937886A3F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Tests", "..\BulbaCourses.Podcasts.Tests\BulbaCourses.Podcasts.Tests.csproj", "{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +193,14 @@ Global
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3624382-51E9-4CAE-B3C0-D9937886A3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3624382-51E9-4CAE-B3C0-D9937886A3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3624382-51E9-4CAE-B3C0-D9937886A3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3624382-51E9-4CAE-B3C0-D9937886A3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +232,8 @@ Global
 		{8153995A-DC00-4EEE-B193-3F86393D4199} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{BE04F720-8B4F-4B3E-9C58-5400934EED91} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
+		{E3624382-51E9-4CAE-B3C0-D9937886A3F2} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
+		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
