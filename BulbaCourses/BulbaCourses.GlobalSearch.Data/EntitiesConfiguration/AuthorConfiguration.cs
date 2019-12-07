@@ -12,7 +12,12 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
     {
         public AuthorConfiguration()
         {
-
+            ToTable("author");
+            HasKey(i => i.Id);
+            Property(i => i.Id).HasColumnName("id");
+            Property(i => i.Name).HasColumnName("name")
+                .IsRequired()
+                .HasMaxLength(255);
         }
     }
 }

@@ -12,7 +12,15 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
     {
         public CourseCategoryConfiguration()
         {
-
+            ToTable("course_category");
+            HasKey(i => i.Id);
+            Property(i => i.Id).HasColumnName("id");
+            Property(i => i.Name).HasColumnName("name")
+                .IsRequired()
+                .HasMaxLength(255);
+            Property(i => i.Description).HasColumnName("description")
+                .IsRequired()
+                .HasMaxLength(1000);
         }
     }
 }

@@ -10,8 +10,6 @@ namespace BulbaCourses.GlobalSearch.Data.Models
     {
         public string Id { get; set; }
         public string Query { get; set; }
-        public DateTime Date { get; set; }
-
         public DateTime? Created { get; set; }
     }
 }

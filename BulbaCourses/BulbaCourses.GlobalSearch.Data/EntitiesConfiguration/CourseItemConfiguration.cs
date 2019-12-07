@@ -12,7 +12,16 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
     {
         public CourseItemConfiguration()
         {
-
+            ToTable("course_item");
+            HasKey(i => i.Id);
+            Property(i => i.Id).HasColumnName("id");
+            Property(i => i.Name).HasColumnName("name")
+                .IsRequired()
+                .HasMaxLength(255);
+            Property(i => i.Description).HasColumnName("description")
+                .IsRequired()
+                .HasMaxLength(1000);
+            Property(i => i.Url).HasColumnName("url");
         }
     }
 }

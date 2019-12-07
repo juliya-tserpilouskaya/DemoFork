@@ -12,7 +12,12 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
     {
         public SearchQueryConfiguration()
         {
-
+            ToTable("search_query");
+            HasKey(i => i.Id);
+            Property(i => i.Id).HasColumnName("id");
+            Property(i => i.Query).IsRequired()
+                .HasColumnName("query_string");
+            Property(i => i.Created).HasColumnName("date");
         }
     }
 }
