@@ -43,5 +43,9 @@
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\SearchService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

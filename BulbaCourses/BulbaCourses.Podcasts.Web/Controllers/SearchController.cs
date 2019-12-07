@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
-    [RoutePrefix("Podcasts")]
+    [RoutePrefix("api/search")]
     public class SearchController : ApiController
     {
         private readonly ISearchService _searchService;
