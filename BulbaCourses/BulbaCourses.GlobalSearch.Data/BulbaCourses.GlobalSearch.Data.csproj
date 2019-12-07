@@ -78,47 +78,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntitiesConfiguration\ArticleConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\AuthorConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CoursesConfiguration\ArticleCourseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CoursesConfiguration\ExcerciseCourseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CoursesConfiguration\PodcastCourseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CoursesConfiguration\TestCourseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\CoursesConfiguration\VideoCourseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\ExcerciseConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\PodcastConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\TestConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\VideoConfiguration.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
     <Compile Include="Enums\SortingType.cs" />
     <Compile Include="GlobalSearchContext.cs" />
-    <Compile Include="Models\ArticleDB.cs" />
     <Compile Include="Models\AuthorDB.cs" />
-    <Compile Include="Models\Courses\ArticleCourseDB.cs" />
-    <Compile Include="Models\Courses\ExcerciseCourseDB.cs" />
-    <Compile Include="Models\Courses\PodcastCourseDB.cs" />
-    <Compile Include="Models\Courses\TestCourseDB.cs" />
-    <Compile Include="Models\Courses\VideoCourseDB.cs" />
-    <Compile Include="Models\ExcerciseDB.cs" />
-    <Compile Include="Models\ILearningCourseItem.cs" />
-    <Compile Include="Models\PodcastDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
-    <Compile Include="Models\TestDB.cs" />
-    <Compile Include="Models\VideoDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ArticleCourseService.cs" />
-    <Compile Include="Services\ExcerciseCourseService.cs" />
-    <Compile Include="Services\Interfaces\IArticleCourseService.cs" />
-    <Compile Include="Services\Interfaces\IExcerciseCourseService.cs" />
-    <Compile Include="Services\Interfaces\IPodcastCourseService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryService.cs" />
-    <Compile Include="Services\Interfaces\ITestCourseService.cs" />
     <Compile Include="Services\Interfaces\IVideoCourseService.cs" />
-    <Compile Include="Services\PodcastCourseService.cs" />
     <Compile Include="Services\SearchQueryService.cs" />
-    <Compile Include="Services\TestCourseService.cs" />
     <Compile Include="Services\VideoCourseService.cs" />
   </ItemGroup>
   <ItemGroup>
