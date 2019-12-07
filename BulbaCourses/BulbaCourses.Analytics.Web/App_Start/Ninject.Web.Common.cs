@@ -3,16 +3,16 @@
 
 namespace BulbaCourses.Analytics.Web.App_Start
 {
-    using System;
-    using System.Web;
-    using System.Web.Http;
     using BulbaCourses.Analytics.BLL.Infrastructure;
+    using BulbaCourses.Analytics.Web.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using Ninject.Web.WebApi;
+    using System;
+    using System.Web;
+    using System.Web.Http;
 
     public static class NinjectWebCommon 
     {
@@ -44,12 +44,12 @@ namespace BulbaCourses.Analytics.Web.App_Start
         {
             var kernel = new StandardKernel();
             try
-            {
+            {                
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();                
 
                 var ninjectResolver = new NinjectDependencyResolver(kernel);
-                GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver;
+                GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver;       
 
                 RegisterServices(kernel);
                 return kernel;
@@ -68,6 +68,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<BLLModule>();
+            kernel.Load<AutoMapperModule>();            
         }
     }
 }

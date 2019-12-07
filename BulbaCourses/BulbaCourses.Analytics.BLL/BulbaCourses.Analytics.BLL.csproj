@@ -60,7 +60,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Dispose\DashboardService.cs" />
     <Compile Include="Services\Dispose\ReportService.cs" />
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>

@@ -94,8 +94,6 @@
     <Compile Include="Models\ReportDb.cs" />
     <Compile Include="Storage\DashboardStorage.cs" />
     <Compile Include="Storage\ReportStorage.cs" />
-    <Compile Include="Entities\Actors\Analyst.cs" />
-    <Compile Include="Entities\Actors\Person.cs" />
     <Compile Include="Interfaces\IDashboardStorage.cs" />
     <Compile Include="Interfaces\IDataBase.cs" />
     <Compile Include="Interfaces\IReportStorage.cs" />
@@ -114,6 +112,7 @@
       <Name>BulbaCourses.Analytics.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

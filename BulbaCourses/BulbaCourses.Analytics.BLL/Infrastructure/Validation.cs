@@ -9,6 +9,11 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure
 
         public static bool IsErrors => Error.Any();
 
+        public static void Free()
+        {
+            Error.Clear();
+        }
+
         public static bool IsNull(string Id, string param, string message)
         {
             return string.IsNullOrWhiteSpace(Id) ? AddError(param, message) : false;
