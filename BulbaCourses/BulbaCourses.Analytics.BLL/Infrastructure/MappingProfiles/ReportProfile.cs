@@ -9,7 +9,6 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure.MappingProfiles
         public ReportProfile()
         {
             CreateMap<ReportDb, ReportDto>();
-            //CreateMap<ReportDb, ReportShortDto>();
         }
     }
 }
