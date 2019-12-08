@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BulbaCourses.Analytics.BLL.DTO
+﻿namespace BulbaCourses.Analytics.BLL.DTO
 {
-    public class ReportShortDTO
+    public class ReportShortDto
     {
         public string Id { get; set; }
 
