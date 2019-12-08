@@ -11,5 +11,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         internal string Author { get; set; }
         internal double Price { get; set; }
         internal string Theme { get; set; }
+        internal DateTime? Created { get; set; }
+        internal DateTime? Modified { get; set; }
     }
 }

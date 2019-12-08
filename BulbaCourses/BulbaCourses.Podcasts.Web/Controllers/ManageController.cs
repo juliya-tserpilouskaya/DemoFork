@@ -76,7 +76,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 Course result = _manageservice.Edit(course);
-                if (result.Equals(null))
+                if (result == null)
                 {
                     return BadRequest();
                 }

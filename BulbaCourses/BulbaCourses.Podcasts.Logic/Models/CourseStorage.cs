@@ -112,6 +112,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 _id++;
             }
             Courses.RemoveAt(_id);
+            course.Modified = System.DateTime.Now;
             Courses.Insert(_id, course);
             return course;
         }
@@ -131,6 +132,8 @@ namespace BulbaCourses.Podcasts.Logic.Services
         internal static Course Add(Course course)
         {
             course.Id = Guid.NewGuid().ToString();
+
+            course.Created = System.DateTime.Now;
             Courses.Add(course);
             return course;
         }
