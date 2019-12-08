@@ -31,7 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,18 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\Models\IReportDto.cs" />
-    <Compile Include="BLL\Services\IReportService.cs" />
-    <Compile Include="DAL\IDashboardRepository.cs" />
-    <Compile Include="DAL\IReportRepository.cs" />
-    <Compile Include="DAL\Models\IAuditModel.cs" />
-    <Compile Include="DAL\Models\IChartDb.cs" />
-    <Compile Include="DAL\Models\IDashboarDb.cs" />
-    <Compile Include="DAL\Models\IReportDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Web\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj">
+      <Project>{09826433-98bd-45c2-af11-1779cdfabe25}</Project>
+      <Name>BulbaCourses.Analytics.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj">
+      <Project>{53fa5e2c-5698-4f83-b190-71aa652dae01}</Project>
+      <Name>BulbaCourses.Analytics.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.Web\BulbaCourses.Analytics.Web.csproj">
+      <Project>{fa1a4acd-bda4-495e-80f4-38979495d414}</Project>
+      <Name>BulbaCourses.Analytics.Web</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
