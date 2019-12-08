@@ -138,7 +138,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AutoMapperModule.cs" />
-    <Compile Include="MappingProfiles\ReportProfile.cs" />
+    <Compile Include="Infrastructure\MappingProfiles\ReportProfile.cs" />
     <Compile Include="Models\ReportShortVm.cs" />
     <Compile Include="Models\ReportVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,10 +164,6 @@
     <ProjectReference Include="..\BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj">
       <Project>{09826433-98BD-45C2-AF11-1779CDFABE25}</Project>
       <Name>BulbaCourses.Analytics.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj">
-      <Project>{12B86A99-3216-441C-BDAC-C8CD95DA5189}</Project>
-      <Name>BulbaCourses.Analytics.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
