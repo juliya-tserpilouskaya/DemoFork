@@ -1,9 +1,8 @@
-﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
-using System;
+﻿using System;
 
 namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class DashboardDb : IDashboardDb
+    public class DashboardDb
     {
         public string Id { get; set; }
 
@@ -13,7 +12,7 @@ namespace BulbaCourses.Analytics.DAL.Models
 
         public string ReportId { get; set; }
 
-        public IReportDb Report { get; set; }
+        public ReportDb Report { get; set; }
 
         public DateTime? Created { get; set; }
 

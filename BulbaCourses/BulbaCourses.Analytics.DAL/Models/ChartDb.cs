@@ -1,8 +1,6 @@
-﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
-
-namespace BulbaCourses.Analytics.DAL.Models
+﻿namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class ChartDb : IChartDb
+    public class ChartDb
     {
         public int Id { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
-    internal partial class ReportService
+    public partial class ReportService
     {
         private bool _isDisposed = false;
 

@@ -1,9 +1,9 @@
-﻿using BulbaCourses.Analytics.Infrastructure.DAL.Models;
+﻿using BulbaCourses.Analytics.DAL.Models;
 using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.Analytics.DAL.Context.Configurations
 {
-    internal class ReportConfigurations : EntityTypeConfiguration<IReportDb>
+    internal class ReportConfigurations : EntityTypeConfiguration<ReportDb>
     {
         public ReportConfigurations()
         {
