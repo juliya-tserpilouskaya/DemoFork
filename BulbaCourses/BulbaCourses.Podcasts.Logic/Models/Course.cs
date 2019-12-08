@@ -1,12 +1,15 @@
-﻿namespace BulbaCourses.Podcasts.Logic.Services
+﻿using System;
+
+namespace BulbaCourses.Podcasts.Logic.Services
 {
-    internal class Course
+    public class Course
     {
-        internal string FileLink;
-        internal string Description;
-        internal string Title;
-        internal string Author;
-        internal double Price;
-        internal string Theme;
+        internal string Id { get; set; } = Guid.NewGuid().ToString();
+        internal string FileLink { get; set; }
+        internal string Description { get; set; }
+        internal string Title { get; set; }
+        internal string Author { get; set; }
+        internal double Price { get; set; }
+        internal string Theme { get; set; }
     }
 }

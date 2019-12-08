@@ -6,7 +6,6 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Web.Http;
 
-
 [assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Tests")]
 
 namespace BulbaCourses.Podcasts.Web.Controllers
@@ -31,7 +30,8 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return BadRequest();
             try
             {
-                var result = _searchService.GetSearchResults(searchString, mode);
+                SearchResultList result = new SearchResultList();
+                _searchService.GetSearchResults(searchString, mode, ref result);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

@@ -7,14 +7,14 @@ using System.Runtime.CompilerServices;
 namespace BulbaCourses.Podcasts.Logic.Services
 {
     public enum SearchMode { ByTitle, ByAuthor, ByTheme }
-    class SearchService : ISearchService
+    internal class SearchService : ISearchService
     {
         public static int SearchCount = 20;
-        public SearchResultList GetSearchResults(string searchString, SearchMode type)
+        public SearchResultList GetSearchResults(string searchString, SearchMode type, ref SearchResultList resultList)
         {
             try
             {
-                SearchResultList result = CourseStorage.Search(searchString, type);
+                SearchResultList result = CourseStorage.Search(searchString, type, ref resultList);
                 return result;
             }
             catch (KeyNotFoundException)
