@@ -11,25 +11,14 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         private YoutubeContext _context;
         private bool _isDisposed = false;
 
-        //temp list for request
-        List<SearchRequestDb> searchRequests = new List<SearchRequestDb>();
-
-
         public SearchRequestsRepository(YoutubeContext ctx)
         {
             _context = ctx;
         }
-
         public IQueryable<SearchRequestDb> SearchRequests => _context.SearchRequests;
 
         public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
-
-            //temp: save to list
-            searchRequests.Add(request);
-            return request;
-
-            /*
             if (string.IsNullOrEmpty(request.Id))
             {
                  _context.SearchRequests.Add(request);
@@ -43,10 +32,8 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                     //editRequest.Description = request.Description;
                 }                
             }
-
-
             _context.SaveChanges();
-            return request;*/
+            return request;
         }
 
         public SearchRequestDb DeleteRequest(string requestId)
@@ -57,7 +44,6 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 _context.SearchRequests.Remove(delRequest);
                 _context.SaveChanges();
             }
-
             return delRequest;
         }
 
@@ -70,7 +56,6 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         {
             return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
         }
-
 
         //interface method implementation
         public void Dispose()
