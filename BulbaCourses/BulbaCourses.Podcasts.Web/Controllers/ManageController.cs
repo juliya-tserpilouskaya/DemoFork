@@ -19,10 +19,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             _manageservice = manageService;
         }
         [HttpGet, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid Paramater Format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Not Found")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -42,9 +42,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [HttpPost, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid Paramater Format")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult Create([FromBody]Course course)
         {
             try
@@ -67,10 +67,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [HttpPut, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid Paramater Format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Not Found")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult Update([FromBody]Course course)
         {
             try
@@ -93,10 +93,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [HttpDelete, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid Paramater Format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Not Found")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))

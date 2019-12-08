@@ -21,9 +21,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         [HttpGet, Route("{searchString}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Empty Request")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Not found")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Not Found")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(SearchResultList))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult GetSearchResults(string searchString, SearchMode mode)
         {
             if (string.IsNullOrEmpty(searchString))
