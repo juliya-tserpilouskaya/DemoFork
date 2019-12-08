@@ -6,8 +6,8 @@ namespace BulbaCourses.Youtube.Web.Logic.Models
 {
     public class SearchRequest
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string UserId { get; set; }
+        public int? Id { get; set; } 
+        public int? UserId { get; set; }
         public string VideoId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

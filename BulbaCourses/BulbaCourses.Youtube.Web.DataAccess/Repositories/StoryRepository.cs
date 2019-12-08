@@ -9,51 +9,86 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
     public class StoryRepository : IStoryRepository
     {
-        private YoutubeContext context;
+        private YoutubeContext _context;
 
         public StoryRepository(YoutubeContext ctx)
         {
-            context = ctx;
+            _context = ctx;
         }
 
+        /// <summary>
+        /// Save story for User
+        /// </summary>
+        /// <param name="story"></param>
+        public SearchStoryDb Save(SearchStoryDb story)
+        {
+            _context.SearchStories.Add(story);
+            _context.SaveChanges();
+            return story;
+        }
+
+        /// <summary>
+        /// Get all stories for all Users
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
         public IEnumerable<SearchStoryDb> GetAll()
         {
-            return context.SearchStories.ToList().AsReadOnly();
+            return _context.SearchStories.ToList().AsReadOnly();
         }
 
-        public SearchStoryDb GetByStoryId(string storyId)
+        /// <summary>
+        /// Get all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<SearchStoryDb> GetByUserId(int? userId)
         {
-            return context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+            return _context.SearchStories.Where(s => s.User.Id == userId).ToList().AsReadOnly();
         }
 
-        public SearchStoryDb GetByUserId(string userId)
+        /// <summary>
+        /// Get all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public IEnumerable<SearchStoryDb> GetByRequestId(int? requestId)
         {
-            return context.SearchStories.SingleOrDefault(s => s.User.Id == userId);
+            return _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToList().AsReadOnly();
         }
 
-        public SearchStoryDb GetByRequestId(string requestId)
+        /// <summary>
+        /// Get one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
+        public SearchStoryDb GetByStoryId(int? storyId)
         {
-            return context.SearchStories.SingleOrDefault(r => r.SearchRequest.Id == requestId);
+            return _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
         }
 
-        public void Save(SearchStoryDb story)
+        /// <summary>
+        /// Delete all records story by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        public void DeleteByUserId(int? userId)
         {
-            if (string.IsNullOrEmpty(story.Id))
-            {
-                context.SearchStories.Add(story);
-            }
-
-            context.SaveChanges();
-        }
-
-        public void Delete(string storyId)
-        {
-            var delstory = context.SearchStories.SingleOrDefault(r => r.Id == storyId);
+            var delstory = _context.SearchStories.Where(s => s.User.Id == userId);
             if (delstory != null)
             {
-                context.SearchStories.Remove(delstory);
-                context.SaveChanges();
+                _context.SearchStories.RemoveRange(delstory);
+                _context.SaveChanges();
             }
         }
+        public void DeleteByStoryId(int? storyId)
+        {
+            var delstory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+            if (delstory != null)
+            {
+                _context.SearchStories.Remove(delstory);
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

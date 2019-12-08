@@ -1,6 +1,7 @@
 ﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
@@ -71,6 +72,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
         public StoryConfiguration()
         {
             ToTable("SearchStories").HasKey(p => p.Id);
+            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.SearchDate).IsRequired();
         }
     }
@@ -81,6 +83,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
         public SearchRequestConfiguration()
         {
             ToTable("SearchRequests").HasKey(p => p.Id);
+            Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.Title).IsRequired().HasMaxLength(200);
             Property(p => p.Author).HasMaxLength(50);
             Property(p => p.VideoId).HasMaxLength(100);

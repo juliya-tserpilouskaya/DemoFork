@@ -9,16 +9,50 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 {
     public interface IStoryService
     {
-        void SaveStory(SearchStoryDb story);
+        /// <summary>
+        /// Save story for User
+        /// </summary>
+        /// <param name="story"></param>
+        SearchStoryDb Save(SearchStoryDb story);
 
-        void DeleteStory(string storyId);
+        /// <summary>
+        /// Delete all records story by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        void DeleteByUserId(int? userId);
 
-        IEnumerable<SearchStoryDb> GetAllSrories();
+        /// <summary>
+        ///Delete one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        void DeleteByStoryId(int? storyId);
 
-        SearchStoryDb GetStoriesById(string storyId);
+        /// <summary>
+        /// Get all stories for all Users
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<SearchStoryDb> GetAllStories();
 
-        SearchStoryDb GetStoriesByUserId(string userId);
+        /// <summary>
+        /// Get all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId);
 
-        SearchStoryDb GetStoriesByRequestId(string requestId);
+        /// <summary>
+        /// Get all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId);
+
+        /// <summary>
+        /// Get one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
+        SearchStoryDb GetStoryByStoryId(int? storyId);
+
     }
 }

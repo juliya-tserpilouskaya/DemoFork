@@ -55,6 +55,7 @@ namespace BulbaCourses.Youtube.Web.Tests
             
         }
 
+        /*
         [Test]
         public void Test_GetById()
         {
@@ -76,7 +77,7 @@ namespace BulbaCourses.Youtube.Web.Tests
 
             var result = (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)videoController.GetAll();
             result.Content.Should().BeEquivalentTo((IEnumerable<ResultVideoDb>)videos.AsReadOnly());
-        }
+        }*/
 
     }
 }

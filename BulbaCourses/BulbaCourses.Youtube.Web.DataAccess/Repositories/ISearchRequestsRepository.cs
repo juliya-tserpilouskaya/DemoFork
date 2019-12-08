@@ -8,14 +8,9 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
     public interface ISearchRequestsRepository : IDisposable
     {
-        IQueryable<SearchRequestDb> SearchRequests { get; }
-
         SearchRequestDb SaveRequest(SearchRequestDb request);
-
-        SearchRequestDb DeleteRequest(string requestId);
-
+        void DeleteRequest(int? requestId);
         IEnumerable<SearchRequestDb> GetAllRequests();
-
-        SearchRequestDb GetRequestById(string requestId);
+        SearchRequestDb GetRequestById(int? requestId);
     }
 }
