@@ -1,6 +1,6 @@
-﻿namespace BulbaCourses.Analytics.BLL.DTO
+﻿namespace BulbaCourses.Analytics.Web.Models
 {
-    public class ReportShortDto
+    public class ReportShortVm
     {
         public string Id { get; set; }
 

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace BulbaCourses.Analytics.DAL.Models
+namespace BulbaCourses.Analytics.Web.Models
 {
-    public class ReportDb
+    public class ReportVm
     {
         public string Id { get; set; }
 
@@ -18,7 +17,5 @@ namespace BulbaCourses.Analytics.DAL.Models
         public string Creator { get; set; }
 
         public string Modifier { get; set; }
-
-        public ICollection<DashboardDb> Dashboards { get; set; }
     }
 }

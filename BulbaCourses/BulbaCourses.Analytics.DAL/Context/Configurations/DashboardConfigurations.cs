@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.Analytics.DAL.Context.Configurations
 {
-    internal class DashboardConfigurations: EntityTypeConfiguration<DashboardDb>
+    internal class DashboardConfigurations : EntityTypeConfiguration<DashboardDb>
     {
         public DashboardConfigurations()
         {

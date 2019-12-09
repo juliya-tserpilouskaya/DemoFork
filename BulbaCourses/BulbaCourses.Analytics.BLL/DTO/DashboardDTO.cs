@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.DTO
 {
-    public class DashboardDTO
+    public class DashboardDto
     {
         public string Id { get; set; }
 
