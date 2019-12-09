@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
-    public class Student : User
+    public class StudentDb : UserDb
     {
-        public IEnumerable<Course> PurchasedCourses { get; set; }
+        public IEnumerable<CourseDb> PurchasedCourses { get; set; }
     }
 }
