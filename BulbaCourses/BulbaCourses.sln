@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
@@ -96,7 +96,6 @@ Global
 		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23092271-E8E3-47BC-B926-D2058FD4BE7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8897E55-F577-4ED3-9B8D-8B78DAF3E1D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA1A4ACD-BDA4-495E-80F4-38979495D414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
