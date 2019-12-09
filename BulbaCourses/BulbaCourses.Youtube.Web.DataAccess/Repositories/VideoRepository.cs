@@ -15,27 +15,30 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         {
             _db = new YoutubeContext();
         }
-        public Video GetById(int? id)
+        //GetById
+        public ResultVideoDb GetById(int? id)
         {
             return _db.Videos.Find(id);
         }
-
-        public IEnumerable<Video> GetAll()
+        //GetAll
+        public IEnumerable<ResultVideoDb> GetAll()
         {
             return _db.Videos.ToList().AsReadOnly();
         }
 
-        
-        public void Create(Video videoEntity)
+        //Create
+        public void Create(ResultVideoDb videoEntity)
         {
             _db.Videos.Add(videoEntity);
         }
 
-        public void Update(Video videoEntity)
+        //Update
+        public void Update(ResultVideoDb videoEntity)
         {
             _db.Entry(videoEntity).State = EntityState.Modified;
         }
 
+        //Delete
         public void Delete(int? id)
         {
             var video = _db.Videos.Find(id);
@@ -43,6 +46,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 _db.Videos.Remove(video);
         }
 
+        //Save
         public void Save()
         {
             _db.SaveChanges();

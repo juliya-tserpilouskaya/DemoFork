@@ -5,10 +5,12 @@ using System.Web;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
-    public class Channel
+    public class ChannelDb
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
+        public ICollection<ResultVideoDb> Videos { get; set; } //reference
+        public MentorDb Mentor { get; set; } //reference
         //public string Author { get; set; }
     }
 }
