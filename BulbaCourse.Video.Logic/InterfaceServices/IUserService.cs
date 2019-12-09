@@ -9,16 +9,15 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
 {
     public interface IUserService
     {
-        User GetByLogin(string userName);
-        User GetUserById(string id);
-        IEnumerable<User> GetAll();
-        User Add(User user);
-        void Delete(User user);
+        UserDb GetByLogin(string userName);
+        UserDb GetUserById(string id);
+        IEnumerable<UserDb> GetAll();
+        void Add(UserDb user);
+        void Delete(UserDb user);
         void DeleteById(string userId);
-        ICollection<Course> GetUserCourse(string userId);
-        Role CheckRole(Role role);
-        bool AddRole(string newRole);
-        bool AddCourseToUser(string userId, string courseId);
-        bool DeleteCourseFromUser(string userId, string courseId);
+        IEnumerable<CourseDb> GetUserCourse(string userId);
+        void AddRoleToUser(string userId, RoleDb role);
+        void AddCourseToUser(string userId, CourseDb course);
+        void DeleteCourseFromUser(string userId, string courseId);
     }
 }

@@ -1,6 +1,4 @@
 ﻿using BulbaCourse.Video.Logic.InterfaceServices;
-using BulbaCourse.Video.Logic.Services;
-using BulbaCourse.Video.Web.Enums;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -10,22 +8,22 @@ using System.Net.Http;
 using System.Web.Http;
 using Video.Data.Models;
 
-namespace BulbaCourse.Video.Controllers
+namespace BulbaCourse.Video.Web.Controllers
 {
-    [RoutePrefix("api/courses")]
-    public class CourseController : ApiController
+    [RoutePrefix("api/comments")]
+    public class CommentController : ApiController
     {
-        private readonly ICourseService courseService;
+        private readonly ICommentService commentService;
 
-        public CourseController(ICourseService courseService)
+        public CommentController(ICommentService commentService)
         {
-            this.courseService = courseService;
+            this.commentService = commentService;
         }
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseDb))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Get(string id)
         {
@@ -35,7 +33,7 @@ namespace BulbaCourse.Video.Controllers
             }
             try
             {
-                var result = courseService.GetCourseById(id);
+                var result = commentService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -46,27 +44,27 @@ namespace BulbaCourse.Video.Controllers
         }
 
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseDb>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentDb>))]
         public IHttpActionResult GetAll()
         {
-            return Ok(courseService.GetAll());
+            return Ok(commentService.GetAll());
         }
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseDb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Post([FromBody]CourseDb course)
+        public IHttpActionResult Post([FromBody]CommentDb comment)
         {
-            if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
+            if (comment == null)
             {
                 return BadRequest();
             }
 
             try
             {
-                courseService.AddCourse(course);
-                return Ok(course);
+                commentService.Add(comment);
+                return Ok(comment);
             }
 
             catch (Exception ex)
@@ -77,25 +75,24 @@ namespace BulbaCourse.Video.Controllers
 
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseDb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Put(string id, [FromBody]CourseDb course)
+        public IHttpActionResult Put(string id, [FromBody]CommentDb comment)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
+            comment.CommentId = id;
 
-            course.CourseId = id;
-
-            if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
+            if (comment == null)
             {
                 return BadRequest();
             }
 
             try
             {
-                courseService.AddCourse(course);
+                commentService.Add(comment);
                 return Ok();
             }
 
@@ -107,7 +104,7 @@ namespace BulbaCourse.Video.Controllers
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseDb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {
@@ -117,7 +114,7 @@ namespace BulbaCourse.Video.Controllers
             }
             try
             {
-                courseService.DeleteById(id);
+                commentService.RemoveById(id);
                 return Ok();
             }
             catch (Exception ex)

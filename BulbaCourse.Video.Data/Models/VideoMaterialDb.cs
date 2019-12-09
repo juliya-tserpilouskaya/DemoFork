@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Video.Data.Models
 {
-    public class VideoMaterial
+    public class VideoMaterialDb
     {
         public string VideoId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
@@ -17,6 +17,6 @@ namespace Video.Data.Models
         public int Order { get; set; }
 
         public string CourseId { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<CommentDb> Comments { get; set; }
     }
 }

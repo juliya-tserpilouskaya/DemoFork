@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Video.Data.Models
 {
-    public class Role
+    public class RoleDb
     {
         public string RoleId { get; set; } = Guid.NewGuid().ToString();
         public string RoleName { get; set; }

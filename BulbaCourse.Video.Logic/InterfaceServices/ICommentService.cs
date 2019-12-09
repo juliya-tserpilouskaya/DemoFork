@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Video.Data.Models;
 
-namespace BulbaCourse.Video.Data.Interfaces
+namespace BulbaCourse.Video.Logic.InterfaceServices
 {
-    public interface ICommentRepository
+    public interface ICommentService
     {
         CommentDb GetById(string commentId);
         IEnumerable<CommentDb> GetAll();
         void Add(CommentDb comment);
-        void Update(CommentDb comment);
-        void Remove(CommentDb comment);
+        CommentDb UpdateCommentText(string commentId, string newText);
+        void RemoveById(string commentId);
     }
 }

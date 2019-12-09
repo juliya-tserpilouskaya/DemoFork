@@ -22,7 +22,7 @@ namespace BulbaCourse.Video.Web.Controllers
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(User))]
+        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string id)
         {
@@ -41,7 +41,7 @@ namespace BulbaCourse.Video.Web.Controllers
             }
         }
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<User>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserDb>))]
         public IHttpActionResult GetAll()
         {
             var result = userService.GetAll();
@@ -50,9 +50,9 @@ namespace BulbaCourse.Video.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(User))]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]User user)
+        public IHttpActionResult Create([FromBody]UserDb user)
         {
             if (user == null)
             {
@@ -60,8 +60,8 @@ namespace BulbaCourse.Video.Web.Controllers
             }
             try
             {
-                var addUser = userService.Add(user);
-                return Ok(addUser);
+                userService.Add(user);
+                return Ok(user);
             }
             catch (Exception ex)
             {
@@ -71,9 +71,9 @@ namespace BulbaCourse.Video.Web.Controllers
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(User))]
+        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]User user)
+        public IHttpActionResult Update([FromBody]UserDb user)
         {
             if (user == null)
             {
@@ -92,7 +92,7 @@ namespace BulbaCourse.Video.Web.Controllers
 
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(User))]
+        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserDb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {

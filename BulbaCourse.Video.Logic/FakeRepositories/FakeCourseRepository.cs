@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using BulbaCourse.Video.Data.Interfaces;
+﻿using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +10,70 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
 {
     public  class FakeCourseRepository: ICourseRepository
     {
-        private List<Course> _courses;
-
+        private List<CourseDb> _courses;
         public FakeCourseRepository()
         {
-            _courses = new List<Course>() 
+            UserDb user1 = new UserDb()
             {
-               new Course() 
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user1",
+                Password = "1111",
+                Email = "1@gmail.com"
+            };
+            UserDb user2 = new UserDb()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user2",
+                Password = "2222",
+                Email = "3@gmail.com"
+            };
+
+            UserDb user3 = new UserDb()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Login = "user3",
+                Password = "3333",
+                Email = "3@gmail.com"
+            };
+
+            _courses = new List<CourseDb>() 
+            {
+               new CourseDb() 
                { 
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_1",
-                   CreatorId = "Creator_1",
-                   Level = CourseLevel.Beginner
+                   Author = user1,
+                   Level = 1
                },
 
-               new Course()
+               new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_2",
-                   CreatorId = "Creator_2",
-                   Level = CourseLevel.Beginner
+                   Author = user2,
+                   Level = 1
                }, 
-               new Course()
+               new CourseDb()
                {
                    CourseId = Guid.NewGuid().ToString(),
                    Name = "Course_3",
-                   CreatorId = "Creator_3",
-                   Level = CourseLevel.Advanced
+                   Author = user3,
+                   Level = 3
                },
             };
         }
 
-        public Course AddCourse(Course course)
+        public void Add(CourseDb course)
         {
             _courses.Add(course);
-            return course;
         }
 
         public bool AddDiscription(string courseId, string discription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TagDb AddTag(string content)
         {
             throw new NotImplementedException();
         }
@@ -58,57 +83,57 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public Tag CheckTag(Tag tag)
+        public IEnumerable<CourseDb> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Course course)
+        public CourseDb GetById(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteById(string courseId)
+        public CourseDb GetByName(string courseName)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Course> GetAll()
-        {
-            return _courses.ToList();
-        }
-
-        public Course GetCourseById(string courseId)
+        public int GetCourseLevel(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public Course GetCourseByName(string courseName)
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public IEnumerable<TagDb> GetTags(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+        public void Remove(CourseDb course)
         {
             throw new NotImplementedException();
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public void RemoveById(string courseId)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
+        public void Update(CourseDb course)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateCourseLevel(string courseId, int level)
         {
             throw new NotImplementedException();
         }
