@@ -13,7 +13,5 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
         public string Description { get; set; }
         public ChannelDb Channel { get; set; } //reference
         public ICollection<SearchRequestDb> SearchRequests { get; set; } //reference
-        //public int PlayListId { get; set; }
-        //public Course Course { get; set; }
     }
 }
