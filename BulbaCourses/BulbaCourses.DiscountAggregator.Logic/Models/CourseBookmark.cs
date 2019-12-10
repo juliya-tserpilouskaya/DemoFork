@@ -38,11 +38,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
             return coursebookmark;
         }
 
-        //public static CourseBookmark Delete(CourseBookmark coursebookmark)
-        //{
-        //    _coursebookmark.(coursebookmark);
-        //    return coursebookmark;
-        //}
+        public static IEnumerable<CourseBookmark> Delete(string id)
+        {
+            var itemToDelete = _coursebookmark.Where(x => x.Id == id).First();
+            _coursebookmark.Remove(itemToDelete);
+            return _coursebookmark.AsReadOnly();
+        }
 
     }
 
