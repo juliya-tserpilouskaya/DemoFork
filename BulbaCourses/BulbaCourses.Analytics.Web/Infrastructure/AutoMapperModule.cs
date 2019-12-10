@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BulbaCourses.Analytics.BLL.Infrastructure.Assemblies;
 using Ninject.Modules;
 
 namespace BulbaCourses.Analytics.Web.Infrastructure
@@ -8,10 +9,13 @@ namespace BulbaCourses.Analytics.Web.Infrastructure
         public override void Load()
         {
             var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<BulbaCourses.Analytics.BLL.Infrastructure.MappingProfiles.ReportProfile>();
-                cfg.AddProfile<BulbaCourses.Analytics.Web.Infrastructure.MappingProfiles.ReportProfile>();
-            });
+                {
+                    var profiles = AssemblyHelper.GetInstancedObjects<Profile>("BulbaCourses.Analytics.");
+                    if (profiles != null)
+                    {
+                        cfg.AddProfiles(profiles);
+                    }
+                });
 
             var mapper = config.CreateMapper();
             Bind<MapperConfiguration>().ToConstant(config).InSingletonScope();

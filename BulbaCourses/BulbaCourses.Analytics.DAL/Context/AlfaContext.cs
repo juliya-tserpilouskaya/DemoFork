@@ -24,7 +24,7 @@ namespace BulbaCourses.Analytics.DAL.Context
             base.OnModelCreating(modelBuilder);
 
             Database.SetInitializer(
-                new DropCreateDatabaseIfModelChanges<AlfaContext>());
+                new DropCreateDatabaseIfModelChanges<AlfaContext>());            
 
             modelBuilder.Configurations.Add(new ReportConfigurations());
             modelBuilder.Configurations.Add(new DashboardConfigurations());
