@@ -18,6 +18,7 @@ namespace BulbaCourses.Video.Logic.Services
 
         public CourseService(IMapper mapper, ICourseRepository courseRepository)
         {
+            this.mapper = mapper;
             this.courseRepository = courseRepository;
         }
 

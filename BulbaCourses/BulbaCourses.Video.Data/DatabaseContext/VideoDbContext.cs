@@ -10,7 +10,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
 {
     public class VideoDbContext : DbContext
     {
-        public VideoDbContext() : base("VidConnect")
+        public VideoDbContext() : base("VideoConnect")
         {
         }
         public DbSet<UserDb> Users { get; set; }

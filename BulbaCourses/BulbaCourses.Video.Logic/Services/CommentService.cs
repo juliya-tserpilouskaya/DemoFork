@@ -18,6 +18,7 @@ namespace BulbaCourses.Video.Logic.Services
 
         public CommentService(IMapper mapper, ICommentRepository commentRepository)
         {
+            this.mapper = mapper;
             this.commentRepository = commentRepository;
         }
 
