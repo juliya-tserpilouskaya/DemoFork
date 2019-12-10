@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\CourseBookmarks.cs" />
     <Compile Include="Models\CourseCategory.cs" />
     <Compile Include="Models\CoursesITAcademy.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
