@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.Web", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.Data", "BulbaCourses.Video.Data\BulbaCourses.Video.Data.csproj", "{99064581-4378-4F1D-9099-2F0A34E1FEF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.Logic", "BulbaCourses.Video.Logic\BulbaCourses.Video.Logic.csproj", "{DD64E168-6D37-481C-AF1B-C171F15306D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{99064581-4378-4F1D-9099-2F0A34E1FEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99064581-4378-4F1D-9099-2F0A34E1FEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99064581-4378-4F1D-9099-2F0A34E1FEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD64E168-6D37-481C-AF1B-C171F15306D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD64E168-6D37-481C-AF1B-C171F15306D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD64E168-6D37-481C-AF1B-C171F15306D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD64E168-6D37-481C-AF1B-C171F15306D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +218,7 @@ Global
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{F7D98B3E-78AA-42D3-9547-EC8C29C946BC} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 		{99064581-4378-4F1D-9099-2F0A34E1FEF6} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
+		{DD64E168-6D37-481C-AF1B-C171F15306D2} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
