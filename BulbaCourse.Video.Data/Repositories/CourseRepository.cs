@@ -1,8 +1,8 @@
 ﻿using BulbaCourse.Video.Data.DatabaseContex;
-using BulbaCourse.Video.Data.Enums;
 using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,48 +18,61 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public Course GetCourseById(string courseId)
+        public CourseDb GetById(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             return course;
         }
 
-        public Course AddCourse(Course course)
+        public void Add(CourseDb course)
         {
             videoDbContext.Courses.Add(course);
             videoDbContext.SaveChanges();
-            return course;
         }
 
-        public Course GetCourseByName(string courseName)
+        public CourseDb GetByName(string courseName)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.Name.Equals(courseName));
             return course;
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<CourseDb> GetAll()
         {
             var courseList = videoDbContext.Courses.ToList().AsReadOnly();
             return courseList;
         }
 
-        public void Delete(Course course)
+        public void Update(CourseDb course)
+        {
+            if (course == null)
+            {
+                throw new ArgumentNullException("course");
+            }
+            videoDbContext.Entry(course).State = EntityState.Modified;
+            videoDbContext.SaveChanges();
+        }
+
+        public void Remove(CourseDb course)
         {
             videoDbContext.Courses.Remove(course);
             videoDbContext.SaveChanges();
         }
-        public void DeleteById(string courseId)
+        public void RemoveById(string courseId)
         {
             var deleteCourse = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             videoDbContext.Courses.Remove(deleteCourse);
             videoDbContext.SaveChanges();
         }
 
-        public Tag CheckTag(Tag tag)
+        public TagDb AddTag(string content)
         {
-            var result = videoDbContext.Tags.FirstOrDefault(p => p.Content == tag.Content);
+            var result = videoDbContext.Tags.FirstOrDefault(p => p.Content.Equals(content));
             if (result == null)
             {
+                TagDb tag = new TagDb()
+                {
+                    Content = content
+                };
                 videoDbContext.Tags.Add(tag);
                 videoDbContext.SaveChanges();
                 result = tag;
@@ -67,7 +80,7 @@ namespace BulbaCourse.Video.Data.Repositories
             return result;
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+            public IEnumerable<TagDb> GetTags(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(p => p.CourseId.Equals(courseId));
             var tags = course.Tags;
@@ -89,14 +102,14 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             var videos = course.Videos;
             return videos;
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             var videos = course.Videos;
@@ -119,14 +132,14 @@ namespace BulbaCourse.Video.Data.Repositories
             }
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public int GetCourseLevel(string courseId)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
-            CourseLevel level = course.Level;
+            int level = course.Level;
             return level;
         }
 
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
+        public void UpdateCourseLevel(string courseId, int level)
         {
             var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             course.Level = level;

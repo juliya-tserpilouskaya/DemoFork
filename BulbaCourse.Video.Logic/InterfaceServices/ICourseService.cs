@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +9,20 @@ namespace BulbaCourse.Video.Logic.InterfaceServices
 {
     public interface ICourseService
     {
-        Course GetCourseById(string courseId);
-        Course GetCourseByName(string courseName);
-        IEnumerable<Course> GetAll();
-        Course AddCourse(Course course);
-        void Delete(Course course);
+        CourseDb GetCourseById(string courseId);
+        CourseDb GetCourseByName(string courseName);
+        IEnumerable<CourseDb> GetAll();
+        void AddCourse(CourseDb course);
+        void Delete(CourseDb course);
         void DeleteById(string courseId);
-        Tag CheckTag(Tag tag);
-        ICollection<Tag> GetTags(string courseId);
-        ICollection<VideoMaterial> GetCourseVideos(string courseId);
-        VideoMaterial GetVideoByOrder(string courseId, int videoOrder);
-        CourseLevel GetCourseLevel(string courseId);
-        void UpdateCourseLevel(string courseId, CourseLevel level);
-        bool AddVideoToCourse(string courseId, string videoId);
-        bool AddDiscription(string courseId, string discription);
+        void AddTagToCourse(string courseId, TagDb tag);
+        IEnumerable<TagDb> GetTags(string courseId);
+        IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId);
+        VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder);
+        int GetCourseLevel(string courseId);
+        void UpdateCourseLevel(string courseId, int level);
+        void AddVideoToCourse(string courseId, VideoMaterialDb video);
+        void AddDiscription(string courseId, string description);
+        IEnumerable<CommentDb> GetCourseComments(string courseId);
     }
 }

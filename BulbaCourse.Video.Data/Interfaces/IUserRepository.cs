@@ -9,16 +9,10 @@ namespace BulbaCourse.Video.Data.Interfaces
 {
     public interface IUserRepository
     {
-        User GetByLogin(string userName);
-        User GetUserById(string id);
-        IEnumerable<User> GetAll();
-        User Add(User user);
-        void Delete(User user);
-        void DeleteById(string userId);
-        ICollection<Course> GetUserCourse(string userId);
-        Role CheckRole(Role role);
-        bool AddRole(string newRole);
-        bool AddCourseToUser(string userId, string courseId);
-        bool DeleteCourseFromUser(string userId, string courseId);
+        UserDb GetById(string id);
+        IEnumerable<UserDb> GetAll();
+        void Add(UserDb user);
+        void Update(UserDb user);
+        void Remove(UserDb user);
     }
 }

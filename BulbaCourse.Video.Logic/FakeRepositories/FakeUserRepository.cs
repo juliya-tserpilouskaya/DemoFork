@@ -10,25 +10,25 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
 {
     public class FakeUserRepository : IUserRepository
     {
-        private List<User> _users;
+        private List<UserDb> _users;
 
         public FakeUserRepository()
         { 
-            _users = new List<User>() 
+            _users = new List<UserDb>() 
             {
-                new User()
+                new UserDb()
                 {
                      UserId  = Guid.NewGuid().ToString(),
                      Name = "User_2",
                      LastName = "LastName_2"
                 },
-                new User()
+                new UserDb()
                 {
                      UserId  = Guid.NewGuid().ToString(),
                      Name = "User_1",
                      LastName = "LastName_1"
                 },
-                new User()
+                new UserDb()
                 {
                      UserId  = Guid.NewGuid().ToString(),
                      Name = "User_3",
@@ -37,10 +37,10 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             };
 
         }
-        public User Add(User user)
+
+        public void Add(UserDb user)
         {
             _users.Add(user);
-            return user;
         }
 
         public bool AddCourseToUser(string userId, string courseId)
@@ -53,17 +53,7 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public Role CheckRole(Role role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteById(string userId)
+        public RoleDb CheckRole(RoleDb role)
         {
             throw new NotImplementedException();
         }
@@ -73,22 +63,37 @@ namespace BulbaCourse.Video.Logic.FakeRepositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _users.ToList().AsReadOnly();
-        }
-
-        public User GetByLogin(string userName)
+        public IEnumerable<UserDb> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public User GetUserById(string id)
+        public UserDb GetById(string id)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<Course> GetUserCourse(string userId)
+        public UserDb GetByLogin(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<CourseDb> GetUserCourse(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(UserDb user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveById(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserDb user)
         {
             throw new NotImplementedException();
         }

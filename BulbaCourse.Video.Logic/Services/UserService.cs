@@ -17,68 +17,64 @@ namespace BulbaCourse.Video.Logic.Services
         {
             this.userRepository = userRepository;
         }
-        public User Add(User user)
+        public void Add(UserDb user)
         {
-            var result = userRepository.Add(user);
-            return result;
+            userRepository.Add(user);
         }
 
-        public bool AddCourseToUser(string userId, string courseId)
+        public void AddCourseToUser(string userId, CourseDb course)
         {
-            var result = userRepository.AddCourseToUser(userId, courseId);
-            return result;
+            var userCourses = userRepository.GetById(userId).Courses;
+            userCourses.Add(course);
         }
 
-        public bool AddRole(string newRole)
+        public void AddRoleToUser(string userId, RoleDb role)
         {
-            var result = userRepository.AddRole(newRole);
-            return result;
+            var userRoles = userRepository.GetById(userId).Roles;
+            userRoles.Add(role);
         }
 
-        public Role CheckRole(Role role)
+        public void Delete(UserDb user)
         {
-            var result = userRepository.CheckRole(role);
-            return result;
-        }
-
-        public void Delete(User user)
-        {
-            userRepository.Delete(user);
+            userRepository.Remove(user);
         }
 
         public void DeleteById(string userId)
         {
-            userRepository.DeleteById(userId);
+            var user = userRepository.GetById(userId);
+            userRepository.Remove(user);
         }
 
-        public bool DeleteCourseFromUser(string userId, string courseId)
+        public void DeleteCourseFromUser(string userId, string courseId)
         {
-            var result = userRepository.DeleteCourseFromUser(userId, courseId);
-            return result;
+            var courses = userRepository.GetById(userId).Courses;
+            var courseToDel = courses.FirstOrDefault(c => c.CourseId.Equals(courseId));
+            courses.Remove(courseToDel);
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserDb> GetAll()
         {
             var result = userRepository.GetAll();
             return result;
         }
 
-        public User GetByLogin(string userName)
+        public UserDb GetByLogin(string userName)
         {
-            var result = userRepository.GetByLogin(userName);
+            var user = userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(userName));
+            return user;
+        }
+
+        public UserDb GetUserById(string id)
+        {
+            var result = userRepository.GetById(id);
             return result;
         }
 
-        public User GetUserById(string id)
+        public IEnumerable<CourseDb> GetUserCourse(string userId)
         {
-            var result = userRepository.GetUserById(id);
-            return result;
-        }
-
-        public ICollection<Course> GetUserCourse(string userId)
-        {
-            var result = userRepository.GetUserCourse(userId);
-            return result;
+            var user = userRepository.GetById(userId);
+            var couses = user.Courses.ToList().AsReadOnly();
+            return couses;
         }
     }
 }

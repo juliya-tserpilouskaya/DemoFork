@@ -2,6 +2,7 @@
 using BulbaCourse.Video.Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,43 +18,55 @@ namespace BulbaCourse.Video.Data.Repositories
         {
             this.videoDbContext = videoDbContext;
         }
-        public Comment AddComment(Comment comment)
+
+        public CommentDb GetById(string commentId)
+        {
+            var comment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
+            return comment;
+        }
+        public IEnumerable<CommentDb> GetAll()
+        {
+            var commentList = videoDbContext.Comments.ToList().AsReadOnly();
+            return commentList;
+        }
+
+        public void Add(CommentDb comment)
         {
             videoDbContext.Comments.Add(comment);
             videoDbContext.SaveChanges();
-            return comment;
         }
 
-        public ICollection<Comment> GetCourseComments(int courseId)
-        {
-            var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
-            var comments = course.Comments.ToList().AsReadOnly();
-            return comments;
-        }
-
-        public ICollection<Comment> GetVideoComments(int videoId)
+        public IEnumerable<CommentDb> GetVideoComments(string videoId)
         {
             var video = videoDbContext.VideoMaterials.FirstOrDefault(b => b.VideoId.Equals(videoId));
             var comments = video.Comments.ToList().AsReadOnly();
             return comments;
         }
 
-        public bool RemoveById(int commentId)
+        public void RemoveById(string commentId)
         {
             var deletedComment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
-            if (deletedComment != null)
-            {
-                videoDbContext.Comments.Remove(deletedComment);
-                videoDbContext.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            videoDbContext.Comments.Remove(deletedComment);
+            videoDbContext.SaveChanges();
         }
 
-        public Comment UpdateCommentText(string commentId, string newText)
+        public void Remove(CommentDb comment)
+        {
+            videoDbContext.Comments.Remove(comment);
+            videoDbContext.SaveChanges();
+        }
+
+        public void Update(CommentDb comment)
+        {
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
+            videoDbContext.Entry(comment).State = EntityState.Modified;
+            videoDbContext.SaveChanges();
+        }
+
+        public CommentDb UpdateCommentText(string commentId, string newText)
         {
             var comment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
             comment.Text = newText;
