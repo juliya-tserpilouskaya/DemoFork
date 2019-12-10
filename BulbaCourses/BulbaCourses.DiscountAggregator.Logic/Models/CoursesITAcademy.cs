@@ -21,11 +21,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     }
     public static class CourseStore
     {
-        private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>()
-        {
-            new CoursesITAcademy(){ URL = "asdf"},
-            new CoursesITAcademy(){ URL = "asdfcc"}
-        };
+        private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>();
+        //{
+            //new CoursesITAcademy(){ URL = "asdf"},
+            //new CoursesITAcademy(){ URL = "asdfcc"}
+        //};
 
         static CourseStore()
         {

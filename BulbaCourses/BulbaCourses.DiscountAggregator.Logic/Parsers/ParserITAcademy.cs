@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Parsers
 {
-    class ParserITAcademy : ICoursesParser
+    class ParserITAcademy
     {
         public IEnumerable<CoursesITAcademy> GetAllCourses()
         {
@@ -19,6 +19,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             List<CoursesITAcademy> listCourses = new List<CoursesITAcademy>();
 
             var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='programm-card-wrap ']/a");
+
+            if (htmlNodes is null) return listCourses;    // TODO
 
             foreach (var node in htmlNodes)
             {
