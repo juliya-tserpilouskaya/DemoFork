@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +59,7 @@
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Parsers\CommonValues.cs" />
     <Compile Include="Parsers\ICoursesParser.cs" />
     <Compile Include="Parsers\ParserITAcademy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

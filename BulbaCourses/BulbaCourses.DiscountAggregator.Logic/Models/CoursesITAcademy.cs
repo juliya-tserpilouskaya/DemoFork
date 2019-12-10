@@ -11,6 +11,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
+        public string Hosting { get; set; }
+
         public string URL { get; set; }
 
         public string Title { get; set; }
@@ -18,14 +20,18 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
         public string Description { get; set; }
 
         public double Price { get; set; }
+        
+        public int OldDiscount { get; set; }
+
+        public int CurrentDiscount { get; set; }
+
+        public DateTime? DateStartCourse { get; set; } = DateTime.Now;
+
+        public DateTime? DateChange { get; set; } = DateTime.Now;
     }
     public static class CourseStore
     {
         private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>();
-        //{
-            //new CoursesITAcademy(){ URL = "asdf"},
-            //new CoursesITAcademy(){ URL = "asdfcc"}
-        //};
 
         static CourseStore()
         {
