@@ -30,5 +30,4 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
 
         }
     }
-
 }

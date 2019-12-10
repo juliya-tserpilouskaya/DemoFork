@@ -1,5 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
-using HtmlAgilityPack;
+using BulbaCourses.DiscountAggregator.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,28 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
+        private readonly ICourseServices courseService;
+
+        public CourseController()
+        {
+            this.courseService = new CourseServices();
+
+        }
+
+        public CourseController(ICourseServices courseService)
+        {
+            this.courseService = courseService;
+        }
+
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
-            var result = Courseware.GetAll();
+            var result = courseService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -42,21 +55,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                //var res = Logic.;
-                var html = @"https://www.it-academy.by/specialization/programmirovanie/";
-                HtmlWeb web = new HtmlWeb();
-                var htmlDoc = web.Load(html);
-
-                var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='programm-card-wrap ']/a");
-
-                List<string> res = new List<string>();
-                foreach (var node in htmlNodes)
-                {
-                    //Console.WriteLine(node.InnerHtml + "  -  " + node.Attributes["href"].Value);
-                    //Console.WriteLine(node.Attributes["href"].Value);
-                    res.Add(node.Attributes["href"].Value);
-                }
-                var result = Courseware.GetById(id);
+                var result = courseService.GetById(id); //Courseware.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

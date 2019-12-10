@@ -5,7 +5,8 @@ namespace BulbaCourses.DiscountAggregator.Web.App_Start
 {
     using System;
     using System.Web;
-
+    using BulbaCourses.DiscountAggregator.Logic;
+    using BulbaCourses.DiscountAggregator.Logic.Services;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -61,6 +62,8 @@ namespace BulbaCourses.DiscountAggregator.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Load<LogicModule>();
+            //kernel.Bind<ICourseServices>().To<CourseServices>();
         }        
     }
 }

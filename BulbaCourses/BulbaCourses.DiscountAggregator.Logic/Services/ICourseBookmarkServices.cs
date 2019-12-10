@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscountAggregator.Logic.Services
+namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public interface ICourseServices
+    public interface ICourseBookmarkServices
     {
-        Course GetById(string id);
+        IEnumerable<CourseBookmark> GetAll();
     }
 }
