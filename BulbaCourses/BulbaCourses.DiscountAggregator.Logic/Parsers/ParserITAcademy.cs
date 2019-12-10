@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Parsers
 {
-    class ParserITAcademy
+    class ParserITAcademy : ICoursesParser
     {
-        public IEnumerable<CoursesITAcademy> GetAllCourseITAcademy()
+        public IEnumerable<CoursesITAcademy> GetAllCourses()
         {
             var html = @"https://www.it-academy.by/specialization/programmirovanie/";
             HtmlWeb web = new HtmlWeb();
@@ -22,10 +22,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
 
             foreach (var node in htmlNodes)
             {
-                CoursesITAcademy currentCourse = new CoursesITAcademy() {
+                CoursesITAcademy currentCourse = new CoursesITAcademy()
+                {
                     URL = @"https://www.it-academy.by" + node.Attributes["href"].Value,
                     Title = node.ChildNodes["div"].ChildNodes["h3"].InnerHtml,
-                    Price = GetPriceCourseITAcademy(node.Attributes["href"].Value.ToString())
+                    Description = "Обучающие курсы",
+                    Price = GetPriceCourseITAcademy(@"https://www.it-academy.by" + node.Attributes["href"].Value.ToString())
                 };
                 listCourses.Add(currentCourse);
             }
@@ -53,7 +55,24 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             //    listCourses.Add(currentCourse);
             //}
 
-            return 0;
+
+            //worked   TODO--
+            //var url = "https://www.it-academy.by/course/asp-net-developer/osnovy-computer-science/";
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+
+            var htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='course-item__price']");
+
+            //Console.WriteLine(htmlNodes[0].InnerText.Trim());
+            //Console.WriteLine(htmlNodes[0].InnerHtml);
+            try
+            {
+                return Convert.ToDouble(htmlNodes[0].InnerText.Trim().Substring(0, htmlNodes[0].InnerText.Trim().Length - 3));
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
 
