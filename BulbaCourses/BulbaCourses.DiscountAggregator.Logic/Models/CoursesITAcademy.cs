@@ -15,20 +15,22 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         public double Price { get; set; }
     }
     public static class CourseStore
     {
-        private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>()
-        {
-            new CoursesITAcademy(){ URL = "asdf"},
-            new CoursesITAcademy(){ URL = "asdfcc"}
-        };
+        private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>();
+        //{
+            //new CoursesITAcademy(){ URL = "asdf"},
+            //new CoursesITAcademy(){ URL = "asdfcc"}
+        //};
 
         static CourseStore()
         {
             ParserITAcademy parserITAcademy = new ParserITAcademy();
-            _course = (List<CoursesITAcademy>)parserITAcademy.GetAllCourseITAcademy();
+            _course.AddRange((List<CoursesITAcademy>)parserITAcademy.GetAllCourses());
         }
         public static IEnumerable<CoursesITAcademy> GetAll()
         {

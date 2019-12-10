@@ -11,58 +11,54 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
+    [RoutePrefix("api/bookmark")]
     public class CourseBookmarkController : ApiController
     {
-        [RoutePrefix("api/bookmark")]
-        public class CourseController : ApiController
+        private readonly ICourseBookmarkServices courseBookmarkService;
+
+        //public CourseBookmarkController()
+        //{
+        //    courseBookmarkService = new CourseBookmarkServices();
+        //}
+
+        public CourseBookmarkController(ICourseBookmarkServices coursebookmarkService)
         {
-            private readonly ICourseBookmarkServices courseBookmarkService;
+            courseBookmarkService = coursebookmarkService;
+        }
 
-            public CourseController()
-            {
-                courseBookmarkService = new CourseBookmarkServices();
-            }
-
-            public CourseController(ICourseBookmarkServices coursebookmarkService)
-            {
-                courseBookmarkService = coursebookmarkService;
-            }
-
-            [HttpGet, Route("")]
-            [Description("Get all bookmarks")]
-            [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-            [SwaggerResponse(HttpStatusCode.NotFound, "Bookmarks doesn't exists")]
-            [SwaggerResponse(HttpStatusCode.OK, "Bookmarks found", typeof(IEnumerable<CourseBookmark>))]
-            [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-            public IHttpActionResult GetAll()
-            {
-                var result = courseBookmarkService.GetAll();
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
+        [HttpGet, Route("")]
+        [Description("Get all bookmarks")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmarks doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks found", typeof(IEnumerable<CourseBookmark>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult GetAll()
+        {
+            var result = courseBookmarkService.GetAll();
+            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        }
 
             
-            [HttpPut, Route("")]
-            public IHttpActionResult Insert([FromBody]CourseBookmark courseBookmark)
-            {
-                // validate book here  //todo, обычно проводиться на стороне клиента
-                //201 статус обычно и используют для Create, но там нужно описать, что он возвращает URL, по которому можно обратиться к книге
-                return Ok(FakerCourseBookmarks.Add(courseBookmark));
-            }
-
-            //[HttpDelete, Route("{id}")]
-            //public IHttpActionResult Delete(string id)
-            //{
-            //    return Ok(FakerCourseBookmarks.);
-            //}
-
-
-            //[HttpPost, Route("")]
-            //public IHttpActionResult Update([FromBody]Book book)
-            //{
-
-            //}
-
-
+        [HttpPut, Route("")]
+        [Description("Insert ")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks added", typeof(IEnumerable<CourseBookmark>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult Add([FromBody]CourseBookmark courseBookmark)
+        {
+            return Ok(courseBookmarkService.Add(courseBookmark));
         }
+
+        [HttpDelete, Route("{id}")]
+        public IHttpActionResult Delete(string id)
+        {
+            return Ok(courseBookmarkService.Delete(id));
+        }
+
+        //[HttpPost, Route("")]
+        //public IHttpActionResult Update([FromBody]Book book)
+        //{
+
+        //}
     }
 }

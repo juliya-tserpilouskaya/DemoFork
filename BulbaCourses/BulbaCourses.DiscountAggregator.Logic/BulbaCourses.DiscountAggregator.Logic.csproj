@@ -52,16 +52,19 @@
   <ItemGroup>
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\CourseBookmarks.cs" />
+    <Compile Include="Models\CourseBookmark.cs" />
     <Compile Include="Models\CourseCategory.cs" />
     <Compile Include="Models\CoursesITAcademy.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Parsers\ICoursesParser.cs" />
     <Compile Include="Parsers\ParserITAcademy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CourseBookmarkServices.cs" />
     <Compile Include="Services\CourseITAcademyServices.cs" />
     <Compile Include="Services\CourseServices.cs" />
+    <Compile Include="Services\ICourseBookmarkServices.cs" />
     <Compile Include="Services\ICourseITAcademyServices.cs" />
     <Compile Include="Services\ICourseServices.cs" />
   </ItemGroup>
