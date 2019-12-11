@@ -1,4 +1,6 @@
-﻿using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using System;
 using System.Collections.Generic;
@@ -10,30 +12,35 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     public class SearchQueryService : ISearchQueryService
     {
+        ISearchQueryDbService _searchQueryDb;
 
-        public IEnumerable<SearchQuery> GetAll()
+        public SearchQueryService(ISearchQueryDbService searchQueryDb)
         {
-            return SearchQueryStorage.GetAll();
+            _searchQueryDb = searchQueryDb;
+        }
+        public IEnumerable<SearchQueryDB> GetAll()
+        {
+            return _searchQueryDb.GetAll();
         }
 
-        public SearchQuery GetById(string id)
+        public SearchQueryDB GetById(string id)
         {
-            return SearchQueryStorage.GetById(id);
+            return _searchQueryDb.GetById(id);
         }
 
-        public SearchQuery Add(SearchQuery query)
+        public SearchQueryDB Add(SearchQueryDB query)
         {
-            return SearchQueryStorage.Add(query);
+            return _searchQueryDb.Add(query);
         }
 
         public void RemoveById(string id)
         {
-            SearchQueryStorage.RemoveById(id);
+            _searchQueryDb.RemoveById(id);
         }
 
         public void RemoveAll()
         {
-            SearchQueryStorage.RemoveAll();
+            _searchQueryDb.RemoveAll();
         }
     }
 }
