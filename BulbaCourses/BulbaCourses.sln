@@ -71,10 +71,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMater
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.Data", "BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj", "{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Logic", "BulbaCourses.GlobalSearch.Logic\BulbaCourses.GlobalSearch.Logic.csproj", "{8508CAEE-D963-48BA-9B66-096F6E604804}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Data", "BulbaCourses.GlobalSearch.Data\BulbaCourses.GlobalSearch.Data.csproj", "{14E229BA-727C-43A1-8CAD-00158F4CEB05}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.Web", "BulbaCourses.Video.Web\BulbaCourses.Video.Web.csproj", "{F7D98B3E-78AA-42D3-9547-EC8C29C946BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.Data", "BulbaCourses.Video.Data\BulbaCourses.Video.Data.csproj", "{99064581-4378-4F1D-9099-2F0A34E1FEF6}"
