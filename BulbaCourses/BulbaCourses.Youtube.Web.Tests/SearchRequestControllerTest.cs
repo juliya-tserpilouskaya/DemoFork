@@ -63,9 +63,6 @@ namespace BulbaCourses.Youtube.Web.Tests
 
             var result = resultListVideo.Content.ToList();
 
-            srRepo.Dispose();
-            sRepo.Dispose();
-            vRepo.Dispose();
 
             result.Should().NotBeNullOrEmpty();
             result.Should().HaveCount(c => c > 3);

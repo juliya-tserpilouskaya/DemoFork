@@ -45,64 +45,6 @@ namespace BulbaCourses.Youtube.Web.Tests
                 .RuleFor(s => s.User, f => fakerUser.Generate(1).First());
         }
 
-        [Test,Category("SearchRequest")]
-        public void Test_SearchRequest_Save()
-        {
-            using (var context = new YoutubeContext())
-            {
-                var requestRepo = new SearchRequestsRepository(context);
-                var requestService = new SearchRequestService(requestRepo);
-
-                var searchRequestDb = fakerRequest.Generate(1).First();
-                var title = searchRequestDb.Title;
-
-                requestService.Save(searchRequestDb);
-
-                var result = context.SearchRequests.Where(r=>r.Title == title).First();
-                result.Should().NotBeNull();
-            }
-        }
-
-        [Test, Category("SearchRequest")]
-        public void Test_SearchRequest_Exists_True()
-        {
-            using (var context = new YoutubeContext())
-            {
-                var requestRepo = new SearchRequestsRepository(context);
-                var requestService = new SearchRequestService(requestRepo);
-
-                var searchRequestDb = fakerRequest.Generate(1).First();
-                var title = searchRequestDb.Title;
-
-                requestService.Save(searchRequestDb);
-                requestService.Save(fakerRequest.Generate(1).First());
-                requestService.Save(fakerRequest.Generate(1).First());
-
-                var result = requestService.Exists(searchRequestDb);
-
-                result.Should().BeTrue();
-            }
-        }
-
-        [Test, Category("SearchRequest")]
-        public void Test_SearchRequest_Exists_False()
-        {
-            using (var context = new YoutubeContext())
-            {
-                var requestRepo = new SearchRequestsRepository(context);
-                var requestService = new SearchRequestService(requestRepo);
-
-                var searchRequestDb = fakerRequest.Generate(1).First();
-                var title = searchRequestDb.Title;
-
-                requestService.Save(fakerRequest.Generate(1).First());
-                requestService.Save(fakerRequest.Generate(1).First());
-
-                var result = requestService.Exists(searchRequestDb);
-
-                result.Should().BeFalse();
-            }
-        }
         [Test, Category("SearchStory")]
         public void Test_SearchStory_Save()
         {
@@ -127,6 +69,8 @@ namespace BulbaCourses.Youtube.Web.Tests
         {
             using (var context = new YoutubeContext())
             {
+              
+              
                 var storyRepo = new StoryRepository(context);
                 var storyService = new StoryService(storyRepo);
 
@@ -137,11 +81,11 @@ namespace BulbaCourses.Youtube.Web.Tests
                 storyService.Save(fakerStory.Generate(1).First());
                 storyService.Save(fakerStory.Generate(1).First());
 
-                var result = context.SearchStories.Where(r => r.User.Id == userId).First();
+                var result = context.SearchStories.FirstOrDefault(r => r.User.Id == userId);
                 result.Should().NotBeNull();
 
                 storyService.DeleteByUserId(userId);
-                result = context.SearchStories.Where(r => r.User.Id == userId).First();
+                result = context.SearchStories.FirstOrDefault(r => r.User.Id == userId);
                 result.Should().BeNull();
             }
         }

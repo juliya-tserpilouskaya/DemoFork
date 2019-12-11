@@ -30,12 +30,13 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
             if (!_requestService.Exists(searchRequestDb))
                 searchRequestDb = _requestService.Save(searchRequestDb);
+            /*
             _storyService.Save(new SearchStoryDb()
             {
                 SearchDate = DateTime.Now,
                 SearchRequest = searchRequestDb,
                 User = new UserDb()
-            });
+            });*/
 
             //Search in Youtube service
             List<ResultVideoDb> resultVideos = SearchInYoutube(searchRequest);

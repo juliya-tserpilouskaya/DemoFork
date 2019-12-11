@@ -30,6 +30,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         {
             try
             {
+                
                 var resultVideos = _logicService.SearchRun(searchRequest);
                 return resultVideos == null ? NotFound() : (IHttpActionResult)Ok(resultVideos);
             }

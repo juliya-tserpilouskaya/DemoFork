@@ -87,9 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoryServiceTest.cs" />
     <Compile Include="VideoControllerTest.cs" />
     <Compile Include="SearchRequestControllerTest.cs" />
-    <Compile Include="YoutubeContextTest.cs" />
+    <Compile Include="SearchRequestServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
