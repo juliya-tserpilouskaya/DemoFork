@@ -83,6 +83,12 @@ namespace BulbaCourses.Video.Logic.Services
             courseRepository.Remove(course);
         }
 
+        public void Update(CourseInfo course)
+        {
+            var courseDb = mapper.Map<CourseInfo, CourseDb>(course);
+            courseRepository.Update(courseDb);
+        }
+
         public int GetCourseLevel(string courseId)
         {
             var result = courseRepository.GetById(courseId).Level;

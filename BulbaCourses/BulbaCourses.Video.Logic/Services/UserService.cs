@@ -60,5 +60,11 @@ namespace BulbaCourses.Video.Logic.Services
             var result = mapper.Map<UserDb, UserInfo>(user);
             return result;
         }
+
+        public void Update(UserInfo user)
+        {
+            var userDb = mapper.Map<UserInfo, UserDb>(user);
+            userRepository.Update(userDb);
+        }
     }
 }

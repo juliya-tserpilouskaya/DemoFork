@@ -15,5 +15,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void Add(UserInfo user);
         void Delete(UserInfo user);
         void DeleteById(string userId);
+        void Update(UserInfo user);
     }
 }

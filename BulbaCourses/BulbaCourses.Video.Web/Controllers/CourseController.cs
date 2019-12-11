@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -12,23 +13,24 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    [RoutePrefix("api/courses")]
+    public class CourseController : ApiController
     {
         private readonly IMapper mapper;
-        private readonly IUserService userService;
+        private readonly ICourseService courseService;
 
-        public UserController(IMapper mapper, IUserService userService)
+        public CourseController(IMapper mapper, ICourseService courseService)
         {
             this.mapper = mapper;
-            this.userService = userService;
+            this.courseService = courseService;
         }
+
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
+        public IHttpActionResult Get(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -36,71 +38,84 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var user = mapper.Map<UserInfo, UserProfileView>(userService.GetUserById(id));
-                var result = userService.GetUserById(user.UserId);
+                var course = mapper.Map<CourseInfo, CourseView>(courseService.GetCourseById(id));
+                var result = courseService.GetCourseById(course.CourseId);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
             }
+
         }
+
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserProfileView>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public IHttpActionResult GetAll()
         {
-            var users = userService.GetAll();
-            var result = mapper.Map<IEnumerable<UserInfo>, IEnumerable<UserProfileView>>(users);
+            var courses = courseService.GetAll();
+            var result = mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]UserProfileView user)
+        public IHttpActionResult Post([FromBody]CourseView course)
         {
-            if (user == null)
+            if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
             {
                 return BadRequest();
             }
+
             try
             {
-                var userInfo = mapper.Map<UserProfileView, UserInfo>(user);
-                userService.Add(userInfo);
-                return Ok(user);
+                var courseInfo = mapper.Map<CourseView, CourseInfo>(course);
+                courseService.AddCourse(courseInfo);
+                return Ok(course);
             }
+
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
 
-        [HttpPut, Route("")]
+        [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]UserProfileView user)
+        public IHttpActionResult Put(string id, [FromBody]CourseView course)
         {
-            if (user == null)
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
+
+            course.CourseId = id;
+
+            if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
+            {
+                return BadRequest();
+            }
+
             try
             {
-                var userInfo = mapper.Map<UserProfileView, UserInfo>(user);
-                userService.Update(userInfo);
+                var courseInfo = mapper.Map<CourseView, CourseInfo>(course);
+                courseService.Update(courseInfo);
                 return Ok();
             }
+
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
 
-        [HttpDelete, Route("{id})")]
+        [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)
         {
@@ -110,7 +125,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                userService.DeleteById(id);
+                courseService.DeleteById(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -118,5 +133,6 @@ namespace BulbaCourses.Video.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
     }
 }
