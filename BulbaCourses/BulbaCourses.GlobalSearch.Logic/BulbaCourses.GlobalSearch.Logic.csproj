@@ -77,5 +77,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.GlobalSearch.Data\BulbaCourses.GlobalSearch.Data.csproj">
+      <Project>{14e229ba-727c-43a1-8cad-00158f4ceb05}</Project>
+      <Name>BulbaCourses.GlobalSearch.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

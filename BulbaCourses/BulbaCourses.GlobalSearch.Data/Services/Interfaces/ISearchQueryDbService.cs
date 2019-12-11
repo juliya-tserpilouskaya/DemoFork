@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
 {
-    public interface ISearchQueryService
+    public interface ISearchQueryDbService
     {
         IEnumerable<SearchQueryDB> GetAll();
         SearchQueryDB GetById(string id);

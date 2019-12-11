@@ -10,6 +10,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     public class SearchQueryService : ISearchQueryService
     {
+
         public IEnumerable<SearchQuery> GetAll()
         {
             return SearchQueryStorage.GetAll();
