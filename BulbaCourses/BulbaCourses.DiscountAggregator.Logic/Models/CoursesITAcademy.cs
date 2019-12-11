@@ -11,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public string Hosting { get; set; }
+        public string Domain { get; set; }
 
         public string URL { get; set; }
 

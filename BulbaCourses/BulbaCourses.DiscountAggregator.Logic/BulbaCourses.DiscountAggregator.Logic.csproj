@@ -56,6 +56,7 @@
     <Compile Include="Models\CourseBookmark.cs" />
     <Compile Include="Models\CourseCategory.cs" />
     <Compile Include="Models\CoursesITAcademy.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />

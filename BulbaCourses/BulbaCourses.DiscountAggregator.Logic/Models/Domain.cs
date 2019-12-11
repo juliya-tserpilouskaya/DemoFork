@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    class UserAccount
+    public class Domain //Вопрос, нужна ли эта модель вообще...?
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public UserProfile UserProfile { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public string DomainName { get; set; }
+        public string DomainURL { get; set; }
     }
 }
