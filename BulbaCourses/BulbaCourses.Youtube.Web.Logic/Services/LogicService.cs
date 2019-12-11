@@ -15,12 +15,16 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         IStoryService _storyService;
         IVideoService _videoService;
         ISearchRequestService _requestService;
+
+        ICacheService _cache;
+
         public LogicService(IStoryService storyService, 
-            IVideoService videoService, ISearchRequestService requestService)
+            IVideoService videoService, ISearchRequestService requestService, ICacheService cache)
         {
             _storyService = storyService;
             _videoService = videoService;
             _requestService = requestService;
+            _cache = cache;
         }
         public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest)
         {
@@ -28,18 +32,41 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             SearchRequestDb searchRequestDb = new SearchRequestDb();
             searchRequestDb.Title = searchRequest.Title;
 
+            var resultVideos = new List<ResultVideoDb>();
+            var cacheResult = _cache.GetValue(searchRequestDb.Id);
+
             if (!_requestService.Exists(searchRequestDb))
+            {
+                //save search request
                 searchRequestDb = _requestService.Save(searchRequestDb);
+            }
+
+            if (cacheResult != null)
+            {
+                //get videos list from cache
+                resultVideos = cacheResult.Videos.ToList();
+
+                //update cache for search request for refresh storage time in the cache
+                _cache.Update(searchRequestDb);
+            }
+            else
+            {                
+                //Search in Youtube service
+                resultVideos = SearchInYoutube(searchRequest);
+
+                searchRequestDb.Videos = resultVideos;
+
+                //add result to cache
+                _cache.Add(searchRequestDb);
+            }             
+
+            //add search user story
             _storyService.Save(new SearchStoryDb()
             {
                 SearchDate = DateTime.Now,
                 SearchRequest = searchRequestDb,
                 User = new UserDb()
-            });
-
-            //Search in Youtube service
-            List<ResultVideoDb> resultVideos = SearchInYoutube(searchRequest);
-
+            });           
 
             return resultVideos.AsReadOnly();
         }
@@ -79,6 +106,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 resultVideo.Description = searchResult.Snippet.Description;
                 resultVideo.SearchRequests = new List<SearchRequestDb>();
                 resultVideos.Add(resultVideo);
+                //здесь, наверное, нужно сохранять информацию о каждом видео в базу, так как у нас есть соответствующая таблица Video в базе
             }
             return resultVideos;
         }
