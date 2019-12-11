@@ -8,10 +8,10 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
     public interface IVideoRepository : IDisposable
     {
-        IEnumerable<Video> GetAll();
-        Video GetById(int? id);
-        void Create(Video video);
-        void Update(Video video);
+        IEnumerable<ResultVideoDb> GetAll();
+        ResultVideoDb GetById(int? id);
+        void Create(ResultVideoDb video);
+        void Update(ResultVideoDb video);
         void Delete(int? id);
         void Save();
     }

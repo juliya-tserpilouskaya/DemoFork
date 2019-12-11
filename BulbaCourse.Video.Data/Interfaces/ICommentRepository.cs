@@ -9,10 +9,10 @@ namespace BulbaCourse.Video.Data.Interfaces
 {
     public interface ICommentRepository
     {
-        Comment AddComment(Comment comment);
-        ICollection<Comment> GetCourseComments(int courseId);
-        ICollection<Comment> GetVideoComments(int videoId);
-        Comment UpdateCommentText(string commentId, string newText);
-        bool RemoveById(int commentId);
+        CommentDb GetById(string commentId);
+        IEnumerable<CommentDb> GetAll();
+        void Add(CommentDb comment);
+        void Update(CommentDb comment);
+        void Remove(CommentDb comment);
     }
 }

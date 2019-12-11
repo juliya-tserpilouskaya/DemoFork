@@ -1,5 +1,4 @@
-﻿using BulbaCourse.Video.Data.Enums;
-using BulbaCourse.Video.Data.Interfaces;
+﻿using BulbaCourse.Video.Data.Interfaces;
 using BulbaCourse.Video.Logic.InterfaceServices;
 using System;
 using System.Collections.Generic;
@@ -19,85 +18,98 @@ namespace BulbaCourse.Video.Logic.Services
             this.courseRepository = courseRepository;
         }
 
-        public Course AddCourse(Course course)
+        public void AddCourse(CourseDb course)
         {
-            return courseRepository.AddCourse(course);
+            courseRepository.Add(course);
         }
 
-        public bool AddDiscription(string courseId, string discription)
+        public void AddDiscription(string courseId, string description)
         {
-            var result = courseRepository.AddDiscription(courseId, discription);
-            return result;
+            var course = courseRepository.GetById(courseId);
+            course.Description = description;
+            courseRepository.Update(course);
 
         }
 
-        public bool AddVideoToCourse(string courseId, string videoId)
+        public void AddVideoToCourse(string courseId, VideoMaterialDb video)
         {
-            var result = courseRepository.AddVideoToCourse(courseId, videoId);
-            return result;
+            var courseVideos = courseRepository.GetById(courseId).Videos;
+            courseVideos.Add(video);
         }
 
-        public Tag CheckTag(Tag tag)
+        public void AddTagToCourse(string courseId, TagDb tag)
         {
-            var result = courseRepository.CheckTag(tag);
-            return result;
+            var courseTags = courseRepository.GetById(courseId).Tags;
+            courseTags.Add(tag);
         }
 
-        public Course GetCourseById(string courseId)
+        public CourseDb GetCourseById(string courseId)
         {
-            var result = courseRepository.GetCourseById(courseId);
-            return result;
-        }
-
-        public Course GetCourseByName(string courseName)
-        {
-            var result = courseRepository.GetCourseByName(courseName);
+            var result = courseRepository.GetById(courseId);
             return result;
         }
 
-        public IEnumerable<Course> GetAll()
+        public CourseDb GetCourseByName(string courseName)
+        {
+            var result = courseRepository.GetAll().FirstOrDefault(c => c.Name.Equals(courseName));
+            return result;
+        }
+
+        public IEnumerable<CourseDb> GetAll()
         {
             var result = courseRepository.GetAll();
             return result;
         }
 
-        public void Delete(Course course)
+        public void Delete(CourseDb course)
         {
-            courseRepository.Delete(course);
+            courseRepository.Remove(course);
         }
 
         public void DeleteById(string courseId)
         {
-            courseRepository.DeleteById(courseId);
+            var course = courseRepository.GetById(courseId);
+            courseRepository.Remove(course);
         }
 
-        public CourseLevel GetCourseLevel(string courseId)
+        public int GetCourseLevel(string courseId)
         {
-            var result = courseRepository.GetCourseLevel(courseId);
+            var result = courseRepository.GetById(courseId).Level;
             return result;
         }
 
-        public ICollection<VideoMaterial> GetCourseVideos(string courseId)
+        public IEnumerable<TagDb> GetTags(string courseId)
         {
-            var result = courseRepository.GetCourseVideos(courseId);
+            var courseTags = courseRepository.GetById(courseId).Tags.ToList().AsReadOnly();
+            return courseTags;
+        }
+
+        public VideoMaterialDb GetVideoByOrder(string courseId, int videoOrder)
+        {
+            var course = courseRepository.GetById(courseId);
+            var result = course.Videos.FirstOrDefault(c => c.Order == videoOrder);
             return result;
         }
 
-        public ICollection<Tag> GetTags(string courseId)
+        public void UpdateCourseLevel(string courseId, int level)
         {
-            var result = courseRepository.GetTags(courseId);
+            var course = courseRepository.GetById(courseId);
+            course.Level = level;
+            courseRepository.Update(course);
+        }
+
+        public IEnumerable<VideoMaterialDb> GetCourseVideos(string courseId)
+        {
+            var course = courseRepository.GetById(courseId);
+            var result = course.Videos.ToList().AsReadOnly();
             return result;
         }
 
-        public VideoMaterial GetVideoByOrder(string courseId, int videoOrder)
+        public IEnumerable<CommentDb> GetCourseComments(string courseId)
         {
-            var result = courseRepository.GetVideoByOrder(courseId, videoOrder);
+            var course = courseRepository.GetById(courseId);
+            var result = course.Comments.ToList().AsReadOnly();
             return result;
-        }
-
-        public void UpdateCourseLevel(string courseId, CourseLevel level)
-        {
-            courseRepository.UpdateCourseLevel(courseId, level);
         }
     }
 }

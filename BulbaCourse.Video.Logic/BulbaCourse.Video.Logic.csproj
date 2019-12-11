@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\BulbaCourses\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,11 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeRepositories\FakeCommentRepository.cs" />
     <Compile Include="FakeRepositories\FakeCourseRepository.cs" />
     <Compile Include="FakeRepositories\FakeUserRepository.cs" />
+    <Compile Include="InterfaceServices\ICommentService.cs" />
     <Compile Include="InterfaceServices\ICourseService.cs" />
     <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
@@ -54,6 +60,10 @@
       <Project>{624f93a8-ca36-44f1-b3f3-e2bb887ce784}</Project>
       <Name>BulbaCourse.Video.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
