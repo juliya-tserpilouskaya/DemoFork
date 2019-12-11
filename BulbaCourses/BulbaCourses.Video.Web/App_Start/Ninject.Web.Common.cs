@@ -5,6 +5,7 @@ namespace BulbaCourses.Video.Web.App_Start
 {
     using System;
     using System.Web;
+    using System.Web.Http;
     using BulbaCourses.Video.Logic.Infrastructure;
     using BulbaCourses.Video.Web.Infrastructure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -12,6 +13,7 @@ namespace BulbaCourses.Video.Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
+    using Ninject.Web.WebApi;
 
     public static class NinjectWebCommon 
     {
@@ -46,6 +48,9 @@ namespace BulbaCourses.Video.Web.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                var ninjectResolver = new NinjectDependencyResolver(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver;
                 RegisterServices(kernel);
                 return kernel;
             }

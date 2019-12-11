@@ -25,10 +25,6 @@ namespace BulbaCourses.Video.Logic.Infrastructure
             Bind<ITransactionRepository>().To<TransactionRepository>();
             Bind<IVideoRepository>().To<VideoRepository>();
 
-            Bind<ICourseRepository>().To<FakeCourseRepository>();
-            Bind<IUserRepository>().To<FakeUserRepository>();
-            Bind<ICommentRepository>().To<FakeCommentRepository>();
-
             //bind services
             Bind<IUserService>().To<UserService>();
             Bind<ICourseService>().To<CourseService>();
