@@ -12,5 +12,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         void DeleteRequest(int? requestId);
         IEnumerable<SearchRequestDb> GetAllRequests();
         SearchRequestDb GetRequestById(int? requestId);
+        bool Exists(SearchRequestDb searchRequest);
+
     }
 }

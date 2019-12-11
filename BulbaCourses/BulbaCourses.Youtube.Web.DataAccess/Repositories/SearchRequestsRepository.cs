@@ -32,6 +32,10 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 _context.SaveChanges();
             }
         }
+        public bool Exists(SearchRequestDb searchRequest)
+        {
+            return _context.SearchRequests.Any(r=>r.Title==searchRequest.Title);
+        }
 
         public IEnumerable<SearchRequestDb> GetAllRequests()
         {

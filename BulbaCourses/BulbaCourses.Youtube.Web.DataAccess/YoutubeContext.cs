@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
     {
         public YoutubeContext() : base("YoutubeDbConnection")
         {
+            Database.Log = s => Debug.WriteLine(s);
         }
 
         public DbSet<ResultVideoDb> Videos { get; set; }
