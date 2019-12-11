@@ -16,11 +16,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     {
         private readonly ICourseBookmarkServices courseBookmarkService;
 
-        //public CourseBookmarkController()
-        //{
-        //    courseBookmarkService = new CourseBookmarkServices();
-        //}
-
         public CourseBookmarkController(ICourseBookmarkServices coursebookmarkService)
         {
             courseBookmarkService = coursebookmarkService;
@@ -40,9 +35,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             
         [HttpPut, Route("")]
-        [Description("Insert ")]
+        [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks added", typeof(IEnumerable<CourseBookmark>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark added", typeof(IEnumerable<CourseBookmark>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Add([FromBody]CourseBookmark courseBookmark)
         {
@@ -54,11 +49,5 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         {
             return Ok(courseBookmarkService.Delete(id));
         }
-
-        //[HttpPost, Route("")]
-        //public IHttpActionResult Update([FromBody]Book book)
-        //{
-
-        //}
     }
 }

@@ -14,7 +14,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         {
         }
 
-        //public DbSet<CourseDb> Courses { get; set; }
         public DbSet<CourseDb> Courses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)  //нужно использовать базовый метод, очень полезно и другой вопрос когда его вызывать

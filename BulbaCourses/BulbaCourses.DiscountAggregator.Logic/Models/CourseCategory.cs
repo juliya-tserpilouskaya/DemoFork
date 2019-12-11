@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    class CourseCategory
+    public class CourseCategory
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Name { get; set; }
+        public string Title { get; set; }
     }
 }

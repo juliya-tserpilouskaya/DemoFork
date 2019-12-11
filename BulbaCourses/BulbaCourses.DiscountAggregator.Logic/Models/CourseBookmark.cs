@@ -10,8 +10,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     public class CourseBookmark
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string Title { get; set; }
-        public string URL { get; set; }
+        public Course IdCourse { get; set; }
     }
     public static class FakerCourseBookmarks
     {
@@ -20,8 +19,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
         static FakerCourseBookmarks()
         {
             var faker = new Faker<CourseBookmark>();
-            faker.RuleFor(_ => _.URL, f => f.Internet.Url());
-            faker.RuleFor(_ => _.Title, f => f.Lorem.Sentence(10));
             _coursebookmark = faker.Generate(5);
         }
 

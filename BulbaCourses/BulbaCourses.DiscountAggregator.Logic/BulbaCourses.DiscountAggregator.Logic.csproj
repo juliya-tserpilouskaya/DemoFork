@@ -64,9 +64,11 @@
     <Compile Include="Parsers\ParserITAcademy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CourseBookmarkServices.cs" />
+    <Compile Include="Services\CourseCategoryServices.cs" />
     <Compile Include="Services\CourseITAcademyServices.cs" />
     <Compile Include="Services\CourseServices.cs" />
     <Compile Include="Services\ICourseBookmarkServices.cs" />
+    <Compile Include="Services\ICourseCategoryServices.cs" />
     <Compile Include="Services\ICourseITAcademyServices.cs" />
     <Compile Include="Services\ICourseServices.cs" />
   </ItemGroup>
