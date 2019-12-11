@@ -52,8 +52,8 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             var UserDbEentity = modelBuilder.Entity<UserDb>();
             UserDbEentity.HasKey(x => x.Id);
             UserDbEentity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            UserDbEentity.Property(x => x.Login).IsRequired().HasMaxLength(20).IsUnicode();
-            UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(20).IsUnicode();
+            UserDbEentity.Property(x => x.Login).IsRequired().HasMaxLength(100).IsUnicode();
+            UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(100).IsUnicode();
             UserDbEentity.Property(x => x.FirstName).IsRequired().HasMaxLength(100).IsUnicode();
             UserDbEentity.Property(x => x.LastName).IsRequired().HasMaxLength(100).IsUnicode();
             UserDbEentity.Property(x => x.FullName).IsRequired().HasMaxLength(100).IsUnicode();
