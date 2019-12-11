@@ -19,11 +19,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string Description { get; set; }
 
-        public double Price { get; set; }
-        
-        public int OldDiscount { get; set; }
+        public double CurrentPrice { get; set; }
 
-        public int CurrentDiscount { get; set; }
+        public double OldPrice { get; set; }
+
+        public DateTime? DateOldPrice { get; set; } = DateTime.Now;
+
+        public int Discount { get; set; }
 
         public DateTime? DateStartCourse { get; set; } = DateTime.Now;
 
