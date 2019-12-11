@@ -15,13 +15,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     public class CourseITAcademyController : ApiController
     {
         private readonly ICourseITAcademyServices courseService;
-
-        public CourseITAcademyController()
-        {
-            this.courseService = new CourseITAcademyServices();
-
-        }
-
+        
         public CourseITAcademyController(ICourseITAcademyServices courseService)
         {
             this.courseService = courseService;
