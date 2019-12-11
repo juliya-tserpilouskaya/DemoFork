@@ -13,8 +13,15 @@ namespace BulbaCourses.Youtube.Web.Logic
     {
         public override void Load()
         {
+            Bind<ICacheService>().To<CacheService>();
+            Bind<ILogicService>().To<LogicService>();
             Bind<ISearchRequestService>().To<SearchRequestService>();
+            Bind<IStoryService>().To<StoryService>();
+            Bind<IVideoService>().To<VideoService>();
+
             Bind<ISearchRequestsRepository>().To<SearchRequestsRepository>();
+            Bind<IStoryRepository>().To<StoryRepository>();
+            Bind<IVideoRepository>().To<VideoRepository>();
         }
     }
 }
