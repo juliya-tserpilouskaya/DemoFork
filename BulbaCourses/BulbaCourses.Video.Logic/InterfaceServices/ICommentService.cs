@@ -12,8 +12,10 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         CommentInfo GetById(string commentId);
         IEnumerable<CommentInfo> GetAll();
         void Add(CommentInfo comment);
+        void Update(CommentInfo comment);
         CommentInfo UpdateCommentText(string commentId, string newText);
-        void RemoveById(string commentId);
+        void Delete(CommentInfo comment);
+        void DeleteById(string commentId);
 
     }
 }

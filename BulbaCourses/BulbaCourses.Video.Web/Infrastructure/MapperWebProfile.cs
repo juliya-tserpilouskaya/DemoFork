@@ -17,6 +17,9 @@ namespace BulbaCourses.Video.Web.Infrastructure
 
             CreateMap<CourseView, CourseInfo>();
             CreateMap<CourseInfo, CourseView>();
+
+            CreateMap<CommentView, CommentInfo>();
+            CreateMap<CommentInfo, CommentView>();
         }
     }
 }

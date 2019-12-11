@@ -120,13 +120,18 @@
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Enums\CourseLevel.cs" />
+    <Compile Include="Enums\Subscription.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\MapperLoadModule.cs" />
     <Compile Include="Infrastructure\MapperWebProfile.cs" />
+    <Compile Include="Models\CommentView.cs" />
+    <Compile Include="Models\CourseView.cs" />
     <Compile Include="Models\UserProfileView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

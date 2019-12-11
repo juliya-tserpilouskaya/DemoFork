@@ -41,10 +41,21 @@ namespace BulbaCourses.Video.Logic.Services
             commentRepository.Add(commentDb);
         }
 
-        public void RemoveById(string commentId)
+        public void Delete(CommentInfo comment)
+        {
+            var commentDb = mapper.Map<CommentInfo, CommentDb>(comment);
+            commentRepository.Remove(commentDb);
+        }
+        public void DeleteById(string commentId)
         {
             var comment = commentRepository.GetById(commentId);
             commentRepository.Remove(comment);
+        }
+
+        public void Update(CommentInfo comment)
+        {
+            var commentDb = mapper.Map<CommentInfo, CommentDb>(comment);
+            commentRepository.Update(commentDb);
         }
 
         public CommentInfo UpdateCommentText(string commentId, string newText)
