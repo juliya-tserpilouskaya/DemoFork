@@ -18,26 +18,58 @@ namespace BulbaCourses.Youtube.Web.Tests
     [TestFixture]
     class SearchRequestControllerTest
     {
+        SearchRequestController srController;
+        SearchRequestsRepository srRepo;
+        StoryRepository sRepo;
+        VideoRepository vRepo;
+
+        [OneTimeSetUp]
+        public void Init()
+        {
+            var youtubeContext = new YoutubeContext();
+            youtubeContext.Users.Add(new UserDb()
+            {
+                FirstName = "Ivan",
+                LastName = "Petrovich",
+                FullName = "Ivan Petrovich",
+                Login = "Vano",
+                Password = "123",
+                NumberPhone = "+375 44 777 77 77",
+                Email = "IPetrovich@gmail.com",
+                ReserveEmail = "",
+                SearchStories = new List<SearchStoryDb>()
+            });
+            var srRepo = new SearchRequestsRepository(youtubeContext);
+            var sRepo = new StoryRepository(youtubeContext);
+            var vRepo = new VideoRepository(youtubeContext);
+
+            var srService = new SearchRequestService(srRepo);
+            var sService = new StoryService(sRepo);
+            var vService = new VideoService(vRepo);
+
+            var lService = new LogicService(sService, vService, srService);
+
+            srController = new SearchRequestController(lService);
+        }
+
         [Test]
         public void Test_SearchVideo()
         {
-            var youtubeContext = new YoutubeContext();
-            using (var srRepo = new SearchRequestsRepository(youtubeContext))
-            {
-                var srService = new SearchRequestService(srRepo);
-                var srController = new SearchRequestController(srService);
+            var searchRequest = new SearchRequest();
+            searchRequest.Title = "2015 05 03 Открытое занятие";
 
-                var searchRequest = new SearchRequest();
-                searchRequest.Title = "2015 05 03 Открытое занятие";
+            var resultListVideo =
+                (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest);
 
-                var resultListVideo = 
-                    (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest);
+            var result = resultListVideo.Content.ToList();
 
-                var result = resultListVideo.Content.ToList();
-                result.Should().NotBeNullOrEmpty();
-                result.Should().HaveCount(c => c > 3);
-                result.First().Title.Should().Be("2015 05 03  Открытое занятие 8");
-            }
+            srRepo.Dispose();
+            sRepo.Dispose();
+            vRepo.Dispose();
+
+            result.Should().NotBeNullOrEmpty();
+            result.Should().HaveCount(c => c > 3);
+            result.First().Title.Should().Be("2015 05 03  Открытое занятие 8");
         }
     }
 }

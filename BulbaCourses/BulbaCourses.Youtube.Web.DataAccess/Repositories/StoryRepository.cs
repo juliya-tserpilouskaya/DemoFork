@@ -10,6 +10,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
     public class StoryRepository : IStoryRepository
     {
         private YoutubeContext _context;
+        private bool _isDisposed = false;
 
         public StoryRepository(YoutubeContext ctx)
         {
@@ -90,5 +91,18 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        protected virtual void Dispose(bool flag)
+        {
+            if (_isDisposed) return;
+            _context.Dispose();
+            _isDisposed = true;
+
+            if (flag)
+                GC.SuppressFinalize(this);
+        }
     }
 }

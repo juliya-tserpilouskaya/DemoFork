@@ -14,11 +14,11 @@ namespace BulbaCourses.Youtube.Web.Controllers
     [RoutePrefix("api/search")]
     public class SearchRequestController : ApiController
     {
-        private readonly ISearchRequestService _searchRequestService;
+        private readonly ILogicService _logicService;
 
-        public SearchRequestController(ISearchRequestService searchRequestService)
+        public SearchRequestController(ILogicService logicService)
         {
-            _searchRequestService = searchRequestService;
+            _logicService = logicService;
         }
 
         // GET api/<controller>        
@@ -30,7 +30,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         {
             try
             {
-                var resultVideos = _searchRequestService.SearchRun(searchRequest);
+                var resultVideos = _logicService.SearchRun(searchRequest);
                 return resultVideos == null ? NotFound() : (IHttpActionResult)Ok(resultVideos);
             }
             catch (InvalidOperationException ex)

@@ -15,6 +15,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
         public YoutubeContext() : base("YoutubeDbConnection")
         {
             Database.Log = s => Debug.WriteLine(s);
+            Database.SetInitializer(new DropCreateDatabaseAlways<YoutubeContext>());
         }
 
         public DbSet<ResultVideoDb> Videos { get; set; }
@@ -50,6 +51,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             //UserDb
             var UserDbEentity = modelBuilder.Entity<UserDb>();
             UserDbEentity.HasKey(x => x.Id);
+            UserDbEentity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             UserDbEentity.Property(x => x.Login).IsRequired().HasMaxLength(20).IsUnicode();
             UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(20).IsUnicode();
             UserDbEentity.Property(x => x.FirstName).IsRequired().HasMaxLength(100).IsUnicode();

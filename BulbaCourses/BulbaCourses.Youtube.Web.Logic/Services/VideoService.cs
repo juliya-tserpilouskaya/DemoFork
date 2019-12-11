@@ -20,11 +20,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _videoRepository = videoRepository;
         }
 
-        public VideoService()
-        {
-            _videoRepository = new VideoRepository();
-        }
-
         /// <summary>
         /// Get search result from youtube by search query
         /// </summary>
