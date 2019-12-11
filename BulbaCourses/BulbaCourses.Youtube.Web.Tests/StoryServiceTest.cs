@@ -15,7 +15,7 @@ using BulbaCourses.Youtube.Web.Logic.Services;
 namespace BulbaCourses.Youtube.Web.Tests
 {
     [TestFixture]
-    class YoutubeContextTest
+    class StoryServiceTest
     {
         Faker<SearchRequestDb> fakerRequest;
         Faker<SearchStoryDb> fakerStory;
@@ -40,7 +40,9 @@ namespace BulbaCourses.Youtube.Web.Tests
             fakerRequest.RuleFor(r=> r.Title, f => f.Random.Word());
 
             fakerStory = new Faker<SearchStoryDb>();
-            fakerStory.RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
+            var storyIds = 0;
+            fakerStory.RuleFor(s => s.Id, f => storyIds+1)
+                .RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
                 .RuleFor(s => s.SearchDate, f => f.Date.Past(1,null))
                 .RuleFor(s => s.User, f => fakerUser.Generate(1).First());
         }
@@ -69,8 +71,6 @@ namespace BulbaCourses.Youtube.Web.Tests
         {
             using (var context = new YoutubeContext())
             {
-              
-              
                 var storyRepo = new StoryRepository(context);
                 var storyService = new StoryService(storyRepo);
 
@@ -89,16 +89,39 @@ namespace BulbaCourses.Youtube.Web.Tests
                 result.Should().BeNull();
             }
         }
-/*
-       void DeleteByStoryId(int? storyId);
 
-       IEnumerable<SearchStoryDb> GetAllStories();
+        [Test, Category("SearchStory")]
+        public void Test_SearchStory_DeleteByStoryId()
+        {
+            using (var context = new YoutubeContext())
+            {
+                var storyRepo = new StoryRepository(context);
+                var storyService = new StoryService(storyRepo);
 
-       IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId);
+                var storyDb = fakerStory.Generate(1).First();
+                var storyId = storyDb.Id;
 
-       IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId);
+                storyService.Save(storyDb);
+                storyService.Save(fakerStory.Generate(1).First());
+                storyService.Save(fakerStory.Generate(1).First());
 
-       SearchStoryDb GetStoryByStoryId(int? storyId);*/
+                var result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
+                result.Should().NotBeNull();
+
+                storyService.DeleteByUserId(storyId);
+                result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
+                result.Should().BeNull();
+            }
+        }
+
+        /*
+               IEnumerable<SearchStoryDb> GetAllStories();
+
+               IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId);
+
+               IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId);
+
+               SearchStoryDb GetStoryByStoryId(int? storyId);*/
 
     }
 }
