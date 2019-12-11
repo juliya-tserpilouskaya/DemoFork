@@ -22,6 +22,5 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// <param name="searchRequest"></param>
         /// <returns></returns>
         bool Exists(SearchRequestDb searchRequest);
-
     }
 }

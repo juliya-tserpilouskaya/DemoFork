@@ -28,7 +28,6 @@ namespace BulbaCourses.Youtube.Web.Tests
                 .RuleFor(v => v.Name, f => f.Random.Words(3));
 
             //Faker for MentorDb
-            int? MentorIds = 0;
             Faker<MentorDb> fakerCO = new Faker<MentorDb>();
             fakerCO.RuleFor(v => v.Login, f => f.Internet.UserName())
                 .RuleFor(v => v.Password, f => f.Random.String(8))

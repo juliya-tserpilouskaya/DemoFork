@@ -10,7 +10,7 @@ using Google.Apis.YouTube.v3;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
-    class LogicService : ILogicService
+    public class LogicService : ILogicService
     {
         IStoryService _storyService;
         IVideoService _videoService;
@@ -28,10 +28,24 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             SearchRequestDb searchRequestDb = new SearchRequestDb();
             searchRequestDb.Title = searchRequest.Title;
 
-            
-            if(!_requestService.Exists(searchRequestDb))
+            if (!_requestService.Exists(searchRequestDb))
                 searchRequestDb = _requestService.Save(searchRequestDb);
+            _storyService.Save(new SearchStoryDb()
+            {
+                SearchDate = DateTime.Now,
+                SearchRequest = searchRequestDb,
+                User = new UserDb()
+            });
 
+            //Search in Youtube service
+            List<ResultVideoDb> resultVideos = SearchInYoutube(searchRequest);
+
+
+            return resultVideos.AsReadOnly();
+        }
+
+        private List<ResultVideoDb> SearchInYoutube(SearchRequest searchRequest)
+        {
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -47,9 +61,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             // Call the search.list method to retrieve results matching the specified searchRequest
             var searchListResponse = searchListRequest.Execute();
 
-
             List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
-
             foreach (var searchResult in searchListResponse.Items)
             {
                 ResultVideoDb resultVideo = new ResultVideoDb();
@@ -66,13 +78,9 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
                 resultVideo.Description = searchResult.Snippet.Description;
                 resultVideo.SearchRequests = new List<SearchRequestDb>();
-                // resultVideo.SearchRequests.Add(searchRequestDb.Id);       //write searchRequestId... !!!
-
                 resultVideos.Add(resultVideo);
             }
-
-
-            return resultVideos.AsReadOnly();
+            return resultVideos;
         }
     }
 }

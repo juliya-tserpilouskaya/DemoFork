@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
-    internal interface ILogicService
+    public interface ILogicService
     {
         /// <summary>
         /// YouTube video search
