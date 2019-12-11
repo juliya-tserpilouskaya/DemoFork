@@ -61,12 +61,12 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             }             
 
             //add search user story
-            _storyService.Save(new SearchStoryDb()
-            {
-                SearchDate = DateTime.Now,
-                SearchRequest = searchRequestDb,
-                User = new UserDb()
-            });           
+            //_storyService.Save(new SearchStoryDb()
+            //{
+            //    SearchDate = DateTime.Now,
+            //    SearchRequest = searchRequestDb,
+            //    User = new UserDb()
+            //});           
 
             return resultVideos.AsReadOnly();
         }

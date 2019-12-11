@@ -43,11 +43,13 @@ namespace BulbaCourses.Youtube.Web.Tests
             var sRepo = new StoryRepository(youtubeContext);
             var vRepo = new VideoRepository(youtubeContext);
 
+
             var srService = new SearchRequestService(srRepo);
             var sService = new StoryService(sRepo);
             var vService = new VideoService(vRepo);
+            var cache = new CacheService();
 
-            var lService = new LogicService(sService, vService, srService);
+            var lService = new LogicService(sService, vService, srService, cache);
 
             srController = new SearchRequestController(lService);
         }
