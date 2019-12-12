@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Swashbuckle.Examples;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web;
 namespace BulbaCourses.Video.Web.Models
 {
     public class CourseView
-    {
+    { 
         public string CourseId { get; set; }
         public string Name { get; set; }
         public int Level { get; set; }
@@ -14,5 +15,7 @@ namespace BulbaCourses.Video.Web.Models
         public string Description { get; set; }
         public int Duration { get; set; }
         public double Price { get; set; }
+
+       
     }
 }

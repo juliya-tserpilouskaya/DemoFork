@@ -3,6 +3,7 @@ using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Models;
+using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -58,10 +59,14 @@ namespace BulbaCourses.Video.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+
         [HttpPost, Route("")]
+
+        [SwaggerRequestExample(typeof(CourseView), typeof(SwaggerModelCourse))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+       
         public IHttpActionResult Post([FromBody]CourseView course)
         {
             if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
