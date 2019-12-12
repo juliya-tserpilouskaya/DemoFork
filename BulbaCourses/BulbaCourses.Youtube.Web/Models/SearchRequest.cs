@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BulbaCourses.Youtube.Web.App_Start;
 
 namespace BulbaCourses.Youtube.Web.Models
 {
