@@ -133,11 +133,16 @@
     </Compile>
     <Compile Include="Infrastructure\MapperLoadModule.cs" />
     <Compile Include="Infrastructure\MapperWebProfile.cs" />
+    <Compile Include="Models\ChangePasswordView.cs" />
     <Compile Include="Models\CommentView.cs" />
     <Compile Include="Models\CourseView.cs" />
     <Compile Include="Models\CourseViewInput.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseViewInput.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
+    <Compile Include="Models\ForgotPasswordView.cs" />
+    <Compile Include="Models\LoginView.cs" />
+    <Compile Include="Models\ProfileView.cs" />
+    <Compile Include="Models\RegisterView.cs" />
     <Compile Include="Models\UserProfileView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
