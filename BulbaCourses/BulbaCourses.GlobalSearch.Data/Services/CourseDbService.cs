@@ -32,7 +32,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public IEnumerable<CourseDB> GetByAuthorId(int id)
         {
-            return _context.Courses.Where(course => course.AuthorId == id);
+            return _context.Courses.Where(course => course.AuthorDBId == id);
         }
 
         public IEnumerable<CourseItemDB> GetLearningItemsByCourseId(string id)

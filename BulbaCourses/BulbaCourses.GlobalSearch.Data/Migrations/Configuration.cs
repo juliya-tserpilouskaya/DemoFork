@@ -103,8 +103,8 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             context.Courses.AddOrUpdate(x => x.Id,
                 new CourseDB()
                 {
-                    AuthorId = 2,
-                    CategoryId = 1,
+                    AuthorDBId = 1,
+                    CourseCategoryDBId = 1,
                     Id = "1",
                     Name = "C video course",
                     Description = "Full c video course in 4k"

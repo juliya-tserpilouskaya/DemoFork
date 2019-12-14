@@ -10,5 +10,6 @@ namespace BulbaCourses.GlobalSearch.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ICollection<CourseDB> Courses { get; set; }
     }
 }

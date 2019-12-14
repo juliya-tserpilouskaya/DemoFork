@@ -108,6 +108,30 @@
     <Compile Include="Migrations\201912141556014_coursebdconfig.Designer.cs">
       <DependentUpon>201912141556014_coursebdconfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912141601049_coursecategoryidchanged.cs" />
+    <Compile Include="Migrations\201912141601049_coursecategoryidchanged.Designer.cs">
+      <DependentUpon>201912141601049_coursecategoryidchanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141611485_coursecategoryrefactored.cs" />
+    <Compile Include="Migrations\201912141611485_coursecategoryrefactored.Designer.cs">
+      <DependentUpon>201912141611485_coursecategoryrefactored.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141613028_renamefeatures.cs" />
+    <Compile Include="Migrations\201912141613028_renamefeatures.Designer.cs">
+      <DependentUpon>201912141613028_renamefeatures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141616049_addauthordbid.cs" />
+    <Compile Include="Migrations\201912141616049_addauthordbid.Designer.cs">
+      <DependentUpon>201912141616049_addauthordbid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141625265_addauthordbid2.cs" />
+    <Compile Include="Migrations\201912141625265_addauthordbid2.Designer.cs">
+      <DependentUpon>201912141625265_addauthordbid2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141627174_addauthordbid2a.cs" />
+    <Compile Include="Migrations\201912141627174_addauthordbid2a.Designer.cs">
+      <DependentUpon>201912141627174_addauthordbid2a.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
@@ -136,6 +160,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912141556014_coursebdconfig.resx">
       <DependentUpon>201912141556014_coursebdconfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141601049_coursecategoryidchanged.resx">
+      <DependentUpon>201912141601049_coursecategoryidchanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141611485_coursecategoryrefactored.resx">
+      <DependentUpon>201912141611485_coursecategoryrefactored.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141613028_renamefeatures.resx">
+      <DependentUpon>201912141613028_renamefeatures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141616049_addauthordbid.resx">
+      <DependentUpon>201912141616049_addauthordbid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141625265_addauthordbid2.resx">
+      <DependentUpon>201912141625265_addauthordbid2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141627174_addauthordbid2a.resx">
+      <DependentUpon>201912141627174_addauthordbid2a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
