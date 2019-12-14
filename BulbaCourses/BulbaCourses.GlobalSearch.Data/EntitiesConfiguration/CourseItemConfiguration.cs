@@ -22,6 +22,7 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
                 .IsRequired()
                 .HasMaxLength(1000);
             Property(i => i.Url).HasColumnName("url");
+            Property(i => i.CourseDBId).HasColumnName("course_bd_id");
         }
     }
 }

@@ -92,7 +92,23 @@
     <Compile Include="Enums\Section.cs" />
     <Compile Include="Enums\SortingType.cs" />
     <Compile Include="GlobalSearchContext.cs" />
-    <Compile Include="GlobalSearchDbInitializer.cs" />
+    <Compile Include="Migrations\201912141429511_InitialCreate.cs" />
+    <Compile Include="Migrations\201912141429511_InitialCreate.Designer.cs">
+      <DependentUpon>201912141429511_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141552288_coursedbid.cs" />
+    <Compile Include="Migrations\201912141552288_coursedbid.Designer.cs">
+      <DependentUpon>201912141552288_coursedbid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141554138_coursedbidremove.cs" />
+    <Compile Include="Migrations\201912141554138_coursedbidremove.Designer.cs">
+      <DependentUpon>201912141554138_coursedbidremove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912141556014_coursebdconfig.cs" />
+    <Compile Include="Migrations\201912141556014_coursebdconfig.Designer.cs">
+      <DependentUpon>201912141556014_coursebdconfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
     <Compile Include="Models\CourseCategoryDB.cs" />
@@ -108,7 +124,20 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912141429511_InitialCreate.resx">
+      <DependentUpon>201912141429511_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141552288_coursedbid.resx">
+      <DependentUpon>201912141552288_coursedbid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141554138_coursedbidremove.resx">
+      <DependentUpon>201912141554138_coursedbidremove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912141556014_coursebdconfig.resx">
+      <DependentUpon>201912141556014_coursebdconfig.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.2\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
