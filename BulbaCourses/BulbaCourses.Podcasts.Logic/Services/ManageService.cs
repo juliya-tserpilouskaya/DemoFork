@@ -6,48 +6,101 @@ using System.Runtime.CompilerServices;
 
 namespace BulbaCourses.Podcasts.Logic.Models
 {
+    public enum OwnershipType { None, Bought, Uploaded, Admin }
     internal class ManageService : IManageService
     {
         public Course Add(Course course)
         {
-            if(course.Title == null || course.Author == null)
+            if (CheckOwnership(course.Id) != OwnershipType.None)
             {
-                return null;
-            }
-            Course result = CourseStorage.Add(course);
-            return result;
-        }
-        public void Delete(string id)
-        {
-            try
-            {
-                CourseStorage.Delete(id);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                throw new ArgumentException();
-            }
-            
-        }
-        public Course Edit(Course course)
-        {
-           
-            try
-            {
-                Course result = CourseStorage.Edit(course);
+                if (course.Title == null || course.Author == null)
+                {
+                    return null;
+                }
+                Course result = CourseStorage.Add(course);
                 return result;
             }
-            catch (ArgumentOutOfRangeException)
+            else
             {
-                return null;
+                throw new AccessViolationException();
+            }
+        }// add check for authorization
+        public void Delete(Course course)
+        {
+            if (CheckOwnership(course.Id) != OwnershipType.None)
+            {
+                CourseStorage.Delete(course);
+            }
+            else
+            {
+                throw new AccessViolationException();
+            }
+
+        }// add check for authorization
+        public Course Edit(Course course)// add check for authorization
+        {
+            if (CheckOwnership(course.Id) != OwnershipType.None)
+            {
+                try
+                {
+                    Course result = CourseStorage.Edit(course);
+                    return result;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    return null;
+                } 
+            }
+            else
+            {
+                throw new AccessViolationException();
             }
         }
         public Course GetById(string id)
         {
+            if (CheckOwnership(id) != OwnershipType.None)
+            {
+                try
+                {
+                    return CourseStorage.GetCourse(id);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                throw new AccessViolationException();
+            }
+        }
+
+        private OwnershipType CheckOwnership(string courseId) // need to check for user id
+        {
             try
             {
-                Course result = CourseStorage.GetCourse(id);
-                return result;
+                Account _user = AccountStorage.GetAccount("0"); //temporarily 0
+                return _user.CheckOwnership(courseId);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return OwnershipType.None;
+            }
+        }
+
+        public CourseInfo GetCourseInfo(string id)
+        {
+            try
+            {
+                Course result = GetById(id);
+                if (result != null)
+                {
+                    return CourseStorage.GetCourseInfo(result); 
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (ArgumentOutOfRangeException)
             {

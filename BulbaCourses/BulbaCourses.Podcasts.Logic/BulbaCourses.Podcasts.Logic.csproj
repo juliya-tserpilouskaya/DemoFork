@@ -42,12 +42,12 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountStorage.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Services\IManageService.cs" />
+    <Compile Include="Interfaces\IManageService.cs" />
     <Compile Include="Services\ManageService.cs" />
-    <Compile Include="Models\SearchResult.cs" />
+    <Compile Include="Models\CourseInfo.cs" />
     <Compile Include="Models\SearchResultList.cs" />
     <Compile Include="Models\CourseStorage.cs" />
-    <Compile Include="Services\ISearchService.cs" />
+    <Compile Include="Interfaces\ISearchService.cs" />
     <Compile Include="Services\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>

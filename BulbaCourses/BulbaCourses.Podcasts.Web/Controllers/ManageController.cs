@@ -39,6 +39,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 return InternalServerError(ex);
             }
+            catch (AccessViolationException)
+            {
+                try
+                {
+                    CourseInfo result = _manageservice.GetCourseInfo(id);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                }
+            }
         }
 
         [HttpPost, Route("")]
@@ -97,24 +105,16 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Not Found")]
         [SwaggerResponse(HttpStatusCode.OK, "Found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
-        public IHttpActionResult Delete(string id)
+        public IHttpActionResult Delete(Course course)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
-            {
-                return BadRequest();
-            }
             try
             {
-                _manageservice.Delete(id);
+                _manageservice.Delete(course);
                 return Ok();
             }
             catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
-            }
-            catch (ArgumentException)
-            {
-                return NotFound();
             }
         }
     }

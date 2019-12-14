@@ -21,13 +21,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                         {
                             if (course.Title.ToLower().Contains(_string.ToLower()))
                             {
-                                resultList.Add(new SearchResult
-                                {
-                                    Title = course.Title,
-                                    Price = course.Price,
-                                    Author = course.Author,
-                                    Theme = course.Theme
-                                });
+                                resultList.Add(GetCourseInfo(course));
                             }
                         }
                         if (resultList.Length() >= SearchService.SearchCount)
@@ -44,13 +38,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                         {
                             if (course.Author.ToLower().Contains(_string.ToLower()))
                             {
-                                resultList.Add(new SearchResult
-                                {
-                                    Title = course.Title,
-                                    Price = course.Price,
-                                    Author = course.Author,
-                                    Theme = course.Theme
-                                });
+                                resultList.Add((GetCourseInfo(course));
                             }
                         }
                         if (resultList.Length() >= SearchService.SearchCount)
@@ -67,13 +55,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                         {
                             if (course.Theme.ToLower().Contains(_string.ToLower()))
                             {
-                                resultList.Add(new SearchResult
-                                {
-                                    Title = course.Title,
-                                    Price = course.Price,
-                                    Author = course.Author,
-                                    Theme = course.Theme
-                                });
+                                resultList.Add((GetCourseInfo(course));
                             }
                         }
                         if (resultList.Length() >= SearchService.SearchCount)
@@ -85,7 +67,17 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 throw new KeyNotFoundException();
             return resultList;
         }
-
+        internal static CourseInfo GetCourseInfo(Course course)
+        {
+            return new CourseInfo
+            {
+                Title = course.Title,
+                Price = course.Price,
+                Author = course.Author,
+                Theme = course.Theme,
+                Id = course.Id
+            };
+        }
         internal static Course GetCourse(string id)
         {
             int _id = 0;
@@ -99,35 +91,19 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
             return Courses[_id];
         }
-
         internal static Course Edit(Course course)
         {
-            int _id = 0;
-            foreach (Course _course in Courses)
-            {
-                if (_course.Id == course.Id)
-                {
-                    break;
-                }
-                _id++;
-            }
-            Courses.RemoveAt(_id);
+            int id = Courses.IndexOf(course);
+            Courses.RemoveAt(id);
             course.Modified = System.DateTime.Now;
-            Courses.Insert(_id, course);
+            Courses.Insert(id, course);
             return course;
         }
-        internal static void Delete(string id)
+        internal static void Delete(Course course)
         {
-            int _id = 0;
-            foreach (Course _course in Courses)
-            {
-                if (_course.Id == id)
-                {
-                    break;
-                }
-                _id++;
-            }
-            Courses.RemoveAt(_id);
+            int id = Courses.IndexOf(course);
+            
+            Courses.RemoveAt(id);
         }
         internal static Course Add(Course course)
         {
@@ -139,4 +115,4 @@ namespace BulbaCourses.Podcasts.Logic.Services
         }
     }
 }
-//
+//to dblayer

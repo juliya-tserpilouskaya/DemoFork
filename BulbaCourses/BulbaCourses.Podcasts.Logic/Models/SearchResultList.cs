@@ -5,8 +5,8 @@ namespace BulbaCourses.Podcasts.Logic.Models
 {
     public class SearchResultList
     {
-        private List<SearchResult> _results = new List<SearchResult>();
-        internal void Add(SearchResult result)
+        private List<CourseInfo> _results = new List<CourseInfo>();
+        internal void Add(CourseInfo result)
         {
             _results.Add(result);
         }
