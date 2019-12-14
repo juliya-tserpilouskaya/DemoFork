@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.BLL.Resources;
+using BulbaCourses.Analytics.Web.Infrastructure.SwaggerExamples.Reports;
 using BulbaCourses.Analytics.Web.Models;
+using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Reports doesn`t exist.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [SwaggerResponse(HttpStatusCode.OK, "Reports found.", typeof(ReportShortVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportShortVmModelExample))]
         public IHttpActionResult GetAll()
         {            
             try
@@ -39,7 +41,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
                 
                 if (_validation.IsErrors)
                 {
-                    return Content(HttpStatusCode.NotFound, _validation.Error);
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
                 }
 
                 var reportVms = _mapper.Map<IEnumerable<ReportShortVm>>(reportDTOs);
@@ -55,6 +57,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Report doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [SwaggerResponse(HttpStatusCode.OK, "Report founds.", typeof(ReportVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportVmModelExample))]
         public IHttpActionResult GetById(string Id)
         {           
             try
@@ -63,7 +66,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
 
                 if (_validation.IsErrors)
                 {
-                    return Content(HttpStatusCode.NotFound, _validation.Error);
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
                 }
 
                 var reportView = _mapper.Map<ReportVm>(reportDto);
@@ -80,6 +83,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Reports doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [SwaggerResponse(HttpStatusCode.OK, "Report Delete", typeof(ReportVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportVmModelExample))]
         public IHttpActionResult DeleteById(string Id)
         {            
             try
@@ -88,7 +92,7 @@ namespace BulbaCourses.Analytics.Web.Controllers
 
                 if (_validation.IsErrors)
                 {
-                    return Content(HttpStatusCode.NotFound, _validation.Error);
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
                 }
 
                 return Ok(Id);

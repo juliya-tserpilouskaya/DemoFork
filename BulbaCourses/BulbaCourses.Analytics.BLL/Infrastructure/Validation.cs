@@ -6,13 +6,34 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure
 {
     public class Validation : IValidation
     {
-        public Dictionary<string, string> Error { get; private set; } = new Dictionary<string, string>();
+        private Dictionary<string, string> _errors;
+        private ErrorContainer _errorContainer;
+        private bool _isChangedErrors;
 
-        public bool IsErrors => Error.Any();
+        public Validation()
+        {
+            _errors = new Dictionary<string, string>();
+            _errorContainer = new ErrorContainer(_errors);
+            _isChangedErrors = false;
+        }
+        public ErrorContainer Errors
+        {
+            get
+            {
+                if (_isChangedErrors)
+                {
+                    _errorContainer = new ErrorContainer(_errors);
+                }
+                return _errorContainer;
+            }
+        }
+
+        public bool IsErrors => _errors.Any();
 
         public void Init()
         {
-            Error.Clear();
+            _errors.Clear();
+            _isChangedErrors = true;
         }
 
         public bool IsNull(string id, string param, string message)
@@ -37,7 +58,8 @@ namespace BulbaCourses.Analytics.BLL.Infrastructure
 
         public bool AddError(string param, string message)
         {
-            Error.Add(param, message);
+            _errors.Add(param, message);
+            _isChangedErrors = true;
             return true;
         }
 

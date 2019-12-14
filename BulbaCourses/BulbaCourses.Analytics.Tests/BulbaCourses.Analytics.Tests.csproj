@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReportsControllerTests.cs" />
+    <Compile Include="AssemblyHelperTests.cs" />
     <Compile Include="ValidateTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
