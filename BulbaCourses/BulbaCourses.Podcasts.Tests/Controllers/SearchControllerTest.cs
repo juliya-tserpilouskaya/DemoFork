@@ -14,9 +14,10 @@ namespace BulbaCourses.Podcasts.Tests
             SearchService service = new SearchService();
             SearchController controller = new SearchController(service);
 
-            SearchResultList result = controller.GetSearchResults("se", SearchMode.ByTitle) as SearchResultList;
+            SearchResultList result = controller.GetSearchResults("rse", SearchMode.ByTitle) as SearchResultList;
             Assert.IsNotNull(result);
         }
     }
 }//// ITS NOT WORKING
 //No courses currently
+///test service instead!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

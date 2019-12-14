@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Logic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.Tests", "BulbaCourses.Podcasts.Tests\BulbaCourses.Podcasts.Tests.csproj", "{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Podcasts.IO", "BulbaCourses.Podcasts.IO\BulbaCourses.Podcasts.IO.csproj", "{EA5C4637-047C-485D-AF4B-15EF062F9969}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA5C4637-047C-485D-AF4B-15EF062F9969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA5C4637-047C-485D-AF4B-15EF062F9969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA5C4637-047C-485D-AF4B-15EF062F9969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA5C4637-047C-485D-AF4B-15EF062F9969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -234,6 +240,7 @@ Global
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{E3624382-51E9-4CAE-B3C0-D9937886A3F2} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
 		{4328DED2-7CD3-483C-BC74-1D30DBE8B22E} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
+		{EA5C4637-047C-485D-AF4B-15EF062F9969} = {69BEDF67-2025-4137-ABB3-67DC4F29B55D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}

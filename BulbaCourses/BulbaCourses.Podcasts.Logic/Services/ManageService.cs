@@ -53,6 +53,6 @@ namespace BulbaCourses.Podcasts.Logic.Models
             {
                 return null;
             }
-        }
+        } // change file reference to nothing if user don't own course. Only info
     }
 }

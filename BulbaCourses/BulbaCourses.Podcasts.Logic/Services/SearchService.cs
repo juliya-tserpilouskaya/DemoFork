@@ -14,8 +14,8 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                SearchResultList result = CourseStorage.Search(searchString, type, ref resultList);
-                return result;
+                return CourseStorage.Search(searchString, type, ref resultList);
+                
             }
             catch (KeyNotFoundException)
             {
