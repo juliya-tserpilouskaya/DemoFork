@@ -4,35 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace BulbaCourses.Podcasts.Logic.Services
-{ /// <summary>
-/// //// turn into db
-/// </summary>
+{
     internal static class CourseStorage
     {
-        private static List<Course> Courses = new List<Course>()
-        {
-            new Course
-            {
-                Title = "course",
-                Price = 10.0,
-                Theme = "disuh",
-                Author = "Hok"
-            },
-            new Course
-            {
-                Title = "3urse",
-                Price = 10.0,
-                Theme = "disuh",
-                Author = "Hok"
-            },
-            new Course
-            {
-                Title = "cours2",
-                Price = 10.0,
-                Theme = "disuh",
-                Author = "Hok"
-            }
-        };
+        private static List<Course> Courses = new List<Course>();
         internal static SearchResultList Search(string _string, SearchMode searchtype, ref SearchResultList resultList) //add caching
         {
             switch (searchtype)

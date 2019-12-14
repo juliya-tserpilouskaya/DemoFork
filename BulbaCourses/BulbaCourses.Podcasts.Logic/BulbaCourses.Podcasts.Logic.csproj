@@ -42,23 +42,17 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AccountStorage.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Interfaces\IManageService.cs" />
+    <Compile Include="Services\IManageService.cs" />
     <Compile Include="Services\ManageService.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\SearchResultList.cs" />
     <Compile Include="Models\CourseStorage.cs" />
-    <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BulbaCourses.Podcasts.IO\BulbaCourses.Podcasts.IO.csproj">
-      <Project>{ea5c4637-047c-485d-af4b-15ef062f9969}</Project>
-      <Name>BulbaCourses.Podcasts.IO</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
