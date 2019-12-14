@@ -118,9 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NotFoundReport" xml:space="preserve">
-    <value>Not Found Report</value>
+    <value>Report doesn't exists</value>
   </data>
   <data name="NotFoundReportById" xml:space="preserve">
-    <value>Not Found Report (by Id)</value>
+    <value>Report doesn't exists (by Id)</value>
+  </data>
+  <data name="NotFoundReports" xml:space="preserve">
+    <value>Reports doesn't exist</value>
   </data>
 </root>

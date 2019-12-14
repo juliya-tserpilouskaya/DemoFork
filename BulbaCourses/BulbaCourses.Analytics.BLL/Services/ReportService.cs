@@ -1,75 +1,113 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.DTO;
 using BulbaCourses.Analytics.BLL.Infrastructure;
-using BulbaCourses.Analytics.BLL.Interfaces;
+using BulbaCourses.Analytics.BLL.Interface;
 using BulbaCourses.Analytics.BLL.Resources;
-using BulbaCourses.Analytics.DAL.Entities.Reports;
-using BulbaCourses.Analytics.DAL.Interfaces;
-using BulbaCourses.Analytics.DAL.Repositories;
-using BulbaCourses.Analytics.DAL.Storage;
+using BulbaCourses.Analytics.DAL.Context;
+using BulbaCourses.Analytics.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
-    internal partial class ReportService : IReportService
+    public partial class ReportService : IReportService
     {
-        private IDataBase _context;
+        private readonly AlfaContext _context = new AlfaContext();
+        private readonly IMapper _mapper;
+        private readonly IValidation _validation;
 
-        public ReportService(IDataBase context, IDashboardService dashboardService, IRepository<Report> repositoryReport)
+        public ReportService(IMapper mapper, IValidation validation)
         {
-            DashboardService = dashboardService;
-            _context = context;
-            _context.Reports = repositoryReport;
+            _mapper = mapper;
+            _validation = validation;
+            // if need adding data to uncomment SeedDatabase(_context);
+            Debug.WriteLine("+++++++++++++ReportService+++++++++++++++++++");
         }
 
-        public IDashboardService DashboardService { get; }
+        static void SeedDatabase(AlfaContext context)
+        {
+            
+            var report = new ReportDb()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Основной отчет",
+                Description = "Описание основного отчета",
+                Created = DateTime.Now,
+                Modified = DateTime.Now,
+                Creator = "Создатель отчета",
+                Modifier = "Модификатор отчета",
+                Dashboards = new List<DashboardDb>() {
+                    new DashboardDb()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        ChartId = 1,
+                        Created = DateTime.Now,
+                        Modified = DateTime.Now,
+                        Creator = "Создатель дашборда",
+                        Modifier = "Модификатор дашборда",
+                        Name = "Дашборд 1"
+                    } 
+                }
+            };
+            context.Reports.Add(report);
+            context.SaveChanges();
+        }
 
-        public ReportDTO ChangeReport(ReportDTO reportDTO)
+        public ReportDto Update(ReportDto reportDTO)
         {
             throw new NotImplementedException();
-        }        
+        }
 
-        public ReportDTO CreateReport(ReportDTO reportDTO)
+        public ReportDto Create(ReportDto reportDTO)
         {
             throw new NotImplementedException();
         }
 
-        public ReportDTO GetReportById(string Id)
+        public ReportDto GetById(string id)
         {
-            ThrowException.IsNull(Id, Resource.NotFoundReportById);
+            if (_validation.IsNull(id, "Id", Resource.NotFoundReportById))
+                return null;
 
-            var report = _context.Reports.Find(_ => _.Id == Id).FirstOrDefault();
+            var reportDb = _context.Reports.Where(_ => _.Id == id).FirstOrDefault();
 
-            ThrowException.IsNull(report, Resource.NotFoundReport);
+            if (_validation.IsNull(reportDb, "Report", Resource.NotFoundReport))
+                return null;
 
-            return new ReportDTO { Id = report.Id, Name = report.Name, Description = report.Description };
+            var reportDto = _mapper.Map<ReportDto>(reportDb);
+
+            return reportDto;
         }
 
-        public ReportDTO GetReportByName(string name)
+        public ReportDto GetByName(string name)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ReportShortDTO> GetReportsShort()
+        public IEnumerable<ReportShortDto> GetAll()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Report, ReportShortDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Report>, List<ReportShortDTO>>(_context.Reports.Find(_ => true));
+            var reportShortDtos = _context.Reports.Where(_=>true).Select(_ => new ReportShortDto() { Id = _.Id, Name = _.Name }).ToList();
 
+            if (_validation.IsZero(reportShortDtos.Count, "Reports", Resource.NotFoundReports))
+                return null;
+
+            return reportShortDtos;
         }
 
-        public void RemoveReport(string Id)
+        public void Remove(string id)
         {
-            ThrowException.IsNull(Id, Resource.NotFoundReportById);
+            if (_validation.IsNull(id, "Id", Resource.NotFoundReportById))
+                return;
 
-            var reports = _context.Reports.Find(_ => _.Id == Id);            
+            var report = _context.Reports.Include(_ => _.Dashboards).Where(_ => _.Id == id).FirstOrDefault();
 
-            ThrowException.IsEmty(!reports.Any(), Resource.NotFoundReportById);
+            if (_validation.IsNull(report, "Report", Resource.NotFoundReportById))
+                return;
 
-            _context.Reports.Delete(reports.FirstOrDefault());
-        }        
+            _context.Reports.Remove(report);
+            _context.SaveChanges();
+        }
     }
 }

@@ -1,18 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.DTO
 {
-    public class ReportDTO
+    public class ReportDto
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public DateTime? Created { get; set; }
+
+        public DateTime? Modified { get; set; }
+
+        public string Creator { get; set; }
+
+        public string Modifier { get; set; }
 
         public int NumberOfDashboards { get; set; }
     }

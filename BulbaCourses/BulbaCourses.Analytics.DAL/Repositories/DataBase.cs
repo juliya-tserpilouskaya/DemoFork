@@ -1,22 +1,13 @@
-﻿using BulbaCourses.Analytics.DAL.Entities.Coupling;
-using BulbaCourses.Analytics.DAL.Entities.Dashboards;
-using BulbaCourses.Analytics.DAL.Entities.Reports;
-using BulbaCourses.Analytics.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BulbaCourses.Analytics.DAL.Interfaces;
+using BulbaCourses.Analytics.Infrastructure.DAL;
 
 namespace BulbaCourses.Analytics.DAL.Repositories
 {
     public class DataBase : IDataBase
     {
-        public IRepository<Report> Reports { get; set; }
+        public IReportRepository Reports { get; set; }
 
-        public IRepository<Dashboard> Dashboards { get; }
-
-        public IRepository<Links> Links { get; }
+        public IReportRepository Dashboards { get; }
 
         public void Dispose()
         {

@@ -35,6 +35,7 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -48,25 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\ChartDTO.cs" />
-    <Compile Include="DTO\DashboardDTO.cs" />
-    <Compile Include="DTO\ReportDTO.cs" />
-    <Compile Include="DTO\ReportShortDTO.cs" />
+    <Compile Include="DTO\ChartDto.cs" />
+    <Compile Include="DTO\DashboardDto.cs" />
+    <Compile Include="DTO\ReportDto.cs" />
+    <Compile Include="DTO\ReportShortDto.cs" />
+    <Compile Include="Infrastructure\Assemblies\AssemblyHelper.cs" />
     <Compile Include="Infrastructure\BLLModule.cs" />
-    <Compile Include="Infrastructure\Exceptions\ExceptionMessage.cs" />
-    <Compile Include="Infrastructure\Exceptions\AbstractException.cs" />
-    <Compile Include="Infrastructure\Exceptions\NotFoundException.cs" />
-    <Compile Include="Infrastructure\ThrowException.cs" />
-    <Compile Include="Interfaces\IDashboardService.cs" />
-    <Compile Include="Interfaces\IReportService.cs" />
+    <Compile Include="Infrastructure\Errors.cs" />
+    <Compile Include="Infrastructure\MappingProfiles\ReportProfile.cs" />
+    <Compile Include="Infrastructure\Validation.cs" />
+    <Compile Include="Interface\IReportService.cs" />
+    <Compile Include="Interface\IValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\DashboardService.cs" />
-    <Compile Include="Services\Dispose\DashboardService.cs" />
     <Compile Include="Services\Dispose\ReportService.cs" />
     <Compile Include="Services\ReportService.cs" />
   </ItemGroup>
@@ -82,9 +81,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
-    internal partial class ReportService
+    public partial class ReportService
     {
         private bool _isDisposed = false;
 

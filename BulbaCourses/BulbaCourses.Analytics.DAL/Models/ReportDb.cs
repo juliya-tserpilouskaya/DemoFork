@@ -1,13 +1,9 @@
-﻿using BulbaCourses.Analytics.DAL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Models
 {
-    public class ReportDb: IAuditModel
+    public class ReportDb
     {
         public string Id { get; set; }
 

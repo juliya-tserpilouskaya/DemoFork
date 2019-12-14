@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
-using BulbaCourses.Analytics.BLL.DTO;
-using BulbaCourses.Analytics.BLL.Infrastructure;
-using BulbaCourses.Analytics.BLL.Infrastructure.Exceptions;
-using BulbaCourses.Analytics.BLL.Interfaces;
-using BulbaCourses.Analytics.BLL.Services;
+using BulbaCourses.Analytics.BLL.Interface;
+using BulbaCourses.Analytics.Web.Infrastructure.SwaggerExamples.Reports;
 using BulbaCourses.Analytics.Web.Models;
+using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace BulbaCourses.Analytics.Web.Controllers
@@ -18,65 +15,91 @@ namespace BulbaCourses.Analytics.Web.Controllers
     [RoutePrefix("api/reports")]
     public class ReportsController : ApiController
     {
-        private IReportService _reportService;
+        private readonly IReportService _reportService;
+        private readonly IMapper _mapper;
+        private readonly IValidation _validation;
 
-        public ReportsController(IReportService reportService)
+        public ReportsController(IReportService reportService, IMapper mapper, IValidation validation)
         {
             _reportService = reportService;
+            _mapper = mapper;
+            _validation = validation;
+            validation.Init();
+            Debug.WriteLine("+++++++++++++++ ReportsController +++++++++++++++");
         }
 
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Reports doesn`t exists.")]
-        [SwaggerResponse(HttpStatusCode.OK, "Reports found", typeof(ReportViewModel))]
-        public IHttpActionResult ShowAll()
-        {
+        [SwaggerResponse(HttpStatusCode.NotFound, "Reports doesn`t exist.")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.OK, "Reports found.", typeof(ReportShortVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportShortVmModelExample))]
+        public IHttpActionResult GetAll()
+        {            
             try
             {
-                IEnumerable<ReportShortDTO> reportDTOs = _reportService.GetReportsShort();
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportShortDTO, ReportViewModel>()).CreateMapper();
-                var reports = mapper.Map<IEnumerable<ReportShortDTO>, List<ReportViewModel>>(reportDTOs);
+                var reportDTOs = _reportService.GetAll();
+                
+                if (_validation.IsErrors)
+                {
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
+                }
 
-                return Ok(reports);
+                var reportVms = _mapper.Map<IEnumerable<ReportShortVm>>(reportDTOs);
+                return Ok(reportVms);
             }
-            catch (NotFoundException)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return InternalServerError();
             }
-
         }
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Report doesn`t exists.")]
-        [SwaggerResponse(HttpStatusCode.OK, "Report found", typeof(ReportViewModel))]
-        public IHttpActionResult ShowReportById(string Id)
-        {
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.OK, "Report founds.", typeof(ReportVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportVmModelExample))]
+        public IHttpActionResult GetById(string Id)
+        {           
             try
             {
-                var reportDTO = _reportService.GetReportById(Id);
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ReportDTO, ReportViewModel>()).CreateMapper();
-                var report = mapper.Map<ReportDTO, ReportViewModel>(reportDTO);
+                var reportDto = _reportService.GetById(Id);
 
-                return Ok(report);
+                if (_validation.IsErrors)
+                {
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
+                }
+
+                var reportView = _mapper.Map<ReportVm>(reportDto);
+
+                return Ok(reportView);
             }
-            catch (NotFoundException)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return InternalServerError();
             }
         }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Reports doesn`t exists.")]
-        [SwaggerResponse(HttpStatusCode.OK, "Report Delete", typeof(ReportViewModel))]
-        public IHttpActionResult DeleteReportById(string Id)
-        {
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.OK, "Report Delete", typeof(ReportVm))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportVmModelExample))]
+        public IHttpActionResult DeleteById(string Id)
+        {            
             try
             {
-                _reportService.RemoveReport(Id);
+                _reportService.Remove(Id);
+
+                if (_validation.IsErrors)
+                {
+                    return Content(HttpStatusCode.NotFound, _validation.Errors);
+                }
+
                 return Ok(Id);
             }
-            catch (NotFoundException)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return InternalServerError();
             }
         }
 

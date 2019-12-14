@@ -1,17 +1,40 @@
-﻿using BulbaCourses.Analytics.DAL.Entities.Dashboards;
-using BulbaCourses.Analytics.DAL.Interfaces;
+﻿using BulbaCourses.Analytics.DAL.Interfaces;
+using BulbaCourses.Analytics.Infrastructure.DAL;
+using BulbaCourses.Analytics.Infrastructure.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Repositories
 {
-    public class DashboardRepository : AbstractRepository<Dashboard>
-    {
-        public DashboardRepository(IDashboardStorage context) :
-            base(context.Storage)
-        { }
+    public class DashboardRepository: IDashboardRepository
+    {         
+        private readonly List<IDashboardDb> _context;
+
+        public DashboardRepository(IDashboardStorage context)
+        {
+            _context = context.Storage;
+        }
+
+        public void Create(IDashboardDb item)
+        {
+            _context.Add(item);
+        }
+
+        public void Delete(IDashboardDb item)
+        {
+            _context.Remove(item);
+        }
+
+        public IEnumerable<IDashboardDb> Find(Func<IDashboardDb, bool> predicate)
+        {
+            return _context.Where(predicate).ToList().AsReadOnly();
+        }
+
+        public void Update(IDashboardDb item)
+        {
+            Delete(item);
+            Create(item);
+        }
     }
 }

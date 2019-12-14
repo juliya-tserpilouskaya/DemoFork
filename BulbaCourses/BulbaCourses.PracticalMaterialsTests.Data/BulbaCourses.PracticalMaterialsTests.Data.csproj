@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Enum\ETestType.cs" />
     <Compile Include="Enum\EUserRole.cs" />
-    <Compile Include="Models\PracticalMaterialsTest.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
