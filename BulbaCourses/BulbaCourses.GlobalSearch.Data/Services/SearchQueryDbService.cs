@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services
 {
-    class SearchQueryDbService : ISearchQueryDbService
+    public class SearchQueryDbService : ISearchQueryDbService
     {
         private GlobalSearchContext _context = new GlobalSearchContext();
 

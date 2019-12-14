@@ -9,6 +9,7 @@ using BulbaCourses.GlobalSearch.Logic.Models;
 using BulbaCourses.GlobalSearch.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -54,7 +55,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
-        public IHttpActionResult Create([FromBody]SearchQuery query)
+        public IHttpActionResult Create([FromBody]SearchQueryDTO query)
         {
             //validate here
             return Ok(_searchQueryService.Add(query));

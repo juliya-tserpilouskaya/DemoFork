@@ -42,6 +42,9 @@
     <Reference Include="Microsoft.Data.Sqlite, Version=3.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.3.1.0\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="SQLitePCLRaw.batteries_v2, Version=2.0.2.669, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.2.0.2\lib\net461\SQLitePCLRaw.batteries_v2.dll</HintPath>
     </Reference>
@@ -78,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModule.cs" />
     <Compile Include="EntitiesConfiguration\AuthorConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseCategoryConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseConfiguration.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Enums\Section.cs" />
     <Compile Include="Enums\SortingType.cs" />
     <Compile Include="GlobalSearchContext.cs" />
+    <Compile Include="GlobalSearchDbInitializer.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
     <Compile Include="Models\CourseCategoryDB.cs" />

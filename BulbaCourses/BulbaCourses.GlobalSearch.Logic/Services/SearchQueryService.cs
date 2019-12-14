@@ -1,5 +1,7 @@
-﻿using BulbaCourses.GlobalSearch.Data.Models;
+﻿using AutoMapper;
+using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using System;
@@ -18,19 +20,28 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         {
             _searchQueryDb = searchQueryDb;
         }
-        public IEnumerable<SearchQueryDB> GetAll()
+        public IEnumerable<SearchQueryDTO> GetAll()
         {
-            return _searchQueryDb.GetAll();
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_searchQueryDb.GetAll());
         }
 
-        public SearchQueryDB GetById(string id)
+        public SearchQueryDTO GetById(string id)
         {
-            return _searchQueryDb.GetById(id);
+
+            var query = _searchQueryDb.GetById(id);
+            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created };
         }
 
-        public SearchQueryDB Add(SearchQueryDB query)
+        public SearchQueryDTO Add(SearchQueryDTO query)
         {
-            return _searchQueryDb.Add(query);
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
+            }).CreateMapper();
+            SearchQueryDB queryDb = new SearchQueryDB() { Id = query.Id, Created = query.Date, Query = query.Query };
+            return mapper.Map<SearchQueryDB, SearchQueryDTO>(_searchQueryDb.Add(queryDb));
         }
 
         public void RemoveById(string id)

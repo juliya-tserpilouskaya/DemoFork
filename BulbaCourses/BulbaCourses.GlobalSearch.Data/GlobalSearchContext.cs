@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data
 {
-    class GlobalSearchContext : DbContext
+    public class GlobalSearchContext : DbContext
     {
-        public GlobalSearchContext() : base("GlobalSearchDbConnection")
+        public GlobalSearchContext() : base("GlobalSearchContext")
         {
             Database.Log = s => Debug.WriteLine(s);
+            Database.SetInitializer(new GlobalSearchDbInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

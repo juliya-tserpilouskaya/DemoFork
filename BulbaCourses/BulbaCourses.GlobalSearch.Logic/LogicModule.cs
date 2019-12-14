@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Services;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Data.Services;
+
 
 namespace BulbaCourses.GlobalSearch.Logic
 {
@@ -18,6 +21,8 @@ namespace BulbaCourses.GlobalSearch.Logic
             Bind<IBookmarkService>().To<BookmarkService>();
             Bind<IAnonymousUserService>().To<AnonymousUserService>();
             Bind<IRegisteredUserService>().To<RegisteredUserService>();
+            Bind<ISearchQueryDbService>().To<SearchQueryDbService>();
+
         }
     }
 }
