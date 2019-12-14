@@ -10,9 +10,7 @@ namespace BulbaCourses.GlobalSearch.Data.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        //public int CategoryId { get; set; }
         public int CourseCategoryDBId { get; set; }
-        //public int AuthorId { get; set; }
         public int AuthorDBId { get; set; }
         public double Cost { get; set; }
         public string Complexity { get; set; }
