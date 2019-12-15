@@ -1,12 +1,11 @@
 using System.Web.Http;
 using WebActivatorEx;
-using BulbaCourses.Video.Web;
+using BulbaCourses.DiscountAggregator.Web;
 using Swashbuckle.Application;
-using Swashbuckle.Examples;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace BulbaCourses.Video.Web
+namespace BulbaCourses.DiscountAggregator.Web
 {
     public class SwaggerConfig
     {
@@ -33,7 +32,7 @@ namespace BulbaCourses.Video.Web
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "BulbaCourses.Video.Web");
+                        c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
@@ -62,7 +61,7 @@ namespace BulbaCourses.Video.Web
                         //c.BasicAuth("basic")
                         //    .Description("Basic HTTP Authentication");
                         //
-                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")
@@ -158,7 +157,7 @@ namespace BulbaCourses.Video.Web
                         // to execute the operation
                         //
                         //c.OperationFilter<AssignOAuth2SecurityRequirements>();
-                        c.OperationFilter<ExamplesOperationFilter>();
+
                         // Post-modify the entire Swagger document by wiring up one or more Document filters.
                         // This gives full control to modify the final SwaggerDocument. You should have a good understanding of
                         // the Swagger 2.0 spec. - https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md
