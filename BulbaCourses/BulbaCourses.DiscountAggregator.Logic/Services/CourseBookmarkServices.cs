@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,17 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         public CourseBookmark Add(CourseBookmark courseBookmark)
         {
-            return FakerCourseBookmarks.Add(courseBookmark);
+            return CourseBookmarksStorage.Add(courseBookmark);
         }
 
         public IEnumerable<CourseBookmark> Delete(string id)
         {
-            return FakerCourseBookmarks.Delete(id);
+            return CourseBookmarksStorage.Delete(id);
         }
 
         public IEnumerable<CourseBookmark> GetAll()
         {
-            return FakerCourseBookmarks.GetAll();
+            return CourseBookmarksStorage.GetAll();
         }
 
     }

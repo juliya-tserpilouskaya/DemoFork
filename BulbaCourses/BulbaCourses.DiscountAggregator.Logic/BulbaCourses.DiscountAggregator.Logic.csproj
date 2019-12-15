@@ -78,6 +78,10 @@
     <Compile Include="Models\CourseCategory.cs" />
     <Compile Include="Models\CoursesITAcademy.cs" />
     <Compile Include="Models\Domain.cs" />
+    <Compile Include="Models\ModelsStorage\CourseBookmarksStorage.cs" />
+    <Compile Include="Models\ModelsStorage\CoursesITAcademyStorage.cs" />
+    <Compile Include="Models\ModelsStorage\Courseware.cs" />
+    <Compile Include="Models\ModelsStorage\UserAccountCollection.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -99,5 +103,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

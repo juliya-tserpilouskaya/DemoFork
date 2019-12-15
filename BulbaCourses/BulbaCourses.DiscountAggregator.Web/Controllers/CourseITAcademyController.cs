@@ -32,6 +32,5 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             var result = courseService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
-
     }
 }
