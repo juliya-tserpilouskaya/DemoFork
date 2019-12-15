@@ -261,6 +261,7 @@
     <Compile Include="Controllers\CourseBookmarkController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseITAcademyController.cs" />
+    <Compile Include="Controllers\CourseUdemyController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
