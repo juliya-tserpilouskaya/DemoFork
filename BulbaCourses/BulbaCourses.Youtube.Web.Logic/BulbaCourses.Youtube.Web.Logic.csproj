@@ -81,10 +81,14 @@
     <Compile Include="Services\ICacheService.cs" />
     <Compile Include="Services\ISearchRequestService.cs" />
     <Compile Include="Services\ILogicService.cs" />
+    <Compile Include="Services\IChannelService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\IStoryService.cs" />
     <Compile Include="Services\IVideoService.cs" />
     <Compile Include="Services\SearchRequestService.cs" />
     <Compile Include="Services\LogicService.cs" />
+    <Compile Include="Services\ChannelService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\StoryService.cs" />
     <Compile Include="Services\VideoService.cs" />
   </ItemGroup>

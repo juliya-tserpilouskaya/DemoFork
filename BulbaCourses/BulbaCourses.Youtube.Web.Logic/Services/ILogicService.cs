@@ -11,6 +11,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest);
+        IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user);
     }
 }

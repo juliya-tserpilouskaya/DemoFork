@@ -16,30 +16,33 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         IVideoService _videoService;
         ISearchRequestService _requestService;
 
+        IChannelService _channelService;
+        IUserService _userService;
         ICacheService _cache;
 
         public LogicService(IStoryService storyService, 
-            IVideoService videoService, ISearchRequestService requestService, ICacheService cache)
+            IVideoService videoService, ISearchRequestService requestService, 
+            ICacheService cache, IUserService userService, IChannelService channelService)
         {
             _storyService = storyService;
             _videoService = videoService;
             _requestService = requestService;
             _cache = cache;
+            _userService = userService;
+            _channelService = channelService;
         }
-        public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest)
+        public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user)
         {
-            //convert searchRequest to searchRequestDb
-            SearchRequestDb searchRequestDb = new SearchRequestDb();
-            searchRequestDb.Title = searchRequest.Title;
-
             var resultVideos = new List<ResultVideoDb>();
+
+            //convert searchRequest to searchRequestDb
+            var searchRequestDb = ParsеToDAL(searchRequest);
+
             var cacheResult = _cache.GetValue(searchRequestDb.Id);
 
+            //save search request if does not exist
             if (!_requestService.Exists(searchRequestDb))
-            {
-                //save search request
                 searchRequestDb = _requestService.Save(searchRequestDb);
-            }
 
             if (cacheResult != null)
             {
@@ -50,7 +53,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 _cache.Update(searchRequestDb);
             }
             else
-            {                
+            {
                 //Search in Youtube service
                 resultVideos = SearchInYoutube(searchRequest);
 
@@ -58,17 +61,42 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
                 //add result to cache
                 _cache.Add(searchRequestDb);
-            }             
+            }
 
+            var userDb = new UserDb()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                FullName = user.FullName,
+                Login = user.Login,
+                Password = user.Password,
+                NumberPhone = user.NumberPhone,
+                Email = user.Email,
+                ReserveEmail = user.ReserveEmail
+            };
+
+            _userService.Save(userDb);
+            var serachStoryDB = new SearchStoryDb()
+            {
+                SearchDate = DateTime.Now,
+                SearchRequest = searchRequestDb,
+                User = userDb
+            };
             //add search user story
-            //_storyService.Save(new SearchStoryDb()
-            //{
-            //    SearchDate = DateTime.Now,
-            //    SearchRequest = searchRequestDb,
-            //    User = new UserDb()
-            //});           
+            _storyService.Save(serachStoryDB);
 
             return resultVideos.AsReadOnly();
+        }
+
+        private SearchRequestDb ParsеToDAL(SearchRequest searchRequest)
+        {
+            SearchRequestDb searchRequestDb = new SearchRequestDb();
+            searchRequestDb.Title = searchRequest.Title;
+            searchRequestDb.Id = searchRequest.Id;
+            searchRequestDb.VideoId = searchRequest.VideoId;
+            searchRequestDb.Author = searchRequest.Author;
+            return searchRequestDb;
         }
 
         private List<ResultVideoDb> SearchInYoutube(SearchRequest searchRequest)
@@ -83,30 +111,32 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             // Run the request.
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = searchRequest.Title;
-            searchListRequest.MaxResults = 10;
+            searchListRequest.MaxResults = 8;
 
             // Call the search.list method to retrieve results matching the specified searchRequest
             var searchListResponse = searchListRequest.Execute();
 
             List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
-            foreach (var searchResult in searchListResponse.Items)
+            foreach (var searchResult in searchListResponse.Items.Where(r=>r.Id.VideoId!=null))
             {
                 ResultVideoDb resultVideo = new ResultVideoDb();
                 resultVideo.Id = searchResult.Id.VideoId;
                 resultVideo.Etag = searchResult.ETag;
                 resultVideo.Title = searchResult.Snippet.Title;
-                resultVideo.Channel = new ChannelDb()
+                resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
+                resultVideo.Description = searchResult.Snippet.Description;
+
+                var channel = new ChannelDb()
                 {
                     Id = searchResult.Snippet.ChannelId,
                     Name = searchResult.Snippet.ChannelTitle,
-                    Mentor = new MentorDb(),
-                    Videos = new List<ResultVideoDb>()
                 };
-                resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
-                resultVideo.Description = searchResult.Snippet.Description;
-                resultVideo.SearchRequests = new List<SearchRequestDb>();
+                if (!_channelService.Exists(channel))
+                    _channelService.Save(channel);
+
+                resultVideo.Channel = _channelService.GetChannelById(channel.Id);
+
                 resultVideos.Add(resultVideo);
-                //здесь, наверное, нужно сохранять информацию о каждом видео в базу, так как у нас есть соответствующая таблица Video в базе
             }
             return resultVideos;
         }

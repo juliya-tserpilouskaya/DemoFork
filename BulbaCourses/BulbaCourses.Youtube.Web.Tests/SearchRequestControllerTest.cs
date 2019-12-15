@@ -27,29 +27,21 @@ namespace BulbaCourses.Youtube.Web.Tests
         public void Init()
         {
             var youtubeContext = new YoutubeContext();
-            youtubeContext.Users.Add(new UserDb()
-            {
-                FirstName = "Ivan",
-                LastName = "Petrovich",
-                FullName = "Ivan Petrovich",
-                Login = "Vano",
-                Password = "123",
-                NumberPhone = "+375 44 777 77 77",
-                Email = "IPetrovich@gmail.com",
-                ReserveEmail = "",
-                SearchStories = new List<SearchStoryDb>()
-            });
             var srRepo = new SearchRequestsRepository(youtubeContext);
             var sRepo = new StoryRepository(youtubeContext);
             var vRepo = new VideoRepository(youtubeContext);
-
+            var uRepo = new UserRepository(youtubeContext);
+            var cRepo = new ChannelRepository(youtubeContext);
 
             var srService = new SearchRequestService(srRepo);
             var sService = new StoryService(sRepo);
             var vService = new VideoService(vRepo);
+
+            var cService = new ChannelService(cRepo);
+            var uService = new UserService(uRepo);
             var cache = new CacheService();
 
-            var lService = new LogicService(sService, vService, srService, cache);
+            var lService = new LogicService(sService, vService, srService, cache, uService, cService);
 
             srController = new SearchRequestController(lService);
         }

@@ -32,7 +32,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             //ResultVideoDb
             var ResultVideoDbEntity = modelBuilder.Entity<ResultVideoDb>();
             ResultVideoDbEntity.HasKey(x => x.Id);
-            ResultVideoDbEntity.Property(x => x.Etag).IsRequired().IsUnicode(); ;
+            ResultVideoDbEntity.Property(x => x.Etag).IsRequired().IsUnicode();
             ResultVideoDbEntity.Property(x => x.Title).IsRequired().HasMaxLength(200).IsUnicode();
             ResultVideoDbEntity.Property(x => x.PublishedAt).IsRequired();
             ResultVideoDbEntity.Property(x => x.Description).IsRequired().IsUnicode();
@@ -41,12 +41,13 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             //ChannelDb
             var ChannelDbEentity = modelBuilder.Entity<ChannelDb>();
             ChannelDbEentity.HasKey(x => x.Id);
-            ChannelDbEentity.Property(x => x.Name).IsRequired().HasMaxLength(200).IsUnicode(); ;
+            ChannelDbEentity.Property(x => x.Name).IsRequired().HasMaxLength(200).IsUnicode();
+            ChannelDbEentity.HasOptional<MentorDb>(x => x.Mentor);
             ChannelDbEentity.HasMany<ResultVideoDb>(x => x.Videos).WithRequired(x=>x.Channel);
 
             //MentorDb
             var MentorDbEentity = modelBuilder.Entity<MentorDb>();
-            MentorDbEentity.HasMany<ChannelDb>(x => x.Channels).WithRequired(x=>x.Mentor);
+            MentorDbEentity.HasMany<ChannelDb>(x => x.Channels).WithOptional(x=>x.Mentor);
 
             //UserDb
             var UserDbEentity = modelBuilder.Entity<UserDb>();
@@ -91,8 +92,8 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             Property(p => p.Title).IsRequired().HasMaxLength(200);
             Property(p => p.Author).HasMaxLength(50);
             Property(p => p.VideoId).HasMaxLength(100);
-            HasMany(s => s.SearchStories).WithRequired(r => r.SearchRequest);
-            HasMany(v => v.Videos).WithMany(r => r.SearchRequests);
+            HasMany<SearchStoryDb>(s => s.SearchStories).WithRequired(r => r.SearchRequest);
+            HasMany<ResultVideoDb>(v => v.Videos).WithMany(r => r.SearchRequests);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Models
         public string LastName { get; set; }
         public string FullName { get; set; }
         public string NumberPhone { get; set; } //возможно надо для авторизации, или восстановления пароля
-        public IEnumerable<string> Email { get; set; } //для дополнительных(резервных) адресов
-    } 
+        public string Email { get; set; }
+        public string ReserveEmail { get; set; }
+    }
 }
