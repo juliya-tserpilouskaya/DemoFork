@@ -8,6 +8,7 @@ using BulbaCourses.GlobalSearch.Web.Models;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -26,7 +27,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "The course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "The course is found", typeof(LearningCourse))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -34,7 +35,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _learningCourseService.GetById(id);
+                var result = await _learningCourseService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex) 
@@ -45,9 +46,9 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _learningCourseService.GetAllCourses();
+            var result = await _learningCourseService.GetAllCoursesAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -56,7 +57,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses in that category")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetByCategory(int domain)
+        public async Task<IHttpActionResult> GetByCategory(int domain)
         {
             //if (string.IsNullOrEmpty(domain))
             //{
@@ -64,7 +65,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             //}
             try
             {
-                var result = _learningCourseService.GetByCategory(domain);
+                var result = await _learningCourseService.GetByCategoryAsync(domain);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -78,7 +79,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses of author found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses of author are found", typeof(IEnumerable<LearningCourse>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetByAuthor(int id)
+        public async Task<IHttpActionResult> GetByAuthor(int id)
         {
             if (id <= 0)
             {
@@ -86,7 +87,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _learningCourseService.GetByAuthorId(id);
+                var result = await _learningCourseService.GetByAuthorIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -100,7 +101,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "The course is not found")]
         [SwaggerResponse(HttpStatusCode.OK, "Items of the course are found", typeof(IEnumerable<LearningCourseItem>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetItems(string id)
+        public async Task<IHttpActionResult> GetItems(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -108,7 +109,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _learningCourseService.GetLearningItemsByCourseId(id);
+                var result = await _learningCourseService.GetLearningItemsByCourseIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -122,7 +123,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses with complexity level are found", typeof(IEnumerable<LearningCourse>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetByComplexity(string level)
+        public async Task<IHttpActionResult> GetByComplexity(string level)
         {
             if (string.IsNullOrEmpty(level))
             {
@@ -130,7 +131,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _learningCourseService.GetCourseByComplexity(level);
+                var result = await _learningCourseService.GetCourseByComplexityAsync(level);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -144,7 +145,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses in specified language are found", typeof(IEnumerable<LearningCourse>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetByLanguage(string lang)
+        public async Task<IHttpActionResult> GetByLanguage(string lang)
         {
             if (string.IsNullOrEmpty(lang))
             {
@@ -152,7 +153,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _learningCourseService.GetCourseByLanguage(lang);
+                var result = await _learningCourseService.GetCourseByLanguageAsync(lang);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -161,26 +162,27 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
-        //[HttpGet, Route("search/{query}")]
-        //[SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
-        //[SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
-        //[SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
-        //[SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        //public IHttpActionResult Search(string query)
-        //{
-        //    if (string.IsNullOrEmpty(query))
-        //    {
-        //        return BadRequest();
-        //    }
-        //    try
-        //    {
-        //        var result = _learningCourseService.GetCourseByQuery(query);
-        //        return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-        //    }
-        //    catch (InvalidOperationException ex)
-        //    {
-        //        return InternalServerError(ex);
-        //    }
-        //}
+        [HttpGet, Route("search/{query}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
+        public IHttpActionResult Search(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                //var result = _learningCourseService.GetCourseByQuery(query);
+                //return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                return NotFound();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }
