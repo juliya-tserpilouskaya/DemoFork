@@ -33,12 +33,16 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetAllStories();
 
+        Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync();
+
         /// <summary>
         /// Get all stories by User Id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId);
+
+        Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId);
 
         /// <summary>
         /// Get all stories by Request Id
@@ -47,12 +51,16 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId);
 
+        Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId);
+
         /// <summary>
         /// Get one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
         /// <returns></returns>
         SearchStoryDb GetStoryByStoryId(int? storyId);
+
+        Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId);
 
     }
 }

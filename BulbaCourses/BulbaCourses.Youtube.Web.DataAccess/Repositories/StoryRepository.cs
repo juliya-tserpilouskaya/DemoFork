@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return _context.SearchStories.ToList().AsReadOnly();
         }
 
+        public async Task<IEnumerable<SearchStoryDb>> GetAllAsync()
+        {
+            return await _context.SearchStories.ToListAsync();
+        }
+
         /// <summary>
         /// Get all stories by User Id
         /// </summary>
@@ -46,6 +52,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         public IEnumerable<SearchStoryDb> GetByUserId(int? userId)
         {
             return _context.SearchStories.Where(s => s.User.Id == userId).ToList().AsReadOnly();
+        }
+
+        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId)
+        {
+            return await _context.SearchStories.Where(s => s.User.Id == userId).ToListAsync();
         }
 
         /// <summary>
@@ -58,6 +69,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToList().AsReadOnly();
         }
 
+        public async Task<IEnumerable<SearchStoryDb>> GetByRequestIdAsync(int? requestId)
+        {
+            return await _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToListAsync();
+        }
+
         /// <summary>
         /// Get one record from story by Story Id
         /// </summary>
@@ -66,6 +82,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         public SearchStoryDb GetByStoryId(int? storyId)
         {
             return _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+        }
+
+        public async Task<SearchStoryDb> GetByStoryIdAsync(int? storyId)
+        {
+            return await _context.SearchStories.SingleOrDefaultAsync(s => s.Id == storyId);
         }
 
         /// <summary>

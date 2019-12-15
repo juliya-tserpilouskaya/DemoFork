@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.Youtube.Web.DataAccess.Models;
+using BulbaCourses.Youtube.Web.Logic.Models;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
@@ -54,6 +55,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return _storyRepository.GetAll();
         }
 
+        public async Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync()
+        {
+            return await _storyRepository.GetAllAsync();
+        }
+
         /// <summary>
         /// Get all stories by User Id
         /// </summary>
@@ -62,6 +68,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         public IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId)
         {
             return _storyRepository.GetByUserId(userId);
+        }
+
+        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId)
+        {
+            return await _storyRepository.GetByUserIdAsync(userId);
         }
 
         /// <summary>
@@ -74,6 +85,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return _storyRepository.GetByRequestId(requestId);
         }
 
+        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId)
+        {
+            return await _storyRepository.GetByRequestIdAsync(requestId);            
+        }
+
         /// <summary>
         /// Get one record from story by Story Id
         /// </summary>
@@ -83,5 +99,15 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         {
             return _storyRepository.GetByStoryId(storyId);
         }
+
+        public async Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId)
+        {
+            return await _storyRepository.GetByStoryIdAsync(storyId);
+        }
+        //public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
+        //{
+        //    var result = await _storyRepository.GetByStoryIdAsync(storyId);
+        //    return result == null ? null : new SearchStory() { Id = result.Id, SearchDate = result.SearchDate, SearchRequestId = result.SearchRequest.Id, UserId = result.User.Id };
+        //}
     }
 }

@@ -34,12 +34,16 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         /// <summary>
         IEnumerable<SearchStoryDb> GetAll();
 
+        Task<IEnumerable<SearchStoryDb>> GetAllAsync();
+
         /// <summary>
         /// Get all stories by User Id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetByUserId(int? userId);
+
+        Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId);
 
         /// <summary>
         /// Get all stories by Request Id
@@ -48,11 +52,15 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetByRequestId(int? requestId);
 
+        Task<IEnumerable<SearchStoryDb>> GetByRequestIdAsync(int? requestId);
+
         /// <summary>
         /// Get one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
         /// <returns></returns>
         SearchStoryDb GetByStoryId(int? storyId);
+
+        Task<SearchStoryDb> GetByStoryIdAsync(int? storyId);
     }
 }

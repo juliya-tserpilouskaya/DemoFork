@@ -1,7 +1,9 @@
 ﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
@@ -42,9 +44,19 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return _context.SearchRequests.ToList().AsReadOnly();
         }
 
+        public async Task<IEnumerable<SearchRequestDb>> GetAllRequestsAsync()
+        {
+            return await _context.SearchRequests.ToListAsync();
+        }
+
         public SearchRequestDb GetRequestById(int? requestId)
         {
             return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
+        }
+
+        public async Task<SearchRequestDb> GetRequestByIdAsync(int? requestId)
+        {
+            return await _context.SearchRequests.SingleOrDefaultAsync(r => r.Id == requestId);
         }
 
         //interface method implementation
