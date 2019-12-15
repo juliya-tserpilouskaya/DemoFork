@@ -56,12 +56,12 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses in that category")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetByCategory(string domain)
+        public IHttpActionResult GetByCategory(int domain)
         {
-            if (string.IsNullOrEmpty(domain))
-            {
-                return BadRequest();
-            }
+            //if (string.IsNullOrEmpty(domain))
+            //{
+            //    return BadRequest();
+            //}
             try
             {
                 var result = _learningCourseService.GetByCategory(domain);
@@ -102,7 +102,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult GetItems(string id)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (string.IsNullOrEmpty(id))
             {
                 return BadRequest();
             }
@@ -161,26 +161,26 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
-        [HttpGet, Route("search/{query}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult Search(string query)
-        {
-            if (string.IsNullOrEmpty(query))
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = _learningCourseService.GetCourseByQuery(query);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        //[HttpGet, Route("search/{query}")]
+        //[SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
+        //[SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
+        //[SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
+        //[SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
+        //public IHttpActionResult Search(string query)
+        //{
+        //    if (string.IsNullOrEmpty(query))
+        //    {
+        //        return BadRequest();
+        //    }
+        //    try
+        //    {
+        //        var result = _learningCourseService.GetCourseByQuery(query);
+        //        return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        //    }
+        //    catch (InvalidOperationException ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
     }
 }

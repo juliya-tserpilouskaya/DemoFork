@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services
 {
-    class CourseDbService : ICourseDbService
+    public class CourseDbService : ICourseDbService
     {
         private GlobalSearchContext _context = new GlobalSearchContext();
 
@@ -25,7 +25,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
                 StringComparison.OrdinalIgnoreCase));
         }
 
-        public IEnumerable<CourseDB> GetByCategory(string category)
+        public IEnumerable<CourseDB> GetByCategory(int category)
         {
             throw new NotImplementedException();
         }

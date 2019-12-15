@@ -22,7 +22,7 @@ namespace BulbaCourses.GlobalSearch.Logic
             Bind<IAnonymousUserService>().To<AnonymousUserService>();
             Bind<IRegisteredUserService>().To<RegisteredUserService>();
             Bind<ISearchQueryDbService>().To<SearchQueryDbService>();
-
+            Bind<ICourseDbService>().To<CourseDbService>();
         }
     }
 }

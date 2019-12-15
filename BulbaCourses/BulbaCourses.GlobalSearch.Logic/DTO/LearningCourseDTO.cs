@@ -1,11 +1,14 @@
-﻿using System;
+﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Logic.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BulbaCourses.GlobalSearch.Logic.Models
+namespace BulbaCourses.GlobalSearch.Logic.DTO
 {
-    public class LearningCourse
+    public class LearningCourseDTO
     {
         public string Id { get; set; }
         public List<LearningCourseItem> Items { get; set; }

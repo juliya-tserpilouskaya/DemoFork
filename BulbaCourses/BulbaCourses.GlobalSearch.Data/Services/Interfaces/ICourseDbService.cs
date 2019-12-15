@@ -11,7 +11,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
     {
         IEnumerable<CourseDB> GetAllCourses();
         CourseDB GetById(string id);
-        IEnumerable<CourseDB> GetByCategory(string category);
+        IEnumerable<CourseDB> GetByCategory(int category);
         IEnumerable<CourseDB> GetByAuthorId(int id);
         IEnumerable<CourseItemDB> GetLearningItemsByCourseId(string id);
         IEnumerable<CourseDB> GetCourseByComplexity(string complexity);

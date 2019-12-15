@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\LearningCourseDTO.cs" />
+    <Compile Include="DTO\LearningCourseItemDTO.cs" />
     <Compile Include="DTO\SearchQueryDTO.cs" />
     <Compile Include="InterfaceServices\IAnonymousUserService.cs" />
     <Compile Include="InterfaceServices\IBookmarkService.cs" />

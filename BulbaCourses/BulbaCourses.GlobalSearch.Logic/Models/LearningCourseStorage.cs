@@ -30,7 +30,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Models
                     },
                 },
                 Name = "C# Basics",
-                Category = "Video",
+                Category = 0,
                 Cost = 20.0,
                 Complexity = "Easy",
                 Language = "En",
@@ -58,7 +58,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Models
                     },
                 },
                 Name = "C# Advanced",
-                Category = "Text",
+                Category = 3,
                 Cost = 20.0,
                 Complexity = "Medium",
                 Language = "En",
@@ -93,7 +93,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Models
                     },
                 },
                 Name = "Microservices",
-                Category = "Podcast",
+                Category = 4,
                 Cost = 20.0,
                 Complexity = "Medium",
                 Language = "En",
@@ -126,10 +126,10 @@ namespace BulbaCourses.GlobalSearch.Logic.Models
         /// </summary>
         /// <param name="category">Category</param>
         /// <returns>Readonly collection of courses</returns>
-        public static IEnumerable<LearningCourse> GetByCategory(string category)
-        {
-            return _courses.AsReadOnly().Where(course => course.Category.Contains(category));
-        }
+        //public static IEnumerable<LearningCourse> GetByCategory(string category)
+        //{
+        //    return _courses.AsReadOnly().Where(course => course.Category.Contains(category));
+        //}
 
         /// <summary>
         /// Get courses from the storage by author

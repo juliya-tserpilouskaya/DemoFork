@@ -1,4 +1,8 @@
-﻿using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+﻿using AutoMapper;
+using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Logic.DTO;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using System;
 using System.Collections.Generic;
@@ -10,44 +14,80 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     public class LearningCourseService : ILearningCourseService
     {
-        public IEnumerable<LearningCourse> GetAllCourses()
+        ICourseDbService _learningCourseDb;
+
+        public LearningCourseService(ICourseDbService learningCourseDb)
         {
-            return LearningCourseStorage.GetAllCourses();
+            _learningCourseDb = learningCourseDb;
+        }
+        public IEnumerable<LearningCourseDTO> GetAllCourses()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CourseDB, LearningCourseDTO>();
+            }).CreateMapper();
+            return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetAllCourses());
         }
 
-        public LearningCourse GetById(string id)
+        public LearningCourseDTO GetById(string id)
         {
-            return LearningCourseStorage.GetById(id);
+            var mapper = new MapperConfiguration(cfg => 
+                cfg.CreateMap<CourseItemDB, LearningCourseItem>()
+                    .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
+                    .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
+                    .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description))
+                ).CreateMapper();
+            var course = _learningCourseDb.GetById(id);
+            return new LearningCourseDTO {
+                Id = course.Id,
+                AuthorId = course.AuthorDBId,
+                Category = course.CourseCategoryDBId,
+                Complexity = course.Complexity,
+                Cost = course.Cost,
+                Description = course.Description,
+                Items = mapper.Map<IEnumerable<CourseItemDB>, List<LearningCourseItem>>(course.Items),
+                Language = course.Language,
+                Name = course.Name
+            };
         }
 
-        public IEnumerable<LearningCourse> GetByCategory(string category)
+        public IEnumerable<LearningCourseDTO> GetByCategory(int category)
         {
-            return LearningCourseStorage.GetByCategory(category);
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetByCategory(category));
         }
 
-        public IEnumerable<LearningCourse> GetByAuthorId(int id)
+        public IEnumerable<LearningCourseDTO> GetByAuthorId(int id)
         {
-            return LearningCourseStorage.GetByAuthorId(id);
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetByAuthorId(id));
         }
 
-        public IEnumerable<LearningCourseItem> GetLearningItemsByCourseId(string id)
+        public IEnumerable<LearningCourseItemDTO> GetLearningItemsByCourseId(string id)
         {
-            return LearningCourseStorage.GetLearningItemsByCourseId(id);
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>()
+                    .ForMember(x => x.Name, opt => opt.MapFrom(c => c.Name))
+                    .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
+                    .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description))
+                ).CreateMapper();
+            var course = _learningCourseDb.GetById(id);
+            return mapper.Map<IEnumerable<CourseItemDB>, List<LearningCourseItemDTO>>(course.Items);
         }
 
-        public IEnumerable<LearningCourse> GetCourseByComplexity(string complexity)
-        {
-            return LearningCourseStorage.GetCourseByComplexity(complexity);
+        public IEnumerable<LearningCourseDTO> GetCourseByComplexity(string complexity)
+        {    
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetCourseByComplexity(complexity));
         }
 
-        public IEnumerable<LearningCourse> GetCourseByLanguage(string lang)
+        public IEnumerable<LearningCourseDTO> GetCourseByLanguage(string lang)
         {
-            return LearningCourseStorage.GetCourseByLanguage(lang);
-        }
-
-        public IEnumerable<LearningCourse> GetCourseByQuery(string query)
-        {
-            return LearningCourseStorage.GetCourseByQuery(query);
+            var mapper = new MapperConfiguration(cfg =>
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetCourseByLanguage(lang));
         }
     }
 }
