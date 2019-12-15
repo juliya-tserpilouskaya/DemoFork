@@ -9,10 +9,13 @@ namespace BulbaCourses.Video.Data.Interfaces
 {
     public interface IUserRepository : IDisposable
     {
-        UserDb GetById(string id);
+        UserDb GetById(string userId);
         IEnumerable<UserDb> GetAll();
         void Add(UserDb user);
         void Update(UserDb user);
         void Remove(UserDb user);
+
+        Task<UserDb> GetByIdAsync(string userId);
+        Task<IEnumerable<UserDb>> GetAllAsync();
     }
 }

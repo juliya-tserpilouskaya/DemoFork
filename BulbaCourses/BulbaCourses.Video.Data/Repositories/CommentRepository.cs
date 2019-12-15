@@ -31,11 +31,23 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<CommentDb>> GetAllAsync()
+        {
+            var commentList = await _videoDbContext.Comments.ToListAsync().ConfigureAwait(false);
+            return commentList;
+        }
+
         public CommentDb GetById(string commentId)
         {
             var comment = _videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
             return comment;
 
+        }
+
+        public async Task<CommentDb> GetByIdAsync(string commentId)
+        {
+            var comment = await _videoDbContext.Comments.SingleOrDefaultAsync(b => b.CommentId.Equals(commentId)).ConfigureAwait(false);
+            return comment;
         }
 
         public void Remove(CommentDb comment)

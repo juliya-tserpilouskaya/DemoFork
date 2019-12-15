@@ -31,11 +31,23 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<RoleDb>> GetAllAsync()
+        {
+            var roleList = await _videoDbContext.Roles.ToListAsync().ConfigureAwait(false);
+            return roleList;
+        }
+
         public RoleDb GetById(string rolelId)
         {
             var role = _videoDbContext.Roles.FirstOrDefault(b => b.RoleId.Equals(rolelId));
             return role;
 
+        }
+
+        public async Task<RoleDb> GetByIdAsync(string rolelId)
+        {
+            var role = await _videoDbContext.Roles.SingleOrDefaultAsync(b => b.RoleId.Equals(rolelId)).ConfigureAwait(false);
+            return role;
         }
 
         public void Remove(RoleDb role)

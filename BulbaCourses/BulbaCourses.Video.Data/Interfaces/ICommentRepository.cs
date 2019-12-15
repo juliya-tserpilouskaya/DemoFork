@@ -14,5 +14,8 @@ namespace BulbaCourses.Video.Data.Interfaces
         void Add(CommentDb comment);
         void Update(CommentDb comment);
         void Remove(CommentDb comment);
+
+        Task<CommentDb> GetByIdAsync(string commentId);
+        Task<IEnumerable<CommentDb>> GetAllAsync();
     }
 }

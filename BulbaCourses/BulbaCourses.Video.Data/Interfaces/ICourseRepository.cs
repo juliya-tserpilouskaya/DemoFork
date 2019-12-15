@@ -14,5 +14,8 @@ namespace BulbaCourses.Video.Data.Interfaces
         void Add(CourseDb course);
         void Update(CourseDb course);
         void Remove(CourseDb course);
+
+        Task<CourseDb> GetByIdAsync(string courseId);
+        Task<IEnumerable<CourseDb>> GetAllAsync();
     }
 }

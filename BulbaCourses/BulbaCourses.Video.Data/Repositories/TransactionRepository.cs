@@ -31,11 +31,23 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<TransactionDb>> GetAllAsync()
+        {
+            var transactionList = await _videoDbContext.Transactions.ToListAsync().ConfigureAwait(false);
+            return transactionList;
+        }
+
         public TransactionDb GetById(string transactionlId)
         {
             var transaction = _videoDbContext.Transactions.FirstOrDefault(b => b.TransactionId.Equals(transactionlId));
             return transaction;
 
+        }
+
+        public async Task<TransactionDb> GetByIdAsync(string transactionlId)
+        {
+            var transaction = await _videoDbContext.Transactions.SingleOrDefaultAsync(b => b.TransactionId.Equals(transactionlId)).ConfigureAwait(false);
+            return transaction;
         }
 
         public void Remove(TransactionDb transaction)

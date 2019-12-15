@@ -31,11 +31,23 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<TagDb>> GetAllAsync()
+        {
+            var tagList = await _videoDbContext.Tags.ToListAsync().ConfigureAwait(false);
+            return tagList;
+        }
+
         public TagDb GetById(string tagId)
         {
             var tag = _videoDbContext.Tags.FirstOrDefault(b => b.TagId.Equals(tagId));
             return tag;
 
+        }
+
+        public async Task<TagDb> GetByIdAsync(string tagId)
+        {
+            var tag = await _videoDbContext.Tags.SingleOrDefaultAsync(b => b.TagId.Equals(tagId)).ConfigureAwait(false);
+            return tag;
         }
 
         public void Remove(TagDb tag)

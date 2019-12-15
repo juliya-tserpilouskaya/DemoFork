@@ -30,11 +30,22 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<VideoMaterialDb>> GetAllAsync()
+        {
+            return await _videoDbContext.VideoMaterials.ToListAsync().ConfigureAwait(false);
+        }
+
         public VideoMaterialDb GetById(string videoId)
         {
             var video = _videoDbContext.VideoMaterials.FirstOrDefault(b => b.VideoId.Equals(videoId));
             return video;
 
+        }
+
+        public async Task<VideoMaterialDb> GetByIdAsync(string videoId)
+        {
+            var video = await _videoDbContext.VideoMaterials.SingleOrDefaultAsync(b => b.VideoId.Equals(videoId)).ConfigureAwait(false);
+            return video;
         }
 
         public void Remove(VideoMaterialDb video)

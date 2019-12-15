@@ -29,9 +29,21 @@ namespace BulbaCourses.Video.Data.Repositories
             return userList;
         }
 
+        public async Task<IEnumerable<UserDb>> GetAllAsync()
+        {
+            var userList = await _videoDbContext.Users.ToListAsync().ConfigureAwait(false);
+            return userList;
+        }
+
         public UserDb GetById(string id)
         {
             var user = _videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
+            return user;
+        }
+
+        public async Task<UserDb> GetByIdAsync(string userId)
+        {
+            var user = await _videoDbContext.Users.SingleOrDefaultAsync(b => b.UserId.Equals(userId)).ConfigureAwait(false);
             return user;
         }
 
