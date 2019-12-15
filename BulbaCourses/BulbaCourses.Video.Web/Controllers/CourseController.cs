@@ -40,7 +40,6 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                //var course = mapper.Map<CourseInfo, CourseView>(courseService.GetCourseByIdAsync(id));
                 var result = await courseService.GetCourseByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
@@ -68,7 +67,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
        
-        public IHttpActionResult Post([FromBody]CourseViewInput courseInput)
+        public async Task<IHttpActionResult> Post([FromBody]CourseViewInput courseInput)
         {
             if (courseInput == null || !Enum.IsDefined(typeof(CourseLevel), courseInput.Level))
             {
@@ -79,14 +78,15 @@ namespace BulbaCourses.Video.Web.Controllers
                 CourseId = Guid.NewGuid().ToString(),
                 Name = courseInput.Name,
                 Description = courseInput.Description,
-                Level = courseInput.Level
+                Level = courseInput.Level,
+                Price = courseInput.Price
             };
 
             try
             {
                 var courseInfo = mapper.Map<CourseView, CourseInfo>(course);
-                courseService.AddCourse(courseInfo);
-                return Ok(course);
+                await courseService.AddCourseAsync(courseInfo);
+                return Ok(courseInfo);
             }
 
             catch (Exception ex)

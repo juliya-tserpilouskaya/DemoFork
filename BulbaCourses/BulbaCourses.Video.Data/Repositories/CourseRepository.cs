@@ -24,6 +24,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(CourseDb course)
+        {
+            _videoDbContext.Courses.Add(course);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<CourseDb> GetAll()
         {
             var courseList = _videoDbContext.Courses.ToList().AsReadOnly();

@@ -27,6 +27,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void AddVideoToCourse(string courseId, VideoMaterialInfo video);
         void AddDiscription(string courseId, string description);
         IEnumerable<CommentInfo> GetCourseComments(string courseId);
-
+        Task<int> AddCourseAsync(CourseInfo courseInfo);
     }
 }

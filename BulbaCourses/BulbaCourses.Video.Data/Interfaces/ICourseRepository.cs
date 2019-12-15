@@ -17,5 +17,6 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<CourseDb> GetByIdAsync(string courseId);
         Task<IEnumerable<CourseDb>> GetAllAsync();
+        Task<int> AddAsync(CourseDb courseDb);
     }
 }
