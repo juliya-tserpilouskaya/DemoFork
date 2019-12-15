@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Data", "BulbaCourses.GlobalSearch.Data\BulbaCourses.GlobalSearch.Data.csproj", "{14E229BA-727C-43A1-8CAD-00158F4CEB05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Tests", "..\BulbaCourses.GlobalSearch.Tests\BulbaCourses.GlobalSearch.Tests.csproj", "{8B04F518-72E2-436D-B82E-5A4B68D3CB65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +202,10 @@ Global
 		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14E229BA-727C-43A1-8CAD-00158F4CEB05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B04F518-72E2-436D-B82E-5A4B68D3CB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B04F518-72E2-436D-B82E-5A4B68D3CB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B04F518-72E2-436D-B82E-5A4B68D3CB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B04F518-72E2-436D-B82E-5A4B68D3CB65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -233,6 +239,7 @@ Global
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{8508CAEE-D963-48BA-9B66-096F6E604804} = {C611C702-E943-405F-8102-D0CA32E52F44}
 		{14E229BA-727C-43A1-8CAD-00158F4CEB05} = {C611C702-E943-405F-8102-D0CA32E52F44}
+		{8B04F518-72E2-436D-B82E-5A4B68D3CB65} = {C611C702-E943-405F-8102-D0CA32E52F44}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
