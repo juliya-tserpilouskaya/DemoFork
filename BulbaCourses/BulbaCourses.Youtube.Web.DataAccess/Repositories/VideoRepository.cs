@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
@@ -20,10 +21,21 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         {
             return _db.Videos.Find(id);
         }
+
+        public async Task<ResultVideoDb> GetByIdAsync(string id)
+        {
+            return await _db.Videos.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
         //GetAll
         public IEnumerable<ResultVideoDb> GetAll()
         {
             return _db.Videos.ToList().AsReadOnly();
+        }
+
+        public async Task<IEnumerable<ResultVideoDb>> GetAllAsync()
+        {
+            return await _db.Videos.ToListAsync();
         }
 
         //Create
