@@ -12,7 +12,9 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
     public interface ISearchQueryService
     {
         IEnumerable<SearchQueryDTO> GetAll();
+        Task<IEnumerable<SearchQueryDTO>> GetAllAsync();
         SearchQueryDTO GetById(string id);
+        Task<SearchQueryDTO> GetByIdAsync(string id);
         SearchQueryDTO Add(SearchQueryDTO query);
         void RemoveById(string id);
         void RemoveAll();

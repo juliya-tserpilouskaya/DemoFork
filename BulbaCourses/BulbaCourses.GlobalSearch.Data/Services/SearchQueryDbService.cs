@@ -2,6 +2,7 @@
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,21 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             return _context.SearchQueries;
         }
 
+        public async Task<IEnumerable<SearchQueryDB>> GetAllAsync()
+        {
+            return await _context.SearchQueries.ToListAsync().ConfigureAwait(false);
+        }
+
         public SearchQueryDB GetById(string id)
         {
             return _context.SearchQueries.SingleOrDefault(q => q.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase));
+        }
+
+        public async Task<SearchQueryDB> GetByIdAsync(string id)
+        {
+            return await _context.SearchQueries.SingleOrDefaultAsync(q => q.Id.Equals(id,
+                StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
         }
 
         public SearchQueryDB Add(SearchQueryDB query)
@@ -40,7 +52,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public void RemoveAll()
         {
-            throw new NotImplementedException();
+            _context.SearchQueries.RemoveRange(_context.SearchQueries);
         }
 
         public void Dispose()

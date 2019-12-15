@@ -10,7 +10,9 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
     public interface ISearchQueryDbService
     {
         IEnumerable<SearchQueryDB> GetAll();
+        Task<IEnumerable<SearchQueryDB>> GetAllAsync();
         SearchQueryDB GetById(string id);
+        Task<SearchQueryDB> GetByIdAsync(string id);
         SearchQueryDB Add(SearchQueryDB query);
         void RemoveById(string id);
         void RemoveAll();

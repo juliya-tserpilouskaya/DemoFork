@@ -28,10 +28,24 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_searchQueryDb.GetAll());
         }
 
+        public async Task<IEnumerable<SearchQueryDTO>> GetAllAsync()
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
+            }).CreateMapper();
+            var data = await _searchQueryDb.GetAllAsync();
+            return mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(data);
+        }
+
         public SearchQueryDTO GetById(string id)
         {
-
             var query = _searchQueryDb.GetById(id);
+            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created };
+        }
+
+        public async Task<SearchQueryDTO> GetByIdAsync(string id)
+        {
+            var query = await _searchQueryDb.GetByIdAsync(id);
             return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created };
         }
 

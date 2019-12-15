@@ -10,6 +10,7 @@ using BulbaCourses.GlobalSearch.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.DTO;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -25,9 +26,9 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no queries stored")]
         [SwaggerResponse(HttpStatusCode.OK, "Queries are found", typeof(IEnumerable<SearchQuery>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _searchQueryService.GetAll();
+            var result = await _searchQueryService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -36,7 +37,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "The query doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is found", typeof(SearchQuery))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -44,7 +45,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _searchQueryService.GetById(id);
+                var result = await _searchQueryService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -76,7 +77,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
         public IHttpActionResult DeleteById(string id)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || SearchQueryStorage.GetById(id) == null)
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || _searchQueryService.GetById(id) == null)
             {
                 return BadRequest();
             }
