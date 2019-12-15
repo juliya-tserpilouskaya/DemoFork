@@ -2,6 +2,7 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
 {
     using BulbaCourses.GlobalSearch.Data.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -99,28 +100,49 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 }
             );
             #endregion
+
+            var course = new CourseDB()
+            {
+                AuthorDBId = 1,
+                CourseCategoryDBId = 1,
+                Id = Guid.NewGuid().ToString(),
+                Name = "C++ video course",
+                Description = "Full c++ video course in 2k",
+            };
+
+            var courseItem = new CourseItemDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Video 122",
+                Description = "Vide2o 2 one description",
+                Url = "https://sdf.com",
+                CourseDBId = course.Id
+            };
+
+            var courseItem2 = new CourseItemDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Video 122",
+                Description = "Vide2o 2 one description",
+                Url = "https://sdf.com",
+                CourseDBId = course.Id
+            };
+
+            //List<CourseItemDB> CourseItems = new List<CourseItemDB>()
+            //        {
+            //            courseItem,
+            //            courseItem2
+            //        };
+
             #region CoursesSeed
-            context.Courses.AddOrUpdate(x => x.Id,
-                new CourseDB()
-                {
-                    AuthorDBId = 1,
-                    CourseCategoryDBId = 1,
-                    Id = "1",
-                    Name = "C video course",
-                    Description = "Full c video course in 4k"
-                });
+            context.Courses.Add(course);
+
             #endregion
             #region CourseItems
-            context.CourseItems.AddOrUpdate(x => x.Id,
-                new CourseItemDB()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CourseDBId = "1",
-                    Name = "Video 1",
-                    Description = "Video number one description",
-                    Url = "https://sdf.com"
-                });
+            context.CourseItems.Add(courseItem);
+            context.CourseItems.Add(courseItem2);
             #endregion
+            //context.SaveChanges();
         }
     }
 }

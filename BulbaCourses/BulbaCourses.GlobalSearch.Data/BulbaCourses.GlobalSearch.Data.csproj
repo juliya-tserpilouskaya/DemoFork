@@ -132,6 +132,10 @@
     <Compile Include="Migrations\201912141627174_addauthordbid2a.Designer.cs">
       <DependentUpon>201912141627174_addauthordbid2a.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912150805190_courseitemfix.cs" />
+    <Compile Include="Migrations\201912150805190_courseitemfix.Designer.cs">
+      <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
@@ -178,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912141627174_addauthordbid2a.resx">
       <DependentUpon>201912141627174_addauthordbid2a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150805190_courseitemfix.resx">
+      <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -72,8 +72,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
                     .ForMember(x => x.Id, opt => opt.MapFrom(c => c.Id))
                     .ForMember(x => x.Description, opt => opt.MapFrom(c => c.Description))
                 ).CreateMapper();
-            var course = _learningCourseDb.GetById(id);
-            return mapper.Map<IEnumerable<CourseItemDB>, List<LearningCourseItemDTO>>(course.Items);
+            return mapper.Map<IEnumerable<CourseItemDB>, List<LearningCourseItemDTO>>(_learningCourseDb.GetLearningItemsByCourseId(id));
         }
 
         public IEnumerable<LearningCourseDTO> GetCourseByComplexity(string complexity)

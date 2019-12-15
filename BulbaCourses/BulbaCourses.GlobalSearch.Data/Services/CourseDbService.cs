@@ -37,8 +37,8 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public IEnumerable<CourseItemDB> GetLearningItemsByCourseId(string id)
         {
-            return _context.Courses.SingleOrDefault(c => c.Id.Equals(id,
-                StringComparison.OrdinalIgnoreCase)).Items;
+            return _context.CourseItems.Where(c => c.CourseDBId.Equals(id,
+                StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<CourseDB> GetCourseByComplexity(string complexity)
