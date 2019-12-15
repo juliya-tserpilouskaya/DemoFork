@@ -24,6 +24,5 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             return CourseBookmarksStorage.GetAll();
         }
-
     }
 }

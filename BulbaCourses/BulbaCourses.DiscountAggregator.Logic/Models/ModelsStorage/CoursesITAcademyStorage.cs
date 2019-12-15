@@ -18,7 +18,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
         }
         public static IEnumerable<CoursesITAcademy> GetAll()
         {
-
             return _course.AsReadOnly();
         }
 

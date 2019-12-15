@@ -43,5 +43,4 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
     }
-
 }

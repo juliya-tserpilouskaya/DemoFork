@@ -8,6 +8,5 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     interface ICourseCategoryServices
     {
-
     }
 }

@@ -40,6 +40,5 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
             _course.Add(course);    // id записи вы формируем на стороне сервера, а не на стороне клиента
             return course;
         }
-
     }
 }

@@ -19,14 +19,11 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)  //нужно использовать базовый метод, очень полезно и другой вопрос когда его вызывать
         {
             base.OnModelCreating(modelBuilder);
-
             var entity = modelBuilder.Entity<CourseDb>();
-
             //using Fluent API
             entity.HasKey(x => x.Id);
             entity.Property(x => x.Title).IsRequired().HasMaxLength(255).IsUnicode();
             entity.Property(x => x.Price).IsRequired();
-
         }
     }
 }
