@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface ICommentRepository
+    public interface ICommentRepository : IDisposable
     {
         CommentDb GetById(string commentId);
         IEnumerable<CommentDb> GetAll();

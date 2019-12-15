@@ -10,40 +10,38 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class CourseRepository : ICourseRepository
+    public class CourseRepository : BaseRepository, ICourseRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public CourseRepository(VideoDbContext videoDbContext)
+        public CourseRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(CourseDb course)
         {
-            videoDbContext.Courses.Add(course);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Courses.Add(course);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<CourseDb> GetAll()
         {
-            var courseList = videoDbContext.Courses.ToList().AsReadOnly();
+            var courseList = _videoDbContext.Courses.ToList().AsReadOnly();
             return courseList;
 
         }
 
         public CourseDb GetById(string courseId)
         {
-            var course = videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
+            var course = _videoDbContext.Courses.FirstOrDefault(b => b.CourseId.Equals(courseId));
             return course;
 
         }
 
         public void Remove(CourseDb course)
         {
-            videoDbContext.Courses.Remove(course);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Courses.Remove(course);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +51,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("course");
             }
-            videoDbContext.Entry(course).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(course).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

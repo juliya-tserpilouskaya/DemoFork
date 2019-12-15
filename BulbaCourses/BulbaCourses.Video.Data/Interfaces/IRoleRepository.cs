@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface IRoleRepository
+    public interface IRoleRepository : IDisposable
     {
         RoleDb GetById(string rolelId);
         IEnumerable<RoleDb> GetAll();

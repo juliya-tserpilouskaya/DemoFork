@@ -10,40 +10,38 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class TegRepository : ITegRepository
+    public class TegRepository : BaseRepository, ITegRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public TegRepository(VideoDbContext videoDbContext)
+        public TegRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(TagDb tag)
         {
-            videoDbContext.Tags.Add(tag);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Tags.Add(tag);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<TagDb> GetAll()
         {
-            var tagList = videoDbContext.Tags.ToList().AsReadOnly();
+            var tagList = _videoDbContext.Tags.ToList().AsReadOnly();
             return tagList;
 
         }
 
         public TagDb GetById(string tagId)
         {
-            var tag = videoDbContext.Tags.FirstOrDefault(b => b.TagId.Equals(tagId));
+            var tag = _videoDbContext.Tags.FirstOrDefault(b => b.TagId.Equals(tagId));
             return tag;
 
         }
 
         public void Remove(TagDb tag)
         {
-            videoDbContext.Tags.Remove(tag);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Tags.Remove(tag);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +51,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("tag");
             }
-            videoDbContext.Entry(tag).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(tag).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

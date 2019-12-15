@@ -10,40 +10,37 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class VideoRepository : IVideoRepository
+    public class VideoRepository : BaseRepository, IVideoRepository
     {
-        private readonly VideoDbContext videoDbContext;
-
-        public VideoRepository(VideoDbContext videoDbContext)
+        public VideoRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(VideoMaterialDb video)
         {
-            videoDbContext.VideoMaterials.Add(video);
-            videoDbContext.SaveChanges();
+            _videoDbContext.VideoMaterials.Add(video);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<VideoMaterialDb> GetAll()
         {
-            var videoList = videoDbContext.VideoMaterials.ToList().AsReadOnly();
+            var videoList = _videoDbContext.VideoMaterials.ToList().AsReadOnly();
             return videoList;
 
         }
 
         public VideoMaterialDb GetById(string videoId)
         {
-            var video = videoDbContext.VideoMaterials.FirstOrDefault(b => b.VideoId.Equals(videoId));
+            var video = _videoDbContext.VideoMaterials.FirstOrDefault(b => b.VideoId.Equals(videoId));
             return video;
 
         }
 
         public void Remove(VideoMaterialDb video)
         {
-            videoDbContext.VideoMaterials.Remove(video);
-            videoDbContext.SaveChanges();
+            _videoDbContext.VideoMaterials.Remove(video);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +50,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("video");
             }
-            videoDbContext.Entry(video).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(video).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

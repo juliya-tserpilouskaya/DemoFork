@@ -10,40 +10,38 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class RoleRepository : IRoleRepository
+    public class RoleRepository : BaseRepository, IRoleRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public RoleRepository(VideoDbContext videoDbContext)
+        public RoleRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(RoleDb role)
         {
-            videoDbContext.Roles.Add(role);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Roles.Add(role);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<RoleDb> GetAll()
         {
-            var roleList = videoDbContext.Roles.ToList().AsReadOnly();
+            var roleList = _videoDbContext.Roles.ToList().AsReadOnly();
             return roleList;
 
         }
 
         public RoleDb GetById(string rolelId)
         {
-            var role = videoDbContext.Roles.FirstOrDefault(b => b.RoleId.Equals(rolelId));
+            var role = _videoDbContext.Roles.FirstOrDefault(b => b.RoleId.Equals(rolelId));
             return role;
 
         }
 
         public void Remove(RoleDb role)
         {
-            videoDbContext.Roles.Remove(role);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Roles.Remove(role);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +51,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("role");
             }
-            videoDbContext.Entry(role).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(role).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

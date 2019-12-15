@@ -10,37 +10,35 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository, IUserRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public UserRepository(VideoDbContext videoDbContext)
+        public UserRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(UserDb user)
         {
-            videoDbContext.Users.Add(user);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Users.Add(user);
+            _videoDbContext.SaveChanges();
         }
 
         public IEnumerable<UserDb> GetAll()
         {
-            var userList = videoDbContext.Users.ToList().AsReadOnly();
+            var userList = _videoDbContext.Users.ToList().AsReadOnly();
             return userList;
         }
 
         public UserDb GetById(string id)
         {
-            var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
+            var user = _videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
             return user;
         }
 
         public void Remove(UserDb user)
         {
-            videoDbContext.Users.Remove(user);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Users.Remove(user);
+            _videoDbContext.SaveChanges();
         }
 
         public void Update(UserDb user)
@@ -49,8 +47,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("user");
             }
-            videoDbContext.Entry(user).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(user).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
         }
     }
 }

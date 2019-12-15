@@ -10,40 +10,38 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class TransactionRepository : ITransactionRepository
+    public class TransactionRepository : BaseRepository, ITransactionRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public TransactionRepository(VideoDbContext videoDbContext)
+        public TransactionRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(TransactionDb transaction)
         {
-            videoDbContext.Transactions.Add(transaction);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Transactions.Add(transaction);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<TransactionDb> GetAll()
         {
-            var transactionList = videoDbContext.Transactions.ToList().AsReadOnly();
+            var transactionList = _videoDbContext.Transactions.ToList().AsReadOnly();
             return transactionList;
 
         }
 
         public TransactionDb GetById(string transactionlId)
         {
-            var transaction = videoDbContext.Transactions.FirstOrDefault(b => b.TransactionId.Equals(transactionlId));
+            var transaction = _videoDbContext.Transactions.FirstOrDefault(b => b.TransactionId.Equals(transactionlId));
             return transaction;
 
         }
 
         public void Remove(TransactionDb transaction)
         {
-            videoDbContext.Transactions.Remove(transaction);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Transactions.Remove(transaction);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +51,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("transaction");
             }
-            videoDbContext.Entry(transaction).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(transaction).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

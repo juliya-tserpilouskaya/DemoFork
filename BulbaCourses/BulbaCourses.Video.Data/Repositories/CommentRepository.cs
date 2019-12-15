@@ -10,40 +10,38 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : BaseRepository, ICommentRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public CommentRepository(VideoDbContext videoDbContext)
+        public CommentRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(CommentDb comment)
         {
-            videoDbContext.Comments.Add(comment);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Comments.Add(comment);
+            _videoDbContext.SaveChanges();
 
         }
 
         public IEnumerable<CommentDb> GetAll()
         {
-            var commentList = videoDbContext.Comments.ToList().AsReadOnly();
+            var commentList = _videoDbContext.Comments.ToList().AsReadOnly();
             return commentList;
 
         }
 
         public CommentDb GetById(string commentId)
         {
-            var comment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
+            var comment = _videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
             return comment;
 
         }
 
         public void Remove(CommentDb comment)
         {
-            videoDbContext.Comments.Remove(comment);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Comments.Remove(comment);
+            _videoDbContext.SaveChanges();
 
         }
 
@@ -53,8 +51,8 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("comment");
             }
-            videoDbContext.Entry(comment).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(comment).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
         }
     }

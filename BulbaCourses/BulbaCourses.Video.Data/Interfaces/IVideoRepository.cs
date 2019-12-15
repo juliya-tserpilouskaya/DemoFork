@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface IVideoRepository
+    public interface IVideoRepository : IDisposable
     {
         VideoMaterialDb GetById(string videoId);
         IEnumerable<VideoMaterialDb> GetAll();

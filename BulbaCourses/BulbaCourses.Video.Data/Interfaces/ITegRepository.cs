@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface ITegRepository
+    public interface ITegRepository : IDisposable
     {
         TagDb GetById(string tagId);
         IEnumerable<TagDb> GetAll();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface ITransactionRepository
+    public interface ITransactionRepository : IDisposable
     {
         TransactionDb GetById(string transactionlId);
         IEnumerable<TransactionDb> GetAll();
