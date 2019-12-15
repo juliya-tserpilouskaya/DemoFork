@@ -136,6 +136,26 @@
     <Compile Include="Migrations\201912150805190_courseitemfix.Designer.cs">
       <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912150941232_dbgeneratedoptionforcourse.cs" />
+    <Compile Include="Migrations\201912150941232_dbgeneratedoptionforcourse.Designer.cs">
+      <DependentUpon>201912150941232_dbgeneratedoptionforcourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912150953462_deletecategoryidentity.cs" />
+    <Compile Include="Migrations\201912150953462_deletecategoryidentity.Designer.cs">
+      <DependentUpon>201912150953462_deletecategoryidentity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912150954422_deletecategoryidentity2.cs" />
+    <Compile Include="Migrations\201912150954422_deletecategoryidentity2.Designer.cs">
+      <DependentUpon>201912150954422_deletecategoryidentity2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912151000361_optionNone.cs" />
+    <Compile Include="Migrations\201912151000361_optionNone.Designer.cs">
+      <DependentUpon>201912151000361_optionNone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912151001511_optionNone2.cs" />
+    <Compile Include="Migrations\201912151001511_optionNone2.Designer.cs">
+      <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
@@ -185,6 +205,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912150805190_courseitemfix.resx">
       <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150941232_dbgeneratedoptionforcourse.resx">
+      <DependentUpon>201912150941232_dbgeneratedoptionforcourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150953462_deletecategoryidentity.resx">
+      <DependentUpon>201912150953462_deletecategoryidentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912150954422_deletecategoryidentity2.resx">
+      <DependentUpon>201912150954422_deletecategoryidentity2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151000361_optionNone.resx">
+      <DependentUpon>201912151000361_optionNone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151001511_optionNone2.resx">
+      <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

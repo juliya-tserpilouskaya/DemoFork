@@ -128,12 +128,6 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 CourseDBId = course.Id
             };
 
-            //List<CourseItemDB> CourseItems = new List<CourseItemDB>()
-            //        {
-            //            courseItem,
-            //            courseItem2
-            //        };
-
             #region CoursesSeed
             context.Courses.Add(course);
 

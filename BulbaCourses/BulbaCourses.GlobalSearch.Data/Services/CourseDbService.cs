@@ -27,7 +27,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public IEnumerable<CourseDB> GetByCategory(int category)
         {
-            throw new NotImplementedException();
+            return _context.Courses.Where(x => x.CourseCategoryDBId == category);
         }
 
         public IEnumerable<CourseDB> GetByAuthorId(int id)
