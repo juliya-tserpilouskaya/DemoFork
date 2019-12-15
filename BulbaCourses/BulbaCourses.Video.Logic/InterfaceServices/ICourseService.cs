@@ -9,9 +9,11 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
 {
     public interface ICourseService
     {
-        CourseInfo GetCourseById(string courseId);
+        Task<CourseInfo> GetCourseByIdAsync(string courseId);
         CourseInfo GetCourseByName(string courseName);
         IEnumerable<CourseInfo> GetAll();
+        Task<IEnumerable<CourseInfo>> GetAllAsync();
+
         void AddCourse(CourseInfo course);
         void Delete(CourseInfo course);
         void DeleteById(string courseId);

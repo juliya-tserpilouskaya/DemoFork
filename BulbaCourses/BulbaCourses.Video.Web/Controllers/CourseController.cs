@@ -3,7 +3,6 @@ using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Models;
-//using BulbaCourses.Video.Web.SwaggerModels;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
@@ -32,7 +32,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Get(string id)
+        public async Task<IHttpActionResult> Get(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -40,8 +40,8 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var course = mapper.Map<CourseInfo, CourseView>(courseService.GetCourseById(id));
-                var result = courseService.GetCourseById(course.CourseId);
+                //var course = mapper.Map<CourseInfo, CourseView>(courseService.GetCourseByIdAsync(id));
+                var result = await courseService.GetCourseByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -53,9 +53,9 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var courses = courseService.GetAll();
+            var courses = await courseService.GetAllAsync();
             var result = mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
