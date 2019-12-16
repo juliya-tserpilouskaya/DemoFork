@@ -19,5 +19,11 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         bool IsLoginExist(string login);
         bool IsEmailExist(string email);
         bool ChangeLogin(string userName, string email);
+
+        Task<UserInfo> GetUserByIdAsync(string userId);
+        Task<IEnumerable<UserInfo>> GetAllAsync();
+        Task<int> UpdateAsync(UserInfo user);
+        Task<int> AddAsync(UserInfo user);
+        Task<int> DeleteByIdAsync(string id);
     }
 }

@@ -13,63 +13,63 @@ namespace BulbaCourses.Video.Logic.Services
 {
     public class UserService : IUserService
     {
-        private readonly IMapper mapper;
-        private readonly IUserRepository userRepository;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IMapper mapper, IUserRepository userRepository)
         {
-            this.mapper = mapper;
-            this.userRepository = userRepository;
+            _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public void Add(UserInfo user)
         {
-            var userDb = mapper.Map<UserInfo, UserDb>(user);
-            userRepository.Add(userDb);
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            _userRepository.Add(userDb);
         }
 
         public void Delete(UserInfo user)
         {
-            var userDb = mapper.Map<UserInfo, UserDb>(user);
-            userRepository.Remove(userDb);
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            _userRepository.Remove(userDb);
         }
 
         public void DeleteById(string userId)
         {
-            var user = userRepository.GetById(userId);
-            userRepository.Remove(user);
+            var user = _userRepository.GetById(userId);
+            _userRepository.Remove(user);
         }
 
         public IEnumerable<UserInfo> GetAll()
         {
-            var users = userRepository.GetAll();
-            var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserInfo>>(users);
+            var users = _userRepository.GetAll();
+            var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserInfo>>(users);
             return result;
         }
 
         public UserInfo GetByLogin(string userName)
         {
-            var user = userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(userName));
-            var result = mapper.Map<UserDb, UserInfo>(user);
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(userName));
+            var result = _mapper.Map<UserDb, UserInfo>(user);
             return result;
         }
 
         public UserInfo GetUserById(string id)
         {
-            var user = userRepository.GetById(id);
-            var result = mapper.Map<UserDb, UserInfo>(user);
+            var user = _userRepository.GetById(id);
+            var result = _mapper.Map<UserDb, UserInfo>(user);
             return result;
         }
 
         public void Update(UserInfo user)
         {
-            var userDb = mapper.Map<UserInfo, UserDb>(user);
-            userRepository.Update(userDb);
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            _userRepository.Update(userDb);
         }
 
         public bool IsLoginExist(string login)
         {
-            var user = userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(login));
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(login));
             if (user != null)
                 return true;
             else return false;
@@ -77,7 +77,7 @@ namespace BulbaCourses.Video.Logic.Services
 
         public bool IsEmailExist(string email)
         {
-            var user = userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
             if (user != null)
                 return true;
             else return false;
@@ -85,12 +85,40 @@ namespace BulbaCourses.Video.Logic.Services
 
         public bool ChangeLogin(string userName, string email)
         {
-            var user = userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
             user.Login = userName;
-            userRepository.Update(user);
+            _userRepository.Update(user);
             if (user != null)
                 return true;
             else return false;
+        }
+
+        public async Task<UserInfo> GetUserByIdAsync(string userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            var userInfo = _mapper.Map<UserDb, UserInfo>(user);
+            return userInfo;
+        }
+        public async Task<IEnumerable<UserInfo>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserInfo>>(users);
+            return result;
+        }
+        public Task<int> UpdateAsync(UserInfo user)
+        {
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            return _userRepository.UpdateAsync(userDb); ;
+        }
+        public Task<int> AddAsync(UserInfo user)
+        {
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            return _userRepository.AddAsync(userDb);
+        }
+        public Task<int> DeleteByIdAsync(string id)
+        {
+            var user = _userRepository.GetById(id);
+            return _userRepository.RemoveAsync(user);
         }
     }
 }
