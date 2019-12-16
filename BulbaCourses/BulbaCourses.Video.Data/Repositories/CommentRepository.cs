@@ -24,6 +24,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(CommentDb comment)
+        {
+            _videoDbContext.Comments.Add(comment);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<CommentDb> GetAll()
         {
             var commentList = _videoDbContext.Comments.ToList().AsReadOnly();
@@ -34,7 +41,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<IEnumerable<CommentDb>> GetAllAsync()
         {
             var commentList = await _videoDbContext.Comments.ToListAsync().ConfigureAwait(false);
-            return commentList;
+            return commentList.AsReadOnly();
         }
 
         public CommentDb GetById(string commentId)
@@ -57,6 +64,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> RemoveAsync(CommentDb comment)
+        {
+            _videoDbContext.Comments.Remove(comment);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(CommentDb comment)
         {
             if (comment == null)
@@ -66,6 +79,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(comment).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(CommentDb comment)
+        {
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
+            _videoDbContext.Entry(comment).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

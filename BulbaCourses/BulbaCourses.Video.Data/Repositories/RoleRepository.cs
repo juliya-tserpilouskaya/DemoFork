@@ -24,6 +24,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(RoleDb role)
+        {
+            _videoDbContext.Roles.Add(role);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<RoleDb> GetAll()
         {
             var roleList = _videoDbContext.Roles.ToList().AsReadOnly();
@@ -34,7 +41,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<IEnumerable<RoleDb>> GetAllAsync()
         {
             var roleList = await _videoDbContext.Roles.ToListAsync().ConfigureAwait(false);
-            return roleList;
+            return roleList.AsReadOnly();
         }
 
         public RoleDb GetById(string rolelId)
@@ -57,6 +64,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> RemoveAsync(RoleDb role)
+        {
+            _videoDbContext.Roles.Remove(role);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(RoleDb role)
         {
             if (role == null)
@@ -66,6 +79,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(role).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(RoleDb role)
+        {
+            if (role == null)
+            {
+                throw new ArgumentNullException("role");
+            }
+            _videoDbContext.Entry(role).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

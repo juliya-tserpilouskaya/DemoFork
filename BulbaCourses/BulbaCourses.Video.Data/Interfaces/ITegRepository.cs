@@ -17,5 +17,8 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<TagDb> GetByIdAsync(string tagId);
         Task<IEnumerable<TagDb>> GetAllAsync();
+        Task<int> AddAsync(TagDb tagDb);
+        Task<int> UpdateAsync(TagDb tagDb);
+        Task<int> RemoveAsync(TagDb tag);
     }
 }

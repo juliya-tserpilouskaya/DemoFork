@@ -17,5 +17,8 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<UserDb> GetByIdAsync(string userId);
         Task<IEnumerable<UserDb>> GetAllAsync();
+        Task<int> AddAsync(UserDb userDb);
+        Task<int> UpdateAsync(UserDb userDb);
+        Task<int> RemoveAsync(UserDb user);
     }
 }

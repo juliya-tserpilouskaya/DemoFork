@@ -23,6 +23,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(VideoMaterialDb video)
+        {
+            _videoDbContext.VideoMaterials.Add(video);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<VideoMaterialDb> GetAll()
         {
             var videoList = _videoDbContext.VideoMaterials.ToList().AsReadOnly();
@@ -32,7 +39,8 @@ namespace BulbaCourses.Video.Data.Repositories
 
         public async Task<IEnumerable<VideoMaterialDb>> GetAllAsync()
         {
-            return await _videoDbContext.VideoMaterials.ToListAsync().ConfigureAwait(false);
+            var videoList = await _videoDbContext.VideoMaterials.ToListAsync().ConfigureAwait(false);
+            return videoList.AsReadOnly();
         }
 
         public VideoMaterialDb GetById(string videoId)
@@ -55,6 +63,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> RemoveAsync(VideoMaterialDb video)
+        {
+            _videoDbContext.VideoMaterials.Remove(video);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(VideoMaterialDb video)
         {
             if (video == null)
@@ -64,6 +78,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(video).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(VideoMaterialDb video)
+        {
+            if (video == null)
+            {
+                throw new ArgumentNullException("video");
+            }
+            _videoDbContext.Entry(video).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

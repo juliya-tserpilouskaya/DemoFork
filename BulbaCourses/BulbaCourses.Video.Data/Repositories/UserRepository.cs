@@ -23,6 +23,13 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.SaveChanges();
         }
 
+        public async Task<int> AddAsync(UserDb user)
+        {
+            _videoDbContext.Users.Add(user);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<UserDb> GetAll()
         {
             var userList = _videoDbContext.Users.ToList().AsReadOnly();
@@ -32,7 +39,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<IEnumerable<UserDb>> GetAllAsync()
         {
             var userList = await _videoDbContext.Users.ToListAsync().ConfigureAwait(false);
-            return userList;
+            return userList.AsReadOnly();
         }
 
         public UserDb GetById(string id)
@@ -53,6 +60,12 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.SaveChanges();
         }
 
+        public async Task<int> RemoveAsync(UserDb user)
+        {
+            _videoDbContext.Users.Remove(user);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(UserDb user)
         {
             if (user == null)
@@ -61,6 +74,16 @@ namespace BulbaCourses.Video.Data.Repositories
             }
             _videoDbContext.Entry(user).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
+        }
+
+        public async Task<int> UpdateAsync(UserDb user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            _videoDbContext.Entry(user).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

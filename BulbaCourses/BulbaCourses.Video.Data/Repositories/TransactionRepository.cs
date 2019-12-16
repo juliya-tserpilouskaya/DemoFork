@@ -24,6 +24,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(TransactionDb transaction)
+        {
+            _videoDbContext.Transactions.Add(transaction);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<TransactionDb> GetAll()
         {
             var transactionList = _videoDbContext.Transactions.ToList().AsReadOnly();
@@ -34,7 +41,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<IEnumerable<TransactionDb>> GetAllAsync()
         {
             var transactionList = await _videoDbContext.Transactions.ToListAsync().ConfigureAwait(false);
-            return transactionList;
+            return transactionList.AsReadOnly();
         }
 
         public TransactionDb GetById(string transactionlId)
@@ -57,6 +64,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> RemoveAsync(TransactionDb transaction)
+        {
+            _videoDbContext.Transactions.Remove(transaction);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(TransactionDb transaction)
         {
             if (transaction == null)
@@ -66,6 +79,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(transaction).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(TransactionDb transaction)
+        {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException("transaction");
+            }
+            _videoDbContext.Entry(transaction).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

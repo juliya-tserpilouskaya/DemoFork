@@ -17,5 +17,8 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<RoleDb> GetByIdAsync(string rolelId);
         Task<IEnumerable<RoleDb>> GetAllAsync();
+        Task<int> AddAsync(RoleDb roleDb);
+        Task<int> UpdateAsync(RoleDb roleDb);
+        Task<int> RemoveAsync(RoleDb role);
     }
 }

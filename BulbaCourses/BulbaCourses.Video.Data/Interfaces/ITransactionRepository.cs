@@ -17,5 +17,8 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<TransactionDb> GetByIdAsync(string transactionlId);
         Task<IEnumerable<TransactionDb>> GetAllAsync();
+        Task<int> AddAsync(TransactionDb transactionDb);
+        Task<int> UpdateAsync(TransactionDb transactionDb);
+        Task<int> RemoveAsync(TransactionDb transaction);
     }
 }
