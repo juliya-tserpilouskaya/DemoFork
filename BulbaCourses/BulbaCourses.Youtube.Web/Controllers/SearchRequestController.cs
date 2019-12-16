@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -25,7 +26,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "ResultVideo list not found")]
         [SwaggerResponse(HttpStatusCode.OK, "ResultVideo list found", typeof(IEnumerable<ResultVideoDb>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult SearchRun([FromBody]SearchRequest searchRequest)
+        public async Task<IHttpActionResult> SearchRun([FromBody]SearchRequest searchRequest)
         {
             User user = new User()
             {
@@ -41,7 +42,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             };
             try
             {
-                var resultVideos = _logicService.SearchRun(searchRequest, user);
+                var resultVideos = await _logicService.SearchRunAsync(searchRequest, user);
                 return resultVideos == null ? NotFound() : (IHttpActionResult)Ok(resultVideos);
             }
             catch (InvalidOperationException ex)

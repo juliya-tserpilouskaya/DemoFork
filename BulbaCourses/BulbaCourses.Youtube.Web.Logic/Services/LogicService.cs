@@ -31,7 +31,13 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _userService = userService;
             _channelService = channelService;
         }
+
         public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ResultVideoDb>> SearchRunAsync(SearchRequest searchRequest, User user)
         {
             var resultVideos = new List<ResultVideoDb>();
 
@@ -55,7 +61,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             else
             {
                 //Search in Youtube service
-                resultVideos = SearchInYoutube(searchRequest);
+                resultVideos = await SearchInYoutubeAsync(searchRequest);
 
                 searchRequestDb.Videos = resultVideos;
 
@@ -99,7 +105,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return searchRequestDb;
         }
 
-        private List<ResultVideoDb> SearchInYoutube(SearchRequest searchRequest)
+        private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -114,7 +120,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             searchListRequest.MaxResults = 8;
 
             // Call the search.list method to retrieve results matching the specified searchRequest
-            var searchListResponse = searchListRequest.Execute();
+            var searchListResponse = await searchListRequest.ExecuteAsync();
 
             List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
             foreach (var searchResult in searchListResponse.Items.Where(r=>r.Id.VideoId!=null))

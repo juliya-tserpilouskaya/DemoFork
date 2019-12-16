@@ -53,10 +53,10 @@ namespace BulbaCourses.Youtube.Web.Tests
             searchRequest.Title = "2015 05 03 Открытое занятие";
 
             var resultListVideo =
-                (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest);
+                (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest)
+                .GetAwaiter().GetResult();
 
             var result = resultListVideo.Content.ToList();
-
 
             result.Should().NotBeNullOrEmpty();
             result.Should().HaveCount(c => c > 3);
