@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public class CourseServices : ICourseServices
+    class DomainServices : IDomainServices
     {
-        public Course GetById(string id)
+        public Domain GetById(string id)
         {
             //тут должно быть какое-либо преобразование, иначе не имеет смысла
-            return Courseware.GetById(id);
+            return DomainStorage.GetById(id);
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<Domain> GetAll()
         {
-            return Courseware.GetAll();
+            return DomainStorage.GetAll();
         }
 
-        public Course Add(Course course)
+        public Domain Add(Course course)
         {
             throw new NotImplementedException();
         }

@@ -83,6 +83,7 @@
     <Compile Include="Models\ModelsStorage\CoursesITAcademyStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesUdemyStorage.cs" />
     <Compile Include="Models\ModelsStorage\Courseware.cs" />
+    <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
     <Compile Include="Models\ModelsStorage\UserAccountCollection.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
@@ -97,12 +98,14 @@
     <Compile Include="Services\CourseITAcademyServices.cs" />
     <Compile Include="Services\CourseServices.cs" />
     <Compile Include="Services\CourseUdemyServices.cs" />
-    <Compile Include="Services\ICourseBookmarkServices.cs" />
-    <Compile Include="Services\ICourseCategoryServices.cs" />
-    <Compile Include="Services\ICourseITAcademyServices.cs" />
-    <Compile Include="Services\ICourseServices.cs" />
-    <Compile Include="Services\ICourseUdemyServices.cs" />
-    <Compile Include="Services\IUserAccountServise.cs" />
+    <Compile Include="Services\DomainServices.cs" />
+    <Compile Include="Services\interfaceServices\IDomainServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseBookmarkServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseCategoryServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseITAcademyServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseUdemyServices.cs" />
+    <Compile Include="Services\interfaceServices\IUserAccountServise.cs" />
     <Compile Include="Services\UserAccountServeces.cs" />
   </ItemGroup>
   <ItemGroup>
