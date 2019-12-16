@@ -137,6 +137,7 @@
     <Compile Include="Models\CommentView.cs" />
     <Compile Include="Models\CourseView.cs" />
     <Compile Include="Models\CourseViewInput.cs" />
+    <Compile Include="SwaggerModels\SwaggerCourseInfo.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseViewInput.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
     <Compile Include="Models\ForgotPasswordView.cs" />

@@ -152,5 +152,17 @@ namespace BulbaCourses.Video.Logic.Services
             var courseDb = mapper.Map<CourseInfo, CourseDb>(course);
             return courseRepository.AddAsync(courseDb);
         }
+
+        public Task<int> UpdateAsync(CourseInfo course)
+        {
+            var courseDb = mapper.Map<CourseInfo, CourseDb>(course);
+            return courseRepository.UpdateAsync(courseDb); ;
+        }
+
+        public Task<int> DeleteByIdAsync(string id)
+        {
+            var course = courseRepository.GetById(id);
+           return courseRepository.RemoveAsync(course);
+        }
     }
 }

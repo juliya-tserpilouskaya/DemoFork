@@ -55,7 +55,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<CourseDb> GetByIdAsync(string courseId)
         {
             //Just for test. 
-            Thread.Sleep(10000);
+            //Thread.Sleep(10000);
             var course = await _videoDbContext.Courses.SingleOrDefaultAsync(b => b.CourseId.Equals(courseId)).ConfigureAwait(false);
             return course;
         }
@@ -82,6 +82,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(course).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(CourseDb course)
+        {
+            if (course == null)
+            {
+                throw new ArgumentNullException("course");
+            }
+            _videoDbContext.Entry(course).State = EntityState.Modified;
+           return  await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }
