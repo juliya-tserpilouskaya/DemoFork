@@ -80,6 +80,7 @@
     <Compile Include="Models\CoursesUdemy.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\ModelsStorage\CourseBookmarksStorage.cs" />
+    <Compile Include="Models\ModelsStorage\CourseCategoryStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesITAcademyStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesUdemyStorage.cs" />
     <Compile Include="Models\ModelsStorage\Courseware.cs" />

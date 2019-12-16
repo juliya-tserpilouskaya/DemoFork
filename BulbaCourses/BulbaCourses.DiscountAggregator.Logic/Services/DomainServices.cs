@@ -20,10 +20,10 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             return DomainStorage.GetAll();
         }
-
-        public Domain Add(Course course)
+            
+        public Domain Add(Domain domain)
         {
-            throw new NotImplementedException();
+            return DomainStorage.Add(domain);
         }
     }
 }

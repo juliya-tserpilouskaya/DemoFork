@@ -30,11 +30,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
                 StringComparison.OrdinalIgnoreCase));
         }
 
-        public static Domain Add(Domain course)
+        public static Domain Add(Domain domain)
         {
-            course.Id = Guid.NewGuid().ToString();
-            _domains.Add(course);    // id записи вы формируем на стороне сервера, а не на стороне клиента
-            return course;
+            domain.Id = Guid.NewGuid().ToString();
+            _domains.Add(domain); 
+            return domain;
         }
     }
 }

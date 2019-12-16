@@ -11,33 +11,33 @@ using System.Web.Http;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
-    [RoutePrefix("api/domains")]
-    public class DomianController : ApiController
+    [RoutePrefix("api/course_category")]
+    public class CourseCategoryController : ApiController
     {
-        private readonly IDomainServices domainService;
+        private readonly ICourseCategoryServices courseCategoryService;
 
-        public DomianController(IDomainServices domainService)
+        public CourseCategoryController(ICourseCategoryServices courseCategoryService)
         {
-            this.domainService = domainService;
+            this.courseCategoryService = courseCategoryService;
         }
 
         [HttpGet, Route("")]
-        [Description("Get all domains")]
+        [Description("Get all categories")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(IEnumerable<Domain>))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Categories doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Categories found", typeof(IEnumerable<CourseCategory>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
-            var result = domainService.GetAll();
+            var result = courseCategoryService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
         [HttpGet, Route("{id}")]
-        [Description("Get domain by Id")]
+        [Description("Get category by Id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Domain doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Domain found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Category doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Category found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string id)
         {
@@ -48,7 +48,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                var result = domainService.GetById(id);
+                var result = courseCategoryService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

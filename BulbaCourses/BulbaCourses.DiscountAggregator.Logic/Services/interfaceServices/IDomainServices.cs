@@ -7,6 +7,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         Domain GetById(string id);
         IEnumerable<Domain> GetAll();
-        Domain Add(Course course);
+        Domain Add(Domain domain);
     }
 }
