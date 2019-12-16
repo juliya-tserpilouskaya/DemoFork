@@ -19,13 +19,13 @@ namespace BulbaCourses.Video.Web.Controllers
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
-        private readonly IMapper mapper;
-        private readonly ICourseService courseService;
+        private readonly IMapper _mapper;
+        private readonly ICourseService _courseService;
 
         public CourseController(IMapper mapper, ICourseService courseService)
         {
-            this.mapper = mapper;
-            this.courseService = courseService;
+            _mapper = mapper;
+            _courseService = courseService;
         }
 
         [HttpGet, Route("{id}")]
@@ -43,7 +43,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var result = await courseService.GetCourseByIdAsync(id);
+                var result = await _courseService.GetCourseByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -59,8 +59,8 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
-            var courses = await courseService.GetAllAsync();
-            var result = mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
+            var courses = await _courseService.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -88,8 +88,8 @@ namespace BulbaCourses.Video.Web.Controllers
 
             try
             {
-                var courseInfo = mapper.Map<CourseView, CourseInfo>(course);
-                await courseService.AddCourseAsync(courseInfo);
+                var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+                await _courseService.AddCourseAsync(courseInfo);
                 return Ok(courseInfo);
             }
 
@@ -126,8 +126,8 @@ namespace BulbaCourses.Video.Web.Controllers
 
             try
             {
-                var courseInfo = mapper.Map<CourseView, CourseInfo>(course);
-                await courseService.UpdateAsync(courseInfo);
+                var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+                await _courseService.UpdateAsync(courseInfo);
                 return Ok();
             }
 
@@ -149,7 +149,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                await courseService.DeleteByIdAsync(id);
+                await _courseService.DeleteByIdAsync(id);
                 return Ok();
             }
             catch (Exception ex)
