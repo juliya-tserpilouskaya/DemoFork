@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web.Models.User
+namespace BulbaCourses.Video.Web.Models.UserViews
 {
     public class RegisterView
     {
@@ -18,11 +18,13 @@ namespace BulbaCourses.Video.Web.Models.User
 
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Login")]
+        //[Remote("CheckLogin", "User", HttpMethod = "POST", ErrorMessage = "LoginExist")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [EmailAddress(ErrorMessage = "EmailInvalid")]
         [Display(Name = "Email")]
+        //[Remote("CheckEmail", "User", HttpMethod ="POST", ErrorMessage = "Email already exist")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password required")]
@@ -34,7 +36,7 @@ namespace BulbaCourses.Video.Web.Models.User
         [Required(ErrorMessage = "Confirm password required")]
         [Display(Name = "Conrifm password")]
         [DataType(DataType.Password)]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
-using BulbaCourses.Video.Web.Models;
+using BulbaCourses.Video.Web.Models.UserViews;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;

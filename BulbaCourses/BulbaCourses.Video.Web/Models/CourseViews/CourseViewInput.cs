@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web.Models
+namespace BulbaCourses.Video.Web.Models.CourseViews
 {
     public class CourseViewInput
     {
