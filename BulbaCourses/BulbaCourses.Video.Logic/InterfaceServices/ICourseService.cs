@@ -9,13 +9,15 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
 {
     public interface ICourseService
     {
-        CourseInfo GetCourseById(string courseId);
+        Task<CourseInfo> GetCourseByIdAsync(string courseId);
         CourseInfo GetCourseByName(string courseName);
         IEnumerable<CourseInfo> GetAll();
+        Task<IEnumerable<CourseInfo>> GetAllAsync();
+
         void AddCourse(CourseInfo course);
         void Delete(CourseInfo course);
         void DeleteById(string courseId);
-        void Update(CourseInfo course);
+        Task<int> UpdateAsync(CourseInfo course);
         void AddTagToCourse(string courseId, TagInfo tag);
         IEnumerable<TagInfo> GetTags(string courseId);
         IEnumerable<VideoMaterialInfo> GetCourseVideos(string courseId);
@@ -25,6 +27,7 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void AddVideoToCourse(string courseId, VideoMaterialInfo video);
         void AddDiscription(string courseId, string description);
         IEnumerable<CommentInfo> GetCourseComments(string courseId);
-
+        Task<int> AddCourseAsync(CourseInfo courseInfo);
+        Task<int> DeleteByIdAsync(string id);
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
@@ -24,6 +25,13 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> AddAsync(CourseDb course)
+        {
+            _videoDbContext.Courses.Add(course);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
+        }
+
         public IEnumerable<CourseDb> GetAll()
         {
             var courseList = _videoDbContext.Courses.ToList().AsReadOnly();
@@ -34,7 +42,7 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
             var courseList = await _videoDbContext.Courses.ToListAsync().ConfigureAwait(false);
-            return courseList;
+            return courseList.AsReadOnly();
         }
 
         public CourseDb GetById(string courseId)
@@ -46,6 +54,8 @@ namespace BulbaCourses.Video.Data.Repositories
 
         public async Task<CourseDb> GetByIdAsync(string courseId)
         {
+            //Just for test. 
+            //Thread.Sleep(10000);
             var course = await _videoDbContext.Courses.SingleOrDefaultAsync(b => b.CourseId.Equals(courseId)).ConfigureAwait(false);
             return course;
         }
@@ -57,6 +67,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<int> RemoveAsync(CourseDb course)
+        {
+            _videoDbContext.Courses.Remove(course);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(CourseDb course)
         {
             if (course == null)
@@ -66,6 +82,16 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(course).State = EntityState.Modified;
             _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(CourseDb course)
+        {
+            if (course == null)
+            {
+                throw new ArgumentNullException("course");
+            }
+            _videoDbContext.Entry(course).State = EntityState.Modified;
+           return  await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

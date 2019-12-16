@@ -133,5 +133,36 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        public async Task<IEnumerable<CourseInfo>> GetAllAsync()
+        {
+            var courses =await courseRepository.GetAllAsync();
+            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+            return result;
+        }
+
+        public async Task<CourseInfo> GetCourseByIdAsync(string courseId)
+        {
+            var course = await courseRepository.GetByIdAsync(courseId);
+            var courseInfo = mapper.Map<CourseDb, CourseInfo>(course);
+            return courseInfo;
+        }
+
+        public Task<int> AddCourseAsync(CourseInfo course)
+        {
+            var courseDb = mapper.Map<CourseInfo, CourseDb>(course);
+            return courseRepository.AddAsync(courseDb);
+        }
+
+        public Task<int> UpdateAsync(CourseInfo course)
+        {
+            var courseDb = mapper.Map<CourseInfo, CourseDb>(course);
+            return courseRepository.UpdateAsync(courseDb); ;
+        }
+
+        public Task<int> DeleteByIdAsync(string id)
+        {
+            var course = courseRepository.GetById(id);
+           return courseRepository.RemoveAsync(course);
+        }
     }
 }
