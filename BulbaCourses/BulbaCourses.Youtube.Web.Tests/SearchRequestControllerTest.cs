@@ -12,6 +12,8 @@ using BulbaCourses.Youtube.Web.DataAccess.Repositories;
 using BulbaCourses.Youtube.Web.DataAccess;
 using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.DataAccess.Models;
+using Ninject;
+using BulbaCourses.Youtube.Web.Logic;
 
 namespace BulbaCourses.Youtube.Web.Tests
 {
@@ -19,29 +21,16 @@ namespace BulbaCourses.Youtube.Web.Tests
     class SearchRequestControllerTest
     {
         SearchRequestController srController;
-        SearchRequestsRepository srRepo;
-        StoryRepository sRepo;
-        VideoRepository vRepo;
 
         [OneTimeSetUp]
         public void Init()
         {
-            var youtubeContext = new YoutubeContext();
-            var srRepo = new SearchRequestsRepository(youtubeContext);
-            var sRepo = new StoryRepository(youtubeContext);
-            var vRepo = new VideoRepository(youtubeContext);
-            var uRepo = new UserRepository(youtubeContext);
-            var cRepo = new ChannelRepository(youtubeContext);
+            var kernel = new StandardKernel();
+            kernel.Load<LogicModule>();
 
-            var srService = new SearchRequestService(srRepo);
-            var sService = new StoryService(sRepo);
-            var vService = new VideoService(vRepo);
+           // var youtubeContext = new YoutubeContext();
 
-            var cService = new ChannelService(cRepo);
-            var uService = new UserService(uRepo);
-            var cache = new CacheService();
-
-            var lService = new LogicService(sService, vService, srService, cache, uService, cService);
+            var lService = new LogicService(kernel.Get<IServiceFactory>());
 
             srController = new SearchRequestController(lService);
         }

@@ -12,24 +12,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 {
     public class LogicService : ILogicService
     {
-        IStoryService _storyService;
-        IVideoService _videoService;
-        ISearchRequestService _requestService;
+        IServiceFactory _serviceFactory;
 
-        IChannelService _channelService;
-        IUserService _userService;
-        ICacheService _cache;
-
-        public LogicService(IStoryService storyService, 
-            IVideoService videoService, ISearchRequestService requestService, 
-            ICacheService cache, IUserService userService, IChannelService channelService)
+        public LogicService(IServiceFactory serviceFactory)
         {
-            _storyService = storyService;
-            _videoService = videoService;
-            _requestService = requestService;
-            _cache = cache;
-            _userService = userService;
-            _channelService = channelService;
+            _serviceFactory = serviceFactory;
         }
 
         public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user)
@@ -39,6 +26,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<IEnumerable<ResultVideoDb>> SearchRunAsync(SearchRequest searchRequest, User user)
         {
+            var _cache = _serviceFactory.CreateCacheService();
+            var _requestService = _serviceFactory.CreateSearchRequestService();
+            var _userService = _serviceFactory.CreateUserService();
+            var _storyService = _serviceFactory.CreateStoryService();
+
             var resultVideos = new List<ResultVideoDb>();
 
             //convert searchRequest to searchRequestDb
@@ -107,6 +99,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
+            var _channelService = _serviceFactory.CreateChannelService();
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
