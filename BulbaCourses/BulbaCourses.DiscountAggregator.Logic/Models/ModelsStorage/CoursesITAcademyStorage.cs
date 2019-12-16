@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
 {
-    public static class CourseStore
+    public static class CourseITAcademyStorage
     {
         private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>();
 
-        static CourseStore()
+        static CourseITAcademyStorage()
         {
             ParserITAcademy parserITAcademy = new ParserITAcademy();
             _course.AddRange((List<CoursesITAcademy>)parserITAcademy.GetAllCourses());

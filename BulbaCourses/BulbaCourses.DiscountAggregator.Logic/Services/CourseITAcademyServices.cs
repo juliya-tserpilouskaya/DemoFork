@@ -13,7 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         public IEnumerable<CoursesITAcademy> GetAll()
         {
-            return CourseStore.GetAll();
+            return CourseITAcademyStorage.GetAll();
         }
     }
 }

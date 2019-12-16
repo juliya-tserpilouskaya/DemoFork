@@ -10,7 +10,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public IEnumerable<string> Domains { get; set; }
+        public IEnumerable<Domain> Domains { get; set; }
 
         public IEnumerable<CourseCategory> CourseCategories { get; set; }
 
