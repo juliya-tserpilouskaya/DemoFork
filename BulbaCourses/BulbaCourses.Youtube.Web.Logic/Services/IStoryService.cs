@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BulbaCourses.Youtube.Web.DataAccess.Models;
+using BulbaCourses.Youtube.Web.Logic.Models;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
@@ -13,7 +13,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// Save story for User
         /// </summary>
         /// <param name="story"></param>
-        SearchStoryDb Save(SearchStoryDb story);
+        SearchStory Save(SearchStory story);
 
         /// <summary>
         /// Delete all records story by User Id
@@ -31,36 +31,36 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        IEnumerable<SearchStoryDb> GetAllStories();
+        IEnumerable<SearchStory> GetAllStories();
 
-        Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync();
+        Task<IEnumerable<SearchStory>> GetAllStoriesAsync();
 
         /// <summary>
         /// Get all stories by User Id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId);
+        IEnumerable<SearchStory> GetStoriesByUserId(int? userId);
 
-        Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId);
+        Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId);
 
         /// <summary>
         /// Get all stories by Request Id
         /// </summary>
         /// <param name="requestId"></param>
         /// <returns></returns>
-        IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId);
+        IEnumerable<SearchStory> GetStoriesByRequestId(int? requestId);
 
-        Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId);
+        Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId);
 
         /// <summary>
         /// Get one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
         /// <returns></returns>
-        SearchStoryDb GetStoryByStoryId(int? storyId);
+        SearchStory GetStoryByStoryId(int? storyId);
 
-        Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId);
+        Task<SearchStory> GetStoryByStoryIdAsync(int? storyId);
 
     }
 }

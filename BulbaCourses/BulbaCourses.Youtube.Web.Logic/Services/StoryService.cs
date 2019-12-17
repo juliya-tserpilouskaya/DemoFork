@@ -21,10 +21,16 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// Save current search request as story for User
         /// </summary>
         /// <param name="story"></param>
-        public SearchStoryDb Save(SearchStoryDb story)
+        public SearchStory Save(SearchStory story)
         {
-            return story != null ? _storyRepository.Save(story) : story;
+            var storyDb = new SearchStoryDb() { Id = story.Id, SearchDate = story.SearchDate, SearchRequest = new SearchRequestDb() { Id = story.SearchRequestId }, User = new UserDb() { Id = story.UserId } };
+            storyDb = _storyRepository.Save(storyDb);
+            return story == null ? null : new SearchStory() { Id = storyDb.Id, SearchDate = storyDb.SearchDate, SearchRequestId = storyDb.SearchRequest.Id, UserId = storyDb.User.Id};
         }
+        //public SearchStoryDb Save(SearchStoryDb story)
+        //{
+        //    return story != null ? _storyRepository.Save(story) : story;
+        //}
 
         /// <summary>
         /// Delete all records story by User Id
@@ -50,14 +56,26 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetAllStories()
+        public IEnumerable<SearchStory> GetAllStories()
         {
-            return _storyRepository.GetAll();
+            return _storyRepository.GetAll().Select(item => new SearchStory()
+            {
+                Id = item.Id,
+                SearchDate = item.SearchDate,
+                SearchRequestId = item.SearchRequest.Id,
+                UserId = item.User.Id
+            });
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync()
+        //public async Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync()
+        //{
+        //    return await _storyRepository.GetAllAsync();
+        //}
+
+        public async Task<IEnumerable<SearchStory>> GetAllStoriesAsync()
         {
-            return await _storyRepository.GetAllAsync();
+            var result = await _storyRepository.GetAllAsync();
+            return result == null ? null : result.Select(item => new SearchStory() { Id = item.Id, SearchDate = item.SearchDate, SearchRequestId = item.SearchRequest.Id, UserId = item.User.Id });
         }
 
         /// <summary>
@@ -65,14 +83,26 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId)
+        public IEnumerable<SearchStory> GetStoriesByUserId(int? userId)
         {
-            return _storyRepository.GetByUserId(userId);
+            return _storyRepository.GetByUserId(userId).Select(item => new SearchStory()
+            {
+                Id = item.Id,
+                SearchDate = item.SearchDate,
+                SearchRequestId = item.SearchRequest.Id,
+                UserId = item.User.Id
+            });
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId)
+        //public async Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId)
+        //{
+        //    return await _storyRepository.GetByUserIdAsync(userId);
+        //}
+
+        public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId)
         {
-            return await _storyRepository.GetByUserIdAsync(userId);
+            var result = await _storyRepository.GetByUserIdAsync(userId);
+            return result == null ? null : result.Select(item => new SearchStory() { Id = item.Id, SearchDate = item.SearchDate, SearchRequestId = item.SearchRequest.Id, UserId = item.User.Id });
         }
 
         /// <summary>
@@ -80,14 +110,26 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="requestId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId)
+        public IEnumerable<SearchStory> GetStoriesByRequestId(int? requestId)
         {
-            return _storyRepository.GetByRequestId(requestId);
+            return _storyRepository.GetByRequestId(requestId).Select(item => new SearchStory()
+            {
+                Id = item.Id,
+                SearchDate = item.SearchDate,
+                SearchRequestId = item.SearchRequest.Id,
+                UserId = item.User.Id
+            });
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId)
+        //public async Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId)
+        //{
+        //    return await _storyRepository.GetByRequestIdAsync(requestId);            
+        //}
+
+        public async Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId)
         {
-            return await _storyRepository.GetByRequestIdAsync(requestId);            
+            var result = await _storyRepository.GetByRequestIdAsync(requestId);
+            return result == null ? null : result.Select(item => new SearchStory() { Id = item.Id, SearchDate = item.SearchDate, SearchRequestId = item.SearchRequest.Id, UserId = item.User.Id });
         }
 
         /// <summary>
@@ -95,19 +137,20 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="storyId"></param>
         /// <returns></returns>
-        public SearchStoryDb GetStoryByStoryId(int? storyId)
+        public SearchStory GetStoryByStoryId(int? storyId)
         {
-            return _storyRepository.GetByStoryId(storyId);
+            var result = _storyRepository.GetByStoryId(storyId);
+            return result == null ? null : new SearchStory() { Id = result.Id, SearchDate = result.SearchDate, SearchRequestId = result.SearchRequest.Id, UserId = result.User.Id };
         }
 
-        public async Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId)
-        {
-            return await _storyRepository.GetByStoryIdAsync(storyId);
-        }
-        //public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
+        //public async Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId)
         //{
-        //    var result = await _storyRepository.GetByStoryIdAsync(storyId);
-        //    return result == null ? null : new SearchStory() { Id = result.Id, SearchDate = result.SearchDate, SearchRequestId = result.SearchRequest.Id, UserId = result.User.Id };
+        //    return await _storyRepository.GetByStoryIdAsync(storyId);
         //}
+        public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
+        {
+            var result = await _storyRepository.GetByStoryIdAsync(storyId);
+            return result == null ? null : new SearchStory() { Id = result.Id, SearchDate = result.SearchDate, SearchRequestId = result.SearchRequest.Id, UserId = result.User.Id };
+        }
     }
 }
