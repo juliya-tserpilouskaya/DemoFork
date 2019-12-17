@@ -15,12 +15,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
     public class LogicService : ILogicService
     {
         IServiceFactory _serviceFactory;
+        ICacheService _cache;
         Mapper _mapperSearchRequest;
         Mapper _mapperUser;
 
         public LogicService(IServiceFactory serviceFactory)
         {
             _serviceFactory = serviceFactory;
+            _cache = _serviceFactory.CreateCacheService();
             _mapperSearchRequest = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<SearchRequest, SearchRequestDb>()));
             _mapperUser = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<User, UserDb>()));
         }
@@ -32,7 +34,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<IEnumerable<ResultVideoDb>> SearchRunAsync(SearchRequest searchRequest, User user)
         {
-            var _cache = _serviceFactory.CreateCacheService();
             var _requestService = _serviceFactory.CreateSearchRequestService();
             var _userService = _serviceFactory.CreateUserService();
             var _storyService = _serviceFactory.CreateStoryService();
@@ -40,49 +41,54 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             
             //Mapping models
             var searchRequestDb = _mapperSearchRequest.Map<SearchRequestDb>(searchRequest);
+            searchRequestDb.CacheId = GenerateCacheId(searchRequestDb);
             var userDb = _mapperUser.Map<UserDb>(user);
 
-
-            var cacheResult = _cache.GetValue(searchRequestDb.Id);
-
-            //save search request if does not exist
-            if (!_requestService.Exists(searchRequestDb))
-                searchRequestDb = _requestService.Save(searchRequestDb);
-
+            //Сheck cache
+            var cacheResult = _cache.GetValue(searchRequestDb.CacheId);
             if (cacheResult != null)
             {
-                //get videos list from cache
-                resultVideos = cacheResult.Videos.ToList();
+                //Get videos list from cache
+                resultVideos = cacheResult;
 
-                //update cache for search request for refresh storage time in the cache
-                _cache.Update(searchRequestDb);
+                //Update cache for search request for refresh storage time in the cache
+                _cache.Update(searchRequestDb.CacheId, resultVideos);
             }
             else
             {
                 //Search in Youtube service
-                resultVideos = await SearchInYoutubeAsync(searchRequest);
+                resultVideos = await SearchInYoutubeAsync(searchRequestDb);
 
-                searchRequestDb.Videos = resultVideos;
-
-                //add result to cache
-                _cache.Add(searchRequestDb);
+                //Add result to cache
+                var res = _cache.Add(searchRequestDb.CacheId, resultVideos);
             }
+            
+            //Save search request if does not exist
+            if (!_requestService.Exists(searchRequestDb))
+            {
+                searchRequestDb.Videos = resultVideos;
+                searchRequestDb = _requestService.Save(searchRequestDb);
+            }
+            //Save user if does not exist
+            if(!_userService.Exists(userDb))
+                _userService.Save(userDb);
 
-            _userService.Save(userDb);
-            var serachStoryDB = new SearchStoryDb()
+            //Save user search story
+            _storyService.Save(new SearchStoryDb()
             {
                 SearchDate = DateTime.Now,
                 SearchRequest = searchRequestDb,
                 User = userDb
-            };
-            //add search user story
-            _storyService.Save(serachStoryDB);
+            });
 
             return resultVideos.AsReadOnly();
         }
 
-        private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequest searchRequest)
+        private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequestDb searchRequest)
         {
+            var _channelService = _serviceFactory.CreateChannelService();
+            var resultVideos = new List<ResultVideoDb>();
+
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -91,7 +97,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             });
 
             // Run the request.
-
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Type = "video";
             searchListRequest.PublishedAfter = searchRequest.PublishedAfter;
@@ -105,10 +110,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
             // Call the search.list method to retrieve results matching the specified searchRequest
             var searchListResponse = await searchListRequest.ExecuteAsync();
-
-            List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
-            var _channelService = _serviceFactory.CreateChannelService();
-
             foreach (var searchResult in searchListResponse.Items)
             {
                 var searchListVideo = youtubeService.Videos.List("contentDetails");
@@ -116,7 +117,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 var responceVideo = await searchListVideo.ExecuteAsync();
                 var videoContentDetails = responceVideo.Items[0].ContentDetails;
 
-                ResultVideoDb resultVideo = new ResultVideoDb();
+                var resultVideo = new ResultVideoDb();
                 resultVideo.Id = searchResult.Id.VideoId;
                 resultVideo.Title = searchResult.Snippet.Title;
                 resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
@@ -140,6 +141,17 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 resultVideos.Add(resultVideo);
             }
             return resultVideos;
+        }
+        private string GenerateCacheId(SearchRequestDb searchRequestDb)
+        {
+            var cacheId = searchRequestDb.PublishedAfter.ToString()
+                + searchRequestDb.PublishedBefore.ToString()
+                + searchRequestDb.Definition
+                + searchRequestDb.Dimension
+                + searchRequestDb.Duration
+                + searchRequestDb.VideoCaption
+                + searchRequestDb.Title;
+            return cacheId;
         }
     }
 }

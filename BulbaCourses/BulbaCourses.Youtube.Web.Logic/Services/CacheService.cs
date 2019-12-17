@@ -15,10 +15,10 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public SearchRequestDb GetValue(int? id)
+        public List<ResultVideoDb> GetValue(string id)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Get(id.ToString()) as SearchRequestDb;
+            return memoryCache.Get(id) as List<ResultVideoDb>;
         }
 
         /// <summary>
@@ -26,32 +26,33 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool Add(SearchRequestDb value)
+        public bool Add(string key, List<ResultVideoDb> value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Add(value.Id.ToString(), value, DateTime.Now.AddMinutes(10));
+            var res = memoryCache.Add(key, value, DateTime.Now.AddMinutes(10));
+            return res;
         }
 
         /// <summary>
         /// Update cache for search request for refresh storage time
         /// </summary>
         /// <param name="value"></param>
-        public void Update(SearchRequestDb value)
+        public void Update(string key, List<ResultVideoDb> value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            memoryCache.Set(value.Id.ToString(), value, DateTime.Now.AddMinutes(10));
+            memoryCache.Set(key, value, DateTime.Now.AddMinutes(10));
         }
 
         /// <summary>
         /// Delete cache by searchrequestId
         /// </summary>
         /// <param name="id"></param>
-        public void Delete(int id)
+        public void Delete(string id)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            if (memoryCache.Contains(id.ToString()))
+            if (memoryCache.Contains(id))
             {
-                memoryCache.Remove(id.ToString());
+                memoryCache.Remove(id);
             }
         }
     }
