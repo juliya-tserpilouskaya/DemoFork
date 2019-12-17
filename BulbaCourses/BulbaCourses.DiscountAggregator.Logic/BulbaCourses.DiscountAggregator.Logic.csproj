@@ -85,7 +85,9 @@
     <Compile Include="Models\ModelsStorage\CoursesUdemyStorage.cs" />
     <Compile Include="Models\ModelsStorage\Courseware.cs" />
     <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
+    <Compile Include="Models\ModelsStorage\SearchCriteriaStorage.cs" />
     <Compile Include="Models\ModelsStorage\UserAccountCollection.cs" />
+    <Compile Include="Models\ModelsStorage\UserProfileStorage.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -107,7 +109,11 @@
     <Compile Include="Services\interfaceServices\ICourseServices.cs" />
     <Compile Include="Services\interfaceServices\ICourseUdemyServices.cs" />
     <Compile Include="Services\interfaceServices\IUserAccountServise.cs" />
+    <Compile Include="Services\interfaceServices\ISearchCriteriaServices.cs" />
+    <Compile Include="Services\interfaceServices\IUserProfileServices.cs" />
+    <Compile Include="Services\SearchCriteriaServices.cs" />
     <Compile Include="Services\UserAccountServeces.cs" />
+    <Compile Include="Services\UserProfileServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,6 +20,8 @@ namespace BulbaCourses.DiscountAggregator.Logic
             Bind<IUserAccountServise>().To<UserAccountServeces>();
             Bind<IDomainServices>().To<DomainServices>();
             Bind<ICourseCategoryServices>().To<CourseCategoryServices>();
+            Bind<IUserProfileServices>().To<UserProfileServices>();
+            Bind<ISearchCriteriaServices>().To<SearchCriteriaServices>();
         }
     }
 }
