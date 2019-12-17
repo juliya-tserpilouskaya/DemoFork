@@ -14,25 +14,25 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        SearchRequestDb GetValue(int? id);
+        List<ResultVideoDb> GetValue(string id);
 
         /// <summary>
         /// Add search request to cache
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        bool Add(SearchRequestDb value);
+        bool Add(string key, List<ResultVideoDb> value);
 
         /// <summary>
         /// Update search request upon repeated request
         /// </summary>
         /// <param name="value"></param>
-        void Update(SearchRequestDb value);
+        void Update(string key, List<ResultVideoDb> value);
 
         /// <summary>
         /// Delete cache of search request by id
         /// </summary>
         /// <param name="id"></param>
-        void Delete(int id);
+        void Delete(string id);
     }
 }

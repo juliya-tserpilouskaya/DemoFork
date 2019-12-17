@@ -34,9 +34,10 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 _context.SaveChanges();
             }
         }
+
         public bool Exists(SearchRequestDb searchRequest)
         {
-            return _context.SearchRequests.Any(r=>r.Title==searchRequest.Title);
+            return _context.SearchRequests.Any(r => r.CacheId == searchRequest.CacheId);
         }
 
         public IEnumerable<SearchRequestDb> GetAllRequests()
@@ -44,14 +45,15 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return _context.SearchRequests.ToList().AsReadOnly();
         }
 
+         public SearchRequestDb GetRequestById(int? requestId)
+        {
+            return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
+        }
+
+        //Async methods
         public async Task<IEnumerable<SearchRequestDb>> GetAllRequestsAsync()
         {
             return await _context.SearchRequests.ToListAsync();
-        }
-
-        public SearchRequestDb GetRequestById(int? requestId)
-        {
-            return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
         }
 
         public async Task<SearchRequestDb> GetRequestByIdAsync(int? requestId)
