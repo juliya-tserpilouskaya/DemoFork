@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.Youtube.Web.Controllers
@@ -25,7 +26,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory found", typeof(SearchStory))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetStoryByUserID(int? userId)
+        public async Task<IHttpActionResult> GetStoryByUserID(int? userId)
         {
             if (userId==null)
             {
@@ -33,7 +34,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
             try
             {
-                var request = _storyService.GetStoriesByUserId(userId);
+                var request = await _storyService.GetStoriesByUserIdAsync(userId);
                 return request == null ? NotFound() : (IHttpActionResult)Ok(request);
             }
             catch (InvalidOperationException ex)

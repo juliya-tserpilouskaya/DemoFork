@@ -107,10 +107,5 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         {
             return await _mapper.Map<Task<SearchStory>>(_storyRepository.GetByStoryIdAsync(storyId));
         }
-        //public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
-        //{
-        //    var result = await _storyRepository.GetByStoryIdAsync(storyId);
-        //    return result == null ? null : new SearchStory() { Id = result.Id, SearchDate = result.SearchDate, SearchRequestId = result.SearchRequest.Id, UserId = result.User.Id };
-        //}
     }
 }
