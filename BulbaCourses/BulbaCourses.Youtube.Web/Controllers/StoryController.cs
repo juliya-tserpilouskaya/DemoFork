@@ -21,7 +21,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             _storyService = storyService;
         }
 
-        [HttpGet, Route("{userId})")]
+        [HttpGet, Route("{userId}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory found", typeof(SearchStory))]

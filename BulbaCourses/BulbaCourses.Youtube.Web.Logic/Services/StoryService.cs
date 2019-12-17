@@ -17,8 +17,13 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         public StoryService(IStoryRepository storyRepository)
         {
             _storyRepository = storyRepository;
-            _mapper = new Mapper(new MapperConfiguration(cfg=>cfg.CreateMap<SearchStoryDb, SearchStory>()));
-        }
+            _mapper = new Mapper(new MapperConfiguration(cfg=>
+            {
+                cfg.CreateMap<SearchStoryDb, SearchStory>();
+                cfg.CreateMap<UserDb, User>();
+                cfg.CreateMap<SearchRequestDb, SearchRequest>();
+            }));
+    }
 
         /// <summary>
         /// Save current search request as story for User
@@ -60,7 +65,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<IEnumerable<SearchStory>> GetAllStoriesAsync()
         {
-            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetAllAsync());
+            return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetAllAsync());
         }
 
         /// <summary>
@@ -75,7 +80,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId)
         {
-            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetByUserIdAsync(userId));
+            return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetByUserIdAsync(userId));
         }
 
         /// <summary>
@@ -90,7 +95,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId)
         {
-            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetByRequestIdAsync(requestId));            
+            return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetByRequestIdAsync(requestId));            
         }
 
         /// <summary>
@@ -105,7 +110,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
         {
-            return await _mapper.Map<Task<SearchStory>>(_storyRepository.GetByStoryIdAsync(storyId));
+            return _mapper.Map<SearchStory>(await _storyRepository.GetByStoryIdAsync(storyId));
         }
     }
 }

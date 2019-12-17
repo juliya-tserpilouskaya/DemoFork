@@ -8,10 +8,7 @@ using BulbaCourses.Youtube.Web.Controllers;
 using System.Collections.Generic;
 using System.Web.Http.Results;
 using System.Linq;
-using BulbaCourses.Youtube.Web.DataAccess.Repositories;
-using BulbaCourses.Youtube.Web.DataAccess;
 using BulbaCourses.Youtube.Web.Logic.Models;
-using BulbaCourses.Youtube.Web.DataAccess.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.Logic;
 
@@ -28,10 +25,7 @@ namespace BulbaCourses.Youtube.Web.Tests
             var kernel = new StandardKernel();
             kernel.Load<LogicModule>();
 
-           // var youtubeContext = new YoutubeContext();
-
             var lService = new LogicService(kernel.Get<IServiceFactory>());
-
             srController = new SearchRequestController(lService);
         }
 

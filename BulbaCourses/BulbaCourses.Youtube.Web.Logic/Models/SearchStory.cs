@@ -7,8 +7,8 @@ namespace BulbaCourses.Youtube.Web.Logic.Models
     public class SearchStory
     {
         public int? Id { get; set; }
-        public int? UserId { get; set; }
         public DateTime? SearchDate { get; set; }
-        public int? SearchRequestId { get; set; }
+        public User User { get; set; } //reference
+        public SearchRequest SearchRequest { get; set; }//reference
     }
 }
