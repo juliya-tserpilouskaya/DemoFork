@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.DTO;
+using BulbaCourses.Analytics.BLL.Infrastructure;
 using BulbaCourses.Analytics.BLL.Interface;
 using BulbaCourses.Analytics.Web.Controllers;
 using BulbaCourses.Analytics.Web.Models;
@@ -53,13 +54,13 @@ namespace BulbaCourses.Analytics.Tests
             _mockReportService.Setup(v => v.GetAll()).Returns(_reportDtos);
 
             _mockValidation.Setup(v => v.IsErrors).Returns(true);
-            _mockValidation.Setup(v => v.Error).Returns(new Dictionary<string, string>());
+            _mockValidation.Setup(v => v.Errors).Returns(new ErrorContainer(new Dictionary<string, string>()));
 
             ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object, _mockValidation.Object);
 
-            var expected = new Dictionary<string, string>();
+            var expected = new ErrorContainer(new Dictionary<string, string>());
 
-            var result = (NegotiatedContentResult<Dictionary<string, string>>)reportsController.GetAll();
+            var result = (NegotiatedContentResult<ErrorContainer>)reportsController.GetAll();
 
             result.Content.Should().BeEquivalentTo(expected);
         }

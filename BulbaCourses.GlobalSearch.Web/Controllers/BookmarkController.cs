@@ -1,4 +1,5 @@
-﻿using BulbaCourses.GlobalSearch.Web.Models;
+﻿using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,17 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     [RoutePrefix("api/bookmarks")]
     public class BookmarkController : ApiController
     {
+        private readonly IBookmarkService _bookmarkService;
+        public BookmarkController(IBookmarkService bookmarkService)
+        {
+            _bookmarkService = bookmarkService;
+        }
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<Bookmark>))]
         public IHttpActionResult GetAll()
         {
-            var result = BookmarkStorage.GetAll();
+            var result = _bookmarkService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -34,7 +40,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = BookmarkStorage.GetById(id);
+                var result = _bookmarkService.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -56,7 +62,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = BookmarkStorage.GetByUserId(id);
+                var result = _bookmarkService.GetByUserId(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -70,7 +76,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult Create([FromBody]Bookmark bookmark)
         {
             //validate here
-            return Ok(BookmarkStorage.Add(bookmark));
+            return Ok(_bookmarkService.Add(bookmark));
         }
 
         [HttpDelete, Route("{id}")]
@@ -80,13 +86,13 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public IHttpActionResult RemoveById(string id)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || BookmarkStorage.GetById(id) == null)
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || _bookmarkService.GetById(id) == null)
             {
                 return BadRequest();
             }
             try
             {
-                BookmarkStorage.RemoveById(id);
+                _bookmarkService.RemoveById(id);
                 return Ok();
             }
             catch (InvalidOperationException ex)
@@ -99,7 +105,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks removed")]
         public IHttpActionResult ClearAll()
         {
-            BookmarkStorage.RemoveAll();
+            _bookmarkService.RemoveAll();
             return Ok();
         }
     }
