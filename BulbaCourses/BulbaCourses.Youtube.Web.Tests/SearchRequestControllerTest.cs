@@ -40,6 +40,8 @@ namespace BulbaCourses.Youtube.Web.Tests
         {
             var searchRequest = new SearchRequest();
             searchRequest.Title = "2015 05 03 Открытое занятие";
+            searchRequest.PublishedAfter = DateTime.Now.AddYears(-10);
+            searchRequest.PublishedBefore = DateTime.Now;
 
             var resultListVideo =
                 (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest)

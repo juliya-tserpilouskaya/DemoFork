@@ -7,16 +7,22 @@ using BulbaCourses.Youtube.Web.DataAccess.Models;
 using BulbaCourses.Youtube.Web.Logic.Models;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using AutoMapper;
+using static Google.Apis.YouTube.v3.SearchResource.ListRequest;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
     public class LogicService : ILogicService
     {
         IServiceFactory _serviceFactory;
+        Mapper _mapperSearchRequest;
+        Mapper _mapperUser;
 
         public LogicService(IServiceFactory serviceFactory)
         {
             _serviceFactory = serviceFactory;
+            _mapperSearchRequest = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<SearchRequest, SearchRequestDb>()));
+            _mapperUser = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<User, UserDb>()));
         }
 
         public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user)
@@ -30,11 +36,12 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             var _requestService = _serviceFactory.CreateSearchRequestService();
             var _userService = _serviceFactory.CreateUserService();
             var _storyService = _serviceFactory.CreateStoryService();
-
             var resultVideos = new List<ResultVideoDb>();
+            
+            //Mapping models
+            var searchRequestDb = _mapperSearchRequest.Map<SearchRequestDb>(searchRequest);
+            var userDb = _mapperUser.Map<UserDb>(user);
 
-            //convert searchRequest to searchRequestDb
-            var searchRequestDb = ParsеToDAL(searchRequest);
 
             var cacheResult = _cache.GetValue(searchRequestDb.Id);
 
@@ -61,19 +68,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 _cache.Add(searchRequestDb);
             }
 
-            var userDb = new UserDb()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                FullName = user.FullName,
-                Login = user.Login,
-                Password = user.Password,
-                NumberPhone = user.NumberPhone,
-                Email = user.Email,
-                ReserveEmail = user.ReserveEmail
-            };
-
             _userService.Save(userDb);
             var serachStoryDB = new SearchStoryDb()
             {
@@ -87,19 +81,8 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return resultVideos.AsReadOnly();
         }
 
-        private SearchRequestDb ParsеToDAL(SearchRequest searchRequest)
-        {
-            SearchRequestDb searchRequestDb = new SearchRequestDb();
-            searchRequestDb.Title = searchRequest.Title;
-            searchRequestDb.Id = searchRequest.Id;
-            searchRequestDb.VideoId = searchRequest.VideoId;
-            searchRequestDb.Author = searchRequest.Author;
-            return searchRequestDb;
-        }
-
         private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
-            var _channelService = _serviceFactory.CreateChannelService();
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -108,22 +91,41 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             });
 
             // Run the request.
+
             var searchListRequest = youtubeService.Search.List("snippet");
+            searchListRequest.Type = "video";
+            searchListRequest.PublishedAfter = searchRequest.PublishedAfter;
+            searchListRequest.PublishedBefore = searchRequest.PublishedBefore;
+            searchListRequest.VideoDefinition = (VideoDefinitionEnum)Enum.Parse(typeof(VideoDefinitionEnum), searchRequest.Definition);
+            searchListRequest.VideoDimension = (VideoDimensionEnum)Enum.Parse(typeof(VideoDimensionEnum), searchRequest.Dimension);
+            searchListRequest.VideoDuration = (VideoDurationEnum)Enum.Parse(typeof(VideoDurationEnum), searchRequest.Duration);
+            searchListRequest.VideoCaption = (VideoCaptionEnum)Enum.Parse(typeof(VideoCaptionEnum), searchRequest.VideoCaption);
             searchListRequest.Q = searchRequest.Title;
-            searchListRequest.MaxResults = 8;
+            searchListRequest.MaxResults = 10;
 
             // Call the search.list method to retrieve results matching the specified searchRequest
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
             List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
-            foreach (var searchResult in searchListResponse.Items.Where(r=>r.Id.VideoId!=null))
+            var _channelService = _serviceFactory.CreateChannelService();
+
+            foreach (var searchResult in searchListResponse.Items)
             {
+                var searchListVideo = youtubeService.Videos.List("contentDetails");
+                searchListVideo.Id = searchResult.Id.VideoId;
+                var responceVideo = await searchListVideo.ExecuteAsync();
+                var videoContentDetails = responceVideo.Items[0].ContentDetails;
+
                 ResultVideoDb resultVideo = new ResultVideoDb();
                 resultVideo.Id = searchResult.Id.VideoId;
-                resultVideo.Etag = searchResult.ETag;
                 resultVideo.Title = searchResult.Snippet.Title;
                 resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
                 resultVideo.Description = searchResult.Snippet.Description;
+                resultVideo.Thumbnail = searchResult.Snippet.Thumbnails.High.Url;
+                resultVideo.Definition = videoContentDetails.Definition;
+                resultVideo.Dimension = videoContentDetails.Dimension;
+                resultVideo.Duration = videoContentDetails.Duration;
+                resultVideo.VideoCaption = videoContentDetails.Caption;
 
                 var channel = new ChannelDb()
                 {

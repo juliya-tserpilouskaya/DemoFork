@@ -10,11 +10,13 @@ namespace BulbaCourses.Youtube.Web.Logic.Models
         public int? UserId { get; set; }
         public string VideoId { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
-        public string Author { get; set; }
-        public string Channel { get; set; }
-        public string PlayList { get; set; }
-        public DateTime PublishedAt { get; set; }
-        public string Url { get; set; }
+        public string ChannelTitle { get; set; }
+        public DateTime? PublishedBefore { get; set; }
+        public DateTime? PublishedAfter { get; set; }
+        public string Definition { get; set; } = "Any";
+        public string Dimension { get; set; } = "Any";
+        public string Duration { get; set; } = "Any";
+        public string VideoCaption { get; set; } = "Any";
+
     }
 }
