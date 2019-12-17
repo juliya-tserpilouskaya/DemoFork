@@ -29,8 +29,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         public bool Add(string key, List<ResultVideoDb> value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            var res = memoryCache.Add(key, value, DateTime.Now.AddMinutes(10));
-            return res;
+            return memoryCache.Add(key, value, DateTime.Now.AddMinutes(10));
         }
 
         /// <summary>

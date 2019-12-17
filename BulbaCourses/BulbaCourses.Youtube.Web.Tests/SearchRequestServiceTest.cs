@@ -18,13 +18,22 @@ namespace BulbaCourses.Youtube.Web.Tests
     class SearchRequestServiceTest
     {
         Faker<SearchRequestDb> fakerRequest;
-        Faker<SearchStoryDb> fakerStory;
 
         [OneTimeSetUp]
         public void Init()
         {
-            fakerRequest = new Faker<SearchRequestDb>();
-            fakerRequest.RuleFor(r => r.Title, f => f.Random.Word());
+            var definition = new[] { "High","Standard","Any"};
+            var dimension = new[] { "Value2d", "Value3d", "Any" };
+            var duration = new[] { "Long__", "Medium","Short__", "Any" };
+            var caption = new[] { "ClosedCaption", "None", "Any" };
+
+            fakerRequest = new Faker<SearchRequestDb>()
+                .RuleFor(r => r.Title, f => f.Random.Word())
+                .RuleFor(r => r.CacheId, f => f.Random.Word())
+                .RuleFor(r => r.Definition, f => f.PickRandom(definition))
+                .RuleFor(r => r.Dimension, f => f.PickRandom(dimension))
+                .RuleFor(r => r.Duration, f => f.PickRandom(duration))
+                .RuleFor(r => r.VideoCaption, f => f.PickRandom(caption));
         }
 
         [Test, Category("SearchRequest")]

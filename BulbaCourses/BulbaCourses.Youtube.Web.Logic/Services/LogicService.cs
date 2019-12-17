@@ -25,7 +25,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _mapper = new Mapper(new MapperConfiguration(cfg => {
                 cfg.CreateMap<SearchRequest, SearchRequestDb>();
                 cfg.CreateMap<User, UserDb>();
-                cfg.CreateMap<List<ResultVideoDb>, List<ResultVideo>>();
+                cfg.CreateMap<ResultVideoDb, ResultVideo>();
             }));             
         }
 
@@ -39,7 +39,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             var _requestService = _serviceFactory.CreateSearchRequestService();
             var _userService = _serviceFactory.CreateUserService();
             var _storyService = _serviceFactory.CreateStoryService();
-            var resultVideos = new List<ResultVideoDb>();
+            var resultVideosDb = new List<ResultVideoDb>();
             
             //Mapping models
             var searchRequestDb = _mapper.Map<SearchRequestDb>(searchRequest);
@@ -51,24 +51,24 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             if (cacheResult != null)
             {
                 //Get videos list from cache
-                resultVideos = cacheResult;
+                resultVideosDb = cacheResult;
 
                 //Update cache for search request for refresh storage time in the cache
-                _cache.Update(searchRequestDb.CacheId, resultVideos);
+                _cache.Update(searchRequestDb.CacheId, resultVideosDb);
             }
             else
             {
                 //Search in Youtube service
-                resultVideos = await SearchInYoutubeAsync(searchRequestDb);
+                resultVideosDb = await SearchInYoutubeAsync(searchRequestDb);
 
                 //Add result to cache
-                var res = _cache.Add(searchRequestDb.CacheId, resultVideos);
+                _cache.Add(searchRequestDb.CacheId, resultVideosDb);
             }
             
             //Save search request if does not exist
             if (!_requestService.Exists(searchRequestDb))
             {
-                searchRequestDb.Videos = resultVideos;
+                searchRequestDb.Videos = resultVideosDb;
                 searchRequestDb = _requestService.Save(searchRequestDb);
             }
             //Save user if does not exist
@@ -82,14 +82,13 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 SearchRequest = searchRequestDb,
                 User = userDb
             });
-
-            return _mapper.Map<List<ResultVideo>>(resultVideos).AsReadOnly();
+            return _mapper.Map<List<ResultVideo>>(resultVideosDb).AsReadOnly();
         }
 
         private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequestDb searchRequest)
         {
             var _channelService = _serviceFactory.CreateChannelService();
-            var resultVideos = new List<ResultVideoDb>();
+            var resultVideosDb = new List<ResultVideoDb>();
 
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -119,16 +118,16 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 var responceVideo = await searchListVideo.ExecuteAsync();
                 var videoContentDetails = responceVideo.Items[0].ContentDetails;
 
-                var resultVideo = new ResultVideoDb();
-                resultVideo.Id = searchResult.Id.VideoId;
-                resultVideo.Title = searchResult.Snippet.Title;
-                resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
-                resultVideo.Description = searchResult.Snippet.Description;
-                resultVideo.Thumbnail = searchResult.Snippet.Thumbnails.High.Url;
-                resultVideo.Definition = videoContentDetails.Definition;
-                resultVideo.Dimension = videoContentDetails.Dimension;
-                resultVideo.Duration = videoContentDetails.Duration;
-                resultVideo.VideoCaption = videoContentDetails.Caption;
+                var resultVideoDb = new ResultVideoDb();
+                resultVideoDb.Id = searchResult.Id.VideoId;
+                resultVideoDb.Title = searchResult.Snippet.Title;
+                resultVideoDb.PublishedAt = searchResult.Snippet.PublishedAt;
+                resultVideoDb.Description = searchResult.Snippet.Description;
+                resultVideoDb.Thumbnail = searchResult.Snippet.Thumbnails.High.Url;
+                resultVideoDb.Definition = videoContentDetails.Definition;
+                resultVideoDb.Dimension = videoContentDetails.Dimension;
+                resultVideoDb.Duration = videoContentDetails.Duration;
+                resultVideoDb.VideoCaption = videoContentDetails.Caption;
 
                 var channel = new ChannelDb()
                 {
@@ -138,11 +137,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 if (!_channelService.Exists(channel))
                     _channelService.Save(channel);
 
-                resultVideo.Channel = _channelService.GetChannelById(channel.Id);
+                resultVideoDb.Channel = _channelService.GetChannelById(channel.Id);
 
-                resultVideos.Add(resultVideo);
+                resultVideosDb.Add(resultVideoDb);
             }
-            return resultVideos;
+            return resultVideosDb;
         }
         private string GenerateCacheId(SearchRequestDb searchRequestDb)
         {
