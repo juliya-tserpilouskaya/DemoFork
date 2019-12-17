@@ -44,7 +44,7 @@ namespace BulbaCourses.Youtube.Web.Tests
             searchRequest.PublishedBefore = DateTime.Now;
 
             var resultListVideo =
-                (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)srController.SearchRun(searchRequest)
+                (OkNegotiatedContentResult<IEnumerable<ResultVideo>>)srController.SearchRun(searchRequest)
                 .GetAwaiter().GetResult();
 
             var result = resultListVideo.Content.ToList();

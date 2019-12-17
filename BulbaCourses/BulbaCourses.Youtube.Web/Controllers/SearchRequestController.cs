@@ -1,5 +1,4 @@
-﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
-using BulbaCourses.Youtube.Web.Logic.Models;
+﻿using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -24,7 +23,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "ResultVideo list not found")]
-        [SwaggerResponse(HttpStatusCode.OK, "ResultVideo list found", typeof(IEnumerable<ResultVideoDb>))]
+        [SwaggerResponse(HttpStatusCode.OK, "ResultVideo list found", typeof(IEnumerable<ResultVideo>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> SearchRun([FromBody]SearchRequest searchRequest)
         {

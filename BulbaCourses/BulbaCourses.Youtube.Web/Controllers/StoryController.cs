@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
+﻿using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -23,7 +23,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [HttpGet, Route("{userId})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "SearchStory found", typeof(SearchStoryDb))]
+        [SwaggerResponse(HttpStatusCode.OK, "SearchStory found", typeof(SearchStory))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetStoryByUserID(int? userId)
         {

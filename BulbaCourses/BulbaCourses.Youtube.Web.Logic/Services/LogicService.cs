@@ -16,23 +16,25 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
     {
         IServiceFactory _serviceFactory;
         ICacheService _cache;
-        Mapper _mapperSearchRequest;
-        Mapper _mapperUser;
+        Mapper _mapper;
 
         public LogicService(IServiceFactory serviceFactory)
         {
             _serviceFactory = serviceFactory;
             _cache = _serviceFactory.CreateCacheService();
-            _mapperSearchRequest = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<SearchRequest, SearchRequestDb>()));
-            _mapperUser = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<User, UserDb>()));
+            _mapper = new Mapper(new MapperConfiguration(cfg => {
+                cfg.CreateMap<SearchRequest, SearchRequestDb>();
+                cfg.CreateMap<User, UserDb>();
+                cfg.CreateMap<List<ResultVideoDb>, List<ResultVideo>>();
+            }));             
         }
 
-        public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest, User user)
+        public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ResultVideoDb>> SearchRunAsync(SearchRequest searchRequest, User user)
+        public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user)
         {
             var _requestService = _serviceFactory.CreateSearchRequestService();
             var _userService = _serviceFactory.CreateUserService();
@@ -40,9 +42,9 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             var resultVideos = new List<ResultVideoDb>();
             
             //Mapping models
-            var searchRequestDb = _mapperSearchRequest.Map<SearchRequestDb>(searchRequest);
+            var searchRequestDb = _mapper.Map<SearchRequestDb>(searchRequest);
             searchRequestDb.CacheId = GenerateCacheId(searchRequestDb);
-            var userDb = _mapperUser.Map<UserDb>(user);
+            var userDb = _mapper.Map<UserDb>(user);
 
             //Сheck cache
             var cacheResult = _cache.GetValue(searchRequestDb.CacheId);
@@ -81,7 +83,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
                 User = userDb
             });
 
-            return resultVideos.AsReadOnly();
+            return _mapper.Map<List<ResultVideo>>(resultVideos).AsReadOnly();
         }
 
         private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequestDb searchRequest)

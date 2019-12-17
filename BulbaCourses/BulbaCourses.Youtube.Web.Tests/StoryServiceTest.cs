@@ -148,7 +148,7 @@ namespace BulbaCourses.Youtube.Web.Tests
 
                 var story = storyService.GetStoriesByUserId(userId).First();
 
-                story.User.Id.Should().Be(userId);
+                story.UserId.Should().Be(userId);
             }
         }
 
@@ -169,7 +169,7 @@ namespace BulbaCourses.Youtube.Web.Tests
 
                 var story = storyService.GetStoriesByRequestId(requestId).First();
 
-                story.SearchRequest.Id.Should().Be(requestId);
+                story.SearchRequestId.Should().Be(requestId);
             }
         }
 

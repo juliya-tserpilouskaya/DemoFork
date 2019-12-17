@@ -6,24 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.Youtube.Web.DataAccess.Models;
 using BulbaCourses.Youtube.Web.Logic.Models;
+using AutoMapper;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
     public class StoryService : IStoryService
     {
         IStoryRepository _storyRepository;
+        Mapper _mapper;
         public StoryService(IStoryRepository storyRepository)
         {
             _storyRepository = storyRepository;
+            _mapper = new Mapper(new MapperConfiguration(cfg=>cfg.CreateMap<SearchStoryDb, SearchStory>()));
         }
 
         /// <summary>
         /// Save current search request as story for User
         /// </summary>
         /// <param name="story"></param>
-        public SearchStoryDb Save(SearchStoryDb story)
+        public SearchStory Save(SearchStoryDb story)
         {
-            return story != null ? _storyRepository.Save(story) : story;
+            return _mapper.Map<SearchStory>(story != null ? _storyRepository.Save(story) : story);
         }
 
         /// <summary>
@@ -50,14 +53,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetAllStories()
+        public IEnumerable<SearchStory> GetAllStories()
         {
-            return _storyRepository.GetAll();
+            return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetAll());
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetAllStoriesAsync()
+        public async Task<IEnumerable<SearchStory>> GetAllStoriesAsync()
         {
-            return await _storyRepository.GetAllAsync();
+            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetAllAsync());
         }
 
         /// <summary>
@@ -65,14 +68,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetStoriesByUserId(int? userId)
+        public IEnumerable<SearchStory> GetStoriesByUserId(int? userId)
         {
-            return _storyRepository.GetByUserId(userId);
+            return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByUserIdAsync(int? userId)
+        public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId)
         {
-            return await _storyRepository.GetByUserIdAsync(userId);
+            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetByUserIdAsync(userId));
         }
 
         /// <summary>
@@ -80,14 +83,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="requestId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetStoriesByRequestId(int? requestId)
+        public IEnumerable<SearchStory> GetStoriesByRequestId(int? requestId)
         {
-            return _storyRepository.GetByRequestId(requestId);
+            return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetByRequestId(requestId));
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetStoriesByRequestIdAsync(int? requestId)
+        public async Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId)
         {
-            return await _storyRepository.GetByRequestIdAsync(requestId);            
+            return await _mapper.Map<Task<IEnumerable<SearchStory>>>(_storyRepository.GetByRequestIdAsync(requestId));            
         }
 
         /// <summary>
@@ -95,14 +98,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         /// </summary>
         /// <param name="storyId"></param>
         /// <returns></returns>
-        public SearchStoryDb GetStoryByStoryId(int? storyId)
+        public SearchStory GetStoryByStoryId(int? storyId)
         {
-            return _storyRepository.GetByStoryId(storyId);
+            return _mapper.Map<SearchStory>(_storyRepository.GetByStoryId(storyId));
         }
 
-        public async Task<SearchStoryDb> GetStoryByStoryIdAsync(int? storyId)
+        public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
         {
-            return await _storyRepository.GetByStoryIdAsync(storyId);
+            return await _mapper.Map<Task<SearchStory>>(_storyRepository.GetByStoryIdAsync(storyId));
         }
         //public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
         //{

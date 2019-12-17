@@ -124,7 +124,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\SearchRequestController.cs" />
     <Compile Include="Controllers\StoryController.cs" />
-    <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -148,10 +147,6 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BulbaCourses.Youtube.Web.DataAccess\BulbaCourses.Youtube.Web.DataAccess.csproj">
-      <Project>{6B9F7A0D-E6EF-4218-8823-5431700500F5}</Project>
-      <Name>BulbaCourses.Youtube.Web.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.Youtube.Web.Logic\BulbaCourses.Youtube.Web.Logic.csproj">
       <Project>{578FF0D7-D576-4C6B-863F-128B3836C0BB}</Project>
       <Name>BulbaCourses.Youtube.Web.Logic</Name>
