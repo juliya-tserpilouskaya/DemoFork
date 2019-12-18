@@ -31,33 +31,4 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public DateTime? DateChange { get; set; } = DateTime.Now;
     }
-    public static class CourseStore
-    {
-        private readonly static List<CoursesITAcademy> _course = new List<CoursesITAcademy>();
-
-        static CourseStore()
-        {
-            ParserITAcademy parserITAcademy = new ParserITAcademy();
-            _course.AddRange((List<CoursesITAcademy>)parserITAcademy.GetAllCourses());
-        }
-        public static IEnumerable<CoursesITAcademy> GetAll()
-        {
-
-            return _course.AsReadOnly();
-        }
-
-        public static CoursesITAcademy GetById(string id)
-        {
-            return _course.SingleOrDefault(b => b.Id.Equals(id,
-                StringComparison.OrdinalIgnoreCase));
-        }
-
-        public static CoursesITAcademy Add(CoursesITAcademy course)
-        {
-            course.Id = Guid.NewGuid().ToString();
-            _course.Add(course);    // id записи вы формируем на стороне сервера, а не на стороне клиента
-            return course;
-        }
-
-    }
 }

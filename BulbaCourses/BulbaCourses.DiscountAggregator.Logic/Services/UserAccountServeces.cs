@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
@@ -21,7 +22,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public void DeleteById(string userId)
         {
-            //var user = UserAccountCollection.GetById(userId);
             UserAccountCollection.DeleteById(userId);
         }
 
@@ -42,5 +42,4 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
     }
-
 }

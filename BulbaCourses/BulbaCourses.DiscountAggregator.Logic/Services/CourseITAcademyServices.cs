@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using BulbaCourses.DiscountAggregator.Logic.Parsers;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         public IEnumerable<CoursesITAcademy> GetAll()
         {
-            //return ParserITAcademy.GetAllCourseITAcademy();
-            return CourseStore.GetAll();
+            return CourseITAcademyStorage.GetAll();
         }
     }
 }

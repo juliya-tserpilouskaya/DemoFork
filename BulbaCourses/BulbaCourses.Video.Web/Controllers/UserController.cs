@@ -23,6 +23,7 @@ namespace BulbaCourses.Video.Web.Controllers
             this.mapper = mapper;
             this.userService = userService;
         }
+
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]

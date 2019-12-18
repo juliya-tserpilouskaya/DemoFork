@@ -259,9 +259,14 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CourseBookmarkController.cs" />
+    <Compile Include="Controllers\CourseCategoryController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseITAcademyController.cs" />
+    <Compile Include="Controllers\CourseUdemyController.cs" />
+    <Compile Include="Controllers\DomianController.cs" />
+    <Compile Include="Controllers\SearchCriteriaController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

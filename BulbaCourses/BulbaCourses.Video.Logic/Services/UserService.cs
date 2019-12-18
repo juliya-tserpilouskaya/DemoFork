@@ -66,5 +66,31 @@ namespace BulbaCourses.Video.Logic.Services
             var userDb = mapper.Map<UserInfo, UserDb>(user);
             userRepository.Update(userDb);
         }
+
+        public bool IsLoginExist(string login)
+        {
+            var user = userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(login));
+            if (user != null)
+                return true;
+            else return false;
+        }
+
+        public bool IsEmailExist(string email)
+        {
+            var user = userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
+            if (user != null)
+                return true;
+            else return false;
+        }
+
+        public bool ChangeLogin(string userName, string email)
+        {
+            var user = userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
+            user.Login = userName;
+            userRepository.Update(user);
+            if (user != null)
+                return true;
+            else return false;
+        }
     }
 }

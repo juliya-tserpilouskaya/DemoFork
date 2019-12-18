@@ -53,7 +53,9 @@
     <Compile Include="DTO\DashboardDto.cs" />
     <Compile Include="DTO\ReportDto.cs" />
     <Compile Include="DTO\ReportShortDto.cs" />
+    <Compile Include="Infrastructure\Assemblies\AssemblyHelper.cs" />
     <Compile Include="Infrastructure\BLLModule.cs" />
+    <Compile Include="Infrastructure\Errors.cs" />
     <Compile Include="Infrastructure\MappingProfiles\ReportProfile.cs" />
     <Compile Include="Infrastructure\Validation.cs" />
     <Compile Include="Interface\IReportService.cs" />

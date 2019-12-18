@@ -16,11 +16,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(html);
             List<CoursesITAcademy> listCourses = new List<CoursesITAcademy>();
-
             var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='programm-card-wrap ']/a");
-
             if (htmlNodes is null) return listCourses;    // TODO
-
             foreach (var node in htmlNodes)
             {
                 CoursesITAcademy currentCourse = new CoursesITAcademy()
@@ -32,16 +29,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                 SetFieldsCourse(currentCourse);
                 listCourses.Add(currentCourse);
             }
-
             return listCourses;
-
         }
 
         private void SetFieldsCourse(CoursesITAcademy course)
         {
             var web = new HtmlWeb();
             var doc = web.Load(course.URL);
-
             var htmlNodes = doc.DocumentNode.SelectNodes("//div[@class='course-item__price']");
             var htmlNodesDiscount = doc.DocumentNode.SelectNodes("//span[@class='discount']");
             var htmlNodesNewPrice = doc.DocumentNode.SelectNodes("//span[@class='price price_new']");
@@ -56,11 +50,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                 course.CurrentPrice = Convert.ToDouble(htmlNodesNewPrice.FirstOrDefault().InnerHtml.Trim().Substring(0, htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Length - 3).Replace('.',','));// Convert.ToDouble(htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Substring(0, htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Length - 3));
                 course.Discount = Convert.ToInt32(htmlNodesDiscount.FirstOrDefault().InnerHtml.Trim().Remove(htmlNodesDiscount.FirstOrDefault().InnerHtml.Length - 1, 1).Remove(0, 1));
             }
-
             course.Description = htmlNodesDescription.FirstOrDefault().ChildNodes[4].InnerText;
-
         }
-
-
     }
 }

@@ -10,5 +10,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
     {
         internal static string urlItAcademy = @"https://www.it-academy.by/specialization/programmirovanie/";
         internal static string hostItAcademy = @"https://www.it-academy.by";
+        internal static string urlUdemy = @"https://www.udemy.com/courses/development/";
     }
 }
