@@ -50,8 +50,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Context\CourseContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Services\ICourseService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,5 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Parsers;
+﻿using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Logic.Parsers;
 using BulbaCourses.DiscountAggregator.Logic.Services;
 using Ninject.Modules;
 using System;
@@ -18,6 +19,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
             Bind<ICourseBookmarkServices>().To<CourseBookmarkServices>();
             Bind<IUserAccountServise>().To<UserAccountServeces>();
 
+            //Bind<ICourseService>().To<CourseService>();
         }
     }
 }
