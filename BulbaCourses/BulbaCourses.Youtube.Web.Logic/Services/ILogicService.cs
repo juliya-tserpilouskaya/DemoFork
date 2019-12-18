@@ -1,26 +1,25 @@
 ﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
 using BulbaCourses.Youtube.Web.Logic.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.Youtube.Web.Logic.Services
 {
-    public interface ISearchRequestService
+    public interface ILogicService
     {
         /// <summary>
-        /// Save search request
+        /// YouTube video search
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        SearchRequestDb Save(SearchRequestDb searchRequest);
+        IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user);
+
         /// <summary>
-        /// Сheck if record of searchRequest exists in database
+        /// YouTube video search
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        bool Exists(SearchRequestDb searchRequest);
+        Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user);
+
     }
 }

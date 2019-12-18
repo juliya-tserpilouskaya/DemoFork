@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BulbaCourses.Youtube.Web.DataAccess.Models
+namespace BulbaCourses.Youtube.Web.Logic.Models
 {
-    public class ResultVideoDb
+    public class ResultVideo
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -15,7 +15,5 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
         public string Duration { get; set; }
         public string VideoCaption { get; set; }
         public string Thumbnail { get; set; }
-        public ChannelDb Channel { get; set; } //reference
-        public ICollection<SearchRequestDb> SearchRequests { get; set; } //reference
     }
 }
