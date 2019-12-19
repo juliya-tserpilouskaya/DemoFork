@@ -62,5 +62,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         SearchStoryDb GetByStoryId(int? storyId);
 
         Task<SearchStoryDb> GetByStoryIdAsync(int? storyId);
+
+        Task<bool> ExistsAsync(int? storyId);
     }
 }

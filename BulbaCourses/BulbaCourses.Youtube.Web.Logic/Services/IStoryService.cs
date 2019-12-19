@@ -63,5 +63,7 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
 
         Task<SearchStory> GetStoryByStoryIdAsync(int? storyId);
 
+        Task<bool> ExistsAsync(int? storyId);
+
     }
 }

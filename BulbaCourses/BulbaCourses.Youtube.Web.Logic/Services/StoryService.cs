@@ -112,5 +112,10 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
         {
             return _mapper.Map<SearchStory>(await _storyRepository.GetByStoryIdAsync(storyId));
         }
+
+        public async Task<bool> ExistsAsync(int? storyId)
+        {
+            return _mapper.Map<SearchStory>(await _storyRepository.ExistsAsync(storyId));
+        }
     }
 }

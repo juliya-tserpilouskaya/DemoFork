@@ -112,6 +112,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             }
         }
 
+        public async Task<bool> ExistsAsync(int? storyId)
+        {
+            return await _context.SearchStories.AnyAsync(s => s.Id == storyId);
+        }
+
         public void Dispose()
         {
             Dispose(true);
