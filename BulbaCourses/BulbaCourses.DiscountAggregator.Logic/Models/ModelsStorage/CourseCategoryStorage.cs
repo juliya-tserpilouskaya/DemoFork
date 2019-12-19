@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
 {
-    class CourseCategoryStorage
+    public static class CourseCategoryStorage
     {
         private readonly static List<CourseCategory> _courseCategory = new List<CourseCategory>();
 

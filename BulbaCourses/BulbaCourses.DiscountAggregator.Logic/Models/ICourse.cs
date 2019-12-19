@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BulbaCourses.DiscountAggregator.Logic.Models
+{
+    public interface ICourse
+    {
+        string Id { get; set; }
+
+        string Domain { get; set; }
+
+        string URL { get; set; }
+
+        string Title { get; set; }
+
+        string Description { get; set; }
+
+        double CurrentPrice { get; set; }
+
+        double OldPrice { get; set; }
+
+        DateTime? DateOldPrice { get; set; }
+
+        int Discount { get; set; }
+
+        DateTime? DateStartCourse { get; set; }
+
+        DateTime? DateChange { get; set; }
+    }
+}

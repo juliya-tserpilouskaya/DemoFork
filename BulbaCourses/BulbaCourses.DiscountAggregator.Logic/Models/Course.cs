@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    public class Course
+    public class Course : ICourse
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        public string Domain { get; set; }
 
         public string URL { get; set; }
 
@@ -17,11 +19,18 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string Title { get; set; }
 
-        public double Price { get; set; }
+        public string Description { get; set; }
+
+        public double CurrentPrice { get; set; }
+
+        public double OldPrice { get; set; }
+
+        public DateTime? DateOldPrice { get; set; } = DateTime.Now;
 
         public int Discount { get; set; }
-        public int OldDiscount { get; set; }
 
-        public string Description { get; set; }
+        public DateTime? DateStartCourse { get; set; } = DateTime.Now;
+
+        public DateTime? DateChange { get; set; } = DateTime.Now;
     }
 }
