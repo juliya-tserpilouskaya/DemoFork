@@ -13,7 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
 {
     public class CourseContext : DbContext
     {
-        public CourseContext() : base("DbConnection")
+        public CourseContext() : base("DADbConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CourseContext, Configuration>());
         }

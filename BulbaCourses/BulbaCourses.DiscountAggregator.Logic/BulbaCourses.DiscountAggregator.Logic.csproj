@@ -87,7 +87,7 @@
     <Compile Include="Models\ModelsStorage\CourseCategoryStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesITAcademyStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesUdemyStorage.cs" />
-    <Compile Include="Models\ModelsStorage\Courseware.cs" />
+    <Compile Include="Models\ModelsStorage\CourseStorage.cs" />
     <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
     <Compile Include="Models\ModelsStorage\SearchCriteriaStorage.cs" />
     <Compile Include="Models\ModelsStorage\UserAccountCollection.cs" />

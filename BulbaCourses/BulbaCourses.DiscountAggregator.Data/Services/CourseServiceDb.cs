@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
-    public class CourseService : ICourseService
+    public class CourseServiceDb : ICourseService
     {
         private readonly CourseContext courseContext;// = new CourseContext();
         
-        public CourseService(CourseContext courseService)
+        public CourseServiceDb(CourseContext courseService)
         {
             this.courseContext = courseService;
         }

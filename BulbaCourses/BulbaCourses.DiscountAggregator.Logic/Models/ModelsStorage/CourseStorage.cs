@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
 {
-    public static class Courseware
+    public static class CourseStorage
     {
         private readonly static List<Course> _course = new List<Course>();
 
-        static Courseware()
+        static CourseStorage()
         {
             var faker = new Faker<Course>();
             faker.RuleFor(_ => _.URL, f => f.Internet.Url());
