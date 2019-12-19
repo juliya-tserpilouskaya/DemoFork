@@ -1,4 +1,5 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using AutoMapper;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -14,11 +15,13 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
-        private readonly ICourseServices courseService;
+        //private readonly IMapper _mapper;
+        private readonly ICourseServices _courseService;
         
-        public CourseController(ICourseServices courseService)
+        public CourseController(/*IMapper mapper,*/ ICourseServices courseService)
         {
-            this.courseService = courseService;
+            //this._mapper = mapper;
+            this._courseService = courseService;
         }
 
         [HttpGet, Route("")]
@@ -29,7 +32,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
         {
-            var result = courseService.GetAll();
+            var result = _courseService.GetAll();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -49,7 +52,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                var result = courseService.GetById(id); //Courseware.GetById(id);
+                var result = _courseService.GetById(id); //Courseware.GetById(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

@@ -48,8 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Context\CourseContext.cs" />
+    <Compile Include="Migrations\201912191112145_InitialCreateTables.cs" />
+    <Compile Include="Migrations\201912191112145_InitialCreateTables.Designer.cs">
+      <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="Models\CourseDb.cs" />
@@ -60,6 +63,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201912191112145_InitialCreateTables.resx">
+      <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

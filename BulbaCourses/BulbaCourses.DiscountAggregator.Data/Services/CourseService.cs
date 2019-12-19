@@ -10,7 +10,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly CourseContext courseContext = new CourseContext();
+        private readonly CourseContext courseContext;// = new CourseContext();
         
         public CourseService(CourseContext courseService)
         {

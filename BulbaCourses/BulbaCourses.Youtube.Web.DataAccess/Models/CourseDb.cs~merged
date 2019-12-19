@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BulbaCourses.Youtube.Web.DataAccess.Models
+{
+<<<<<<< HEAD
+    public class CourseDb //получаем из другого домена, нужна ли эта сущность??
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+=======
+<<<<<<< HEAD:BulbaCourses/BulbaCourses.Youtube.Web.DataAccess/Models/ChannelDb.cs
+    public class ChannelDb
+=======
+    public class CourseDb //получаем из другого домена, нужна ли эта сущность??
+>>>>>>> dc04bacf482ad9924ba8ee94482b96fdbe594b56:BulbaCourses/BulbaCourses.Youtube.Web.DataAccess/Models/CourseDb.cs
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+<<<<<<< HEAD:BulbaCourses/BulbaCourses.Youtube.Web.DataAccess/Models/ChannelDb.cs
+        public ICollection<ResultVideoDb> Videos { get; set; } //reference
+        public MentorDb Mentor { get; set; } //reference
+        //public string Author { get; set; }
+=======
+>>>>>>> dc04bacf482ad9924ba8ee94482b96fdbe594b56:BulbaCourses/BulbaCourses.Youtube.Web.DataAccess/Models/CourseDb.cs
+>>>>>>> dc04bacf482ad9924ba8ee94482b96fdbe594b56
+    }
+}

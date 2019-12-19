@@ -16,9 +16,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
             var faker = new Faker<Course>();
             faker.RuleFor(_ => _.URL, f => f.Internet.Url());
             faker.RuleFor(_ => _.Category, f => f.Company.CompanyName());
-            faker.RuleFor(_ => _.Title, f => f.Lorem.Sentence(10));// f => f.Lorem.Sentence(10));
-            faker.RuleFor(_ => _.Price, f => f.Random.Double(0, 100000));// f => f.Random.Double());//f.Commerce.Price(0,10000,2));// .Double());
-            faker.RuleFor(_ => _.Discount, f => f.Random.Int(1, 99));// f => f.Random.Int());
+            faker.RuleFor(_ => _.Title, f => f.Lorem.Sentence(10));
+            faker.RuleFor(_ => _.Price, f => f.Random.Double(0, 100000));
+            faker.RuleFor(_ => _.Discount, f => f.Random.Int(1, 99));
             faker.RuleFor(_ => _.Description, f => f.Lorem.Sentences(13));
             _course = faker.Generate(10);
         }

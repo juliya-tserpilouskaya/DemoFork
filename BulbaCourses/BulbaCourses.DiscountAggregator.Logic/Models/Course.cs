@@ -20,6 +20,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
         public double Price { get; set; }
 
         public int Discount { get; set; }
+        public int OldDiscount { get; set; }
 
         public string Description { get; set; }
     }

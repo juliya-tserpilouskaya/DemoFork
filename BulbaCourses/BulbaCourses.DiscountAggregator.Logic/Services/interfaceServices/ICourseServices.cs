@@ -1,4 +1,5 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,5 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         Course GetById(string id);
         IEnumerable<Course> GetAll();
         Course Add(Course course);
-    }
+    }   
 }
