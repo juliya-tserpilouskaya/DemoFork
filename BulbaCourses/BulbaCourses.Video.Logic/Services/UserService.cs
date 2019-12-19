@@ -67,20 +67,35 @@ namespace BulbaCourses.Video.Logic.Services
             _userRepository.Update(userDb);
         }
 
-        public bool IsLoginExist(string login)
+        public async Task<bool> ExistLoginAsync(string login)
         {
-            var user = _userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(login));
-            if (user != null)
-                return true;
-            else return false;
+            return await _userRepository.IsLoginExistAsync(login);
         }
 
-        public bool IsEmailExist(string email)
+        public async Task<bool> ExistEmailAsync(string email)
         {
-            var user = _userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
+            return await _userRepository.IsEmailExistAsync(email);
+        }
+
+        public async Task<bool> CheckEmailForLossingPass(string email)
+        {
+            var exsist = await _userRepository.IsEmailExistAsync(email);
+            if (exsist == true)
+            { exsist = false; }
+            else if (exsist == false)
+            { exsist = true; }
+            return exsist;
+        }
+
+        public async Task<bool> CheckPasswordAsync(string id, string password)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            var correctPass = false;
             if (user != null)
-                return true;
-            else return false;
+            {
+                correctPass = user.Password.Equals(password);
+            }
+            return correctPass;
         }
 
         public bool ChangeLogin(string userName, string email)

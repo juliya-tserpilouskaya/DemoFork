@@ -20,5 +20,7 @@ namespace BulbaCourses.Video.Data.Interfaces
         Task<int> AddAsync(UserDb userDb);
         Task<int> UpdateAsync(UserDb userDb);
         Task<int> RemoveAsync(UserDb user);
+        Task<bool> IsLoginExistAsync(string login);
+        Task<bool> IsEmailExistAsync(string email);
     }
 }

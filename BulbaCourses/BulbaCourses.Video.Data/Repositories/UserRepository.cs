@@ -85,5 +85,15 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.Entry(user).State = EntityState.Modified;
             return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
+
+        public async Task<bool> IsLoginExistAsync(string login)
+        {
+            return await _videoDbContext.Users.AnyAsync(c => c.Login.Equals(login)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsEmailExistAsync(string email)
+        {
+            return await _videoDbContext.Users.AnyAsync(c => c.Email.Equals(email)).ConfigureAwait(false);
+        }
     }
 }

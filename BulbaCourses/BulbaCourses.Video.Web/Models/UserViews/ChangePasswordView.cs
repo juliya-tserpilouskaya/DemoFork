@@ -8,6 +8,8 @@ namespace BulbaCourses.Video.Web.Models.UserViews
 {
     public class ChangePasswordView
     {
+        public string UserId { get; set; }
+
         [Required]
         [Display(Name = "Old password")]
         [DataType(DataType.Password)]

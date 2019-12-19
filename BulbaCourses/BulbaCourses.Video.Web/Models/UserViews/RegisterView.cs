@@ -8,6 +8,8 @@ namespace BulbaCourses.Video.Web.Models.UserViews
 {
     public class RegisterView
     {
+        public string UserId { get; set; }
+
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Firstname")]
         public string Name { get; set; }
