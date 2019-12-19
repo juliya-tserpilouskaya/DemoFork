@@ -28,7 +28,6 @@ namespace BulbaCourses.Youtube.Web.Tests
                 .RuleFor(v => v.Name, f => f.Random.Words(3));
 
             //Faker for MentorDb
-            int? MentorIds = 0;
             Faker<MentorDb> fakerCO = new Faker<MentorDb>();
             fakerCO.RuleFor(v => v.Login, f => f.Internet.UserName())
                 .RuleFor(v => v.Password, f => f.Random.String(8))
@@ -55,6 +54,7 @@ namespace BulbaCourses.Youtube.Web.Tests
             
         }
 
+        /*
         [Test]
         public void Test_GetById()
         {
@@ -76,7 +76,7 @@ namespace BulbaCourses.Youtube.Web.Tests
 
             var result = (OkNegotiatedContentResult<IEnumerable<ResultVideoDb>>)videoController.GetAll();
             result.Content.Should().BeEquivalentTo((IEnumerable<ResultVideoDb>)videos.AsReadOnly());
-        }
+        }*/
 
     }
 }

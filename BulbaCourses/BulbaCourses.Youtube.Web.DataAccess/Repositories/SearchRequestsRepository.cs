@@ -1,7 +1,9 @@
 ﻿using BulbaCourses.Youtube.Web.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
@@ -11,45 +13,19 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         private YoutubeContext _context;
         private bool _isDisposed = false;
 
-        //temp list for request
-        List<SearchRequestDb> searchRequests = new List<SearchRequestDb>();
-
-
         public SearchRequestsRepository(YoutubeContext ctx)
         {
             _context = ctx;
         }
 
-        public IQueryable<SearchRequestDb> SearchRequests => _context.SearchRequests;
-
         public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
-
-            //temp: save to list
-            searchRequests.Add(request);
-            return request;
-
-            /*
-            if (string.IsNullOrEmpty(request.Id))
-            {
-                 _context.SearchRequests.Add(request);
-            }
-            else
-            {
-                var editRequest = _context.SearchRequests.SingleOrDefault(r => r.Id == request.Id);
-                if (editRequest != null)
-                {
-                    editRequest.Title = request.Title;
-                    //editRequest.Description = request.Description;
-                }                
-            }
-
-
+            _context.SearchRequests.Add(request);
             _context.SaveChanges();
-            return request;*/
+            return request;
         }
 
-        public SearchRequestDb DeleteRequest(string requestId)
+        public void DeleteRequest(int? requestId)
         {
             var delRequest = _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
             if (delRequest != null)
@@ -57,8 +33,11 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
                 _context.SearchRequests.Remove(delRequest);
                 _context.SaveChanges();
             }
+        }
 
-            return delRequest;
+        public bool Exists(SearchRequestDb searchRequest)
+        {
+            return _context.SearchRequests.Any(r => r.CacheId == searchRequest.CacheId);
         }
 
         public IEnumerable<SearchRequestDb> GetAllRequests()
@@ -66,11 +45,21 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
             return _context.SearchRequests.ToList().AsReadOnly();
         }
 
-        public SearchRequestDb GetRequestById(string requestId)
+         public SearchRequestDb GetRequestById(int? requestId)
         {
             return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
         }
 
+        //Async methods
+        public async Task<IEnumerable<SearchRequestDb>> GetAllRequestsAsync()
+        {
+            return await _context.SearchRequests.ToListAsync();
+        }
+
+        public async Task<SearchRequestDb> GetRequestByIdAsync(int? requestId)
+        {
+            return await _context.SearchRequests.SingleOrDefaultAsync(r => r.Id == requestId);
+        }
 
         //interface method implementation
         public void Dispose()
