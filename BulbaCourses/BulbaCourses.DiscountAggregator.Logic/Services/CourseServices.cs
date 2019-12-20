@@ -24,9 +24,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public Course GetById(string id)
         {
-            //тут должно быть какое-либо преобразование, иначе не имеет смысла
-            //return Courseware.GetById(id);
-            throw new NotImplementedException();
+            var courses = _courseService.GetById(id);
+            var result = mapper.Map<CourseDb, Course>(courses);
+            return result;
         }
 
         public IEnumerable<Course> GetAll()
@@ -37,11 +37,22 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;//Courseware.GetAll();
         }
 
-        public Course Add(Course course)
+        public void Add(Course course)
         {
-            throw new NotImplementedException();
+            var courseDb = mapper.Map<Course, CourseDb>(course);
+            _courseService.Add(courseDb);
         }
 
-        
+        public void Delete(Course course)
+        {
+            var courseDb = mapper.Map<Course, CourseDb>(course);
+            _courseService.Delete(courseDb);
+        }
+
+        public void Update(Course course)
+        {
+            var courseDb = mapper.Map<Course, CourseDb>(course);
+            _courseService.Update(courseDb);
+        }
     }
 }

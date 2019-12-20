@@ -45,12 +45,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             if (htmlNodesDiscount is null)
             {
                 var _ = htmlNodes.FirstOrDefault().InnerText.Trim().Replace('.', ',');
-                course.CurrentPrice = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
+                course.Price = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
             }
             else
             {
                 var _ = htmlNodesNewPrice.FirstOrDefault().InnerHtml.Trim().Replace('.', ',');
-                course.CurrentPrice = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
+                course.Price = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
                 course.Discount = Convert.ToInt32(Regex
                     .Match(htmlNodesDiscount.FirstOrDefault().InnerHtml, @"[\d]+").ToString());
             }

@@ -21,7 +21,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string Description { get; set; }
 
-        public double CurrentPrice { get; set; }
+        public double Price { get; set; }
 
         public double OldPrice { get; set; }
 
