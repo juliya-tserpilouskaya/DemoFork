@@ -1,13 +1,15 @@
 ﻿using BulbaCourses.Analytics.DAL.Context.Configurations;
+using BulbaCourses.Analytics.DAL.Interface;
 using BulbaCourses.Analytics.DAL.Models;
 using System.Data.Entity;
 using System.Diagnostics;
 
 namespace BulbaCourses.Analytics.DAL.Context
-{
-    public class AlfaContext : DbContext
+{  
+    [DbConfigurationType(typeof(DbConfig))]
+    public class AnalyticsContext : DbContext
     {
-        public AlfaContext() : base("AnalyticsDbConnection")
+        public AnalyticsContext() : base("AnalyticsDbConnection")
         {
             Database.Log = s => Debug.WriteLine(s);
         }
@@ -19,18 +21,18 @@ namespace BulbaCourses.Analytics.DAL.Context
         public DbSet<ChartDb> Charts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {           
+        {
 
             base.OnModelCreating(modelBuilder);
 
-            Database.SetInitializer(
-                new DropCreateDatabaseIfModelChanges<AlfaContext>());            
+            // Uncomment if need create Database
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<AnalyticsContext>());
 
             modelBuilder.Configurations.Add(new ReportConfigurations());
             modelBuilder.Configurations.Add(new DashboardConfigurations());
             modelBuilder.Configurations.Add(new ChartConfigurations());
 
-            Debug.WriteLine("+++++++++++++ OnModelCreating +++++++++++++");
+            Debug.WriteLine("+++++++++++++ AnalyticsContext OnModelCreating +++++++++++++");
         }
     }
 }
