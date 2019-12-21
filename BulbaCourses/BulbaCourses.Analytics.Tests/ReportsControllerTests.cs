@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using BulbaCourses.Analytics.BLL.DTO;
-using BulbaCourses.Analytics.BLL.Infrastructure;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.Web.Controllers;
-using BulbaCourses.Analytics.Web.Models;
+using BulbaCourses.Analytics.Web.Controllers.V1;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -19,7 +16,7 @@ namespace BulbaCourses.Analytics.Tests
         private List<ReportShortDto> _reportDtos;
         private List<ReportShortVm> _reportVms;
         private Mock<IMapper> _mockMapper;
-        private Mock<IReportService> _mockReportService;
+        private Mock<IReportsService> _mockReportService;
         private Mock<IValidation> _mockValidation;
 
         [SetUp]
@@ -31,7 +28,7 @@ namespace BulbaCourses.Analytics.Tests
             _mockMapper = new Mock<IMapper>();
             _mockMapper.Setup(v => v.Map<IEnumerable<ReportShortVm>>(_reportDtos)).Returns(_reportVms);
 
-            _mockReportService = new Mock<IReportService>();
+            _mockReportService = new Mock<IReportsService>();
             _mockValidation = new Mock<IValidation>();
 
         }
@@ -54,7 +51,7 @@ namespace BulbaCourses.Analytics.Tests
             _mockReportService.Setup(v => v.GetAll()).Returns(_reportDtos);
 
             _mockValidation.Setup(v => v.IsErrors).Returns(true);
-            _mockValidation.Setup(v => v.Errors).Returns(new ErrorContainer(new Dictionary<string, string>()));
+            _mockValidation.Setup(v => v.Error).Returns(new ErrorContainer(new Dictionary<string, string>()));
 
             ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object, _mockValidation.Object);
 
