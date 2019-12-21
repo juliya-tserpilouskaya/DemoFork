@@ -15,12 +15,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
-        //private readonly IMapper _mapper;
         private readonly ICourseServices _courseService;
         
-        public CourseController(/*IMapper mapper,*/ ICourseServices courseService)
+        public CourseController( ICourseServices courseService)
         {
-            //this._mapper = mapper;
             this._courseService = courseService;
         }
 
@@ -62,25 +60,104 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
         }
 
-        //примеры для дальнейшего использования
-        //[HttpPost, Route("")]
-        //public IHttpActionResult Create([FromBody]Book book)
-        //{
-        //    // validate book here  //todo, обычно проводиться на стороне клиента
-        //    //201 статус обычно и используют для Create, но там нужно описать, что он возвращает URL, по которому можно обратиться к книге
-        //    return Ok(BookStorage.Add(book));
-        //}
+        [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult DeleteById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _courseService.DeleteById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
-        //[HttpPut, Route("")]
-        //public IHttpActionResult Update([FromBody]Book book)
-        //{
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "All courses was updated", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult UpdateAll([FromBody]Course course)
+        {
+            try
+            {
+                _courseService.Update(course);
+                return Ok();
+            }
 
-        //}
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
-        //[HttpDelete, Route("{id}")]
-        //public IHttpActionResult Delete(string id)
-        //{
+        [HttpPut, Route("id")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult UpdateById(string id, [FromBody]Course course)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
 
-        //}
+            try
+            {
+                _courseService.Update(course);
+                return Ok();
+            }
+
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost, Route("")]
+        public IHttpActionResult Create([FromBody]Course course)
+        {
+            //if (course == null || !Enum.IsDefined(typeof(CourseCategory), course.Category))
+            //{
+            //    return BadRequest();
+            //}
+            var newCourse = new Course
+            {
+                Id = course.Id,// "111",
+                Domain = course.Domain,
+                URL = "111",
+                Category = "111",
+                Title = "111",
+                Description = "111",
+                Price = 20.0,
+                OldPrice = 20.0,
+                DateOldPrice = DateTime.Now,
+                Discount = 20,
+                DateStartCourse = DateTime.Now,
+                DateChange = DateTime.Now,
+
+            };
+            try
+            {
+                _courseService.Add(newCourse);
+                return Ok(newCourse);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+            
+        }
+
+
+
+
     }
 }

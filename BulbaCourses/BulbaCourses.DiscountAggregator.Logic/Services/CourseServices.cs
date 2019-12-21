@@ -49,10 +49,22 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             _courseService.Delete(courseDb);
         }
 
+        public void DeleteById(string id)
+        {
+            var course = _courseService.GetById(id);
+            _courseService.Delete(course);
+        }
+
         public void Update(Course course)
         {
             var courseDb = mapper.Map<Course, CourseDb>(course);
             _courseService.Update(courseDb);
+        }
+
+
+        public void UpdatebyId(string id, Course course)
+        {
+            throw new NotImplementedException();
         }
     }
 }

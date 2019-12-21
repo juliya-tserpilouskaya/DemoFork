@@ -10,10 +10,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     public interface ICourseServices
     {
-        Course GetById(string id);
         IEnumerable<Course> GetAll();
+        Course GetById(string id);
         void Add(Course course);
-        void Delete(Course course);
+        void DeleteById(string id);
         void Update(Course course);
+        void UpdatebyId(string id, Course course);
+
     }   
 }
