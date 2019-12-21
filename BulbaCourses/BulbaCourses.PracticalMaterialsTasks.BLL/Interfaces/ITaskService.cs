@@ -10,8 +10,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 {
     public interface ITaskService
     {
-        Models.Task GetTask(int? id);
-        IEnumerable<Models.Task> GetTasks(DbContext context);
+        Models.Task GetTask(int id);
+        IEnumerable<Models.Task> GetTasks();
         void Dispose();
     }
 }
