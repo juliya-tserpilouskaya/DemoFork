@@ -3,8 +3,8 @@
 
 namespace BulbaCourses.Analytics.Web.App_Start
 {
-    using BulbaCourses.Analytics.BLL.Infrastructure;
-    using BulbaCourses.Analytics.Web.Infrastructure;
+    using BulbaCourses.Analytics.BLL.Ensure;
+    using BulbaCourses.Analytics.Web.Ensure;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
@@ -14,6 +14,9 @@ namespace BulbaCourses.Analytics.Web.App_Start
     using System.Web;
     using System.Web.Http;
 
+    /// <summary>
+    /// Represents Ninject Web configuration.
+    /// </summary>
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

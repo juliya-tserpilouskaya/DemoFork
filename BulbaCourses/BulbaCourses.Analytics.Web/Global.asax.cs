@@ -7,6 +7,9 @@ using System.Web.Routing;
 
 namespace BulbaCourses.Analytics.Web
 {
+    /// <summary>
+    /// Global Application Start
+    /// </summary>
     public class Global : HttpApplication
     {
         void Application_Start(object sender, EventArgs e)
