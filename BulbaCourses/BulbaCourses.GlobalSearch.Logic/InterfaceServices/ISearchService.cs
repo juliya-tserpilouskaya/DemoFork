@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
 {
-    interface ISearchService
+    public interface ISearchService
     {
         IEnumerable<LearningCourseDTO> Search();
         Task<IEnumerable<LearningCourseDTO>> SearchAsync();
