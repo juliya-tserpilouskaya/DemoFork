@@ -9,7 +9,8 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
 {
     public interface ISearchService
     {
-        IEnumerable<LearningCourseDTO> Search();
+        IEnumerable<LearningCourseDTO> Search(string query);
+        IEnumerable<LearningCourseDTO> GetIndexedCourses();
         Task<IEnumerable<LearningCourseDTO>> SearchAsync();
     }
 }

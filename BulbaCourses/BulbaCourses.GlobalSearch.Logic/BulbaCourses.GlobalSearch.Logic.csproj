@@ -70,7 +70,7 @@
     <Compile Include="InterfaceServices\ISearchQueryService.cs" />
     <Compile Include="InterfaceServices\ISearchService.cs" />
     <Compile Include="LogicModule.cs" />
-    <Compile Include="LuceneSearch.cs" />
+    <Compile Include="Lucene\LuceneSearch.cs" />
     <Compile Include="Models\AnonymousUser.cs" />
     <Compile Include="Models\AnonymousUserStorage.cs" />
     <Compile Include="Models\Author.cs" />
