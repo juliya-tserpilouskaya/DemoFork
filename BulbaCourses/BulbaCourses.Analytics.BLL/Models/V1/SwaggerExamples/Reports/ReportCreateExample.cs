@@ -1,12 +1,12 @@
-﻿using Swashbuckle.Examples;
-using System;
+﻿using BulbaCourses.Analytics.Models.V1;
+using Swashbuckle.Examples;
 
 namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports
 {
     /// <summary>
-    /// Represents a example of model view report.
+    /// Represents a example of model view new report.
     /// </summary>
-    public class ReportIdExample : IExamplesProvider
+    public class ReportCreateExample : IExamplesProvider
     {
         /// <summary>
         /// Gets a example of model view report.
@@ -14,9 +14,10 @@ namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports
         /// <returns></returns>
         public virtual object GetExamples()
         {
-            var value = new ReportId()
+            var value = new ReportNew()
             {
-                Id = Guid.NewGuid().ToString()               
+                Name = "Number of requests per day",
+                Description = "The dynamics of the number of requests per day",
             };
 
             return value;

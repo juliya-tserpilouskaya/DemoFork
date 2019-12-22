@@ -29,7 +29,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
             FluentValidationModelValidatorProvider.Configure(configutation,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
-            AssemblyScanner.FindValidatorsInAssemblyContaining(typeof(ReportNewValidator))
+            AssemblyScanner.FindValidatorsInAssemblyContaining(typeof(ReportCreateValidator))
                 .ForEach(result => 
                     kernel.Bind(result.InterfaceType).To(result.ValidatorType)
                 );

@@ -1,4 +1,6 @@
-﻿namespace BulbaCourses.Analytics.Models.V1
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BulbaCourses.Analytics.Models.V1
 {
     /// <summary>
     /// Represents a model view new report.
@@ -8,6 +10,7 @@
         /// <summary>
         /// Gets or sets the name for the report.
         /// </summary>
+        [Required] 
         public string Name { get; set; }
 
         /// <summary>

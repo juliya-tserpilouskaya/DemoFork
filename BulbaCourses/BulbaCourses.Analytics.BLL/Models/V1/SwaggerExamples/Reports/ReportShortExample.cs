@@ -10,7 +10,7 @@ namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports
     public class ReportShortExample : IExamplesProvider
     {
         /// <summary>
-        /// Getts a example of model view report short.
+        /// Gets a example of model view report short.
         /// </summary>
         /// <returns></returns>
         public virtual object GetExamples()
