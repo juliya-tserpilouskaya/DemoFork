@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.Logic.Services;
+using EasyNetQ;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -16,10 +17,12 @@ namespace BulbaCourses.Youtube.Web.Controllers
     public class SearchRequestController : ApiController
     {
         private readonly ILogicService _logicService;
+        private IBus _bus;
 
-        public SearchRequestController(ILogicService logicService)
+        public SearchRequestController(ILogicService logicService,IBus bus)
         {
             _logicService = logicService;
+            _bus = bus;
         }
 
         [HttpPost, Route("")]
@@ -43,6 +46,8 @@ namespace BulbaCourses.Youtube.Web.Controllers
             };
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            _bus.Send("YoutubeQ", searchRequest);
 
             try
             {

@@ -7,6 +7,7 @@ using System.Web.Http;
 using BulbaCourses.Youtube.Web.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.App_Start;
+using EasyNetQ;
 
 namespace BulbaCourses.Youtube.Web
 {
@@ -17,12 +18,17 @@ namespace BulbaCourses.Youtube.Web
             IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
 
             // Web API configuration and services
+            //FluentValidation configuration
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchStory>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
+
+            //RabbitMQ configuration
+            var bus = kernel.Get<IBus>();
+            bus.Receive<SearchRequest>("YoutubeQ", m => OnMessage(m));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -32,6 +38,11 @@ namespace BulbaCourses.Youtube.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+        }
+
+        private static void OnMessage(SearchRequest obj)
+        {
+            Console.WriteLine(obj.Title);
         }
     }
 }
