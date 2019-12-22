@@ -7,8 +7,14 @@ using Ninject.Modules;
 
 namespace BulbaCourses.Analytics.BLL.Ensure
 {
+    /// <summary>
+    /// Represents BLL Module.
+    /// </summary>
     public class BLLModule : NinjectModule
     {
+        /// <summary>
+        /// Loads binds.
+        /// </summary>
         public override void Load()
         {            
             Bind<IReportsService>().To<ReportsService>();

@@ -13,7 +13,10 @@ namespace BulbaCourses.Analytics.BLL.Ensure
         /// <param name="stringToFix"></param>
         /// <returns></returns>
         public static string SpaceFix(this string stringToFix)
-        {            
+        {
+            if (string.IsNullOrEmpty(stringToFix)) 
+                return stringToFix;
+
             return Regex.Replace(stringToFix, " {2,}", " ").Trim();
         }
     }
