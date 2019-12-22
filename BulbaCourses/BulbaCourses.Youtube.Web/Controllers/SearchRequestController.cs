@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Youtube.Web.Logic.Models;
 using BulbaCourses.Youtube.Web.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "SearchRequest validation failed")]
         [SwaggerResponse(HttpStatusCode.NotFound, "ResultVideo list not found")]
         [SwaggerResponse(HttpStatusCode.OK, "ResultVideo list found", typeof(IEnumerable<ResultVideo>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -39,6 +41,9 @@ namespace BulbaCourses.Youtube.Web.Controllers
                 Email = "IPetrov@gmail.com",
                 ReserveEmail = ""
             };
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 var resultVideos = await _logicService.SearchRunAsync(searchRequest, user);

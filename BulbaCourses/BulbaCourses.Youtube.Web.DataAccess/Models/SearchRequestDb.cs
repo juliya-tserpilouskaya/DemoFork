@@ -8,9 +8,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
     {
         public int? Id { get; set; }
         public string CacheId { get; set; }
-        public string VideoId { get; set; }
         public string Title { get; set; }
-        public string ChannelTitle { get; set; }
         public DateTime? PublishedBefore { get; set; }
         public DateTime? PublishedAfter { get; set; }
         public string Definition { get; set; }

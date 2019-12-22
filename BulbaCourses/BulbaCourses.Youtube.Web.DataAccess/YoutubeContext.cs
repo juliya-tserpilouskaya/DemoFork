@@ -95,9 +95,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess
             ToTable("SearchRequests").HasKey(p => p.Id);
             Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.CacheId).IsRequired();
-            Property(p => p.VideoId).HasMaxLength(100);
             Property(p => p.Title).IsRequired().HasMaxLength(200);
-            Property(p => p.ChannelTitle).IsOptional().IsUnicode();
             Property(p => p.PublishedBefore).IsOptional();
             Property(p => p.PublishedAfter).IsOptional();
             Property(p => p.Definition).IsRequired();

@@ -112,6 +112,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\StoryService.cs" />
     <Compile Include="Services\VideoService.cs" />
+    <Compile Include="Validator\SerachRequestValidator.cs" />
     <Compile Include="Validator\StoryValidator.cs" />
   </ItemGroup>
   <ItemGroup>
