@@ -53,10 +53,17 @@ namespace BulbaCourses.Analytics.BLL.Interface
         Task<bool> RemoveAsync(string id);
 
         /// <summary>
-        /// Checks if a report exists.
+        /// Checks if a report exists by Name.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        Task<bool> ExistsAsync(string name);
+        Task<bool> ExistsNameAsync(string name);
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> ExistsIdAsync(string id);               
     }
 }
