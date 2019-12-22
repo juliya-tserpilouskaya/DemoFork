@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\BulbaCourses.Analytics.BLL.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -76,14 +77,13 @@
     <Compile Include="Ensure\Correct.cs" />
     <Compile Include="Ensure\MappingProfiles\ReportProfile.cs" />
     <Compile Include="Ensure\Search.cs" />
-    <Compile Include="Ensure\Validators\Reports\ReportNewValidator.cs" />
+    <Compile Include="Ensure\Validators\Reports\ReportCreateValidator.cs" />
+    <Compile Include="Ensure\Validators\Reports\ReportValidator.cs" />
     <Compile Include="Interface\IReportsService.cs" />
-    <Compile Include="Models\V1\Reports\ReportId.cs" />
     <Compile Include="Models\V1\Reports\ReportNew.cs" />
     <Compile Include="Models\V1\Reports\ReportShort.cs" />
     <Compile Include="Models\V1\Reports\Report.cs" />
-    <Compile Include="Models\V1\SwaggerExamples\Reports\ReportIdExample.cs" />
-    <Compile Include="Models\V1\SwaggerExamples\Reports\ReportNewExample.cs" />
+    <Compile Include="Models\V1\SwaggerExamples\Reports\ReportCreateExample.cs" />
     <Compile Include="Models\V1\SwaggerExamples\Reports\ReportShortExample.cs" />
     <Compile Include="Models\V1\SwaggerExamples\Reports\ReportExample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,6 +93,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ReportsService.cs" />
+    <Compile Include="Services\SeedDatabase\Seed.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
