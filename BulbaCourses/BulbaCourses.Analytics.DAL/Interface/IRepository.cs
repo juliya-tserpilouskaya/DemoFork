@@ -69,6 +69,13 @@ namespace BulbaCourses.Analytics.DAL.Interface
             Expression<Func<T, bool>> firstOrDefaultAsyncCondition);
 
         /// <summary>
+        /// Deletes an item in the repository.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        Task<bool> DeleteAsync(T item);
+
+        /// <summary>
         /// Gets true if the element exists, otherwise false.
         /// </summary>
         /// <param name="anyAsyncCondition"></param>

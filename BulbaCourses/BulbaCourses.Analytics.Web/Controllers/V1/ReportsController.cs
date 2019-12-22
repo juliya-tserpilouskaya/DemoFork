@@ -57,16 +57,14 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
             try
             {
                 var reportDtos = await _reportService.GetAllAsync();
-
                 if (!reportDtos.Any()) { return NotFound(); }
-
                 var reportShorts = _mapper.Map<IEnumerable<ReportShort>>(reportDtos);
 
                 return Ok(reportShorts);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ioe)
             {
-                return InternalServerError();
+                return InternalServerError(ioe);
             }
         }
 
@@ -85,16 +83,14 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
             try
             {
                 var reportDtos = await _reportService.GetAllByNameAsync(name, Search.StringOption.Contains);
-
                 if (!reportDtos.Any()) { return NotFound(); }
-
                 var report = _mapper.Map<List<Report>>(reportDtos);
 
                 return Ok(report);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ioe)
             {
-                return InternalServerError();
+                return InternalServerError(ioe);
             }
         }
 
@@ -113,16 +109,14 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
             try
             {
                 var reportDto = await _reportService.GetByIdAsync(id);
-
                 if (reportDto == null) return NotFound();
-
                 var report = _mapper.Map<Report>(reportDto);
 
                 return Ok(report);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ioe)
             {
-                return InternalServerError();
+                return InternalServerError(ioe);
             }
         }
 
@@ -134,21 +128,18 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         [HttpDelete, Route("id/{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Report doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [SwaggerResponse(HttpStatusCode.OK, "Report Delete", typeof(ReportId))]
-        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportIdExample))]
         public async Task<IHttpActionResult> DeleteById(string id)
         {
             try
             {
                 var isRemoved = await _reportService.RemoveAsync(id);
-
                 if (!isRemoved) { return NotFound(); }
 
-                return Ok(new ReportId { Id = id });
+                return Ok();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ioe)
             {
-                return InternalServerError();
+                return InternalServerError(ioe);
             }
         }
 
@@ -161,8 +152,8 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Report not created.")]
         [SwaggerResponse(HttpStatusCode.OK, "Report created", typeof(ReportNew))]
-        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportNewExample))]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddReport")]ReportNew reportNew)
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportCreateExample))]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "Create")]ReportNew reportNew)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -171,14 +162,44 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
             {
                 var reportDto = _mapper.Map<ReportDto>(reportNew);
                 reportDto = await _reportService.CreateAsync(reportDto);
-
                 if (reportDto == null) return BadRequest();
+                reportNew = _mapper.Map<ReportNew>(reportDto);
 
                 return Ok(reportNew);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ioe)
             {
-                return InternalServerError();
+                return InternalServerError(ioe);
+            }
+        }
+
+        /// <summary>
+        /// Updates a report.
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Report not updated.")]
+        [SwaggerResponse(HttpStatusCode.OK, "Report updated", typeof(Report))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(ReportExample))]
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "Update")]Report report)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var reportDto = _mapper.Map<ReportDto>(report);
+                reportDto = await _reportService.UpdateAsync(reportDto);
+                if (reportDto == null) return BadRequest();
+                report = _mapper.Map<Report>(reportDto);
+
+                return Ok(report);
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return InternalServerError(ioe);
             }
         }
     }

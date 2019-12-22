@@ -66,12 +66,22 @@ namespace BulbaCourses.Analytics.DAL.Repositories
             return await _context.Reports.FirstOrDefaultAsync(firstOrDefaultAsyncCondition).ConfigureAwait(false);
         }
 
-        public Task<ReportDb> UpdateAsync(ReportDb item)
+        public async Task<ReportDb> UpdateAsync(ReportDb item)
         {
-            throw new NotImplementedException();
+            _context.Reports.Attach(item);
+            var entry = _context.Entry(item);
+
+            entry.State = EntityState.Modified;
+            entry.Property(_ => _.Name).IsModified = true;
+            entry.Property(_ => _.Description).IsModified = true;
+            entry.Property(_ => _.Modified).IsModified = true;
+            entry.Property(_ => _.Modifier).IsModified = true;
+
+            await _context.SaveChangesAsync();
+            return item;
         }
 
-        private async Task<bool> DeleteAsync(ReportDb reportDb)
+        public async Task<bool> DeleteAsync(ReportDb reportDb)
         {
             if (reportDb == null)
             {

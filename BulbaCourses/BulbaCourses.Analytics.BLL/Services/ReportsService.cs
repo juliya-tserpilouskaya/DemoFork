@@ -1,67 +1,59 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.Ensure;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.BLL.Resources;
-using BulbaCourses.Analytics.DAL.Context;
 using BulbaCourses.Analytics.DAL.Interface;
 using BulbaCourses.Analytics.DAL.Models;
 using BulbaCourses.Analytics.Infrastructure.Models;
-using BulbaCourses.Analytics.Models.V1;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.BLL.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working Report.
+    /// </summary>
     public class ReportsService : IReportsService
     {
         private readonly IMapper _mapper;
         private readonly IRepository<ReportDb> _repository;
 
+        /// <summary>
+        /// Creates a new report service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="repository"></param>
         public ReportsService(IMapper mapper, IRepository<ReportDb> repository)
         {
             _mapper = mapper;
             _repository = repository;
-            // if need adding data to uncomment SeedDatabase(_context);
-        }
+            // if need adding data to uncomment Seed.SeedDatabase(repository);
+        }        
 
-        static void SeedDatabase(AnalyticsContext context)
+        /// <summary>
+        /// Updates a report.
+        /// </summary>
+        /// <param name="reportDto"></param>
+        /// <returns></returns>
+        public async Task<ReportDto> UpdateAsync(ReportDto reportDto)
         {
+            reportDto.Name = reportDto.Name.SpaceFix();
+            reportDto.Description = reportDto.Description.SpaceFix();
+            reportDto.Modified = DateTime.Now;
+            reportDto.Modifier = "Имя обновившего клиента";
 
-            var report = new ReportDb()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Основной отчет",
-                Description = "Описание основного отчета",
-                Created = DateTime.Now,
-                Modified = DateTime.Now,
-                Creator = "Создатель отчета",
-                Modifier = "Модификатор отчета",
-                Dashboards = new List<DashboardDb>() {
-                    new DashboardDb()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        ChartId = 1,
-                        Created = DateTime.Now,
-                        Modified = DateTime.Now,
-                        Creator = "Создатель дашборда",
-                        Modifier = "Модификатор дашборда",
-                        Name = "Дашборд 1"
-                    }
-                }
-            };
-            context.Reports.Add(report);
-            context.SaveChanges();
+            var reportDb = _mapper.Map<ReportDb>(reportDto);
+            await _repository.UpdateAsync(reportDb).ConfigureAwait(false);
+
+            return reportDto;
         }
 
-        public Task<ReportDto> UpdateAsync(ReportDto reportDto)
-        {
-            return Task.FromResult(reportDto);
-        }
-
+        /// <summary>
+        /// Creates a report.
+        /// </summary>
+        /// <param name="reportDto"></param>
+        /// <returns></returns>
         public async Task<ReportDto> CreateAsync(ReportDto reportDto)
         {
             reportDto.Id = Guid.NewGuid().ToString();
@@ -70,11 +62,7 @@ namespace BulbaCourses.Analytics.BLL.Services
             reportDto.Creator = "Виталий";
             reportDto.Modifier = "Виталий";
             reportDto.Name = reportDto.Name.SpaceFix();
-
-            if (!string.IsNullOrEmpty(reportDto.Description))
-            {
-                reportDto.Description = reportDto.Description.SpaceFix();
-            }
+            reportDto.Description = reportDto.Description.SpaceFix();
 
             var reportDb = _mapper.Map<ReportDb>(reportDto);
             await _repository.CreateAsync(reportDb).ConfigureAwait(false);
@@ -82,6 +70,11 @@ namespace BulbaCourses.Analytics.BLL.Services
             return reportDto;
         }
 
+        /// <summary>
+        /// Shows a report details by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ReportDto> GetByIdAsync(string id)
         {
             var reportDb = await _repository.ReadAsync(_ => _.Id == id).ConfigureAwait(false);
@@ -90,6 +83,12 @@ namespace BulbaCourses.Analytics.BLL.Services
             return reportDto;
         }
 
+        /// <summary>
+        /// Shows a reports details by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="stringOption"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ReportDto>> GetAllByNameAsync(string name, Search.StringOption stringOption)
         {
             var option = GetSearchNameOptions(name, stringOption);
@@ -99,6 +98,10 @@ namespace BulbaCourses.Analytics.BLL.Services
             return reportDtos;
         }
 
+        /// <summary>
+        /// Gets all reports.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<ReportDto>> GetAllAsync()
         {
             var reportDbs = await _repository.ReadAllAsync(_ => _.Name).ConfigureAwait(false);
@@ -107,14 +110,34 @@ namespace BulbaCourses.Analytics.BLL.Services
             return reportDtos;
         }
 
+        /// <summary>
+        /// Removes a report by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> RemoveAsync(string id)
         {
             return await _repository.DeleteAsync(_ => _.Dashboards, _ => _.Id == id).ConfigureAwait(false);
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        /// <summary>
+        /// Checks if a report exists by Name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsNameAsync(string name)
         {
             return await _repository.ExistsAsync(_ => _.Name == name).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsIdAsync(string id)
+        {
+            return await _repository.ExistsAsync(_ => _.Id == id).ConfigureAwait(false);
         }
 
         private Expression<Func<ReportDb, bool>> GetSearchNameOptions(string name, Search.StringOption stringOption)
