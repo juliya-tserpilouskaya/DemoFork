@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.DiscountAggreg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Infrastructure", "BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj", "{12B86A99-3216-441C-BDAC-C8CD95DA5189}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Video.WebTests", "BulbaCourses.Video.WebTests\BulbaCourses.Video.WebTests.csproj", "{56D2B876-1238-49D2-A95B-E2F5D61A0C2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,10 @@ Global
 		{12B86A99-3216-441C-BDAC-C8CD95DA5189}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B86A99-3216-441C-BDAC-C8CD95DA5189}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B86A99-3216-441C-BDAC-C8CD95DA5189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D2B876-1238-49D2-A95B-E2F5D61A0C2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D2B876-1238-49D2-A95B-E2F5D61A0C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D2B876-1238-49D2-A95B-E2F5D61A0C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D2B876-1238-49D2-A95B-E2F5D61A0C2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,6 +261,7 @@ Global
 		{F7E7A6E5-399F-40F7-AC7C-1293B7A071A0} = {ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}
 		{02EBD441-46F9-45A8-8998-705EA01D8CAA} = {ABB7FB4C-6AC4-475A-9F64-5F960BDE0E1F}
 		{12B86A99-3216-441C-BDAC-C8CD95DA5189} = {99D812B3-957C-411B-A862-81A6CF59FDA8}
+		{56D2B876-1238-49D2-A95B-E2F5D61A0C2C} = {01F60791-46CA-403F-A2B1-8CEA6E7A5DC9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
