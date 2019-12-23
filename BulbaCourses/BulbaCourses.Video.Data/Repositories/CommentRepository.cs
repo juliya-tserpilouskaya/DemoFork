@@ -10,41 +10,64 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : BaseRepository, ICommentRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public CommentRepository(VideoDbContext videoDbContext)
+        public CommentRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(CommentDb comment)
         {
-            videoDbContext.Comments.Add(comment);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Comments.Add(comment);
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> AddAsync(CommentDb comment)
+        {
+            _videoDbContext.Comments.Add(comment);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
         }
 
         public IEnumerable<CommentDb> GetAll()
         {
-            var commentList = videoDbContext.Comments.ToList().AsReadOnly();
+            var commentList = _videoDbContext.Comments.ToList().AsReadOnly();
             return commentList;
 
         }
 
+        public async Task<IEnumerable<CommentDb>> GetAllAsync()
+        {
+            var commentList = await _videoDbContext.Comments.ToListAsync().ConfigureAwait(false);
+            return commentList.AsReadOnly();
+        }
+
         public CommentDb GetById(string commentId)
         {
-            var comment = videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
+            var comment = _videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
             return comment;
 
         }
 
+        public async Task<CommentDb> GetByIdAsync(string commentId)
+        {
+            var comment = await _videoDbContext.Comments.SingleOrDefaultAsync(b => b.CommentId.Equals(commentId)).ConfigureAwait(false);
+            return comment;
+        }
+
         public void Remove(CommentDb comment)
         {
-            videoDbContext.Comments.Remove(comment);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Comments.Remove(comment);
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> RemoveAsync(CommentDb comment)
+        {
+            _videoDbContext.Comments.Remove(comment);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(CommentDb comment)
@@ -53,9 +76,19 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("comment");
             }
-            videoDbContext.Entry(comment).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(comment).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(CommentDb comment)
+        {
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
+            _videoDbContext.Entry(comment).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

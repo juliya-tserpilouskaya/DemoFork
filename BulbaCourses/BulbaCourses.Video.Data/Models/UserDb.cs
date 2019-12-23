@@ -8,7 +8,7 @@ namespace BulbaCourses.Video.Data.Models
 {
     public class UserDb
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
+        public string UserId { get; set; }// = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Login { get; set; }

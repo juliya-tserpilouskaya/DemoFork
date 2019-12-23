@@ -47,9 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeRepositories\FakeCommentRepository.cs" />
-    <Compile Include="FakeRepositories\FakeCourseRepository.cs" />
-    <Compile Include="FakeRepositories\FakeUserRepository.cs" />
     <Compile Include="Infrastructure\LogicLoadModule.cs" />
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
     <Compile Include="InterfaceServices\ICommentService.cs" />
