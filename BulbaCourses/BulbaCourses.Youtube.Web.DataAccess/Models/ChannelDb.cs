@@ -11,6 +11,5 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
         public string Name { get; set; }
         public ICollection<ResultVideoDb> Videos { get; set; } //reference
         public MentorDb Mentor { get; set; } //reference
-        //public string Author { get; set; }
     }
 }

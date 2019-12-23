@@ -8,7 +8,8 @@ namespace BulbaCourses.Video.Data.Models
 {
     public class CourseDb
     {
-        public string CourseId { get; set; } = Guid.NewGuid().ToString();
+
+        public string CourseId { get; set; }// = Guid.NewGuid().ToString(); Guid generate in view layer!!
         public string Name { get; set; }
         public UserDb Author { get; set; }
         public int Level { get; set; }

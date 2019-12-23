@@ -6,8 +6,6 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
     public class MentorDb : UserDb
     {
-        public ICollection<ChannelDb> Channels { get; set; } //reference
-        
-        // public IEnumerable<Course> Courses { get; set; }
+        public ICollection<ChannelDb> Channels { get; set; } //reference        
     }
 }

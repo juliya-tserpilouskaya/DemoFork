@@ -8,7 +8,7 @@ namespace BulbaCourses.Video.Data.Models
 {
     public class RoleDb
     {
-        public string RoleId { get; set; } = Guid.NewGuid().ToString();
+        public string RoleId { get; set; }// = Guid.NewGuid().ToString();
         public string RoleName { get; set; }
     }
 }

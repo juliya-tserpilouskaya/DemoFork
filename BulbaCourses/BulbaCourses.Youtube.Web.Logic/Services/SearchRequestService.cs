@@ -19,54 +19,14 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _searchRequestRepository = searchRequestRepository;
         }
 
-        public IEnumerable<ResultVideoDb> SearchRun(SearchRequest searchRequest)
+        public SearchRequestDb Save(SearchRequestDb searchRequest)
         {
-            //convert searchRequest to searchRequestDb
-            SearchRequestDb searchRequestDb = new SearchRequestDb();
-            searchRequestDb.Title = searchRequest.Title;
-
-            _searchRequestRepository.SaveRequest(searchRequestDb);
-
-
-            // Create the service.
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                ApiKey = "AIzaSyAZQwG0x87WljOsVjJGfL1fIC30EWf42pg",
-                ApplicationName = "BulbaCourses"
-            });
-
-            // Run the request.
-            var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = searchRequest.Title; 
-            searchListRequest.MaxResults = 10;
-
-            // Call the search.list method to retrieve results matching the specified searchRequest
-            var searchListResponse = searchListRequest.Execute();
-
-
-            List<ResultVideoDb> resultVideos = new List<ResultVideoDb>();
-
-            foreach (var searchResult in searchListResponse.Items)
-            {
-                ResultVideoDb resultVideo = new ResultVideoDb();
-                resultVideo.Id = searchResult.Id.VideoId;
-                resultVideo.Etag = searchResult.ETag;
-                resultVideo.Title = searchResult.Snippet.Title;
-                resultVideo.Channel = new ChannelDb()
-                {
-                    Id = searchResult.Snippet.ChannelId,
-                    Name = searchResult.Snippet.ChannelTitle,
-                    Mentor = new MentorDb(),
-                    Videos = new List<ResultVideoDb>()
-                };
-                resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
-                resultVideo.Description = searchResult.Snippet.Description;
-                resultVideo.SearchRequests = new List<SearchRequestDb>();
-               // resultVideo.SearchRequests.Add(searchRequestDb.Id);       //write searchRequestId... !!!
-
-                resultVideos.Add(resultVideo);
-            }
-            return resultVideos.AsReadOnly();
+            return _searchRequestRepository.SaveRequest(searchRequest);
         }
+        public bool Exists(SearchRequestDb searchRequest)
+        {
+            return _searchRequestRepository.Exists(searchRequest);
+        }
+
     }
 }
