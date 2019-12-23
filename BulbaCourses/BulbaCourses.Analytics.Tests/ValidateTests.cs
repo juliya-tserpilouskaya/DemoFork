@@ -1,16 +1,7 @@
-﻿using AutoMapper;
-using Bogus;
-using BulbaCourses.Analytics.BLL.DTO;
-using BulbaCourses.Analytics.BLL.Infrastructure;
-using BulbaCourses.Analytics.BLL.Services;
-using BulbaCourses.Analytics.Web.Controllers;
-using BulbaCourses.Analytics.Web.Models;
+﻿using BulbaCourses.Analytics.BLL.Infrastructure;
 using FluentAssertions;
-using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http.Results;
 
 namespace BulbaCourses.Analytics.Tests
 {
@@ -28,7 +19,7 @@ namespace BulbaCourses.Analytics.Tests
         [Test]
         public void ErrorNotNull()
         { 
-            _validation.Error.Should().NotBeNull();
+            _validation.Errors.Should().NotBeNull();
         }
 
         [Test, Sequential]
@@ -40,9 +31,9 @@ namespace BulbaCourses.Analytics.Tests
             _validation.AddError(key, value);
             _validation.Init();
             
-            var expected = new Dictionary<string, string>();
+            var expected = new ErrorContainer(new Dictionary<string, string>());
             
-            _validation.Error.Should().BeEquivalentTo(expected);
+            _validation.Errors.Should().BeEquivalentTo(expected);
         }        
 
         [Test, Sequential]

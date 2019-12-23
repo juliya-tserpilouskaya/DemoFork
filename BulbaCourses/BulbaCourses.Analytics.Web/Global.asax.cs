@@ -13,7 +13,7 @@ namespace BulbaCourses.Analytics.Web
         {
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(WebApiConfig.Register);            
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }

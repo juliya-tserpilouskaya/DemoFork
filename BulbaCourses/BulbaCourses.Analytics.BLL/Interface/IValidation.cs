@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BulbaCourses.Analytics.BLL.Infrastructure;
 
 namespace BulbaCourses.Analytics.BLL.Interface
 {
     public interface IValidation
     {
-        Dictionary<string, string> Error { get; }
+        ErrorContainer Errors { get; }
         bool IsErrors { get; }
         bool AddError(string param, string message);
         void Init();
