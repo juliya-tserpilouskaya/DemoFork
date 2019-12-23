@@ -27,5 +27,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         Task<int> UpdateAsync(UserInfo user);
         Task<int> AddAsync(UserInfo user);
         Task<int> DeleteByIdAsync(string id);
+        Task<int> DeleteAsync(UserInfo user);
     }
 }

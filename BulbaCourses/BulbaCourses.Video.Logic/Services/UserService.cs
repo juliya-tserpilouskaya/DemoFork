@@ -135,5 +135,10 @@ namespace BulbaCourses.Video.Logic.Services
             var user = _userRepository.GetById(id);
             return _userRepository.RemoveAsync(user);
         }
+        public Task<int> DeleteAsync(UserInfo user)
+        {
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            return _userRepository.RemoveAsync(userDb);
+        }
     }
 }
