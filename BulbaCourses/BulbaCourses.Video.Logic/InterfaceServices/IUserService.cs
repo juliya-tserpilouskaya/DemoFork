@@ -17,6 +17,7 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void DeleteById(string userId);
         void Update(UserInfo user);
         Task<bool> ExistLoginAsync(string login);
+        Task<bool> CheckLoginAsync(string login);
         Task<bool> ExistEmailAsync(string email);
         Task<bool> CheckEmailForLossingPass(string email);
         Task<bool> CheckPasswordAsync(string id, string password);

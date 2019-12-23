@@ -72,6 +72,16 @@ namespace BulbaCourses.Video.Logic.Services
             return await _userRepository.IsLoginExistAsync(login);
         }
 
+        public async Task<bool> CheckLoginAsync(string login)
+        {
+            var exsist = await _userRepository.IsLoginExistAsync(login);
+            if (exsist == true)
+            { exsist = false; }
+            else if (exsist == false)
+            { exsist = true; }
+            return exsist;
+        }
+
         public async Task<bool> ExistEmailAsync(string email)
         {
             return await _userRepository.IsEmailExistAsync(email);

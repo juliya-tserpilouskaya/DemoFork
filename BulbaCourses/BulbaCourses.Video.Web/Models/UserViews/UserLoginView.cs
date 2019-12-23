@@ -6,13 +6,11 @@ using System.Web;
 
 namespace BulbaCourses.Video.Web.Models.UserViews
 {
-    public class LoginView
+    public class UserLoginView
     {
-        [Required(ErrorMessage = "Reguired")]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
-        [Required(ErrorMessage = "Reguired")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

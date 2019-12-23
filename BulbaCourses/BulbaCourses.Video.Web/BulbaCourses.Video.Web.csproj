@@ -148,18 +148,20 @@
     <Compile Include="Models\CommentView.cs" />
     <Compile Include="Models\CourseViews\CourseView.cs" />
     <Compile Include="Models\CourseViews\CourseViewInput.cs" />
-    <Compile Include="Models\UserViews\ChangePasswordView.cs" />
-    <Compile Include="Models\UserViews\ForgotPasswordView.cs" />
-    <Compile Include="Models\UserViews\LoginView.cs" />
-    <Compile Include="Models\UserViews\RegisterView.cs" />
+    <Compile Include="Models\UserViews\UserChangePasswordView.cs" />
+    <Compile Include="Models\UserViews\UserForgotPasswordView.cs" />
+    <Compile Include="Models\UserViews\UserLoginView.cs" />
+    <Compile Include="Models\UserViews\UserRegisterView.cs" />
     <Compile Include="Models\UserViews\UserProfileView.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseInfo.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseViewInput.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\ChangePasswordViewValidator.cs" />
-    <Compile Include="Validators\ForgotPasswordViewValidator.cs" />
-    <Compile Include="Validators\RegisterViewValidator.cs" />
+    <Compile Include="Validators\UserChangePasswordViewValidator.cs" />
+    <Compile Include="Validators\UserForgotPasswordViewValidator.cs" />
+    <Compile Include="Validators\UserLoginViewValidator.cs" />
+    <Compile Include="Validators\UserProfileViewValidator.cs" />
+    <Compile Include="Validators\UserRegisterViewValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dockerfile" />

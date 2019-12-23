@@ -8,9 +8,9 @@ using System.Web;
 
 namespace BulbaCourses.Video.Web.Validators
 {
-    public class ForgotPasswordViewValidator : AbstractValidator<ForgotPasswordView>
+    public class UserForgotPasswordViewValidator : AbstractValidator<UserForgotPasswordView>
     {
-        public ForgotPasswordViewValidator(IUserService service)
+        public UserForgotPasswordViewValidator(IUserService service)
         {
             RuleFor(c => c.Email).NotEmpty().WithMessage("Email is required.");
             RuleFor(c => c.Email).EmailAddress().WithMessage("Invalid email format.");
