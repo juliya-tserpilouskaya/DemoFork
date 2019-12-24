@@ -81,28 +81,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
-        [HttpPut, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "All courses was updated", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult UpdateAll([FromBody]Course course)
-        {
-            try
-            {
-                _courseService.Update(course);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult UpdateById(string id, [FromBody]Course course)
+        public IHttpActionResult Update(string id, [FromBody]Course course)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -124,22 +107,29 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [HttpPost, Route("")]
         public IHttpActionResult Create([FromBody]Course course)
         {
-            //if (course == null || !Enum.IsDefined(typeof(CourseCategory), course.Category))
-            //{
-            //    return BadRequest();
-            //}
+            //validate course here
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (course == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
+            {
+                return BadRequest();
+            }
+
             var newCourse = new Course
             {
-                Id = course.Id,// "111",
+                Id = Guid.NewGuid().ToString(),
                 Domain = course.Domain,
-                URL = "111",
-                Category = "111",
-                Title = "111",
-                Description = "111",
-                Price = 20.0,
-                OldPrice = 20.0,
+                URL = course.URL,
+                Category = course.Category,
+                Title = course.Title,
+                Description = course.Description,
+                Price = course.Price,
+                OldPrice = course.OldPrice,
                 DateOldPrice = DateTime.Now,
-                Discount = 20,
+                Discount = course.Discount,
                 DateStartCourse = DateTime.Now,
                 DateChange = DateTime.Now,
 
@@ -155,9 +145,5 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
             
         }
-
-
-
-
     }
 }

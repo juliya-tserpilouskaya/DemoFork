@@ -29,6 +29,11 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             var coursesList = courseContext.Courses.ToList().AsReadOnly();
             return coursesList;
         }
+        public CourseDb GetById(string id)
+        {
+            var course = courseContext.Courses.FirstOrDefault(c => c.Id.Equals(id));
+            return course;
+        }
 
         public void Delete(CourseDb course)
         {
@@ -43,12 +48,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 courseContext.Entry(course).State = EntityState.Modified;
                 courseContext.SaveChanges();
             } 
-        }
-
-        public CourseDb GetById(string id)
-        {
-            var course = courseContext.Courses.FirstOrDefault(c => c.Id.Equals(id));
-            return course;
         }
     }
 }

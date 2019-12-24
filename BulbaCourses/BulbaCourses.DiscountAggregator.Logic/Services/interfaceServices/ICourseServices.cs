@@ -15,7 +15,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         void Add(Course course);
         void DeleteById(string id);
         void Update(Course course);
-        void UpdatebyId(string id, Course course);
 
     }   
 }

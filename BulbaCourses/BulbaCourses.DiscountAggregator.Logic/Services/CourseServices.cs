@@ -60,11 +60,5 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             var courseDb = mapper.Map<Course, CourseDb>(course);
             _courseService.Update(courseDb);
         }
-
-
-        public void UpdatebyId(string id, Course course)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

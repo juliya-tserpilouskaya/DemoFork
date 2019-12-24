@@ -1,4 +1,6 @@
 ﻿using Bogus;
+using BulbaCourses.DiscountAggregator.Logic.Validators;
+using FluentValidation.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
+    [Validator(typeof(CourseValidator))]
     public class Course : ICourse
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
