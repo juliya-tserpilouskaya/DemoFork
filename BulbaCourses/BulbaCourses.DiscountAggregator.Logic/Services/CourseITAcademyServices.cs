@@ -15,5 +15,10 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             return CourseITAcademyStorage.GetAll();
         }
+
+        public Task<IEnumerable<CoursesITAcademy>> GetAllAsync()
+        {
+            return Task.FromResult(CourseITAcademyStorage.GetAll().AsEnumerable());
+        }
     }
 }
