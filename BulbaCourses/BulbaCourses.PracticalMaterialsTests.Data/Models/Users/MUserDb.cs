@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.Models
-{    
-    public class User
+namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Users
+{
+    public class MUserDb
     {
         public int Id { get; set; }
 

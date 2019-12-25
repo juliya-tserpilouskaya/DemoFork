@@ -41,10 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\ETestType.cs" />
-    <Compile Include="Enum\EUserRole.cs" />
-    <Compile Include="Models\UserRole.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetIntoMissingElementsDb.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetOrderDb.cs" />
+    <Compile Include="Models\Join\MJoin_TestWithQuestionsDb.cs" />
+    <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetOrderDb.cs" />
+    <Compile Include="Models\TestsBase\MTestBase_MainInfoDb.cs" />
+    <Compile Include="Models\Users\MUserDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

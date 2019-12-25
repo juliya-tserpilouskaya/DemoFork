@@ -1,8 +1,5 @@
-﻿using System;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Enum;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Users
 {
@@ -16,6 +13,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Users
 
         public string Email { get; set; }
 
-        public IEnumerable<int> UserRoles { get; set; }
+        public IEnumerable<EUserRole> UserRoles { get; set; }
     }
 }
