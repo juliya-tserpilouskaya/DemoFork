@@ -41,7 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\EQuestionType.cs" />
+    <Compile Include="Enum\EUserRole.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetIntoMissingElements.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetOrder.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
+    <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\TestsBase\MTestBase_MainInfo.cs" />
+    <Compile Include="Models\Join\MJoin_TestWithQuestions.cs" />
+    <Compile Include="Models\Users\MUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
