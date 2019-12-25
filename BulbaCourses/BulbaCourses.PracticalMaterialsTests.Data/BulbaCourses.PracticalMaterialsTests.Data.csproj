@@ -50,9 +50,7 @@
     <Compile Include="DbService\Questions\Realization\DbService_Question_ChoosingAnswerFromList.cs" />
     <Compile Include="DbService\Questions\Interfaсe\IDbService_Question.cs" />
     <Compile Include="DbService\Tests\Interfaсe\IDbService_Test.cs" />
-    <Compile Include="DbService\Tests\Realization\DbService_Test_ChoosingAnswerFromList.cs" />
-    <Compile Include="DbService\Tests\Realization\DbService_Test_SetIntoMissingElements.cs" />
-    <Compile Include="DbService\Tests\Realization\DbService_Test_SetOrderDb.cs" />
+    <Compile Include="DbService\Tests\Realization\DbService_Test.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />

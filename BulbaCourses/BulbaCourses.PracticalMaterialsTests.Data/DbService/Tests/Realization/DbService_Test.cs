@@ -3,7 +3,7 @@ using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Tests.Realization
 {
-    public class DbService_Test_SetOrderDb : IDbService_Test
+    public class DbService_Test : IDbService_Test
     {
         public void AddQuestion()
         {

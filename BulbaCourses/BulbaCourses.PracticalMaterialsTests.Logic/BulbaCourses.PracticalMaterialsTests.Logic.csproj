@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="Enum\EQuestionType.cs" />
     <Compile Include="Enum\EUserRole.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_ChoosingAnswerFromList.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetIntoMissingElements.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetOrder.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElements.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrder.cs" />
     <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromList.cs" />
@@ -53,7 +53,13 @@
     <Compile Include="Models\Join\MJoin_TestWithQuestions.cs" />
     <Compile Include="Models\Users\MUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestAPI\TestAPIClass.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">
+      <Project>{4ab20b3a-6e96-4f8a-b5e1-d59bd28de331}</Project>
+      <Name>BulbaCourses.PracticalMaterialsTests.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
