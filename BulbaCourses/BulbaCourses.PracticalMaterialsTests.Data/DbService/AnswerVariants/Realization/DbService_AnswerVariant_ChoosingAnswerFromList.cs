@@ -5,6 +5,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Rea
 {
     public class DbService_AnswerVariant_ChoosingAnswerFromList : IDbService_AnswerVariant
     {
+        bool _isDisposed = false;
+
         public void AddQuestion()
         {
             throw new NotImplementedException();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants
 {    
-    public class MAnswerVariants_SetIntoMissingElements
+    public class MAnswerVariant_SetIntoMissingElements
     {
     }
 }

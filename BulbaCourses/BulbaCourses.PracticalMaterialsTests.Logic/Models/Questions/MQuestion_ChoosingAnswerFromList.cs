@@ -19,6 +19,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions
 
         public MUser Author { get; set; }
 
-        public IEnumerable<MAnswerVariants_ChoosingAnswerFromList> AnswerVariants { get; set; }
+        public IEnumerable<MAnswerVariant_ChoosingAnswerFromList> AnswerVariants { get; set; }
     }
 }
