@@ -3,7 +3,7 @@ using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Realization
 {
-    public class DbService_Question_SetIntoMissingElements : IQuestionDbService
+    public class DbService_Question_SetIntoMissingElements : IDbService_Question
     {
         public void AddQuestion()
         {

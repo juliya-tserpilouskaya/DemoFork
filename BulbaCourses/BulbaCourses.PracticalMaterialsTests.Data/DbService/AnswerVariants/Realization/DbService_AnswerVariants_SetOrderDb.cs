@@ -1,9 +1,9 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Interfaсe;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Interfaсe;
 using System;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Realization
+namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Realization
 {
-    public class DbService_Question_ChoosingAnswerFromList : IDbService_Question
+    public class DbService_AnswerVariants_SetOrderDb : IDbService_AnswerVariants
     {
         public void AddQuestion()
         {
