@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbService\Question\Realization\DbService_Question_SetOrderDb.cs" />
+    <Compile Include="DbService\Question\Realization\DbService_Question_SetIntoMissingElements.cs" />
+    <Compile Include="DbService\Question\Realization\DbService_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="DbService\Question\Interfaсe\IQuestionDbService.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariants_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariants_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariants_SetOrderDb.cs" />
