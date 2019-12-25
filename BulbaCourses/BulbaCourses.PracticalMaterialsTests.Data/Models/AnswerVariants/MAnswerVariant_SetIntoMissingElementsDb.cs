@@ -2,7 +2,7 @@
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants
 {    
-    public class MAnswerVariants_SetIntoMissingElementsDb
+    public class MAnswerVariant_SetIntoMissingElementsDb
     {
     }
 }

@@ -41,22 +41,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbService\AnswerVariants\Interfaсe\IDbService_AnswerVariants.cs" />
-    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariants_ChoosingAnswerFromList.cs" />
-    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariants_SetIntoMissingElements.cs" />
-    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariants_SetOrderDb.cs" />
-    <Compile Include="DbService\Question\Realization\DbService_Question_SetOrderDb.cs" />
-    <Compile Include="DbService\Question\Realization\DbService_Question_SetIntoMissingElements.cs" />
-    <Compile Include="DbService\Question\Realization\DbService_Question_ChoosingAnswerFromList.cs" />
-    <Compile Include="DbService\Question\Interfaсe\IDbService_Question.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_ChoosingAnswerFromListDb.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetIntoMissingElementsDb.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariants_SetOrderDb.cs" />
+    <Compile Include="DbService\AnswerVariants\Interfaсe\IDbService_AnswerVariant.cs" />
+    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariant_SetIntoMissingElements.cs" />
+    <Compile Include="DbService\AnswerVariants\Realization\DbService_AnswerVariant_SetOrderDb.cs" />
+    <Compile Include="DbService\Questions\Realization\DbService_Question_SetOrderDb.cs" />
+    <Compile Include="DbService\Questions\Realization\DbService_Question_SetIntoMissingElements.cs" />
+    <Compile Include="DbService\Questions\Realization\DbService_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="DbService\Questions\Interfaсe\IDbService_Question.cs" />
+    <Compile Include="DbService\Tests\Interfaсe\IDbService_Test.cs" />
+    <Compile Include="DbService\Tests\Realization\DbService_Test_ChoosingAnswerFromList.cs" />
+    <Compile Include="DbService\Tests\Realization\DbService_Test_SetIntoMissingElements.cs" />
+    <Compile Include="DbService\Tests\Realization\DbService_Test_SetOrderDb.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
+    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
     <Compile Include="Models\Join\MJoin_TestWithQuestionsDb.cs" />
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\Questions\MQuestion_SetOrderDb.cs" />
-    <Compile Include="Models\TestsBase\MTestBase_MainInfoDb.cs" />
+    <Compile Include="Models\Tests\MTest_MainInfoDb.cs" />
     <Compile Include="Models\Users\MUserDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

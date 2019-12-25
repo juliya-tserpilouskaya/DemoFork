@@ -3,7 +3,7 @@ using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Realization
 {
-    public class DbService_AnswerVariants_ChoosingAnswerFromList : IDbService_AnswerVariants
+    public class DbService_AnswerVariant_SetOrderDb : IDbService_AnswerVariant
     {
         public void AddQuestion()
         {

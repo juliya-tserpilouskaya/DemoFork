@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Interfaсe
+namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Interfaсe
 {
-    public interface IDbService_Question
+    public interface IDbService_AnswerVariant
     {
         void GetQuestonById(int Id);
 

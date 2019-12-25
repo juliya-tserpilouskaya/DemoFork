@@ -49,7 +49,7 @@
     <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromList.cs" />
-    <Compile Include="Models\TestsBase\MTestBase_MainInfo.cs" />
+    <Compile Include="Models\Tests\MTest_MainInfo.cs" />
     <Compile Include="Models\Join\MJoin_TestWithQuestions.cs" />
     <Compile Include="Models\Users\MUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

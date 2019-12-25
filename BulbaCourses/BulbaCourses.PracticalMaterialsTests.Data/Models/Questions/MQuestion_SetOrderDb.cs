@@ -13,6 +13,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Questions
 
         public MUserDb Author { get; set; }
 
-        public IEnumerable<MAnswerVariants_SetOrderDb> AnswerVariants { get; set; }
+        public IEnumerable<MAnswerVariant_SetOrderDb> AnswerVariants { get; set; }
     }
 }

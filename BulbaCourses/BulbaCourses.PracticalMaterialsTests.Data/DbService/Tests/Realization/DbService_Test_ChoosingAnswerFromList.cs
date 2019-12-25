@@ -1,9 +1,9 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Interfaсe;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.Tests.Interfaсe;
 using System;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Question.Realization
+namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Tests.Realization
 {
-    public class DbService_Question_ChoosingAnswerFromList : IDbService_Question
+    public class DbService_Test_ChoosingAnswerFromList : IDbService_Test
     {
         public void AddQuestion()
         {

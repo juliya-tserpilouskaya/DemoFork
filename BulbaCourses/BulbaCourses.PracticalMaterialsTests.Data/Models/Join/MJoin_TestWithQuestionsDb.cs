@@ -1,11 +1,11 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.TestsBase;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Join
 {
     public class MJoin_TestWithQuestionsDb
     {
-        public MTestBase_MainInfoDb Test_Info { get; set; }
+        public MTest_MainInfoDb Test_Info { get; set; }
 
         public int QuestionType { get; set; }
 

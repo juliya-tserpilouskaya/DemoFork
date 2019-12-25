@@ -2,7 +2,7 @@
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants
 {   
-    public class MAnswerVariants_SetOrderDb
+    public class MAnswerVariant_ChoosingAnswerFromListDb
     {
         public int Id { get; set; }
 
@@ -10,6 +10,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants
 
         public int SortKey { get; set; }
 
-        public int CorrectOrderKey { get; set; }
+        public bool IsCorrectAnswer { get; set; }
     }
 }

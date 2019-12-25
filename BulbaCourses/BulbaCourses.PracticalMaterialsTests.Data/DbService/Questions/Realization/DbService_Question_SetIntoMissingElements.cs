@@ -1,9 +1,9 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Interfaсe;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.Questions.Interfaсe;
 using System;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.AnswerVariants.Realization
+namespace BulbaCourses.PracticalMaterialsTests.Data.DbService.Questions.Realization
 {
-    public class DbService_AnswerVariants_SetIntoMissingElements : IDbService_AnswerVariants
+    public class DbService_Question_SetIntoMissingElements : IDbService_Question
     {
         public void AddQuestion()
         {

@@ -2,9 +2,9 @@
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Users;
 using System.Collections.Generic;
 
-namespace BulbaCourses.PracticalMaterialsTests.Data.Models.TestsBase
+namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Tests
 {
-    public class MTestBase_MainInfoDb
+    public class MTest_MainInfoDb
     {
         public int Id { get; set; }
 

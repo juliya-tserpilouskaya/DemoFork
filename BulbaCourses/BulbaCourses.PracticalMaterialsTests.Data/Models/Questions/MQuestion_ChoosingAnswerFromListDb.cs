@@ -15,6 +15,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Questions
 
         public MUserDb Author { get; set; }
 
-        public IEnumerable<MAnswerVariants_ChoosingAnswerFromListDb> AnswerVariants { get; set; }
+        public IEnumerable<MAnswerVariant_ChoosingAnswerFromListDb> AnswerVariants { get; set; }
     }
 }
