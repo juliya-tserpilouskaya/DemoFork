@@ -1,20 +1,18 @@
+using System;
+using System.Web;
+using System.Web.Http;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using BulbaCourses.Podcasts.Web.Infrastructure;
+using Ninject;
+using Ninject.Web.Common;
+using Ninject.Web.WebApi;
+using Ninject.Web.Common.WebHost;
+using BulbaCourses.Podcasts.Logic.Infrastructure;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Podcasts.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Podcasts.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.Podcasts.Web.App_Start
 {
-    using System;
-    using System.Web;
-    using System.Web.Http;
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-    using BulbaCourses.Podcasts.Web.Infrastructure;
-    using BulbaCourses.Podcasts.Logic.Infrastracture;
-    using Ninject;
-    using Ninject.Web.Common;
-    using Ninject.Web.WebApi;
-    using Ninject.Web.Common.WebHost;
-    using BulbaCourses.Podcasts.Logic.Infrastructure;
-
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
