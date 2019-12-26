@@ -26,5 +26,12 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return usersList;
         }
 
+        public void Add(UserAccountDb userAccount)
+        {
+            userAccount.Password = HashingPassword.HashPassword(userAccount.Password);
+            courseContext.Users.Add(userAccount);
+            courseContext.SaveChanges();
+        }
+
     }
 }

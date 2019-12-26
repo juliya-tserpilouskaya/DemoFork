@@ -23,7 +23,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         }
         public void Add(UserAccount user)
         {
-            UserAccountCollection.Add(user);
+            //UserAccountCollection.Add(user);
+            var userAccountDb = mapper.Map<UserAccount, UserAccountDb>(user);
+            _accounts.Add(userAccountDb);
         }
 
         public void Delete(UserAccount user)

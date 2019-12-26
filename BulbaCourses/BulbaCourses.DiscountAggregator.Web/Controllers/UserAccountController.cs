@@ -52,6 +52,39 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        [HttpPost, Route("")]
+        public IHttpActionResult Create([FromBody]UserAccount user)
+        {
+            //validate course here
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (user == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
+            {
+                return BadRequest();
+            }
+
+            var newUser = new UserAccount
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = user.Email,
+                Login = user.Login,
+                Password = user.Password,
+                UserProfile = user.UserProfile
+            };
+            try
+            {
+                userAccountService.Add(newUser);
+                return Ok(newUser);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         //[HttpPost, Route("")]
         //public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddBook, default")]UserAccount user)
         //{

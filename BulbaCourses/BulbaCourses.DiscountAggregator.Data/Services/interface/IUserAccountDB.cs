@@ -10,5 +10,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
     public interface IUserAccountDB
     {
         IEnumerable<UserAccountDb> GetAll();
+        void Add(UserAccountDb user);
     }
 }
