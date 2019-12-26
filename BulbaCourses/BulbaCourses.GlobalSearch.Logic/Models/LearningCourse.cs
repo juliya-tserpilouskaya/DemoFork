@@ -10,7 +10,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Models
         public string Id { get; set; }
         public List<LearningCourseItem> Items { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
+        public int Category { get; set; }
         public double Cost { get; set; }
         public string Complexity { get; set; }
         public string Language { get; set; }

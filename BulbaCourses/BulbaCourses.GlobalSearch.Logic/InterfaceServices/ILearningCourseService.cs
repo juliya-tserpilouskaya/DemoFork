@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.Models;
 
 namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
 {
     public interface ILearningCourseService
     {
-        IEnumerable<LearningCourse> GetAllCourses();
-        LearningCourse GetById(string id);
-        IEnumerable<LearningCourse> GetByCategory(string category);
-        IEnumerable<LearningCourse> GetByAuthorId(int id);
-        IEnumerable<LearningCourseItem> GetLearningItemsByCourseId(string id);
-        IEnumerable<LearningCourse> GetCourseByComplexity(string complexity);
-        IEnumerable<LearningCourse> GetCourseByLanguage(string lang);
-        IEnumerable<LearningCourse> GetCourseByQuery(string query);
+        IEnumerable<LearningCourseDTO> GetAllCourses();
+        Task<IEnumerable<LearningCourseDTO>> GetAllCoursesAsync();
+        LearningCourseDTO GetById(string id);
+        Task<LearningCourseDTO> GetByIdAsync(string id);
+        IEnumerable<LearningCourseDTO> GetByCategory(int category);
+        Task<IEnumerable<LearningCourseDTO>> GetByCategoryAsync(int category);
+        IEnumerable<LearningCourseDTO> GetByAuthorId(int id);
+        Task<IEnumerable<LearningCourseDTO>> GetByAuthorIdAsync(int id);
+        IEnumerable<LearningCourseItemDTO> GetLearningItemsByCourseId(string id);
+        Task<IEnumerable<LearningCourseItemDTO>> GetLearningItemsByCourseIdAsync(string id);
+        IEnumerable<LearningCourseDTO> GetCourseByComplexity(string complexity);
+        Task<IEnumerable<LearningCourseDTO>> GetCourseByComplexityAsync(string complexity);
+        IEnumerable<LearningCourseDTO> GetCourseByLanguage(string lang);
+        Task<IEnumerable<LearningCourseDTO>> GetCourseByLanguageAsync(string lang);
+
     }
 }

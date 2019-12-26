@@ -24,6 +24,9 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
             Property(i => i.Created).HasColumnName("created");
             Property(i => i.Cost).HasColumnName("cost");
             Property(i => i.Complexity).HasColumnName("complexity");
+            Property(i => i.Language).HasColumnName("language");
+            Property(i => i.Modified).HasColumnName("modified");
+            Property(i => i.CourseCategoryDBId).HasColumnName("course_category_id");
         }
     }
 }

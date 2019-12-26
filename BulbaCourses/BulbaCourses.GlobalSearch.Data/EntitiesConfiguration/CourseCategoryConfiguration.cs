@@ -1,6 +1,7 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
         {
             ToTable("course_category");
             HasKey(i => i.Id);
-            Property(i => i.Id).HasColumnName("id");
+            Property(i => i.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(i => i.Name).HasColumnName("name")
                 .IsRequired()
                 .HasMaxLength(255);
