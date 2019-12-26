@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BulbaCourses.Podcasts.Web.Models;
+using System;
 using System.Collections.Generic;
 
 namespace BulbaCourses.Video.Web.Models

@@ -12,6 +12,8 @@ namespace BulbaCourses.Podcasts.Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using Ninject.Web.WebApi;
+    using Ninject.Web.Common.WebHost;
+    using BulbaCourses.Podcasts.Logic.Infrastructure;
 
     public static class NinjectWebCommon 
     {

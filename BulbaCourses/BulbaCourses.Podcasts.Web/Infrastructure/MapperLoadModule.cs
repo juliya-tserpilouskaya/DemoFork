@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web.Infrastructure
+namespace BulbaCourses.Podcasts.Web.Infrastructure
 {
     public class MapperLoadModule : NinjectModule
     {
