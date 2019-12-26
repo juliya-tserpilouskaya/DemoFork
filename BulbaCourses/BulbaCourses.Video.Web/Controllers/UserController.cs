@@ -62,7 +62,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Create([FromBody]UserProfileView user)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
