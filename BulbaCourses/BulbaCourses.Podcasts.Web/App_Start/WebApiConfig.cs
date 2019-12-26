@@ -9,9 +9,9 @@ namespace BulbaCourses.Podcasts.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Конфигурация и службы веб-API
 
-            // Web API routes
+            // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
