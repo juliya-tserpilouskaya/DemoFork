@@ -44,6 +44,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
             return _accounts.AsReadOnly();
         }
 
+        //internal static Task<UserAccount> GetByIdAsync(string id)
+        //{
+        //    return _accounts.SingleOrDefault(b => b.Id.Equals(id,
+        //        StringComparison.OrdinalIgnoreCase));
+        //}
+
         public static IEnumerable<UserAccount> DeleteById(string id)
         {
             var itemToDelete = _accounts.Where(x => x.Id == id).First();

@@ -1,4 +1,5 @@
-﻿using BulbaCourses.DiscountAggregator.Data.Services;
+﻿using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
 using BulbaCourses.DiscountAggregator.Logic.Parsers;
 using BulbaCourses.DiscountAggregator.Logic.Services;
 using Ninject.Modules;
@@ -26,6 +27,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
 
             //DAL
             Bind<ICourseService>().To<CourseServiceDb>();
+            Bind<IUserAccountDB>().To<UserAccountServiceDB>();
         }
     }
 }
