@@ -10,6 +10,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using EasyNetQ;
+using FluentValidation;
+using FluentValidation.WebApi;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -18,18 +22,21 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IUserService userService;
+        private readonly IValidator<CourseWeb> validator;
+        private readonly IBus bus;
 
-        public UserController(IMapper mapper, IUserService userService)
+        public UserController(IMapper mapper, IUserService userService, IBus bus)
         {
             this.mapper = mapper;
             this.userService = userService;
+            this.bus = bus;
         }
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -38,7 +45,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var user = mapper.Map<UserLogic, UserWeb>(userService.GetById(id));
-                var result = userService.GetById(user.Id);
+                var result = await userService.GetById(user.Id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -46,30 +53,33 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var users = userService.GetAll();
+            var users = await userService.GetAll();
             var result = mapper.Map<IEnumerable<UserLogic>, IEnumerable<UserWeb>>(users);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+
+        [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]UserWeb user)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddUser, default")]UserWeb userWeb)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(user);
-                userService.Add(userlogic);
-                return Ok(user);
+                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
+                var result = await userService.Add(userlogic);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -77,21 +87,22 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]UserWeb user)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser, default")]UserWeb userWeb)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(user);
-                userService.Update(userlogic);
-                return Ok();
+                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
+                var result = await userService.Update(userlogic);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -99,19 +110,20 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(UserWeb user)
+        public IHttpActionResult Delete([FromBody, CustomizeValidator(RuleSet = "DeleteUser, default")] UserWeb userWeb)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(user);
+                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
                 userService.Delete(userlogic);
                 return Ok();
             }

@@ -12,6 +12,7 @@ namespace BulbaCourses.Podcasts.Web
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
         }
     }
 }

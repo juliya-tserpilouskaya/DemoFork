@@ -15,5 +15,6 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
         void Add(UserLogic user);
         void Delete(UserLogic user);
         void Update(UserLogic user);
+        bool Exists(string name);
     }
 }

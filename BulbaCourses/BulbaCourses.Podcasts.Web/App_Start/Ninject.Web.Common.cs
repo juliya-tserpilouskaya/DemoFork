@@ -46,9 +46,7 @@ namespace BulbaCourses.Podcasts.Web.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-
-                var ninjectResolver = new NinjectDependencyResolver(kernel);
-                GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver;
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 RegisterServices(kernel);
                 return kernel;
             }
@@ -67,6 +65,7 @@ namespace BulbaCourses.Podcasts.Web.App_Start
         {
             kernel.Load<LogicLoadModule>();
             kernel.Load<MapperLoadModule>();
+            kernel.RegisterEasyNetQ("host=localhost");
         }        
     }
 }

@@ -59,5 +59,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             var userDb = mapper.Map<UserLogic, UserDb>(user);
             dbmanager.UpdateUser(userDb);
         }
+
+        public bool Exists(string name)
+        {
+            return dbmanager.GetAllUsers().Any(b => b.Name == name);
+
+        }
     }
 }

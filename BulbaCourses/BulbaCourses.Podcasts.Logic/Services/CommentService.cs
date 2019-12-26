@@ -35,9 +35,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             return result;
         }
 
-        public void Add(CommentLogic comment)
+        public void Add(CommentLogic comment, CourseLogic course)
         {
             var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+            var coursedb = mapper.Map<CourseLogic, CourseDb>(course);
+            course.Comments.Append(comment);
+            dbmanager.UpdateCourse(coursedb);
             dbmanager.AddComment(commentDb);
         }
 
@@ -45,11 +48,6 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
             dbmanager.RemoveComment(commentDb);
-        }
-        public void DeleteById(string commentId)
-        {
-            var comment = dbmanager.GetCommentById(commentId);
-            dbmanager.RemoveComment(comment);
         }
 
         public void Update(CommentLogic comment)

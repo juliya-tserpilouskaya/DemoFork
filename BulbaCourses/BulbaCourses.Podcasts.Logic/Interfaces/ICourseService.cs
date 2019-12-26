@@ -9,11 +9,11 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface ICourseService
     {
-        void AddCourse(CourseLogic course);
+        CourseLogic AddCourse(CourseLogic course);
 
         void AddDiscription(string Id, string description);
 
-        void AddFileToCourse(string Id, AudioLogic audio);
+        AudioLogic AddFileToCourse(string Id, AudioLogic audio);
 
         CourseLogic GetById(string Id);
 
@@ -22,11 +22,13 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
         IEnumerable<CourseLogic> GetAll();
 
         void Delete(CourseLogic course);
-        void Update(CourseLogic course);
+
+        CourseLogic Update(CourseLogic course);
 
         IEnumerable<AudioLogic> GetCourseAudios(string Id);
 
         IEnumerable<CommentLogic> GetCourseComments(string Id);
 
+        bool Exists(string name);
     }
 }

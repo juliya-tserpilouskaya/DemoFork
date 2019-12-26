@@ -45,6 +45,7 @@
     <Compile Include="Models\AudioDb.cs" />
     <Compile Include="Models\CommentDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
+    <Compile Include="Models\OrderDb.cs" />
     <Compile Include="Models\UserDb.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

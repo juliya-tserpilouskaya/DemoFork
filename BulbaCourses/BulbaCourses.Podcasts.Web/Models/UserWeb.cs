@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web.Models
+namespace BulbaCourses.Podcasts.Web.Models
 {
     public class UserWeb
     {
@@ -14,8 +14,8 @@ namespace BulbaCourses.Video.Web.Models
         public string Email { get; set; }
         public string Avatar { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public ICollection<CourseWeb> UploadedCourses { get; set; }
-        public ICollection<CourseWeb> BoughtCourses { get; set; }
+        public ICollection<OrderWeb> UploadedCourses { get; set; }
+        public ICollection<OrderWeb> BoughtCourses { get; set; }
         public ICollection<CommentWeb> Comments { get; set; }
     }
 }

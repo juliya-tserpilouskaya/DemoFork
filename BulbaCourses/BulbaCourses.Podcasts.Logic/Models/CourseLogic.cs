@@ -11,9 +11,8 @@ namespace BulbaCourses.Podcasts.Logic.Models
         public double Raiting { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public DateTime CreationDate { get; set; }
-        public int FileCount { get; set; }
         public ICollection<AudioLogic> Audios { get; set; }
         public ICollection<CommentLogic> Comments { get; set; }
     }

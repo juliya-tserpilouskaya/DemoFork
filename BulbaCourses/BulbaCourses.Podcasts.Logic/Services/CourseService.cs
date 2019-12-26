@@ -21,10 +21,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.mapper = mapper;
             this.dbmanager = dbmanager;
         }
-        public void AddCourse(CourseLogic course)
+
+        public async Task<CourseLogic> AddCourse(CourseLogic course)
         {
             var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-            dbmanager.AddCourse(courseDb);
+            var result = await dbmanager.AddCourse(courseDb);
+            return result;
         }
 
         public void AddDiscription(string Id, string description)
@@ -35,43 +37,46 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public void AddFileToCourse(string Id, AudioLogic audio)
+        public AudioLogic AddFileToCourse(string Id, AudioLogic audio)
         {
             var audiodb = mapper.Map<AudioLogic, AudioDb>(audio);
             var courseAudios = dbmanager.GetCourseById(Id).Audios;
             courseAudios.Add(audiodb);
+            return audio;
         }
 
-        public CourseLogic GetById(string Id)
+        public async Task<CourseLogic> GetById(string Id)
         {
-            var course = dbmanager.GetCourseById(Id);
+            var course = await dbmanager.GetCourseById(Id);
             var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
             return CourseLogic;
         }
 
         public CourseLogic GetCourseByName(string courseName)
         {
-            var course = dbmanager.GetAllCourses().FirstOrDefault(c => c.Name.Equals(courseName));
+            var course = Task.FromResult(dbmanager.GetAllCourses().FirstOrDefault(c => c.Name.Equals(courseName))).Result;
             var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
             return CourseLogic;
         }
 
-        public IEnumerable<CourseLogic> GetAll()
+        public async Task<IEnumerable<CourseLogic>> GetAll()
         {
-            var courses = dbmanager.GetAllCourses();
+            var courses = await dbmanager.GetAllCourses();
             var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
             return result;
-        }
+        } //debug
 
         public void Delete(CourseLogic course)
         {
             var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
             dbmanager.RemoveCourse(courseDb);
         }
-        public void Update(CourseLogic course)
+
+        public async Task<CourseLogic> Update(CourseLogic course)
         {
             var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-            dbmanager.UpdateCourse(courseDb);
+            var result = await dbmanager.UpdateCourse(courseDb);
+            return result;
         }
 
         public IEnumerable<AudioLogic> GetCourseAudios(string Id)
@@ -85,9 +90,22 @@ namespace BulbaCourses.Podcasts.Logic.Services
         public IEnumerable<CommentLogic> GetCourseComments(string Id)
         {
             var course = dbmanager.GetCourseById(Id);
-            var commentDb = course.Comments.ToList().AsReadOnly();
-            var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(commentDb);
+            IEnumerable<CommentDb> comments = new List<CommentDb>();
+            foreach (AudioDb audio in course.Audios)
+            {
+                foreach (CommentDb comment in audio.Comments)
+                {
+                    comments.Append<CommentDb>(comment);
+                }
+            }
+            var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
             return result;
+        }
+
+        public bool Exists(string name)
+        {
+            return dbmanager.GetAllCourses().Any(b => b.Name == name);
+
         }
     }
 }

@@ -11,9 +11,9 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
     {
         CommentLogic GetById(string commentId);
         IEnumerable<CommentLogic> GetAll(); //debug
-        void Add(CommentLogic comment);
+        void Add(CommentLogic comment, CourseLogic course);
         void Update(CommentLogic comment);
         void Delete(CommentLogic comment);
-
+        bool Exists(string name);
     }
 }

@@ -11,8 +11,8 @@ namespace BulbaCourses.Podcasts.Logic.Models
         public string Email { get; set; }
         public string Avatar { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public ICollection<CourseLogic> UploadedCourses { get; set; }
-        public ICollection<CourseLogic> BoughtCourses { get; set; }
+        public ICollection<OrderLogic> UploadedCourses { get; set; }
+        public ICollection<OrderLogic> BoughtCourses { get; set; }
         public ICollection<CommentLogic> Comments { get; set; }
     }
 }

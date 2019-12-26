@@ -10,6 +10,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using EasyNetQ;
+using FluentValidation;
+using FluentValidation.WebApi;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -18,11 +22,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICommentService commentService;
+        private readonly IValidator<CourseWeb> validator;
+        private readonly IBus bus;
 
-        public CommentController(IMapper mapper, ICommentService commentService)
+        public CommentController(IMapper mapper, ICommentService commentService, IBus bus)
         {
             this.mapper = mapper;
             this.commentService = commentService;
+            this.bus = bus;
         }
 
         [HttpGet, Route("{id}")]
@@ -30,7 +37,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Get(string id)
+        public async Task<IHttpActionResult> Get(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -38,8 +45,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var comment = mapper.Map<CommentLogic, CommentWeb>(commentService.GetById(id));
-                return comment == null ? NotFound() : (IHttpActionResult)Ok(comment);
+                var commentlogic = await commentService.GetById(id);
+                var commentWeb = mapper.Map<CommentLogic, CommentWeb>(commentlogic);
+                return commentWeb == null ? NotFound() : (IHttpActionResult)Ok(commentWeb);
             }
             catch (InvalidOperationException ex)
             {
@@ -50,31 +58,32 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         [HttpGet, Route("")] // for debug
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var comments = commentService.GetAll();
-            var result = mapper.Map<IEnumerable<CommentLogic>, IEnumerable<CommentWeb>>(comments);
-            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            var commentlogic = await commentService.GetAll();
+            var commentWeb = mapper.Map<IEnumerable<CommentLogic>, IEnumerable<CommentWeb>>(commentlogic);
+            return commentWeb == null ? NotFound() : (IHttpActionResult)Ok(commentWeb);
 
             //Ok(commentService.GetAll());
         }
 
+        [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Post([FromBody]CommentWeb comment)
+        public async Task<IHttpActionResult> Post([FromBody, CustomizeValidator(RuleSet = "AddComment, default")] CommentWeb commentWeb, CourseWeb courseWeb)
         {
-            if (comment == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(comment);
-                commentService.Add(commentlogic);
-                return Ok(comment);
+                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWebWeb);
+                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                var result = await commentService.Add(commentlogic, courselogic);
+                return Ok(result);
             }
 
             catch (Exception ex)
@@ -83,28 +92,22 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Put(string id, [FromBody]CommentWeb comment)
+        public async Task<IHttpActionResult> Put(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateComment, default")]CommentWeb commentWeb)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-            comment.Id = id;
-
-            if (comment == null)
-            {
-                return BadRequest();
-            }
-
             try
             {
-                var commentInfo = mapper.Map<CommentWeb, CommentLogic>(comment);
-                commentService.Update(commentInfo);
-                return Ok();
+                var commentLogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                var result = await commentService.Update(commentLogic);
+                return Ok(result);
             }
 
             catch (Exception ex)
@@ -113,20 +116,21 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(CommentWeb comment)
+        public IHttpActionResult Delete([FromBody, CustomizeValidator(RuleSet = "DeleteComment, default")]CommentWeb commentWeb)
         {
-            if (comment == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var commentInfo = mapper.Map<CommentWeb, CommentLogic>(comment);
-                commentService.Delete(commentInfo);
+                var commentLogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                commentService.Delete(commentLogic);
                 return Ok();
             }
             catch (Exception ex)
