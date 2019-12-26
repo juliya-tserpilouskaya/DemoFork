@@ -2,6 +2,7 @@
 using BulbaCourses.DiscountAggregator.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         public UserAccountServiceDB(CourseContext courseService)
         {
-            this.courseContext = courseService;
+            courseContext = courseService;
         }
 
         public IEnumerable<UserAccountDb> GetAll()
         {
-            var usersList = courseContext.Users.ToList().AsReadOnly();
+            //var usersList = courseContext.Users.ToList().AsReadOnly();
+            var usersList = courseContext.Users./*Include(x => x.UserProfile).*/ToList().AsReadOnly();
             //var usersList2 = courseContext.Users.Include(c => c.Orders()) .Include(c => c.UserPro).ToList().AsReadOnly();
             return usersList;
         }

@@ -57,6 +57,10 @@
     <Compile Include="Migrations\201912261254478_updateUsers.Designer.cs">
       <DependentUpon>201912261254478_updateUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912262019146_asdf.cs" />
+    <Compile Include="Migrations\201912262019146_asdf.Designer.cs">
+      <DependentUpon>201912262019146_asdf.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="ModelsConfigurations\UserAccountConfigurations.cs" />
@@ -66,8 +70,8 @@
     <Compile Include="Models\UserProfileDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CourseServiceDb.cs" />
-    <Compile Include="Services\ICourseService.cs" />
-    <Compile Include="Services\IUserAccountDB.cs" />
+    <Compile Include="Services\interface\ICourseService.cs" />
+    <Compile Include="Services\interface\IUserAccountDB.cs" />
     <Compile Include="Services\UserAccountServiceDB.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912261254478_updateUsers.resx">
       <DependentUpon>201912261254478_updateUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912262019146_asdf.resx">
+      <DependentUpon>201912262019146_asdf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
