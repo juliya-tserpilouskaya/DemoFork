@@ -8,7 +8,7 @@ namespace BulbaCourses.Video.Data.Models
 {
     public class VideoMaterialDb
     {
-        public string VideoId { get; set; } = Guid.NewGuid().ToString();
+        public string VideoId { get; set; }// = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public int Duration { get; set; }
         public DateTime Created { get; set; }

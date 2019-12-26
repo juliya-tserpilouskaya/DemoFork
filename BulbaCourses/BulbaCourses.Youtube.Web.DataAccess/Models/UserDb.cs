@@ -6,7 +6,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Models
 {
     public class UserDb
     {
-        public string Id { get; set; }
+        public int? Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }  //скрыть надо бы..
         public string FirstName { get; set; }

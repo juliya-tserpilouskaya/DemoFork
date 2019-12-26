@@ -10,37 +10,60 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository, IUserRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public UserRepository(VideoDbContext videoDbContext)
+        public UserRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(UserDb user)
         {
-            videoDbContext.Users.Add(user);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Users.Add(user);
+            _videoDbContext.SaveChanges();
+        }
+
+        public async Task<int> AddAsync(UserDb user)
+        {
+            _videoDbContext.Users.Add(user);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
         }
 
         public IEnumerable<UserDb> GetAll()
         {
-            var userList = videoDbContext.Users.ToList().AsReadOnly();
+            var userList = _videoDbContext.Users.ToList().AsReadOnly();
             return userList;
+        }
+
+        public async Task<IEnumerable<UserDb>> GetAllAsync()
+        {
+            var userList = await _videoDbContext.Users.ToListAsync().ConfigureAwait(false);
+            return userList.AsReadOnly();
         }
 
         public UserDb GetById(string id)
         {
-            var user = videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
+            var user = _videoDbContext.Users.FirstOrDefault(b => b.UserId.Equals(id));
+            return user;
+        }
+
+        public async Task<UserDb> GetByIdAsync(string userId)
+        {
+            var user = await _videoDbContext.Users.SingleOrDefaultAsync(b => b.UserId.Equals(userId)).ConfigureAwait(false);
             return user;
         }
 
         public void Remove(UserDb user)
         {
-            videoDbContext.Users.Remove(user);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Users.Remove(user);
+            _videoDbContext.SaveChanges();
+        }
+
+        public async Task<int> RemoveAsync(UserDb user)
+        {
+            _videoDbContext.Users.Remove(user);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(UserDb user)
@@ -49,8 +72,28 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("user");
             }
-            videoDbContext.Entry(user).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(user).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
+        }
+
+        public async Task<int> UpdateAsync(UserDb user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            _videoDbContext.Entry(user).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsLoginExistAsync(string login)
+        {
+            return await _videoDbContext.Users.AnyAsync(c => c.Login.Equals(login)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsEmailExistAsync(string email)
+        {
+            return await _videoDbContext.Users.AnyAsync(c => c.Email.Equals(email)).ConfigureAwait(false);
         }
     }
 }

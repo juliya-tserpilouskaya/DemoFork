@@ -1,6 +1,5 @@
 ﻿using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Repositories;
-using BulbaCourses.Video.Logic.FakeRepositories;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Services;
 using Ninject.Modules;

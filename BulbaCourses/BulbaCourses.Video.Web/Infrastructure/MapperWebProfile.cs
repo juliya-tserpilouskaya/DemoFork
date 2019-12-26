@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Models;
+using BulbaCourses.Video.Web.Models.CourseViews;
+using BulbaCourses.Video.Web.Models.UserViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;

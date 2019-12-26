@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Interfaces
 {
-    public interface ICourseRepository
+    public interface ICourseRepository : IDisposable
     {
         CourseDb GetById(string courseId);
         IEnumerable<CourseDb> GetAll();
         void Add(CourseDb course);
         void Update(CourseDb course);
         void Remove(CourseDb course);
+
+        Task<CourseDb> GetByIdAsync(string courseId);
+        Task<IEnumerable<CourseDb>> GetAllAsync();
+        Task<int> AddAsync(CourseDb courseDb);
+        Task<int> UpdateAsync(CourseDb courseDb);
+        Task<int> RemoveAsync(CourseDb course);
     }
 }

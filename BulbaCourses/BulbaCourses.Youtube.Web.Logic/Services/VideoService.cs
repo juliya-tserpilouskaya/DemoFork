@@ -20,12 +20,11 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             _videoRepository = videoRepository;
         }
 
-        public VideoService()
-        {
-            _videoRepository = new VideoRepository();
-        }
-
-
+        /// <summary>
+        /// Get search result from youtube by search query
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <returns></returns>
         public IEnumerable<string> GetSearchListResponse(string searchTerm)
         {
             // Create the service.
@@ -76,11 +75,20 @@ namespace BulbaCourses.Youtube.Web.Logic.Services
             return videos.AsReadOnly();
         }
 
+        /// <summary>
+        /// Get all video from repository
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ResultVideoDb> GetAll()
         {
             return _videoRepository.GetAll();
         }
 
+        /// <summary>
+        /// Get video by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ResultVideoDb GetById(int? id)
         {
             return _videoRepository.GetById(id);
