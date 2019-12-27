@@ -16,6 +16,8 @@ namespace BulbaCourses.Video.Web.Infrastructure
         {
             CreateMap<UserProfileView, UserInfo>();
             CreateMap<UserInfo, UserProfileView>();
+            CreateMap<UserRegisterView, UserInfo>();
+            CreateMap<UserEditView, UserInfo>();
 
             CreateMap<CourseView, CourseInfo>();
             CreateMap<CourseInfo, CourseView>();

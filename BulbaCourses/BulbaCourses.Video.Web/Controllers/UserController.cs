@@ -28,7 +28,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserInfo))]
+        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
         {
@@ -58,9 +58,9 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserRegisterView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Create([FromBody]UserRegisterView user)
         {
             if (!ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+                var userInfo = _mapper.Map<UserRegisterView, UserInfo>(user);
                 await _userService.AddAsync(userInfo);
                 return Ok(user);
             }
@@ -80,9 +80,9 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserEditView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Update([FromBody]UserEditView user)
         {
             if (user == null)
             {
@@ -90,7 +90,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+                var userInfo = _mapper.Map<UserEditView, UserInfo>(user);
                 await _userService.UpdateAsync(userInfo);
                 return Ok();
             }

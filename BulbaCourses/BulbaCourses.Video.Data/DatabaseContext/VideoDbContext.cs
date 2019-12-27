@@ -30,6 +30,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             modelBuilder.Entity<UserDb>().ToTable("Users");
             var entityUser = modelBuilder.Entity<UserDb>();
             entityUser.HasKey(b => b.UserId);
+            //entityUser.Property(b => b.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             entityUser.Property(b => b.Login).IsRequired().HasMaxLength(20).IsUnicode();
             entityUser.Property(b => b.Password).IsRequired().HasMaxLength(20).IsUnicode();
             entityUser.Property(b => b.Email).IsRequired().HasMaxLength(20).IsUnicode();
