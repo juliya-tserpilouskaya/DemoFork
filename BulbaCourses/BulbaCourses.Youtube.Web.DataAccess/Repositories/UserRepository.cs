@@ -68,7 +68,7 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
         /// <returns></returns>
         public bool Exists(UserDb user)
         {
-            return _context.Users.Any(u => u.Id == user.Id);
+            return _context.Users.Any(u => u.Id == user.Id && u.Login == user.Login);
         }
 
         public void Dispose()

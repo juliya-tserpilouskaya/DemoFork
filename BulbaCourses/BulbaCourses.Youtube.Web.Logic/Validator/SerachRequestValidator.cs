@@ -20,8 +20,6 @@ namespace BulbaCourses.Youtube.Web.Logic.Validator
             RuleFor(x => x.Id).Null().WithMessage("Id must be null");
             RuleFor(x => x.Title).NotNull().MaximumLength(500)
                 .WithMessage("Title must be not null, length no more than 500 symbols");
-            RuleFor(x => x.PublishedBefore).NotNull().WithMessage("PublishedBefore must be not null");
-            RuleFor(x => x.PublishedAfter).NotNull().WithMessage("PublishedBefore must be not null");
             RuleFor(x => x.Definition).Must(x => !string.IsNullOrEmpty(x))
                 .Must(x=> _definition.Any(d => d == x))
                 .WithMessage("Definition must be not null and must be one of three values: High, Standard, Any");

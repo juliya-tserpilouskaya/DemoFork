@@ -11,6 +11,7 @@ using System.Linq;
 using BulbaCourses.Youtube.Web.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.Logic;
+using EasyNetQ;
 
 namespace BulbaCourses.Youtube.Web.Tests
 {
@@ -24,9 +25,10 @@ namespace BulbaCourses.Youtube.Web.Tests
         {
             var kernel = new StandardKernel();
             kernel.Load<LogicModule>();
+            kernel.RegisterEasyNetQ("host=localhost");
 
             var lService = new LogicService(kernel.Get<IServiceFactory>());
-            srController = new SearchRequestController(lService);
+            srController = new SearchRequestController(lService, kernel.Get<IBus>());
         }
 
         [Test]
