@@ -20,9 +20,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         public IEnumerable<UserAccountDb> GetAll()
         {
-            //var usersList = courseContext.Users.ToList().AsReadOnly();
-            var usersList = courseContext.Users./*Include(x => x.UserProfile).*/ToList().AsReadOnly();
-            //var usersList2 = courseContext.Users.Include(c => c.Orders()) .Include(c => c.UserPro).ToList().AsReadOnly();
+            var usersList = courseContext.Users/*.Include(x => x.UserProfile)*/.ToList().AsReadOnly();
             return usersList;
         }
 
@@ -31,6 +29,15 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             userAccount.Password = HashingPassword.HashPassword(userAccount.Password);
             courseContext.Users.Add(userAccount);
             courseContext.SaveChanges();
+        }
+
+        public void Update(UserAccountDb userAccount)
+        {
+            if (userAccount != null)
+            {
+                courseContext.Entry(userAccount).State = EntityState.Modified;
+                courseContext.SaveChanges();
+            }
         }
 
     }

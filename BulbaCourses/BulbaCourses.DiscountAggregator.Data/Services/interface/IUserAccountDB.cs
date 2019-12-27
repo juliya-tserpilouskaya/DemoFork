@@ -11,5 +11,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
     {
         IEnumerable<UserAccountDb> GetAll();
         void Add(UserAccountDb user);
+        void Update(UserAccountDb courseDb);
     }
 }

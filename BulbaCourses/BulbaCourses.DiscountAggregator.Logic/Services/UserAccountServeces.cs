@@ -65,5 +65,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         //    return result == null ? null : new UserAccount() { Id = result.Id, UserProfile = null , Email = result.Email,
         //                                                        Login = result.Login, Password = result.Password };
         //}
+
+        public void Update(UserAccount userAccount)
+        {
+            var userAccountDb = mapper.Map<UserAccount, UserAccountDb>(userAccount);
+            _accounts.Update(userAccountDb);
+        }
     }
 }

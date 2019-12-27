@@ -53,6 +53,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserAccount))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Create([FromBody]UserAccount user)
         {
             //validate course here
@@ -101,51 +104,30 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         //    return Ok(user);
         //}
 
-
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserAccount))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult Update([FromBody]UserAccount user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                userAccountService.Update(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
     }
 
-    //    [HttpPost, Route("")]
-    //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-    //    [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserDb))]
-    //    [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-    //    public IHttpActionResult Create([FromBody]UserDb user)
-    //    {
-    //        if (user == null)
-    //        {
-    //            return BadRequest();
-    //        }
-    //        try
-    //        {
-    //            userService.Add(user);
-    //            return Ok(user);
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return InternalServerError(ex);
-    //        }
-    //    }
-
-    //    [HttpPut, Route("")]
-    //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-    //    [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserDb))]
-    //    [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-    //    public IHttpActionResult Update([FromBody]UserDb user)
-    //    {
-    //        if (user == null)
-    //        {
-    //            return BadRequest();
-    //        }
-    //        try
-    //        {
-    //            userService.Add(user);
-    //            return Ok();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return InternalServerError(ex);
-    //        }
-    //    }
+    
 
     //    [HttpDelete, Route("{id})")]
     //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
