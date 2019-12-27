@@ -150,6 +150,7 @@
     <Compile Include="Models\CourseViews\CourseView.cs" />
     <Compile Include="Models\CourseViews\CourseViewInput.cs" />
     <Compile Include="Models\UserViews\UserChangePasswordView.cs" />
+    <Compile Include="Models\UserViews\UserEditView.cs" />
     <Compile Include="Models\UserViews\UserForgotPasswordView.cs" />
     <Compile Include="Models\UserViews\UserLoginView.cs" />
     <Compile Include="Models\UserViews\UserRegisterView.cs" />
