@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.Youtube.Web.App_Start
 {
