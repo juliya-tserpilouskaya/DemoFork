@@ -17,6 +17,7 @@ using System.Web.Http;
 namespace BulbaCourses.Youtube.Web.Controllers
 {
     [RoutePrefix("api/SearchRequest")]
+    [Authorize]
     public class SearchRequestController : ApiController
     {
         private readonly ILogicService _logicService;

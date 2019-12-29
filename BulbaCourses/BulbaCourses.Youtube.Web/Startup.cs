@@ -11,6 +11,9 @@ using FluentValidation.WebApi;
 using BulbaCourses.Youtube.Web.Logic;
 using BulbaCourses.Youtube.Web.App_Start;
 using BulbaCourses.Youtube.Web.Logic.Models;
+using IdentityServer3.AccessTokenValidation;
+using System.Security.Cryptography.X509Certificates;
+using System.IO;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Youtube.Web.Startup))]
 
@@ -24,10 +27,18 @@ namespace BulbaCourses.Youtube.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
+            var cert = File.ReadAllBytes(
+               @"D:\LearnASPNET\bulba-courses\BulbaCourses\BulbaCourses.Youtube.SelfHosted\bin\debug\cert.pfx");
+
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+            {
+                IssuerName = "BulbaCourses security server",
+                Authority = "http://localhost:9000",
+                ValidationMode = ValidationMode.Local,
+                SigningCertificate = new X509Certificate2(cert, "123")
+            });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
-
-            app.UseWebApi(config);
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)
