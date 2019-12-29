@@ -1,5 +1,5 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.DbService.Questions.Interfaсe;
-using BulbaCourses.PracticalMaterialsTests.Data.DbService.Questions.Realization;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Service.Questions.Interfaсe;
+using BulbaCourses.PracticalMaterialsTests.Data.Service.Questions.Realization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,15 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.TestAPI
 {
     public class TestAPIClass
     {
-        IDbService_Question Question;
-
         public TestAPIClass()
-        {
-            this.Question = new DbService_Question_ChoosingAnswerFromList();
+        {            
         }
 
         public string GetQuestionById(int Id)
         {
-            Question.GetQuestonById(Id);
+            DbService_Question_ChoosingAnswerFromList dd = new DbService_Question_ChoosingAnswerFromList();
+
+            dd.GetQuestonById(5);
 
             return "Получил JSON с вопросом";
         }

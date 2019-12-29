@@ -7,5 +7,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Questions
     /// </summary>
     public class MQuestion_SetIntoMissingElementsDb
     {
+        public int Id { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Swashbuckle.Swagger.Annotations;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.TestAPI;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     public class TestAPIController : ApiController
     {
-        [HttpGet, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parametr format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]
-        [SwaggerResponse(HttpStatusCode.OK, "Book found", typeof(string))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
-        public IHttpActionResult TesatMethod(int id)
+        [HttpGet]
+        public IHttpActionResult TesatMethod()
         {
-            switch (id)
-            {
-                case 1:
-                    return Ok();
+            TestAPIClass dd = new TestAPIClass();
 
-                default:
-                    return BadRequest();
-            }
+            string ss = dd.GetQuestionById(4);
+
+            return Ok(ss);
         }
     }
 }

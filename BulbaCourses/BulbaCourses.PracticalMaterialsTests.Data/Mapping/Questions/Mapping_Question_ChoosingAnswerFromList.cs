@@ -1,0 +1,34 @@
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+
+namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Questions
+{
+    public class Mapping_Question_ChoosingAnswerFromList : EntityTypeConfiguration<MQuestion_ChoosingAnswerFromListDb>
+    {
+        public Mapping_Question_ChoosingAnswerFromList()
+        {
+            ToTable("Question_ChoosingAnswerFromList");
+
+            HasKey(i => i.Id);
+
+            Property(i => i.Id)
+                .HasColumnName("Id")
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .IsRequired();
+
+            Property(i => i.QuestionText)
+                .HasColumnName("QuestionText")
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .IsRequired();
+            
+            this.HasMany(g => g.AnswerVariants)
+                .WithRequired(s => s.Question_ChoosingAnswerFromListDb)
+                .HasForeignKey<int>(s => s.Question_ChoosingAnswerFromListDb_Id);
+
+            this.Ignore(c => c.Author);            
+        }
+    }
+}

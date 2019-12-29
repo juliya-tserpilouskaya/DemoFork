@@ -261,6 +261,12 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Logic\BulbaCourses.PracticalMaterialsTests.Logic.csproj">
+      <Project>{be04f720-8b4f-4b3e-9c58-5400934eed91}</Project>
+      <Name>BulbaCourses.PracticalMaterialsTests.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
