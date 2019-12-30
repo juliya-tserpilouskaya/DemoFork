@@ -29,6 +29,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             var coursesList = courseContext.Courses.ToList().AsReadOnly();
             return coursesList;
         }
+
         public CourseDb GetById(string id)
         {
             var course = courseContext.Courses.FirstOrDefault(c => c.Id.Equals(id));

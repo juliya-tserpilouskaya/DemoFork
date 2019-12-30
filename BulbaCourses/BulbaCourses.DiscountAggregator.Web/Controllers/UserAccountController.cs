@@ -7,6 +7,8 @@ using BulbaCourses.DiscountAggregator.Logic.Services;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
@@ -20,27 +22,28 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this.userAccountService = userAccountServise;
         }
 
-        [HttpGet, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User's account doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Account found", typeof(UserAccount))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
-        {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = userAccountService.GetUserById(id);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        //[HttpGet, Route("{id}")]
+        //[SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        //[SwaggerResponse(HttpStatusCode.NotFound, "User's account doesn't exists")]
+        //[SwaggerResponse(HttpStatusCode.OK, "Account found", typeof(UserAccount))]
+        //[SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        //public async Task<IHttpActionResult> GetById(string id)
+        //{
+        //    if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+        //    {
+        //        return BadRequest();
+        //    }
+        //    try
+        //    {
+        //        var result = await userAccountService.GetUserByIdAsync(id);
+        //        return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        //    }
+        //    catch (InvalidOperationException ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all user's account", typeof(IEnumerable<UserAccount>))]
         public IHttpActionResult GetAll()
@@ -49,51 +52,82 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserAccount))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult Create([FromBody]UserAccount user)
+        {
+            //validate course here
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            if (user == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
+            {
+                return BadRequest();
+            }
+
+            var newUser = new UserAccount
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = user.Email,
+                Login = user.Login,
+                Password = user.Password,
+                UserProfile = user.UserProfile
+            };
+            try
+            {
+                userAccountService.Add(newUser);
+                return Ok(newUser);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        //[HttpPost, Route("")]
+        //public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddBook, default")]UserAccount user)
+        //{
+        //    // validate book here
+        //    var result = _validator.Validate(user);
+        //    if (!result.IsValid)
+        //    {
+        //        return BadRequest(result.Errors.Select(x => x.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
+        //    }
+
+        //    user = UserAccountCollection.Add(user);
+        //    await _bus.SendAsync("BookService", user);
+
+        //    return Ok(user);
+        //}
+
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserAccount))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult Update([FromBody]UserAccount user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                userAccountService.Update(user);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
     }
 
-    //    [HttpPost, Route("")]
-    //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-    //    [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserDb))]
-    //    [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-    //    public IHttpActionResult Create([FromBody]UserDb user)
-    //    {
-    //        if (user == null)
-    //        {
-    //            return BadRequest();
-    //        }
-    //        try
-    //        {
-    //            userService.Add(user);
-    //            return Ok(user);
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return InternalServerError(ex);
-    //        }
-    //    }
-
-    //    [HttpPut, Route("")]
-    //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-    //    [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserDb))]
-    //    [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-    //    public IHttpActionResult Update([FromBody]UserDb user)
-    //    {
-    //        if (user == null)
-    //        {
-    //            return BadRequest();
-    //        }
-    //        try
-    //        {
-    //            userService.Add(user);
-    //            return Ok();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return InternalServerError(ex);
-    //        }
-    //    }
+    
 
     //    [HttpDelete, Route("{id})")]
     //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]

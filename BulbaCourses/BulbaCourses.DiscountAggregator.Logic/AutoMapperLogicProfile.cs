@@ -15,6 +15,12 @@ namespace BulbaCourses.DiscountAggregator.Logic
         {
             CreateMap<CourseDb, Course>();
             CreateMap<Course, CourseDb>();
+
+            CreateMap<UserAccountDb, UserAccount>();
+            CreateMap<UserAccount, UserAccountDb>();
+
+            CreateMap<UserProfileDb, UserProfile>();
+            CreateMap<UserProfile, UserProfileDb>();
         }
     }
 }

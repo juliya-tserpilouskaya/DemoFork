@@ -15,5 +15,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         void Add(UserAccount user);
         void Delete(UserAccount user);
         void DeleteById(string userId);
+        void Update(UserAccount user);
+        //Task<UserAccount> GetUserByIdAsync(string id);
     }
 }

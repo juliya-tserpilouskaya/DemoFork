@@ -19,11 +19,15 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         }
 
         public DbSet<CourseDb> Courses { get; set; }
+        public DbSet<UserAccountDb> Users { get; set; }
+        public DbSet<UserProfileDb> Profiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)  //нужно использовать базовый метод, очень полезно и другой вопрос когда его вызывать
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new CourseConfigurations());
+            //modelBuilder.Configurations.Add(new UserAccountConfigurations());
+            //modelBuilder.Configurations.Add(new UserProfileConfigurations());
         }
 
         

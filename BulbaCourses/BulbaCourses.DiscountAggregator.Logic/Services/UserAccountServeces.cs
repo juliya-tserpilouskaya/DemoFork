@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 
@@ -10,9 +13,19 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     class UserAccountServeces : IUserAccountServise
     {
+        private readonly IMapper mapper;
+        private readonly IUserAccountDB _accounts;
+
+        public UserAccountServeces(IMapper mapper, IUserAccountDB accounts)
+        {
+            this.mapper = mapper;
+            _accounts = accounts;
+        }
         public void Add(UserAccount user)
         {
-            UserAccountCollection.Add(user);
+            //UserAccountCollection.Add(user);
+            var userAccountDb = mapper.Map<UserAccount, UserAccountDb>(user);
+            _accounts.Add(userAccountDb);
         }
 
         public void Delete(UserAccount user)
@@ -27,7 +40,10 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public IEnumerable<UserAccount> GetAll()
         {
-            return UserAccountCollection.GetAll();
+            //return UserAccountCollection.GetAll();
+            var users = _accounts.GetAll();
+            var result = mapper.Map<IEnumerable<UserAccountDb>, IEnumerable<UserAccount>>(users);
+            return result;
         }
 
         public UserAccount GetByLogin(string login)
@@ -40,6 +56,20 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             var result = UserAccountCollection.GetById(id);
             return result;
+        }
+
+        //public async Task<UserAccount> GetUserByIdAsync(string id)
+        //{
+        //    //var result = await _context.Books.SingleOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+        //    var result = await UserAccountCollection.GetByIdAsync(id);
+        //    return result == null ? null : new UserAccount() { Id = result.Id, UserProfile = null , Email = result.Email,
+        //                                                        Login = result.Login, Password = result.Password };
+        //}
+
+        public void Update(UserAccount userAccount)
+        {
+            var userAccountDb = mapper.Map<UserAccount, UserAccountDb>(userAccount);
+            _accounts.Update(userAccountDb);
         }
     }
 }
