@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Validators;
 using BulbaCourses.DiscountAggregator.Web.App_Start;
 using FluentValidation;
 using FluentValidation.WebApi;
@@ -17,16 +18,16 @@ namespace BulbaCourses.DiscountAggregator.Web
             IKernel kernel = (IKernel) config.DependencyResolver.GetService(typeof(IKernel));
 
             // Web API configuration and services
-            FluentValidationModelValidatorProvider.Configure(config);
+            //FluentValidationModelValidatorProvider.Configure(config);
 
-           //FluentValidationModelValidatorProvider.Configure(config, 
-           //     cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+            FluentValidationModelValidatorProvider.Configure(config,
+                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
             //IValidator<Course> сканирует сборку и возвр список результатов, где вкачестве интерфейсов указан базовый тип
             // а в качестве типа валидатора - связанный с ним класс
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<Course>()
-            //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //        .To(result.ValidatorType));
+            AssemblyScanner.FindValidatorsInAssemblyContaining<Course>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                    .To(result.ValidatorType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

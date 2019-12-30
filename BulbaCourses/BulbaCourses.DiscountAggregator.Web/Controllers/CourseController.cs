@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -85,8 +86,13 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody]Course course)
+        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]Course course)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
@@ -105,7 +111,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody]Course course)
+        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddCourse, default")]Course course)
         {
             //validate course here
             if (!ModelState.IsValid)
@@ -132,8 +138,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 Discount = course.Discount,
                 DateStartCourse = DateTime.Now,
                 DateChange = DateTime.Now,
-
             };
+
             try
             {
                 _courseService.Add(newCourse);

@@ -53,6 +53,10 @@
     <Compile Include="Migrations\201912191112145_InitialCreateTables.Designer.cs">
       <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912261258026_CreateTable.cs" />
+    <Compile Include="Migrations\201912261258026_CreateTable.Designer.cs">
+      <DependentUpon>201912261258026_CreateTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="Models\CourseDb.cs" />
@@ -67,6 +71,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912191112145_InitialCreateTables.resx">
       <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912261258026_CreateTable.resx">
+      <DependentUpon>201912261258026_CreateTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

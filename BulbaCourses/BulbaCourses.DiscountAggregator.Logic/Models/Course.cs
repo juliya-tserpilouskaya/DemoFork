@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    [Validator(typeof(CourseValidator))]
+    //[Validator(typeof(CourseValidator))]
     public class Course : ICourse
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
