@@ -29,7 +29,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             db.Tasks.Add(task);
         }
-        public void Put(TaskDb task)
+        public void Update(TaskDb task)
         {
             db.Entry(task).State = EntityState.Modified;
         }

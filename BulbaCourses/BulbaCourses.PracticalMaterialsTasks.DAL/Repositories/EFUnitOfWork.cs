@@ -13,6 +13,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
     {
         private TasksContext db;
         private TaskRepository taskRepository;
+        private UserRepository userRepository;
         public EFUnitOfWork(string connectionString)
         {
             db = new TasksContext(connectionString);
@@ -24,6 +25,18 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
                 if (taskRepository == null)
                     taskRepository = new TaskRepository(db);
                 return taskRepository;
+            }
+        }
+        public IRepository<UserDb> Users
+        {
+            get
+            {
+                if (userRepository == null)
+                {
+                    userRepository = new UserRepository(db);
+
+                }
+                return userRepository;
             }
         }
         public void Save()
@@ -47,5 +60,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        
     }
 }

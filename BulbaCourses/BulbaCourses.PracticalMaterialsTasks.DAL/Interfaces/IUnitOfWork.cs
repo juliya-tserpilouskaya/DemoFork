@@ -9,7 +9,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {
-        //IRepository<UserDb> Users { get; }
+        IRepository<UserDb> Users { get; }
         IRepository<TaskDb> Tasks { get; }
         void Save();
     }

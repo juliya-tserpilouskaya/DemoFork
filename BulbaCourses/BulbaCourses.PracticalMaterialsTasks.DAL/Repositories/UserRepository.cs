@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces;
+using BulbaCourses.PracticalMaterialsTasks.DAL.Models;
+using BulbaCourses.PracticalMaterialsTasks.DAL.Context;
+using System.Data.Entity;
+
+namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
+{
+    public class UserRepository: IRepository<UserDb>
+    {
+        private TasksContext db;
+
+        public UserRepository(TasksContext context)
+        {
+            this.db = context;
+        }
+
+        public IEnumerable<UserDb> GetAll()
+        {
+            return db.Users;
+        }
+
+        public UserDb Get(int id)
+        {
+            return db.Users.Find(id);
+        }
+
+        public void Create(UserDb user)
+        {
+            db.Users.Add(user);
+
+        }
+
+        public void Update(UserDb user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+        }
+
+        public IEnumerable<UserDb> Find(Func<UserDb,Boolean> predicate)
+        {
+            return db.Users.Include(u => u.NickName).Where(predicate).ToList();
+        }
+
+        public void Delete(int id)
+        {
+            UserDb user = db.Users.Find(id);
+            if(user != null)
+            {
+                db.Users.Remove(user);
+            }
+        }
+    }
+}

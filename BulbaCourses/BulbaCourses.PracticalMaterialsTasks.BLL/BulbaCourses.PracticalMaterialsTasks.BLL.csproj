@@ -82,16 +82,15 @@
     <Compile Include="Services\TaskService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTasks.DAL\BulbaCourses.PracticalMaterialsTasks.DAL.csproj">
       <Project>{9c9fe5b6-c9cf-4974-b166-e7e0a752c809}</Project>
       <Name>BulbaCourses.PracticalMaterialsTasks.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
