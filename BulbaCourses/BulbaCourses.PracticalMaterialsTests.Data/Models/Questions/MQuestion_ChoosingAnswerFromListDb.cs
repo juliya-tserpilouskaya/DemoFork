@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Users;
 using System.Collections.Generic;
 
@@ -13,8 +14,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Questions
 
         public string QuestionText { get; set; }
 
-        public MUserDb Author { get; set; }
+        public int SortKey { get; set; }
 
-        public ICollection<MAnswerVariant_ChoosingAnswerFromListDb> AnswerVariants { get; set; }
+        public int Test_MainInfoDb_Id { get; set; }
+
+        public MTest_MainInfoDb Test_MainInfoDb { get; set; }
+
+        public ICollection<MAnswerVariant_ChoosingAnswerFromListDb> AnswerVariants { get; set; }        
     }
 }

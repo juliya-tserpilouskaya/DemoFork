@@ -1,5 +1,4 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
@@ -20,15 +19,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Questions
 
             Property(i => i.QuestionText)
                 .HasColumnName("QuestionText")
-                .HasMaxLength(50)
-                .IsUnicode(false)
+                .HasMaxLength(50)                
                 .IsRequired();
-            
+
+            Property(i => i.SortKey)
+                .HasColumnName("SortKey")                
+                .IsRequired();
+
             this.HasMany(g => g.AnswerVariants)
                 .WithRequired(s => s.Question_ChoosingAnswerFromListDb)
-                .HasForeignKey<int>(s => s.Question_ChoosingAnswerFromListDb_Id);
-
-            this.Ignore(c => c.Author);            
+                .HasForeignKey<int>(s => s.Question_ChoosingAnswerFromListDb_Id);            
         }
     }
 }

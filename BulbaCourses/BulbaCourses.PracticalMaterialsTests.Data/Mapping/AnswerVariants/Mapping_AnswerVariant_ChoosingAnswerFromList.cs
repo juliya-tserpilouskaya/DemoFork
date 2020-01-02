@@ -18,9 +18,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.AnswerVariants
                 .IsRequired();
 
             Property(i => i.AnswerText)
-                .HasColumnName("AnswerText")
-                .HasMaxLength(50)
-                .IsUnicode(false)
+                .HasColumnName("AnswerText")                
+                .HasMaxLength(50)                
                 .IsRequired();
 
             Property(i => i.SortKey)

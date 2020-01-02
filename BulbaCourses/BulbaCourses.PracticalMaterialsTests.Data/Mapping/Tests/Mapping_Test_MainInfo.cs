@@ -15,16 +15,24 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Tests
             Property(i => i.Id)
                 .HasColumnName("Id")
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
-                .IsRequired();                
+                .IsRequired();
 
             Property(i => i.Name)
                 .HasColumnName("Name")                
-                .HasMaxLength(50)                
-                .IsUnicode(false)
+                .HasMaxLength(50)
                 .IsRequired();
 
-            this.Ignore(c => c.Author);
-            this.Ignore(c => c.Join_TestWithQuestions);
+            this.HasMany(g => g.Question_ChoosingAnswerFromList)
+                .WithRequired(s => s.Test_MainInfoDb)
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
+
+            this.HasMany(g => g.Question_SetIntoMissingElements)
+                .WithRequired(s => s.Test_MainInfoDb)
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
+
+            this.HasMany(g => g.Question_SetOrder)
+                .WithRequired(s => s.Test_MainInfoDb)
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Service.Questions.Realizatio
         {
             using (DbContext_Test cc = new DbContext_Test())
             { 
-                string XXX = cc.User.Find(3).Email;                
+                string XXX = cc.User.Find(3).Email;                  
             }
         }
     }

@@ -17,8 +17,18 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Questions
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
                 .IsRequired();
 
-            this.Ignore(c => c.Author);
-            this.Ignore(c => c.AnswerVariants);
+            Property(i => i.QuestionText)
+                .HasColumnName("QuestionText")
+                .HasMaxLength(50)                
+                .IsRequired();
+
+            Property(i => i.SortKey)
+                .HasColumnName("SortKey")
+                .IsRequired();
+
+            this.HasMany(g => g.AnswerVariants)
+                .WithRequired(s => s.Question_SetOrderDb)
+                .HasForeignKey<int>(s => s.Question_SetOrderDb_Id);
         }
     }
 }

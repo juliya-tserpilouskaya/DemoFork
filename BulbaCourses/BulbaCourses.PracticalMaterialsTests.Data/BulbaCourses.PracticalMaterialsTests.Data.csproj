@@ -54,7 +54,6 @@
     <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_ChoosingAnswerFromList.cs" />
     <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_SetIntoMissingElements.cs" />
     <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_SetOrder.cs" />
-    <Compile Include="Mapping\Join\Mapping_Join_TestWithQuestions.cs" />
     <Compile Include="Mapping\Questions\Mapping_Question_ChoosingAnswerFromList.cs" />
     <Compile Include="Mapping\Questions\Mapping_Question_SetIntoMissingElements.cs" />
     <Compile Include="Mapping\Questions\Mapping_Question_SetOrder.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
-    <Compile Include="Models\Join\MJoin_TestWithQuestionsDb.cs" />
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\Questions\MQuestion_SetOrderDb.cs" />
