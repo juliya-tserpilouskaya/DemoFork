@@ -7,7 +7,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
     {
         public CourseValidator()
         {
-            //CascadeMode = CascadeMode.Continue;
             RuleSet("AddCourse", () =>
             {
                  RuleFor(x => x.Id).Null().WithMessage("Id must be null");
