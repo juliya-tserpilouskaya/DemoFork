@@ -10,6 +10,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     public interface IUserAccountServise
     {
         IEnumerable<UserAccount> GetAll();
+        Task<IEnumerable<UserAccount>> GetAllAsync();
         UserAccount GetByLogin(string login);
         UserAccount GetUserById(string id);
         void Add(UserAccount user);

@@ -40,10 +40,16 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public IEnumerable<UserAccount> GetAll()
         {
-            //return UserAccountCollection.GetAll();
             var users = _accounts.GetAll();
             var result = mapper.Map<IEnumerable<UserAccountDb>, IEnumerable<UserAccount>>(users);
             return result;
+        }
+
+        public Task<IEnumerable<UserAccount>> GetAllAsync()
+        {
+            var users = _accounts.GetAll();
+            var result = mapper.Map<IEnumerable<UserAccountDb>, IEnumerable<UserAccount>>(users);
+            return Task.FromResult(result);
         }
 
         public UserAccount GetByLogin(string login)

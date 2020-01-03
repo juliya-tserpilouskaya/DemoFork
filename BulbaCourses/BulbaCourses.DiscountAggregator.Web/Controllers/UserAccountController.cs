@@ -46,9 +46,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all user's account", typeof(IEnumerable<UserAccount>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = userAccountService.GetAll();
+            var result = await userAccountService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -56,9 +56,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserAccount))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]UserAccount user)
+        public async Task<IHttpActionResult> Create([FromBody]UserAccount user)
         {
-            //validate course here
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -68,19 +67,19 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-
-            var newUser = new UserAccount
-            {
-                Id = Guid.NewGuid().ToString(),
-                Email = user.Email,
-                Login = user.Login,
-                Password = user.Password,
-                UserProfile = user.UserProfile
-            };
+            user.Id = Guid.NewGuid().ToString();
+            //var newUser = new UserAccount
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Email = user.Email,
+            //    Login = user.Login,
+            //    Password = user.Password,
+            //    UserProfile = user.UserProfile
+            //};
             try
             {
-                userAccountService.Add(newUser);
-                return Ok(newUser);
+                userAccountService.Add(user);
+                return Ok(user);
             }
             catch (Exception ex)
             {
