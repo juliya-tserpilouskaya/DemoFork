@@ -8,7 +8,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
     public class UserProfile
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 

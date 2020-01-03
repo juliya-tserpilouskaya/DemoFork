@@ -100,7 +100,7 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpDelete, Route("{id})")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Delete(string id)

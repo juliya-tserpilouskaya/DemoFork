@@ -35,7 +35,10 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         {
             if (userAccount != null)
             {
-                courseContext.Entry(userAccount).State = EntityState.Modified;
+                //if(HashingPassword.VerifyHashedPassword(userAccount.Password,"123"))
+                userAccount.Password = HashingPassword.HashPassword(userAccount.Password);
+                courseContext.Entry(userAccount.UserProfile).State = EntityState.Modified;
+                courseContext.Entry(userAccount).State = EntityState.Modified;                
                 courseContext.SaveChanges();
             }
         }

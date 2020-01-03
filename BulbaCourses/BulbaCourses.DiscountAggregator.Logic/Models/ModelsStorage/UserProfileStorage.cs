@@ -14,7 +14,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
         static UserProfileStorage()
         {
             var faker = new Faker<UserProfile>();
-            faker.RuleFor(_ => _.UserId, f => f.Person.UserName);
+            //faker.RuleFor(_ => _.Id, f => f.Person.UserName);
             faker.RuleFor(_ => _.FirstName, f => f.Person.FirstName);
             faker.RuleFor(_ => _.LastName, f => f.Person.LastName);
             faker.RuleFor(_ => _.DateOfBirth, f => f.Person.DateOfBirth);
@@ -31,9 +31,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
             return _profiles.AsReadOnly();
         }
 
-        public static UserProfile GetByUserId(string userId)
+        public static UserProfile GetById(string id)
         {
-            return _profiles.SingleOrDefault(b => b.UserId.Equals(userId,
+            return _profiles.SingleOrDefault(b => b.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase));
         }
 
