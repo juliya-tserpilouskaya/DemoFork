@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using BulbaCourses.DiscountAggregator.Web.Filters;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -86,7 +87,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]Course course)
+        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default, UpdateCourse")]Course course)
         {
             if (!ModelState.IsValid)
             {
@@ -111,39 +112,25 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddCourse, default")]Course course)
+        //[OverrideActionFilters]
+        [BadRequestFilter]
+        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "default, AddCourse")]Course course)
         {
             //validate course here
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             if (course == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
             {
                 return BadRequest();
             }
 
-            var newCourse = new Course
-            {
-                Id = Guid.NewGuid().ToString(),
-                Domain = course.Domain,
-                URL = course.URL,
-                Category = course.Category,
-                Title = course.Title,
-                Description = course.Description,
-                Price = course.Price,
-                OldPrice = course.OldPrice,
-                DateOldPrice = DateTime.Now,
-                Discount = course.Discount,
-                DateStartCourse = DateTime.Now,
-                DateChange = DateTime.Now,
-            };
-
             try
             {
-                _courseService.Add(newCourse);
-                return Ok(newCourse);
+                course.Id = Guid.NewGuid().ToString();
+                _courseService.Add(course);
+                return Ok(course);
             }
             catch (Exception ex)
             {
