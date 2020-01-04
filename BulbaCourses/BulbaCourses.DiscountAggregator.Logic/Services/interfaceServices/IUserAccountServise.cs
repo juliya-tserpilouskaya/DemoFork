@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public interface IUserAccountServise
+    public interface IUserAccountService
     {
         IEnumerable<UserAccount> GetAll();
         Task<IEnumerable<UserAccount>> GetAllAsync();
@@ -17,6 +17,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         void Delete(UserAccount user);
         void DeleteById(string userId);
         void Update(UserAccount user);
+        Task<bool> ExistsAsync(string login);
         //Task<UserAccount> GetUserByIdAsync(string id);
     }
 }

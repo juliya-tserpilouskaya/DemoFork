@@ -11,7 +11,7 @@ using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    class UserAccountServeces : IUserAccountServise
+    class UserAccountServeces : IUserAccountService
     {
         private readonly IMapper mapper;
         private readonly IUserAccountDB _accounts;
@@ -37,6 +37,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             //UserAccountCollection.DeleteById(user.Id);
             _accounts.DeleteById(userId);
+        }
+
+        public async Task<bool> ExistsAsync(string login)
+        {
+            return await _accounts.ExistsAsync(login).ConfigureAwait(false);
         }
 
         public IEnumerable<UserAccount> GetAll()

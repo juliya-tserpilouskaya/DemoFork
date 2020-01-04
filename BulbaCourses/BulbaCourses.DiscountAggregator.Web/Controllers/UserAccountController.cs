@@ -9,15 +9,16 @@ using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System.Threading.Tasks;
+using FluentValidation.WebApi;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/userAccounts")]
     public class UserAccountController : ApiController
     {
-        private readonly IUserAccountServise userAccountService;
+        private readonly IUserAccountService userAccountService;
 
-        public UserAccountController(IUserAccountServise userAccountServise)
+        public UserAccountController(IUserAccountService userAccountServise)
         {
             this.userAccountService = userAccountServise;
         }
@@ -56,29 +57,21 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserAccount))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]UserAccount user)
+        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddAccount")]UserAccount user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             if (user == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
             {
                 return BadRequest();
             }
-            user.Id = Guid.NewGuid().ToString();
-            user.UserProfile.Id = Guid.NewGuid().ToString();
-            //var newUser = new UserAccount
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    Email = user.Email,
-            //    Login = user.Login,
-            //    Password = user.Password,
-            //    UserProfile = user.UserProfile
-            //};
+            
             try
             {
+                user.Id = Guid.NewGuid().ToString();
+                user.UserProfile.Id = Guid.NewGuid().ToString();
                 userAccountService.Add(user);
                 return Ok(user);
             }
@@ -108,7 +101,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserAccount))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]UserAccount user)
+        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "UpdateAccount")]UserAccount user)
         {
             if (user == null)
             {

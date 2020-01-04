@@ -57,5 +57,10 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 //courseContext.SaveChanges();
             }
         }
+
+        public async Task<bool> ExistsAsync(string login)
+        {
+            return await courseContext.Users.AnyAsync(b => b.Login == login).ConfigureAwait(false);
+        }
     }
 }

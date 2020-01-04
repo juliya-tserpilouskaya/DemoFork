@@ -13,5 +13,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         void Add(UserAccountDb user);
         void Update(UserAccountDb courseDb);
         void DeleteById(string userId);
+        Task<bool> ExistsAsync(string login);
     }
 }
