@@ -43,5 +43,19 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             }
         }
 
+        public void DeleteById(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                courseContext.Profiles.Remove(courseContext.Profiles
+                    .Where(x => x.Id == courseContext.Users.Where(i => i.Id == userId).FirstOrDefault().UserProfile.Id)
+                    .FirstOrDefault());
+                courseContext.Users.Remove(courseContext.Users.Where(x => x.Id == userId).FirstOrDefault());
+                courseContext.SaveChanges();
+                //по идее должно и так удалять, но так не чистит связанную таблицу
+                //courseContext.Entry(courseContext.Users.Where(x => x.Id == userId).FirstOrDefault()).State = EntityState.Deleted;
+                //courseContext.SaveChanges();
+            }
+        }
     }
 }

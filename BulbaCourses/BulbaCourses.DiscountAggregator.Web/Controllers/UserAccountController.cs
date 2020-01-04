@@ -56,7 +56,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserAccount))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody]UserAccount user)
+        public IHttpActionResult Create([FromBody]UserAccount user)
         {
             if (!ModelState.IsValid)
             {
@@ -68,6 +68,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
             user.Id = Guid.NewGuid().ToString();
+            user.UserProfile.Id = Guid.NewGuid().ToString();
             //var newUser = new UserAccount
             //{
             //    Id = Guid.NewGuid().ToString(),
@@ -124,29 +125,25 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        [HttpDelete, Route("{id})")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserAccount))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                userAccountService.DeleteById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
-
-    
-
-    //    [HttpDelete, Route("{id})")]
-    //    [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-    //    [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserDb))]
-    //    [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-    //    public IHttpActionResult Delete(string id)
-    //    {
-    //        if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
-    //        {
-    //            return BadRequest();
-    //        }
-    //        try
-    //        {
-    //            userService.DeleteById(id);
-    //            return Ok();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return InternalServerError(ex);
-    //        }
-    //    }
-    //}
 }
