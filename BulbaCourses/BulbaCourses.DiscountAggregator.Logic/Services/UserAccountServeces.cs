@@ -23,19 +23,20 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         }
         public void Add(UserAccount user)
         {
-            //UserAccountCollection.Add(user);
             var userAccountDb = mapper.Map<UserAccount, UserAccountDb>(user);
             _accounts.Add(userAccountDb);
         }
 
         public void Delete(UserAccount user)
         {
-            UserAccountCollection.DeleteById(user.Id);
+            //UserAccountCollection.DeleteById(user.Id);
+            _accounts.DeleteById(user.Id);
         }
 
         public void DeleteById(string userId)
         {
-            UserAccountCollection.DeleteById(userId);
+            //UserAccountCollection.DeleteById(user.Id);
+            _accounts.DeleteById(userId);
         }
 
         public IEnumerable<UserAccount> GetAll()
