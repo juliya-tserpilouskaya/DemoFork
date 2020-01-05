@@ -8,12 +8,15 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Users;
 using BulbaCourses.PracticalMaterialsTests.Data.Validators.Users;
 using NUnit.Framework;
 using FluentValidation;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Data.Validators.Tests;
 
 namespace BulbaCourses.PracticalMaterialsTests.Tests.Data
 {
     [TestFixture]
     class UnitTest_Validator
     {
+
         [Test]
         [TestCaseSource("ValuesForUserData")]
         [Description("Тестовый метод для валидации данных во время добавления нового пользователя")]
@@ -29,6 +32,29 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Data
             };
           
             var Result = VUser.Validate(User);
+
+            if (Result.IsValid == false)
+            {
+                foreach (var fail in Result.Errors)
+                {
+                    Assert.Warn($"{fail.PropertyName} : {fail.ErrorMessage}");
+                }
+            }
+        }
+
+        [Test]
+        [TestCase("  ")]
+        [Description("Тестовый метод для валидации данных во время добавления нового теста")]
+        public void InsertNewDataFromTest(string Name)
+        {
+            Validator_Test_MainInfo VTest_MainInfo = new Validator_Test_MainInfo();
+
+            MTest_MainInfoDb Test_MainInfo = new MTest_MainInfoDb()
+            {
+                Name = Name
+            };
+
+            var Result = VTest_MainInfo.Validate(Test_MainInfo);
 
             if (Result.IsValid == false)
             {
