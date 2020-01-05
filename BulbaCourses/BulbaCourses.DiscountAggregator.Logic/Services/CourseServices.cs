@@ -29,12 +29,25 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
+        public Task<Course> GetByIdAsync(string id)
+        {
+            var courses = _courseService.GetById(id);
+            var result = mapper.Map<CourseDb, Course>(courses);
+            return Task.FromResult(result);
+        }
+
         public IEnumerable<Course> GetAll()
         {
             var courses = _courseService.GetAll();
+            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses); 
+            return result;
+        }
+
+        public Task<IEnumerable<Course>> GetAllAsync()
+        {
+            var courses = _courseService.GetAll();
             var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);
-            //return _courseService.GetAll(); 
-            return result;//Courseware.GetAll();
+            return Task.FromResult(result);
         }
 
         public void Add(Course course)

@@ -11,9 +11,17 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     public interface ICourseServices
     {
         IEnumerable<Course> GetAll();
+
+        Task<IEnumerable<Course>> GetAllAsync();
+
         Course GetById(string id);
+
+        Task<Course> GetByIdAsync(string id);
+
         void Add(Course course);
+
         void DeleteById(string id);
+
         void Update(Course course);
 
     }   

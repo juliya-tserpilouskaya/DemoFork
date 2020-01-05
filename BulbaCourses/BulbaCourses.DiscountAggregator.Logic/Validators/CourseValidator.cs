@@ -12,7 +12,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
     {
         public CourseValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
+            //CascadeMode = CascadeMode.StopOnFirstFailure;
 
             RuleSet("AddCourse", () =>
             {
@@ -21,7 +21,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
 
             RuleSet("UpdateCourse", () =>
             {
-                RuleFor(x => x.Id).NotNull().WithMessage("Id must be not null");              
+                RuleFor(x => x.Id).NotNull().WithMessage("Id must be not null");
             });
 
             RuleFor(x => x.Price).GreaterThan(0.0);
