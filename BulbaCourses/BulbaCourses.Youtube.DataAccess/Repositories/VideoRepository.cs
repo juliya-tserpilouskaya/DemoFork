@@ -17,7 +17,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             _db = youtubeContext;
         }
         //GetById
-        public ResultVideoDb GetById(int? id)
+        public ResultVideoDb GetById(string id)
         {
             return _db.Videos.Find(id);
         }
@@ -51,7 +51,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         }
 
         //Delete
-        public void Delete(int? id)
+        public void Delete(string id)
         {
             var video = _db.Videos.Find(id);
             if (video != null)

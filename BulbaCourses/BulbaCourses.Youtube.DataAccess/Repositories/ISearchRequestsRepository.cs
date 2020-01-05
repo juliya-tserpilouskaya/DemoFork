@@ -10,11 +10,13 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
     public interface ISearchRequestsRepository : IDisposable
     {
         SearchRequestDb SaveRequest(SearchRequestDb request);
+        void Update(SearchRequestDb request);
         void DeleteRequest(int? requestId);
         IEnumerable<SearchRequestDb> GetAllRequests();
         Task<IEnumerable<SearchRequestDb>> GetAllRequestsAsync();
-        SearchRequestDb GetRequestById(int? requestId);
-        Task<SearchRequestDb> GetRequestByIdAsync(int? requestId);
+        SearchRequestDb GetRequestByCacheId(string cacheId);
+
+        Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId);
         bool Exists(SearchRequestDb searchRequest);
 
     }

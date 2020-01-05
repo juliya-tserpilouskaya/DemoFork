@@ -23,9 +23,24 @@ namespace BulbaCourses.Youtube.Logic.Services
         {
             return _searchRequestRepository.SaveRequest(searchRequest);
         }
+        public void Update(SearchRequestDb searchRequest)
+        {
+            _searchRequestRepository.Update(searchRequest);
+        }
+
         public bool Exists(SearchRequestDb searchRequest)
         {
             return _searchRequestRepository.Exists(searchRequest);
+        }
+
+        public SearchRequestDb GetRequestByCacheId(string cacheId)
+        {
+            return _searchRequestRepository.GetRequestByCacheId(cacheId);
+        }
+
+        public async Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId)
+        {
+            return await _searchRequestRepository.GetRequestByCacheIdAsync(cacheId);
         }
 
     }

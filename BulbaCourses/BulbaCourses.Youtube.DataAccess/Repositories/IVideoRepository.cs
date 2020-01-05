@@ -11,11 +11,11 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
     {
         IEnumerable<ResultVideoDb> GetAll();
         Task<IEnumerable<ResultVideoDb>> GetAllAsync();
-        ResultVideoDb GetById(int? id);
+        ResultVideoDb GetById(string id);
         Task<ResultVideoDb> GetByIdAsync(string id);
         void Create(ResultVideoDb video);
         void Update(ResultVideoDb video);
-        void Delete(int? id);
+        void Delete(string id);
         void Save();
     }
 }

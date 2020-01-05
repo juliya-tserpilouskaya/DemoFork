@@ -36,9 +36,10 @@ namespace BulbaCourses.Youtube.Logic.Services
 
         public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user)
         {
-            var _requestService = _serviceFactory.CreateSearchRequestService();
-            var _userService = _serviceFactory.CreateUserService();
-            var _storyService = _serviceFactory.CreateStoryService();
+            var requestService = _serviceFactory.CreateSearchRequestService();
+            var userService = _serviceFactory.CreateUserService();
+            var storyService = _serviceFactory.CreateStoryService();
+            var videoService = _serviceFactory.CreateVideoService();
             var resultVideosDb = new List<ResultVideoDb>();
             
             //Mapping models
@@ -64,19 +65,52 @@ namespace BulbaCourses.Youtube.Logic.Services
                 //Add result to cache
                 _cache.Add(searchRequestDb.CacheId, resultVideosDb);
             }
-            
-            //Save search request if does not exist
-            if (!_requestService.Exists(searchRequestDb))
+
+
+            //Save ResultVideo and SearchRequest if does not exist
+            var videoFromDb = new ResultVideoDb();
+            if (requestService.Exists(searchRequestDb))
             {
-                searchRequestDb.Videos = resultVideosDb;
-                searchRequestDb = _requestService.Save(searchRequestDb);
+                searchRequestDb = await requestService.GetRequestByCacheIdAsync(searchRequestDb.CacheId);
+                foreach (var resultVideo in resultVideosDb)
+                {
+                    videoFromDb = videoService.GetById(resultVideo.Id);
+                    if (videoFromDb != null)
+                    {
+                        if (!searchRequestDb.Videos.Contains(videoFromDb))
+                        searchRequestDb.Videos.Add(videoFromDb);
+                    }
+                    else
+                    {
+                        searchRequestDb.Videos.Add(resultVideo);
+                    }
+                }
+                requestService.Update(searchRequestDb);
             }
+            else
+            {
+                searchRequestDb.Videos = new List<ResultVideoDb>();
+                foreach (var resultVideo in resultVideosDb)
+                {
+                    videoFromDb = videoService.GetById(resultVideo.Id);
+                    if (videoFromDb != null)
+                    {
+                        searchRequestDb.Videos.Add(videoFromDb);
+                    }
+                    else
+                    {
+                        searchRequestDb.Videos.Add(resultVideo);
+                    }
+                }
+                requestService.Save(searchRequestDb);
+            }
+
             //Save user if does not exist
-            if(!_userService.Exists(userDb))
-                _userService.Save(userDb);
+            if(!userService.Exists(userDb))
+                userService.Save(userDb);
 
             //Save user search story
-            _storyService.Save(new SearchStoryDb()
+            storyService.Save(new SearchStoryDb()
             {
                 SearchDate = DateTime.Now,
                 SearchRequest = searchRequestDb,

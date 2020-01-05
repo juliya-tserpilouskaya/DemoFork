@@ -24,6 +24,12 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             _context.SaveChanges();
             return request;
         }
+        public void Update(SearchRequestDb request)
+        {
+            _context.Entry(request).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
 
         public void DeleteRequest(int? requestId)
         {
@@ -45,9 +51,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return _context.SearchRequests.ToList().AsReadOnly();
         }
 
-         public SearchRequestDb GetRequestById(int? requestId)
+         public SearchRequestDb GetRequestByCacheId(string cacheId)
         {
-            return _context.SearchRequests.SingleOrDefault(r => r.Id == requestId);
+            return _context.SearchRequests.SingleOrDefault(r => string.Equals(r.CacheId, cacheId));
         }
 
         //Async methods
@@ -56,9 +62,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return await _context.SearchRequests.ToListAsync();
         }
 
-        public async Task<SearchRequestDb> GetRequestByIdAsync(int? requestId)
+        public async Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId)
         {
-            return await _context.SearchRequests.SingleOrDefaultAsync(r => r.Id == requestId);
+            return await _context.SearchRequests.Include(_=>_.Videos).SingleOrDefaultAsync(r => r.CacheId == cacheId);
         }
 
         //interface method implementation
@@ -75,5 +81,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             if (flag)
                 GC.SuppressFinalize(this);
         }
+
     }
 }
