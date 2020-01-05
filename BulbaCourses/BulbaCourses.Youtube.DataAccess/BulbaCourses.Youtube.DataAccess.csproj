@@ -82,6 +82,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessModule.cs" />
+    <Compile Include="Migrations\202001051409156_Init.cs" />
+    <Compile Include="Migrations\202001051409156_Init.Designer.cs">
+      <DependentUpon>202001051409156_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChannelDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\MentorDb.cs" />
@@ -106,6 +111,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001051409156_Init.resx">
+      <DependentUpon>202001051409156_Init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

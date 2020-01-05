@@ -14,6 +14,7 @@ using BulbaCourses.Youtube.Logic.Models;
 using IdentityServer3.AccessTokenValidation;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
+using Swashbuckle.Application;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Youtube.Web.Startup))]
 
@@ -29,6 +30,9 @@ namespace BulbaCourses.Youtube.Web
             config.MapHttpAttributeRoutes();
             var cert = File.ReadAllBytes(
                @"D:\LearnASPNET\bulba-courses\BulbaCourses\BulbaCourses.Youtube.SelfHosted\bin\debug\cert.pfx");
+
+            config.EnableSwagger(c => { c.SingleApiVersion("v1", "BulbaCourses.Youtube.Web"); })
+                .EnableSwaggerUi();
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {

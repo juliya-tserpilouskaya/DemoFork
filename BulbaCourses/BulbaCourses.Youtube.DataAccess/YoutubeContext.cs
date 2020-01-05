@@ -15,7 +15,7 @@ namespace BulbaCourses.Youtube.DataAccess
         public YoutubeContext() : base("YoutubeDbConnection")
         {
             Database.Log = s => Debug.WriteLine(s);
-            Database.SetInitializer(new DropCreateDatabaseAlways<YoutubeContext>());
+           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<YoutubeContext,Configuration>());
         }
 
         public DbSet<ResultVideoDb> Videos { get; set; }

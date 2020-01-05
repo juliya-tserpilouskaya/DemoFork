@@ -65,7 +65,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
 
-        [HttpDelete, Route("{userId})")]
+        [HttpDelete, Route("byuserid/{userId})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory deleted")]

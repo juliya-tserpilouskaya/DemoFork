@@ -116,7 +116,7 @@ namespace BulbaCourses.Youtube.Tests
                 var result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
                 result.Should().NotBeNull();
 
-                storyService.DeleteByUserId(storyId);
+                storyService.DeleteByStoryId(storyId);
                 result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
                 result.Should().BeNull();
             }
