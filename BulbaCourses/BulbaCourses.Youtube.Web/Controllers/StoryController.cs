@@ -1,5 +1,5 @@
-﻿using BulbaCourses.Youtube.Web.Logic.Models;
-using BulbaCourses.Youtube.Web.Logic.Services;
+﻿using BulbaCourses.Youtube.Logic.Models;
+using BulbaCourses.Youtube.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;

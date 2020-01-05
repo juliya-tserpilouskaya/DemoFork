@@ -6,7 +6,7 @@ namespace BulbaCourses.Youtube.Web.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
-    using BulbaCourses.Youtube.Web.Logic;
+    using BulbaCourses.Youtube.Logic;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;

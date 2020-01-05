@@ -211,9 +211,9 @@
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BulbaCourses.Youtube.Web.Logic\BulbaCourses.Youtube.Web.Logic.csproj">
-      <Project>{578FF0D7-D576-4C6B-863F-128B3836C0BB}</Project>
-      <Name>BulbaCourses.Youtube.Web.Logic</Name>
+    <ProjectReference Include="..\BulbaCourses.Youtube.Logic\BulbaCourses.Youtube.Logic.csproj">
+      <Project>{578ff0d7-d576-4c6b-863f-128b3836c0bb}</Project>
+      <Name>BulbaCourses.Youtube.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

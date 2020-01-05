@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using BulbaCourses.Youtube.Web.Logic.Models;
+using BulbaCourses.Youtube.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.App_Start;
 using EasyNetQ;
