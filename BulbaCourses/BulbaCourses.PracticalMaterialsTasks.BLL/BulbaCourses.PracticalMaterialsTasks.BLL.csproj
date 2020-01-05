@@ -74,12 +74,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Infrastructure\ValidationExeption.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\TaskDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

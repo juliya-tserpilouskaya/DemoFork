@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
-using BulbaCourses.PracticalMaterialsTasks.DAL.Models;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 {
-    public interface ITaskService
+    public interface IUserService
     {
+        void MakeUser(UserDTO userdto);
 
-        void MakeTask(TaskDTO taskDto);
-        TaskDTO GetTask(string id);
-        IEnumerable<TaskDTO> GetTasks();
+        UserDTO GetUser(string id);
+
+        IEnumerable<UserDTO> GetUsers();
+
         void Dispose();
     }
 }

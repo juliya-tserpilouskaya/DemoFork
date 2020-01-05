@@ -33,10 +33,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             DataBase.Save();
         }
 
-        public TaskDTO GetTask(int? id)
+        public TaskDTO GetTask(string id)
         {
             if (id == null) throw new ValidationExeption("Not id","idtask");
-            var task = DataBase.Tasks.Get(id.Value);
+            var task = DataBase.Tasks.Get(id);
             if (task == null) throw new ValidationExeption("Not task", "task");
             return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel };
         }
