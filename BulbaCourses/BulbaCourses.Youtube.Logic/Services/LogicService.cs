@@ -106,8 +106,10 @@ namespace BulbaCourses.Youtube.Logic.Services
             }
 
             //Save user if does not exist
-            if(!userService.Exists(userDb))
-                userService.Save(userDb);
+            if (!userService.Exists(userDb))
+                userDb = userService.Save(userDb);
+            else
+                userDb = userService.GetUserById(userDb.Id);
 
             //Save user search story
             storyService.Save(new SearchStoryDb()
