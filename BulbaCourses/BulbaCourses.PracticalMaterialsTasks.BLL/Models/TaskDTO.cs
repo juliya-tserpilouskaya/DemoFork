@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Models
 {
-    public class Task
+    public class TaskDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

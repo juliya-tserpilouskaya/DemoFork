@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Models
 {
-    public class User
+    public class UserDTO
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string FirstName { get; set; }

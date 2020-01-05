@@ -74,10 +74,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\ValidationExeption.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
-    <Compile Include="Models\SignIn.cs" />
-    <Compile Include="Models\Task.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\TaskDTO.cs" />
+    <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TaskService.cs" />
   </ItemGroup>

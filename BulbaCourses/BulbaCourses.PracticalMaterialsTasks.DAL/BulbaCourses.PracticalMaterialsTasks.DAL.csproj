@@ -55,7 +55,6 @@
     <Compile Include="Context\TasksContext.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Models\SignInDb.cs" />
     <Compile Include="Models\TaskDb.cs" />
     <Compile Include="Models\UserDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
