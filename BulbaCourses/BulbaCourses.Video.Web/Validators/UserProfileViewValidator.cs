@@ -1,4 +1,5 @@
-﻿using BulbaCourses.Video.Web.Models.UserViews;
+﻿using BulbaCourses.Video.Logic.InterfaceServices;
+using BulbaCourses.Video.Web.Models.UserViews;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,72 @@ namespace BulbaCourses.Video.Web.Validators
 {
     public class UserProfileViewValidator : AbstractValidator<UserProfileView>
     {
-        public UserProfileViewValidator()
+        public UserProfileViewValidator(IUserService service)
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleFor(c => c.UserId).NotEmpty().WithMessage("User id is required.");
-            RuleFor(c => c.Name).NotEmpty().WithMessage("User name is required.");
-            RuleFor(c => c.LastName).NotEmpty().WithMessage("User lastname is required.");
-            RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
-            RuleFor(c => c.Email).NotEmpty().WithMessage("Email is required.");
-            RuleFor(c => c.AvatarPath).NotEmpty().WithMessage("Avatar is requried.");
-            RuleFor(c => c.SubscriptionType).NotEmpty().WithMessage("Subscription is required.");
+            RuleSet("AddUser", () => {
+                RuleFor(c => c.UserId).Must(c => string.IsNullOrEmpty(c)).WithMessage("Id must be empty or null");
+
+                RuleFor(c => c.Name).NotEmpty().WithMessage("User name is required.");
+
+                RuleFor(c => c.LastName).NotEmpty().WithMessage("User lastname is required.");
+
+                RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
+                RuleFor(c => c.Login).MustAsync((async (title, token) => !(await service.ExistLoginAsync(title))))
+                    .WithMessage("Login already taken");
+                RuleFor(c => c.Login).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
+
+                RuleFor(c => c.Email).NotEmpty().WithMessage("Email is required.");
+                RuleFor(c => c.Email).EmailAddress().WithMessage("Invalid email format.");
+                RuleFor(c => c.Email).MustAsync((async (title, token) => !(await service.ExistEmailAsync(title))))
+                    .WithMessage("Email already taken");
+
+                RuleFor(c => c.Password).NotEmpty().WithMessage("Password is required.")
+                    .MinimumLength(8).WithMessage("Password must contain at least 8 characters.")
+                    .Matches("[A-Z]").Matches("[a-z]").Matches("[a-z]").Matches("[0-9]").Matches("[^a-zA-Z0-9]")
+                    .WithMessage("Regular Expression Password");
+
+                RuleFor(c => c.ConfirmPassword).Equal(c => c.Password).WithMessage("Password and confirmation password do not match");
+
+            });
+
+            RuleSet("UpdateUser", () => {
+                RuleFor(c => c.UserId).NotEmpty().WithMessage("Id must not be empty or null");
+
+                RuleFor(c => c.Name).NotEmpty().WithMessage("User name is required.");
+
+                RuleFor(c => c.LastName).NotEmpty().WithMessage("User lastname is required.");
+
+                RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
+                RuleFor(c => c.Login).MustAsync((async (title, token) => (await service.ExistLoginAsync(title))))
+                    .WithMessage("Login already taken");
+                RuleFor(c => c.Login).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
+
+                RuleFor(c => c.Email).NotEmpty().WithMessage("Email is required.");
+                RuleFor(c => c.Email).EmailAddress().WithMessage("Invalid email format.");
+                RuleFor(c => c.Email).MustAsync((async (title, token) => (await service.ExistEmailAsync(title))))
+                    .WithMessage("Email already taken");
+
+                RuleFor(c => c.Password).NotEmpty().WithMessage("Password is required.")
+                    .MinimumLength(8).WithMessage("Password must contain at least 8 characters.")
+                    .Matches("[A-Z]").Matches("[a-z]").Matches("[a-z]").Matches("[0-9]").Matches("[^a-zA-Z0-9]")
+                    .WithMessage("Regular Expression Password");
+
+                RuleFor(c => c.ConfirmPassword).Equal(c => c.Password).WithMessage("Password and confirmation password do not match");
+
+            });
+
+
+
+
+            //RuleFor(c => c.UserId).NotEmpty().WithMessage("User id is required.");
+            //RuleFor(c => c.Name).NotEmpty().WithMessage("User name is required.");
+            //RuleFor(c => c.LastName).NotEmpty().WithMessage("User lastname is required.");
+            //RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
+            //RuleFor(c => c.Email).NotEmpty().WithMessage("Email is required.");
+            //RuleFor(c => c.AvatarPath).NotEmpty().WithMessage("Avatar is requried.");
+            //RuleFor(c => c.SubscriptionType).NotEmpty().WithMessage("Subscription is required.");
 
         }
     }

@@ -21,21 +21,18 @@ namespace BulbaCourses.Video.Web
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
             //IValidator<User>
-            AssemblyScanner.FindValidatorsInAssemblyContaining<UserForgotPasswordView>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
-            AssemblyScanner.FindValidatorsInAssemblyContaining<UserChangePasswordView>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
-            AssemblyScanner.FindValidatorsInAssemblyContaining<UserLoginView>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
             AssemblyScanner.FindValidatorsInAssemblyContaining<UserProfileView>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
-            AssemblyScanner.FindValidatorsInAssemblyContaining<UserRegisterView>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
+                .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserForgotPasswordView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserChangePasswordView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserLoginView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

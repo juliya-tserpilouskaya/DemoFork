@@ -2,6 +2,7 @@
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Models.UserViews;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -58,17 +59,17 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserRegisterView))]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody]UserRegisterView user)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddUser")]UserProfileView user)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var userInfo = _mapper.Map<UserRegisterView, UserInfo>(user);
+                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
                 await _userService.AddAsync(userInfo);
                 return Ok(user);
             }
@@ -80,17 +81,17 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserEditView))]
+        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody]UserEditView user)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user)
         {
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             try
             {
-                var userInfo = _mapper.Map<UserEditView, UserInfo>(user);
+                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
                 await _userService.UpdateAsync(userInfo);
                 return Ok();
             }
