@@ -113,6 +113,45 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             throw new NotImplementedException();
         }
 
+        public CourseDB Update(CourseDB course)
+        {
+            CourseDB deletedCourse = _context.Courses
+                .SingleOrDefault(p => p.Id.Equals(course.Id, StringComparison.OrdinalIgnoreCase));
+
+            if (deletedCourse != null)
+            {
+                _context.Courses.Remove(deletedCourse);
+                course.Id = Guid.NewGuid().ToString();
+                _context.Courses.Add(course);
+                _context.SaveChanges();
+            }
+            else
+            {
+                return deletedCourse;
+            }
+            return course;
+        }
+
+        public bool DeleteById(string id)
+        {
+            CourseDB courseToDelete = _context.Courses
+                .Include(p => p.Items)
+                .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+
+            if (courseToDelete != null)
+            {
+                _context.CourseItems.RemoveRange(courseToDelete.Items.ToArray());
+                _context.Courses.Remove(courseToDelete);
+                _context.SaveChanges();
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void Dispose()
         {
             Dispose(true);

@@ -24,6 +24,7 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         Task<IEnumerable<LearningCourseDTO>> GetCourseByComplexityAsync(string complexity);
         IEnumerable<LearningCourseDTO> GetCourseByLanguage(string lang);
         Task<IEnumerable<LearningCourseDTO>> GetCourseByLanguageAsync(string lang);
-
+        LearningCourseDTO Update(LearningCourseDTO course);
+        bool DeleteById(string id);
     }
 }

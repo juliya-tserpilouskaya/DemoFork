@@ -41,7 +41,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             query.Id = Guid.NewGuid().ToString();
             _context.SearchQueries.Add(query);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
             return query;
         }
 
@@ -49,13 +49,13 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             var query = _context.SearchQueries.SingleOrDefault(c => c.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.SearchQueries.Remove(query);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void RemoveAll()
         {
             _context.SearchQueries.RemoveRange(_context.SearchQueries);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task<bool> AnyAsync(string id)

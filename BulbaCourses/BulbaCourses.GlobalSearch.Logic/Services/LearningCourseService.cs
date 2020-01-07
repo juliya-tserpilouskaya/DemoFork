@@ -136,13 +136,27 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetCourseByLanguage(lang));
         }
 
-
         public async Task<IEnumerable<LearningCourseDTO>> GetCourseByLanguageAsync(string lang)
         {
             var mapper = new MapperConfiguration(cfg =>
                 cfg.CreateMap<CourseDB, LearningCourseDTO>()).CreateMapper();
             var data = await _learningCourseDb.GetCourseByLanguageAsync(lang);
             return mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(data);
+        }
+
+        public LearningCourseDTO Update(LearningCourseDTO course)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CourseDB, LearningCourseDTO>().ReverseMap();
+                cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
+            }).CreateMapper();
+            var data = _learningCourseDb.Update(mapper.Map<LearningCourseDTO, CourseDB>(course));
+            return mapper.Map<CourseDB, LearningCourseDTO>(data);
+        }
+
+        public bool DeleteById(string id)
+        {
+            return _learningCourseDb.DeleteById(id);
         }
     }
 }

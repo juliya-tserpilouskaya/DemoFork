@@ -25,5 +25,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         Task<IEnumerable<CourseDB>> GetCourseByLanguageAsync(string lang);
         IEnumerable<CourseDB> GetCourseByQuery(string query);
         Task<IEnumerable<CourseDB>> GetCourseByQueryAsync(string query);
+        CourseDB Update(CourseDB course);
+        bool DeleteById(string id);
     }
 }
