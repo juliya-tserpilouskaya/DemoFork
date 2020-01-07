@@ -58,7 +58,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
         public IHttpActionResult Create([FromBody]SearchQueryDTO query)
         {
-            //validate here
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             return Ok(_searchQueryService.Add(query));
         }
 

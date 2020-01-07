@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using FluentValidation.WebApi;
 
 namespace BulbaCourses.GlobalSearch.Web
 {
@@ -10,7 +11,7 @@ namespace BulbaCourses.GlobalSearch.Web
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            FluentValidationModelValidatorProvider.Configure(config);
             // Web API routes
             config.MapHttpAttributeRoutes();
 
