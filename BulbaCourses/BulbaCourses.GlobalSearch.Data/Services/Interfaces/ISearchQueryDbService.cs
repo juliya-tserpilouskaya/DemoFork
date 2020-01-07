@@ -16,5 +16,6 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         SearchQueryDB Add(SearchQueryDB query);
         void RemoveById(string id);
         void RemoveAll();
+        Task<bool> AnyAsync(string id);
     }
 }

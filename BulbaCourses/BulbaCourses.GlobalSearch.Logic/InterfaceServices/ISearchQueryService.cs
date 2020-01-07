@@ -18,5 +18,6 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         SearchQueryDTO Add(SearchQueryDTO query);
         void RemoveById(string id);
         void RemoveAll();
+        Task<bool> AnyAsync(string id);
     }
 }

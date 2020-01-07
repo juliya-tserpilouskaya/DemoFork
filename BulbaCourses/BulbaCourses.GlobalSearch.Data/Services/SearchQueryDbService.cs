@@ -58,6 +58,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             _context.SaveChangesAsync();
         }
 
+        public async Task<bool> AnyAsync(string id)
+        {
+            return await _context.SearchQueries.AnyAsync(c => c.Id == id)
+                .ConfigureAwait(false);
+        }
+
         public void Dispose()
         {
             Dispose(true);

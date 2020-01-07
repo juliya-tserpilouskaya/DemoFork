@@ -67,5 +67,11 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         {
             _searchQueryDb.RemoveAll();
         }
+
+        //useless method for test only
+        public async Task<bool> AnyAsync(string id)
+        {
+            return await _searchQueryDb.AnyAsync(id);
+        }
     }
 }
