@@ -1,5 +1,4 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Context;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
 using NUnit.Framework;
 using System.Linq;
 

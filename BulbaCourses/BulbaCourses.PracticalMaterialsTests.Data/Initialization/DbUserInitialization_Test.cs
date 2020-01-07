@@ -2,7 +2,6 @@
 using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Users;
 using System.Collections.Generic;
 using System.Data.Entity;
 
@@ -98,34 +97,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
 
             // ------------ Questions
 
-            // ------------ AnswerVariants
-
-            // ------------ User
-
-            IList<MUserDb> default_UserList = 
-                new List<MUserDb>()
-                {
-                    new MUserDb()
-                    {
-                        Login = "User_1",
-                        Password = "User_1_Password",
-                        Email = "User_1_Email"
-                    },
-                    new MUserDb()
-                    {
-                        Login = "User_2",
-                        Password = "User_2_Password",
-                        Email = "User_2_Email"
-                    },
-                    new MUserDb()
-                    {
-                        Login = "User_3",
-                        Password = "User_3_Password",
-                        Email = "User_3_Email"
-                    }
-                };
-            
-            context.User.AddRange(default_UserList);            
+            // ------------ AnswerVariants               
 
             // ------------ 
 

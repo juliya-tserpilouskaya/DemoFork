@@ -31,7 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,25 +51,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\EQuestionType.cs" />
-    <Compile Include="Enum\EUserRole.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromList.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElements.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrder.cs" />
-    <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
-    <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
+    <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
     <Compile Include="Models\Tests\MTest_MainInfo.cs" />
-    <Compile Include="Models\Join\MJoin_TestWithQuestions.cs" />
-    <Compile Include="Models\Users\MUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestAPI\TestAPIClass.cs" />
+    <Compile Include="Services\AnswerVariants\Interfaсe\IService_AnswerVariant.cs" />
+    <Compile Include="Services\AnswerVariants\Realization\Service_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Services\AnswerVariants\Realization\Service_AnswerVariant_SetIntoMissingElements.cs" />
+    <Compile Include="Services\AnswerVariants\Realization\Service_AnswerVariant_SetOrderDb.cs" />
+    <Compile Include="Services\Questions\Interfaсe\IService_Question.cs" />
+    <Compile Include="Services\Questions\Realization\Service_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Services\Questions\Realization\Service_Question_SetIntoMissingElements.cs" />
+    <Compile Include="Services\Questions\Realization\Service_Question_SetOrderDb.cs" />
+    <Compile Include="Services\Tests\Interfaсe\IService_Test.cs" />
+    <Compile Include="Services\Tests\Realization\Service_Test.cs" />
+    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_SetIntoMissingElements.cs" />
+    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_SetOrder.cs" />
+    <Compile Include="Validators\Questions\Validator_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Validators\Questions\Validator_Question_SetIntoMissingElements.cs" />
+    <Compile Include="Validators\Questions\Validator_Question_SetOrder.cs" />
+    <Compile Include="Validators\Tests\Validator_Test_MainInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">
       <Project>{4ab20b3a-6e96-4f8a-b5e1-d59bd28de331}</Project>
       <Name>BulbaCourses.PracticalMaterialsTests.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants;
-using BulbaCourses.PracticalMaterialsTests.Logic.Models.Users;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using System.Collections.Generic;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions
@@ -9,10 +9,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions
     /// </summary>
     public class MQuestion_SetOrder
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
 
-        public MUser Author { get; set; }
+        public string QuestionText { get; set; }
 
-        public IEnumerable<MAnswerVariant_SetOrder> AnswerVariants { get; set; }
+        public int SortKey { get; set; }        
+
+        public MTest_MainInfo Test_MainInfo { get; set; }
+
+        public ICollection<MAnswerVariant_SetOrder> AnswerVariants { get; set; }
     }
 }

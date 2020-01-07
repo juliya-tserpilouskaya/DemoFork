@@ -51,7 +51,7 @@
       <HintPath>..\packages\FluentAssertions.5.9.0\lib\net47\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.8.6.0\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
@@ -76,22 +76,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\UnitTest_Data.cs" />
-    <Compile Include="Data\UnitTest_Validator.cs" />
+    <Compile Include="Logic\UnitTest_Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">
       <Project>{4ab20b3a-6e96-4f8a-b5e1-d59bd28de331}</Project>
       <Name>BulbaCourses.PracticalMaterialsTests.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\" />
-    <Folder Include="Web\" />
+    <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Logic\BulbaCourses.PracticalMaterialsTests.Logic.csproj">
+      <Project>{be04f720-8b4f-4b3e-9c58-5400934eed91}</Project>
+      <Name>BulbaCourses.PracticalMaterialsTests.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

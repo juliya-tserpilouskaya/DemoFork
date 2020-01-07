@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants
 {   
@@ -14,6 +10,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants
 
         public int SortKey { get; set; }
 
-        public int CorrectOrderKey { get; set; }
+        public int CorrectOrderKey { get; set; }        
+
+        public MQuestion_SetOrder Question_SetOrder { get; set; }
     }
 }

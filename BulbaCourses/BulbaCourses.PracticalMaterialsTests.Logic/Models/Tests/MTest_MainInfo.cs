@@ -1,5 +1,4 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Join;
-using BulbaCourses.PracticalMaterialsTests.Logic.Models.Users;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions;
 using System.Collections.Generic;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests
@@ -8,10 +7,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; }        
 
-        public MUser Author { get; set; }
+        public ICollection<MQuestion_ChoosingAnswerFromList> Question_ChoosingAnswerFromList { get; set; }
 
-        public IEnumerable<MJoin_TestWithQuestions> Join_TestWithQuestions { get; set; }
+        public ICollection<MQuestion_SetIntoMissingElements> Question_SetIntoMissingElements { get; set; }
+
+        public ICollection<MQuestion_SetOrder> Question_SetOrder { get; set; }
     }
 }

@@ -37,12 +37,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -67,17 +61,6 @@
     <Compile Include="Mapping\Questions\Mapping_Question_SetIntoMissingElements.cs" />
     <Compile Include="Mapping\Questions\Mapping_Question_SetOrder.cs" />
     <Compile Include="Mapping\Tests\Mapping_Test_MainInfo.cs" />
-    <Compile Include="Mapping\Users\Mapping_User.cs" />
-    <Compile Include="Service\AnswerVariants\Interfaсe\IDbService_AnswerVariant.cs" />
-    <Compile Include="Service\AnswerVariants\Realization\DbService_AnswerVariant_ChoosingAnswerFromList.cs" />
-    <Compile Include="Service\AnswerVariants\Realization\DbService_AnswerVariant_SetIntoMissingElements.cs" />
-    <Compile Include="Service\AnswerVariants\Realization\DbService_AnswerVariant_SetOrderDb.cs" />
-    <Compile Include="Service\Questions\Realization\DbService_Question_SetOrderDb.cs" />
-    <Compile Include="Service\Questions\Realization\DbService_Question_SetIntoMissingElements.cs" />
-    <Compile Include="Service\Questions\Realization\DbService_Question_ChoosingAnswerFromList.cs" />
-    <Compile Include="Service\Questions\Interfaсe\IDbService_Question.cs" />
-    <Compile Include="Service\Tests\Interfaсe\IDbService_Test.cs" />
-    <Compile Include="Service\Tests\Realization\DbService_Test.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
@@ -85,16 +68,7 @@
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
     <Compile Include="Models\Questions\MQuestion_SetOrderDb.cs" />
     <Compile Include="Models\Tests\MTest_MainInfoDb.cs" />
-    <Compile Include="Models\Users\MUserDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_ChoosingAnswerFromList.cs" />
-    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_SetIntoMissingElements.cs" />
-    <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_SetOrder.cs" />
-    <Compile Include="Validators\Questions\Validator_Question_ChoosingAnswerFromList.cs" />
-    <Compile Include="Validators\Questions\Validator_Question_SetIntoMissingElements.cs" />
-    <Compile Include="Validators\Questions\Validator_Question_SetOrder.cs" />
-    <Compile Include="Validators\Tests\Validator_Test_MainInfo.cs" />
-    <Compile Include="Validators\Users\Validator_User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
