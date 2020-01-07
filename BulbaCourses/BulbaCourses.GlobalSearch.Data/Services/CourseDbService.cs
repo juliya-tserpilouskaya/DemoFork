@@ -17,24 +17,32 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public IEnumerable<CourseDB> GetAllCourses()
         {
-            return _context.Courses;
+            return _context.Courses
+                .Include(c => c.Items);
         }
 
         public async Task<IEnumerable<CourseDB>> GetAllCoursesAsync()
         {
-            return await _context.Courses.ToListAsync().ConfigureAwait(false);
+            return await _context.Courses
+                .Include(c => c.Items)
+                .ToListAsync().ConfigureAwait(false);
         }
 
         public CourseDB GetById(string id)
         {
-            return _context.Courses.SingleOrDefault(c => c.Id.Equals(id,
+            return _context.Courses
+                .Include(c => c.Items)
+                .SingleOrDefault(c => c.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task<CourseDB> GetByIdAsync(string id)
         {
-            return await _context.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id,
-                StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
+            return await _context.Courses
+                .Include(c => c.Items)
+                .SingleOrDefaultAsync(c => c.Id.Equals(id,
+                StringComparison.OrdinalIgnoreCase))
+                .ConfigureAwait(false);
         }
 
         public IEnumerable<CourseDB> GetByCategory(int category)
@@ -49,12 +57,18 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public IEnumerable<CourseDB> GetByAuthorId(int id)
         {
-            return _context.Courses.Where(course => course.AuthorDBId == id);
+            return _context.Courses
+                .Include(c => c.Items)
+                .Where(course => course.AuthorDBId == id);
         }
 
         public async Task<IEnumerable<CourseDB>> GetByAuthorIdAsync(int id)
         {
-            return await _context.Courses.Where(course => course.AuthorDBId == id).ToListAsync().ConfigureAwait(false);
+            return await _context.Courses
+                .Include(c => c.Items)
+                .Where(course => course.AuthorDBId == id)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public IEnumerable<CourseItemDB> GetLearningItemsByCourseId(string id)
