@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.DTO
 {
-    [Validator(typeof(SearchQueryValidator))]
+    //[Validator(typeof(SearchQueryValidator))]
     public class SearchQueryDTO
     {
         public string Id { get; set; }

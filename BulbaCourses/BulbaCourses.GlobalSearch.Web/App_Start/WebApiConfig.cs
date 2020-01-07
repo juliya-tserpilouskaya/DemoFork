@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using BulbaCourses.GlobalSearch.Web.App_Start;
 using FluentValidation.WebApi;
+using FluentValidation;
+using Ninject;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 
 namespace BulbaCourses.GlobalSearch.Web
 {
@@ -10,8 +14,18 @@ namespace BulbaCourses.GlobalSearch.Web
     {
         public static void Register(HttpConfiguration config)
         {
+            IKernel kernel = (IKernel)
+                config.DependencyResolver.GetService(typeof(IKernel));
+            
             // Web API configuration and services
-            FluentValidationModelValidatorProvider.Configure(config);
+            FluentValidationModelValidatorProvider
+                .Configure(config, cfg => cfg.ValidatorFactory =
+                new NinjectValidationFactory(kernel));
+
+            AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                .To(result.ValidatorType));
+            
             // Web API routes
             config.MapHttpAttributeRoutes();
 
