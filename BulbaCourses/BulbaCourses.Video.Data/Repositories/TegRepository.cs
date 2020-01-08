@@ -10,41 +10,64 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
-    public class TegRepository : ITegRepository
+    public class TegRepository : BaseRepository, ITegRepository
     {
-        private readonly VideoDbContext videoDbContext;
 
-        public TegRepository(VideoDbContext videoDbContext)
+        public TegRepository(VideoDbContext videoDbContext) : base(videoDbContext)
         {
-            this.videoDbContext = videoDbContext;
         }
 
         public void Add(TagDb tag)
         {
-            videoDbContext.Tags.Add(tag);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Tags.Add(tag);
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> AddAsync(TagDb tag)
+        {
+            _videoDbContext.Tags.Add(tag);
+            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return result;
         }
 
         public IEnumerable<TagDb> GetAll()
         {
-            var tagList = videoDbContext.Tags.ToList().AsReadOnly();
+            var tagList = _videoDbContext.Tags.ToList().AsReadOnly();
             return tagList;
 
         }
 
+        public async Task<IEnumerable<TagDb>> GetAllAsync()
+        {
+            var tagList = await _videoDbContext.Tags.ToListAsync().ConfigureAwait(false);
+            return tagList.AsReadOnly();
+        }
+
         public TagDb GetById(string tagId)
         {
-            var tag = videoDbContext.Tags.FirstOrDefault(b => b.TagId.Equals(tagId));
+            var tag = _videoDbContext.Tags.FirstOrDefault(b => b.TagId.Equals(tagId));
             return tag;
 
         }
 
+        public async Task<TagDb> GetByIdAsync(string tagId)
+        {
+            var tag = await _videoDbContext.Tags.SingleOrDefaultAsync(b => b.TagId.Equals(tagId)).ConfigureAwait(false);
+            return tag;
+        }
+
         public void Remove(TagDb tag)
         {
-            videoDbContext.Tags.Remove(tag);
-            videoDbContext.SaveChanges();
+            _videoDbContext.Tags.Remove(tag);
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> RemoveAsync(TagDb tag)
+        {
+            _videoDbContext.Tags.Remove(tag);
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(TagDb tag)
@@ -53,9 +76,19 @@ namespace BulbaCourses.Video.Data.Repositories
             {
                 throw new ArgumentNullException("tag");
             }
-            videoDbContext.Entry(tag).State = EntityState.Modified;
-            videoDbContext.SaveChanges();
+            _videoDbContext.Entry(tag).State = EntityState.Modified;
+            _videoDbContext.SaveChanges();
 
+        }
+
+        public async Task<int> UpdateAsync(TagDb tag)
+        {
+            if (tag == null)
+            {
+                throw new ArgumentNullException("tag");
+            }
+            _videoDbContext.Entry(tag).State = EntityState.Modified;
+            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

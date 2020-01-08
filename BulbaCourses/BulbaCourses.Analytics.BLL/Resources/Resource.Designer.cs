@@ -79,11 +79,38 @@ namespace BulbaCourses.Analytics.BLL.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report doesn&apos;t exists (by Name).
+        /// </summary>
+        public static string NotFoundReportByName {
+            get {
+                return ResourceManager.GetString("NotFoundReportByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reports doesn&apos;t exist.
         /// </summary>
         public static string NotFoundReports {
             get {
                 return ResourceManager.GetString("NotFoundReports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A report with the same name already exists..
+        /// </summary>
+        public static string ReportExists {
+            get {
+                return ResourceManager.GetString("ReportExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must have minimum length 3 and maximum length 128.
+        /// </summary>
+        public static string ReportNameLength {
+            get {
+                return ResourceManager.GetString("ReportNameLength", resourceCulture);
             }
         }
     }

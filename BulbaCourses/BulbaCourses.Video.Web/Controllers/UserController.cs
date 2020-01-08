@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
-using BulbaCourses.Video.Web.Models;
+using BulbaCourses.Video.Web.Models.UserViews;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
@@ -15,21 +16,21 @@ namespace BulbaCourses.Video.Web.Controllers
     [RoutePrefix("api/users")]
     public class UserController : ApiController
     {
-        private readonly IMapper mapper;
-        private readonly IUserService userService;
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
         public UserController(IMapper mapper, IUserService userService)
         {
-            this.mapper = mapper;
-            this.userService = userService;
+            _mapper = mapper;
+            _userService = userService;
         }
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserInfo))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -37,8 +38,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var user = mapper.Map<UserInfo, UserProfileView>(userService.GetUserById(id));
-                var result = userService.GetUserById(user.UserId);
+                var result = await _userService.GetUserByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -46,12 +46,13 @@ namespace BulbaCourses.Video.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserProfileView>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var users = userService.GetAll();
-            var result = mapper.Map<IEnumerable<UserInfo>, IEnumerable<UserProfileView>>(users);
+            var users = await _userService.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<UserInfo>, IEnumerable<UserProfileView>>(users);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -59,7 +60,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Create([FromBody]UserProfileView user)
         {
             if (user == null)
             {
@@ -67,8 +68,8 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var userInfo = mapper.Map<UserProfileView, UserInfo>(user);
-                userService.Add(userInfo);
+                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+                await _userService.AddAsync(userInfo);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -81,7 +82,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Update([FromBody]UserProfileView user)
         {
             if (user == null)
             {
@@ -89,8 +90,8 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var userInfo = mapper.Map<UserProfileView, UserInfo>(user);
-                userService.Update(userInfo);
+                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+                await _userService.UpdateAsync(userInfo);
                 return Ok();
             }
             catch (Exception ex)
@@ -103,7 +104,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -111,7 +112,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                userService.DeleteById(id);
+                await _userService.DeleteByIdAsync(id);
                 return Ok();
             }
             catch (Exception ex)

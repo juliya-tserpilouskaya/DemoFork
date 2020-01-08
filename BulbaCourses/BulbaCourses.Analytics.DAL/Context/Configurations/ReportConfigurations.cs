@@ -17,12 +17,12 @@ namespace BulbaCourses.Analytics.DAL.Context.Configurations
 
             Property(_ => _.Name)
                 .IsRequired()
-                .HasMaxLength(255)
+                .HasMaxLength(128)
                 .IsUnicode();
 
             Property(_ => _.Description)
                 .IsOptional()
-                .HasMaxLength(1020)
+                .HasMaxLength(255)
                 .IsUnicode();
 
             Property(_ => _.Created)
@@ -33,12 +33,12 @@ namespace BulbaCourses.Analytics.DAL.Context.Configurations
 
             Property(_ => _.Creator)
                 .IsOptional()
-                .HasMaxLength(255)
+                .HasMaxLength(128)
                 .IsUnicode();
 
             Property(_ => _.Modifier)
                 .IsOptional()
-                .HasMaxLength(255)
+                .HasMaxLength(128)
                 .IsUnicode();
         }
     }
