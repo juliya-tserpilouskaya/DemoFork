@@ -154,6 +154,21 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return mapper.Map<CourseDB, LearningCourseDTO>(data);
         }
 
+        public LearningCourseDTO Add(LearningCourseDTO course)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()
+                    .ForMember(x => x.AuthorId, opt => opt.MapFrom(c => c.AuthorDBId))
+                    .ForMember(x => x.Category, opt => opt.MapFrom(c => c.CourseCategoryDBId))
+                    .ReverseMap()
+                    .ForPath(x => x.AuthorDBId, opt => opt.MapFrom(c => c.AuthorId))
+                    .ForPath(x => x.CourseCategoryDBId, opt => opt.MapFrom(c => c.Category));
+                cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
+            }).CreateMapper();
+            var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
+            return mapper.Map<CourseDB, LearningCourseDTO>(data);
+        }
+
         public bool DeleteById(string id)
         {
             return _learningCourseDb.DeleteById(id);

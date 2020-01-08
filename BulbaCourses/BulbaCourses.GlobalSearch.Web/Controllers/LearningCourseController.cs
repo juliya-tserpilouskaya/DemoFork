@@ -191,6 +191,17 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
+        public IHttpActionResult Create([FromBody]LearningCourseDTO course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(_learningCourseService.Add(course));
+        }
+
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]

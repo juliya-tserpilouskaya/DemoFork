@@ -132,6 +132,14 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             return course;
         }
 
+        public CourseDB Add(CourseDB course)
+        {
+            course.Id = Guid.NewGuid().ToString();
+            _context.Courses.Add(course);
+            _context.SaveChanges();
+            return course;
+        }
+
         public bool DeleteById(string id)
         {
             CourseDB courseToDelete = _context.Courses
@@ -148,7 +156,6 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             {
                 return false;
             }
-
             return true;
         }
 
