@@ -16,7 +16,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Filters
         {
             if (!actionContext.ModelState.IsValid)
             {
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = "Invalid model" };
+                actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
                 return;
             }
         }

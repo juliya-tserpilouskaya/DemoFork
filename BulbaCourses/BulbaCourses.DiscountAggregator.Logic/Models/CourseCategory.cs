@@ -14,8 +14,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string Title { get; set; }
 
-        public Domain Domain { get; set; }
-
-        public IEnumerable<CourseCategory> SubCategory {get; set;}
+        // Domain Domain { get; set; }
     }
 }

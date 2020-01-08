@@ -28,7 +28,7 @@ namespace BulbaCourses.DiscountAggregator.Web
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
 
-            //config.Filters.Add(new BadRequestFilterAttribute());
+            config.Filters.Add(new BadRequestFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

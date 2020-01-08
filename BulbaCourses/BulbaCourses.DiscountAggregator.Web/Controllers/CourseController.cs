@@ -156,10 +156,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddCourse,default")]Course course)
         {
             //validate course here
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             if (course == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
             {
                 return BadRequest();
