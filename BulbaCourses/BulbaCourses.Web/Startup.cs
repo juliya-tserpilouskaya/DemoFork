@@ -1,0 +1,62 @@
+﻿using System;
+using System.Resources;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using System.Web.Http;
+using BulbaCourses.Web.Data;
+using BulbaCourses.Web.Properties;
+using BulbaCourses.Web.Security;
+using IdentityServer3.AspNetIdentity;
+using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.Jwt;
+using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
+using Owin;
+
+[assembly: OwinStartup(typeof(BulbaCourses.Web.Startup))]
+
+namespace BulbaCourses.Web
+{
+    public class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
+
+            var config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
+
+            ConfigSecurity(app);
+
+            app.UseNinjectMiddleware(() => new StandardKernel(new InjectModule()))
+                .UseNinjectWebApi(config);
+        }
+
+        private void ConfigSecurity(IAppBuilder app)
+        {
+            var factory = new IdentityServerServiceFactory();
+            factory.UseInMemoryClients(SecurityConfig.LoadClients())
+                .UseInMemoryScopes(SecurityConfig.LoadScopes());
+
+            factory.Register(new Registration<UserManager<IdentityUser,string>>(resolver => new BulbaUserManager(new UserStore<IdentityUser>(new UserContext()))));
+            factory.Register(new Registration<AspNetIdentityUserService<IdentityUser,string>>());
+            factory.UserService = new Registration<IUserService, AspNetIdentityUserService<IdentityUser, string>>();
+
+            var options = new IdentityServerOptions
+            {
+                Factory = factory,
+                IssuerUri = "BulbaCourses SSO",
+                RequireSsl = false,
+                SiteName = "BulbaCourses SSO",
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
+            };
+
+            app.UseIdentityServer(options);
+        }
+    }
+}
