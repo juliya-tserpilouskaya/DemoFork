@@ -175,20 +175,27 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Update([FromBody]LearningCourseDTO course)
         {
-            if (course is null)
-            {
-                return BadRequest();
-            }
 
-            try
+            if (!ModelState.IsValid)
             {
-                var result = _learningCourseService.Update(course);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                return BadRequest(ModelState);
             }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return Ok(_learningCourseService.Update(course));
+
+            //if (course is null)
+            //{
+            //    return BadRequest();
+            //}
+
+            //try
+            //{
+            //    var result = _learningCourseService.Update(course);
+            //    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            //}
+            //catch (InvalidOperationException ex)
+            //{
+            //    return InternalServerError(ex);
+            //}
         }
 
         [HttpDelete, Route("{id}")]

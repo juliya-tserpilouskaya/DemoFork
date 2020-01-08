@@ -25,7 +25,11 @@ namespace BulbaCourses.GlobalSearch.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                 .To(result.ValidatorType));
-            
+
+            AssemblyScanner.FindValidatorsInAssemblyContaining<LearningCourseDTO>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                .To(result.ValidatorType));
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
