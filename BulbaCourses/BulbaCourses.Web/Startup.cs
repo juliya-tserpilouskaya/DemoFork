@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Resources;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.Web.Data;
+using BulbaCourses.Web.Migrations;
 using BulbaCourses.Web.Properties;
 using BulbaCourses.Web.Security;
 using IdentityServer3.AspNetIdentity;
@@ -35,6 +37,8 @@ namespace BulbaCourses.Web
 
             app.UseNinjectMiddleware(() => new StandardKernel(new InjectModule()))
                 .UseNinjectWebApi(config);
+
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<UserContext, Configuration>());
         }
 
         private void ConfigSecurity(IAppBuilder app)

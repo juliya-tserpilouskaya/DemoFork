@@ -10,6 +10,7 @@ namespace BulbaCourses.Web.Data
     {
         public UserContext() : base("UserDbConnection")
         {
+            
         }
     }
 }
