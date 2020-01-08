@@ -180,22 +180,15 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_learningCourseService.Update(course));
-
-            //if (course is null)
-            //{
-            //    return BadRequest();
-            //}
-
-            //try
-            //{
-            //    var result = _learningCourseService.Update(course);
-            //    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            //}
-            //catch (InvalidOperationException ex)
-            //{
-            //    return InternalServerError(ex);
-            //}
+            try
+            {
+                var result = _learningCourseService.Update(course);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpDelete, Route("{id}")]
