@@ -128,10 +128,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse,default")]Course course)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
