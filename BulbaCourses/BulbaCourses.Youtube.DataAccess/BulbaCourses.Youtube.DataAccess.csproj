@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6B9F7A0D-E6EF-4218-8823-5431700500F5}</ProjectGuid>
+    <ProjectGuid>{58168014-6AEC-44DC-9D44-27D896724A66}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BulbaCourses.Youtube.DataAccess</RootNamespace>

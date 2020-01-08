@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ADEDAA35-C807-48CB-8A37-343C3B751112}</ProjectGuid>
+    <ProjectGuid>{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BulbaCourses.Youtube.Tests</RootNamespace>
@@ -116,11 +116,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.Youtube.DataAccess\BulbaCourses.Youtube.DataAccess.csproj">
-      <Project>{6b9f7a0d-e6ef-4218-8823-5431700500f5}</Project>
+      <Project>{58168014-6AEC-44DC-9D44-27D896724A66}</Project>
       <Name>BulbaCourses.Youtube.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.Youtube.Logic\BulbaCourses.Youtube.Logic.csproj">
-      <Project>{578ff0d7-d576-4c6b-863f-128b3836c0bb}</Project>
+      <Project>{82F072DD-142C-4BCE-936E-077C76EB7802}</Project>
       <Name>BulbaCourses.Youtube.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.Youtube.Web\BulbaCourses.Youtube.Web.csproj">

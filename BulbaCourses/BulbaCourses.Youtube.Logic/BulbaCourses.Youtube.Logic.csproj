@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{578FF0D7-D576-4C6B-863F-128B3836C0BB}</ProjectGuid>
+    <ProjectGuid>{82F072DD-142C-4BCE-936E-077C76EB7802}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BulbaCourses.Youtube.Logic</RootNamespace>
@@ -122,15 +122,14 @@
     <Compile Include="Validator\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BulbaCourses.Youtube.DataAccess\BulbaCourses.Youtube.DataAccess.csproj">
-      <Project>{6B9F7A0D-E6EF-4218-8823-5431700500F5}</Project>
-      <Name>BulbaCourses.Youtube.DataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.Youtube.DataAccess\BulbaCourses.Youtube.DataAccess.csproj">
+      <Project>{58168014-6AEC-44DC-9D44-27D896724A66}</Project>
+      <Name>BulbaCourses.Youtube.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

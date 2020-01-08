@@ -212,7 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.Youtube.Logic\BulbaCourses.Youtube.Logic.csproj">
-      <Project>{578ff0d7-d576-4c6b-863f-128b3836c0bb}</Project>
+      <Project>{82F072DD-142C-4BCE-936E-077C76EB7802}</Project>
       <Name>BulbaCourses.Youtube.Logic</Name>
     </ProjectReference>
   </ItemGroup>
