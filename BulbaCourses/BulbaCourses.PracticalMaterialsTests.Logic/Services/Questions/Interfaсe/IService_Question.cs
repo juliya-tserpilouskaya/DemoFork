@@ -2,7 +2,7 @@
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Interfaсe
 {
-    public interface IService_Question
+    public interface IService_Question : IDisposable
     {
         void GetQuestonById(int Id);
 
