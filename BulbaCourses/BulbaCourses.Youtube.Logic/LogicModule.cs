@@ -8,6 +8,9 @@ using Ninject.Modules;
 using BulbaCourses.Youtube.DataAccess.Repositories;
 using Ninject.Extensions.Factory;
 using BulbaCourses.Youtube.DataAccess;
+using AutoMapper;
+using BulbaCourses.Youtube.DataAccess.Models;
+using BulbaCourses.Youtube.Logic.Models;
 
 namespace BulbaCourses.Youtube.Logic
 {
@@ -30,6 +33,17 @@ namespace BulbaCourses.Youtube.Logic
             Bind<IUserRepository>().To<UserRepository>();
             Bind<IVideoRepository>().To<VideoRepository>();
             Bind<YoutubeContext>().ToSelf().InSingletonScope();
+
+
+            var mapper = new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SearchStoryDb, SearchStory>().ReverseMap();
+                cfg.CreateMap<UserDb, User>().ReverseMap();
+                cfg.CreateMap<SearchRequestDb, SearchRequest>().ReverseMap();
+                cfg.CreateMap<ResultVideoDb, ResultVideo>().ReverseMap();
+            }));
+            Bind<IMapper>().ToConstant(mapper);
+
         }
     }
 }

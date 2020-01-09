@@ -14,7 +14,13 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Save story for User
         /// </summary>
         /// <param name="story"></param>
-        SearchStory Save(SearchStoryDb story);
+        SearchStory Save(SearchStory story);
+
+        /// <summary>
+        /// Save story for User async
+        /// </summary>
+        /// <param name="story"></param>
+        Task<Result<SearchStory>> SaveAsync(SearchStory story);
 
         /// <summary>
         /// Delete all records story by User Id
@@ -27,6 +33,8 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="storyId"></param>
         void DeleteByStoryId(int? storyId);
+
+        Task<Result> DeleteByStoryIdAsync(int? storyId);
 
         /// <summary>
         /// Get all stories for all Users

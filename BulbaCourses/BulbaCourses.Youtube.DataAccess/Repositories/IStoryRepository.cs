@@ -10,6 +10,12 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
     public interface IStoryRepository
     {
         /// <summary>
+        /// Save Changes Async
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
+        Task SaveAsync();
+        /// <summary>
         /// Save story for User
         /// </summary>
         /// <param name="story"></param>

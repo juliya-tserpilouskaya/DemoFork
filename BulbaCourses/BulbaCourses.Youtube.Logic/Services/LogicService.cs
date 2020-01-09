@@ -16,17 +16,18 @@ namespace BulbaCourses.Youtube.Logic.Services
     {
         IServiceFactory _serviceFactory;
         ICacheService _cache;
-        Mapper _mapper;
+        readonly IMapper _mapper;
 
-        public LogicService(IServiceFactory serviceFactory)
+        public LogicService(IServiceFactory serviceFactory, IMapper mapper)
         {
             _serviceFactory = serviceFactory;
             _cache = _serviceFactory.CreateCacheService();
-            _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<SearchRequest, SearchRequestDb>();
-                cfg.CreateMap<User, UserDb>();
-                cfg.CreateMap<ResultVideoDb, ResultVideo>();
-            }));             
+            _mapper = mapper;
+            //_mapper = new Mapper(new MapperConfiguration(cfg => {
+            //    cfg.CreateMap<SearchRequest, SearchRequestDb>();
+            //    cfg.CreateMap<User, UserDb>();
+            //    cfg.CreateMap<ResultVideoDb, ResultVideo>();
+            //}));             
         }
 
         public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user)
@@ -112,7 +113,7 @@ namespace BulbaCourses.Youtube.Logic.Services
                 userDb = userService.GetUserById(userDb.Id);
 
             //Save user search story
-            storyService.Save(new SearchStoryDb()
+            storyService.Save(new SearchStory()
             {
                 SearchDate = DateTime.Now,
                 SearchRequest = searchRequestDb,
