@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,51 +10,120 @@ namespace BulbaCourses.Youtube.Web.DataAccess.Repositories
 {
     public class StoryRepository : IStoryRepository
     {
-        private YoutubeContext context;
+        private YoutubeContext _context;
+        private bool _isDisposed = false;
 
         public StoryRepository(YoutubeContext ctx)
         {
-            context = ctx;
+            _context = ctx;
         }
 
+        /// <summary>
+        /// Save story for User
+        /// </summary>
+        /// <param name="story"></param>
+        public SearchStoryDb Save(SearchStoryDb story)
+        {
+            _context.SearchStories.Add(story);
+            _context.SaveChanges();
+            return story;
+        }
+
+        /// <summary>
+        /// Get all stories for all Users
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
         public IEnumerable<SearchStoryDb> GetAll()
         {
-            return context.SearchStories.ToList().AsReadOnly();
+            return _context.SearchStories.ToList().AsReadOnly();
         }
 
-        public SearchStoryDb GetByStoryId(string storyId)
+        public async Task<IEnumerable<SearchStoryDb>> GetAllAsync()
         {
-            return context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+            return await _context.SearchStories.ToListAsync();
         }
 
-        public SearchStoryDb GetByUserId(string userId)
+        /// <summary>
+        /// Get all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<SearchStoryDb> GetByUserId(int? userId)
         {
-            return context.SearchStories.SingleOrDefault(s => s.User.Id == userId);
+            return _context.SearchStories.Where(s => s.User.Id == userId).ToList().AsReadOnly();
         }
 
-        public SearchStoryDb GetByRequestId(string requestId)
+        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId)
         {
-            return context.SearchStories.SingleOrDefault(r => r.SearchRequest.Id == requestId);
+            return await _context.SearchStories.Where(s => s.User.Id == userId).ToListAsync();
         }
 
-        public void Save(SearchStoryDb story)
+        /// <summary>
+        /// Get all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
+        public IEnumerable<SearchStoryDb> GetByRequestId(int? requestId)
         {
-            if (string.IsNullOrEmpty(story.Id))
-            {
-                context.SearchStories.Add(story);
-            }
-
-            context.SaveChanges();
+            return _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToList().AsReadOnly();
         }
 
-        public void Delete(string storyId)
+        public async Task<IEnumerable<SearchStoryDb>> GetByRequestIdAsync(int? requestId)
         {
-            var delstory = context.SearchStories.SingleOrDefault(r => r.Id == storyId);
+            return await _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToListAsync();
+        }
+
+        /// <summary>
+        /// Get one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
+        public SearchStoryDb GetByStoryId(int? storyId)
+        {
+            return _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+        }
+
+        public async Task<SearchStoryDb> GetByStoryIdAsync(int? storyId)
+        {
+            return await _context.SearchStories.SingleOrDefaultAsync(s => s.Id == storyId);
+        }
+
+        /// <summary>
+        /// Delete all records story by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        public void DeleteByUserId(int? userId)
+        {
+            var delstory = _context.SearchStories.Where(s => s.User.Id == userId);
             if (delstory != null)
             {
-                context.SearchStories.Remove(delstory);
-                context.SaveChanges();
+                _context.SearchStories.RemoveRange(delstory);
+                _context.SaveChanges();
             }
+        }
+        public void DeleteByStoryId(int? storyId)
+        {
+            var delstory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
+            if (delstory != null)
+            {
+                _context.SearchStories.Remove(delstory);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        protected virtual void Dispose(bool flag)
+        {
+            if (_isDisposed) return;
+            _context.Dispose();
+            _isDisposed = true;
+
+            if (flag)
+                GC.SuppressFinalize(this);
         }
     }
 }

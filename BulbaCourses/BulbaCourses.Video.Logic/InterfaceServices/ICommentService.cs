@@ -17,5 +17,11 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void Delete(CommentInfo comment);
         void DeleteById(string commentId);
 
+        Task<CommentInfo> GetCommentByIdAsync(string commentId);
+        Task<IEnumerable<CommentInfo>> GetAllAsync();
+        Task<int> UpdateAsync(CommentInfo comment);
+        Task<int> AddAsync(CommentInfo comment);
+        Task<int> DeleteByIdAsync(string commentId);
+
     }
 }

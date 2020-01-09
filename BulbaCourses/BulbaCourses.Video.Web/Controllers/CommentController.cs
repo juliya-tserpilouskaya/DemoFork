@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
@@ -15,21 +16,21 @@ namespace BulbaCourses.Video.Web.Controllers
     [RoutePrefix("api/comments")]
     public class CommentController : ApiController
     {
-        private readonly IMapper mapper;
-        private readonly ICommentService commentService;
+        private readonly IMapper _mapper;
+        private readonly ICommentService _commentService;
 
         public CommentController(IMapper mapper, ICommentService commentService)
         {
-            this.mapper = mapper;
-            this.commentService = commentService;
+            _mapper = mapper;
+            _commentService = commentService;
         }
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentView))]
+        [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentInfo))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Get(string id)
+        public async Task<IHttpActionResult> Get(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -37,7 +38,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                var comment = mapper.Map<CommentInfo, CommentView>(commentService.GetById(id));
+                var comment = await _commentService.GetCommentByIdAsync(id);
                 return comment == null ? NotFound() : (IHttpActionResult)Ok(comment);
             }
             catch (InvalidOperationException ex)
@@ -49,20 +50,18 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentView>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var comments = commentService.GetAll();
-            var result = mapper.Map<IEnumerable<CommentInfo>, IEnumerable<CommentView>>(comments);
+            var comments = await _commentService.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<CommentInfo>, IEnumerable<CommentView>>(comments);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-
-            //Ok(commentService.GetAll());
         }
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Post([FromBody]CommentView comment)
+        public async Task<IHttpActionResult> Post([FromBody]CommentView comment)
         {
             if (comment == null)
             {
@@ -71,8 +70,8 @@ namespace BulbaCourses.Video.Web.Controllers
 
             try
             {
-                var commentInfo = mapper.Map<CommentView, CommentInfo>(comment);
-                commentService.Add(commentInfo);
+                var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
+                await _commentService.AddAsync(commentInfo);
                 return Ok(comment);
             }
 
@@ -86,7 +85,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Put(string id, [FromBody]CommentView comment)
+        public async Task<IHttpActionResult> Put(string id, [FromBody]CommentView comment)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -101,8 +100,8 @@ namespace BulbaCourses.Video.Web.Controllers
 
             try
             {
-                var commentInfo = mapper.Map<CommentView, CommentInfo>(comment);
-                commentService.Update(commentInfo);
+                var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
+                await _commentService.UpdateAsync(commentInfo);
                 return Ok();
             }
 
@@ -116,7 +115,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -124,7 +123,7 @@ namespace BulbaCourses.Video.Web.Controllers
             }
             try
             {
-                commentService.DeleteById(id);
+                await _commentService.DeleteByIdAsync(id);
                 return Ok();
             }
             catch (Exception ex)

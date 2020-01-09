@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data
 {
-    class GlobalSearchContext : DbContext
+    public class GlobalSearchContext : DbContext
     {
-        public GlobalSearchContext() : base("GlobalSearchDbConnection")
+        public GlobalSearchContext() : base()
         {
             Database.Log = s => Debug.WriteLine(s);
+            //Database.SetInitializer(new GlobalSearchDbInitializer());
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -23,6 +25,7 @@ namespace BulbaCourses.GlobalSearch.Data
             modelBuilder.Configurations.Add(new CourseItemConfiguration());
             modelBuilder.Configurations.Add(new CourseConfiguration());
             modelBuilder.Configurations.Add(new CourseCategoryConfiguration());
+            modelBuilder.Configurations.Add(new SearchQueryConfiguration());
         }
 
         public DbSet<AuthorDB> Authors { get; set; }
