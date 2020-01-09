@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
-    public class BookmarkServiceDb
+    public class BookmarkServiceDb : IBookmarkServiceDb
     {
         private readonly CourseContext context;
 

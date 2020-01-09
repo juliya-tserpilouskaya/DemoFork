@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
-    public interface ICourseService
+    public interface IBookmarkServiceDb
     {
-        IEnumerable<CourseDb> GetAll();
-        CourseDb GetById(string id);
-        void Add(CourseDb courseDb);
-        void Delete(CourseDb courseDb);
-        void Update(CourseDb courseDb);
+        IEnumerable<CourseBookmarkDb> GetAll();
+        void Add(CourseBookmarkDb courseDb);
+        void Delete(CourseBookmarkDb courseDb);
+        //Task<bool> ExistsAsync(string login);
     }
 }

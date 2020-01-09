@@ -94,10 +94,16 @@
     <Compile Include="Services\CourseCategoryServiceDb.cs" />
     <Compile Include="Services\CourseServiceDb.cs" />
     <Compile Include="Services\DomainServiceDb.cs" />
+    <Compile Include="Services\interface\IDomainServiceDb.cs" />
+    <Compile Include="Services\interface\IBookmarkServiceDb.cs" />
+    <Compile Include="Services\interface\ICourseCategoryServiceDb.cs" />
     <Compile Include="Services\interface\ICourseService.cs" />
     <Compile Include="Services\interface\IUserAccountDB.cs" />
+    <Compile Include="Services\interface\ISearchCriteriaServeceDb.cs" />
+    <Compile Include="Services\interface\IUserProfileServiceDb.cs" />
     <Compile Include="Services\SearchCriteriaServeceDb.cs" />
     <Compile Include="Services\UserAccountServiceDB.cs" />
+    <Compile Include="Services\UserProfileServiceDb.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

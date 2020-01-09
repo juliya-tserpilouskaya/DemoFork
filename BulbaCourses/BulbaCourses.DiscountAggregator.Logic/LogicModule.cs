@@ -28,6 +28,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
             //DAL
             Bind<ICourseService>().To<CourseServiceDb>();
             Bind<IUserAccountDB>().To<UserAccountServiceDB>();
+            Bind<IDomainServiceDb>().To<DomainServiceDb>();
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
-    public class DomainServiceDb
+    public class DomainServiceDb : IDomainServiceDb
     {
         private readonly CourseContext context;
 

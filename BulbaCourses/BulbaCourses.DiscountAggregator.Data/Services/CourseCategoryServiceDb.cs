@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
-    public class CourseCategoryServiceDb
+    public class CourseCategoryServiceDb : ICourseCategoryServiceDb
     {
         private readonly CourseContext context;
 
