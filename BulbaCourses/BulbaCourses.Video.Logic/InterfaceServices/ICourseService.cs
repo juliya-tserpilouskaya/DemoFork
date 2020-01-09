@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,12 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
 {
     public interface ICourseService
     {
-        Task<CourseInfo> GetCourseByIdAsync(string courseId);
-        CourseInfo GetCourseByName(string courseName);
         IEnumerable<CourseInfo> GetAll();
-        Task<IEnumerable<CourseInfo>> GetAllAsync();
-
         void AddCourse(CourseInfo course);
         void Delete(CourseInfo course);
         void DeleteById(string courseId);
-        Task<int> UpdateAsync(CourseInfo course);
+
+        CourseInfo GetCourseByName(string courseName);
         void AddTagToCourse(string courseId, TagInfo tag);
         IEnumerable<TagInfo> GetTags(string courseId);
         IEnumerable<VideoMaterialInfo> GetCourseVideos(string courseId);
@@ -26,9 +24,12 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void UpdateCourseLevel(string courseId, int level);
         void AddVideoToCourse(string courseId, VideoMaterialInfo video);
         void AddDiscription(string courseId, string description);
-        IEnumerable<CommentInfo> GetCourseComments(string courseId);
-        Task<int> AddCourseAsync(CourseInfo courseInfo);
-        Task<int> DeleteByIdAsync(string id);
+
+        Task<IEnumerable<CourseInfo>> GetAllAsync();
+        Task<CourseInfo> GetCourseByIdAsync(string courseId);
+        Task<Result<CourseInfo>> UpdateAsync(CourseInfo course);
+        Task<Result<CourseInfo>> AddCourseAsync(CourseInfo courseInfo);
+        Task<Result> DeleteByIdAsync(string id);
         Task<bool> ExistNameAsync(string courseName);
     }
 }

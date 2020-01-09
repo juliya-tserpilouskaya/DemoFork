@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Video.Data.Migrations;
+﻿//using BulbaCourses.Video.Data.Migrations;
 using BulbaCourses.Video.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
     {
         public VideoDbContext() : base("VideoConnect")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
         }
         public DbSet<UserDb> Users { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
@@ -42,7 +42,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityCourses = modelBuilder.Entity<CourseDb>();
             entityCourses.HasKey(b => b.CourseId);
             entityCourses.Property(b => b.Name).IsRequired().IsUnicode();
-            entityCourses.HasIndex(b => b.Name).IsUnique(true);
+            //entityCourses.HasIndex(b => b.Name).IsUnique(true);
             entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1000);
             entityCourses.Property(b => b.Duration).IsRequired();
             entityCourses.Property(b => b.Price).IsRequired();

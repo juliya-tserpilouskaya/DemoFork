@@ -3,8 +3,11 @@ using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +25,38 @@ namespace BulbaCourses.Video.Logic.Services
             _courseRepository = courseRepository;
         }
 
+        public IEnumerable<CourseInfo> GetAll()
+        {
+            var courses = _courseRepository.GetAll();
+            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+            return result;
+        }
+
+        public void Delete(CourseInfo course)
+        {
+            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
+            _courseRepository.Remove(courseDb);
+        }
+
+        public void DeleteById(string courseId)
+        {
+            var course = _courseRepository.GetById(courseId);
+            _courseRepository.Remove(course);
+        }
+
+        public void Update(CourseInfo course)
+        {
+            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
+            _courseRepository.Update(courseDb);
+        }
+
         public void AddCourse(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
             _courseRepository.Add(courseDb);
         }
+
+
 
         public void AddDiscription(string courseId, string description)
         {
@@ -62,31 +92,6 @@ namespace BulbaCourses.Video.Logic.Services
             var course = _courseRepository.GetAll().FirstOrDefault(c => c.Name.Equals(courseName));
             var courseInfo = _mapper.Map<CourseDb, CourseInfo>(course);
             return courseInfo;
-        }
-
-        public IEnumerable<CourseInfo> GetAll()
-        {
-            var courses = _courseRepository.GetAll();
-            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
-            return result;
-        }
-
-        public void Delete(CourseInfo course)
-        {
-            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
-            _courseRepository.Remove(courseDb);
-        }
-
-        public void DeleteById(string courseId)
-        {
-            var course = _courseRepository.GetById(courseId);
-            _courseRepository.Remove(course);
-        }
-
-        public void Update(CourseInfo course)
-        {
-            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
-            _courseRepository.Update(courseDb);
         }
 
         public int GetCourseLevel(string courseId)
@@ -125,14 +130,6 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
-        public IEnumerable<CommentInfo> GetCourseComments(string courseId)
-        {
-            var course = _courseRepository.GetById(courseId);
-            var commentListDb = course.Comments.ToList().AsReadOnly();
-            var result = _mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentInfo>>(commentListDb);
-            return result;
-        }
-
         public async Task<IEnumerable<CourseInfo>> GetAllAsync()
         {
             var courses =await _courseRepository.GetAllAsync();
@@ -147,22 +144,54 @@ namespace BulbaCourses.Video.Logic.Services
             return courseInfo;
         }
 
-        public Task<int> AddCourseAsync(CourseInfo course)
+        public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
-            return _courseRepository.AddAsync(courseDb);
+            try
+            {
+                await _courseRepository.AddAsync(courseDb);
+                return Result<CourseInfo>.Ok(_mapper.Map<CourseInfo>(courseDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Cannot save course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Cannot save course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Invalid course. {e.Message}");
+            }
         }
 
-        public Task<int> UpdateAsync(CourseInfo course)
+        public async Task<Result<CourseInfo>> UpdateAsync(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
-            return _courseRepository.UpdateAsync(courseDb);
+            try
+            {
+                await _courseRepository.UpdateAsync(courseDb);
+                return Result<CourseInfo>.Ok(_mapper.Map<CourseInfo>(courseDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Cannot update course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Cannot update course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Invalid course. {e.Message}");
+            }
         }
 
-        public Task<int> DeleteByIdAsync(string id)
+        public Task<Result> DeleteByIdAsync(string id)
         {
-            var course = _courseRepository.GetById(id);
-           return _courseRepository.RemoveAsync(course);
+            _courseRepository.RemoveAsyncById(id);
+            return Task.FromResult(Result.Ok());
         }
 
         public async Task<bool> ExistNameAsync(string courseName)
