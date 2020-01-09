@@ -21,5 +21,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Models
         public DateTime SubscriptionDateStart { get; set; }
 
         public DateTime SubscriptionDateEnd { get; set; }
+        
+        public SearchCriteriaDb SearchCriteria { get; set; }
     }
 }

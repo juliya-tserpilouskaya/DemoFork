@@ -70,17 +70,33 @@
     <Compile Include="Migrations\201912311129079_UpdateTables.Designer.cs">
       <DependentUpon>201912311129079_UpdateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001092001050_AllModelDb.cs" />
+    <Compile Include="Migrations\202001092001050_AllModelDb.Designer.cs">
+      <DependentUpon>202001092001050_AllModelDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001092052365_update1.cs" />
+    <Compile Include="Migrations\202001092052365_update1.Designer.cs">
+      <DependentUpon>202001092052365_update1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="ModelsConfigurations\UserAccountConfigurations.cs" />
     <Compile Include="ModelsConfigurations\UserProfileConfigurations.cs" />
+    <Compile Include="Models\CourseBookmarkDb.cs" />
+    <Compile Include="Models\CourseCategoryDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
+    <Compile Include="Models\DomainDb.cs" />
+    <Compile Include="Models\SearchCriteriaDb.cs" />
     <Compile Include="Models\UserAccountDb.cs" />
     <Compile Include="Models\UserProfileDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BookmarkServiceDb.cs" />
+    <Compile Include="Services\CourseCategoryServiceDb.cs" />
     <Compile Include="Services\CourseServiceDb.cs" />
+    <Compile Include="Services\DomainServiceDb.cs" />
     <Compile Include="Services\interface\ICourseService.cs" />
     <Compile Include="Services\interface\IUserAccountDB.cs" />
+    <Compile Include="Services\SearchCriteriaServeceDb.cs" />
     <Compile Include="Services\UserAccountServiceDB.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +118,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912311129079_UpdateTables.resx">
       <DependentUpon>201912311129079_UpdateTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001092001050_AllModelDb.resx">
+      <DependentUpon>202001092001050_AllModelDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001092052365_update1.resx">
+      <DependentUpon>202001092052365_update1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

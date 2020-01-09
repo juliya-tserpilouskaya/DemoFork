@@ -13,8 +13,6 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Stop")]
 [assembly: OwinStartup(typeof(BulbaCourses.DiscountAggregator.Web.Startup))]
 
 namespace BulbaCourses.DiscountAggregator.Web
@@ -35,7 +33,9 @@ namespace BulbaCourses.DiscountAggregator.Web
         {
 
             var kernel = new StandardKernel(new LogicModule());
-            
+
+            kernel.Load<AutoMapperLoad>();
+
             // Web API configuration and services
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
@@ -45,7 +45,7 @@ namespace BulbaCourses.DiscountAggregator.Web
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
             
-            kernel.Load<AutoMapperLoad>();
+            
             return kernel;
         }
     }

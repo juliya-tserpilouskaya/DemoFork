@@ -9,11 +9,10 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
     public class CourseBookmark
     {
-        // TODO   //составной первичный курс из IdCourse and UserAccount
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
-        public Course IdCourse { get; set; }
+        public IEnumerable<Course> Course { get; set; }
 
-        public UserAccount UserAccount { get; set; }
+        public UserProfile UserAccount { get; set; }
     }
 }

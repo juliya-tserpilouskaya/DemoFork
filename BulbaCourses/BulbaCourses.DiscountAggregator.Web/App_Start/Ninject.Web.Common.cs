@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.DiscountAggregator.Web.App_Start
 {
