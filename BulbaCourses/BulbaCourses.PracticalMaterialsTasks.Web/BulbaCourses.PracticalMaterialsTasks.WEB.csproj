@@ -148,6 +148,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTasks.BLL\BulbaCourses.PracticalMaterialsTasks.BLL.csproj">
+      <Project>{6815ed1c-7ea5-42ce-9dd8-8ab7b4ec2dc2}</Project>
+      <Name>BulbaCourses.PracticalMaterialsTasks.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTasks.DAL\BulbaCourses.PracticalMaterialsTasks.DAL.csproj">
       <Project>{9c9fe5b6-c9cf-4974-b166-e7e0a752c809}</Project>
       <Name>BulbaCourses.PracticalMaterialsTasks.DAL</Name>
