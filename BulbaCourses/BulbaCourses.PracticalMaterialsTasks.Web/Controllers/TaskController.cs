@@ -27,6 +27,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         }
 
         [HttpGet,Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Task is found")]
         public IHttpActionResult GetAll()
         {
             var result = _taskservice.GetTasks();
