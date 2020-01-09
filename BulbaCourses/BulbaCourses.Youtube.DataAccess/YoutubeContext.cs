@@ -1,4 +1,6 @@
-﻿using BulbaCourses.Youtube.DataAccess.Models;
+﻿using BulbaCourses.Youtube.DataAccess.Migrations;
+using BulbaCourses.Youtube.DataAccess.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,12 +12,13 @@ using System.Web;
 
 namespace BulbaCourses.Youtube.DataAccess
 {
-    public class YoutubeContext : DbContext
+    [DbConfigurationType(typeof(DbConfig))]
+    public class YoutubeContext : IdentityDbContext<IdentityUser>
     {
-        public YoutubeContext() : base("YoutubeDbConnection")
+        public YoutubeContext() : base(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=YoutubeDbConnection;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
         {
             Database.Log = s => Debug.WriteLine(s);
-           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<YoutubeContext,Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<YoutubeContext,Configuration>());
         }
 
         public DbSet<ResultVideoDb> Videos { get; set; }
@@ -59,13 +62,13 @@ namespace BulbaCourses.Youtube.DataAccess
             UserDbEentity.HasKey(x => x.Id);
             UserDbEentity.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             UserDbEentity.Property(x => x.Login).IsRequired().HasMaxLength(100).IsUnicode();
-            UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(100).IsUnicode();
-            UserDbEentity.Property(x => x.FirstName).IsRequired().HasMaxLength(100).IsUnicode();
-            UserDbEentity.Property(x => x.LastName).IsRequired().HasMaxLength(100).IsUnicode();
-            UserDbEentity.Property(x => x.FullName).IsRequired().HasMaxLength(100).IsUnicode();
-            UserDbEentity.Property(x => x.NumberPhone).IsRequired().HasMaxLength(20).IsUnicode();
-            UserDbEentity.Property(x => x.Email).IsRequired().HasMaxLength(200).IsUnicode();
-            UserDbEentity.Property(x => x.ReserveEmail).IsRequired().HasMaxLength(200).IsUnicode();
+            //UserDbEentity.Property(x => x.Password).IsRequired().HasMaxLength(100).IsUnicode();
+            //UserDbEentity.Property(x => x.FirstName).IsRequired().HasMaxLength(100).IsUnicode();
+            //UserDbEentity.Property(x => x.LastName).IsRequired().HasMaxLength(100).IsUnicode();
+            //UserDbEentity.Property(x => x.FullName).IsRequired().HasMaxLength(100).IsUnicode();
+            //UserDbEentity.Property(x => x.NumberPhone).IsRequired().HasMaxLength(20).IsUnicode();
+            //UserDbEentity.Property(x => x.Email).IsRequired().HasMaxLength(200).IsUnicode();
+            //UserDbEentity.Property(x => x.ReserveEmail).IsRequired().HasMaxLength(200).IsUnicode();
             UserDbEentity.HasMany<SearchStoryDb>(x => x.SearchStories).WithRequired(x => x.User);
 
             //SearchStoryDb
