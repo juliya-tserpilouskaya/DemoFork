@@ -1,4 +1,4 @@
-﻿//using BulbaCourses.Video.Data.Migrations;
+﻿using BulbaCourses.Video.Data.Migrations;
 using BulbaCourses.Video.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
     {
         public VideoDbContext() : base("VideoConnect")
         {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
         }
         public DbSet<UserDb> Users { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }

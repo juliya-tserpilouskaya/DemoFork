@@ -55,9 +55,9 @@
     <Compile Include="Interfaces\ITransactionRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IVideoRepository.cs" />
-    <Compile Include="Migrations\202001091312590_start.cs" />
-    <Compile Include="Migrations\202001091312590_start.Designer.cs">
-      <DependentUpon>202001091312590_start.cs</DependentUpon>
+    <Compile Include="Migrations\202001092057177_first.cs" />
+    <Compile Include="Migrations\202001092057177_first.Designer.cs">
+      <DependentUpon>202001092057177_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CommentDb.cs" />
@@ -80,8 +80,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001091312590_start.resx">
-      <DependentUpon>202001091312590_start.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001092057177_first.resx">
+      <DependentUpon>202001092057177_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

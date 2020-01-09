@@ -13,7 +13,6 @@ namespace BulbaCourses.Video.Web.Models
         {
             return new CourseView
             {
-                CourseId = Guid.NewGuid().ToString(),
                 Name ="Name",
                 Description="Course description",
                 Duration = 100,

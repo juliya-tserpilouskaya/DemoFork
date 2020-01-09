@@ -3,7 +3,7 @@ namespace BulbaCourses.Video.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class start : DbMigration
+    public partial class first : DbMigration
     {
         public override void Up()
         {
@@ -44,7 +44,9 @@ namespace BulbaCourses.Video.Data.Migrations
                         Name = c.String(nullable: false),
                         Level = c.Int(nullable: false),
                         Raiting = c.Double(nullable: false),
+                        RateCount = c.Int(nullable: false),
                         Description = c.String(nullable: false, maxLength: 1000),
+                        Date = c.DateTime(nullable: false),
                         UpdateDate = c.DateTime(),
                         Duration = c.Int(nullable: false),
                         Price = c.Double(nullable: false),

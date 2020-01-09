@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.Video.Web.App_Start;
+using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.Models.UserViews;
 using FluentValidation;
 using FluentValidation.WebApi;
@@ -24,9 +25,9 @@ namespace BulbaCourses.Video.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<UserProfileView>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                 .To(result.ValidatorType));
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserForgotPasswordView>()
-            //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //        .To(result.ValidatorType));
+            AssemblyScanner.FindValidatorsInAssemblyContaining<CourseView>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                    .To(result.ValidatorType));
             //AssemblyScanner.FindValidatorsInAssemblyContaining<UserChangePasswordView>()
             //    .ForEach(result => kernel.Bind(result.InterfaceType)
             //        .To(result.ValidatorType));

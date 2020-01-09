@@ -209,29 +209,75 @@ namespace BulbaCourses.Video.Logic.Services
             return await _courseRepository.IsNameExistAsync(courseName);
         }
 
-        public Task<CourseInfo> GetCourseByNameAsync(string courseName)
+        public async Task<IEnumerable<CourseInfo>> GetCoursesByNameAsync(string courseName)
         {
-            throw new NotImplementedException();
+            var allCourses = await _courseRepository.GetAllAsync();
+            var courses = allCourses.Where(c => c.Name.Contains(courseName));
+            var coursesInfo = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+            return coursesInfo;
         }
 
-        public Task<Result> RateCourse(CourseInfo course, int Assessment)
+        public Task<Result<CourseInfo>> RateCourse(CourseInfo course, int assessment)
         {
-            throw new NotImplementedException();
+            int newRateCount = course.RateCount++;
+            double newRaiting = ((course.Raiting * Convert.ToDouble(course.RateCount)) + assessment) / newRateCount;
+
+            course.Raiting = newRaiting;
+            course.RateCount = newRateCount;
+            return UpdateAsync(course);
+
         }
 
         public Task<Result> AddVideoAsync(CourseInfo course, VideoMaterialInfo video)
         {
-            throw new NotImplementedException();
+            var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
+            var courseVideos = _mapper.Map<CourseInfo, CourseDb>(course);
+            try
+            {
+                courseVideos.Videos.Add(videoDb);
+                return Task.FromResult(Result.Ok());
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add video to course. {e.Message}"));
+            }
+            catch (DbUpdateException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add video to course. Duplicate field. {e.Message}"));
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Task.FromResult(Result.Fail($"Invalid tag. {e.Message}"));
+            }
         }
 
         public Task<Result> AddTagAsync(CourseInfo course, TagInfo tag)
         {
-            throw new NotImplementedException();
+            var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
+            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
+            try
+            {
+                courseDb.Tags.Add(tagDb);
+                return Task.FromResult(Result.Ok());
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add tag to course. {e.Message}"));
+            }
+            catch (DbUpdateException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add tag to course. Duplicate field. {e.Message}"));
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Task.FromResult(Result.Fail($"Invalid tag. {e.Message}"));
+            }
         }
 
-        public Task<Result> ChangeLevel(CourseInfo course, int level)
+        public Task<Result<CourseInfo>> ChangeLevel(CourseInfo course, int level)
         {
-            throw new NotImplementedException();
+            course.Level = level;
+            return UpdateAsync(course);
         }
     }
 }

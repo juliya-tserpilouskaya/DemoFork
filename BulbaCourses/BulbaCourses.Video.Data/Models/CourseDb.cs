@@ -14,6 +14,7 @@ namespace BulbaCourses.Video.Data.Models
         public UserDb Author { get; set; }
         public int Level { get; set; }
         public double Raiting { get; set; }
+        public int RateCount { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public DateTime? UpdateDate { get; set; }

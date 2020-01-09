@@ -21,7 +21,7 @@ namespace BulbaCourses.Video.Web.Validators
                 RuleFor(c => c.Login).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
 
             });
-
+            
             RuleSet("UpdateUser", () => {
 
                 RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
