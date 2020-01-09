@@ -130,9 +130,10 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+
         public async Task<IEnumerable<CourseInfo>> GetAllAsync()
         {
-            var courses =await _courseRepository.GetAllAsync();
+            var courses = await _courseRepository.GetAllAsync();
             var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
             return result;
         }
@@ -142,6 +143,15 @@ namespace BulbaCourses.Video.Logic.Services
             var course = await _courseRepository.GetByIdAsync(courseId);
             var courseInfo = _mapper.Map<CourseDb, CourseInfo>(course);
             return courseInfo;
+        }
+
+        public async Task<IEnumerable<CourseInfo>> GetListByTagAsync(TagInfo tag)
+        {
+            var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
+            var courses = await _courseRepository.GetAllAsync();
+            courses = courses.Where(c => c.Tags.Contains(tagDb));
+            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+            return result;
         }
 
         public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
@@ -197,6 +207,31 @@ namespace BulbaCourses.Video.Logic.Services
         public async Task<bool> ExistNameAsync(string courseName)
         {
             return await _courseRepository.IsNameExistAsync(courseName);
+        }
+
+        public Task<CourseInfo> GetCourseByNameAsync(string courseName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> RateCourse(CourseInfo course, int Assessment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> AddVideoAsync(CourseInfo course, VideoMaterialInfo video)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> AddTagAsync(CourseInfo course, TagInfo tag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> ChangeLevel(CourseInfo course, int level)
+        {
+            throw new NotImplementedException();
         }
     }
 }

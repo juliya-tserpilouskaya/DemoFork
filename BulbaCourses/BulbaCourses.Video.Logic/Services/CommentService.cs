@@ -86,7 +86,7 @@ namespace BulbaCourses.Video.Logic.Services
 
         public async Task<Result<CommentInfo>> UpdateAsync(CommentInfo comment)
         {
-            comment.UpdateDate = DateTime.Now;
+            comment.UpdateDate = DateTime.Now.Date;
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
             try
             {
