@@ -12,6 +12,7 @@ using FluentAssertions;
 using Bogus;
 using System.Linq;
 using System.Threading.Tasks;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 
 namespace BulbaCourses.Video.WebTests
 {
@@ -25,30 +26,25 @@ namespace BulbaCourses.Video.WebTests
         private Mock<IMapper> _mockMapper;
         private List<UserDb> _usersDbList;
         private List<UserInfo> _usersInfoList;
-        private Faker<UserDb> _fakerUsers;
+        //private Faker<UserDb> _fakerUsers;
 
         [OneTimeSetUp]
         public void Init()
         {
             Faker<UserDb> fakerUsers = new Faker<UserDb>();
             fakerUsers.RuleFor(u => u.UserId, b => b.Random.String(8))
-                .RuleFor(u => u.Name, b => b.Name.FirstName())
-                .RuleFor(u => u.LastName, b => b.Name.LastName())
                 .RuleFor(u => u.Login, b => b.Internet.UserName())
-                .RuleFor(u => u.Password, b => b.Random.String(10))
-                .RuleFor(u => u.Email, b => b.Internet.Email())
-                .RuleFor(u => u.AvatarPath, b => b.Internet.Avatar())
                 .RuleFor(u => u.SubscriptionType, b => b.Random.Int(0, 3));
         }
 
         [SetUp]
         public void InitMock()
         {
-            _userDb = new UserDb() { UserId = "id", Login = "A", Name = "b", Email = "test@gmail.com", Password = "testPassword" };
-            _userInfo = new UserInfo() { UserId = "id", Login = "A", Name = "b", Email = "test@gmail.com", Password = "testPassword" };
+            _userDb = new UserDb() { UserId = "id", Login = "A"};
+            _userInfo = new UserInfo() { Login = "A"};
 
-            _usersDbList = new List<UserDb>() { new UserDb() { UserId = "id", Login = "A", Name = "b" } };
-            _usersInfoList = new List<UserInfo>() { new UserInfo() { UserId = "id", Login = "A", Name = "b" } };
+            _usersDbList = new List<UserDb>() { new UserDb() { UserId = "id", Login = "A" } };
+            _usersInfoList = new List<UserInfo>() { new UserInfo() { Login = "A"} };
 
             _mockUserRepository = new Mock<IUserRepository>();
             _mockMapper = new Mock<IMapper>();
@@ -106,104 +102,35 @@ namespace BulbaCourses.Video.WebTests
         public async Task Test_Add_User_Async()
         {
             _mockMapper.Setup(m => m.Map<UserInfo, UserDb>(_userInfo)).Returns(_userDb);
-            _mockUserRepository.Setup(c => c.AddAsync(_userDb)).Returns(async () => 1);
+            _mockUserRepository.Setup(c => c.AddAsync(_userDb)).Returns(async () => _userDb);
 
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var result = await service.AddAsync(_userInfo);
-            result.Should().Be(1);
+            result.Should().Be(_userDb);
         }
 
         [Test]
         public async Task Test_Delete_User_Async()
         {
             _mockMapper.Setup(m => m.Map<UserInfo, UserDb>(_userInfo)).Returns(_userDb);
-            _mockUserRepository.Setup(c => c.RemoveAsync(_userDb)).Returns(async () => 1);
+            _mockUserRepository.Setup(c => c.RemoveAsync(_userDb));
 
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.DeleteAsync(_userInfo);
 
-            res.Should().Be(1);
+            res.Should().Be(Task.FromResult(Result.Ok()));
         }
 
         [Test]
         public async Task Test_Update_User_Async()
         {
             _mockMapper.Setup(m => m.Map<UserInfo, UserDb>(_userInfo)).Returns(_userDb);
-            _mockUserRepository.Setup(c => c.UpdateAsync(_userDb)).Returns(async () => 1);
+            _mockUserRepository.Setup(c => c.UpdateAsync(_userDb)).Returns(async () => _userDb);
 
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.UpdateAsync(_userInfo);
 
-            res.Should().Be(1);
+            res.Should().Be(_userDb);
         }
-
-        [Test]
-        public async Task Test_ExistLoginAsync()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.IsLoginExistAsync(_userDb.Login)).Returns(async () => true);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            var res = await service.ExistLoginAsync(_userInfo.Login);
-
-            res.Should().Be(true);
-        }
-
-        [Test]
-        public async Task Test_ExistLoginAsync_False()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.IsLoginExistAsync(_userDb.Login)).Returns(async () => false);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            var res = await service.ExistLoginAsync(_userInfo.Login);
-
-            res.Should().Be(false);
-        }
-
-        [Test]
-        public async Task Test_ExistEmailAsync()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.IsLoginExistAsync(_userDb.Email)).Returns(async () => true);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            var res = await service.ExistLoginAsync(_userInfo.Email);
-
-            res.Should().Be(true);
-        }
-
-        [Test]
-        public async Task Test_User_CheckEmail()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.IsLoginExistAsync(_userDb.Email)).Returns(async () => false);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            var res = await service.CheckEmailForLossingPass(_userInfo.Email);
-
-            res.Should().Be(true);
-        }
-
-        [Test]
-        public async Task Test_User_CheckPasswordAsync()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.GetByIdAsync(_userDb.UserId)).Returns(async () => _userDb);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            string newPass = "testPassword";
-            var res = await service.CheckPasswordAsync(_userInfo.UserId, newPass);
-
-            res.Should().Be(true);
-        }
-
-        [Test]
-        public async Task Test_User_CheckPasswordAsync_False()
-        {
-            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
-            _mockUserRepository.Setup(c => c.GetByIdAsync(_userDb.UserId)).Returns(async () => _userDb);
-            UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
-            string newPass = "falsePassword";
-            var res = await service.CheckPasswordAsync(_userInfo.UserId, newPass);
-
-            res.Should().Be(false);
-        }
-
     }
 }

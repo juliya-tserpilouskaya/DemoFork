@@ -20,5 +20,7 @@ namespace BulbaCourses.Video.Data.Interfaces
         Task<int> AddAsync(CourseDb courseDb);
         Task<int> UpdateAsync(CourseDb courseDb);
         Task<int> RemoveAsync(CourseDb course);
+
+        Task<bool> IsNameExistAsync(string courseName);
     }
 }

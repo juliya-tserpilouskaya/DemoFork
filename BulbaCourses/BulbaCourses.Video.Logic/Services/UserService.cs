@@ -3,8 +3,11 @@ using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,13 +50,6 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
-        public UserInfo GetByLogin(string userName)
-        {
-            var user = _userRepository.GetAll().FirstOrDefault(c => c.Login.Equals(userName));
-            var result = _mapper.Map<UserDb, UserInfo>(user);
-            return result;
-        }
-
         public UserInfo GetUserById(string id)
         {
             var user = _userRepository.GetById(id);
@@ -65,57 +61,6 @@ namespace BulbaCourses.Video.Logic.Services
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
             _userRepository.Update(userDb);
-        }
-
-        public async Task<bool> ExistLoginAsync(string login)
-        {
-            return await _userRepository.IsLoginExistAsync(login);
-        }
-
-        public async Task<bool> CheckLoginAsync(string login)
-        {
-            var exsist = await _userRepository.IsLoginExistAsync(login);
-            if (exsist == true)
-            { exsist = false; }
-            else if (exsist == false)
-            { exsist = true; }
-            return exsist;
-        }
-
-        public async Task<bool> ExistEmailAsync(string email)
-        {
-            return await _userRepository.IsEmailExistAsync(email);
-        }
-
-        public async Task<bool> CheckEmailForLossingPass(string email)
-        {
-            var exsist = await _userRepository.IsEmailExistAsync(email);
-            if (exsist == true)
-            { exsist = false; }
-            else if (exsist == false)
-            { exsist = true; }
-            return exsist;
-        }
-
-        public async Task<bool> CheckPasswordAsync(string id, string password)
-        {
-            var user = await _userRepository.GetByIdAsync(id);
-            var correctPass = false;
-            if (user != null)
-            {
-                correctPass = user.Password.Equals(password);
-            }
-            return correctPass;
-        }
-
-        public bool ChangeLogin(string userName, string email)
-        {
-            var user = _userRepository.GetAll().FirstOrDefault(c => c.Email.Equals(email));
-            user.Login = userName;
-            _userRepository.Update(user);
-            if (user != null)
-                return true;
-            else return false;
         }
 
         public async Task<UserInfo> GetUserByIdAsync(string userId)
@@ -130,25 +75,58 @@ namespace BulbaCourses.Video.Logic.Services
             var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserInfo>>(users);
             return result;
         }
-        public Task<int> UpdateAsync(UserInfo user)
+        public async Task<Result<UserInfo>> UpdateAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
-            return _userRepository.UpdateAsync(userDb); ;
+            try
+            {
+                 await _userRepository.UpdateAsync(userDb);
+                return Result<UserInfo>.Ok(_mapper.Map<UserInfo>(userDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Cannot update user. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Cannot update user. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Invalid user. {e.Message}");
+            }
         }
-        public Task<int> AddAsync(UserInfo user)
+        public async Task<Result<UserInfo>> AddAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
-            return _userRepository.AddAsync(userDb);
+            try
+            {
+                await _userRepository.AddAsync(userDb);
+                return Result<UserInfo>.Ok(_mapper.Map<UserInfo>(userDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Cannot save user. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Cannot save user. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<UserInfo>)Result<UserInfo>.Fail($"Invalid user. {e.Message}");
+            }
         }
-        public Task<int> DeleteByIdAsync(string id)
+        public Task<Result> DeleteByIdAsync(string id)
         {
-            var user = _userRepository.GetById(id);
-            return _userRepository.RemoveAsync(user);
+            _userRepository.RemoveAsyncById(id);
+            return Task.FromResult(Result.Ok());
         }
-        public Task<int> DeleteAsync(UserInfo user)
+        public Task<Result> DeleteAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
-            return _userRepository.RemoveAsync(userDb);
+            _userRepository.RemoveAsync(userDb);
+            return Task.FromResult(Result.Ok());
         }
     }
 }

@@ -51,7 +51,6 @@
     <Compile Include="DatabaseContext\VideoDbContext.cs" />
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\ICourseRepository.cs" />
-    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\ITegRepository.cs" />
     <Compile Include="Interfaces\ITransactionRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CommentDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
-    <Compile Include="Models\RoleDb.cs" />
     <Compile Include="Models\TagDb.cs" />
     <Compile Include="Models\TransactionDb.cs" />
     <Compile Include="Models\UserDb.cs" />
@@ -72,7 +70,6 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\CourseRepository.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\TegRepository.cs" />
     <Compile Include="Repositories\TransactionRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

@@ -29,5 +29,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         IEnumerable<CommentInfo> GetCourseComments(string courseId);
         Task<int> AddCourseAsync(CourseInfo courseInfo);
         Task<int> DeleteByIdAsync(string id);
+        Task<bool> ExistNameAsync(string courseName);
     }
 }

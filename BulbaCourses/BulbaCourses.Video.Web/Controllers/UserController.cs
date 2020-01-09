@@ -67,16 +67,10 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-            try
-            {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
-                await _userService.AddAsync(userInfo);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.AddAsync(userInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("")]
@@ -85,20 +79,9 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user)
         {
-            if (user == null)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
-                await _userService.UpdateAsync(userInfo);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.UpdateAsync(userInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id})")]

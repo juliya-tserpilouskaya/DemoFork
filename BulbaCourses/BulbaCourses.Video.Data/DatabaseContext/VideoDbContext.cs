@@ -16,7 +16,6 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
         }
         public DbSet<UserDb> Users { get; set; }
-        public DbSet<RoleDb> Roles { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
         public DbSet<CourseDb> Courses { get; set; }
         public DbSet<TagDb> Tags { get; set; }
@@ -31,14 +30,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityUser = modelBuilder.Entity<UserDb>();
             entityUser.HasKey(b => b.UserId);
             //entityUser.Property(b => b.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            entityUser.Property(b => b.Login).IsRequired().HasMaxLength(20).IsUnicode();
-            entityUser.Property(b => b.Password).IsRequired().HasMaxLength(20).IsUnicode();
-            entityUser.Property(b => b.Email).IsRequired().HasMaxLength(20).IsUnicode();
-
-            modelBuilder.Entity<RoleDb>().ToTable("Roles");
-            var entityRole = modelBuilder.Entity<RoleDb>();
-            entityRole.HasKey(b => b.RoleId);
-            entityRole.Property(b => b.RoleName).IsRequired().HasMaxLength(20).IsUnicode();
+            entityUser.Property(b => b.Biography).IsOptional().HasMaxLength(510).IsUnicode();
 
             modelBuilder.Entity<TransactionDb>().ToTable("Transactions");
             var entityTransaction = modelBuilder.Entity<TransactionDb>();
@@ -50,6 +42,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityCourses = modelBuilder.Entity<CourseDb>();
             entityCourses.HasKey(b => b.CourseId);
             entityCourses.Property(b => b.Name).IsRequired().IsUnicode();
+            entityCourses.HasIndex(b => b.Name).IsUnique(true);
             entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1000);
             entityCourses.Property(b => b.Duration).IsRequired();
             entityCourses.Property(b => b.Price).IsRequired();
@@ -75,6 +68,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityTags = modelBuilder.Entity<TagDb>();
             entityTags.HasKey(b => b.TagId);
             entityTags.Property(b => b.Content).IsRequired().HasMaxLength(15).IsUnicode();
+            entityTags.HasIndex(b => b.Content).IsUnique(true);
             entityTags.HasMany<CourseDb>(b => b.Courses).WithMany(t => t.Tags).Map(m => m.MapRightKey("CourseId").MapLeftKey("TagId").ToTable("CourseTag"));
 
         }

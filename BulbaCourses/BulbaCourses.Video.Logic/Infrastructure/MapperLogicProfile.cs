@@ -13,14 +13,9 @@ namespace BulbaCourses.Video.Logic.Infrastructure
     {
         public MapperLogicProfile()
         {
-            CreateMap<UserDb, UserInfo>();
-            CreateMap<UserInfo, UserDb>();
-
-            CreateMap<CommentDb, CommentInfo>();
-            CreateMap<CommentInfo, CommentDb>();
-
-            CreateMap<CourseDb, CourseInfo>();
-            CreateMap<CourseInfo, CourseDb>();
+            CreateMap<UserDb, UserInfo>().ReverseMap();
+            CreateMap<CommentDb, CommentInfo>().ReverseMap();
+            CreateMap<CourseDb, CourseInfo>().ReverseMap();
         }
     }
 }

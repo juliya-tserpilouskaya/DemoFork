@@ -164,5 +164,10 @@ namespace BulbaCourses.Video.Logic.Services
             var course = _courseRepository.GetById(id);
            return _courseRepository.RemoveAsync(course);
         }
+
+        public async Task<bool> ExistNameAsync(string courseName)
+        {
+            return await _courseRepository.IsNameExistAsync(courseName);
+        }
     }
 }
