@@ -16,6 +16,7 @@ using System.Web.Http;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
+    //[Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;

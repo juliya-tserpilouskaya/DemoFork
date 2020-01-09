@@ -18,7 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string URL { get; set; }
 
-        public CourseCategory Category { get; set; }
+        public string Category { get; set; }
 
         public string Title { get; set; }
 

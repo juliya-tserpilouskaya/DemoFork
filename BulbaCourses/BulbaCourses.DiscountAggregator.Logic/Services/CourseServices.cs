@@ -39,7 +39,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         public IEnumerable<Course> GetAll()
         {
             var courses = _courseService.GetAll();
-            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses); 
+            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);    
             return result;
         }
 
