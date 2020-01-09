@@ -11,5 +11,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Models
         public string Name { get; set; }
         public string Text { get; set; }
         public string TaskLevel { get; set; }
+
+        public DateTime? Created { get; set; }
+
+        public DateTime? Modified { get; set; }
     }
 }

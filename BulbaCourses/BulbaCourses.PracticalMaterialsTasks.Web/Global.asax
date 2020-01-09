@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="BulbaCourses.PracticalMaterialsTasks.Web.WebApiApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.vb" Inherits="BulbaCourses.PracticalMaterialsTasks.WEB.WebApiApplication" Language="VB" %>

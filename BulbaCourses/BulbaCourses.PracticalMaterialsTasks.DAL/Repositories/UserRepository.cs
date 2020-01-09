@@ -24,7 +24,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             return db.Users;
         }
 
-        public UserDb Get(int id)
+        public UserDb Get(string id)
         {
             return db.Users.Find(id);
         }
@@ -45,7 +45,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             return db.Users.Include(u => u.NickName).Where(predicate).ToList();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             UserDb user = db.Users.Find(id);
             if(user != null)

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
@@ -78,6 +78,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTasks.BLL", "BulbaCourses.PracticalMaterialsTasks.BLL\BulbaCourses.PracticalMaterialsTasks.BLL.csproj", "{6815ED1C-7EA5-42CE-9DD8-8AB7B4EC2DC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTasks.DAL", "BulbaCourses.PracticalMaterialsTasks.DAL\BulbaCourses.PracticalMaterialsTasks.DAL.csproj", "{9C9FE5B6-C9CF-4974-B166-E7E0A752C809}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BulbaCourses.PracticalMaterialsTasks.WEB", "BulbaCourses.PracticalMaterialsTasks.WEB\BulbaCourses.PracticalMaterialsTasks.WEB.vbproj", "{38E12A17-8548-4EDF-81B8-D078EA32F4C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -194,6 +196,10 @@ Global
 		{9C9FE5B6-C9CF-4974-B166-E7E0A752C809}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9FE5B6-C9CF-4974-B166-E7E0A752C809}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C9FE5B6-C9CF-4974-B166-E7E0A752C809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E12A17-8548-4EDF-81B8-D078EA32F4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E12A17-8548-4EDF-81B8-D078EA32F4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E12A17-8548-4EDF-81B8-D078EA32F4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E12A17-8548-4EDF-81B8-D078EA32F4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,6 +232,7 @@ Global
 		{4AB20B3A-6E96-4F8A-B5E1-D59BD28DE331} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 		{6815ED1C-7EA5-42CE-9DD8-8AB7B4EC2DC2} = {601CB2CE-FBD0-48DF-8450-E4BF5B0D1185}
 		{9C9FE5B6-C9CF-4974-B166-E7E0A752C809} = {601CB2CE-FBD0-48DF-8450-E4BF5B0D1185}
+		{38E12A17-8548-4EDF-81B8-D078EA32F4C0} = {601CB2CE-FBD0-48DF-8450-E4BF5B0D1185}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}

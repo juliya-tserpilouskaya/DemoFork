@@ -21,7 +21,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Tasks;
         }
-        public TaskDb Get(int id)
+        public TaskDb Get(string id)
         {
             return db.Tasks.Find(id);
         }
@@ -37,7 +37,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Tasks.Where(predicate).ToList();
         }
-        public void Delete(int id)
+        public void Delete(string id)
         {
             TaskDb task = db.Tasks.Find(id);
             if (task != null)

@@ -38,7 +38,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             if (id == null) throw new ValidationExeption("Not id","idtask");
             var task = DataBase.Tasks.Get(id);
             if (task == null) throw new ValidationExeption("Not task", "task");
-            return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel };
+            return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified };
         }
 
         public IEnumerable<TaskDTO> GetTasks()
