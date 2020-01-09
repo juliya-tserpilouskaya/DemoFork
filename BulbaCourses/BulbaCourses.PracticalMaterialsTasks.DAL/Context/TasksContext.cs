@@ -23,7 +23,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Context
             connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\\TaskDB.mdf';Integrated Security=True";
         }
 
-        public TasksContext() { };
+        public TasksContext() { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
