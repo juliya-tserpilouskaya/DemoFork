@@ -4,8 +4,6 @@ using BulbaCourses.Video.Web;
 using Swashbuckle.Application;
 using Swashbuckle.Examples;
 
-//[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
-
 namespace BulbaCourses.Video.Web
 {
     public class SwaggerConfig
@@ -13,14 +11,6 @@ namespace BulbaCourses.Video.Web
         public static void Register(HttpConfiguration config)
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
-
-           // config.EnableSwagger(c => {
-           //     c.SingleApiVersion("v1", "Name.API");
-           // })
-           //.EnableSwaggerUi(c => {
-           //})
-
 
             config.EnableSwagger(c =>
                     {

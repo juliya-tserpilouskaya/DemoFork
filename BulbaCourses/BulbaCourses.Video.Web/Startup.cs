@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.Video.Logic.Infrastructure;
 using BulbaCourses.Video.Web.Infrastructure;
+using BulbaCourses.Video.Web.Models.CourseViews;
+using FluentValidation;
+using FluentValidation.WebApi;
 using Microsoft.Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
@@ -43,13 +46,13 @@ namespace BulbaCourses.Video.Web
             var kernel = new StandardKernel(new LogicLoadModule());
             kernel.Load<MapperLoadModule>();
             //// Web API configuration and services
-            //FluentValidationModelValidatorProvider.Configure(config,
-            //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+            FluentValidationModelValidatorProvider.Configure(config,
+                cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
-            ////IValidator<Book>
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<Book>()
-            //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //        .To(result.ValidatorType));
+            
+            AssemblyScanner.FindValidatorsInAssemblyContaining<CourseViewInput>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                    .To(result.ValidatorType));
 
             //kernel.RegisterEasyNetQ("host=10.211.55.2");
             return kernel;

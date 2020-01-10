@@ -154,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
+    <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ChangePasswordViewValidator.cs" />
+    <Compile Include="Validators\CourseViewInputValidator.cs" />
     <Compile Include="Validators\ForgotPasswordViewValidator.cs" />
     <Compile Include="Validators\RegisterViewValidator.cs" />
   </ItemGroup>
