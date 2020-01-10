@@ -1,3 +1,4 @@
+﻿
 namespace BulbaCourses.DiscountAggregator.Data.Migrations
 {
     using System;

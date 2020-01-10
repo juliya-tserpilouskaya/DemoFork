@@ -10,9 +10,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public IEnumerable<DomainDb> Domains { get; set; }
+        public ICollection<DomainDb> Domains { get; set; }
 
-        public IEnumerable<CourseCategoryDb> CourseCategories { get; set; }
+        public ICollection<CourseCategoryDb> CourseCategories { get; set; }
 
         public double MinPrice { get; set; }
         //set { if (value >= 0) MinPrice = value; }
