@@ -2,6 +2,7 @@
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
+using BulbaCourses.Video.Web.Models;
 using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.SwaggerModels;
 using FluentValidation.WebApi;
@@ -30,7 +31,7 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        //[SwaggerRequestExample(typeof(CourseView), typeof(SwaggerCourseView))]        
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseView))]
@@ -54,7 +55,7 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("")]
-        //[SwaggerRequestExample(typeof(CourseView), typeof(SwaggerCourseView))]        
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
@@ -111,8 +112,8 @@ namespace BulbaCourses.Video.Web.Controllers
 
 
         [HttpPost, Route("")]
-        //[SwaggerRequestExample(typeof(CourseView), typeof(SwaggerCourseView))]
-        //[SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
+        [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -129,8 +130,8 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpPut, Route("{id}")]
-        
-        //[SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
+
+        [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
