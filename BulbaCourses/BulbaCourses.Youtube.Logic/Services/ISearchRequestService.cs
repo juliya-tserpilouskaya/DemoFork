@@ -47,7 +47,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="cacheId"></param>
         /// <returns></returns>
-        Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId);
+        Task<SearchRequest> GetRequestByCacheIdAsync(string cacheId);
 
     }
 }

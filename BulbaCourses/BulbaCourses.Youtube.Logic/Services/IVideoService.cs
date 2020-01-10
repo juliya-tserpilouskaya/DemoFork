@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulbaCourses.Youtube.Logic.Models;
 
 namespace BulbaCourses.Youtube.Logic.Services
 {
@@ -13,13 +14,13 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Get all video
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ResultVideoDb> GetAll();
+        IEnumerable<ResultVideo> GetAll();
 
         /// <summary>
         /// Get video by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        ResultVideoDb GetById(string id);
+        ResultVideo GetById(string id);
     }
 }

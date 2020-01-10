@@ -63,7 +63,12 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         {
             _db.SaveChanges();
         }
-        
+
+        public async Task SaveChangeAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
+
         public virtual void Dispose(bool disposing)
         {
             if (!_isDisposed)

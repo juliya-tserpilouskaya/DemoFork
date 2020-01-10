@@ -120,9 +120,9 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<SearchRequest>(_searchRequestRepository.GetRequestByCacheId(cacheId));
         }
 
-        public async Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId)
+        public async Task<SearchRequest> GetRequestByCacheIdAsync(string cacheId)
         {
-            return await _searchRequestRepository.GetRequestByCacheIdAsync(cacheId);
+            return _mapper.Map<SearchRequest>(await _searchRequestRepository.GetRequestByCacheIdAsync(cacheId));
         }
 
     }

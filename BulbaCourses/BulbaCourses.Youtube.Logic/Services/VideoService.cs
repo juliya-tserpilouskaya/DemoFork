@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using BulbaCourses.Youtube.DataAccess.Repositories;
 using BulbaCourses.Youtube.Logic.Models;
 using BulbaCourses.Youtube.DataAccess.Models;
@@ -15,18 +16,20 @@ namespace BulbaCourses.Youtube.Logic.Services
     public class VideoService : IVideoService
     {
         IVideoRepository _videoRepository;
-        public VideoService(IVideoRepository videoRepository)
+        readonly IMapper _mapper;
+        public VideoService(IVideoRepository videoRepository, IMapper mapper)
         {
             _videoRepository = videoRepository;
+            _mapper = mapper;
         }
 
         /// <summary>
         /// Get all video from repository
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ResultVideoDb> GetAll()
+        public IEnumerable<ResultVideo> GetAll()
         {
-            return _videoRepository.GetAll();
+            return _mapper.Map<IEnumerable<ResultVideo>>(_videoRepository.GetAll());
         }
 
         /// <summary>
@@ -34,9 +37,9 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ResultVideoDb GetById(string id)
+        public ResultVideo GetById(string id)
         {
-            return _videoRepository.GetById(id);
+            return _mapper.Map<ResultVideo>(_videoRepository.GetById(id));
         }
     }
 }

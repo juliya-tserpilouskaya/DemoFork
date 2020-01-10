@@ -24,6 +24,12 @@ namespace BulbaCourses.Youtube.Logic.Validator
                 RuleFor(x => x.Id).Null().WithMessage("Id must be null");
             });
 
+            RuleSet("Search", () =>
+            {
+                RuleFor(x => x.Title).NotNull().MaximumLength(500)
+                    .WithMessage("Title must be not null, length no more than 500 symbols");
+            });
+
             RuleFor(x => x.Title).NotNull().MaximumLength(500)
                 .WithMessage("Title must be not null, length no more than 500 symbols");
             RuleFor(x => x.Definition).Must(x => !string.IsNullOrEmpty(x))

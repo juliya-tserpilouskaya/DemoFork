@@ -22,7 +22,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Save Changes Async
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         public async Task SaveChangeAsync()
         {
             await _context.SaveChangesAsync();
@@ -43,7 +42,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         public IEnumerable<SearchStoryDb> GetAll()
         {
             return _context.SearchStories.ToList().AsReadOnly();
@@ -53,7 +51,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Get async all stories for all Users
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         public async Task<IEnumerable<SearchStoryDb>> GetAllAsync()
         {
             return await _context.SearchStories.ToListAsync();

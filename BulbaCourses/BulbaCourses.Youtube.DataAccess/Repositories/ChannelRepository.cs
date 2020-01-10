@@ -18,6 +18,15 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Save Changes Async
+        /// </summary>
+        /// <returns></returns>
+        public async Task SaveChangeAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Save Channel 
         /// </summary>
         /// <param name="channel"></param>
@@ -32,7 +41,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Get all Channels 
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         public IEnumerable<ChannelDb> GetAll()
         {
             return _context.Channels.ToList().AsReadOnly();

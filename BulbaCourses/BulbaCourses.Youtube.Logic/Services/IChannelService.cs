@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.Youtube.DataAccess.Models;
+using BulbaCourses.Youtube.Logic.Models;
 
 namespace BulbaCourses.Youtube.Logic.Services
 {
@@ -13,20 +14,27 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Save Channel
         /// </summary>
         /// <param name="channel"></param>
-        ChannelDb Save(ChannelDb channel);
+        Channel Save(Channel channel);
+
+        /// <summary>
+        /// Save Channel Async
+        /// </summary>
+        /// <param name="story"></param>
+        /// <returns></returns>
+        Task<Result<Channel>> SaveAsync(Channel story);
 
         /// <summary>
         /// Get all Channels
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ChannelDb> GetAllChannels();
+        IEnumerable<Channel> GetAllChannels();
 
         /// <summary>
         /// Get Channel by Id
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        ChannelDb GetChannelById(string channelId);
+        Channel GetChannelById(string channelId);
 
         /// <summary>
         /// Delete Channel by Id
@@ -35,10 +43,17 @@ namespace BulbaCourses.Youtube.Logic.Services
         void DeleteChannelById(string channelId);
 
         /// <summary>
+        /// Delete Channel by Id Async
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        Task<Result> DeleteChannelByIdAsync(string channelId);
+
+        /// <summary>
         /// Check if Channel exists
         /// </summary>
         /// <param name="channel"></param>
         /// <returns></returns>
-        bool Exists(ChannelDb channel);
+        bool Exists(Channel channel);
     }
 }

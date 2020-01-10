@@ -41,6 +41,7 @@ namespace BulbaCourses.Youtube.Logic
                 cfg.CreateMap<UserDb, User>().ReverseMap();
                 cfg.CreateMap<SearchRequestDb, SearchRequest>().ReverseMap();
                 cfg.CreateMap<ResultVideoDb, ResultVideo>().ReverseMap();
+                cfg.CreateMap<ChannelDb, Channel>().ReverseMap();
             }));
             Bind<IMapper>().ToConstant(mapper);
 

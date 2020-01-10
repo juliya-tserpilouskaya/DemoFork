@@ -15,5 +15,6 @@ namespace BulbaCourses.Youtube.Logic.Models
         public string Duration { get; set; }
         public string VideoCaption { get; set; }
         public string Thumbnail { get; set; }
+        public Channel Channel { get; set; }
     }
 }

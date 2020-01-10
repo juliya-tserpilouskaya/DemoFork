@@ -7,14 +7,14 @@ using BulbaCourses.Youtube.DataAccess.Models;
 
 namespace BulbaCourses.Youtube.DataAccess.Repositories
 {
-    public interface IStoryRepository
+    public interface IStoryRepository : IDisposable
     {
         /// <summary>
         /// Save Changes Async
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         Task SaveChangeAsync();
+
         /// <summary>
         /// Save story for User
         /// </summary>
@@ -37,7 +37,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         IEnumerable<SearchStoryDb> GetAll();
 
         Task<IEnumerable<SearchStoryDb>> GetAllAsync();
