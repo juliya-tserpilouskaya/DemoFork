@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.Video.Logic.Infrastructure;
+using BulbaCourses.Video.Web.Infrastructure;
 using Microsoft.Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
@@ -33,13 +34,14 @@ namespace BulbaCourses.Video.Web
             //    ValidationMode = ValidationMode.Local,
             //    SigningCertificate = new X509Certificate2(data, "123")
             //});
-
+            SwaggerConfig.Register(config);
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
             var kernel = new StandardKernel(new LogicLoadModule());
+            kernel.Load<MapperLoadModule>();
             //// Web API configuration and services
             //FluentValidationModelValidatorProvider.Configure(config,
             //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
