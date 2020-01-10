@@ -147,6 +147,7 @@
     <Compile Include="Infrastructure\MapperWebProfile.cs" />
     <Compile Include="Models\CommentView.cs" />
     <Compile Include="Models\CourseViews\CourseView.cs" />
+    <Compile Include="Models\CourseViews\CourseViewInput.cs" />
     <Compile Include="Models\UserViews\UserProfileView.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseInfo.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
