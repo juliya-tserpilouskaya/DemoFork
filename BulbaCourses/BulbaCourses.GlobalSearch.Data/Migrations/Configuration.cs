@@ -128,6 +128,14 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 CourseDBId = course.Id
             };
 
+            var bookmark1 = new BookmarkDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid().ToString(),
+                Title = "Best course ever",
+                URL = "https://sdf.com"
+            };
+
             #region CoursesSeed
             context.Courses.Add(course);
 
@@ -136,6 +144,12 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             context.CourseItems.Add(courseItem);
             context.CourseItems.Add(courseItem2);
             #endregion
+
+
+            #region Bookmarks
+            context.Bookmarks.Add(bookmark1);
+            #endregion
+
             //context.SaveChanges();
         }
     }
