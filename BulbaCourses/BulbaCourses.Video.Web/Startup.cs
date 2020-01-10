@@ -1,22 +1,22 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using System.Web.Http;
-using BulbaCourses.Video.Logic.Infrastructure;
+﻿using BulbaCourses.Video.Logic.Infrastructure;
 using BulbaCourses.Video.Web.Infrastructure;
 using BulbaCourses.Video.Web.Models.CourseViews;
 using FluentValidation;
-using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Web;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Video.Web.Startup))]
-
 namespace BulbaCourses.Video.Web
 {
     public class Startup
@@ -33,6 +33,7 @@ namespace BulbaCourses.Video.Web
             var data = File.ReadAllBytes(
                 @"D:\bulbacourses.pfx");
 
+
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
                 IssuerName = "BulbaCourses SSO",
@@ -40,7 +41,6 @@ namespace BulbaCourses.Video.Web
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });
-
 
             SwaggerConfig.Register(config);
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
@@ -51,16 +51,17 @@ namespace BulbaCourses.Video.Web
             var kernel = new StandardKernel(new LogicLoadModule());
             kernel.Load<MapperLoadModule>();
             //// Web API configuration and services
-            FluentValidationModelValidatorProvider.Configure(config,
-                cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+            //FluentValidationModelValidatorProvider.Configure(config,
+            //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
-            
             AssemblyScanner.FindValidatorsInAssemblyContaining<CourseViewInput>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
 
+
             //kernel.RegisterEasyNetQ("host=10.211.55.2");
             return kernel;
         }
+
     }
 }

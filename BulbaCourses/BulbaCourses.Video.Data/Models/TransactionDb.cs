@@ -8,7 +8,8 @@ namespace BulbaCourses.Video.Data.Models
 {
     public class TransactionDb
     {
-        public string TransactionId { get; set; }// = Guid.NewGuid().ToString();
+        public string TransactionId { get; set; } = Guid.NewGuid().ToString();
+        public UserDb User { get; set; }
         public DateTime TransactionDate { get; set; }
         public double TransactionAmount { get; set; }
     }

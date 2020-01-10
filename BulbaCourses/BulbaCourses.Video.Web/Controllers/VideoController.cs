@@ -37,5 +37,6 @@ namespace BulbaCourses.Video.Web.Controllers
         public void Delete(int id)
         {
         }
+
     }
 }

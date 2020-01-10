@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BulbaCourses.Video.Web.Enums
+namespace BulbaCourses.Video.Logic.Models.Enums
 {
     public enum CourseLevel
     {
@@ -11,6 +12,5 @@ namespace BulbaCourses.Video.Web.Enums
         Beginner = 1,
         Intermediate = 2,
         Advanced = 3
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Video.Web.Enums;
+﻿using BulbaCourses.Video.Logic.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +12,6 @@ namespace BulbaCourses.Video.Web.Models.CourseViews
         public CourseLevel Level { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
+
     }
 }
