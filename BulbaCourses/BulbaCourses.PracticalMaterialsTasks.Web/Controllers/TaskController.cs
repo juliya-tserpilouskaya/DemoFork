@@ -16,7 +16,7 @@ using BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces;
 namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
 {
     [RoutePrefix("api/Tasks")]
-   // [Authorize]
+    //[Authorize]
     public class TaskController: ApiController
     {
         private readonly ITaskService _taskservice;

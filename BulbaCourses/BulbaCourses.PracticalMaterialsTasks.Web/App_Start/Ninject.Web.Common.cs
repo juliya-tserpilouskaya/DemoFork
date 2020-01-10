@@ -6,6 +6,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
+    using BulbaCourses.PracticalMaterialsTasks.BLL;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -63,6 +64,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Load<LogicModule>();
         }        
     }
 }

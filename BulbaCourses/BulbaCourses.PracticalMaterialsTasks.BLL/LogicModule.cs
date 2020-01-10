@@ -7,6 +7,8 @@ using Ninject.Modules;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Services;
 using BulbaCourses.PracticalMaterialsTasks.DAL;
+using BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces;
+using BulbaCourses.PracticalMaterialsTasks.DAL.Repositories;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL
 {
@@ -15,6 +17,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL
         public override void Load()
         {
             Bind<ITaskService>().To<TaskService>();
+            Bind<IUnitOfWork>().To<EFUnitOfWork>();
             this.Kernel?.Load(new[] { new DataModule() });
         }
     }
