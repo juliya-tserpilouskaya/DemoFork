@@ -15,7 +15,7 @@ namespace BulbaCourses.Video.Web.SwaggerModels
             {
                 Name = "Course name",
                 Description = "Course description",
-                Level = Logic.Models.Enums.CourseLevel.Beginner,
+                Level = Enums.CourseLevel.Beginner,
                 Price = 99.99
             };
         }
