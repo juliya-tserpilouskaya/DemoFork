@@ -131,15 +131,15 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             var bookmark1 = new BookmarkDB()
             {
                 Id = Guid.NewGuid().ToString(),
-                UserId = Guid.NewGuid().ToString(),
+                //UserId = Guid.NewGuid().ToString(),
                 Title = "Best course ever",
                 URL = "https://sdf.com"
             };
 
             #region CoursesSeed
             context.Courses.Add(course);
-
             #endregion
+
             #region CourseItems
             context.CourseItems.Add(courseItem);
             context.CourseItems.Add(courseItem2);
