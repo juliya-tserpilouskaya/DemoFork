@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.DiscountAggregator.Logic;
@@ -7,6 +9,7 @@ using BulbaCourses.DiscountAggregator.Web.App_Start;
 using BulbaCourses.DiscountAggregator.Web.Filters;
 using FluentValidation;
 using FluentValidation.WebApi;
+using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
@@ -26,6 +29,19 @@ namespace BulbaCourses.DiscountAggregator.Web
             SwaggerConfig.Register(config);
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
+
+            var data = File.ReadAllBytes(
+                @"D:\Education\It-Academy\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+            {
+                IssuerName = "BulbaCourses SSO",
+                Authority = "http://localhost:44317 ",
+                ValidationMode = ValidationMode.Local,
+                SigningCertificate = new X509Certificate2(data, "123")
+
+            });
+
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
 
