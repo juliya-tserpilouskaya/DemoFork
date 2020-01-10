@@ -29,11 +29,21 @@ namespace BulbaCourses.Youtube.Logic.Services
         void DeleteByUserId(int? userId);
 
         /// <summary>
+        /// Delete all records story by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        Task<Result> DeleteByUserIdAsync(int? userId);
+
+        /// <summary>
         ///Delete one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
         void DeleteByStoryId(int? storyId);
 
+        /// <summary>
+        ///Delete one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
         Task<Result> DeleteByStoryIdAsync(int? storyId);
 
         /// <summary>
@@ -42,6 +52,10 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// <returns></returns>
         IEnumerable<SearchStory> GetAllStories();
 
+        /// <summary>
+        /// Get asunc all stories for all Users
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<SearchStory>> GetAllStoriesAsync();
 
         /// <summary>
@@ -51,6 +65,11 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// <returns></returns>
         IEnumerable<SearchStory> GetStoriesByUserId(int? userId);
 
+        /// <summary>
+        /// Get async all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId);
 
         /// <summary>
@@ -60,6 +79,11 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// <returns></returns>
         IEnumerable<SearchStory> GetStoriesByRequestId(int? requestId);
 
+        /// <summary>
+        /// Get async all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
         Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId);
 
         /// <summary>
@@ -69,6 +93,11 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// <returns></returns>
         SearchStory GetStoryByStoryId(int? storyId);
 
+        /// <summary>
+        /// Get async one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         Task<SearchStory> GetStoryByStoryIdAsync(int? storyId);
 
         Task<bool> ExistsAsync(int? storyId);

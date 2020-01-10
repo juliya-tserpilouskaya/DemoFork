@@ -18,16 +18,28 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             _context = ctx;
         }
 
+        /// <summary>
+        /// Save Changes Async
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
+        public async Task SaveChangeAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
             _context.SearchRequests.Add(request);
             _context.SaveChanges();
             return request;
         }
-        public void Update(SearchRequestDb request)
+
+        public SearchRequestDb Update(SearchRequestDb request)
         {
             _context.Entry(request).State = EntityState.Modified;
             _context.SaveChanges();
+            return request;
         }
 
 

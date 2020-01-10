@@ -41,43 +41,41 @@ namespace BulbaCourses.Youtube.Logic.Services
             var result = _validator.Validate(story, ruleSet: "AddStory");
 
             if(!result.IsValid)
-            {
-                var storyDb = _mapper.Map<SearchStoryDb>(story);
-                story = _mapper.Map<SearchStory>(_storyRepository.Save(storyDb));
-            }
+                return story;
+
+            var storyDb = _mapper.Map<SearchStoryDb>(story);
             
-            return story;
+            return _mapper.Map<SearchStory>(_storyRepository.Save(storyDb));
         }
 
         public async Task<Result<SearchStory>> SaveAsync(SearchStory story)
         {
+            //validation
             var result = _validator.Validate(story, ruleSet: "AddStory");
             if (!result.IsValid)
-                return (Result<SearchStory>)Result<SearchStory>.Fail($"Invalid model");
+                return (Result<SearchStory>)Result.Fail($"Invalid model");
+
 
             var storyDb = _mapper.Map<SearchStoryDb>(story);
-
             _storyRepository.Save(storyDb);
 
             try
             {
-                await _storyRepository.SaveAsync();
+                await _storyRepository.SaveChangeAsync();
                 return Result<SearchStory>.Ok(_mapper.Map<SearchStory>(storyDb));
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return (Result < SearchStory > )Result<SearchStory>.Fail($"Cannot save model. {ex.Message}");
+                return (Result<SearchStory>)Result.Fail($"Cannot save model. {ex.Message}");
             }
             catch (DbUpdateException ex)
             {
-                return (Result<SearchStory>)Result<SearchStory>.Fail($"Cannot save model. {ex.Message}");
+                return (Result<SearchStory>)Result.Fail($"Cannot save model. {ex.Message}");
             }            
             catch (DbEntityValidationException ex)
             {
-                return (Result<SearchStory>)Result<SearchStory>.Fail($"Cannot save model. Invalid model. {ex.Message}");
+                return (Result<SearchStory>)Result.Fail($"Cannot save model. Invalid model. {ex.Message}");
             }
-
-
         }
 
         /// <summary>
@@ -91,6 +89,32 @@ namespace BulbaCourses.Youtube.Logic.Services
         }
 
         /// <summary>
+        /// Delete all records story by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        public async Task<Result> DeleteByUserIdAsync(int? userId)
+        {
+            if (userId == null)
+                return Result.Fail($"Invalid model");
+
+            _storyRepository.DeleteByUserId(userId);
+
+            try
+            {
+                await _storyRepository.SaveChangeAsync();
+                return Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Result.Fail($"Cannot delete model. {ex.Message}");
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result.Fail($"Cannot delete model. {ex.Message}");
+            }
+        }
+
+        /// <summary>
         ///Delete one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
@@ -100,9 +124,30 @@ namespace BulbaCourses.Youtube.Logic.Services
                 _storyRepository.DeleteByStoryId(storyId);
         }
 
-        public Task<Result> DeleteByStoryIdAsync(int? storyId)
+        /// <summary>
+        ///Delete one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        public async Task<Result> DeleteByStoryIdAsync(int? storyId)
         {
-            return Task.FromResult(Result.Ok());
+            if (storyId == null)
+                return Result.Fail($"Invalid model");
+
+            _storyRepository.DeleteByStoryId(storyId);
+
+            try
+            {
+                await _storyRepository.SaveChangeAsync();
+                return Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return Result.Fail($"Cannot delete model. {ex.Message}");
+            }
+            catch (DbUpdateException ex)
+            {
+                return Result.Fail($"Cannot delete model. {ex.Message}");
+            }
         }
 
         /// <summary>

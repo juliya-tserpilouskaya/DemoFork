@@ -14,7 +14,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// </summary>
         /// <returns></returns>
         /// <summary>
-        Task SaveAsync();
+        Task SaveChangeAsync();
         /// <summary>
         /// Save story for User
         /// </summary>

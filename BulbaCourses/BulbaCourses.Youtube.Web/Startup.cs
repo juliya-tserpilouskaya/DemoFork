@@ -57,7 +57,12 @@ namespace BulbaCourses.Youtube.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchStory>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-            
+
+            //IValidator SearchRequest
+            AssemblyScanner.FindValidatorsInAssemblyContaining<SearchRequest>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                    .To(result.ValidatorType));
+
             //
             kernel.RegisterEasyNetQ("host=localhost");
 

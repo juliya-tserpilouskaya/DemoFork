@@ -31,7 +31,7 @@ namespace BulbaCourses.Youtube.Logic.Models
 
     public class Result<T> : Result where T : class
     {
-        protected Result(bool success, string message T data) : base (success, message)
+        protected Result(bool success, string message, T data) : base (success, message)
         {
             Data = data;
         }
