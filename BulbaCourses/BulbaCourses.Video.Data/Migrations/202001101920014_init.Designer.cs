@@ -13,7 +13,7 @@ namespace BulbaCourses.Video.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202001101029435_init"; }
+            get { return "202001101920014_init"; }
         }
         
         string IMigrationMetadata.Source

@@ -56,6 +56,7 @@
     <Compile Include="InterfaceServices\ICommentService.cs" />
     <Compile Include="InterfaceServices\ICourseService.cs" />
     <Compile Include="InterfaceServices\IUserService.cs" />
+    <Compile Include="InterfaceServices\IVideoService.cs" />
     <Compile Include="Models\CommentInfo.cs" />
     <Compile Include="Models\CourseInfo.cs" />
     <Compile Include="Models\Enums\CourseLevel.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\VideoService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.Video.Data\BulbaCourses.Video.Data.csproj">
