@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
-<<<<<<< HEAD
 using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Models;
-=======
-using BulbaCourses.Video.Web.Enums;
->>>>>>> parent of 9c862a3... * refactored courses
 using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.SwaggerModels;
 using FluentValidation.WebApi;
