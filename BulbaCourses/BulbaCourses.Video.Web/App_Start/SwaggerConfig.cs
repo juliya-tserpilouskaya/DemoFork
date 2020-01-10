@@ -4,15 +4,18 @@ using BulbaCourses.Video.Web;
 using Swashbuckle.Application;
 using Swashbuckle.Examples;
 
+[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+
 namespace BulbaCourses.Video.Web
 {
     public class SwaggerConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
-            config.EnableSwagger(c =>
+            GlobalConfiguration.Configuration
+                .EnableSwagger(c =>
                     {
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not

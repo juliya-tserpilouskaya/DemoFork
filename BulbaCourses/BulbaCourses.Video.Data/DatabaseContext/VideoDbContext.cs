@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.DatabaseContext
 {
-   
     public class VideoDbContext : DbContext
     {
         public VideoDbContext() : base("VideoConnect")

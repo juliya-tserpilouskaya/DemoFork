@@ -2,7 +2,6 @@
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
-using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Models;
 using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.SwaggerModels;
@@ -16,8 +15,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using FluentValidation;
-using FluentValidation.WebApi;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
@@ -60,8 +57,6 @@ namespace BulbaCourses.Video.Web.Controllers
         [HttpGet, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
-       [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
-       [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
             var courses = await _courseService.GetAllAsync();
@@ -70,9 +65,6 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("{list}")]
-        [HttpPost, Route("")]
-        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
-        [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<CourseView>))]
@@ -80,14 +72,6 @@ namespace BulbaCourses.Video.Web.Controllers
         public async Task<IHttpActionResult> GetByName(string courseName)
         {
             if (string.IsNullOrEmpty(courseName) || !Guid.TryParse(courseName, out var _))
-        public async Task<IHttpActionResult> Post([FromBody, CustomizeValidator()]  CourseViewInput courseInput)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (courseInput == null || !Enum.IsDefined(typeof(CourseLevel), courseInput.Level))
             {
                 return BadRequest();
             }
@@ -104,9 +88,6 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("{list-tags}")]
-        [HttpPut, Route("{id}")]
-        
-        [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<CourseView>))]
@@ -114,14 +95,6 @@ namespace BulbaCourses.Video.Web.Controllers
         public async Task<IHttpActionResult> GetByTags(TagInfo tag)
         {
             if (string.IsNullOrEmpty(tag.Content) || !Guid.TryParse(tag.Content, out var _))
-        public async Task<IHttpActionResult> Put(string id, [FromBody, CustomizeValidator()]  CourseViewInput courseInput)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
