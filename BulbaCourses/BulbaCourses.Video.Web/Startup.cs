@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.Video.Logic.Infrastructure;
@@ -6,6 +8,7 @@ using BulbaCourses.Video.Web.Infrastructure;
 using BulbaCourses.Video.Web.Models.CourseViews;
 using FluentValidation;
 using FluentValidation.WebApi;
+using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
@@ -27,16 +30,18 @@ namespace BulbaCourses.Video.Web
 
             //config.Filters.Add(new BadRequestFilterAttribute());
 
-            //var data = File.ReadAllBytes(
-            //    @"C:\Users\Master\source\repos\Sample.Web\Sample.SelfHosted\bin\Debug\cert.pfx");
+            var data = File.ReadAllBytes(
+                @"D:\bulbacourses.pfx");
 
-            //app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
-            //{
-            //    IssuerName = "My Security Server",
-            //    Authority = "http://localhost:5050",
-            //    ValidationMode = ValidationMode.Local,
-            //    SigningCertificate = new X509Certificate2(data, "123")
-            //});
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+            {
+                IssuerName = "BulbaCourses SSO",
+                Authority = "http://localhost:9000",
+                ValidationMode = ValidationMode.Local,
+                SigningCertificate = new X509Certificate2(data, "123")
+            });
+
+
             SwaggerConfig.Register(config);
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }

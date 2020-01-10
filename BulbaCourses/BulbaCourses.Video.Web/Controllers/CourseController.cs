@@ -32,10 +32,11 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        [SwaggerRequestExample(typeof(CourseInfo), typeof(SwaggerCourseInfo))]
+       
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseInfo))]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Get(string id)
         {
@@ -56,9 +57,9 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         [HttpGet, Route("")]
-        //[SwaggerRequestExample(typeof(CourseView), typeof(SwaggerCourseView))]
         
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
+       [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
+       [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
             var courses = await _courseService.GetAllAsync();
@@ -68,7 +69,7 @@ namespace BulbaCourses.Video.Web.Controllers
 
 
         [HttpPost, Route("")]
-        [SwaggerRequestExample(typeof(CourseView), typeof(SwaggerCourseView))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]

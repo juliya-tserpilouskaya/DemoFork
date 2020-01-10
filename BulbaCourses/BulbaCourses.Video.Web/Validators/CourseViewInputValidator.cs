@@ -15,21 +15,10 @@ namespace BulbaCourses.Video.Web.Validators
         public CourseViewInputValidator(ICourseService service)
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
-
-            //RuleSet("AddCourse", () =>
-            //{
-            //    //RuleFor(x => x.Name). Must(x => !string.IsNullOrEmpty(x)).WithMessage("Name must not be empty or null");
-            //    RuleFor(x => x.).MustAsync((async (title, token) => !(await service.ExistsAsync(title).ConfigureAwait(false))));
-            //});
-            //RuleSet("UpdateCourse", () =>
-            //{
-            //    RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
-            //    RuleFor(x => x.Title).MustAsync((async (title, token) => (await service.ExistsAsync(title).ConfigureAwait(false))));
-            //});
-
-            //  RuleFor(x => x.Title).NotEmpty().MaximumLength(20).MinimumLength(5);
+            //RuleFor(x=>x.Description).
+           
             RuleFor(x => x.Price).GreaterThan(0.0);
         }
 
     }
-}
+} 
