@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201912151001511_optionNone2.Designer.cs">
       <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.cs" />
+    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.Designer.cs">
+      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
@@ -220,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912151001511_optionNone2.resx">
       <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001101209448_DBGenerationOptionNull.resx">
+      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

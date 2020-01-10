@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
@@ -22,9 +23,9 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(IEnumerable<RegisteredUser>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _registeredUserService.GetAll();
+            var result = await _registeredUserService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -33,7 +34,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "User was found", typeof(RegisteredUser))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -41,7 +42,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _registeredUserService.GetById(id);
+                var result = await _registeredUserService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -52,10 +53,15 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "User added")]
-        public IHttpActionResult Create([FromBody]RegisteredUser registeredUser)
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater")]
+        public async Task<IHttpActionResult> Create([FromBody]RegisteredUser registeredUser)
         {
             //validate here
-            return Ok(_registeredUserService.Add(registeredUser));
+            if (registeredUser == null)
+            {
+                return BadRequest();
+            }
+            return Ok(await _registeredUserService.AddAsync(registeredUser));
         }
 
         [HttpDelete, Route("{id}")]
@@ -63,7 +69,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult RemoveById(string id)
+        public async Task<IHttpActionResult> RemoveById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || _registeredUserService.GetById(id) == null)
             {
@@ -71,7 +77,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                _registeredUserService.RemoveById(id);
+                await _registeredUserService.RemoveByIdAsync(id);
                 return Ok();
             }
             catch (InvalidOperationException ex)
@@ -82,9 +88,9 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Users removed")]
-        public IHttpActionResult ClearAll()
+        public async Task<IHttpActionResult> ClearAll()
         {
-            _registeredUserService.RemoveAll();
+            await _registeredUserService.RemoveAllAsync();
             return Ok();
         }
     }

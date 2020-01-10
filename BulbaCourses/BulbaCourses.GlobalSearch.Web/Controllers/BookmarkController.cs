@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
@@ -18,12 +19,13 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         {
             _bookmarkService = bookmarkService;
         }
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<Bookmark>))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _bookmarkService.GetAll();
+            var result = await _bookmarkService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -32,7 +34,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark was found", typeof(Bookmark))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -40,7 +42,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _bookmarkService.GetById(id);
+                var result = await _bookmarkService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -54,7 +56,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark wasn't found")]
         [SwaggerResponse(HttpStatusCode.OK, "ID users bookmarks were found", typeof(IEnumerable<Bookmark>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult GetByUserId(string id)
+        public async Task<IHttpActionResult> GetByUserId(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -62,7 +64,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _bookmarkService.GetByUserId(id);
+                var result = await _bookmarkService.GetByUserIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

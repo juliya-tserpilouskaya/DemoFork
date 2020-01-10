@@ -20,14 +20,29 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return BookmarkStorage.GetAll();
         }
 
+        public Task<IEnumerable<Bookmark>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Bookmark GetById(string id)
         {
             return BookmarkStorage.GetById(id);
         }
 
+        public Task<Bookmark> GetByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Bookmark> GetByUserId(string userID)
         {
             return BookmarkStorage.GetByUserId(userID);
+        }
+
+        public Task<IEnumerable<Bookmark>> GetByUserIdAsync(string userID)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveAll()

@@ -10,8 +10,11 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
     public interface IBookmarkService
     {
         IEnumerable<Bookmark> GetAll();
+        Task<IEnumerable<Bookmark>> GetAllAsync();
         Bookmark GetById(string id);
+        Task<Bookmark> GetByIdAsync(string id);
         IEnumerable<Bookmark> GetByUserId(string userID);
+        Task<IEnumerable<Bookmark>> GetByUserIdAsync(string userID);
         Bookmark Add(Bookmark bookmark);
         void RemoveById(string id);
         void RemoveAll();
