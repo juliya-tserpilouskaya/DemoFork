@@ -1,4 +1,7 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using AutoMapper;
+using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
@@ -10,19 +13,32 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     public class CourseBookmarkServices : ICourseBookmarkServices
     {
-        public CourseBookmark Add(CourseBookmark courseBookmark)
-        {
-            return CourseBookmarksStorage.Add(courseBookmark);
-        }
+        private readonly IMapper mapper;
+        private readonly IBookmarkServiceDb _bookmarkServiceDb;
 
-        public IEnumerable<CourseBookmark> Delete(string id)
+        public CourseBookmarkServices(IMapper mapper, IBookmarkServiceDb bookmarkServiceDb)
         {
-            return CourseBookmarksStorage.Delete(id);
+            this.mapper = mapper;
+            _bookmarkServiceDb = bookmarkServiceDb;
         }
-
         public IEnumerable<CourseBookmark> GetAll()
         {
-            return CourseBookmarksStorage.GetAll();
+            var bookmarks = _bookmarkServiceDb.GetAll();
+            var result = mapper.Map<IEnumerable<CourseBookmarkDb>, IEnumerable<CourseBookmark>>(bookmarks);
+            return result;
         }
+
+        public void Add(CourseBookmark courseBookmark)
+        {
+            var bookmarkDb = mapper.Map<CourseBookmark,CourseBookmarkDb>(courseBookmark);
+            _bookmarkServiceDb.Add(bookmarkDb);
+        }
+
+        public void DeleteById(string id)
+        {
+            var bookmark = _bookmarkServiceDb.GetById(id);
+            _bookmarkServiceDb.Delete(bookmark);
+        }
+
     }
 }

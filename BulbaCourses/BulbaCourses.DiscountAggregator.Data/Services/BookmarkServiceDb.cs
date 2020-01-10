@@ -28,11 +28,17 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             var bookmarks = context.CourseBookmarks.ToList().AsReadOnly();
             return bookmarks;
         }
+        public CourseBookmarkDb GetById(string id)
+        {
+            var bookmark = context.CourseBookmarks.FirstOrDefault(c => c.Id.Equals(id));
+            return bookmark;
+        }
 
         public void Delete(CourseBookmarkDb bookmark)
         {
             context.CourseBookmarks.Remove(bookmark);
             context.SaveChanges();
         }
+
     }
 }

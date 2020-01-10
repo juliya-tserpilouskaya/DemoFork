@@ -82,6 +82,10 @@
     <Compile Include="Migrations\202001100655103_UpdateCourse.Designer.cs">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001100717476_UpdateCategoryModel.cs" />
+    <Compile Include="Migrations\202001100717476_UpdateCategoryModel.Designer.cs">
+      <DependentUpon>202001100717476_UpdateCategoryModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="ModelsConfigurations\UserAccountConfigurations.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001100655103_UpdateCourse.resx">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001100717476_UpdateCategoryModel.resx">
+      <DependentUpon>202001100717476_UpdateCategoryModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
