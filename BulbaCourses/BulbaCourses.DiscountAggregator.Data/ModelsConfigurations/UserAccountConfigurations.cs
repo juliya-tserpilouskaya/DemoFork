@@ -19,6 +19,8 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
                     .IsUnicode();
             Property(x => x.Password).IsRequired().HasMaxLength(54);
             Property(x => x.Email).IsRequired().HasMaxLength(54);
+
+            HasOptional<UserProfileDb>(x => x.UserProfile);
         }
     }
 }

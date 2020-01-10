@@ -29,9 +29,15 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)  //нужно использовать базовый метод, очень полезно и другой вопрос когда его вызывать
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new BookmarkConfigurations());
+           
+
+            modelBuilder.Configurations.Add(new CategoryConfigurations());
             modelBuilder.Configurations.Add(new CourseConfigurations());
-            //modelBuilder.Configurations.Add(new UserAccountConfigurations());
-            //modelBuilder.Configurations.Add(new UserProfileConfigurations());
+            modelBuilder.Configurations.Add(new DomainConfigurations());
+            modelBuilder.Configurations.Add(new SearchCriteriaConfigurations());
+            modelBuilder.Configurations.Add(new UserAccountConfigurations());
+            modelBuilder.Configurations.Add(new UserProfileConfigurations());
         }
 
         

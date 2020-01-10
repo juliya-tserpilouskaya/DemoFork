@@ -9,8 +9,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Models
     public class CourseBookmarkDb
     {
         public string Id { get; set; }
+
         public UserProfileDb UserProfile { get; set; }
 
-        public IEnumerable<CourseDb> Course { get; set; }        
+        public ICollection<CourseDb> Course { get; set; }        
     }
 }
