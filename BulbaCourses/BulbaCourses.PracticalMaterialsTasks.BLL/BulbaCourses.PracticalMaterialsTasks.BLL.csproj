@@ -78,6 +78,7 @@
     <Compile Include="Infrastructure\ValidationExeption.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="LogicModule.cs" />
     <Compile Include="Models\TaskDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

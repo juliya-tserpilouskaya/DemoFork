@@ -10,7 +10,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Context
 {
     public class TasksContext : DbContext
     {
-        //const string _connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\\TaskDB.mdf';Integrated Security=True";
+        
         public DbSet<UserDb> Users { get; set; }
         public DbSet<TaskDb> Tasks { get; set; }
 
@@ -18,9 +18,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Context
         {
             Database.SetInitializer<TasksContext>(new DbInitializer());
         }
-        public TasksContext(string connectionString) : base(connectionString)
+        public TasksContext(string connectionString) : base("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\\TaskDB.mdf';Integrated Security=True")
         {
-            connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\\TaskDB.mdf';Integrated Security=True";
+           
         }
 
         public TasksContext() { }

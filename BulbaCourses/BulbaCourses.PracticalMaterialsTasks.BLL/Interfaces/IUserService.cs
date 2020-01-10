@@ -7,7 +7,7 @@ using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 {
-    public interface IUserService
+    public interface IUserService:IDisposable
     {
         void MakeUser(UserDTO userdto);
 
@@ -15,6 +15,6 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 
         IEnumerable<UserDTO> GetUsers();
 
-        void Dispose();
+      
     }
 }

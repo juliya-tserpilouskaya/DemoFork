@@ -9,12 +9,12 @@ using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 {
-    public interface ITaskService
+    public interface ITaskService:IDisposable
     {
 
         void MakeTask(TaskDTO taskDto);
         TaskDTO GetTask(string id);
         IEnumerable<TaskDTO> GetTasks();
-        void Dispose();
+        
     }
 }
