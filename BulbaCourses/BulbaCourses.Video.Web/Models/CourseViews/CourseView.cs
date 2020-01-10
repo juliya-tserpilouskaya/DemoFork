@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Video.Logic.Models.Enums;
+﻿using BulbaCourses.Video.Web.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

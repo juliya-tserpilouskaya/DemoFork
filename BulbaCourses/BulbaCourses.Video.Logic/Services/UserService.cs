@@ -3,7 +3,6 @@ using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
-using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
@@ -128,61 +127,6 @@ namespace BulbaCourses.Video.Logic.Services
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
             _userRepository.RemoveAsync(userDb);
             return Task.FromResult(Result.Ok());
-        }
-
-        public Task<Result> BuySubscription(UserInfo user, Subscription subscription)
-        {
-            double price = 0;
-            switch (subscription)
-            {
-                case (Subscription.Normal):
-                    {
-                        price = 3.50;
-                        break;
-                    }
-                case (Subscription.Premium):
-                    {
-                        price = 5.50;
-                        break;
-                    }
-            }
-            if (price > 0)
-            {
-                var userDb = _mapper.Map<UserInfo, UserDb>(user);
-                var transaction = new TransactionDb()
-                {
-                    TransactionId = Guid.NewGuid().ToString(),
-                    TransactionDate = DateTime.Now,
-                    TransactionAmount = price,
-                    User = userDb
-                };
-
-                bool pay = PaiPal(user, price);
-
-                if (pay == true)
-                {
-                    userDb.Transactions.Add(transaction);
-                }
-                
-                return Task.FromResult(Result.Ok());
-            }
-            else
-            {
-                return Task.FromResult(Result.Fail("you need to pay for subscription"));
-            }
-        }
-
-        private bool PaiPal(UserInfo user, double money)
-        {
-            // разработать метод оплаты
-            if (money > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

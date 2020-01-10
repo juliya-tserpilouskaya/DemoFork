@@ -58,8 +58,6 @@
     <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="Models\CommentInfo.cs" />
     <Compile Include="Models\CourseInfo.cs" />
-    <Compile Include="Models\Enums\CourseLevel.cs" />
-    <Compile Include="Models\Enums\Subscription.cs" />
     <Compile Include="Models\ResultModels\Result.cs" />
     <Compile Include="Models\TagInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />

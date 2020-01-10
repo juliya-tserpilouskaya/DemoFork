@@ -1,5 +1,4 @@
 ﻿using BulbaCourses.Video.Logic.Models;
-using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
@@ -24,6 +23,5 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         Task<Result<UserInfo>> AddAsync(UserInfo user);
         Task<Result> DeleteByIdAsync(string id);
         Task<Result> DeleteAsync(UserInfo user);
-        Task<Result> BuySubscription(UserInfo user, Subscription subscription);
     }
 }

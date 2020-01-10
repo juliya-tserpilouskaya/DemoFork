@@ -20,7 +20,7 @@ namespace BulbaCourses.Video.Web.Models
                 Name ="Name",
                 Description="Course description",
                 Duration = 100,
-                Level = Logic.Models.Enums.CourseLevel.Beginner,
+                Level = Enums.CourseLevel.Beginner,
                 Raiting = 4.6,
                 Price = 99.99
             };

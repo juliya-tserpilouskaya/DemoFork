@@ -184,11 +184,16 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Enums\CourseLevel.cs" />
     <Compile Include="Enums\Subscription.cs" />
 >>>>>>> develop
+=======
+    <Compile Include="Enums\CourseLevel.cs" />
+    <Compile Include="Enums\Subscription.cs" />
+>>>>>>> parent of 9c862a3... * refactored courses
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

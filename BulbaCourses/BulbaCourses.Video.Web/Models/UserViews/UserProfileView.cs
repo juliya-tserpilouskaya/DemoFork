@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Video.Logic.Models.Enums;
+﻿using BulbaCourses.Video.Web.Enums;
 using BulbaCourses.Video.Web.Validators;
 using FluentValidation.Attributes;
 using System;
@@ -12,7 +12,7 @@ namespace BulbaCourses.Video.Web.Models.UserViews
     {
         public string Login { get; set; }
         public string Biography { get; set; }
-        //public string AvatarPath { get; set; }
-        public Subscription SubscriptionType { get; set; }
+        public string AvatarPath { get; set; }
+        //public Subscription SubscriptionType { get; set; }
     }
 }

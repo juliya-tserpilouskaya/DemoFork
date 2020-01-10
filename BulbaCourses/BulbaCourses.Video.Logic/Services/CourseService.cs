@@ -157,7 +157,6 @@ namespace BulbaCourses.Video.Logic.Services
         public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
-            courseDb.Date = DateTime.Now;
             try
             {
                 await _courseRepository.AddAsync(courseDb);

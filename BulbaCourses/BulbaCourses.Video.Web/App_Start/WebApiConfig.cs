@@ -22,12 +22,18 @@ namespace BulbaCourses.Video.Web
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
             //IValidator<User>
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserProfileView>()
-            //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //    .To(result.ValidatorType));
+            AssemblyScanner.FindValidatorsInAssemblyContaining<UserProfileView>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                .To(result.ValidatorType));
             AssemblyScanner.FindValidatorsInAssemblyContaining<CourseView>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserChangePasswordView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<UserLoginView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
