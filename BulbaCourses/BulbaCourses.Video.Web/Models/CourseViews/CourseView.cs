@@ -8,7 +8,6 @@ namespace BulbaCourses.Video.Web.Models.CourseViews
 {
     public class CourseView
     {
-        public string CourseId { get; set; }
         public string Name { get; set; }
         public CourseLevel Level { get; set; }
         public double Raiting { get; set; }

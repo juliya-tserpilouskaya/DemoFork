@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web
+namespace BulbaCourses.Video.Web.App_Start
 {
     public class NinjectValidationFactory : ValidatorFactoryBase
     {
@@ -15,7 +15,6 @@ namespace BulbaCourses.Video.Web
         {
             _kernel = kernel;
         }
-
         public override IValidator CreateInstance(Type validatorType)
         {
             return (IValidator)_kernel.TryGet(validatorType);
