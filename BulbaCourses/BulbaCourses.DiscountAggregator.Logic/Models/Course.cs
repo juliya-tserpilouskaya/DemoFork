@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    //[Validator(typeof(CourseValidator))]
     public class Course : ICourse
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public string Domain { get; set; }
+        public Domain Domain { get; set; }
 
         public string URL { get; set; }
 
-        public string Category { get; set; }
+        public CourseCategory Category { get; set; }
 
         public string Title { get; set; }
 

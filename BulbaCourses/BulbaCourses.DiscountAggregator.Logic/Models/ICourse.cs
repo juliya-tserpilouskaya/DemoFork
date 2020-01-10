@@ -10,9 +10,10 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
     {
         string Id { get; set; }
 
-        string Domain { get; set; }
+        Domain Domain { get; set; }
 
         string URL { get; set; }
+        CourseCategory Category { get; set; }
 
         string Title { get; set; }
 

@@ -31,7 +31,6 @@ namespace BulbaCourses.DiscountAggregator.Web
 
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
-
             var kernel = new StandardKernel(new LogicModule());
 
             kernel.Load<AutoMapperLoad>();
@@ -44,8 +43,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<Course>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-            
-            
+               
             return kernel;
         }
     }

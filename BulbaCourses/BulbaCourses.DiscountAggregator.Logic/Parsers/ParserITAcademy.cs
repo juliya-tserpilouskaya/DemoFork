@@ -23,7 +23,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             {
                 CoursesITAcademy currentCourse = new CoursesITAcademy()
                 {
-                    Domain = CommonValues.hostItAcademy,   
+                    Domain = new Domain()
+                    {
+                        DomainURL = CommonValues.hostItAcademy,
+                        DomainName = "It-Academy",
+                        Id = Guid.NewGuid().ToString()
+                    },   
                     URL = CommonValues.hostItAcademy + node.Attributes["href"].Value,
                     Title = node.ChildNodes["div"].ChildNodes["h3"].InnerHtml
                 };

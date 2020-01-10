@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
-    public class Domain // TODO   //Вопрос, нужна ли эта модель вообще...?
+    public class Domain
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
