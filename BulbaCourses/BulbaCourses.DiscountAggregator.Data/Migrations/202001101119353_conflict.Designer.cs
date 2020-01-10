@@ -7,13 +7,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class EN5 : IMigrationMetadata
+    public sealed partial class conflict : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EN5));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(conflict));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001101027545_EN5"; }
+            get { return "202001101119353_conflict"; }
         }
         
         string IMigrationMetadata.Source

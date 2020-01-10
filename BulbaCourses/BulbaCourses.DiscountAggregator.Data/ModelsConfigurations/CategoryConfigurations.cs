@@ -7,7 +7,7 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
     {
         public CategoryConfigurations()
         {
-            ToTable("CourseCategorys");
+            ToTable("CourseCategories");
             HasKey(x => x.Id);
             Property(x => x.Name).IsRequired()
                 .HasMaxLength(255)

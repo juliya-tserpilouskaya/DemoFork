@@ -72,6 +72,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 user.Id = Guid.NewGuid().ToString();
                 user.UserProfile.Id = Guid.NewGuid().ToString();
+
                 userAccountService.Add(user);
                 return Ok(user);
             }
