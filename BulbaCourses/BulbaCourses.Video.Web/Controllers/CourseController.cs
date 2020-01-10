@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
-using BulbaCourses.Video.Web.Enums;
+using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.SwaggerModels;
 using FluentValidation.WebApi;

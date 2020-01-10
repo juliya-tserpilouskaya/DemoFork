@@ -3,7 +3,7 @@ namespace BulbaCourses.Video.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class first : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -91,11 +91,11 @@ namespace BulbaCourses.Video.Data.Migrations
                         TransactionId = c.String(nullable: false, maxLength: 128),
                         TransactionDate = c.DateTime(nullable: false),
                         TransactionAmount = c.Double(nullable: false),
-                        UserDb_UserId = c.String(maxLength: 128),
+                        User_UserId = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.TransactionId)
-                .ForeignKey("dbo.Users", t => t.UserDb_UserId)
-                .Index(t => t.UserDb_UserId);
+                .ForeignKey("dbo.Users", t => t.User_UserId)
+                .Index(t => t.User_UserId);
             
             CreateTable(
                 "dbo.CourseTag",
@@ -115,7 +115,7 @@ namespace BulbaCourses.Video.Data.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Comments", "UserCommentsId", "dbo.Users");
-            DropForeignKey("dbo.Transactions", "UserDb_UserId", "dbo.Users");
+            DropForeignKey("dbo.Transactions", "User_UserId", "dbo.Users");
             DropForeignKey("dbo.Videos", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Comments", "VideoMaterialDb_VideoId", "dbo.Videos");
             DropForeignKey("dbo.CourseTag", "CourseId", "dbo.Courses");
@@ -123,7 +123,7 @@ namespace BulbaCourses.Video.Data.Migrations
             DropForeignKey("dbo.Courses", "CourseAuthorId", "dbo.Users");
             DropIndex("dbo.CourseTag", new[] { "CourseId" });
             DropIndex("dbo.CourseTag", new[] { "TagId" });
-            DropIndex("dbo.Transactions", new[] { "UserDb_UserId" });
+            DropIndex("dbo.Transactions", new[] { "User_UserId" });
             DropIndex("dbo.Videos", new[] { "CourseId" });
             DropIndex("dbo.Tags", new[] { "Content" });
             DropIndex("dbo.Courses", new[] { "CourseAuthorId" });

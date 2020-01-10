@@ -19,6 +19,7 @@ namespace BulbaCourses.Video.Web.Validators
                 RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
                 RuleFor(c => c.Login).MinimumLength(5).WithMessage("Login must contain minimum 5 characters.");
                 RuleFor(c => c.Login).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
+                RuleFor(c => c.SubscriptionType).IsInEnum();
 
             });
             
@@ -27,6 +28,7 @@ namespace BulbaCourses.Video.Web.Validators
                 RuleFor(c => c.Login).NotEmpty().WithMessage("User login is required.");
                 RuleFor(c => c.Login).MinimumLength(5).WithMessage("Login must contain minimum 5 characters.");
                 RuleFor(c => c.Login).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
+                RuleFor(c => c.SubscriptionType).IsInEnum();
 
             });
 

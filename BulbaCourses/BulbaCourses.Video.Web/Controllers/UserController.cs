@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models.UserViews;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
@@ -71,6 +72,22 @@ namespace BulbaCourses.Video.Web.Controllers
             var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
             var result = await _userService.AddAsync(userInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+        }
+
+        [HttpPost, Route("buy")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Buy([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user, Subscription subscription)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.BuySubscription(userInfo, subscription);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
         }
 
         [HttpPut, Route("")]
