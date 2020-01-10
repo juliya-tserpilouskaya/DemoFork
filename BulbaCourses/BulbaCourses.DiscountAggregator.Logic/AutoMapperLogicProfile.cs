@@ -16,9 +16,6 @@ namespace BulbaCourses.DiscountAggregator.Logic
             CreateMap<CourseDb, Course>().ReverseMap();
             //CreateMap<Course, CourseDb>();
 
-            CreateMap<UserAccountDb, UserAccount>().ReverseMap();
-            //CreateMap<UserAccount, UserAccountDb>();
-
             CreateMap<UserProfileDb, UserProfile>().ReverseMap();
             //CreateMap<UserProfile, UserProfileDb>();
 

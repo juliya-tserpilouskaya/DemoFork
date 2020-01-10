@@ -354,7 +354,6 @@
     <Compile Include="Controllers\CourseUdemyController.cs" />
     <Compile Include="Controllers\DomianController.cs" />
     <Compile Include="Controllers\SearchCriteriaController.cs" />
-    <Compile Include="Controllers\UserAccountController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Filters\BadRequestFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">

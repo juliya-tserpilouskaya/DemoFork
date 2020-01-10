@@ -1,4 +1,7 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using AutoMapper;
+using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
@@ -10,19 +13,70 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     class UserProfileServices : IUserProfileServices
     {
-        public UserProfile GetByUserId(string userId)
+        private readonly IMapper _mapper;
+        private readonly IUserProfileServiceDb _profileService;
+
+        public UserProfileServices(IMapper mapper, IUserProfileServiceDb profileService)
         {
-            return UserProfileStorage.GetById(userId);
+            this._mapper = mapper;
+            _profileService = profileService;
+        }
+        public UserProfile GetById(string id)
+        {
+            var profile = _profileService.GetById(id);
+            var result = _mapper.Map<UserProfileDb, UserProfile>(profile);
+            return result;
+        }
+
+        public Task<UserProfile> GetByIdAsync(string id)
+        {
+            var profile = _profileService.GetById(id);
+            var result = _mapper.Map<UserProfileDb, UserProfile>(profile);
+            return Task.FromResult(result);
         }
 
         public IEnumerable<UserProfile> GetAll()
         {
-            return UserProfileStorage.GetAll();
+            var profiles = _profileService.GetAll();
+            var result = _mapper.Map<IEnumerable<UserProfileDb>, IEnumerable<UserProfile>>(profiles);
+            return result;
         }
 
-        public UserProfile Add(UserProfile userProfile)
+        public async Task<IEnumerable<UserProfile>> GetAllAsync()
         {
-            return UserProfileStorage.Add(userProfile);
+            var profiles = await _profileService.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<UserProfileDb>, IEnumerable<UserProfile>>(profiles);
+            return result;
+        }
+
+        public UserProfile Add(UserProfile profile)
+        {
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            _profileService.Add(profileDb);
+            return profile;
+        }
+
+        public void Delete(UserProfile profile)
+        {
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            _profileService.Delete(profileDb);
+        }
+
+        public void DeleteById(string id)
+        {
+            var profile = _profileService.GetById(id);
+            _profileService.Delete(profile);
+        }
+
+        public void Update(UserProfile profile)
+        {
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            _profileService.Update(profileDb);
+        }
+
+        public Task<bool> ExistsAsync(string login)
+        {
+            throw new NotImplementedException();
         }
     }
 }

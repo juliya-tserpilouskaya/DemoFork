@@ -82,13 +82,13 @@
     <Compile Include="Migrations\202001100655103_UpdateCourse.Designer.cs">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001101119353_conflict.cs" />
-    <Compile Include="Migrations\202001101119353_conflict.Designer.cs">
-      <DependentUpon>202001101119353_conflict.cs</DependentUpon>
+    <Compile Include="Migrations\202001101813201_ignorechange.cs" />
+    <Compile Include="Migrations\202001101813201_ignorechange.Designer.cs">
+      <DependentUpon>202001101813201_ignorechange.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001101216416_NewM.cs" />
-    <Compile Include="Migrations\202001101216416_NewM.Designer.cs">
-      <DependentUpon>202001101216416_NewM.cs</DependentUpon>
+    <Compile Include="Migrations\202001101909517_deleteUserAccount.cs" />
+    <Compile Include="Migrations\202001101909517_deleteUserAccount.Designer.cs">
+      <DependentUpon>202001101909517_deleteUserAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -96,14 +96,12 @@
     <Compile Include="ModelsConfigurations\CourseConfigurations.cs" />
     <Compile Include="ModelsConfigurations\DomainConfigurations.cs" />
     <Compile Include="ModelsConfigurations\SearchCriteriaConfigurations.cs" />
-    <Compile Include="ModelsConfigurations\UserAccountConfigurations.cs" />
     <Compile Include="ModelsConfigurations\UserProfileConfigurations.cs" />
     <Compile Include="Models\CourseBookmarkDb.cs" />
     <Compile Include="Models\CourseCategoryDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\DomainDb.cs" />
     <Compile Include="Models\SearchCriteriaDb.cs" />
-    <Compile Include="Models\UserAccountDb.cs" />
     <Compile Include="Models\UserProfileDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BookmarkServiceDb.cs" />
@@ -114,11 +112,9 @@
     <Compile Include="Services\interface\IBookmarkServiceDb.cs" />
     <Compile Include="Services\interface\ICourseCategoryServiceDb.cs" />
     <Compile Include="Services\interface\ICourseService.cs" />
-    <Compile Include="Services\interface\IUserAccountDB.cs" />
     <Compile Include="Services\interface\ISearchCriteriaServeceDb.cs" />
     <Compile Include="Services\interface\IUserProfileServiceDb.cs" />
     <Compile Include="Services\SearchCriteriaServeceDb.cs" />
-    <Compile Include="Services\UserAccountServiceDB.cs" />
     <Compile Include="Services\UserProfileServiceDb.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -150,11 +146,11 @@
     <EmbeddedResource Include="Migrations\202001100655103_UpdateCourse.resx">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101119353_conflict.resx">
-      <DependentUpon>202001101119353_conflict.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001101813201_ignorechange.resx">
+      <DependentUpon>202001101813201_ignorechange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101216416_NewM.resx">
-      <DependentUpon>202001101216416_NewM.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001101909517_deleteUserAccount.resx">
+      <DependentUpon>202001101909517_deleteUserAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

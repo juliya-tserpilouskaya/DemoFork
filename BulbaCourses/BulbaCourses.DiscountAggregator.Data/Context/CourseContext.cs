@@ -19,7 +19,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         }
 
         public DbSet<CourseDb> Courses { get; set; }
-        public DbSet<UserAccountDb> Users { get; set; }
         public DbSet<UserProfileDb> Profiles { get; set; }
         public DbSet<CourseBookmarkDb> CourseBookmarks { get; set; }
         public DbSet<CourseCategoryDb> CourseCategories { get; set; }
@@ -35,7 +34,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
             modelBuilder.Configurations.Add(new CourseConfigurations());
             modelBuilder.Configurations.Add(new DomainConfigurations());
             modelBuilder.Configurations.Add(new SearchCriteriaConfigurations());
-            modelBuilder.Configurations.Add(new UserAccountConfigurations());
             modelBuilder.Configurations.Add(new UserProfileConfigurations());
         }
 

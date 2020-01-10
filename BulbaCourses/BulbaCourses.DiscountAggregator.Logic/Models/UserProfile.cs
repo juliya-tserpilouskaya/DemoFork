@@ -14,6 +14,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public string LastName { get; set; }
 
+        public string Email { get; set; }
+
         public DateTime? DateOfBirth { get; set; }
             
         public IEnumerable<SearchCriteria> SearchCriterias { get; set; }

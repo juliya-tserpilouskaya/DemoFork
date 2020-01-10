@@ -15,6 +15,8 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
             Property(x => x.LastName).IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode();
+            Property(x => x.Email).IsRequired()
+                .HasMaxLength(105);
             Property(x => x.Subscription).IsRequired();
         }
     }
