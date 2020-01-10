@@ -82,41 +82,13 @@
     <Compile Include="Migrations\202001100655103_UpdateCourse.Designer.cs">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001101015369_EN.cs" />
-    <Compile Include="Migrations\202001101015369_EN.Designer.cs">
-      <DependentUpon>202001101015369_EN.cs</DependentUpon>
+    <Compile Include="Migrations\202001101119353_conflict.cs" />
+    <Compile Include="Migrations\202001101119353_conflict.Designer.cs">
+      <DependentUpon>202001101119353_conflict.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001101022454_EN1.cs" />
-    <Compile Include="Migrations\202001101022454_EN1.Designer.cs">
-      <DependentUpon>202001101022454_EN1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101023393_EN2.cs" />
-    <Compile Include="Migrations\202001101023393_EN2.Designer.cs">
-      <DependentUpon>202001101023393_EN2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101024526_EN3.cs" />
-    <Compile Include="Migrations\202001101024526_EN3.Designer.cs">
-      <DependentUpon>202001101024526_EN3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101025469_EN4.cs" />
-    <Compile Include="Migrations\202001101025469_EN4.Designer.cs">
-      <DependentUpon>202001101025469_EN4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101027545_EN5.cs" />
-    <Compile Include="Migrations\202001101027545_EN5.Designer.cs">
-      <DependentUpon>202001101027545_EN5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101028380_EN6.cs" />
-    <Compile Include="Migrations\202001101028380_EN6.Designer.cs">
-      <DependentUpon>202001101028380_EN6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101029407_EN7.cs" />
-    <Compile Include="Migrations\202001101029407_EN7.Designer.cs">
-      <DependentUpon>202001101029407_EN7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001100717476_UpdateCategoryModel.cs" />
-    <Compile Include="Migrations\202001100717476_UpdateCategoryModel.Designer.cs">
-      <DependentUpon>202001100717476_UpdateCategoryModel.cs</DependentUpon>
+    <Compile Include="Migrations\202001101216416_NewM.cs" />
+    <Compile Include="Migrations\202001101216416_NewM.Designer.cs">
+      <DependentUpon>202001101216416_NewM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -178,32 +150,11 @@
     <EmbeddedResource Include="Migrations\202001100655103_UpdateCourse.resx">
       <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101015369_EN.resx">
-      <DependentUpon>202001101015369_EN.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001101119353_conflict.resx">
+      <DependentUpon>202001101119353_conflict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101022454_EN1.resx">
-      <DependentUpon>202001101022454_EN1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101023393_EN2.resx">
-      <DependentUpon>202001101023393_EN2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101024526_EN3.resx">
-      <DependentUpon>202001101024526_EN3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101025469_EN4.resx">
-      <DependentUpon>202001101025469_EN4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101027545_EN5.resx">
-      <DependentUpon>202001101027545_EN5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101028380_EN6.resx">
-      <DependentUpon>202001101028380_EN6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101029407_EN7.resx">
-      <DependentUpon>202001101029407_EN7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001100717476_UpdateCategoryModel.resx">
-      <DependentUpon>202001100717476_UpdateCategoryModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001101216416_NewM.resx">
+      <DependentUpon>202001101216416_NewM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
