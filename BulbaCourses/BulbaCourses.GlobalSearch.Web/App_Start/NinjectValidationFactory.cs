@@ -15,6 +15,7 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
         {
             _kernel = kernel;
         }
+
         public override IValidator CreateInstance(Type validatorType)
         {
             return (IValidator)_kernel.TryGet(validatorType);

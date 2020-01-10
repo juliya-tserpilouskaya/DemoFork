@@ -88,6 +88,7 @@
     <Compile Include="Services\LearningCourseService.cs" />
     <Compile Include="Services\RegisteredUserService.cs" />
     <Compile Include="Services\SearchQueryService.cs" />
+    <Compile Include="Validators\LearningCourseItemValidator.cs" />
     <Compile Include="Validators\LearningCourseValidator.cs" />
     <Compile Include="Validators\SearchQueryValidator.cs" />
   </ItemGroup>

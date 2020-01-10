@@ -14,21 +14,21 @@ namespace BulbaCourses.GlobalSearch.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            IKernel kernel = (IKernel)
-                config.DependencyResolver.GetService(typeof(IKernel));
-            
-            // Web API configuration and services
-            FluentValidationModelValidatorProvider
-                .Configure(config, cfg => cfg.ValidatorFactory =
-                new NinjectValidationFactory(kernel));
+            //IKernel kernel = (IKernel)
+            //    config.DependencyResolver.GetService(typeof(IKernel));
 
-            AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                .To(result.ValidatorType));
+            ////Web API configuration and services
+            //FluentValidationModelValidatorProvider
+            //    .Configure(config, cfg => cfg.ValidatorFactory =
+            //    new NinjectValidationFactory(kernel));
 
-            AssemblyScanner.FindValidatorsInAssemblyContaining<LearningCourseDTO>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //    .To(result.ValidatorType));
+
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<LearningCourseDTO>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //    .To(result.ValidatorType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();

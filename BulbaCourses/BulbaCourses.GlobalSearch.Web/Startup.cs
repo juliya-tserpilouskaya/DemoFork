@@ -2,6 +2,9 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.GlobalSearch.Logic;
+using BulbaCourses.GlobalSearch.Logic.Validators;
+using BulbaCourses.GlobalSearch.Logic.DTO;
+using BulbaCourses.GlobalSearch.Web.App_Start;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Microsoft.Owin;
@@ -31,21 +34,24 @@ namespace BulbaCourses.GlobalSearch.Web
             app.UseWebApi(config);
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
-            //+Setup OWIN Startup class and
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
             var kernel = new StandardKernel(new LogicModule());
             //kernel.Load<MapperLoadModule>();
-            //// Web API configuration and services
-            //FluentValidationModelValidatorProvider.Configure(config,
-            //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
+            FluentValidationModelValidatorProvider
+                .Configure(config, cfg => cfg.ValidatorFactory =
+                new NinjectValidationFactory(kernel));
 
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<CourseViewInput>()
+            AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                .To(result.ValidatorType));
+
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<LearningCourseDTO>()
             //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //        .To(result.ValidatorType));
+            //    .To(result.ValidatorType));
 
             //kernel.RegisterEasyNetQ("host=10.211.55.2");
             return kernel;
