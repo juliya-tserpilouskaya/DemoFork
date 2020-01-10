@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="DataModule.cs" />
     <Compile Include="EntitiesConfiguration\AuthorConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\BookmarkConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseCategoryConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseItemConfiguration.cs" />
@@ -162,11 +163,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
+    <Compile Include="Models\BookmarkDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
     <Compile Include="Models\CourseCategoryDB.cs" />
     <Compile Include="Models\CourseItemDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BookmarkDbService.cs" />
+    <Compile Include="Services\Interfaces\IBookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryDbService.cs" />
     <Compile Include="Services\Interfaces\ICourseDbService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />

@@ -26,6 +26,7 @@ namespace BulbaCourses.GlobalSearch.Data
             modelBuilder.Configurations.Add(new CourseConfiguration());
             modelBuilder.Configurations.Add(new CourseCategoryConfiguration());
             modelBuilder.Configurations.Add(new SearchQueryConfiguration());
+            modelBuilder.Configurations.Add(new BookmarkConfiguration());
         }
 
         public DbSet<AuthorDB> Authors { get; set; }
@@ -33,5 +34,6 @@ namespace BulbaCourses.GlobalSearch.Data
         public DbSet<CourseCategoryDB> Categories { get; set; }
         public DbSet<CourseDB> Courses { get; set; }
         public DbSet<CourseItemDB> CourseItems { get; set; }
+        public DbSet<BookmarkDB> Bookmarks { get; set; }
     }
 }
