@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BulbaCourses.GlobalSearch.Logic.Validators;
+using FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

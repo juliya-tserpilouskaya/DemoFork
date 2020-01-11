@@ -23,6 +23,8 @@ namespace BulbaCourses.GlobalSearch.Logic
             Bind<IRegisteredUserService>().To<RegisteredUserService>();
             Bind<ISearchQueryDbService>().To<SearchQueryDbService>();
             Bind<ICourseDbService>().To<CourseDbService>();
+            Bind<ISearchService>().To<SearchService>();
+
         }
     }
 }
