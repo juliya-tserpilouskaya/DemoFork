@@ -20,7 +20,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public IEnumerable<UserDB> GetAll()
         {
-            return _context.Users;
+            return _context.Users.Include(b => b.BookmarkItems).Include(q => q.SearchQueryItems);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<IEnumerable<UserDB>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync().ConfigureAwait(false);
+            return await _context.Users.Include(b => b.BookmarkItems).Include(q => q.SearchQueryItems).ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public UserDB GetById(string id)
         {
-            return _context.Users.SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return _context.Users.Include(b => b.BookmarkItems).Include(q => q.SearchQueryItems).SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<UserDB> GetByIdAsync(string id)
         {
-            return await _context.Users.SingleOrDefaultAsync(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return await _context.Users.Include(b => b.BookmarkItems).Include(q => q.SearchQueryItems).SingleOrDefaultAsync(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -61,6 +61,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             user.Id = Guid.NewGuid().ToString();
             _context.Users.Add(user);
+            _context.SaveChanges();
             return user;
         }
 
@@ -112,6 +113,23 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             var user = _context.Bookmarks.SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.Bookmarks.Remove(user);
+
+            //UserDB userToDelete = _context.Users
+            //    .Include(b => b.BookmarkItems).Include(q => q.SearchQueryItems)
+            //    .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+
+            //if (userToDelete != null)
+            //{
+            //    _context.Bookmarks.RemoveRange(userToDelete.BookmarkItems.ToArray());
+            //    _context.SearchQueries.RemoveRange(userToDelete.SearchQueryItems.ToArray());
+            //    _context.Users.Remove(userToDelete);
+            //    _context.SaveChanges();
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            //return true;
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace BulbaCourses.GlobalSearch.Data.Models
     {
         public string Id { get; set; }
         public bool Authorization { get; set; }
-        public ICollection<BookmarkDB> Items { get; set; }
+        public ICollection<BookmarkDB> BookmarkItems { get; set; }
         public ICollection<SearchQueryDB> SearchQueryItems { get; set; }
     }
 }
