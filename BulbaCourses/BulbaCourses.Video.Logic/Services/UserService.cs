@@ -172,6 +172,30 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        public Task<Result> BuySingleCourse(UserInfo user, CourseInfo course)
+        {
+            double price = course.Price;
+            var userDb = _mapper.Map<UserInfo, UserDb>(user);
+            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
+            var transaction = new TransactionDb()
+            {
+                TransactionId = Guid.NewGuid().ToString(),
+                TransactionDate = DateTime.Now,
+                TransactionAmount = price,
+                User = userDb
+            };
+
+            bool pay = PaiPal(user, price);
+
+            if (pay == true)
+            {
+                userDb.Transactions.Add(transaction);
+                userDb.Courses.Add(courseDb);
+            }
+
+            return Task.FromResult(Result.Ok());
+        }
+
         private bool PaiPal(UserInfo user, double money)
         {
             // разработать метод оплаты

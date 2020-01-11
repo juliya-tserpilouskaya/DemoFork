@@ -2,6 +2,7 @@
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
+using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.Models.UserViews;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
@@ -74,11 +75,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
-        [HttpPost, Route("buy")]
+        [HttpPost, Route("buysub")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Buy([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user, Subscription subscription)
+        public async Task<IHttpActionResult> BuySubscription([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user, Subscription subscription)
         {
             if (!ModelState.IsValid)
             {
@@ -87,6 +88,23 @@ namespace BulbaCourses.Video.Web.Controllers
 
             var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
             var result = await _userService.BuySubscription(userInfo, subscription);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
+        }
+
+        [HttpPost, Route("buycourse")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> BuySubscription([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user, CourseView course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+            var result = await _userService.BuySingleCourse(userInfo, courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
         }
 
