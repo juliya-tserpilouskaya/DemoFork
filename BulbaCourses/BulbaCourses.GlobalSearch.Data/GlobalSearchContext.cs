@@ -16,7 +16,6 @@ namespace BulbaCourses.GlobalSearch.Data
         {
             Database.Log = s => Debug.WriteLine(s);
             //Database.SetInitializer(new GlobalSearchDbInitializer());
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
