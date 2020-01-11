@@ -82,6 +82,7 @@
     <Compile Include="InterfaceServices\IRegisteredUserService.cs" />
     <Compile Include="InterfaceServices\ISearchQueryService.cs" />
     <Compile Include="InterfaceServices\ISearchService.cs" />
+    <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\AnonymousUser.cs" />
     <Compile Include="Models\AnonymousUserStorage.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Services\RegisteredUserService.cs" />
     <Compile Include="Services\SearchQueryService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Validators\LearningCourseItemValidator.cs" />
     <Compile Include="Validators\LearningCourseValidator.cs" />
     <Compile Include="Validators\SearchQueryValidator.cs" />
