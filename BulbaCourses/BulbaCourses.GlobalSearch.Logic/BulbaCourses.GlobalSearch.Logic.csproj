@@ -63,9 +63,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperModule.cs" />
     <Compile Include="DTO\LearningCourseDTO.cs" />
     <Compile Include="DTO\LearningCourseItemDTO.cs" />
     <Compile Include="DTO\SearchQueryDTO.cs" />
+    <Compile Include="Infrastructure\MapperLogicProfile.cs" />
     <Compile Include="InterfaceServices\IAnonymousUserService.cs" />
     <Compile Include="InterfaceServices\IBookmarkService.cs" />
     <Compile Include="InterfaceServices\ILearningCourseService.cs" />

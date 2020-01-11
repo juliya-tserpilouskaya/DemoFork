@@ -15,10 +15,12 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
     public class SearchQueryService : ISearchQueryService
     {
         ISearchQueryDbService _searchQueryDb;
+        IMapper _mapper;
 
-        public SearchQueryService(ISearchQueryDbService searchQueryDb)
+        public SearchQueryService(IMapper mapper, ISearchQueryDbService searchQueryDb)
         {
             _searchQueryDb = searchQueryDb;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -27,10 +29,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public IEnumerable<SearchQueryDTO> GetAll()
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
-            }).CreateMapper();
-            return mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_searchQueryDb.GetAll());
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_searchQueryDb.GetAll());
         }
 
         /// <summary>
@@ -39,11 +38,8 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public async Task<IEnumerable<SearchQueryDTO>> GetAllAsync()
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
-            }).CreateMapper();
             var data = await _searchQueryDb.GetAllAsync();
-            return mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(data);
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(data);
         }
 
         /// <summary>
@@ -75,11 +71,8 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public SearchQueryDTO Add(SearchQueryDTO query)
         {
-            var mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<SearchQueryDB, SearchQueryDTO>();
-            }).CreateMapper();
             SearchQueryDB queryDb = new SearchQueryDB() { Id = query.Id, Created = query.Date, Query = query.Query };
-            return mapper.Map<SearchQueryDB, SearchQueryDTO>(_searchQueryDb.Add(queryDb));
+            return _mapper.Map<SearchQueryDB, SearchQueryDTO>(_searchQueryDb.Add(queryDb));
         }
 
         /// <summary>

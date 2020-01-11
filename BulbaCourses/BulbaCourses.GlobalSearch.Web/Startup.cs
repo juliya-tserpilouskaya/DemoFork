@@ -39,7 +39,7 @@ namespace BulbaCourses.GlobalSearch.Web
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
             var kernel = new StandardKernel(new LogicModule());
-            //kernel.Load<MapperLoadModule>();
+            kernel.Load<AutoMapperModule>();
 
             FluentValidationModelValidatorProvider
                 .Configure(config, cfg => cfg.ValidatorFactory =
@@ -48,10 +48,6 @@ namespace BulbaCourses.GlobalSearch.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchQueryDTO>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                 .To(result.ValidatorType));
-
-            //AssemblyScanner.FindValidatorsInAssemblyContaining<LearningCourseDTO>()
-            //    .ForEach(result => kernel.Bind(result.InterfaceType)
-            //    .To(result.ValidatorType));
 
             //kernel.RegisterEasyNetQ("host=10.211.55.2");
             return kernel;
