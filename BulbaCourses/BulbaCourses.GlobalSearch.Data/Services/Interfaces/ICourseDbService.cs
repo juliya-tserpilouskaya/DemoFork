@@ -47,7 +47,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         /// </summary>
         /// <param name="category">Category</param>
         /// <returns></returns>
-        Task<IEnumerable<CourseDB>> GetByCategoryAsync(int catefory);
+        Task<IEnumerable<CourseDB>> GetByCategoryAsync(int category);
 
         /// <summary>
         /// Returns learning course by author
