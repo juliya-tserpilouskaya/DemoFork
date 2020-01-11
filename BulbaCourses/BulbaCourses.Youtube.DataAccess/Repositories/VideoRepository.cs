@@ -42,13 +42,8 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         //Save
         public ResultVideoDb Save(ResultVideoDb video)
         {
-            var channel = _db.Channels.Find(video.Channel.Id);
-            if (channel != null)
-            {
-                video.Channel = channel;
-                _db.Videos.Add(video);
-                _db.SaveChanges();
-            }
+            _db.Videos.Add(video);
+            _db.SaveChanges();
             return video;
         }
 

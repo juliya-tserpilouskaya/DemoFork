@@ -22,10 +22,10 @@ namespace BulbaCourses.Youtube.Tests
     {
         Faker<SearchRequest> fakerRequest;
         Faker<SearchStory> fakerStory;
+        IStoryService stService;
         StoryController stController;
         StandardKernel kernel;
         string user1 = "user1";
-        string user2 = "user2";
 
         [OneTimeSetUp]
         public void Init()
@@ -46,39 +46,39 @@ namespace BulbaCourses.Youtube.Tests
             fakerStory.RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
                 .RuleFor(s => s.SearchDate, f => f.Date.Past(1, null));
 
-
             kernel = new StandardKernel();
             kernel.Load<LogicModule>();
 
-            var stService = kernel.Get<IStoryService>();
+            stService = kernel.Get<IStoryService>();
             stController = new StoryController(stService);
-
-            //generate stories
-            var storyDb1 = fakerStory.Generate(3);
-            foreach (var item in storyDb1)
-            {
-                item.UserId = user1;
-                stService.Save(item);
-            }
-            var storyDb2 = fakerStory.Generate(5);
-            foreach (var item in storyDb2)
-            {
-                item.UserId = user2;
-                stService.Save(item);
-            }
         }
 
         [Test]
         public void Test_GetStory_ByUserId()
         {
+            var countBefore = 0;
             var resultListStory =
+                (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1)
+                .GetAwaiter().GetResult();
+
+            countBefore = resultListStory.Content.ToList().Count;
+
+            //generate stories
+            var storiesDb = fakerStory.Generate(3);
+            foreach (var item in storiesDb)
+            {
+                item.UserId = user1;
+                stService.Save(item);
+            }
+
+            resultListStory =
                 (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1)
                 .GetAwaiter().GetResult();
 
             var result = resultListStory.Content.ToList();
 
             result.Should().NotBeNullOrEmpty();
-            result.Should().HaveCount(c => c == 3);
+            result.Should().HaveCount(c => c == countBefore + 3);
 
             foreach (var item in result)
                 item.UserId.Should().Be(user1);

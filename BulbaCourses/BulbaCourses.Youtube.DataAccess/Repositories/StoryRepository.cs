@@ -86,7 +86,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToList().AsReadOnly();
         }
 
-        // <summary>
+        /// <summary>
         /// Get async all stories by Request Id
         /// </summary>
         /// <param name="requestId"></param>

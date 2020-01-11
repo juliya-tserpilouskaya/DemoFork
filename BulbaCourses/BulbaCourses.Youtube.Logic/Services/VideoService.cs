@@ -22,22 +22,16 @@ namespace BulbaCourses.Youtube.Logic.Services
             _videoRepository = videoRepository;
             _mapper = mapper;
         }
+
         /// <summary>
         /// Save ResultVideo
         /// </summary>
         /// <param name="video"></param>
         public ResultVideo Save(ResultVideo video)
         {
-            //var result = _validator.Validate(video, ruleSet: "AddVideo");
-
-            //if (!result.IsValid)
-            //    return video;
-
             var videoDb = _mapper.Map<ResultVideoDb>(video);
-
             return _mapper.Map<ResultVideo>(_videoRepository.Save(videoDb));
         }
-
 
         /// <summary>
         /// Get all video from repository

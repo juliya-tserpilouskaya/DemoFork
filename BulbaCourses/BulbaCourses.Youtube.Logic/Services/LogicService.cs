@@ -66,7 +66,6 @@ namespace BulbaCourses.Youtube.Logic.Services
                 _cache.Add(searchRequest.CacheId, resultVideos);
             }
 
-
             //Save ResultVideo and SearchRequest if does not exist
             var videoFromDb = new ResultVideo();
             if (requestService.Exists(searchRequest))
@@ -75,36 +74,14 @@ namespace BulbaCourses.Youtube.Logic.Services
 
                 foreach (var resultVideo in resultVideos)
                 {
-                    //videoFromDb = videoService.GetById(resultVideo.Id);
-                    //if (videoFromDb != null)
-                    //{
-                        if (!searchRequest.Videos.Contains(resultVideo))
+                    if (!searchRequest.Videos.Any(v=>v.Id ==resultVideo.Id))
                         searchRequest.Videos.Add(resultVideo);
-                    //}
-                    //else
-                    //{
-                    //    searchRequest.Videos.Add(resultVideo);
-                    //}
                 }
                 requestService.Update(searchRequest);
             }
             else
             {
                 searchRequest.Videos = resultVideos;
-
-                //searchRequest.Videos = new List<ResultVideo>();
-                //foreach (var resultVideo in resultVideos)
-                //{
-                //videoFromDb = videoService.GetById(resultVideo.Id);
-                //if (videoFromDb != null)
-                //{
-                //    searchRequest.Videos.Add(videoFromDb);
-                //}
-                //else
-                //{
-                //    searchRequest.Videos.Add(resultVideo);
-                //}
-                //}
                 searchRequest = requestService.Save(searchRequest);
             }
 
