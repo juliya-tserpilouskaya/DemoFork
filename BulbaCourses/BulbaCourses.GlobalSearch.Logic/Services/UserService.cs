@@ -1,4 +1,7 @@
-﻿using BulbaCourses.GlobalSearch.Logic.DTO;
+﻿using AutoMapper;
+using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System;
 using System.Collections.Generic;
@@ -10,6 +13,9 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     class UserService : IUserService
     {
+        IUserDbService _learningCourseDb;
+        IMapper _mapper;
+
         public IEnumerable<UserDTO> GetAll()
         {
             throw new NotImplementedException();

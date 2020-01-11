@@ -191,7 +191,7 @@
     <Compile Include="Services\Interfaces\IBookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryDbService.cs" />
     <Compile Include="Services\Interfaces\ICourseDbService.cs" />
-    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Interfaces\IUserDbService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />
     <Compile Include="Services\CourseDbService.cs" />
     <Compile Include="Services\UserDBService.cs" />

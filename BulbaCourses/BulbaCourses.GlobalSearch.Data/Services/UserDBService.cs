@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services
 {
-    class UserDBService : IUserService
+    class UserDBService : IUserDbService
     {
         private GlobalSearchContext _context = new GlobalSearchContext();
         private bool _isDisposed;
