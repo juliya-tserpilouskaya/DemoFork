@@ -1,13 +1,14 @@
-﻿using System;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe
 {
     public interface IService_Test : IDisposable
     {
-        void GetQuestonById(int Id);
+        MTest_MainInfo GetTestById(int Id);
 
-        void AddQuestion();
+        void AddTest();
 
-        void DropQuestionById(int Id);
+        void DropTestById(int Id);
     }
 }

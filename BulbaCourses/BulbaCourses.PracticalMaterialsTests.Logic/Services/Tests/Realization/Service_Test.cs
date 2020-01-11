@@ -1,55 +1,41 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Context;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
 using System;
+using System.Linq;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
 {
-    public class Service_Test : IService_Test
+    public class Service_Test : Service_Base, IService_Test
     {
-        protected readonly DbContext_Test _context;
-
-        private bool _isDisposed = false;
-
-        protected Service_Test(DbContext_Test context)
+        public Service_Test(DbContext_Test context) : base (context)
         {
-            _context = context;
+
         }
 
-        public void AddQuestion()
+        public MTest_MainInfo GetTestById(int Id)
+        {
+            MTest_MainInfoDb Test_MainInfoDb = 
+                _context.Test_MainInfo.FirstOrDefault(c => c.Id == Id);
+
+            return
+                new MTest_MainInfo()
+                {
+                    Id = Test_MainInfoDb.Id,
+                    Name = Test_MainInfoDb.Name
+                };
+        }
+
+        public void AddTest()
         {
             throw new NotImplementedException();
         }
 
-        public void DropQuestionById(int Id)
+        public void DropTestById(int Id)
         {
             throw new NotImplementedException();
-        }
-
-        public void GetQuestonById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
-
-        protected void Dispose(bool flag)
-        {
-            if (_isDisposed) return;
-
-            _context?.Dispose();
-
-            _isDisposed = true;
-
-            if (flag)
-                GC.SuppressFinalize(this);
-        }
-
-        ~Service_Test()
-        {
-            this.Dispose(false);
-        }
+        } 
     }
 }

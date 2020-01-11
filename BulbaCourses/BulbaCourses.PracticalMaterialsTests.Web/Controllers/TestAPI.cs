@@ -1,4 +1,6 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.TestAPI;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -10,15 +12,18 @@ using System.Web.Http;
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     public class TestAPIController : ApiController
-    {
-        [HttpGet]
+    {   
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parametr format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test found", typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult TesatMethod()
         {
-            TestAPIClass dd = new TestAPIClass();
+            IService_Test ServiceTest = new Service_Test();
 
-            string ss = dd.GetQuestionById(4);
+            MTest_MainInfo Test_MainInfo = ServiceTest.GetTestById(1);            
 
-            return Ok(ss);
+            return Ok(Test_MainInfo.Name);
         }
     }
 }
