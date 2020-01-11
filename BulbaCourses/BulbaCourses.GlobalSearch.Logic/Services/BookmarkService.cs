@@ -1,5 +1,8 @@
-﻿using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
-using BulbaCourses.GlobalSearch.Logic.Models;
+﻿using AutoMapper;
+using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Logic.DTO;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,49 +13,104 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     class BookmarkService : IBookmarkService
     {
-        public Bookmark Add(Bookmark bookmark)
+        IBookmarkDbService _bookmarkDb;
+        IMapper _mapper;
+
+        public BookmarkService(IMapper mapper, IBookmarkDbService bookmarkDb)
         {
-            return BookmarkStorage.Add(bookmark);
+            _bookmarkDb = bookmarkDb;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Bookmark> GetAll()
+        /// <summary>
+        /// Returns all search queries
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BookmarkDTO> GetAll()
         {
-            return BookmarkStorage.GetAll();
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(_bookmarkDb.GetAll());
         }
 
-        public Task<IEnumerable<Bookmark>> GetAllAsync()
+        /// <summary>
+        /// Asynchronously returns all bookmarks
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookmarkDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var data = await _bookmarkDb.GetAllAsync();
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(data);
         }
 
-        public Bookmark GetById(string id)
+        /// <summary>
+        /// Returns bookmark by id
+        /// </summary>
+        /// <param name="id">search query id</param>
+        /// <returns></returns>
+        public BookmarkDTO GetById(string id)
         {
-            return BookmarkStorage.GetById(id);
+            var bookmark = _bookmarkDb.GetById(id);
+            return new BookmarkDTO { Id = bookmark.Id, UserId = bookmark.UserId, Title = bookmark.Title, URL = bookmark.URL };
         }
 
-        public Task<Bookmark> GetByIdAsync(string id)
+        /// <summary>
+        /// Asynchronously returns bookmark by id
+        /// </summary>
+        /// <param name="id">search query id</param>
+        /// <returns></returns>
+        public async Task<BookmarkDTO> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var bookmark = await _bookmarkDb.GetByIdAsync(id);
+            return new BookmarkDTO { Id = bookmark.Id, UserId = bookmark.UserId, Title = bookmark.Title, URL = bookmark.URL };
         }
 
-        public IEnumerable<Bookmark> GetByUserId(string userID)
+        /// <summary>
+        /// Returns bookmark by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public IEnumerable<BookmarkDTO> GetByUserId(string userID)
         {
-            return BookmarkStorage.GetByUserId(userID);
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(_bookmarkDb.GetByUserId(userID));
         }
 
-        public Task<IEnumerable<Bookmark>> GetByUserIdAsync(string userID)
+        /// <summary>
+        /// Asynchronously returns bookmark by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookmarkDTO>> GetByUserIdAsync(string userID)
         {
-            throw new NotImplementedException();
+            var data = await _bookmarkDb.GetByUserIdAsync(userID);
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(data);
         }
 
-        public void RemoveAll()
+        /// <summary>
+        /// Creates bookmark
+        /// </summary>
+        /// <param name="bookmark">search query</param>
+        /// <returns></returns>
+        public BookmarkDTO Add(BookmarkDTO bookmark)
         {
-            BookmarkStorage.RemoveAll();
+            BookmarkDB bookmarkDb = new BookmarkDB() { Id = bookmark.Id, UserId = bookmark.UserId, Title = bookmark.Title, URL = bookmark.URL };
+            return _mapper.Map<BookmarkDB, BookmarkDTO>(_bookmarkDb.Add(bookmarkDb));
         }
 
+        /// <summary>
+        /// Removes bookmarks by id
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
         public void RemoveById(string id)
         {
-            BookmarkStorage.RemoveById(id);
+            _bookmarkDb.RemoveById(id);
+        }
+
+        /// <summary>
+        /// Removes all bookmarks from database
+        /// </summary>
+        public void RemoveAll()
+        {
+            _bookmarkDb.RemoveAll();
         }
     }
 }

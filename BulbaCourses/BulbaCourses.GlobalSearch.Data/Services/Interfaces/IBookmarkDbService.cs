@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
 {
-    interface IBookmarkDbService
+    public interface IBookmarkDbService
     {
         /// <summary>
         /// Returns all bookmarks

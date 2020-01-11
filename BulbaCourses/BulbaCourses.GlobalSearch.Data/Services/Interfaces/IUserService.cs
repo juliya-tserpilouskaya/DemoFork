@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
 {
-    interface IUserService
+    public interface IUserService
     {
         /// <summary>
         /// Returns all users
