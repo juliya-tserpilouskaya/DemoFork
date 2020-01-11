@@ -14,6 +14,69 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         private GlobalSearchContext _context = new GlobalSearchContext();
         private bool _isDisposed;
 
+        /// <summary>
+        /// Returns all bookmarks
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BookmarkDB> GetAll()
+        {
+            return _context.Bookmarks;
+        }
+
+        /// <summary>
+        /// Asynchronously returns all bookmarks
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookmarkDB>> GetAllAsync()
+        {
+            return await _context.Bookmarks.ToListAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns bookmark by id
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        public BookmarkDB GetById(string id)
+        {
+            return _context.Bookmarks.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Asynchronously returns bookmark by id
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        public async Task<BookmarkDB> GetByIdAsync(string id)
+        {
+            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Returns bookmark by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public IEnumerable<BookmarkDB> GetByUserId(string userID)
+        {
+            return _context.Bookmarks.Where(b => b.UserId == userID);
+        }
+
+        /// <summary>
+        /// Asynchronously returns bookmark by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookmarkDB>> GetByUserIdAsync(string userID)
+        {
+            return await _context.Bookmarks.Where(b => b.UserId == userID).ToListAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates new bookmark
+        /// </summary>
+        /// <param name="bookmark">New user</param>
+        /// <returns></returns>
         public BookmarkDB Add(BookmarkDB bookmark)
         {
             bookmark.Id = Guid.NewGuid().ToString();
@@ -21,46 +84,25 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             return bookmark;
         }
 
-        public IEnumerable<BookmarkDB> GetAll()
-        {
-            return _context.Bookmarks;
-        }
-
-        public async Task<IEnumerable<BookmarkDB>> GetAllAsync()
-        {
-            return await _context.Bookmarks.ToListAsync().ConfigureAwait(false);
-        }
-
-        public BookmarkDB GetById(string id)
-        {
-            return _context.Bookmarks.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public async Task<BookmarkDB> GetByIdAsync(string id)
-        {
-            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public IEnumerable<BookmarkDB> GetByUserId(string userID)
-        {
-            return _context.Bookmarks.Where(b => b.UserId == userID);
-        }
-
-        public async Task<IEnumerable<BookmarkDB>> GetByUserIdAsync(string userID)
-        {
-            return await _context.Bookmarks.Where(b => b.UserId == userID).ToListAsync().ConfigureAwait(false);
-        }
-
-        public void RemoveAll()
-        {
-            _context.Bookmarks.RemoveRange(_context.Bookmarks);
-        }
-
+        /// <summary>
+        /// Removes bookmarks by id
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
         public void RemoveById(string id)
         {
             var bookmark = _context.Bookmarks.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.Bookmarks.Remove(bookmark);
         }
+
+        /// <summary>
+        /// Removes all bookmarks from database
+        /// </summary>
+        public void RemoveAll()
+        {
+            _context.Bookmarks.RemoveRange(_context.Bookmarks);
+        }
+
         public void Dispose()
         {
             Dispose(true);
