@@ -14,10 +14,10 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         UserDB GetById(string id);
         Task<UserDB> GetByIdAsync(string id);
         UserDB Add(UserDB user);
-        IEnumerable<BookmarkDB> GetBookmarksByUserId(string id);
-        Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id);
-        IEnumerable<BookmarkDB> GetBookmarksByUserId(string id);
-        Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id);
+        //IEnumerable<BookmarkDB> GetBookmarksByUserId(string id);
+        //Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id);
+        //IEnumerable<BookmarkDB> GetBookmarksByUserId(string id);
+        //Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id);
         void RemoveById(string id);
         void RemoveAll();
     }

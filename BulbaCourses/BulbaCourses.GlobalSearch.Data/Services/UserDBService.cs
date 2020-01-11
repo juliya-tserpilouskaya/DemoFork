@@ -58,14 +58,10 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         //    return _context.Bookmarks.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase));
         //}
 
-        ////public async Task<IEnumerable<CourseItemDB>> GetLearningItemsByCourseIdAsync(string id)
-        ////{
-        ////    return await _context.CourseItems.Where(c => c.CourseDBId.Equals(id,
-        ////        StringComparison.OrdinalIgnoreCase)).ToListAsync().ConfigureAwait(false);
-        ////}
-
-
-
+        //public async Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id)
+        //{
+        //    return await _context.Bookmarks.Where(i => i.CourseDBId.Equals(id, StringComparison.OrdinalIgnoreCase)).ToListAsync().ConfigureAwait(false);
+        //}
 
         public void Dispose()
         {
