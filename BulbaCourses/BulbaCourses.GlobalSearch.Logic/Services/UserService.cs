@@ -13,62 +13,114 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 {
     class UserService : IUserService
     {
-        IUserDbService _learningCourseDb;
+        IUserDbService _userDb;
         IMapper _mapper;
 
+        public UserService(IMapper mapper, IUserDbService userDb)
+        {
+            _userDb = userDb;
+            _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Returns all users
+        /// </summary>
         public IEnumerable<UserDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<UserDB>, List<UserDTO>>(_userDb.GetAll());
         }
 
-        public Task<IEnumerable<UserDTO>> GetAllAsync()
+        /// <summary>
+        /// Asynchronously returns all users
+        /// </summary>
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var data = await _userDb.GetAllAsync();
+            return _mapper.Map<IEnumerable<UserDB>, List<UserDTO>>(data);
         }
 
-        public IEnumerable<BookmarkDTO> GetBookmarksByUserId(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<BookmarkDTO>> GetBookmarksByUserIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Returns user by id
+        /// </summary>
+        /// <param name="id">User id</param>
         public UserDTO GetById(string id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserDB, UserDTO>(_userDb.GetById(id));
         }
 
-        public Task<UserDTO> GetByIdAsync(string id)
+        /// <summary>
+        /// Asynchronously returns user by id
+        /// </summary>
+        /// <param name="id">User id</param>
+        public async Task<UserDTO> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userDb.GetByIdAsync(id);
+            return _mapper.Map<UserDB, UserDTO>(user);
         }
 
-        public IEnumerable<SearchQueryDTO> GetSearchQueriesByUserId(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<SearchQueryDTO>> GetSearchQueriesByUserIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Creates new user
+        /// </summary>
+        /// <param name="user">New user</param>
         public UserDTO Add(UserDTO user)
         {
-            throw new NotImplementedException();
+            UserDB userDb = new UserDB() { Id = user.Id, Authorization = user.Authorization };
+            return _mapper.Map<UserDB, UserDTO>(_userDb.Add(userDb));
         }
 
-        public void RemoveAll()
+        /// <summary>
+        /// Returns bookmarks by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        public IEnumerable<BookmarkDTO> GetBookmarksByUserId(string id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(_userDb.GetBookmarksByUserId(id));
         }
 
+        /// <summary>
+        /// Asynchronously returns bookmarks by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        public async Task<IEnumerable<BookmarkDTO>> GetBookmarksByUserIdAsync(string id)
+        {
+            var data = await _userDb.GetBookmarksByUserIdAsync(id);
+            return _mapper.Map<IEnumerable<BookmarkDB>, List<BookmarkDTO>>(data);
+        }
+
+        /// <summary>
+        /// Returns search queries by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        public IEnumerable<SearchQueryDTO> GetSearchQueriesByUserId(string id)
+        {
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_userDb.GetSearchQueriesByUserId(id));
+        }
+
+        /// <summary>
+        /// Asynchronously returns search queries by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        public async Task<IEnumerable<SearchQueryDTO>> GetSearchQueriesByUserIdAsync(string id)
+        {
+            var data = await _userDb.GetSearchQueriesByUserIdAsync(id);
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(data);
+        }
+
+        /// <summary>
+        /// Removes user by id
+        /// </summary>
+        /// <param name="id">User id</param>
         public void RemoveById(string id)
         {
-            throw new NotImplementedException();
+            _userDb.RemoveById(id);
+        }
+
+        /// <summary>
+        /// Removes all users from database
+        /// </summary>
+        public void RemoveAll()
+        {
+            _userDb.RemoveAll();
         }
     }
 }

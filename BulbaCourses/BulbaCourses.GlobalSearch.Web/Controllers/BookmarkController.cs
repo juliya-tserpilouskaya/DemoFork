@@ -1,4 +1,5 @@
-﻿using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+﻿using BulbaCourses.GlobalSearch.Logic.DTO;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -75,7 +76,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
-        public IHttpActionResult Create([FromBody]Bookmark bookmark)
+        public IHttpActionResult Create([FromBody]BookmarkDTO bookmark)
         {
             //validate here
             return Ok(_bookmarkService.Add(bookmark));
