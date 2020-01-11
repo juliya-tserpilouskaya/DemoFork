@@ -18,37 +18,59 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
         protected override void Seed(BulbaCourses.GlobalSearch.Data.GlobalSearchContext context)
         {
             //  This method will be called after migrating to the latest version.
+            var user1 = new UserDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Authorization = true,
+            };
+
+            var user2 = new UserDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Authorization = false,
+            };
+
+            #region Users
+            context.Users.Add(user1);
+            context.Users.Add(user2);
+            #endregion
+
             #region SearchQueriesSeed
             context.SearchQueries.AddOrUpdate(x => x.Id,
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "basics of c#",
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    UserId = user1.Id
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "c# advanced",
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    UserId = user1.Id
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "php 9 podcast",
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    UserId = user2.Id
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "develop c++",
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    UserId = user2.Id
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "terminator 3",
-                    Created = DateTime.Now
+                    Created = DateTime.Now,
+                    UserId = user2.Id
                 }
             );
             #endregion
@@ -128,23 +150,13 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 CourseDBId = course.Id
             };
 
-            var user1 = new UserDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Authorization = true,
-            };
-
-            var user2 = new UserDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Authorization = false,
-            };
+            
 
             var bookmark1 = new BookmarkDB()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = user1.Id.ToString(),
-                Title = "Best course ever",
+                Title = "Best course ever5",
                 URL = "https://sdf.com"
             };
 
@@ -152,30 +164,30 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = user1.Id.ToString(),
-                Title = "Best course ever 2",
+                Title = "Best course ever 7",
                 URL = "https://sdf.com"
             };
 
-            var searchQuery1 = new SearchQueryDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserId = user1.Id.ToString(),
-                Query = "C# course"
-            };
+            //var searchQuery1 = new SearchQueryDB()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    UserId = user1.Id.ToString(),
+            //    Query = "C# course"
+            //};
 
-            var searchQuery2 = new SearchQueryDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserId = user1.Id.ToString(),
-                Query = "C++ course"
-            };
+            //var searchQuery2 = new SearchQueryDB()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    UserId = user1.Id.ToString(),
+            //    Query = "C++ course"
+            //};
 
-            var searchQuery3 = new SearchQueryDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserId = user2.Id.ToString(),
-                Query = "JS course"
-            };
+            //var searchQuery3 = new SearchQueryDB()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    UserId = user2.Id.ToString(),
+            //    Query = "JS course"
+            //};
 
 
             #region CoursesSeed
@@ -193,16 +205,13 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             context.Bookmarks.Add(bookmark2);
             #endregion
 
-            #region Users
-            context.Users.Add(user1);
-            context.Users.Add(user2);
-            #endregion
+            
 
-            #region SearchQueries
-            context.SearchQueries.Add(searchQuery1);
-            context.SearchQueries.Add(searchQuery2);
-            context.SearchQueries.Add(searchQuery3);
-            #endregion
+            //#region SearchQueries
+            //context.SearchQueries.Add(searchQuery1);
+            //context.SearchQueries.Add(searchQuery2);
+            //context.SearchQueries.Add(searchQuery3);
+            //#endregion
 
             //context.SaveChanges();
         }
