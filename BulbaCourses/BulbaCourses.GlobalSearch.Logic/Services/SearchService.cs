@@ -3,6 +3,7 @@ using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+using BulbaCourses.GlobalSearch.Logic.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,23 +23,17 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 
         public IEnumerable<LearningCourseDTO> Search(string query)
         {
-            return LuceneSearch.Search(query);
+            var searcher = new LuceneSearcher();
+            return searcher.Search(query);
         }
 
         public IEnumerable<LearningCourseDTO> GetIndexedCourses()
         {
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<CourseDB, LearningCourseDTO>();
-            }).CreateMapper();
 
-            var data = _learningCourseDb.GetAllCourses();
+            var indexer = new LuceneIndexer();
 
-            var repoItems = mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(data);
+            return indexer.GetAllIndexRecords();
 
-            LuceneSearch.AddUpdateLuceneIndex(repoItems);
-
-            return LuceneSearch.GetAllIndexRecords();
         }
 
         public Task<IEnumerable<LearningCourseDTO>> SearchAsync()
