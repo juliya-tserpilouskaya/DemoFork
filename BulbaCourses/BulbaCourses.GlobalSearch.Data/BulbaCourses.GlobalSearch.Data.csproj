@@ -88,6 +88,7 @@
     <Compile Include="EntitiesConfiguration\CourseConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseItemConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\SearchQueryConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\UserConfiguration.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
@@ -172,13 +173,16 @@
     <Compile Include="Models\CourseCategoryDB.cs" />
     <Compile Include="Models\CourseItemDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
+    <Compile Include="Models\UserDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\IBookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryDbService.cs" />
     <Compile Include="Services\Interfaces\ICourseDbService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />
     <Compile Include="Services\CourseDbService.cs" />
+    <Compile Include="Services\UserDBService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
