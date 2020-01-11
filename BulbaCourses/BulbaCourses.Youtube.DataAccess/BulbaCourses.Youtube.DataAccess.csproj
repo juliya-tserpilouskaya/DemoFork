@@ -105,10 +105,6 @@
     <Compile Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.Designer.cs">
       <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001110058086_added_foreignKey_searchRequestId.cs" />
-    <Compile Include="Migrations\202001110058086_added_foreignKey_searchRequestId.Designer.cs">
-      <DependentUpon>202001110058086_added_foreignKey_searchRequestId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChannelDb.cs" />
     <Compile Include="Repositories\IStoryRepository.cs" />
@@ -141,9 +137,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.resx">
       <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001110058086_added_foreignKey_searchRequestId.resx">
-      <DependentUpon>202001110058086_added_foreignKey_searchRequestId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

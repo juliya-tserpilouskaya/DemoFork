@@ -48,7 +48,7 @@ namespace BulbaCourses.Youtube.DataAccess
             var ChannelDbEentity = modelBuilder.Entity<ChannelDb>();
             ChannelDbEentity.HasKey(x => x.Id);
             ChannelDbEentity.Property(x => x.Name).IsRequired().HasMaxLength(200).IsUnicode();
-            ChannelDbEentity.HasMany<ResultVideoDb>(x => x.Videos).WithRequired(x=>x.Channel);
+            ChannelDbEentity.HasMany<ResultVideoDb>(x => x.Videos).WithRequired(x=>x.Channel).HasForeignKey(k=>k.Channel_Id);
 
             //SearchStoryDb
             modelBuilder.Configurations.Add(new StoryConfiguration());
@@ -84,7 +84,7 @@ namespace BulbaCourses.Youtube.DataAccess
             Property(p => p.Dimension).IsRequired();
             Property(p => p.Duration).IsRequired();
             Property(p => p.VideoCaption).IsRequired();
-            HasMany<SearchStoryDb>(s => s.SearchStories).WithRequired(r => r.SearchRequest).HasForeignKey(k=>k.SearchRequestId);
+            HasMany<SearchStoryDb>(s => s.SearchStories).WithRequired(r => r.SearchRequest).HasForeignKey(k=>k.SearchRequest_Id);
             HasMany<ResultVideoDb>(v => v.Videos).WithMany(r => r.SearchRequests);
         }
     }

@@ -113,7 +113,7 @@ namespace BulbaCourses.Youtube.Logic.Services
             {
                 SearchDate = DateTime.Now,
                 //SearchRequest = searchRequest,
-                SearchRequestId = searchRequest.Id,
+                SearchRequest_Id = searchRequest.Id,
 
                 UserId = userId
             });
@@ -173,7 +173,8 @@ namespace BulbaCourses.Youtube.Logic.Services
                 };
                 if (!channelService.Exists(channel))
                     channelService.Save(channel);
-                resultVideo.Channel = channel;
+
+                resultVideo.Channel_Id = channel.Id;
 
                 var videoFromDb = videoService.GetById(resultVideo.Id);
                 if (videoFromDb == null)

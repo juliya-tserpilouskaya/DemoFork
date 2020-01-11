@@ -10,6 +10,6 @@ namespace BulbaCourses.Youtube.Logic.Models
         public DateTime? SearchDate { get; set; }
         public string UserId { get; set; } 
         public SearchRequest SearchRequest { get; set; }//reference
-        public int? SearchRequestId { get; set; }
+        public int? SearchRequest_Id { get; set; } //reference
     }
 }

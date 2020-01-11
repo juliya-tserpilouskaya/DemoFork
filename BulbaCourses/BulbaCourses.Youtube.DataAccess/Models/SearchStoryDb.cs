@@ -11,6 +11,6 @@ namespace BulbaCourses.Youtube.DataAccess.Models
         public string UserId { get; set; } 
         public SearchRequestDb SearchRequest { get; set; } //reference
 
-        public int? SearchRequestId { get; set; }
+        public int? SearchRequest_Id { get; set; } //reference
     }
 }
