@@ -8,7 +8,9 @@ namespace BulbaCourses.Youtube.DataAccess.Models
     {
         public int? Id { get; set; }
         public DateTime? SearchDate { get; set; }
-        public UserDb User { get; set; } //reference
+        public string UserId { get; set; } 
         public SearchRequestDb SearchRequest { get; set; } //reference
+
+        public int? SearchRequestId { get; set; }
     }
 }

@@ -26,37 +26,26 @@ namespace BulbaCourses.Youtube.Logic.Services
             _cache = _serviceFactory.CreateCacheService();
             _mapper = mapper;
             _validator = validator;
-            //_mapper = new Mapper(new MapperConfiguration(cfg => {
-            //    cfg.CreateMap<SearchRequest, SearchRequestDb>();
-            //    cfg.CreateMap<User, UserDb>();
-            //    cfg.CreateMap<ResultVideoDb, ResultVideo>();
-            //}));             
         }
 
-        public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user)
+        public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, string userId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user)
+        public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, string userId)
         {
             var result = _validator.Validate(searchRequest, ruleSet: "AddRequest, Search");
             if (!result.IsValid)
                 return null;
 
             var requestService = _serviceFactory.CreateSearchRequestService();
-            var userService = _serviceFactory.CreateUserService();
             var storyService = _serviceFactory.CreateStoryService();
             var videoService = _serviceFactory.CreateVideoService();
-            //var resultVideosDb = new List<ResultVideoDb>();
-            var searchRequestDb = new SearchRequest();
 
             var resultVideos = new List<ResultVideo>();
 
-            //Mapping models
-            //var searchRequestDb = _mapper.Map<SearchRequestDb>(searchRequest);
             searchRequest.CacheId = GenerateCacheId(searchRequest);
-            var userDb = _mapper.Map<UserDb>(user);
 
             //Сheck cache
             var cacheResult = _cache.GetValue(searchRequest.CacheId);
@@ -82,59 +71,60 @@ namespace BulbaCourses.Youtube.Logic.Services
             var videoFromDb = new ResultVideo();
             if (requestService.Exists(searchRequest))
             {
-                searchRequestDb = await requestService.GetRequestByCacheIdAsync(searchRequest.CacheId);
+                searchRequest = await requestService.GetRequestByCacheIdAsync(searchRequest.CacheId);
+
                 foreach (var resultVideo in resultVideos)
                 {
-                    videoFromDb = videoService.GetById(resultVideo.Id);
-                    if (videoFromDb != null)
-                    {
-                        if (!searchRequest.Videos.Contains(videoFromDb))
-                        searchRequest.Videos.Add(videoFromDb);
-                    }
-                    else
-                    {
+                    //videoFromDb = videoService.GetById(resultVideo.Id);
+                    //if (videoFromDb != null)
+                    //{
+                        if (!searchRequest.Videos.Contains(resultVideo))
                         searchRequest.Videos.Add(resultVideo);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    searchRequest.Videos.Add(resultVideo);
+                    //}
                 }
                 requestService.Update(searchRequest);
             }
             else
             {
-                searchRequestDb.Videos = new List<ResultVideo>();
-                foreach (var resultVideo in resultVideos)
-                {
-                    videoFromDb = videoService.GetById(resultVideo.Id);
-                    if (videoFromDb != null)
-                    {
-                        searchRequestDb.Videos.Add(videoFromDb);
-                    }
-                    else
-                    {
-                        searchRequestDb.Videos.Add(resultVideo);
-                    }
-                }
-                requestService.Save(searchRequestDb);
-            }
+                searchRequest.Videos = resultVideos;
 
-            //Save user if does not exist
-            if (!userService.Exists(userDb))
-                userDb = userService.Save(userDb);
-            else
-                userDb = userService.GetUserById(userDb.Id);
+                //searchRequest.Videos = new List<ResultVideo>();
+                //foreach (var resultVideo in resultVideos)
+                //{
+                //videoFromDb = videoService.GetById(resultVideo.Id);
+                //if (videoFromDb != null)
+                //{
+                //    searchRequest.Videos.Add(videoFromDb);
+                //}
+                //else
+                //{
+                //    searchRequest.Videos.Add(resultVideo);
+                //}
+                //}
+                searchRequest = requestService.Save(searchRequest);
+            }
 
             //Save user search story
             storyService.Save(new SearchStory()
             {
                 SearchDate = DateTime.Now,
-                SearchRequest = searchRequest,
-                User = _mapper.Map<User>(userDb)
+                //SearchRequest = searchRequest,
+                SearchRequestId = searchRequest.Id,
+
+                UserId = userId
             });
             return resultVideos.AsReadOnly();
         }
 
         private async Task<List<ResultVideo>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
-            var _channelService = _serviceFactory.CreateChannelService();
+            var channelService = _serviceFactory.CreateChannelService();
+            var videoService = _serviceFactory.CreateVideoService();
+
             var resultVideos = new List<ResultVideo>();
 
             // Create the service.
@@ -181,10 +171,15 @@ namespace BulbaCourses.Youtube.Logic.Services
                     Id = searchResult.Snippet.ChannelId,
                     Name = searchResult.Snippet.ChannelTitle,
                 };
-                if (!_channelService.Exists(channel))
-                    _channelService.Save(channel);
+                if (!channelService.Exists(channel))
+                    channelService.Save(channel);
+                resultVideo.Channel = channel;
 
-                resultVideo.Channel = _channelService.GetChannelById(channel.Id);
+                var videoFromDb = videoService.GetById(resultVideo.Id);
+                if (videoFromDb == null)
+                    resultVideo = videoService.Save(resultVideo);
+                else
+                    resultVideo = videoFromDb;
 
                 resultVideos.Add(resultVideo);
             }

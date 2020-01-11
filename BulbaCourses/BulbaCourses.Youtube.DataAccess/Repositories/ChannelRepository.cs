@@ -53,7 +53,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public ChannelDb GetById(string channelId)
         {
-            return _context.Channels.SingleOrDefault(c => c.Id.Equals(channelId));
+            return _context.Channels.SingleOrDefault(c => c.Id==channelId);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <param name="channelId"></param>
         public void DeleteById(string channelId)
         {
-            var delChannel = _context.Channels.SingleOrDefault(c => c.Id.Equals(channelId));
+            var delChannel = _context.Channels.SingleOrDefault(c => c.Id==channelId);
             if (delChannel != null)
             {
                 _context.Channels.Remove(delChannel);
@@ -76,7 +76,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public bool Exists(ChannelDb channel)
         {
-            return _context.Channels.Any(c => c.Id.Equals(channel.Id));
+            return _context.Channels.Any(c => c.Id==channel.Id);
         }
 
         public void Dispose()

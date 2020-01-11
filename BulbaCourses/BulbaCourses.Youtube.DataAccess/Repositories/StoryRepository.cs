@@ -61,9 +61,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetByUserId(int? userId)
+        public IEnumerable<SearchStoryDb> GetByUserId(string userId)
         {
-            return _context.SearchStories.Where(s => s.User.Id == userId).ToList().AsReadOnly();
+            return _context.SearchStories.Where(s => s.UserId == userId).ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId)
+        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId)
         {
-            return await _context.SearchStories.Where(s => s.User.Id == userId).ToListAsync();
+            return await _context.SearchStories.Where(s => s.UserId == userId).ToListAsync();
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        public void DeleteByUserId(int? userId)
+        public void DeleteByUserId(string userId)
         {
-            var delstory = _context.SearchStories.Where(s => s.User.Id == userId);
+            var delstory = _context.SearchStories.Where(s => s.UserId == userId);
             if (delstory != null)
             {
                 _context.SearchStories.RemoveRange(delstory);

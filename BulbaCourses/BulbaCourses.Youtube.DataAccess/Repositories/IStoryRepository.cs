@@ -25,7 +25,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        void DeleteByUserId(int? userId);
+        void DeleteByUserId(string userId);
 
         /// <summary>
         ///Delete one record from story by Story Id
@@ -46,9 +46,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        IEnumerable<SearchStoryDb> GetByUserId(int? userId);
+        IEnumerable<SearchStoryDb> GetByUserId(string userId);
 
-        Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId);
+        Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId);
 
         /// <summary>
         /// Get all stories by Request Id

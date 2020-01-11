@@ -11,6 +11,12 @@ namespace BulbaCourses.Youtube.Logic.Services
     public interface IVideoService
     {
         /// <summary>
+        /// Save ResultVideo
+        /// </summary>
+        /// <param name="video"></param>
+        ResultVideo Save(ResultVideo video);
+
+        /// <summary>
         /// Get all video
         /// </summary>
         /// <returns></returns>

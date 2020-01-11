@@ -24,12 +24,6 @@ namespace BulbaCourses.Youtube.Logic.Services
             _storyRepository = storyRepository;
             _mapper = mapper;
             _validator = validator;
-            //_mapper = new Mapper(new MapperConfiguration(cfg=>
-            //{
-            //    cfg.CreateMap<SearchStoryDb, SearchStory>();
-            //    cfg.CreateMap<UserDb, User>();
-            //    cfg.CreateMap<SearchRequestDb, SearchRequest>();
-            //}));
         }
 
         /// <summary>
@@ -82,7 +76,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        public void DeleteByUserId(int? userId)
+        public void DeleteByUserId(string userId)
         {
             if (userId != null)
                 _storyRepository.DeleteByUserId(userId);
@@ -92,7 +86,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        public async Task<Result> DeleteByUserIdAsync(int? userId)
+        public async Task<Result> DeleteByUserIdAsync(string userId)
         {
             if (userId == null)
                 return Result.Fail($"Invalid model");
@@ -169,12 +163,12 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStory> GetStoriesByUserId(int? userId)
+        public IEnumerable<SearchStory> GetStoriesByUserId(string userId)
         {
             return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetByUserId(userId));
         }
 
-        public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId)
+        public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(string userId)
         {
             return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetByUserIdAsync(userId));
         }

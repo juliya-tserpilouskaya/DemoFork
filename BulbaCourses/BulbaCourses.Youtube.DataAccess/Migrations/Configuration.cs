@@ -21,19 +21,20 @@ namespace BulbaCourses.Youtube.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            var userManager = new UserManager<IdentityUser>(
-                new UserStore<IdentityUser>(context));
 
-            userManager.Create(new IdentityUser("Vano"),"Vanopass");
-            userManager.Create(new IdentityUser("Balu"), "Balupass");
-            userManager.Create(new IdentityUser("Homa"), "Homapass");
-            userManager.Create(new IdentityUser("Nata"), "Natapass");
-            userManager.Create(new IdentityUser("Kuba"), "Kubapass");
-            userManager.Create(new IdentityUser("Dona"), "Donapass");
-            userManager.Create(new IdentityUser("Boris"), "Borispass");
-            userManager.Create(new IdentityUser("Kesha"), "Keshapass");
-            userManager.Create(new IdentityUser("admin"), "admin");
-            context.SaveChanges();
+            //Seed Database for IdentityDbContext
+            //    var userManager = new UserManager<IdentityUser>(
+            //        new UserStore<IdentityUser>(context));
+            //    userManager.Create(new IdentityUser("Vano"),"Vanopass");
+            //    userManager.Create(new IdentityUser("Balu"), "Balupass");
+            //    userManager.Create(new IdentityUser("Homa"), "Homapass");
+            //    userManager.Create(new IdentityUser("Nata"), "Natapass");
+            //    userManager.Create(new IdentityUser("Kuba"), "Kubapass");
+            //    userManager.Create(new IdentityUser("Dona"), "Donapass");
+            //    userManager.Create(new IdentityUser("Boris"), "Borispass");
+            //    userManager.Create(new IdentityUser("Kesha"), "Keshapass");
+            //    userManager.Create(new IdentityUser("admin"), "admin");
+            //    context.SaveChanges();
         }
     }
 }

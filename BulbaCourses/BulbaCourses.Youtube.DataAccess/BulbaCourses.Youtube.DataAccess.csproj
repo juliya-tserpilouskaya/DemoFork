@@ -97,24 +97,30 @@
     <Compile Include="Migrations\202001091744400_added_identity.Designer.cs">
       <DependentUpon>202001091744400_added_identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001102100547_deleted_identity.cs" />
+    <Compile Include="Migrations\202001102100547_deleted_identity.Designer.cs">
+      <DependentUpon>202001102100547_deleted_identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.cs" />
+    <Compile Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.Designer.cs">
+      <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001110058086_added_foreignKey_searchRequestId.cs" />
+    <Compile Include="Migrations\202001110058086_added_foreignKey_searchRequestId.Designer.cs">
+      <DependentUpon>202001110058086_added_foreignKey_searchRequestId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChannelDb.cs" />
-    <Compile Include="Models\CourseDb.cs" />
-    <Compile Include="Models\MentorDb.cs" />
     <Compile Include="Repositories\IStoryRepository.cs" />
     <Compile Include="Repositories\IChannelRepository.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\SearchRequestsRepository.cs" />
     <Compile Include="Repositories\IVideoRepository.cs" />
     <Compile Include="Repositories\ISearchRequestsRepository.cs" />
     <Compile Include="Models\SearchRequestDb.cs" />
     <Compile Include="Models\SearchStoryDb.cs" />
-    <Compile Include="Models\StudentDb.cs" />
-    <Compile Include="Models\UserDb.cs" />
     <Compile Include="Models\ResultVideoDb.cs" />
     <Compile Include="Repositories\StoryRepository.cs" />
     <Compile Include="Repositories\ChannelRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="YoutubeContext.cs" />
     <Compile Include="Repositories\VideoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,6 +135,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001091744400_added_identity.resx">
       <DependentUpon>202001091744400_added_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001102100547_deleted_identity.resx">
+      <DependentUpon>202001102100547_deleted_identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.resx">
+      <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001110058086_added_foreignKey_searchRequestId.resx">
+      <DependentUpon>202001110058086_added_foreignKey_searchRequestId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

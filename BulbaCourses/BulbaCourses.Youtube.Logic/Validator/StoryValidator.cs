@@ -11,7 +11,7 @@ namespace BulbaCourses.Youtube.Logic.Validator
 {
     public class StoryValidator : AbstractValidator<SearchStory>
     {
-        public StoryValidator(IStoryService service)
+        public StoryValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
@@ -19,7 +19,7 @@ namespace BulbaCourses.Youtube.Logic.Validator
             {
                 RuleFor(x => x.Id).Null().WithMessage("Id must be null");
                 RuleFor(x => x.SearchRequest).NotNull().WithMessage("Search request must not be null");
-                RuleFor(x => x.User).NotNull().WithMessage("User must not be null");
+                RuleFor(x => x.UserId).NotNull().WithMessage("UserId must not be null");
             });
         }
     }

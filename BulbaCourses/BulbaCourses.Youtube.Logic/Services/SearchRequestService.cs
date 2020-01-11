@@ -21,7 +21,8 @@ namespace BulbaCourses.Youtube.Logic.Services
         readonly IMapper _mapper;
         private readonly IValidator<SearchRequest> _validator;
 
-        public SearchRequestService(ISearchRequestsRepository searchRequestRepository, IMapper mapper, IValidator<SearchRequest> validator)
+        public SearchRequestService(ISearchRequestsRepository searchRequestRepository, 
+            IMapper mapper, IValidator<SearchRequest> validator)
         {
             _searchRequestRepository = searchRequestRepository;
             _mapper = mapper;

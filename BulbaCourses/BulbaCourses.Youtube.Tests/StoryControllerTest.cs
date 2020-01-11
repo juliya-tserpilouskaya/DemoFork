@@ -20,31 +20,21 @@ namespace BulbaCourses.Youtube.Tests
     [TestFixture]
     class StoryControllerTest
     {
-        Faker<SearchRequestDb> fakerRequest;
-        Faker<SearchStoryDb> fakerStory;
-        Faker<UserDb> fakerUser;
-        UserDb user1;
-        UserDb user2;
+        Faker<SearchRequest> fakerRequest;
+        Faker<SearchStory> fakerStory;
         StoryController stController;
+        StandardKernel kernel;
+        string user1 = "user1";
+        string user2 = "user2";
 
         [OneTimeSetUp]
         public void Init()
         {
-            fakerUser = new Faker<UserDb>();
-            fakerUser.RuleFor(u => u.Login, f => f.Internet.UserName())
-                .RuleFor(u => u.Password, f => f.Random.String(8))
-                .RuleFor(u => u.FirstName, f => f.Name.FirstName())
-                .RuleFor(u => u.LastName, f => f.Name.LastName())
-                .RuleFor(u => u.FullName, f => f.Name.FullName())
-                .RuleFor(u => u.NumberPhone, f => f.Phone.PhoneNumber("+###(##)###-##-##"))
-                .RuleFor(u => u.Email, f => f.Internet.Email())
-                .RuleFor(u => u.ReserveEmail, f => f.Internet.Email());
-
             var definition = new[] { "High", "Standard", "Any" };
             var dimension = new[] { "Value2d", "Value3d", "Any" };
             var duration = new[] { "Long__", "Medium", "Short__", "Any" };
             var caption = new[] { "ClosedCaption", "None", "Any" };
-            fakerRequest = new Faker<SearchRequestDb>()
+            fakerRequest = new Faker<SearchRequest>()
                 .RuleFor(r => r.Title, f => f.Random.Word())
                 .RuleFor(r => r.CacheId, f => f.Random.Word())
                 .RuleFor(r => r.Definition, f => f.PickRandom(definition))
@@ -52,38 +42,37 @@ namespace BulbaCourses.Youtube.Tests
                 .RuleFor(r => r.Duration, f => f.PickRandom(duration))
                 .RuleFor(r => r.VideoCaption, f => f.PickRandom(caption));
 
-            fakerStory = new Faker<SearchStoryDb>();
+            fakerStory = new Faker<SearchStory>();
             fakerStory.RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
                 .RuleFor(s => s.SearchDate, f => f.Date.Past(1, null));
 
-            var kernel = new StandardKernel();
+
+            kernel = new StandardKernel();
             kernel.Load<LogicModule>();
-            var uService = new UserService(kernel.Get<IUserRepository>());
-            var stService = new StoryService(kernel.Get<IStoryRepository>());
+
+            var stService = kernel.Get<IStoryService>();
             stController = new StoryController(stService);
-            
-            //generate users and stories
-            user1 = uService.Save(fakerUser.Generate(1).First());
+
+            //generate stories
             var storyDb1 = fakerStory.Generate(3);
             foreach (var item in storyDb1)
             {
-                item.User = user1;
+                item.UserId = user1;
                 stService.Save(item);
             }
-            user2 = uService.Save(fakerUser.Generate(1).First());
             var storyDb2 = fakerStory.Generate(5);
             foreach (var item in storyDb2)
             {
-                item.User = user2;
+                item.UserId = user2;
                 stService.Save(item);
             }
-       }
+        }
 
         [Test]
         public void Test_GetStory_ByUserId()
         {
             var resultListStory =
-                (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1.Id)
+                (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1)
                 .GetAwaiter().GetResult();
 
             var result = resultListStory.Content.ToList();
@@ -92,7 +81,7 @@ namespace BulbaCourses.Youtube.Tests
             result.Should().HaveCount(c => c == 3);
 
             foreach (var item in result)
-                item.User.Id.Should().Be(user1.Id);
+                item.UserId.Should().Be(user1);
         }
     }
 }

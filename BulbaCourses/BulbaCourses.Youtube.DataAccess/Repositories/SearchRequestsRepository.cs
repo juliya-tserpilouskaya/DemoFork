@@ -30,6 +30,12 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
 
         public SearchRequestDb SaveRequest(SearchRequestDb request)
         {
+            var videosFromDb = new List<ResultVideoDb>();
+            foreach (var video in request.Videos)
+            {
+                videosFromDb.Add(_context.Videos.Find(video.Id));
+            }
+            request.Videos = videosFromDb;
             _context.SearchRequests.Add(request);
             _context.SaveChanges();
             return request;
@@ -37,6 +43,12 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
 
         public SearchRequestDb Update(SearchRequestDb request)
         {
+            var videosFromDb = new List<ResultVideoDb>();
+            foreach (var video in request.Videos)
+            {
+                videosFromDb.Add(_context.Videos.Find(video.Id));
+            }
+            request.Videos = videosFromDb;
             _context.Entry(request).State = EntityState.Modified;
             _context.SaveChanges();
             return request;

@@ -26,7 +26,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory found", typeof(SearchStory))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetStoryByUserID(int? userId)
+        public async Task<IHttpActionResult> GetStoryByUserID(string userId)
         {
             if (userId==null)
             {
@@ -70,7 +70,7 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory deleted")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteByUserId(int? userId)
+        public IHttpActionResult DeleteByUserId(string userId)
         {
             if (userId==null)
             {

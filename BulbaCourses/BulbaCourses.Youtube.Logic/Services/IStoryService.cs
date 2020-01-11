@@ -26,13 +26,13 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        void DeleteByUserId(int? userId);
+        void DeleteByUserId(string userId);
 
         /// <summary>
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        Task<Result> DeleteByUserIdAsync(int? userId);
+        Task<Result> DeleteByUserIdAsync(string userId);
 
         /// <summary>
         ///Delete one record from story by Story Id
@@ -63,14 +63,14 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        IEnumerable<SearchStory> GetStoriesByUserId(int? userId);
+        IEnumerable<SearchStory> GetStoriesByUserId(string userId);
 
         /// <summary>
         /// Get async all stories by User Id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(int? userId);
+        Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(string userId);
 
         /// <summary>
         /// Get all stories by Request Id
