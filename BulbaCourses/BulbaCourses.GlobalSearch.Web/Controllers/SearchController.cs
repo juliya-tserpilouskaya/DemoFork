@@ -23,11 +23,20 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course not found")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
-        public async Task<IHttpActionResult> GetAll()
+        [SwaggerResponse(HttpStatusCode.NotFound, "Indexed courses not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Indexed courses are found", typeof(IEnumerable<LearningCourse>))]
+        public IHttpActionResult GetAllIndexed()
         {
-            var result = await _searchService.SearchAsync();
+            var result = _searchService.GetIndexedCourses();
+            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        }
+
+        [HttpGet, Route("{query}")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "courses not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "courses are found", typeof(IEnumerable<LearningCourse>))]
+        public IHttpActionResult Search(string query)
+        {
+            var result = _searchService.Search(query);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
     }

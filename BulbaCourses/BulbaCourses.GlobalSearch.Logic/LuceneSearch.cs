@@ -14,8 +14,8 @@ namespace BulbaCourses.GlobalSearch.Logic
 {
     public static class LuceneSearch
     {
-        //ISSUE: change to correct project path
-        private static string _luceneDir = AppDomain.CurrentDomain.GetData("DataDirectory").ToString();
+
+        private static string _luceneDir = AppDomain.CurrentDomain.GetData("DataDirectory").ToString() + @"/searchIndex";
 
         private static FSDirectory _directoryTemp;
 
@@ -47,6 +47,7 @@ namespace BulbaCourses.GlobalSearch.Logic
 
             // add lucene fields mapped to db fields
             doc.Add(new Field("Id", courseData.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("Description", courseData.Description.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             //doc.Add(new Field("Content", courseData.Content, Field.Store.YES, Field.Index.ANALYZED));
 
             // add entry to index
@@ -155,7 +156,7 @@ namespace BulbaCourses.GlobalSearch.Logic
             return new LearningCourseDTO
             {
                 Id = doc.Get("Id"),
-                //Content = doc.Get("Content"),
+                Description = doc.Get("Description")
             };
         }
 
@@ -231,7 +232,7 @@ namespace BulbaCourses.GlobalSearch.Logic
                 else
                 {
                     var parser = new MultiFieldQueryParser
-                        (Lucene.Net.Util.Version.LUCENE_30, new[] { "Id", "Content" }, analyzer);
+                        (Lucene.Net.Util.Version.LUCENE_30, new[] { "Id", "Description" }, analyzer);
                     var query = parseQuery(searchQuery, parser);
                     var hits = searcher.Search
                     (query, null, hits_limit, Sort.RELEVANCE).ScoreDocs;
