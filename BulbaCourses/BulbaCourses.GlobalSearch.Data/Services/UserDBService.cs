@@ -14,6 +14,49 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         private GlobalSearchContext _context = new GlobalSearchContext();
         private bool _isDisposed;
 
+        /// <summary>
+        /// Returns all users
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<UserDB> GetAll()
+        {
+            return _context.Users;
+        }
+
+        /// <summary>
+        /// Asynchronously returns all users
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<UserDB>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns user by id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public UserDB GetById(string id)
+        {
+            return _context.Users.SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Asynchronously returns user by id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public async Task<UserDB> GetByIdAsync(string id)
+        {
+            return await _context.Users.SingleOrDefaultAsync(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Creates new user
+        /// </summary>
+        /// <param name="user">New user</param>
+        /// <returns></returns>
         public UserDB Add(UserDB user)
         {
             user.Id = Guid.NewGuid().ToString();
@@ -21,47 +64,63 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             return user;
         }
 
-        public IEnumerable<UserDB> GetAll()
+        /// <summary>
+        /// Returns bookmarks by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public IEnumerable<BookmarkDB> GetBookmarksByUserId(string id)
         {
-            return _context.Users;
+            return _context.Bookmarks.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<IEnumerable<UserDB>> GetAllAsync()
+        /// <summary>
+        /// Asynchronously returns bookmarks by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id)
         {
-            return await _context.Users.ToListAsync().ConfigureAwait(false);
+            return await _context.Bookmarks.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase)).ToListAsync().ConfigureAwait(false);
         }
 
-        public UserDB GetById(string id)
+        /// <summary>
+        /// Returns search queries by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public IEnumerable<SearchQueryDB> GetSearchQueriesByUserId(string id)
         {
-            return _context.Users.SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return _context.SearchQueries.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<UserDB> GetByIdAsync(string id)
+        /// <summary>
+        /// Asynchronously returns search queries by user id
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<SearchQueryDB>> GetSearchQueriesByUserIdAsync(string id)
         {
-            return await _context.Users.SingleOrDefaultAsync(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return await _context.SearchQueries.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase)).ToListAsync().ConfigureAwait(false);
         }
 
-        public void RemoveAll()
-        {
-            _context.Users.RemoveRange(_context.Users);
-        }
-
+        /// <summary>
+        /// Removes user by id
+        /// </summary>
+        /// <param name="id">User id</param
         public void RemoveById(string id)
         {
             var user = _context.Bookmarks.SingleOrDefault(u => u.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.Bookmarks.Remove(user);
         }
 
-
-        //public IEnumerable<BookmarkDB> GetBookmarksByUserId(string id)
-        //{
-        //    return _context.Bookmarks.Where(i => i.UserId.Equals(id, StringComparison.OrdinalIgnoreCase));
-        //}
-
-        //public async Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id)
-        //{
-        //    return await _context.Bookmarks.Where(i => i.CourseDBId.Equals(id, StringComparison.OrdinalIgnoreCase)).ToListAsync().ConfigureAwait(false);
-        //}
+        /// <summary>
+        /// Removes all users from database
+        /// </summary>
+        public void RemoveAll()
+        {
+            _context.Users.RemoveRange(_context.Users);
+        }
 
         public void Dispose()
         {
@@ -87,26 +146,6 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             {
                 GC.SuppressFinalize(this);
             }
-        }
-
-        public IEnumerable<BookmarkDB> GetBookmarksByUserId(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<SearchQueryDB> GetSearchQueriesByUserId(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<SearchQueryDB>> GetSearchQueriesByUserIdAsync(string id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
