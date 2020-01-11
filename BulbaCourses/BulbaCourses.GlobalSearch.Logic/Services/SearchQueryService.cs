@@ -65,6 +65,25 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         }
 
         /// <summary>
+        /// Returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        public IEnumerable<SearchQueryDTO> GetByUserId(string userID)
+        {
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(_searchQueryDb.GetByUserId(userID));
+        }
+
+        /// <summary>
+        /// Asynchronously returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        public async Task<IEnumerable<SearchQueryDTO>> GetByUserIdAsync(string userID)
+        {
+            var data = await _searchQueryDb.GetByUserIdAsync(userID);
+            return _mapper.Map<IEnumerable<SearchQueryDB>, List<SearchQueryDTO>>(data);
+        }
+
+        /// <summary>
         /// Creates search query
         /// </summary>
         /// <param name="query">search query</param>

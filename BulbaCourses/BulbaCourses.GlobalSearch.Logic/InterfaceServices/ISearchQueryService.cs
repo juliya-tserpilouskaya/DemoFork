@@ -38,6 +38,18 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         Task<SearchQueryDTO> GetByIdAsync(string id);
 
         /// <summary>
+        /// Returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        IEnumerable<SearchQueryDTO> GetByUserId(string userID);
+
+        /// <summary>
+        /// Asynchronously returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        Task<IEnumerable<SearchQueryDTO>> GetByUserIdAsync(string userID);
+
+        /// <summary>
         /// Creates search query
         /// </summary>
         /// <param name="query">search query</param>

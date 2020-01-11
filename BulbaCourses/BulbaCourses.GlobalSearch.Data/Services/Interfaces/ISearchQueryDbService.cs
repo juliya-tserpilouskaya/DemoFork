@@ -46,14 +46,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         /// Asynchronously returns search query by user id
         /// </summary>
         /// <param name="userID">User id</param>
-        /// <returns></returns>
         Task<IEnumerable<SearchQueryDB>> GetByUserIdAsync(string userID);
 
         /// <summary>
         /// Creates search query
         /// </summary>
         /// <param name="query">search query</param>
-        /// <returns></returns>
         SearchQueryDB Add(SearchQueryDB query);
 
         /// <summary>
