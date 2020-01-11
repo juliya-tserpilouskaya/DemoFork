@@ -18,6 +18,12 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
             Property(x => x.Email).IsRequired()
                 .HasMaxLength(105);
             Property(x => x.Subscription).IsRequired();
+
+            //HasOptional<SearchCriteriaDb>(x => x.SearchCriteria).WithMany(p => p.Id).Map(m => m.MapRightKey("Criterias").MapLeftKey("TagId").ToTable("CourseTag"));
+
+            //HasMany<CourseDb>(b => b.Courses).WithMany(t => t.Tags).Map(m => m.MapRightKey("CourseId").MapLeftKey("TagId").ToTable("CourseTag"));
+
+            //HasMany<UserProfileDb>(b => b.Author).WithMany(t => t.Courses).Map(m => m.MapKey("CourseAuthorId"));
         }
     }
 }

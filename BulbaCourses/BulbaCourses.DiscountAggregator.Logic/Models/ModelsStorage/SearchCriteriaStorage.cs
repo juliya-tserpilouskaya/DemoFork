@@ -27,15 +27,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
             return _criterias.AsReadOnly();
         }
 
-        public static SearchCriteria GetByUserId(string userId)
+        public static SearchCriteria GetById(string userId)
         {
-            return _criterias.SingleOrDefault(b => b.UserId.Equals(userId,
+            return _criterias.SingleOrDefault(b => b.Id.Equals(userId,
                 StringComparison.OrdinalIgnoreCase));
         }
 
         public static SearchCriteria Add(SearchCriteria criteria)
         {
-            criteria.UserId = Guid.NewGuid().ToString();
+            criteria.Id = Guid.NewGuid().ToString();
             _criterias.Add(criteria);
             return criteria;
         }

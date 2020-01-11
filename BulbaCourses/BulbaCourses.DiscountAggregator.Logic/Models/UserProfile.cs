@@ -18,7 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public DateTime? DateOfBirth { get; set; }
             
-        public IEnumerable<SearchCriteria> SearchCriterias { get; set; }
+        public SearchCriteria SearchCriteria { get; set; }
 
         public bool Subscription { get; set; }
 

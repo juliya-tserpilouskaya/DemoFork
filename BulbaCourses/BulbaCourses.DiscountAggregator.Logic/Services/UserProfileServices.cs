@@ -51,9 +51,17 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public UserProfile Add(UserProfile profile)
         {
+            profile.Id = Guid.NewGuid().ToString();
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             _profileService.Add(profileDb);
             return profile;
+        }
+
+        public Task<int> AddAsync(UserProfile profile)
+        {
+            profile.Id = Guid.NewGuid().ToString();
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            return _profileService.AddAsync(profileDb);
         }
 
         public void Delete(UserProfile profile)

@@ -7,6 +7,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
     public interface IUserProfileServiceDb
     {
         void Add(UserProfileDb profile);
+        Task<int> AddAsync(UserProfileDb profileDb);
         void Delete(UserProfileDb profile);
         IEnumerable<UserProfileDb> GetAll();
         UserProfileDb GetById(string id);

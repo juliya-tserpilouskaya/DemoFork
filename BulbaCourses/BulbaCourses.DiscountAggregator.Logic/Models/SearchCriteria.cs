@@ -8,11 +8,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
     public class SearchCriteria
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public IEnumerable<Domain> Domains { get; set; }
+        public ICollection<Domain> Domains { get; set; }
 
-        public IEnumerable<CourseCategory> CourseCategories { get; set; }
+        public ICollection<CourseCategory> CourseCategories { get; set; }
 
         public double MinPrice { get; set; }
             //set { if (value >= 0) MinPrice = value; }

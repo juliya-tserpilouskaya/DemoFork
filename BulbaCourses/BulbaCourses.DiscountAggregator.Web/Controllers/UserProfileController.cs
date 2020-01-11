@@ -28,15 +28,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Search profiles doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Search profiles found", typeof(IEnumerable<UserProfile>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        //public IHttpActionResult GetAll()
-        //{
-        //    var result = _userProfileService.GetAll();
-        //    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-        //}
         public async Task<IHttpActionResult> GetAll()
         {
             var result = await _userProfileService.GetAllAsync();
-            //var result = _mapper.Map<IEnumerable<UserInfo>, IEnumerable<UserProfileView>>(users);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -65,14 +59,26 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
         }
 
-        [HttpPut, Route("")]
+        [HttpPost, Route("")]
         [Description("Add new profile")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(IEnumerable<UserProfile>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Add([FromBody]UserProfile userProfile)
+        public async Task<IHttpActionResult> Add([FromBody]UserProfile userProfile)
         {
-            return Ok(_userProfileService.Add(userProfile));
+            if (userProfile == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _userProfileService.AddAsync(userProfile);
+                return Ok(userProfile);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

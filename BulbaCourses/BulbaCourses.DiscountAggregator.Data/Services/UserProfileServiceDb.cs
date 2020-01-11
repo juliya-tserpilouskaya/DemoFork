@@ -21,7 +21,16 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         public void Add(UserProfileDb profile)
         {
             context.Profiles.Add(profile);
+            context.SearchCriterias.Add(profile.SearchCriteria);
             context.SaveChanges();
+        }
+
+        public async Task<int> AddAsync(UserProfileDb profileDb)
+        {
+            context.Profiles.Add(profileDb);
+            context.SearchCriterias.Add(profileDb.SearchCriteria);
+            var result = await context.SaveChangesAsync().ConfigureAwait(false);
+            return result;
         }
 
         public IEnumerable<UserProfileDb> GetAll()
@@ -32,7 +41,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         public async Task<IEnumerable<UserProfileDb>> GetAllAsync()
         {
-            var userList = await context.Profiles.ToListAsync().ConfigureAwait(false);
+            var userList = await context.Profiles.Include(x => x.SearchCriteria).ToListAsync().ConfigureAwait(false);
             return userList.AsReadOnly();
         }
 

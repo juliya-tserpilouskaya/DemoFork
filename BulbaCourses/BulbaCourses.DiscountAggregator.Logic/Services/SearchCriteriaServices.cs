@@ -12,7 +12,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         public SearchCriteria GetByUserId(string userId)
         {
-            return SearchCriteriaStorage.GetByUserId(userId);
+            return SearchCriteriaStorage.GetById(userId);
         }
 
         public IEnumerable<SearchCriteria> GetAll()
