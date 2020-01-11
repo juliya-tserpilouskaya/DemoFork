@@ -18,7 +18,7 @@ namespace BulbaCourses.Youtube.Logic.Validator
             RuleSet("AddStory", () =>
             {
                 RuleFor(x => x.Id).Null().WithMessage("Id must be null");
-                RuleFor(x => x.SearchRequest).NotNull().WithMessage("Search request must not be null");
+                RuleFor(x => x.SearchRequest_Id).NotNull().WithMessage("Search requestId must not be null");
                 RuleFor(x => x.UserId).NotNull().WithMessage("UserId must not be null");
             });
         }
