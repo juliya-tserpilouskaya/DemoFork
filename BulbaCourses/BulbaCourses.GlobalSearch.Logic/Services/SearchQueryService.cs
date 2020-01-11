@@ -50,7 +50,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public SearchQueryDTO GetById(string id)
         {
             var query = _searchQueryDb.GetById(id);
-            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created };
+            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created, UserId = query.UserId };
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public async Task<SearchQueryDTO> GetByIdAsync(string id)
         {
             var query = await _searchQueryDb.GetByIdAsync(id);
-            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created };
+            return new SearchQueryDTO { Id = query.Id, Query = query.Query, Date = query.Created, UserId = query.UserId };
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public SearchQueryDTO Add(SearchQueryDTO query)
         {
-            SearchQueryDB queryDb = new SearchQueryDB() { Id = query.Id, Created = query.Date, Query = query.Query };
+            SearchQueryDB queryDb = new SearchQueryDB() { Id = query.Id, Created = query.Date, Query = query.Query, UserId = query.UserId };
             return _mapper.Map<SearchQueryDB, SearchQueryDTO>(_searchQueryDb.Add(queryDb));
         }
 
