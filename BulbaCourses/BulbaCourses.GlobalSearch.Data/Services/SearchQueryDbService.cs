@@ -56,6 +56,26 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         }
 
         /// <summary>
+        /// Returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public IEnumerable<SearchQueryDB> GetByUserId(string userID)
+        {
+            return _context.SearchQueries.Where(q => q.UserId == userID);
+        }
+
+        /// <summary>
+        /// Asynchronously returns search query by user id
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<SearchQueryDB>> GetByUserIdAsync(string userID)
+        {
+            return await _context.SearchQueries.Where(q => q.UserId == userID).ToListAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Creates search query
         /// </summary>
         /// <param name="query">search query</param>
@@ -119,7 +139,5 @@ namespace BulbaCourses.GlobalSearch.Data.Services
                 GC.SuppressFinalize(this);
             }
         }
-
-
     }
 }
