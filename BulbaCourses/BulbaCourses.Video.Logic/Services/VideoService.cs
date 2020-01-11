@@ -126,5 +126,33 @@ namespace BulbaCourses.Video.Logic.Services
                 return (Result<VideoMaterialInfo>)Result.Fail($"Invalid video. {e.Message}");
             }
         }
+
+        public Task<Result> AddComment(VideoMaterialInfo video, string comment)
+        {
+            var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
+            var commentDb = new CommentDb() { 
+                CommentId = Guid.NewGuid().ToString(), 
+                Date = DateTime.Now, 
+                Text = comment, 
+                VideoId = videoDb
+            };
+            try
+            {
+                videoDb.Comments.Add(commentDb);
+                return Task.FromResult(Result.Ok());
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add comment to video. {e.Message}"));
+            }
+            catch (DbUpdateException e)
+            {
+                return Task.FromResult(Result.Fail($"Cannot add comment to video. Duplicate field. {e.Message}"));
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Task.FromResult(Result.Fail($"Invalid tag. {e.Message}"));
+            }
+        }
     }
 }
