@@ -2,11 +2,8 @@
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
 using BulbaCourses.DiscountAggregator.Logic.Models;
-using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
@@ -21,6 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             this._mapper = mapper;
             _profileService = profileService;
         }
+
         public UserProfile GetById(string id)
         {
             var profile = _profileService.GetById(id);
@@ -28,11 +26,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public Task<UserProfile> GetByIdAsync(string id)
+        public async Task<UserProfile> GetByIdAsync(string id)
         {
-            var profile = _profileService.GetById(id);
+            var profile = await _profileService.GetByIdAsync(id);
             var result = _mapper.Map<UserProfileDb, UserProfile>(profile);
-            return Task.FromResult(result);
+            return result;
         }
 
         public IEnumerable<UserProfile> GetAll()
@@ -80,6 +78,21 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             _profileService.Update(profileDb);
+        }
+
+        public Task<UserProfile> UpdateAsync(UserProfile profile)
+        {
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            _profileService.UpdateAsync(profileDb);
+            return Task.FromResult(profile);
+        }
+
+        public Task<UserProfile> DeleteByIdAsync(string idProfile)
+        {
+            var profileDb = _profileService.GetById(idProfile);
+            _profileService.DeleteAsync(profileDb);
+            var profile = _mapper.Map<UserProfileDb, UserProfile>(profileDb);
+            return Task.FromResult(profile);
         }
 
         public Task<bool> ExistsAsync(string login)

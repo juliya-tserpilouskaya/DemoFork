@@ -34,29 +34,27 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
-        [HttpGet, Route("{userId}")]//можно указать какой тип id
+        [HttpGet, Route("{id}")]//можно указать какой тип id
         [Description("Get profile by Id")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
         [SwaggerResponse(HttpStatusCode.NotFound, "Profile doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile found", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
-            //if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var _))
-            //{
-            //    return BadRequest();
-            //}
-
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
             try
             {
-                var result = _userProfileService.GetById(id);
+                var result = await _userProfileService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
             }
-
         }
 
         [HttpPost, Route("")]
@@ -74,6 +72,48 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 await _userProfileService.AddAsync(userProfile);
                 return Ok(userProfile);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Profile updated", typeof(UserProfile))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]        
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Update([FromBody]UserProfile profile)
+        {
+            if (profile == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _userProfileService.UpdateAsync(profile);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpDelete, Route("{id})")]
+        [SwaggerResponse(HttpStatusCode.OK, "Profile deleted", typeof(UserProfile))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _userProfileService.DeleteByIdAsync(id);
+                return Ok();
             }
             catch (Exception ex)
             {
