@@ -21,7 +21,13 @@ namespace BulbaCourses.GlobalSearch.Logic.Search.Mapping
             return new LearningCourseDTO
             {
                 Id = doc.Get("Id"),
-                Description = doc.Get("Description")
+                Description = doc.Get("Description"),
+                Name = doc.Get("Name"),
+                Category = Convert.ToInt32(doc.Get("Category")),
+                Cost = Convert.ToDouble(doc.Get("Cost")),
+                Complexity = doc.Get("Complexity"),
+                Language = doc.Get("Language"),
+                AuthorId = Convert.ToInt32(doc.Get("AuthorId")),
             };
         }
 

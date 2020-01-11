@@ -16,11 +16,13 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
     {
         ICourseDbService _learningCourseDb;
         IMapper _mapper;
+        ISearchService _lucene;
 
-        public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb)
+        public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb, ISearchService lucene)
         {
             _learningCourseDb = learningCourseDb;
             _mapper = mapper;
+            _lucene = lucene;
         }
 
         /// <summary>
@@ -177,6 +179,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public LearningCourseDTO Update(LearningCourseDTO course)
         {
             var data = _learningCourseDb.Update(_mapper.Map<LearningCourseDTO, CourseDB>(course));
+            _lucene.IndexCourse(course);
             return _mapper.Map<CourseDB, LearningCourseDTO>(data);
         }
 
@@ -197,7 +200,9 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
                 cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
             }).CreateMapper();
             var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
-            return mapper.Map<CourseDB, LearningCourseDTO>(data);
+            LearningCourseDTO LearningCourse = mapper.Map<CourseDB, LearningCourseDTO>(data);
+            _lucene.IndexCourse(LearningCourse);
+            return LearningCourse;
         }
 
         /// <summary>

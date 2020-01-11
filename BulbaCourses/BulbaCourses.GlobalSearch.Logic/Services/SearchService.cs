@@ -36,6 +36,14 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 
         }
 
+        public IEnumerable<LearningCourseDTO> IndexCourse(LearningCourseDTO course)
+        {
+
+            var indexer = new LuceneIndexer();
+            indexer.AddUpdateLuceneIndex(course);
+            return indexer.GetAllIndexRecords();
+        }
+
         public Task<IEnumerable<LearningCourseDTO>> SearchAsync()
         {
             throw new NotImplementedException();

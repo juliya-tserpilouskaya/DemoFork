@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
@@ -28,6 +29,14 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult GetAllIndexed()
         {
             var result = _searchService.GetIndexedCourses();
+            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        }
+
+        [HttpPost, Route("index")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course successfully indexed", typeof(IEnumerable<LearningCourse>))]
+        public IHttpActionResult IndexCourse([FromBody]LearningCourseDTO course)
+        {
+            var result = _searchService.IndexCourse(course);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 

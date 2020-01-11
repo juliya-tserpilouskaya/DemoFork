@@ -11,6 +11,7 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
     {
         IEnumerable<LearningCourseDTO> Search(string query);
         IEnumerable<LearningCourseDTO> GetIndexedCourses();
+        IEnumerable<LearningCourseDTO> IndexCourse(LearningCourseDTO course);
         Task<IEnumerable<LearningCourseDTO>> SearchAsync();
     }
 }
