@@ -11,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
     {
         IEnumerable<CourseBookmarkDb> GetAll();
         CourseBookmarkDb GetById(string id);
-        void Add(CourseBookmarkDb courseDb);
+        Task<CourseBookmarkDb> AddAsync(CourseBookmarkDb courseDb);
         void Delete(CourseBookmarkDb courseDb);
     }
 }

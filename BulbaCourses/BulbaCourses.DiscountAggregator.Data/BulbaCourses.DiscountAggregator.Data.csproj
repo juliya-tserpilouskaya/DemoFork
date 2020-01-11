@@ -112,9 +112,9 @@
     <Compile Include="Services\interface\IBookmarkServiceDb.cs" />
     <Compile Include="Services\interface\ICourseCategoryServiceDb.cs" />
     <Compile Include="Services\interface\ICourseService.cs" />
-    <Compile Include="Services\interface\ISearchCriteriaServeceDb.cs" />
+    <Compile Include="Services\interface\ISearchCriteriaServiceDb.cs" />
     <Compile Include="Services\interface\IUserProfileServiceDb.cs" />
-    <Compile Include="Services\SearchCriteriaServeceDb.cs" />
+    <Compile Include="Services\SearchCriteriaServiceDb.cs" />
     <Compile Include="Services\UserProfileServiceDb.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -102,27 +102,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return await context.Profiles.AnyAsync(b => b.Id == id).ConfigureAwait(false);
         }
 
-
-
-
-
-
-
-
-
-        //private readonly CourseContext courseContext;
-
-        //public UserAccountServiceDB(CourseContext courseService)
-        //{
-        //    courseContext = courseService;
-        //}
-
-        //public IEnumerable<UserAccountDb> GetAll()
-        //{
-        //    var usersList = courseContext.Users/*.Include(x => x.UserProfile)*/.ToList().AsReadOnly();
-        //    return usersList;
-        //}
-
+        //ниже код относящийся к UserAccount которая уже не нужна и удалена
         //public void Add(UserAccountDb userAccount)
         //{
         //    userAccount.Password = HashingPassword.HashPassword(userAccount.Password);

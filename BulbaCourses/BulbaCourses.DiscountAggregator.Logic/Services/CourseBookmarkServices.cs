@@ -28,11 +28,14 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public void Add(CourseBookmark courseBookmark)
+        public async Task<CourseBookmark> AddAsync(CourseBookmark courseBookmark)
         {
-            var bookmarkDb = mapper.Map<CourseBookmark,CourseBookmarkDb>(courseBookmark);
-            _bookmarkServiceDb.Add(bookmarkDb);
+            courseBookmark.Id = Guid.NewGuid().ToString();
+            var bookmarkDb = mapper.Map<CourseBookmark, CourseBookmarkDb>(courseBookmark);
+            await _bookmarkServiceDb.AddAsync(bookmarkDb);
+            return courseBookmark;
         }
+
 
         public void DeleteById(string id)
         {

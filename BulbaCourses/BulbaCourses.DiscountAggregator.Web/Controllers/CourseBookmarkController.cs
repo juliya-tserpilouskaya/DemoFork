@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
@@ -34,12 +35,12 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
             
-        [HttpPut, Route("")]
+        [HttpPost, Route("")]
         [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added", typeof(IEnumerable<CourseBookmark>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Add([FromBody]CourseBookmark courseBookmark)
+        public async Task<IHttpActionResult> Add([FromBody]CourseBookmark courseBookmark)
         {
             if (courseBookmark == null)
             {
@@ -48,8 +49,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                courseBookmark.Id = Guid.NewGuid().ToString();
-                _courseBookmarkService.Add(courseBookmark);
+                _courseBookmarkService.AddAsync(courseBookmark);
                 return Ok(courseBookmark);
             }
             catch (Exception ex)

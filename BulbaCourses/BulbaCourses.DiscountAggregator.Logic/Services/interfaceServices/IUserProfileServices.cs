@@ -11,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         IEnumerable<UserProfile> GetAll();
         Task<IEnumerable<UserProfile>> GetAllAsync();
         UserProfile Add(UserProfile userProfile);
-        Task<int> AddAsync(UserProfile profile);
+        Task<UserProfile> AddAsync(UserProfile profile);
         Task<UserProfile> UpdateAsync(UserProfile profile);
         Task<UserProfile> DeleteByIdAsync(string idProfile);
         Task<bool> ExistsAsync(string login);

@@ -22,6 +22,12 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             context.CourseBookmarks.Add(bookmark);
             context.SaveChanges();
         }
+        public Task<CourseBookmarkDb> AddAsync(CourseBookmarkDb bookmark)
+        {
+            context.CourseBookmarks.Add(bookmark);
+            context.SaveChanges();
+            return Task.FromResult(bookmark);
+        }
 
         public IEnumerable<CourseBookmarkDb> GetAll()
         {
