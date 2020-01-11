@@ -70,7 +70,7 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                     Id = Guid.NewGuid().ToString(),
                     Query = "terminator 3",
                     Created = DateTime.Now,
-                    UserId = user2.Id
+                    UserId = user2.Id,
                 }
             );
             #endregion

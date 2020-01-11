@@ -170,6 +170,14 @@
     <Compile Include="Migrations\202001111652023_addUsersWithItems.Designer.cs">
       <DependentUpon>202001111652023_addUsersWithItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001111713413_searchQueryUserIdIsRequired.cs" />
+    <Compile Include="Migrations\202001111713413_searchQueryUserIdIsRequired.Designer.cs">
+      <DependentUpon>202001111713413_searchQueryUserIdIsRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001111716181_bookmarkUserIdIsRequired.cs" />
+    <Compile Include="Migrations\202001111716181_bookmarkUserIdIsRequired.Designer.cs">
+      <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\BookmarkDB.cs" />
@@ -249,6 +257,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001111652023_addUsersWithItems.resx">
       <DependentUpon>202001111652023_addUsersWithItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111713413_searchQueryUserIdIsRequired.resx">
+      <DependentUpon>202001111713413_searchQueryUserIdIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111716181_bookmarkUserIdIsRequired.resx">
+      <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
