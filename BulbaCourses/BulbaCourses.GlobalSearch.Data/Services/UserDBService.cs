@@ -88,5 +88,25 @@ namespace BulbaCourses.GlobalSearch.Data.Services
                 GC.SuppressFinalize(this);
             }
         }
+
+        public IEnumerable<BookmarkDB> GetBookmarksByUserId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<BookmarkDB>> GetBookmarksByUserIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SearchQueryDB> GetSearchQueriesByUserId(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<SearchQueryDB>> GetSearchQueriesByUserIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
