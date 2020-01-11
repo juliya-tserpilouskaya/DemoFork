@@ -11,7 +11,6 @@ namespace BulbaCourses.Video.Web.Models.UserViews
     public class UserProfileView
     {
         public string Login { get; set; }
-        public string Biography { get; set; }
         //public string AvatarPath { get; set; }
         public Subscription SubscriptionType { get; set; }
     }

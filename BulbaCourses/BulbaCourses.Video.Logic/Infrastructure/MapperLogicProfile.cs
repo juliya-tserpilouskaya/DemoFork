@@ -18,6 +18,7 @@ namespace BulbaCourses.Video.Logic.Infrastructure
             CreateMap<CourseDb, CourseInfo>().ReverseMap();
             CreateMap<TagDb, TagInfo>().ReverseMap();
             CreateMap<VideoMaterialDb, VideoMaterialInfo>().ReverseMap();
+            CreateMap<AuthorDb, AuthorInfo>().ReverseMap();
         }
     }
 }

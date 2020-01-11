@@ -53,11 +53,13 @@
   <ItemGroup>
     <Compile Include="Infrastructure\LogicLoadModule.cs" />
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
+    <Compile Include="InterfaceServices\IAuthorService.cs" />
     <Compile Include="InterfaceServices\ICommentService.cs" />
     <Compile Include="InterfaceServices\ICourseService.cs" />
     <Compile Include="InterfaceServices\ISearchService.cs" />
     <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="InterfaceServices\IVideoService.cs" />
+    <Compile Include="Models\AuthorInfo.cs" />
     <Compile Include="Models\CommentInfo.cs" />
     <Compile Include="Models\CourseInfo.cs" />
     <Compile Include="Models\Enums\CourseLevel.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\VideoMaterialInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthorService.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\SearchService.cs" />

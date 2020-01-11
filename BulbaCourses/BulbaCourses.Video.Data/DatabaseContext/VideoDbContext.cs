@@ -16,6 +16,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
         }
         public DbSet<UserDb> Users { get; set; }
+        public DbSet<AuthorDb> Authors { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
         public DbSet<CourseDb> Courses { get; set; }
         public DbSet<TagDb> Tags { get; set; }
@@ -30,7 +31,14 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityUser = modelBuilder.Entity<UserDb>();
             entityUser.HasKey(b => b.UserId);
             //entityUser.Property(b => b.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            entityUser.Property(b => b.Biography).IsOptional().HasMaxLength(510).IsUnicode();
+            
+            modelBuilder.Entity<AuthorDb>().ToTable("Authors");
+            var entityAuthor = modelBuilder.Entity<AuthorDb>();
+            entityAuthor.HasKey(b => b.AuthorId);
+            entityAuthor.Property(b => b.Name).IsRequired().IsUnicode();
+            entityAuthor.Property(b => b.Lastname).IsRequired().IsUnicode();
+            entityAuthor.Property(b => b.Professions).IsRequired().IsUnicode();
+            entityAuthor.Property(b => b.Annotation).IsRequired().HasMaxLength(1024);
 
             modelBuilder.Entity<TransactionDb>().ToTable("Transactions");
             var entityTransaction = modelBuilder.Entity<TransactionDb>();
@@ -43,10 +51,10 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             entityCourses.HasKey(b => b.CourseId);
             entityCourses.Property(b => b.Name).IsRequired().IsUnicode();
             //entityCourses.HasIndex(b => b.Name).IsUnique(true);
-            entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1000);
+            entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1024);
             entityCourses.Property(b => b.Duration).IsRequired();
             entityCourses.Property(b => b.Price).IsRequired();
-            entityCourses.HasOptional<UserDb>(b => b.Author).WithMany(t => t.Courses).Map(m => m.MapKey("CourseAuthorId"));
+            entityCourses.HasOptional<AuthorDb>(b => b.Author).WithMany(t => t.AuthorCourses).Map(m => m.MapKey("CourseAuthorId"));
 
             modelBuilder.Entity<VideoMaterialDb>().ToTable("Videos");
             var entityVideo = modelBuilder.Entity<VideoMaterialDb>();

@@ -49,17 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseContext\VideoDbContext.cs" />
+    <Compile Include="Interfaces\IAuthorRepository.cs" />
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\ICourseRepository.cs" />
     <Compile Include="Interfaces\ITegRepository.cs" />
     <Compile Include="Interfaces\ITransactionRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IVideoRepository.cs" />
-    <Compile Include="Migrations\202001101920014_init.cs" />
-    <Compile Include="Migrations\202001101920014_init.Designer.cs">
-      <DependentUpon>202001101920014_init.cs</DependentUpon>
+    <Compile Include="Migrations\202001112351483_first.cs" />
+    <Compile Include="Migrations\202001112351483_first.Designer.cs">
+      <DependentUpon>202001112351483_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuthorDb.cs" />
     <Compile Include="Models\CommentDb.cs" />
     <Compile Include="Models\CourseDb.cs" />
     <Compile Include="Models\TagDb.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Models\UserDb.cs" />
     <Compile Include="Models\VideoMaterialDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AuthorRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\CourseRepository.cs" />
@@ -80,8 +83,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001101920014_init.resx">
-      <DependentUpon>202001101920014_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001112351483_first.resx">
+      <DependentUpon>202001112351483_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

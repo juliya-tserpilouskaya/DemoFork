@@ -18,6 +18,7 @@ namespace BulbaCourses.Video.Web.Infrastructure
             CreateMap<CourseView, CourseInfo>().ReverseMap();
             CreateMap<CommentView, CommentInfo>().ReverseMap();
             CreateMap<VideoView, VideoMaterialInfo>().ReverseMap();
+            CreateMap<AuthorView, AuthorInfo>().ReverseMap();
         }
     }
 }

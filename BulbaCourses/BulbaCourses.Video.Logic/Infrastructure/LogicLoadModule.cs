@@ -22,12 +22,14 @@ namespace BulbaCourses.Video.Logic.Infrastructure
             Bind<ITegRepository>().To<TegRepository>();
             Bind<ITransactionRepository>().To<TransactionRepository>();
             Bind<IVideoRepository>().To<VideoRepository>();
+            Bind<IAuthorRepository>().To<AuthorRepository>();
 
             //bind services
             Bind<IUserService>().To<UserService>();
             Bind<ICourseService>().To<CourseService>();
             Bind<ICommentService>().To<CommentService>();
             Bind<IVideoService>().To<VideoService>();
+            Bind<IAuthorService>().To<AuthorService>();
 
         }
     }
