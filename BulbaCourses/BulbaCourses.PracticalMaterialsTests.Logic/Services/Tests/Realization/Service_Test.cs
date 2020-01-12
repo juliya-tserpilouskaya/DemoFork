@@ -4,14 +4,14 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
-{
+{    
     public class Service_Test : Service_Base, IService_Test
     {
         protected readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
         {
             _mapper = mapper;
         }
-
+        
         public MTest_MainInfo GetById(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =
@@ -32,7 +32,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             return
                 _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
         }
-
+        
         public async Task<MTest_MainInfo> GetByIdAsync(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =

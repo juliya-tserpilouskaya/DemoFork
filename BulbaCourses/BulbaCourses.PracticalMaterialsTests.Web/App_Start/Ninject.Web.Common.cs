@@ -15,7 +15,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
     using Ninject.Web.WebApi;
 
     using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
-    using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfañe;
+    using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
     using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 
     public static class NinjectWebCommon 

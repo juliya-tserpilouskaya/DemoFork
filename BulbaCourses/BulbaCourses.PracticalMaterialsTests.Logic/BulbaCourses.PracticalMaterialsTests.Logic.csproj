@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -82,7 +84,7 @@
     <Compile Include="Services\Questions\Realization\Service_Question_ChoosingAnswerFromList.cs" />
     <Compile Include="Services\Questions\Realization\Service_Question_SetIntoMissingElements.cs" />
     <Compile Include="Services\Questions\Realization\Service_Question_SetOrderDb.cs" />
-    <Compile Include="Services\Tests\Interfaсe\IService_Test.cs" />
+    <Compile Include="Services\Tests\Interface\IService_Test.cs" />
     <Compile Include="Services\Tests\Realization\Service_Test.cs" />
     <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_ChoosingAnswerFromList.cs" />
     <Compile Include="Validators\AnswerVariants\Validator_AnswerVariant_SetIntoMissingElements.cs" />

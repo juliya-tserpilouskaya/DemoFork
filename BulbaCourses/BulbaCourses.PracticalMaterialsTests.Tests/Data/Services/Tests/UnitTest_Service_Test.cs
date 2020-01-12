@@ -7,7 +7,7 @@ using BulbaCourses.PracticalMaterialsTests.Logic.AutoMap;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 using Ninject;
 using NUnit.Framework;
