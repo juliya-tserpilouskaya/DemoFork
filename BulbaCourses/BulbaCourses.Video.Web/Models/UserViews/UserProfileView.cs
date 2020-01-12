@@ -8,6 +8,7 @@ using System.Web;
 
 namespace BulbaCourses.Video.Web.Models.UserViews
 {
+    [Validator(typeof(UserProfileViewValidator))]
     public class UserProfileView
     {
         public string Login { get; set; }

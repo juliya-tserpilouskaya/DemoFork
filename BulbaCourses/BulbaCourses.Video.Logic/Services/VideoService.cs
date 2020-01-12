@@ -34,6 +34,7 @@ namespace BulbaCourses.Video.Logic.Services
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
             videoDb.Created = DateTime.Now;
+            videoDb.CourseId = Guid.NewGuid().ToString(); //заменить на ID курса
             try
             {
                 await _videoRepository.AddAsync(videoDb);

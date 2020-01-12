@@ -18,16 +18,16 @@ namespace BulbaCourses.Video.Web
             IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
 
             // Web API configuration and services
-            FluentValidationModelValidatorProvider.Configure(config,
-                cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+            //FluentValidationModelValidatorProvider.Configure(config,
+            //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
             //IValidator<User>
             //AssemblyScanner.FindValidatorsInAssemblyContaining<UserProfileView>()
             //    .ForEach(result => kernel.Bind(result.InterfaceType)
             //    .To(result.ValidatorType));
-            AssemblyScanner.FindValidatorsInAssemblyContaining<CourseView>()
-                .ForEach(result => kernel.Bind(result.InterfaceType)
-                    .To(result.ValidatorType));
+            //AssemblyScanner.FindValidatorsInAssemblyContaining<CourseView>()
+            //    .ForEach(result => kernel.Bind(result.InterfaceType)
+            //        .To(result.ValidatorType));
 
             // Web API routes
             config.MapHttpAttributeRoutes();
