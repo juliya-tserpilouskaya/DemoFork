@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -9,7 +10,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
     {
         public static void Register(HttpConfiguration config)
         {
-            // Конфигурация и службы веб-API
+            // Web API configuration and services            
 
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();

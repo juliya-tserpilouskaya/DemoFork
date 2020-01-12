@@ -3,7 +3,7 @@ using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService
 {
-    public class Service_Base
+    public class Service_Base : IDisposable
     {
         protected readonly DbContext_Test _context;
 
