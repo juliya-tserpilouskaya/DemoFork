@@ -1,4 +1,7 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using AutoMapper;
+using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
@@ -10,19 +13,50 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     class SearchCriteriaServices : ISearchCriteriaServices
     {
-        public SearchCriteria GetByUserId(string userId)
+        private readonly IMapper _mapper;
+        private readonly ISearchCriteriaServiceDb _criteriaServiceDb;
+
+        public SearchCriteriaServices(IMapper mapper, ISearchCriteriaServiceDb criteriaService)
         {
-            return SearchCriteriaStorage.GetById(userId);
+            this._mapper = mapper;
+            _criteriaServiceDb = criteriaService;
+        }
+        public async Task<IEnumerable<SearchCriteria>> GetAllAsync()
+        {
+            var criterias = await _criteriaServiceDb.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<SearchCriteriaDb>, IEnumerable<SearchCriteria>>(criterias);
+            return result;
         }
 
-        public IEnumerable<SearchCriteria> GetAll()
+        public async Task<SearchCriteria> GetByIdAsync(string id)
         {
-            return SearchCriteriaStorage.GetAll();
+            var criteria = await _criteriaServiceDb.GetByIdAsync(id);
+            var result = _mapper.Map<SearchCriteriaDb, SearchCriteria>(criteria);
+            return result;
         }
 
-        public SearchCriteria Add(SearchCriteria searchCriteria)
+        public Task<SearchCriteria> AddAsync(SearchCriteria criteria)
         {
-            return SearchCriteriaStorage.Add(searchCriteria);
+            criteria.Id = Guid.NewGuid().ToString();
+            var criteriaDb = _mapper.Map<SearchCriteria, SearchCriteriaDb>(criteria);
+            _criteriaServiceDb.AddAsync(criteriaDb);
+            return Task.FromResult(criteria);
         }
+
+        public Task<SearchCriteria> UpdateAsync(SearchCriteria criteria)
+        {
+            var criteriaDb = _mapper.Map<SearchCriteria, SearchCriteriaDb>(criteria);
+            _criteriaServiceDb.UpdateAsync(criteriaDb);
+            return Task.FromResult(criteria);
+        }    
+
+        public Task<SearchCriteria> DeleteByIdAsync(string idCriteria)
+        {
+            var criteriaDb = _criteriaServiceDb.GetByIdAsync(idCriteria);
+            _criteriaServiceDb.DeleteAsync(criteriaDb.Result);
+            var criteria = _mapper.Map<SearchCriteriaDb, SearchCriteria>(criteriaDb.Result);
+            return Task.FromResult(criteria);
+        }
+
     }
 }

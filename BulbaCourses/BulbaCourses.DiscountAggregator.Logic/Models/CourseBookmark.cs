@@ -13,6 +13,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 
         public IEnumerable<Course> Course { get; set; }
 
-        public UserProfile UserAccount { get; set; }
+        public UserProfile UserProfile { get; set; }
     }
 }

@@ -2,11 +2,8 @@
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
 using BulbaCourses.DiscountAggregator.Logic.Models;
-using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
@@ -21,6 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             this._mapper = mapper;
             _profileService = profileService;
         }
+
         public UserProfile GetById(string id)
         {
             var profile = _profileService.GetById(id);
@@ -28,11 +26,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public Task<UserProfile> GetByIdAsync(string id)
+        public async Task<Result<UserProfile>> GetByIdAsync(string id)
         {
-            var profile = _profileService.GetById(id);
-            var result = _mapper.Map<UserProfileDb, UserProfile>(profile);
-            return Task.FromResult(result);
+            var profileDb = await _profileService.GetByIdAsync(id);
+            var profile = _mapper.Map<UserProfileDb, UserProfile>(profileDb);
+            return Result<UserProfile>.Ok(profile);
         }
 
         public IEnumerable<UserProfile> GetAll()
@@ -57,11 +55,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return profile;
         }
 
-        public Task<int> AddAsync(UserProfile profile)
+        public async Task<Result<UserProfile>> AddAsync(UserProfile profile)
         {
             profile.Id = Guid.NewGuid().ToString();
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
-            return _profileService.AddAsync(profileDb);
+            var result = await _profileService.AddAsync(profileDb);
+            return result ? Result<UserProfile>.Ok(profile) 
+                : (Result<UserProfile>)Result<UserProfile>.Fail("Cannot save model");
         }
 
         public void Delete(UserProfile profile)
@@ -80,6 +80,21 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         {
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             _profileService.Update(profileDb);
+        }
+
+        public Task<Result<UserProfile>> UpdateAsync(UserProfile profile)
+        {
+            var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
+            _profileService.UpdateAsync(profileDb);
+            return Task.FromResult(Result<UserProfile>.Ok(profile));
+        }
+
+        public Task<Result<UserProfile>> DeleteByIdAsync(string idProfile)
+        {
+            var profileDb = _profileService.GetById(idProfile);
+            _profileService.DeleteAsync(profileDb);
+            var profile = _mapper.Map<UserProfileDb, UserProfile>(profileDb);
+            return Task.FromResult(Result<UserProfile>.Ok(profile));
         }
 
         public Task<bool> ExistsAsync(string login)

@@ -133,8 +133,10 @@
     <Compile Include="Services\UserProfileServices.cs" />
     <Compile Include="Validators\CategoryValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
+    <Compile Include="Validators\CourseBookmarkValidator.cs" />
     <Compile Include="Validators\CourseValidator.cs" />
     <Compile Include="Validators\UserAccountValidator.cs" />
+    <Compile Include="Validators\UserProfileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
