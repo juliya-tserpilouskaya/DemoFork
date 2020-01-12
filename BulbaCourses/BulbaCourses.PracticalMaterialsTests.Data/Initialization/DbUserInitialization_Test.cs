@@ -19,7 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                     new MTest_MainInfoDb()
                     {
                         Name = "Test_Name_1",
-                        Question_ChoosingAnswerFromList = 
+                        Questions_ChoosingAnswerFromList = 
                             new List<MQuestion_ChoosingAnswerFromListDb>()
                             {
                                  new MQuestion_ChoosingAnswerFromListDb()
@@ -50,7 +50,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                         }
                                  }
                             },
-                        Question_SetIntoMissingElements = 
+                        Questions_SetIntoMissingElements = 
                             new List<MQuestion_SetIntoMissingElementsDb>()
                             {
                                 new MQuestion_SetIntoMissingElementsDb()
@@ -59,7 +59,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                     SortKey = 2
                                 }
                             },
-                        Question_SetOrder = 
+                        Questions_SetOrder = 
                             new List<MQuestion_SetOrderDb>()
                             {
                                  new MQuestion_SetOrderDb()

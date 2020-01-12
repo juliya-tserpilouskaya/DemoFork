@@ -22,15 +22,15 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Tests
                 .HasMaxLength(50)
                 .IsRequired();
 
-            this.HasMany(g => g.Question_ChoosingAnswerFromList)
+            this.HasMany(g => g.Questions_ChoosingAnswerFromList)
                 .WithRequired(s => s.Test_MainInfoDb)
                 .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
 
-            this.HasMany(g => g.Question_SetIntoMissingElements)
+            this.HasMany(g => g.Questions_SetIntoMissingElements)
                 .WithRequired(s => s.Test_MainInfoDb)
                 .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
 
-            this.HasMany(g => g.Question_SetOrder)
+            this.HasMany(g => g.Questions_SetOrder)
                 .WithRequired(s => s.Test_MainInfoDb)
                 .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
         }

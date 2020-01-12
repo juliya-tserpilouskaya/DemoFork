@@ -9,10 +9,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Tests
 
         public string Name { get; set; }        
 
-        public ICollection<MQuestion_ChoosingAnswerFromListDb> Question_ChoosingAnswerFromList { get; set; }
+        public ICollection<MQuestion_ChoosingAnswerFromListDb> Questions_ChoosingAnswerFromList { get; set; }
 
-        public ICollection<MQuestion_SetIntoMissingElementsDb> Question_SetIntoMissingElements { get; set; }
+        public ICollection<MQuestion_SetIntoMissingElementsDb> Questions_SetIntoMissingElements { get; set; }
 
-        public ICollection<MQuestion_SetOrderDb> Question_SetOrder { get; set; }
+        public ICollection<MQuestion_SetOrderDb> Questions_SetOrder { get; set; }
     }
 }
