@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMap\AutoMapperProfile_Logic.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromList.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElements.cs" />
     <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrder.cs" />
@@ -101,8 +102,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AutoMap\Profile\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

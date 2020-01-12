@@ -73,6 +73,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IService_Test>().To<Service_Test>();
+
             kernel.Load<ModuleNinject_Logic>();
         }        
     }

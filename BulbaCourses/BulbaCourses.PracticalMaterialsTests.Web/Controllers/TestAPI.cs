@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 using Ninject;
@@ -18,7 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         {
             IKernel kernel = new StandardKernel();
 
-            kernel.Bind<IService_Test>().To<Service_Test>();
+            kernel.Bind<IService_Test>().To<Service_Test>();            
 
             _service_Test = kernel.Get<IService_Test>();
         }
