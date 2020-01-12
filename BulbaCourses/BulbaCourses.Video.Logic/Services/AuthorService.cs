@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.InterfaceServices;
