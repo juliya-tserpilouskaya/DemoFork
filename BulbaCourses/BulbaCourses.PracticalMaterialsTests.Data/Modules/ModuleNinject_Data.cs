@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using Ninject.Modules;
+using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Modules
 {
@@ -7,7 +8,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Modules
     {
         public override void Load()
         {
-            Bind<DbContext_Test>().ToSelf();
+            Bind<DbContext>().To<DbContext_Test>();
         }
     }
 }

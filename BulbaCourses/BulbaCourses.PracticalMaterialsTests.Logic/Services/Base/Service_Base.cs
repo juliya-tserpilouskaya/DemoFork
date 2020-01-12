@@ -1,16 +1,17 @@
 ﻿using AutoMapper;
 using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using System;
+using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService
 {
     public class Service_Base : IDisposable
     {
-        protected readonly DbContext_Test _context;        
+        protected readonly DbContext _context;        
 
         private bool _isDisposed = false;
 
-        protected Service_Base(DbContext_Test context)
+        protected Service_Base(DbContext context)
         {
             _context = context;            
         }

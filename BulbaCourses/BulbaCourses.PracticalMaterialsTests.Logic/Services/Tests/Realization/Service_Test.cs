@@ -16,7 +16,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
     {
         protected readonly IMapper _mapper;
 
-        public Service_Test(DbContext_Test context, IMapper mapper) : base (context)
+        public Service_Test(DbContext context, IMapper mapper) : base (context)
         {
             _mapper = mapper;
         }
@@ -24,7 +24,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
         public MTest_MainInfo GetById(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =
-                _context.Test_MainInfo
+                _context.Set<MTest_MainInfoDb>()
                     .Include(_ => _.Questions_ChoosingAnswerFromList)
                     .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
                     .FirstOrDefault(_ => _.Id == Id);                   
@@ -35,8 +35,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
 
         public async Task<MTest_MainInfo> GetByIdAsync(int Id)
         {
-            MTest_MainInfoDb Test_MainInfoDb = 
-                await _context.Test_MainInfo
+            MTest_MainInfoDb Test_MainInfoDb =
+                await _context.Set<MTest_MainInfoDb>()
                     .Include(_ => _.Questions_ChoosingAnswerFromList)
                     .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
                     .FirstOrDefaultAsync(_ => _.Id == Id)
@@ -51,8 +51,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             MTest_MainInfoDb Test_MainInfoDb =
                  _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
-            _context.Test_MainInfo
-                .Add(Test_MainInfoDb);
+            _context.Set<MTest_MainInfoDb>()
+               .Add(Test_MainInfoDb);
 
             _context.SaveChanges();
 

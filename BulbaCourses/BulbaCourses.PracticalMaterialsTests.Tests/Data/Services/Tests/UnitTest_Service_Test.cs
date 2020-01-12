@@ -3,13 +3,16 @@ using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.AutoMap;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interfaсe;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
+using Ninject;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,29 +21,29 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Data.Services.Tests
     [TestFixture]
     public class UnitTest_Service_Test
     {
-        IService_Test _serviceTest;
+        IService_Test _service_Test;
 
         [OneTimeSetUp]
         public void Init()
         {
-            _serviceTest = 
-                new Service_Test(new DbContext_Test(), new Mapper(
-                    new MapperConfiguration(cfg =>
-                    {
-                        cfg.CreateMap<MTest_MainInfo, MTest_MainInfoDb>().ReverseMap();
-                        cfg.CreateMap<MQuestion_ChoosingAnswerFromList, MQuestion_ChoosingAnswerFromListDb>().ReverseMap();
-                        cfg.CreateMap<MQuestion_SetIntoMissingElements, MQuestion_SetIntoMissingElementsDb>().ReverseMap();
-                        cfg.CreateMap<MQuestion_SetOrder, MQuestion_SetOrderDb>().ReverseMap();                        
-                        cfg.CreateMap<MAnswerVariant_ChoosingAnswerFromList, MAnswerVariant_ChoosingAnswerFromListDb>().ReverseMap();
-                        cfg.CreateMap<MQuestion_SetIntoMissingElements, MQuestion_SetIntoMissingElementsDb>().ReverseMap();
-                        cfg.CreateMap<MAnswerVariant_SetOrder, MAnswerVariant_SetOrderDb>().ReverseMap();                        
-                    })));
+            IKernel kernel = new StandardKernel();            
+
+            kernel.Bind<IService_Test>().To<Service_Test>();
+
+            kernel.Bind<DbContext>().To<DbContext_Test>();
+
+            kernel.Bind<IMapper>().ToMethod(ctx => new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<AutoMapperProfile_Logic>();
+            })));
+
+            _service_Test = kernel.Get<IService_Test>();
         }
 
         [Test]
         public void GetByIdTest()
         {
-            MTest_MainInfo Test_MainInfo = _serviceTest.GetById(1);
+            MTest_MainInfo Test_MainInfo = _service_Test.GetById(1);
 
             Assert.Warn($@"{Test_MainInfo.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Name}");
         }
@@ -48,7 +51,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Data.Services.Tests
         [Test]
         public void GetByIdAsyncTest()
         {
-            Task<MTest_MainInfo> Test_MainInfo = _serviceTest.GetByIdAsync(1);
+            Task<MTest_MainInfo> Test_MainInfo = _service_Test.GetByIdAsync(1);
 
             Assert.Warn($@"{Test_MainInfo.Result.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Result.Name}");             
         }
@@ -134,9 +137,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Data.Services.Tests
                 };
                 
 
-            int ResultId_1 = _serviceTest.Add(TestData);
+            int ResultId_1 = _service_Test.Add(TestData);
 
-            int ResultId_1_2 = _serviceTest.Add(TestData);
+            int ResultId_1_2 = _service_Test.Add(TestData);
 
             Assert.Warn($@"ResultId: {ResultId_1} || {ResultId_1_2}");
         }        
