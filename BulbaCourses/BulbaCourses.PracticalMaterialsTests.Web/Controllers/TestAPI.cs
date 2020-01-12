@@ -15,13 +15,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
     {
         private readonly IService_Test _service_Test;
 
-        public TestAPIController()
+        public TestAPIController(IService_Test service_Test)
         {
-            IKernel kernel = new StandardKernel();
-
-            kernel.Bind<IService_Test>().To<Service_Test>();            
-
-            _service_Test = kernel.Get<IService_Test>();
+            _service_Test = service_Test;
         }
 
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parametr format")]
