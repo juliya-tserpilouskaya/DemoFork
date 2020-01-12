@@ -34,7 +34,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
             
-        [HttpPut, Route("")]
+        [HttpPost, Route("")]
         [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added", typeof(IEnumerable<CourseBookmark>))]

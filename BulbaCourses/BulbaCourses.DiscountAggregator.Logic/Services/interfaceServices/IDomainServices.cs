@@ -1,12 +1,16 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     public interface IDomainServices
     {
-        Domain GetById(string id);
-        IEnumerable<Domain> GetAll();
-        Domain Add(Domain domain);
+        Task<IEnumerable<Domain>> GetAllAsync();
+        Task<Domain> GetByIdAsync(string id);
+        Task<Result<Domain>> AddAsync(Domain domain);
+        Task<Result> DeleteByIdAsync(string id);
+        Task<Result<Domain>> UpdateAsync(Domain domain);
     }
 }

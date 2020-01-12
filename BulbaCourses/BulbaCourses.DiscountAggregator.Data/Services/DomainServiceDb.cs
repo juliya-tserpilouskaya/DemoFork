@@ -11,44 +11,54 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class DomainServiceDb : IDomainServiceDb
     {
-        private readonly CourseContext context;
+        private readonly CourseContext domainContext;
 
         public DomainServiceDb(CourseContext context)
         {
-            this.context = context;
+            this.domainContext = context;
         }
 
-        public void Add(DomainDb domain)
+        public async Task<DomainDb> AddAsync(DomainDb domain)
         {
-            context.Domains.Add(domain);
-            context.SaveChanges();
+            domainContext.Domains.Add(domain);
+            domainContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return await Task.FromResult(domain);
         }
 
-        public IEnumerable<DomainDb> GetAll()
+        public async Task<IEnumerable<DomainDb>> GetAllAsync()
         {
-            var domains = context.Domains.ToList().AsReadOnly();
-            return domains;
+            var domainList = await domainContext.Domains.ToListAsync().ConfigureAwait(false);
+            return domainList.AsReadOnly();
         }
 
-        public DomainDb GetById(string id)
+        public async Task<DomainDb> GetByIdAsync(string id)
         {
-            var domain = context.Domains.FirstOrDefault(c => c.Id.Equals(id));
+            var domain = await domainContext.Domains.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return domain;
         }
 
-        public void Delete(DomainDb domain)
+        public async Task DeleteAsync(DomainDb domainDb)
         {
-            context.Domains.Remove(domain);
-            context.SaveChanges();
+            domainContext.Domains.Remove(domainDb);
+            await domainContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public void Update(DomainDb domain)
+        public async Task DeleteByIdAsync(string id)
         {
-            if (domain != null)
+            var domain = domainContext.Domains.SingleOrDefault(c => c.Id.Equals(id));
+            domainContext.Domains.Remove(domain);
+            await domainContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<DomainDb> UpdateAsync(DomainDb domainDb)
+        {
+            if (domainDb == null)
             {
-                context.Entry(domain).State = EntityState.Modified;
-                context.SaveChanges();
+                throw new ArgumentNullException("domain");
             }
+            domainContext.Entry(domainDb).State = EntityState.Modified;
+            await domainContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(domainDb);
         }
     }
 }

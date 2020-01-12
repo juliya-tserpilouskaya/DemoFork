@@ -16,7 +16,7 @@ using System.Web.Http;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    [Authorize]
+    //[Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;
@@ -114,7 +114,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
             try
             {
-                _courseService.DeleteById(id);
+                _courseService.DeleteByIdAsync(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -127,7 +127,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse,default")]Course course)
+        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
             //if (!ModelState.IsValid)
             //{
@@ -141,7 +141,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
             try
             {
-                _courseService.Update(course);
+                _courseService.UpdateAsync(course);
                 return Ok();
             }
 
@@ -154,29 +154,21 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [HttpPost, Route("")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
-        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddCourse,default")]Course course)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddCourse,default")]Course course)
         {
             //validate course here
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest(ModelState);
             //}
-            if (course == null /*|| !Enum.IsDefined(typeof(CourseCategory), course.Category)*/)
+            if (course == null)
             {
                 return BadRequest();
             }
 
-            try
-            {
-                course.Id = Guid.NewGuid().ToString();
-                _courseService.Add(course);
-                return Ok(course);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-            
+            course.Id = Guid.NewGuid().ToString();
+            var result = await _courseService.AddAsync(course);
+            return  result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
     }
 }

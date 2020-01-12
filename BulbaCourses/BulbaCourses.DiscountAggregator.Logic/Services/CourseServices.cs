@@ -5,6 +5,8 @@ using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,65 +15,88 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     public class CourseServices : ICourseServices
     {
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
 
         public CourseServices(IMapper mapper, ICourseService courseService)
         {
-            this.mapper = mapper;
+            this._mapper = mapper;
             _courseService = courseService;
-        }
-
-        public Course GetById(string id)
-        {
-            var courses = _courseService.GetById(id);
-            var result = mapper.Map<CourseDb, Course>(courses);
-            return result;
-        }
-
-        public Task<Course> GetByIdAsync(string id)
-        {
-            var courses = _courseService.GetById(id);
-            var result = mapper.Map<CourseDb, Course>(courses);
-            return Task.FromResult(result);
         }
 
         public IEnumerable<Course> GetAll()
         {
             var courses = _courseService.GetAll();
-            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);    
+            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);    
             return result;
         }
 
-        public Task<IEnumerable<Course>> GetAllAsync()
+        public async Task<IEnumerable<Course>> GetAllAsync()
         {
-            var courses = _courseService.GetAll();
-            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);
-            return Task.FromResult(result);
+            var courses = await _courseService.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<Course>>(courses);
+            return result;
         }
 
-        public void Add(Course course)
+        public Course GetById(string id)
         {
-            var courseDb = mapper.Map<Course, CourseDb>(course);
-            _courseService.Add(courseDb);
+            var courses = _courseService.GetById(id);
+            var result = _mapper.Map<CourseDb, Course>(courses);
+            return result;
         }
 
-        public void Delete(Course course)
+        public async Task<Course> GetByIdAsync(string id)
         {
-            var courseDb = mapper.Map<Course, CourseDb>(course);
-            _courseService.Delete(courseDb);
+            var courses = await _courseService.GetByIdAsync(id);
+            var result = _mapper.Map<CourseDb, Course>(courses);
+            return result;
         }
 
-        public void DeleteById(string id)
+        public async Task<Result<Course>> AddAsync(Course course)
         {
-            var course = _courseService.GetById(id);
-            _courseService.Delete(course);
+            var courseDb = _mapper.Map<Course, CourseDb>(course);
+
+            try
+            {
+                await _courseService.AddAsync(courseDb);
+                return Result<CourseDb>.Ok(_mapper.Map<Course>(courseDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<Course>)Result.Fail($"Cannot save course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<Course>)Result.Fail($"Cannot save course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<Course>)Result.Fail($"Invalid course. {e.Message}");
+            }
         }
 
-        public void Update(Course course)
+        public Task<Result> DeleteByIdAsync(string id)
         {
-            var courseDb = mapper.Map<Course, CourseDb>(course);
-            _courseService.Update(courseDb);
+            _courseService.DeleteByIdAsync(id);
+            return Task.FromResult(Result.Ok());
+        }
+
+        public async Task<Result<Course>> UpdateAsync(Course course)
+        {
+            var courseDb = _mapper.Map<Course, CourseDb>(course);
+            try
+            {
+                await _courseService.UpdateAsync(courseDb);
+                return Result<CourseDb>.Ok(_mapper.Map<Course>(courseDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<Course>)Result.Fail($"Cannot save course. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<Course>)Result.Fail($"Invalid course. {e.Message}");
+            }
         }
     }
 }

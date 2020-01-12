@@ -8,36 +8,85 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     class DomainServices : IDomainServices
     {
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
         private readonly IDomainServiceDb _domains;
 
         public DomainServices(IMapper mapper, IDomainServiceDb domains)
         {
-            this.mapper = mapper;
+            this._mapper = mapper;
             _domains = domains;
         }
-        public Domain GetById(string id)
+
+        public async Task<Result<Domain>> AddAsync(Domain domain)
         {
-            //тут должно быть какое-либо преобразование, иначе не имеет смысла
-            return DomainStorage.GetById(id);
+            var domainDb = _mapper.Map<Domain, DomainDb>(domain);
+
+            try
+            {
+                await _domains.AddAsync(domainDb);
+                return Result<DomainDb>.Ok(_mapper.Map<Domain>(domainDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<Domain>)Result.Fail($"Cannot save domain. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<Domain>)Result.Fail($"Cannot save domain. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<Domain>)Result.Fail($"Invalid domain. {e.Message}");
+            }
         }
 
-        public IEnumerable<Domain> GetAll()
+        public Task<Result> DeleteByIdAsync(string id)
         {
-            //return DomainStorage.GetAll();
-            var domains = _domains.GetAll();
-            var result = mapper.Map<IEnumerable<DomainDb>, IEnumerable<Domain>>(domains);
+            _domains.DeleteByIdAsync(id);
+            return Task.FromResult(Result.Ok());
+        }
+
+        public async Task<IEnumerable<Domain>> GetAllAsync()
+        {
+            var domains = await _domains.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<DomainDb>, IEnumerable<Domain>>(domains);
             return result;
         }
-            
-        public Domain Add(Domain domain)
+
+        public async Task<Domain> GetByIdAsync(string id)
         {
-            return DomainStorage.Add(domain);
+            var domains = await _domains.GetByIdAsync(id);
+            var result = _mapper.Map<DomainDb, Domain>(domains);
+            return result;
+        }
+
+        public async Task<Result<Domain>> UpdateAsync(Domain domain)
+        {
+            var domainDb = _mapper.Map<Domain, DomainDb>(domain);
+            try
+            {
+                await _domains.UpdateAsync(domainDb);
+                return Result<DomainDb>.Ok(_mapper.Map<Domain>(domainDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<Domain>)Result.Fail($"Cannot save domain. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<Domain>)Result.Fail($"Cannot save domain. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<Domain>)Result.Fail($"Invalid domain. {e.Message}");
+            }
         }
     }
 }

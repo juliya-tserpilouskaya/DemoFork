@@ -1,14 +1,16 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public interface ICourseCategoryServiceDb
     {
-        IEnumerable<CourseCategoryDb> GetAll();
-        CourseCategoryDb GetById(string id);
-        void Add(CourseCategoryDb courseDb);
-        void Delete(CourseCategoryDb courseDb);
-        void Update(CourseCategoryDb courseDb);
+        Task<IEnumerable<CourseCategoryDb>> GetAllAsync();
+        Task<CourseCategoryDb> GetByIdAsync(string id);
+        Task<CourseCategoryDb> AddAsync(CourseCategoryDb courseCategoryDb);
+        Task DeleteAsync(CourseCategoryDb courseCategoryDb);
+        Task DeleteByIdAsync(string id);
+        Task<CourseCategoryDb> UpdateAsync(CourseCategoryDb courseCategoryDb);
     }
 }

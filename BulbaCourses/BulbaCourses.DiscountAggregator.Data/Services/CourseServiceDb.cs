@@ -18,16 +18,24 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             this.courseContext = courseService;
         }
 
-        public void Add(CourseDb course)
+        public async Task<CourseDb> AddAsync(CourseDb course)
         {
             courseContext.Courses.Add(course);
-            courseContext.SaveChanges();
+            courseContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return await Task.FromResult(course);
         }
+        
 
         public IEnumerable<CourseDb> GetAll()
         {
             var coursesList = courseContext.Courses.ToList().AsReadOnly();
             return coursesList;
+        }
+        
+        public async Task<IEnumerable<CourseDb>> GetAllAsync()
+        {
+            var coursesList = await courseContext.Courses.ToListAsync().ConfigureAwait(false);
+            return coursesList.AsReadOnly();
         }
 
         public CourseDb GetById(string id)
@@ -35,20 +43,35 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             var course = courseContext.Courses.FirstOrDefault(c => c.Id.Equals(id));
             return course;
         }
-
-        public void Delete(CourseDb course)
+        
+        public async Task<CourseDb> GetByIdAsync(string id)
         {
-            courseContext.Courses.Remove(course);
-            courseContext.SaveChanges();
+            var course = await courseContext.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            return course;
         }
 
-        public void Update(CourseDb course)
+        public async Task DeleteAsync(CourseDb course)
         {
-            if(course != null)
+            courseContext.Courses.Remove(course);
+            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+        
+        public async Task DeleteByIdAsync(string id)
+        {
+            var course = courseContext.Courses.SingleOrDefault(c => c.Id.Equals(id));
+            courseContext.Courses.Remove(course);
+            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<CourseDb> UpdateAsync(CourseDb course)
+        {
+            if (course == null)
             {
-                courseContext.Entry(course).State = EntityState.Modified;
-                courseContext.SaveChanges();
-            } 
+                throw new ArgumentNullException("course");
+            }
+            courseContext.Entry(course).State = EntityState.Modified;
+            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(course);
         }
     }
 }

@@ -14,11 +14,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
         public AutoMapperLogicProfile()
         {
             CreateMap<CourseDb, Course>().ReverseMap();
-            //CreateMap<Course, CourseDb>();
-
             CreateMap<UserProfileDb, UserProfile>().ReverseMap();
-            //CreateMap<UserProfile, UserProfileDb>();
-
             CreateMap<CourseBookmarkDb, CourseBookmark>().ReverseMap();
             CreateMap<CourseCategoryDb, CourseCategory>().ReverseMap();
             CreateMap<DomainDb, Domain>().ReverseMap();

@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 
@@ -10,19 +15,78 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     class CourseCategoryServices : ICourseCategoryServices
     {
-        public CourseCategory Add(CourseCategory courseCategory)
+        private readonly IMapper _mapper;
+        private readonly ICourseCategoryServiceDb _courseCategoryServiceDb;
+
+        public CourseCategoryServices(IMapper mapper, ICourseCategoryServiceDb courseCategoryServiceDb)
         {
-            return CourseCategoryStorage.Add(courseCategory);
+            this._mapper = mapper;
+            _courseCategoryServiceDb = courseCategoryServiceDb;
         }
 
-        public IEnumerable<CourseCategory> GetAll()
+        public async Task<Result<CourseCategory>> AddAsync(CourseCategory courseCategory)
         {
-            return CourseCategoryStorage.GetAll();
+            var courseCategoryDb = _mapper.Map<CourseCategory, CourseCategoryDb>(courseCategory);
+
+            try
+            {
+                await _courseCategoryServiceDb.AddAsync(courseCategoryDb);
+                return Result<CourseCategoryDb>.Ok(_mapper.Map<CourseCategory>(courseCategoryDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Cannot save category. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Cannot save category. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Invalid category. {e.Message}");
+            }
         }
 
-        public CourseCategory GetById(string id)
+        public Task<Result> DeleteByIdAsync(string id)
         {
-            return CourseCategoryStorage.GetById(id);
+            _courseCategoryServiceDb.DeleteByIdAsync(id);
+            return Task.FromResult(Result.Ok());
+        }
+
+        public async Task<IEnumerable<CourseCategory>> GetAllAsync()
+        {
+            var categories = await _courseCategoryServiceDb.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<CourseCategoryDb>, IEnumerable<CourseCategory>>(categories);
+            return result;
+        }
+
+        public async Task<CourseCategory> GetByIdAsync(string id)
+        {
+            var categories = await _courseCategoryServiceDb.GetByIdAsync(id);
+            var result = _mapper.Map<CourseCategoryDb, CourseCategory>(categories);
+            return result;
+        }
+
+        public async Task<Result<CourseCategory>> UpdateAsync(CourseCategory category)
+        {
+            var categoryDb = _mapper.Map<CourseCategory, CourseCategoryDb>(category);
+            try
+            {
+                await _courseCategoryServiceDb.UpdateAsync(categoryDb);
+                return Result<CourseDb>.Ok(_mapper.Map<CourseCategory>(categoryDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Cannot save category. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Cannot save category. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseCategory>)Result.Fail($"Invalid category. {e.Message}");
+            }
         }
     }
 }

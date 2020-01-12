@@ -30,9 +30,11 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
 
+            //TODO использовать ресурсы
             var data = File.ReadAllBytes(
-                //@"D:\Education\It-Academy\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-                @"D:\git\testReset\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+            //@"D:\Education\It-Academy\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+            //@"D:\git\testReset\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+            @"E:\Programming\IT-Academy\Project\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
