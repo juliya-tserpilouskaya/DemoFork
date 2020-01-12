@@ -61,6 +61,10 @@
     <Compile Include="DataModule.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Migrations\202001121527258_updatemodel.cs" />
+    <Compile Include="Migrations\202001121527258_updatemodel.Designer.cs">
+      <DependentUpon>202001121527258_updatemodel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\TaskDb.cs" />
     <Compile Include="Models\UserDb.cs" />
@@ -73,6 +77,10 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001121527258_updatemodel.resx">
+      <DependentUpon>202001121527258_updatemodel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

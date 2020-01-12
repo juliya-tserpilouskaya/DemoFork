@@ -30,6 +30,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Task is found")]
         public IHttpActionResult GetAll()
+
         {
             var result = _taskservice.GetTasks();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);

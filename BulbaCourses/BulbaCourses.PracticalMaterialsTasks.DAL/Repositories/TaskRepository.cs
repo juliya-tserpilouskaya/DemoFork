@@ -19,7 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         }
         public IEnumerable<TaskDb> GetAll()
         {
-            return db.Tasks;
+            return db.Tasks.ToList();
         }
         public TaskDb Get(string id)
         {
