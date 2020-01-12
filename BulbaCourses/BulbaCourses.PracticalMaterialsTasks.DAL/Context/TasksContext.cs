@@ -18,7 +18,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Context
         {
             Database.SetInitializer<TasksContext>(new DbInitializer());
         }
-        public TasksContext(string connectionString) : base("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\\TaskDB.mdf';Integrated Security=True")
+        public TasksContext(string connectionString) : base(connectionString)
         {
            
         }

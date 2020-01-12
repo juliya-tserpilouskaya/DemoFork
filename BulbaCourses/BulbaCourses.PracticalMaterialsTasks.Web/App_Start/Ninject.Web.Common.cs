@@ -13,7 +13,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.App_Start
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using Ninject.Web.WebApi;
-
+    using Ninject.Modules;
+    using BLL.Infrastructure;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -64,7 +65,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            NinjectModule serviceModule = new ServiceModule("DefaultConnection");
+            kernel.Load(serviceModule);
             kernel.Load<LogicModule>();
+            
+
         }        
     }
 }

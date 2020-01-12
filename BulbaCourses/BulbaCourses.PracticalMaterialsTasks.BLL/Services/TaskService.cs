@@ -12,7 +12,7 @@ using BulbaCourses.PracticalMaterialsTasks.BLL.Infrastructure;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 {
-    class TaskService : ITaskService
+    public class TaskService : ITaskService
     {
         IUnitOfWork DataBase { get; set; }
 

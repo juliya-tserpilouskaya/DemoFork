@@ -17,8 +17,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL
         public override void Load()
         {
             Bind<ITaskService>().To<TaskService>();
-            Bind<IUnitOfWork>().To<EFUnitOfWork>();
-            this.Kernel?.Load(new[] { new DataModule() });
+            //Bind<IUnitOfWork>().To<EFUnitOfWork>();
+            //this.Kernel?.Load(new[] { new DataModule() });
         }
     }
 }
