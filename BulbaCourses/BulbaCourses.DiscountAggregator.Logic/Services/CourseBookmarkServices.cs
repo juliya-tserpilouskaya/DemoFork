@@ -13,35 +13,38 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
     public class CourseBookmarkServices : ICourseBookmarkServices
     {
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
         private readonly IBookmarkServiceDb _bookmarkServiceDb;
 
         public CourseBookmarkServices(IMapper mapper, IBookmarkServiceDb bookmarkServiceDb)
         {
-            this.mapper = mapper;
+            this._mapper = mapper;
             _bookmarkServiceDb = bookmarkServiceDb;
         }
-        public IEnumerable<CourseBookmark> GetAll()
+
+        public async Task<IEnumerable<CourseBookmark>> GetByUserIdAsync(string userId)
         {
-            var bookmarks = _bookmarkServiceDb.GetAll();
-            var result = mapper.Map<IEnumerable<CourseBookmarkDb>, IEnumerable<CourseBookmark>>(bookmarks);
+            var bookmarks = await _bookmarkServiceDb.GetByUserIdAsync(userId);
+            var result = _mapper.Map<IEnumerable<CourseBookmarkDb>, IEnumerable<CourseBookmark>>(bookmarks);
             return result;
         }
 
-        public async Task<CourseBookmark> AddAsync(CourseBookmark courseBookmark)
+        public async Task<Result<CourseBookmark>> AddAsync(CourseBookmark bookmark)
         {
-            courseBookmark.Id = Guid.NewGuid().ToString();
-            var bookmarkDb = mapper.Map<CourseBookmark, CourseBookmarkDb>(courseBookmark);
-            await _bookmarkServiceDb.AddAsync(bookmarkDb);
-            return courseBookmark;
+            bookmark.Id = Guid.NewGuid().ToString();
+            var bookmarkDb = _mapper.Map<CourseBookmark, CourseBookmarkDb>(bookmark);
+            var result = await _bookmarkServiceDb.AddAsync(bookmarkDb);
+            return result ? Result<CourseBookmark>.Ok(bookmark)
+                : (Result<CourseBookmark>)Result<CourseBookmark>.Fail("Cannot save model");
         }
 
-
-        public void DeleteById(string id)
+        public async Task<Result<CourseBookmark>> DeleteAsync(CourseBookmark bookmark)
         {
-            var bookmark = _bookmarkServiceDb.GetById(id);
-            _bookmarkServiceDb.Delete(bookmark);
+            var bookmarkDb = _mapper.Map<CourseBookmark, CourseBookmarkDb>(bookmark);
+            var result = await _bookmarkServiceDb.DeleteAsync(bookmarkDb);
+            
+            return result ? Result<CourseBookmark>.Ok(bookmark)
+                : (Result<CourseBookmark>)Result<CourseBookmark>.Fail("Cannot save model");
         }
-
     }
 }

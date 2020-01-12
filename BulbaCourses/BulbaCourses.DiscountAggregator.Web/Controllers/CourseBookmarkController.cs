@@ -22,19 +22,29 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             _courseBookmarkService = coursebookmarkService;
         }
 
-        [HttpGet, Route("")]
-        [Description("Get all bookmarks")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmarks doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks found", typeof(IEnumerable<CourseBookmark>))]
+        [HttpGet, Route("{userId}")]//можно указать какой тип id
+        [Description("Get Bookmark by UserId")]// для описания ,но в данном примере не работает...
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark found", typeof(CourseBookmark))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetByUserId(string userId)
         {
-            var result = _courseBookmarkService.GetAll();
-            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await _courseBookmarkService.GetByUserIdAsync(userId);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-            
         [HttpPost, Route("")]
         [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
@@ -47,33 +57,24 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                _courseBookmarkService.AddAsync(courseBookmark);
-                return Ok(courseBookmark);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _courseBookmarkService.AddAsync(courseBookmark);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
-        [HttpDelete, Route("{id}")]
-        public IHttpActionResult DeleteById(string id)
+        [HttpDelete, Route("")]
+        [Description("Delete bookmark")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark deleted", typeof(CourseBookmark))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Delete(CourseBookmark bookmark)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (bookmark == null)
             {
                 return BadRequest();
             }
-            try
-            {
-                _courseBookmarkService.DeleteById(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _courseBookmarkService.DeleteAsync(bookmark);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
     }
 }

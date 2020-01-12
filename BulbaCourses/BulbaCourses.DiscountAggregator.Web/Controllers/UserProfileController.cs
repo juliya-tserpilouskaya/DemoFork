@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -62,28 +63,22 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(IEnumerable<UserProfile>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Add([FromBody]UserProfile userProfile)
+        public async Task<IHttpActionResult> Add([FromBody, CustomizeValidator(RuleSet = "AddProfile,default")]UserProfile userProfile)
         {
             if (userProfile == null)
             {
                 return BadRequest();
             }
-            try
-            {
-                await _userProfileService.AddAsync(userProfile);
-                return Ok(userProfile);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _userProfileService.AddAsync(userProfile);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile updated", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]        
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody]UserProfile profile)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateProfile,default")]UserProfile profile)
         {
             if (profile == null)
             {

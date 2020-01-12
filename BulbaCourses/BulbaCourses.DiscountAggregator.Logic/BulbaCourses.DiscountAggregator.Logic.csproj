@@ -102,6 +102,7 @@
     <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
     <Compile Include="Models\ModelsStorage\SearchCriteriaStorage.cs" />
     <Compile Include="Models\ModelsStorage\UserProfileStorage.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Parsers\CommonValues.cs" />
@@ -125,8 +126,10 @@
     <Compile Include="Services\interfaceServices\IUserProfileServices.cs" />
     <Compile Include="Services\SearchCriteriaServices.cs" />
     <Compile Include="Services\UserProfileServices.cs" />
+    <Compile Include="Validators\CourseBookmarkValidator.cs" />
     <Compile Include="Validators\CourseValidator.cs" />
     <Compile Include="Validators\UserAccountValidator.cs" />
+    <Compile Include="Validators\UserProfileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

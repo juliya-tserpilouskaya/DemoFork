@@ -3,8 +3,9 @@ using BulbaCourses.DiscountAggregator.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Services
@@ -25,20 +26,31 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             context.SaveChanges();
         }
 
-        public async Task<int> AddAsync(UserProfileDb profileDb)
+        public async Task<bool> AddAsync(UserProfileDb profileDb)
         {
             context.Profiles.Add(profileDb);
             context.SearchCriterias.Add(profileDb.SearchCriteria);
-            var result = await context.SaveChangesAsync().ConfigureAwait(false);
-            return result;
+            try
+            {
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }           
+            catch (DbEntityValidationException)
+            {
+                return false;
+            }
         }
 
-        public IEnumerable<UserProfileDb> GetAll()
-        {
-            var profiles = context.Profiles.ToList().AsReadOnly();
-            return profiles;
-        }
-
+        public IEnumerable<UserProfileDb> GetAll() => context.Profiles.ToList().AsReadOnly();
+        
         public async Task<IEnumerable<UserProfileDb>> GetAllAsync()
         {
             var userList = await context.Profiles
@@ -48,11 +60,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return userList.AsReadOnly();
         }
 
-        public UserProfileDb GetById(string id)
-        {
-            var profile = context.Profiles.FirstOrDefault(c => c.Id.Equals(id));
-            return profile;
-        }
+        public UserProfileDb GetById(string id) => context.Profiles.FirstOrDefault(c => c.Id.Equals(id));
 
         public async Task<UserProfileDb> GetByIdAsync(string id)
         {

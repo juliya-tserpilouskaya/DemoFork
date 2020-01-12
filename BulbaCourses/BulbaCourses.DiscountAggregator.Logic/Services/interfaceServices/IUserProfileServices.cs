@@ -7,13 +7,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     public interface IUserProfileServices
     {
         UserProfile GetById(string userId);
-        Task<UserProfile> GetByIdAsync(string id);
+        Task<Result<UserProfile>> GetByIdAsync(string id);
         IEnumerable<UserProfile> GetAll();
         Task<IEnumerable<UserProfile>> GetAllAsync();
         UserProfile Add(UserProfile userProfile);
-        Task<UserProfile> AddAsync(UserProfile profile);
-        Task<UserProfile> UpdateAsync(UserProfile profile);
-        Task<UserProfile> DeleteByIdAsync(string idProfile);
+        Task<Result<UserProfile>> AddAsync(UserProfile profile);
+        Task<Result<UserProfile>> UpdateAsync(UserProfile profile);
+        Task<Result<UserProfile>> DeleteByIdAsync(string idProfile);
         Task<bool> ExistsAsync(string login);
     }
 }

@@ -9,9 +9,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public interface IBookmarkServiceDb
     {
-        IEnumerable<CourseBookmarkDb> GetAll();
-        CourseBookmarkDb GetById(string id);
-        Task<CourseBookmarkDb> AddAsync(CourseBookmarkDb courseDb);
-        void Delete(CourseBookmarkDb courseDb);
+        Task<IEnumerable<CourseBookmarkDb>> GetByUserIdAsync(string userId);
+        Task<bool> AddAsync(CourseBookmarkDb bookmarkDb);
+        Task<bool> DeleteAsync(CourseBookmarkDb bookmarkDb);
     }
 }
