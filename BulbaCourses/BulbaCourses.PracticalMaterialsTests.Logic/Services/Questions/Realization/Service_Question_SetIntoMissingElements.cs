@@ -1,13 +1,15 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Data.Context;
+﻿using AutoMapper;
+using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Interfaсe;
 using System;
+using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realization
 {
     public class Service_Question_SetIntoMissingElements : Service_Base, IService_Question
     {
-        protected Service_Question_SetIntoMissingElements(DbContext_Test context) : base(context)
+        protected Service_Question_SetIntoMissingElements(DbContext context, IMapper mapper) : base(context, mapper)
         {
 
         }

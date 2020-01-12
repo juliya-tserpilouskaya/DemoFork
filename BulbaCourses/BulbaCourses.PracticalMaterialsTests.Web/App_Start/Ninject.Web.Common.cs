@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
 {
@@ -29,7 +29,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-
             bootstrapper.Initialize(CreateKernel);
         }
         
@@ -73,8 +72,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            // ---------- LayerLogic
-
             kernel.Bind<IService_Test>().To<Service_Test>();
 
             kernel.Load<ModuleNinject_Logic>();

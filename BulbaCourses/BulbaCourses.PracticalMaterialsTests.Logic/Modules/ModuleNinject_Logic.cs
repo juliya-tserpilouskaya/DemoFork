@@ -9,6 +9,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Modules
     {
         public override void Load()
         {
+            // ---------- Services            
+
             // ---------- AutoMapper
 
             Bind<IMapper>().ToMethod(ctx => new Mapper(new MapperConfiguration(cfg =>
@@ -16,7 +18,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Modules
                 cfg.AddProfile<AutoMapperProfile_Logic>();
             })));
 
-            // ---------- LayerData
+            // ---------- DataLayer
 
             this.Kernel?.Load(new[] { new ModuleNinject_Data() });
         }

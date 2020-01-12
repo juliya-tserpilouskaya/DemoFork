@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using System;
 using System.Data.Entity;
 
@@ -7,13 +6,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService
 {
     public class Service_Base : IDisposable
     {
-        protected readonly DbContext _context;        
+        protected readonly DbContext _context;
+
+        protected readonly IMapper _mapper;
 
         private bool _isDisposed = false;
 
-        protected Service_Base(DbContext context)
+        protected Service_Base(DbContext context, IMapper mapper)
         {
-            _context = context;            
+            _context = context;
+            _mapper = mapper;
         }
 
         public void Dispose()

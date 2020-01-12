@@ -2,25 +2,28 @@
 using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
-{    
+{
     public class Service_Test : Service_Base, IService_Test
     {
-        protected readonly IMapper _mapper;
-
-        public Service_Test(DbContext context, IMapper mapper) : base (context)
+        public Service_Test(DbContext context, IMapper mapper) : base (context, mapper)
         {
-            _mapper = mapper;
+            
         }
-        
+
         public MTest_MainInfo GetById(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =
@@ -32,7 +35,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             return
                 _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
         }
-        
+
         public async Task<MTest_MainInfo> GetByIdAsync(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =
@@ -46,7 +49,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
                 _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
         }
 
-        public int Add(MTest_MainInfo Test_MainInfo)
+        public Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo)
         {            
             MTest_MainInfoDb Test_MainInfoDb =
                  _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
@@ -54,25 +57,151 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             _context.Set<MTest_MainInfoDb>()
                .Add(Test_MainInfoDb);
 
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
 
-            return
-                Test_MainInfoDb.Id;
+                return
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+            }            
         }
 
-        public Task<int> AddAsync(MTest_MainInfo Test_MainInfo)
+        public async Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo)
         {
-            throw new NotImplementedException();
+            MTest_MainInfoDb Test_MainInfoDb =
+                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+            _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                return 
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+            }
         }
 
-        public void DropById(int Id)
+        public Result<MTest_MainInfo> Update(MTest_MainInfo Test_MainInfo)
         {
-            throw new NotImplementedException();
+            MTest_MainInfoDb Test_MainInfoDb =
+                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+            var entry = _context.Entry(Test_MainInfoDb);
+
+            entry.State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+
+                return
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot update model. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+            }
         }
 
-        public void DropByIdAsync(int Id)
+        public async Task<Result<MTest_MainInfo>> UpdateAsync(MTest_MainInfo Test_MainInfo)
         {
-            throw new NotImplementedException();
+            MTest_MainInfoDb Test_MainInfoDb =
+                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);            
+
+            var entry = _context.Entry(Test_MainInfo);
+
+            entry.State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                return
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot update model. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+            }
+        }
+
+        public Result DeleteById(int Id)
+        {
+            _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
+
+            try
+            {
+                _context.SaveChanges();
+
+                return
+                    Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
+            }
+        }
+
+        public async Task<Result> DeleteByIdAsync(int Id)
+        {
+            _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                return
+                    Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
+            }
         }
     }
 }

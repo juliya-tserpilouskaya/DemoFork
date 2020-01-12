@@ -81,8 +81,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Services\Tests\UnitTest_Service_Test.cs" />
-    <Compile Include="Logic\UnitTest_Validator.cs" />
+    <Compile Include="Logic\Services\Tests\UnitTest_Service_Test.cs" />
+    <Compile Include="Logic\Validation\UnitTest_Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

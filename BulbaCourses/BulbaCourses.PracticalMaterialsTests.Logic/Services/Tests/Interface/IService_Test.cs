@@ -1,5 +1,9 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface
@@ -10,12 +14,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface
 
         Task<MTest_MainInfo> GetByIdAsync(int Id);
 
-        int Add(MTest_MainInfo Test_MainInfo);
+        Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo);
 
-        Task<int> AddAsync(MTest_MainInfo Test_MainInfo);
+        Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo);
 
-        void DropById(int Id);
+        Result<MTest_MainInfo> Update(MTest_MainInfo Test_MainInfo);
 
-        void DropByIdAsync(int Id);
+        Task<Result<MTest_MainInfo>> UpdateAsync(MTest_MainInfo Test_MainInfo);
+
+        Result DeleteById(int Id);
+
+        Task<Result> DeleteByIdAsync(int Id);
     }
 }

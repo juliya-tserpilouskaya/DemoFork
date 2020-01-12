@@ -12,8 +12,6 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +70,7 @@
     <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromList.cs" />
     <Compile Include="Models\Questions\MQuestion_SetIntoMissingElements.cs" />
     <Compile Include="Models\Questions\MQuestion_SetOrder.cs" />
+    <Compile Include="Models\Common\Result.cs" />
     <Compile Include="Models\Tests\MTest_MainInfo.cs" />
     <Compile Include="Modules\ModuleNinject_Logic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
