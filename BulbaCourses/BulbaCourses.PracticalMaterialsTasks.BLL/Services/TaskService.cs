@@ -15,6 +15,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
     public class TaskService : ITaskService
     {
         IUnitOfWork DataBase { get; set; }
+        private readonly IMapper _mapper;
 
         public TaskService(IUnitOfWork unit)
         {
@@ -32,10 +33,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
                 Created = taskDto.Created,
                 Modified = taskDto.Modified
             };
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb, TaskDTO>()).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
+            var taskDB = mapper.Map<TaskDTO, TaskDb>(task);
+            
 
-
-            DataBase.Tasks.Create(mapper);
+            DataBase.Tasks.Create(taskDB);
             DataBase.Save();
         }
 
