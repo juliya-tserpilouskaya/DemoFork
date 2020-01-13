@@ -132,6 +132,7 @@
     <Compile Include="Services\SearchCriteriaServices.cs" />
     <Compile Include="Services\UserProfileServices.cs" />
     <Compile Include="Validators\CategoryValidator.cs" />
+    <Compile Include="Validators\SearchCriteriaValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\CourseBookmarkValidator.cs" />
     <Compile Include="Validators\CourseValidator.cs" />

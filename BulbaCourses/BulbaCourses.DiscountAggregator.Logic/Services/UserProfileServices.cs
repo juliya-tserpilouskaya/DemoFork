@@ -61,7 +61,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             var result = await _profileService.AddAsync(profileDb);
             return result ? Result<UserProfile>.Ok(profile) 
-                : (Result<UserProfile>)Result<UserProfile>.Fail("Cannot save model");
+                : (Result<UserProfile>)Result<UserProfile>.Fail<UserProfile>("Cannot save model");
         }
 
         public void Delete(UserProfile profile)

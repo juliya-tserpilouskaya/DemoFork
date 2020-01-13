@@ -4,19 +4,20 @@ using FluentValidation;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Validators
 {
-    class UserProfileValidator : AbstractValidator<UserProfile>
+    public class UserProfileValidator : AbstractValidator<UserProfile>
     {
-
         public UserProfileValidator(IUserProfileServices userAccountService)
         {
+            CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleSet("AddProfile", () =>
              {
+                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
              });
 
             RuleSet("UpdateProfile", () =>
             {
-                    RuleFor(x => x.Id).MustAsync(async (id, token) =>
-                 (await userAccountService.ExistsAsync(id).ConfigureAwait(false)));
+                 //   RuleFor(x => x.Id).MustAsync(async (id, token) =>
+                 //(await userAccountService.ExistsAsync(id).ConfigureAwait(false)));
             });
 
             RuleFor(x => x.FirstName).NotEmpty().Length(1, 105);

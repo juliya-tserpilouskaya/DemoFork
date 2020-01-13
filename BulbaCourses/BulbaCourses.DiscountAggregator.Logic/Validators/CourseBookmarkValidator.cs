@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Validators
 {
-    class CourseBookmarkValidator : AbstractValidator<CourseBookmark>
+    public class CourseBookmarkValidator : AbstractValidator<CourseBookmark>
     {
         public CourseBookmarkValidator(ICourseBookmarkServices courseBookmarkService)
         {

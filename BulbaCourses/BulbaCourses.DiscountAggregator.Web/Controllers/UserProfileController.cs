@@ -61,9 +61,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [HttpPost, Route("")]
         [Description("Add new profile")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(IEnumerable<UserProfile>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Add([FromBody, CustomizeValidator(RuleSet = "AddProfile,default")]UserProfile userProfile)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet="*")]UserProfile userProfile)
         {
             if (userProfile == null)
             {
