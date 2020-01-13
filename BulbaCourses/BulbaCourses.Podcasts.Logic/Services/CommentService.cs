@@ -14,9 +14,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
     public class CommentService : ICommentService
     {
         private readonly IMapper mapper;
-        private readonly IDBManager dbmanager;
+        private readonly IManager<T> dbmanager;
 
-        public CommentService(IMapper mapper, IDBManager dbmanager)
+        public CommentService(IMapper mapper, IManager<CommentDb> dbmanager)
         {
             this.mapper = mapper;
             this.dbmanager = dbmanager;

@@ -13,14 +13,11 @@ namespace BulbaCourses.Podcasts.Logic.Infrastructure
     {
         public MapperLogicProfile()
         {
-            CreateMap<UserDb, UserLogic>();
-            CreateMap<UserLogic, UserDb>();
+            CreateMap<UserDb, UserLogic>().ReverseMap();
 
-            CreateMap<CommentDb, CommentLogic>();
-            CreateMap<CommentLogic, CommentDb>();
+            CreateMap<CommentDb, CommentLogic>().ReverseMap();
 
-            CreateMap<CourseDb, CourseLogic>();
-            CreateMap<CourseLogic, CourseDb>();
+            CreateMap<CourseDb, CourseLogic>().ReverseMap();
         }
     }
 }

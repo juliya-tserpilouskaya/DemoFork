@@ -14,9 +14,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
     public class CourseService : ICourseService
     {
         private readonly IMapper mapper;
-        private readonly IDBManager dbmanager;
+        private readonly IManager dbmanager;
 
-        public CourseService(IMapper mapper, IDBManager dbmanager)
+        public CourseService(IMapper mapper, IManager dbmanager)
         {
             this.mapper = mapper;
             this.dbmanager = dbmanager;

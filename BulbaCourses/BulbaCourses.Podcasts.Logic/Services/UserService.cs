@@ -14,9 +14,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
     public class UserService : IUserService
     {
         private readonly IMapper mapper;
-        private readonly IDBManager dbmanager;
+        private readonly IManager dbmanager;
 
-        public UserService(IMapper mapper, IDBManager dbmanager)
+        public UserService(IMapper mapper, IManager dbmanager)
         {
             this.mapper = mapper;
             this.dbmanager = dbmanager;
