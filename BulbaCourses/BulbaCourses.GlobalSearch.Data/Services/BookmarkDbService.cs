@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Data.Services
 {
-    class BookmarkDbService : IBookmarkDbService
+    public class BookmarkDbService : IBookmarkDbService
     {
         private GlobalSearchContext _context = new GlobalSearchContext();
         private bool _isDisposed;

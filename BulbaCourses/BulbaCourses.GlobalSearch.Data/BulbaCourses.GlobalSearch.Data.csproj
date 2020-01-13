@@ -194,7 +194,7 @@
     <Compile Include="Services\Interfaces\IUserDbService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />
     <Compile Include="Services\CourseDbService.cs" />
-    <Compile Include="Services\UserDBService.cs" />
+    <Compile Include="Services\UserDbService1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
