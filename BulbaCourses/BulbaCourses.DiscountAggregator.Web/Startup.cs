@@ -35,6 +35,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             //@"D:\Education\It-Academy\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
             //@"D:\git\testReset\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
             //@"E:\Programming\IT-Academy\Project\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+            //@"E:\Programming\IT-Academy\Project\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
             @"D:\asp\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()

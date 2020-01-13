@@ -63,15 +63,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<Course>)Result.Fail($"Cannot save course. {e.Message}");
+                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<Course>)Result.Fail($"Cannot save course. Duplicate field. {e.Message}");
+                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<Course>)Result.Fail($"Invalid course. {e.Message}");
+                return (Result<Course>)Result<Course>.Fail<Course>($"Invalid course. {e.Message}");
             }
         }
 
@@ -91,11 +91,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<Course>)Result.Fail($"Cannot save course. {e.Message}");
+                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<Course>)Result.Fail($"Invalid course. {e.Message}");
+                return (Result<Course>)Result<Course>.Fail<Course>($"Invalid course. {e.Message}");
             }
         }
     }

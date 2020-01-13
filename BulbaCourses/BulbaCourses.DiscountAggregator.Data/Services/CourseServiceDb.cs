@@ -3,6 +3,8 @@ using BulbaCourses.DiscountAggregator.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +21,11 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         }
 
         public async Task<CourseDb> AddAsync(CourseDb course)
-        {
+        { 
             courseContext.Courses.Add(course);
             courseContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return await Task.FromResult(course);
         }
-        
 
         public IEnumerable<CourseDb> GetAll()
         {

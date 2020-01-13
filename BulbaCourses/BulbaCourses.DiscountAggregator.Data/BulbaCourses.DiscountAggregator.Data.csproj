@@ -78,17 +78,9 @@
     <Compile Include="Migrations\202001092052365_update1.Designer.cs">
       <DependentUpon>202001092052365_update1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001100655103_UpdateCourse.cs" />
-    <Compile Include="Migrations\202001100655103_UpdateCourse.Designer.cs">
-      <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101813201_ignorechange.cs" />
-    <Compile Include="Migrations\202001101813201_ignorechange.Designer.cs">
-      <DependentUpon>202001101813201_ignorechange.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101909517_deleteUserAccount.cs" />
-    <Compile Include="Migrations\202001101909517_deleteUserAccount.Designer.cs">
-      <DependentUpon>202001101909517_deleteUserAccount.cs</DependentUpon>
+    <Compile Include="Migrations\202001130800236_Changed.cs" />
+    <Compile Include="Migrations\202001130800236_Changed.Designer.cs">
+      <DependentUpon>202001130800236_Changed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -143,14 +135,8 @@
     <EmbeddedResource Include="Migrations\202001092052365_update1.resx">
       <DependentUpon>202001092052365_update1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001100655103_UpdateCourse.resx">
-      <DependentUpon>202001100655103_UpdateCourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101813201_ignorechange.resx">
-      <DependentUpon>202001101813201_ignorechange.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101909517_deleteUserAccount.resx">
-      <DependentUpon>202001101909517_deleteUserAccount.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001130800236_Changed.resx">
+      <DependentUpon>202001130800236_Changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -35,15 +35,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<Domain>)Result.Fail($"Cannot save domain. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<Domain>)Result.Fail($"Cannot save domain. Duplicate field. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<Domain>)Result.Fail($"Invalid domain. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Invalid domain. {e.Message}");
             }
         }
 
@@ -77,15 +77,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<Domain>)Result.Fail($"Cannot save domain. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<Domain>)Result.Fail($"Cannot save domain. Duplicate field. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<Domain>)Result.Fail($"Invalid domain. {e.Message}");
+                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Invalid domain. {e.Message}");
             }
         }
     }
