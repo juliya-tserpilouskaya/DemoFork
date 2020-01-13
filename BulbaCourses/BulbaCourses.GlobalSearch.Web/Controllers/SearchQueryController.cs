@@ -78,6 +78,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query data")]
         public IHttpActionResult Create([FromBody]SearchQueryDTO query)
         {
             if(!ModelState.IsValid)

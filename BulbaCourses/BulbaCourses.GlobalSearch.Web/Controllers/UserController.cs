@@ -101,7 +101,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult Create([FromBody]UserDTO user)
         {
             //validate here
-            if (user == null)
+            if (user == null || !ModelState.IsValid)
             {
                 return BadRequest();
             }

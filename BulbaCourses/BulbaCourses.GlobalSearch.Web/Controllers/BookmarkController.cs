@@ -76,9 +76,13 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
         public IHttpActionResult Create([FromBody]BookmarkDTO bookmark)
         {
-            //validate here
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             return Ok(_bookmarkService.Add(bookmark));
         }
 
