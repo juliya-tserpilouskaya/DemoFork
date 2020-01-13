@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorServiceTests.cs" />
+    <Compile Include="CommentServiceTests.cs" />
     <Compile Include="CourseControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDbAsyncQueryProvider.cs" />

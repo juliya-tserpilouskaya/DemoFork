@@ -20,7 +20,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
         public DbSet<CourseDb> Courses { get; set; }
         public DbSet<TagDb> Tags { get; set; }
-        public DbSet<CommentDb> Comments { get; set; }
+        public virtual DbSet<CommentDb> Comments { get; set; }
         public DbSet<TransactionDb> Transactions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
