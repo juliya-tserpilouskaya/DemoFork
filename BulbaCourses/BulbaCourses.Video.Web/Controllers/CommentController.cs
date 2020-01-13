@@ -68,17 +68,9 @@ namespace BulbaCourses.Video.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
-                await _commentService.AddAsync(commentInfo);
-                return Ok(comment);
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
+            var result = await _commentService.AddAsync(commentInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("{id}")]
@@ -91,24 +83,15 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 return BadRequest();
             }
-            comment.CommentId = id;
 
             if (comment == null)
             {
                 return BadRequest();
             }
 
-            try
-            {
-                var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
-                await _commentService.UpdateAsync(commentInfo);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var commentInfo = _mapper.Map<CommentView, CommentInfo>(comment);
+            var result = await _commentService.UpdateAsync(commentInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id}")]

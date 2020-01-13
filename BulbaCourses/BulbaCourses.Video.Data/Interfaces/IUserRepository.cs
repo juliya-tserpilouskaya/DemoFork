@@ -17,10 +17,9 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<UserDb> GetByIdAsync(string userId);
         Task<IEnumerable<UserDb>> GetAllAsync();
-        Task<int> AddAsync(UserDb userDb);
-        Task<int> UpdateAsync(UserDb userDb);
-        Task<int> RemoveAsync(UserDb user);
-        Task<bool> IsLoginExistAsync(string login);
-        Task<bool> IsEmailExistAsync(string email);
+        Task<UserDb> AddAsync(UserDb userDb);
+        Task<UserDb> UpdateAsync(UserDb userDb);
+        Task RemoveAsync(UserDb user);
+        Task RemoveAsyncById(string userId);
     }
 }

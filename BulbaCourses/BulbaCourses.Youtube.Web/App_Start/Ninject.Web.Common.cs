@@ -1,12 +1,12 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Youtube.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.Youtube.Web.App_Start
 {
     using System;
     using System.Web;
     using System.Web.Http;
-    using BulbaCourses.Youtube.Web.Logic;
+    using BulbaCourses.Youtube.Logic;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -65,6 +65,7 @@ namespace BulbaCourses.Youtube.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<LogicModule>();
+            kernel.RegisterEasyNetQ("host=localhost");
         }        
     }
 }

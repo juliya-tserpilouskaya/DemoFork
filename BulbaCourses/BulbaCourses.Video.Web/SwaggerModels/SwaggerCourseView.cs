@@ -13,11 +13,10 @@ namespace BulbaCourses.Video.Web.Models
         {
             return new CourseView
             {
-                CourseId = Guid.NewGuid().ToString(),
                 Name ="Name",
                 Description="Course description",
                 Duration = 100,
-                Level = Enums.CourseLevel.Beginner,
+                Level = Logic.Models.Enums.CourseLevel.Beginner,
                 Raiting = 4.6,
                 Price =99.99
             };
