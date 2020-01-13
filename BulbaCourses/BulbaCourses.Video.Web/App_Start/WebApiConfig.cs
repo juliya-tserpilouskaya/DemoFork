@@ -1,6 +1,4 @@
 ﻿using BulbaCourses.Video.Web.App_Start;
-using BulbaCourses.Video.Web.Models.CourseViews;
-using BulbaCourses.Video.Web.Models.UserViews;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;

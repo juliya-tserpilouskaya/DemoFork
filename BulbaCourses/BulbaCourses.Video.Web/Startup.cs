@@ -2,7 +2,6 @@
 using BulbaCourses.Video.Web.App_Start;
 using BulbaCourses.Video.Web.Infrastructure;
 using BulbaCourses.Video.Web.Models;
-using BulbaCourses.Video.Web.Models.CourseViews;
 using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;

@@ -1,5 +1,5 @@
 ﻿using BulbaCourses.Video.Logic.InterfaceServices;
-using BulbaCourses.Video.Web.Models.CourseViews;
+using BulbaCourses.Video.Web.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

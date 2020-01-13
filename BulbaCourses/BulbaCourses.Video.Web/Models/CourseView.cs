@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BulbaCourses.Video.Web.Models.CourseViews
+namespace BulbaCourses.Video.Web.Models
 {
     [Validator(typeof(CourseViewValidator))]
     public class CourseView

@@ -2,7 +2,6 @@
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Models;
-using BulbaCourses.Video.Web.Models.CourseViews;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
