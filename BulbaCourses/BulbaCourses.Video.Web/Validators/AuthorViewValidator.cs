@@ -22,7 +22,7 @@ namespace BulbaCourses.Video.Web.Validators
             RuleFor(c => c.Lastname).MaximumLength(20).WithMessage("Lastname must contain maximum 20 characters.");
 
             RuleFor(c => c.Annotation).NotEmpty().WithMessage("Author Annotation is required.");
-            RuleFor(c => c.Annotation).MinimumLength(50).WithMessage("Annotation must contain minimum 50 characters.");
+            RuleFor(c => c.Annotation).MinimumLength(5).WithMessage("Annotation must contain minimum 5 characters.");
             RuleFor(c => c.Annotation).MaximumLength(1000).WithMessage("Annotation must contain maximum 1000 characters.");
 
             RuleFor(c => c.Professions).NotEmpty().WithMessage("Author Professions is required.");

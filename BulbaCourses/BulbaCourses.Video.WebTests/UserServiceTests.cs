@@ -102,11 +102,11 @@ namespace BulbaCourses.Video.WebTests
         public async Task Test_Add_User_Async()
         {
             _mockMapper.Setup(m => m.Map<UserInfo, UserDb>(_userInfo)).Returns(_userDb);
+            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
             _mockUserRepository.Setup(c => c.AddAsync(_userDb)).Returns(async () => _userDb);
-
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var result = await service.AddAsync(_userInfo);
-            result.Should().Be(_userDb);
+            result.IsSuccess.Should().BeTrue();
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace BulbaCourses.Video.WebTests
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.DeleteAsync(_userInfo);
 
-            res.Should().Be(Task.FromResult(Result.Ok()));
+            res.IsSuccess.Should().BeTrue();
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace BulbaCourses.Video.WebTests
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.UpdateAsync(_userInfo);
 
-            res.Should().Be(_userDb);
+            res.IsSuccess.Should().BeTrue();
         }
     }
 }

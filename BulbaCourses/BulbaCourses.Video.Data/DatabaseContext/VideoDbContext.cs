@@ -16,7 +16,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
         }
         public DbSet<UserDb> Users { get; set; }
-        public DbSet<AuthorDb> Authors { get; set; }
+        public virtual DbSet<AuthorDb> Authors { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
         public DbSet<CourseDb> Courses { get; set; }
         public DbSet<TagDb> Tags { get; set; }
