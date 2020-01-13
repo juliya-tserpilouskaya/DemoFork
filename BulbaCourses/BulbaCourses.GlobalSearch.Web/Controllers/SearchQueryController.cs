@@ -54,6 +54,28 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        [HttpGet, Route("user/{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid user id")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "User is not found")]
+        [SwaggerResponse(HttpStatusCode.OK, "Search queries are found", typeof(IEnumerable<SearchQueryDTO>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
+        public async Task<IHttpActionResult> GetByUserId(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await _searchQueryService.GetByUserIdAsync(id);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
         public IHttpActionResult Create([FromBody]SearchQueryDTO query)
