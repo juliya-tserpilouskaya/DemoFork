@@ -23,13 +23,19 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 
         public void MakeTask(TaskDTO taskDto)
         {
-            TaskDb task = DataBase.Tasks.Get(taskDto.Id);
-
-            if(task == null)
+            TaskDTO task = new TaskDTO()
             {
-                throw new ValidationExeption("No Task","task");
-            }
-            DataBase.Tasks.Create(task);
+                Id = taskDto.Id,
+                Name = taskDto.Name,
+                Text = taskDto.Text,
+                TaskLevel = taskDto.TaskLevel,
+                Created = taskDto.Created,
+                Modified = taskDto.Modified
+            };
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb, TaskDTO>()).CreateMapper();
+
+
+            DataBase.Tasks.Create(mapper);
             DataBase.Save();
         }
 
