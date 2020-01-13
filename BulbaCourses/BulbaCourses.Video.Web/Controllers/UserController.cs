@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models.UserViews;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,7 @@ namespace BulbaCourses.Video.Web.Controllers
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserInfo))]
+        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
         {
@@ -60,44 +62,43 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddUser")]UserProfileView user)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-            try
+
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.AddAsync(userInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+        }
+
+        [HttpPost, Route("buy")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserProfileView))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Buy([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user, Subscription subscription)
+        {
+            if (!ModelState.IsValid)
             {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
-                await _userService.AddAsync(userInfo);
-                return Ok(user);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.BuySubscription(userInfo, subscription);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
         }
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserProfileView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody]UserProfileView user)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser")]UserProfileView user)
         {
-            if (user == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
-                await _userService.UpdateAsync(userInfo);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
+            var result = await _userService.UpdateAsync(userInfo);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id})")]

@@ -34,6 +34,10 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BulbaCourses.Analytics.BLL\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -54,6 +58,9 @@
     <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="Models\CommentInfo.cs" />
     <Compile Include="Models\CourseInfo.cs" />
+    <Compile Include="Models\Enums\CourseLevel.cs" />
+    <Compile Include="Models\Enums\Subscription.cs" />
+    <Compile Include="Models\ResultModels\Result.cs" />
     <Compile Include="Models\TagInfo.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\VideoMaterialInfo.cs" />

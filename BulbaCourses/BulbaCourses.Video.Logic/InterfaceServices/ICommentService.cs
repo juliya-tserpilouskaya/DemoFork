@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,15 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         IEnumerable<CommentInfo> GetAll();
         void Add(CommentInfo comment);
         void Update(CommentInfo comment);
-        CommentInfo UpdateCommentText(string commentId, string newText);
         void Delete(CommentInfo comment);
         void DeleteById(string commentId);
+        CommentInfo UpdateCommentText(string commentId, string newText);
 
         Task<CommentInfo> GetCommentByIdAsync(string commentId);
         Task<IEnumerable<CommentInfo>> GetAllAsync();
-        Task<int> UpdateAsync(CommentInfo comment);
-        Task<int> AddAsync(CommentInfo comment);
-        Task<int> DeleteByIdAsync(string commentId);
+        Task<Result<CommentInfo>> UpdateAsync(CommentInfo comment);
+        Task<Result<CommentInfo>> AddAsync(CommentInfo comment);
+        Task<Result> DeleteByIdAsync(string commentId);
 
     }
 }

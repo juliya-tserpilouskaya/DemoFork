@@ -17,8 +17,9 @@ namespace BulbaCourses.Video.Data.Interfaces
 
         Task<CommentDb> GetByIdAsync(string commentId);
         Task<IEnumerable<CommentDb>> GetAllAsync();
-        Task<int> AddAsync(CommentDb commentDb);
-        Task<int> UpdateAsync(CommentDb commentDb);
-        Task<int> RemoveAsync(CommentDb comment);
+        Task<CommentDb> AddAsync(CommentDb commentDb);
+        Task<CommentDb> UpdateAsync(CommentDb commentDb);
+        Task RemoveAsync(CommentDb comment);
+        Task RemoveAsyncById(string commentId);
     }
 }
