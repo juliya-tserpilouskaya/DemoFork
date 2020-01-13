@@ -105,6 +105,7 @@
     <Compile Include="Services\SearchQueryService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Validators\BookmarkValidator.cs" />
     <Compile Include="Validators\LearningCourseItemValidator.cs" />
     <Compile Include="Validators\LearningCourseValidator.cs" />
     <Compile Include="Validators\SearchQueryValidator.cs" />
