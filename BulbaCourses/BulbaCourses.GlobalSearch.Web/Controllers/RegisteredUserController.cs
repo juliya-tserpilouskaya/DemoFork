@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
-    [RoutePrefix("api/users")]
+    [RoutePrefix("api/registeredusers")]
     public class RegisteredUserController : ApiController
     {
         private readonly IRegisteredUserService _registeredUserService;

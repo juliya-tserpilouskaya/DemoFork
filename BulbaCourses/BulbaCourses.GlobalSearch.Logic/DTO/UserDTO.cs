@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.DTO
 {
-    class UserDTO
+    public class UserDTO
     {
         public string Id { get; set; }
         public bool Authorization { get; set; }
