@@ -23,7 +23,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<Bookmark>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
         public async Task<IHttpActionResult> GetAll()
         {
             var result = await _bookmarkService.GetAllAsync();
@@ -33,7 +33,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookmark was found", typeof(Bookmark))]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark was found", typeof(BookmarkDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public async Task<IHttpActionResult> GetById(string id)
         {
@@ -55,7 +55,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("user/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid UserId")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark wasn't found")]
-        [SwaggerResponse(HttpStatusCode.OK, "ID users bookmarks were found", typeof(IEnumerable<Bookmark>))]
+        [SwaggerResponse(HttpStatusCode.OK, "ID users bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
         public async Task<IHttpActionResult> GetByUserId(string id)
         {
