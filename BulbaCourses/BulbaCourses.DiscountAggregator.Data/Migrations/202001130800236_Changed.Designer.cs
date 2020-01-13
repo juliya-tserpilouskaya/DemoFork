@@ -7,13 +7,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ignorechange : IMigrationMetadata
+    public sealed partial class Changed : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ignorechange));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Changed));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001101813201_ignorechange"; }
+            get { return "202001130800236_Changed"; }
         }
         
         string IMigrationMetadata.Source

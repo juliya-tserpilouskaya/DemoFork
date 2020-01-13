@@ -35,15 +35,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Cannot save category. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Cannot save category. Duplicate field. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Invalid category. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message}");
             }
         }
 
@@ -77,15 +77,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Cannot save category. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Cannot save category. Duplicate field. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<CourseCategory>)Result.Fail($"Invalid category. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message}");
             }
         }
     }

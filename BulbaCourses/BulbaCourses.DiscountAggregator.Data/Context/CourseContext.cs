@@ -29,7 +29,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new BookmarkConfigurations());
-
             modelBuilder.Configurations.Add(new CategoryConfigurations());
             modelBuilder.Configurations.Add(new CourseConfigurations());
             modelBuilder.Configurations.Add(new DomainConfigurations());
