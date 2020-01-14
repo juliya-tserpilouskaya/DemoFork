@@ -151,6 +151,22 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
             courses.First().Name.Should().Be(_coursesInfo.First().Name);
         }
 
+        //[Test]
+        //public async Task Test_GetList_Course_ByTag_Async()
+        //{
+        //    _mockSet.As<IDbAsyncEnumerable<CourseDb>>().Setup(b => b.GetAsyncEnumerator()).Returns(new TestDbAsyncEnumerator<CourseDb>(_coursesDb.GetEnumerator()));
+        //    _mockSet.As<IQueryable<CourseDb>>().Setup(b => b.Provider).Returns(new TestDbAsyncQueryProvider<CourseDb>(_coursesDb.Provider));
+
+        //    _mockContext.Setup(c => c.Courses).Returns(_mockSet.Object);
+        //    _mockRepo = new CourseRepository(_mockContext.Object);
+        //    _mockMapper.Setup(m => m.Map<TagInfo, TagDb>(_tagInfo)).Returns(_tagDb);
+        //    _mockMapper.Setup(m => m.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(_coursesDb)).Returns(_coursesInfo);
+
+        //    _service = new CourseService(_mockMapper.Object, _mockRepo);
+        //    var courses = await _service.GetListByTagAsync(_tagInfo);
+        //    courses.Count().Should().Be(3);
+        //}
+
         [Test]
         public async Task Test_Create_Course_Async()
         {

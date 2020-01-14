@@ -35,7 +35,7 @@ namespace BulbaCourses.Video.Logic.Services
                     var courses = allCourses.Where(c => c.Name.Contains(searchRequest));
                     coursesInfo = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     coursesInfo = null;
                 }
@@ -54,7 +54,20 @@ namespace BulbaCourses.Video.Logic.Services
                     courses = courses.Where(c => c.Tags.Contains(tag));
                     coursesInfo = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
+                {
+                    coursesInfo = null;
+                }
+            }
+            else if (variant == SearchVariant.ByAuthor)
+            {
+                try
+                {
+                    var allCourses = await _courseRepository.GetAllAsync();
+                    var courses = allCourses.Where(c => c.Author.Name.Contains(searchRequest));
+                    coursesInfo = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+                }
+                catch (KeyNotFoundException)
                 {
                     coursesInfo = null;
                 }

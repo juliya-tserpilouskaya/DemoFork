@@ -11,11 +11,10 @@ namespace BulbaCourses.Video.Web.Models
     [Validator(typeof(CourseViewValidator))]
     public class CourseView
     {
+        public string CourseId { get; set; }
         public string Name { get; set; }
         public CourseLevel Level { get; set; }
-        public double Raiting { get; set; }
         public string Description { get; set; }
-        public int Duration { get; set; }
         public double Price { get; set; }
     }
 }
