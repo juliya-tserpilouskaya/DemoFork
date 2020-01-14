@@ -18,8 +18,8 @@ namespace BulbaCourses.Video.Data.DatabaseContext
         public DbSet<UserDb> Users { get; set; }
         public virtual DbSet<AuthorDb> Authors { get; set; }
         public DbSet<VideoMaterialDb> VideoMaterials { get; set; }
-        public DbSet<CourseDb> Courses { get; set; }
-        public DbSet<TagDb> Tags { get; set; }
+        public virtual DbSet<CourseDb> Courses { get; set; }
+        public virtual DbSet<TagDb> Tags { get; set; }
         public virtual DbSet<CommentDb> Comments { get; set; }
         public DbSet<TransactionDb> Transactions { get; set; }
 

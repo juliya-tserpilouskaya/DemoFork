@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Bogus;
 using BulbaCourses.Video.Data.DatabaseContext;
-using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Data.Repositories;
 using BulbaCourses.Video.Logic.Models;
@@ -14,10 +13,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BulbaCourses.Video.WebTests
+namespace BulbaCourses.Video.WebTests.ServicesTests
 {
     [TestFixture]
     public class AuthorServiceTests
@@ -121,7 +119,7 @@ namespace BulbaCourses.Video.WebTests
         }
 
         [Test]
-        public async Task Test_GetById_Author_Async()        
+        public async Task Test_GetById_Author_Async()
         {
             _mockSet.As<IDbAsyncEnumerable<AuthorDb>>().Setup(b => b.GetAsyncEnumerator()).Returns(new TestDbAsyncEnumerator<AuthorDb>(_autorsDb.GetEnumerator()));
             _mockSet.As<IQueryable<AuthorDb>>().Setup(b => b.Provider).Returns(new TestDbAsyncQueryProvider<AuthorDb>(_autorsDb.Provider));
