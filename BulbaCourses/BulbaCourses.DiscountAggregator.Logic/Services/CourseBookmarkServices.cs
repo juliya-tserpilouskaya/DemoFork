@@ -35,8 +35,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             bookmark.Id = Guid.NewGuid().ToString();
             var bookmarkDb = _mapper.Map<CourseBookmark, CourseBookmarkDb>(bookmark);
             var result = await _bookmarkServiceDb.AddAsync(bookmarkDb);
-            return result ? Result<CourseBookmark>.Ok(bookmark)
-                : (Result<CourseBookmark>)Result<CourseBookmark>.Fail("Cannot save model");
+            return result.IsSuccess ? Result<CourseBookmark>.Ok(_mapper.Map<CourseBookmark>(result.Data))
+                : (Result<CourseBookmark>)Result.Fail(result.Message);
         }
 
         public async Task<Result<CourseBookmark>> DeleteAsync(CourseBookmark bookmark)
@@ -44,8 +44,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             var bookmarkDb = _mapper.Map<CourseBookmark, CourseBookmarkDb>(bookmark);
             var result = await _bookmarkServiceDb.DeleteAsync(bookmarkDb);
             
-            return result ? Result<CourseBookmark>.Ok(bookmark)
-                : (Result<CourseBookmark>)Result<CourseBookmark>.Fail("Cannot save model");
+            return result.IsSuccess ? Result<CourseBookmark>.Ok(_mapper.Map<CourseBookmark>(result.Data))
+                : (Result<CourseBookmark>)Result.Fail(result.Message);
         }
     }
 }
