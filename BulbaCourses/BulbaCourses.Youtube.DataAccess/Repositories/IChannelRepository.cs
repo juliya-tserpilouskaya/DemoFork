@@ -10,6 +10,13 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
     public interface IChannelRepository : IDisposable
     {
         /// <summary>
+        /// Save Changes Async
+        /// </summary>
+        /// <returns></returns>
+        /// <summary>
+        Task SaveChangeAsync();
+
+        /// <summary>
         /// Save Channel 
         /// </summary>
         /// <param name="channel"></param>

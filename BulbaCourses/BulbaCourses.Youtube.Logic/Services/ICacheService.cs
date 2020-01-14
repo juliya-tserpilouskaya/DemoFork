@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulbaCourses.Youtube.Logic.Models;
 
 namespace BulbaCourses.Youtube.Logic.Services
 {
@@ -14,20 +15,20 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<ResultVideoDb> GetValue(string id);
+        List<ResultVideo> GetValue(string id);
 
         /// <summary>
         /// Add search request to cache
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        bool Add(string key, List<ResultVideoDb> value);
+        bool Add(string key, List<ResultVideo> value);
 
         /// <summary>
         /// Update search request upon repeated request
         /// </summary>
         /// <param name="value"></param>
-        void Update(string key, List<ResultVideoDb> value);
+        void Update(string key, List<ResultVideo> value);
 
         /// <summary>
         /// Delete cache of search request by id
