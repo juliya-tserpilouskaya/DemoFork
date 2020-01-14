@@ -8,15 +8,17 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
 {
     public class UserProfile
     {
-        public string UserId { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public int Age { get; set; }
+        public string Email { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
             
-        public IEnumerable<SearchCriteria> SearchCriterias { get; set; }
+        public SearchCriteria SearchCriteria { get; set; }
 
         public bool Subscription { get; set; }
 

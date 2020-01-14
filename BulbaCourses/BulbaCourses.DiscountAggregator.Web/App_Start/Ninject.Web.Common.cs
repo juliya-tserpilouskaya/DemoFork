@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.DiscountAggregator.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.DiscountAggregator.Web.App_Start
 {
@@ -17,6 +17,7 @@ namespace BulbaCourses.DiscountAggregator.Web.App_Start
 
     public static class NinjectWebCommon 
     {
+
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
@@ -66,6 +67,7 @@ namespace BulbaCourses.DiscountAggregator.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<LogicModule>();
+            kernel.Load<AutoMapperLoad>();
             //kernel.Bind<ICourseServices>().To<CourseServices>();
         }        
     }

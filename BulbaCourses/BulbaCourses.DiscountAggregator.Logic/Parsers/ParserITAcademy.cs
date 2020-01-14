@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Parsers
@@ -22,7 +23,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             {
                 CoursesITAcademy currentCourse = new CoursesITAcademy()
                 {
-                    Domain = CommonValues.hostItAcademy,   
+                    Domain = new Domain()
+                    {
+                        DomainURL = CommonValues.hostItAcademy,
+                        DomainName = "It-Academy",
+                        Id = Guid.NewGuid().ToString()
+                    },   
                     URL = CommonValues.hostItAcademy + node.Attributes["href"].Value,
                     Title = node.ChildNodes["div"].ChildNodes["h3"].InnerHtml
                 };
@@ -43,12 +49,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
 
             if (htmlNodesDiscount is null)
             {
-                course.CurrentPrice = Convert.ToDouble(htmlNodes.FirstOrDefault().InnerText.Trim().Substring(0, htmlNodes.FirstOrDefault().InnerText.Trim().Length - 3));
+                var _ = htmlNodes.FirstOrDefault().InnerText.Trim().Replace('.', ',');
+                course.Price = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
             }
             else
             {
-                course.CurrentPrice = Convert.ToDouble(htmlNodesNewPrice.FirstOrDefault().InnerHtml.Trim().Substring(0, htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Length - 3).Replace('.',','));// Convert.ToDouble(htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Substring(0, htmlNodesNewPrice.FirstOrDefault().InnerText.Trim().Length - 3));
-                course.Discount = Convert.ToInt32(htmlNodesDiscount.FirstOrDefault().InnerHtml.Trim().Remove(htmlNodesDiscount.FirstOrDefault().InnerHtml.Length - 1, 1).Remove(0, 1));
+                var _ = htmlNodesNewPrice.FirstOrDefault().InnerHtml.Trim().Replace('.', ',');
+                course.Price = Convert.ToDouble(Regex.Match(_, @"[\d.,]+").ToString());
+                course.Discount = Convert.ToInt32(Regex
+                    .Match(htmlNodesDiscount.FirstOrDefault().InnerHtml, @"[\d]+").ToString());
             }
             course.Description = htmlNodesDescription.FirstOrDefault().ChildNodes[4].InnerText;
         }
