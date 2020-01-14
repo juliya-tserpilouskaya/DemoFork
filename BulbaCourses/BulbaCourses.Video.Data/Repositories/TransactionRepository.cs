@@ -24,11 +24,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> AddAsync(TransactionDb transaction)
+        public async Task<TransactionDb> AddAsync(TransactionDb transaction)
         {
             _videoDbContext.Transactions.Add(transaction);
-            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
-            return result;
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(transaction);
         }
 
         public IEnumerable<TransactionDb> GetAll()
@@ -64,10 +64,25 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> RemoveAsync(TransactionDb transaction)
+        public async Task RemoveAsync(TransactionDb transaction)
         {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException("transaction");
+            }
             _videoDbContext.Transactions.Remove(transaction);
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RemoveAsyncById(string transactionlId)
+        {
+            var transaction = _videoDbContext.Transactions.SingleOrDefault(b => b.TransactionId.Equals(transactionlId));
+            if (transaction == null)
+            {
+                throw new ArgumentNullException("transaction");
+            }
+            _videoDbContext.Transactions.Remove(transaction);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(TransactionDb transaction)
@@ -81,14 +96,15 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> UpdateAsync(TransactionDb transaction)
+        public async Task<TransactionDb> UpdateAsync(TransactionDb transaction)
         {
             if (transaction == null)
             {
                 throw new ArgumentNullException("transaction");
             }
             _videoDbContext.Entry(transaction).State = EntityState.Modified;
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(transaction);
         }
     }
 }

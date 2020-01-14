@@ -12,7 +12,6 @@ namespace BulbaCourses.Video.Web.SwaggerModels
         {
             return new Logic.Models.CourseInfo
             {
-                CourseId = Guid.NewGuid().ToString(),
                 Name = "Name",
                 Description = "Course description",
                 Duration = 100,
