@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public interface ICourseServices
+    public class CourseUdemyServices : ICourseUdemyServices
     {
-        Course GetById(string id);
-        IEnumerable<Course> GetAll();
+        public IEnumerable<CoursesUdemy> GetAll()
+        {
+            return CoursesUdemyStorage.GetAll();
+        }
     }
 }

@@ -31,8 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Bogus, Version=28.4.3.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
       <HintPath>..\packages\Bogus.28.4.3\lib\net40\Bogus.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BulbaCourses.Analytics.BLL\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.17.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.17\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -44,6 +57,10 @@
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -72,37 +89,64 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperLogicProfile.cs" />
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\CourseBookmark.cs" />
     <Compile Include="Models\CourseCategory.cs" />
     <Compile Include="Models\CoursesITAcademy.cs" />
+    <Compile Include="Models\CoursesUdemy.cs" />
     <Compile Include="Models\Domain.cs" />
+    <Compile Include="Models\ICourse.cs" />
     <Compile Include="Models\ModelsStorage\CourseBookmarksStorage.cs" />
+    <Compile Include="Models\ModelsStorage\CourseCategoryStorage.cs" />
     <Compile Include="Models\ModelsStorage\CoursesITAcademyStorage.cs" />
-    <Compile Include="Models\ModelsStorage\Courseware.cs" />
-    <Compile Include="Models\ModelsStorage\UserAccountCollection.cs" />
+    <Compile Include="Models\ModelsStorage\CoursesUdemyStorage.cs" />
+    <Compile Include="Models\ModelsStorage\CourseStorage.cs" />
+    <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
+    <Compile Include="Models\ModelsStorage\SearchCriteriaStorage.cs" />
+    <Compile Include="Models\ModelsStorage\UserProfileStorage.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
-    <Compile Include="Models\UserAccount.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Parsers\CommonValues.cs" />
     <Compile Include="Parsers\ICoursesParser.cs" />
     <Compile Include="Parsers\ParserITAcademy.cs" />
+    <Compile Include="Parsers\ParserUdemy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CourseBookmarkServices.cs" />
     <Compile Include="Services\CourseCategoryServices.cs" />
     <Compile Include="Services\CourseITAcademyServices.cs" />
     <Compile Include="Services\CourseServices.cs" />
-    <Compile Include="Services\ICourseBookmarkServices.cs" />
+    <Compile Include="Services\CourseUdemyServices.cs" />
+    <Compile Include="Services\DomainServices.cs" />
     <Compile Include="Services\ICourseCategoryServices.cs" />
-    <Compile Include="Services\ICourseITAcademyServices.cs" />
-    <Compile Include="Services\ICourseServices.cs" />
-    <Compile Include="Services\IUserAccountServise.cs" />
-    <Compile Include="Services\UserAccountServeces.cs" />
+    <Compile Include="Services\interfaceServices\IDomainServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseBookmarkServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseCategoryServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseITAcademyServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseServices.cs" />
+    <Compile Include="Services\interfaceServices\ICourseUdemyServices.cs" />
+    <Compile Include="Services\interfaceServices\ISearchCriteriaServices.cs" />
+    <Compile Include="Services\interfaceServices\IUserProfileServices.cs" />
+    <Compile Include="Services\SearchCriteriaServices.cs" />
+    <Compile Include="Services\UserProfileServices.cs" />
+    <Compile Include="Validators\CategoryValidator.cs" />
+    <Compile Include="Validators\SearchCriteriaValidator.cs" />
+    <Compile Include="Validators\DomainValidator.cs" />
+    <Compile Include="Validators\CourseBookmarkValidator.cs" />
+    <Compile Include="Validators\CourseValidator.cs" />
+    <Compile Include="Validators\UserAccountValidator.cs" />
+    <Compile Include="Validators\UserProfileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Data\BulbaCourses.DiscountAggregator.Data.csproj">
+      <Project>{02ebd441-46f9-45a8-8998-705ea01d8caa}</Project>
+      <Name>BulbaCourses.DiscountAggregator.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

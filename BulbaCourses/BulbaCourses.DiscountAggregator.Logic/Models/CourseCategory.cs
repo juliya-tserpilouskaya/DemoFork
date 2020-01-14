@@ -13,5 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
         public string Name { get; set; }
 
         public string Title { get; set; }
+
+        Domain Domain { get; set; }
     }
 }
