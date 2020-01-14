@@ -1,4 +1,6 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Parsers;
+﻿using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Logic.Parsers;
 using BulbaCourses.DiscountAggregator.Logic.Services;
 using Ninject.Modules;
 using System;
@@ -15,8 +17,20 @@ namespace BulbaCourses.DiscountAggregator.Logic
         {
             Bind<ICourseServices>().To<CourseServices>();
             Bind<ICourseITAcademyServices>().To<CourseITAcademyServices>();
+            Bind<ICourseUdemyServices>().To<CourseUdemyServices>();
             Bind<ICourseBookmarkServices>().To<CourseBookmarkServices>();
-            Bind<IUserAccountServise>().To<UserAccountServeces>();
+            Bind<IDomainServices>().To<DomainServices>();
+            Bind<ICourseCategoryServices>().To<CourseCategoryServices>();
+            Bind<IUserProfileServices>().To<UserProfileServices>();
+            Bind<ISearchCriteriaServices>().To<SearchCriteriaServices>();
+
+            //DAL
+            Bind<ICourseService>().To<CourseServiceDb>();
+            Bind<IDomainServiceDb>().To<DomainServiceDb>();
+            Bind<ICourseCategoryServiceDb>().To<CourseCategoryServiceDb>();
+            Bind<IBookmarkServiceDb>().To<BookmarkServiceDb>();
+            Bind<IUserProfileServiceDb>().To<UserProfileServiceDb>();
+            Bind<ISearchCriteriaServiceDb>().To<SearchCriteriaServiceDb>();
         }
     }
 }

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public interface ICourseBookmarkServices
+    public interface ICourseUdemyServices
     {
-        IEnumerable<CourseBookmark> GetAll();
-        CourseBookmark Add(CourseBookmark courseBookmark);
-        IEnumerable<CourseBookmark> Delete(string id);
+        IEnumerable<CoursesUdemy> GetAll();
     }
 }
