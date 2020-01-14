@@ -139,5 +139,11 @@
       <DependentUpon>202001130800236_Changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Infrastructure\BulbaCourses.DiscountAggregator.Infrastructure.csproj">
+      <Project>{BEE48F9D-0C56-4385-A217-C405C7721F20}</Project>
+      <Name>BulbaCourses.DiscountAggregator.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

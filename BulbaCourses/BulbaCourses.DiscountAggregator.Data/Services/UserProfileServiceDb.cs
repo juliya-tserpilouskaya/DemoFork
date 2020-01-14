@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -26,26 +27,26 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             context.SaveChanges();
         }
 
-        public async Task<bool> AddAsync(UserProfileDb profileDb)
+        public async Task<Result<UserProfileDb>> AddAsync(UserProfileDb profileDb)
         {
-            context.Profiles.Add(profileDb);
-            context.SearchCriterias.Add(profileDb.SearchCriteria);
             try
             {
+                context.Profiles.Add(profileDb);
+                context.SearchCriterias.Add(profileDb.SearchCriteria);
                 await context.SaveChangesAsync().ConfigureAwait(false);
-                return true;
+                return Result<UserProfileDb>.Ok(profileDb);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                return false;
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Cannot save profile. {e.Message}");
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
-                return false;
-            }           
-            catch (DbEntityValidationException)
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Cannot save profile. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
             {
-                return false;
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Invalid profile. {e.Message}");
             }
         }
 
@@ -78,11 +79,22 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             context.SaveChanges();
         }
 
-        public async Task<UserProfileDb> DeleteAsync(UserProfileDb profileDb)
+        public async Task<Result<UserProfileDb>> DeleteAsync(UserProfileDb profileDb)
         {
-            context.Profiles.Remove(profileDb);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return profileDb;
+            try
+            {
+                context.Profiles.Remove(profileDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<UserProfileDb>.Ok(profileDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Profile not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Invalid profile. {e.Message}");
+            }
         }
 
         public void Update(UserProfileDb profile)
@@ -94,60 +106,29 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             }
         }
 
-        public async Task<UserProfileDb> UpdateAsync(UserProfileDb profileDb)
+        public async Task<Result<UserProfileDb>> UpdateAsync(UserProfileDb profileDb)
         {
-            if (profileDb == null)
+            try
             {
-                throw new ArgumentNullException("Profile");
+                context.Entry(profileDb).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<UserProfileDb>.Ok(profileDb);
             }
-            context.Entry(profileDb).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return profileDb;
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Profile not deleted. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Cannot save profile. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<UserProfileDb>.Fail<UserProfileDb>($"Invalid profile. {e.Message}");
+            }
         }
 
-        public async Task<bool> ExistsAsync(string id)
-        {
-            return await context.Profiles.AnyAsync(b => b.Id == id).ConfigureAwait(false);
-        }
-
-        //ниже код относящийся к UserAccount которая уже не нужна и удалена
-        //public void Add(UserAccountDb userAccount)
-        //{
-        //    userAccount.Password = HashingPassword.HashPassword(userAccount.Password);
-        //    //courseContext
-        //    courseContext.Users.Add(userAccount);
-        //    courseContext.SaveChanges();
-        //}
-
-        //public void Update(UserAccountDb userAccount)
-        //{
-        //    if (userAccount != null)
-        //    {
-        //        //if(HashingPassword.VerifyHashedPassword(userAccount.Password,"123"))
-        //        userAccount.Password = HashingPassword.HashPassword(userAccount.Password);
-        //        courseContext.Entry(userAccount.UserProfile).State = EntityState.Modified;
-        //        courseContext.Entry(userAccount).State = EntityState.Modified;
-        //        courseContext.SaveChanges();
-        //    }
-        //}
-
-        //public void DeleteById(string userId)
-        //{
-        //    if (!string.IsNullOrEmpty(userId))
-        //    {
-        //        courseContext.Profiles.Remove(courseContext.Profiles
-        //            .Where(x => x.Id == courseContext.Users.Where(i => i.Id == userId).FirstOrDefault().UserProfile.Id)
-        //            .FirstOrDefault());
-        //        courseContext.Users.Remove(courseContext.Users.Where(x => x.Id == userId).FirstOrDefault());
-        //        courseContext.SaveChanges();
-        //        //по идее должно и так удалять, но так не чистит связанную таблицу
-        //        //courseContext.Entry(courseContext.Users.Where(x => x.Id == userId).FirstOrDefault()).State = EntityState.Deleted;
-        //        //courseContext.SaveChanges();
-        //    }
-        //}
-
-
-
-
+        public async Task<bool> ExistsAsync(string id) 
+            => await context.Profiles.AnyAsync(b => b.Id == id).ConfigureAwait(false);
     }
 }
