@@ -19,7 +19,6 @@ namespace BulbaCourses.Video.Logic.Infrastructure
             Bind<IUserRepository>().To<UserRepository>();
             Bind<ICommentRepository>().To<CommentRepository>();
             Bind<ICourseRepository>().To<CourseRepository>();
-            Bind<IRoleRepository>().To<RoleRepository>();
             Bind<ITegRepository>().To<TegRepository>();
             Bind<ITransactionRepository>().To<TransactionRepository>();
             Bind<IVideoRepository>().To<VideoRepository>();

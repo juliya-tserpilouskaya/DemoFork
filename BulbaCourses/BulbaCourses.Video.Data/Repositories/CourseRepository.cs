@@ -25,11 +25,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> AddAsync(CourseDb course)
+        public async Task<CourseDb> AddAsync(CourseDb course)
         {
             _videoDbContext.Courses.Add(course);
-            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
-            return result;
+            _videoDbContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return await Task.FromResult(course);
         }
 
         public IEnumerable<CourseDb> GetAll()
@@ -54,8 +54,6 @@ namespace BulbaCourses.Video.Data.Repositories
 
         public async Task<CourseDb> GetByIdAsync(string courseId)
         {
-            //Just for test. 
-            //Thread.Sleep(10000);
             var course = await _videoDbContext.Courses.SingleOrDefaultAsync(b => b.CourseId.Equals(courseId)).ConfigureAwait(false);
             return course;
         }
@@ -67,10 +65,25 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> RemoveAsync(CourseDb course)
+        public async Task RemoveAsync(CourseDb course)
         {
+            if (course == null)
+            {
+                throw new ArgumentNullException("course");
+            }
             _videoDbContext.Courses.Remove(course);
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RemoveAsyncById(string courseId)
+        {
+            var course = _videoDbContext.Courses.SingleOrDefault(c => c.CourseId.Equals(courseId));
+            if (course == null)
+            {
+                throw new ArgumentNullException("course");
+            }
+            _videoDbContext.Courses.Remove(course);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(CourseDb course)
@@ -84,14 +97,20 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> UpdateAsync(CourseDb course)
+        public async Task<CourseDb> UpdateAsync(CourseDb course)
         {
             if (course == null)
             {
                 throw new ArgumentNullException("course");
             }
             _videoDbContext.Entry(course).State = EntityState.Modified;
-           return  await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(course);
+        }
+
+        public async Task<bool> IsNameExistAsync(string courseName)
+        {
+            return await _videoDbContext.Courses.AnyAsync(c => c.Name.Equals(courseName)).ConfigureAwait(false);
         }
     }
 }

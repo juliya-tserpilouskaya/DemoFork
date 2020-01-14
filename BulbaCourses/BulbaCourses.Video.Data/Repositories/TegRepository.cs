@@ -24,11 +24,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> AddAsync(TagDb tag)
+        public async Task<TagDb> AddAsync(TagDb tag)
         {
             _videoDbContext.Tags.Add(tag);
-            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
-            return result;
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(tag);
         }
 
         public IEnumerable<TagDb> GetAll()
@@ -64,10 +64,25 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> RemoveAsync(TagDb tag)
+        public async Task RemoveAsync(TagDb tag)
         {
+            if (tag == null)
+            {
+                throw new ArgumentNullException("user");
+            }
             _videoDbContext.Tags.Remove(tag);
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RemoveAsyncById(string tagId)
+        {
+            var tag = _videoDbContext.Tags.SingleOrDefault(b => b.TagId.Equals(tagId));
+            if (tag == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            _videoDbContext.Tags.Remove(tag);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(TagDb tag)
@@ -81,14 +96,15 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> UpdateAsync(TagDb tag)
+        public async Task<TagDb> UpdateAsync(TagDb tag)
         {
             if (tag == null)
             {
                 throw new ArgumentNullException("tag");
             }
             _videoDbContext.Entry(tag).State = EntityState.Modified;
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(tag);
         }
     }
 }

@@ -24,11 +24,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> AddAsync(CommentDb comment)
+        public async Task<CommentDb> AddAsync(CommentDb comment)
         {
             _videoDbContext.Comments.Add(comment);
-            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
-            return result;
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(comment);
         }
 
         public IEnumerable<CommentDb> GetAll()
@@ -64,10 +64,25 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> RemoveAsync(CommentDb comment)
+        public async Task RemoveAsync(CommentDb comment)
         {
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
             _videoDbContext.Comments.Remove(comment);
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RemoveAsyncById(string commentId)
+        {
+            var comment = _videoDbContext.Comments.SingleOrDefault(b => b.CommentId.Equals(commentId));
+            if (comment == null)
+            {
+                throw new ArgumentNullException("comment");
+            }
+            _videoDbContext.Comments.Remove(comment);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(CommentDb comment)
@@ -81,14 +96,15 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> UpdateAsync(CommentDb comment)
+        public async Task<CommentDb> UpdateAsync(CommentDb comment)
         {
             if (comment == null)
             {
                 throw new ArgumentNullException("comment");
             }
             _videoDbContext.Entry(comment).State = EntityState.Modified;
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(comment);
         }
     }
 }
