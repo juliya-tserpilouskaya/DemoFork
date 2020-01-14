@@ -10,6 +10,7 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Models.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
+using BulbaCourses.PracticalMaterialsTests.Logic.Validators.Tests;
 using Ninject;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -44,9 +45,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
         [Test]
         public void GetByIdTest()
         {
-            MTest_MainInfo Test_MainInfo = _service_Test.GetById(1);
+            var Test_MainInfo = _service_Test.GetById(1);
 
-            Assert.Warn($@"{Test_MainInfo.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Name}");
+            Assert.Warn($@"{Test_MainInfo.Data.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Data.Name}");            
         }
 
         [Test]
@@ -55,6 +56,96 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
             Task<MTest_MainInfo> Test_MainInfo = _service_Test.GetByIdAsync(1);
 
             Assert.Warn($@"{Test_MainInfo.Result.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Result.Name}");
+        }
+
+        [Test]
+        public void GetAll()
+        {
+            MTest_MainInfo TestData =
+                new MTest_MainInfo()
+                {
+                    Name = "Test_Name_2",
+                    Questions_ChoosingAnswerFromList =
+                        new List<MQuestion_ChoosingAnswerFromList>()
+                        {
+                                new MQuestion_ChoosingAnswerFromList()
+                                {
+                                    QuestionText = "Question_ChoosingAnswerFromListDb_Text_1",
+                                    SortKey = 1,
+                                    AnswerVariants =
+                                    new List<MAnswerVariant_ChoosingAnswerFromList>()
+                                    {
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_1",
+                                            SortKey = 1,
+                                            IsCorrectAnswer = false
+                                        },
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_2",
+                                            SortKey = 2,
+                                            IsCorrectAnswer = false
+                                        },
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_3",
+                                            SortKey = 3,
+                                            IsCorrectAnswer = true
+                                        }
+                                    }
+                                }
+                        },
+                    Questions_SetIntoMissingElements =
+                        new List<MQuestion_SetIntoMissingElements>()
+                        {
+                            new MQuestion_SetIntoMissingElements()
+                            {
+                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
+                                SortKey = 2
+                            }
+                        },
+                    Questions_SetOrder =
+                        new List<MQuestion_SetOrder>()
+                        {
+                                new MQuestion_SetOrder()
+                                {
+                                    QuestionText = "QuestionText_1",
+                                    SortKey = 3,
+                                    AnswerVariants =
+                                    new List<MAnswerVariant_SetOrder>()
+                                    {
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_1",
+                                            SortKey = 1,
+                                            CorrectOrderKey = 1
+                                        },
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_2",
+                                            SortKey = 2,
+                                            CorrectOrderKey = 2
+                                        },
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_3",
+                                            SortKey = 3,
+                                            CorrectOrderKey = 3
+                                        }
+                                    }
+                                }
+                        }
+                };
+         
+            for (int i = 0; i < 4; i++)
+            {
+                _service_Test.Add(TestData);
+            }
+
+            var Test_MainInfo = _service_Test.GetAll().ToList();
+
+            Test_MainInfo.ForEach(X => Assert.Warn($@"{X.Id}"));           
         }
 
         [Test]
@@ -141,12 +232,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
             var ResultId_1 = _service_Test.Add(TestData);
 
             var ResultId_1_2 = _service_Test.Add(TestData);
-
-            Assert.Warn($@"ResultId: {ResultId_1} || {ResultId_1_2}");
+                     
+            Assert.Warn($@"ResultId: {ResultId_1.Data.Id} || {ResultId_1_2.Data.Name}");           
         }
 
         [Test]
-        [Description("Асинхронный вызов метода Добавления нового теста в базу с возвратом корректного результата (true/false) по методике Шадуро")]
         public async Task AddTestAsync()
         {
             MTest_MainInfo TestData =
@@ -230,15 +320,30 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
 
             Assert.Warn($@"ResultId: {HasAdd.IsSuccess}");
         }
-        
+
+        [Test]
+        public void DeleteById()
+        {
+            var Test_MainInfo =  _service_Test.DeleteById(1);
+
+            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
+        }
+
+        [Test]
+        public async Task DeleteByIdAsync()
+        {
+            var Test_MainInfo = await _service_Test.DeleteByIdAsync(1);
+
+            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
+        }
+
         [Test]
         public void Update()
         {
             MTest_MainInfo TestData =
                 new MTest_MainInfo()
                 {
-                    Id = 1,
-                    Name = "Test_Name_2",
+                    Name = "Test_Name_3",
                     Questions_ChoosingAnswerFromList =
                         new List<MQuestion_ChoosingAnswerFromList>()
                         {
@@ -310,8 +415,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
                                     }
                                 }
                         }
-                };
 
+                };
 
             var Test_MainInfo = _service_Test.Update(TestData);
 
@@ -403,14 +508,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic.Services.Tests
             var Test_MainInfo = await _service_Test.UpdateAsync(TestData);
 
             Assert.Warn($@"{Test_MainInfo.Data.Name}");
-        }
-
-        [Test]
-        public async Task DeleteByIdAsync()
-        {
-            var Test_MainInfo = await _service_Test.DeleteByIdAsync(1);
-
-            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
         }
     }
 }

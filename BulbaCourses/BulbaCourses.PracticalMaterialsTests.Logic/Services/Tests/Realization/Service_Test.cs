@@ -7,6 +7,7 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
+using EntityFramework.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -24,18 +25,32 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             
         }
 
-        public MTest_MainInfo GetById(int Id)
-        {
-            MTest_MainInfoDb Test_MainInfoDb =
+        public Result<MTest_MainInfo> GetById(int Id)
+        {    
+            try
+            {
+                MTest_MainInfoDb Test_MainInfoDb =
                 _context.Set<MTest_MainInfoDb>()
                     .Include(_ => _.Questions_ChoosingAnswerFromList)
                     .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
-                    .FirstOrDefault(_ => _.Id == Id);                   
+                    .FirstOrDefault(_ => _.Id == Id);
 
-            return
-                _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
+                if (Test_MainInfoDb == null)
+                {
+                    throw new NullReferenceException();
+                }
+
+                return
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
+            }
+            catch (NullReferenceException e)
+            {
+                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+            }
+
         }
-
+     
         public async Task<MTest_MainInfo> GetByIdAsync(int Id)
         {
             MTest_MainInfoDb Test_MainInfoDb =
@@ -49,21 +64,26 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
                 _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
         }
 
+        public IEnumerable<MTest_MainInfoDb> GetAll()
+        {
+            return
+                _context.Set<MTest_MainInfoDb>().ToList().AsReadOnly();
+        }
+
         public Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo)
-        {            
+        {
             MTest_MainInfoDb Test_MainInfoDb =
                  _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
-            _context.Set<MTest_MainInfoDb>()
-               .Add(Test_MainInfoDb);
+            _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
 
             try
             {
-                _context.SaveChanges();
+                 _context.SaveChanges();
 
                 return
                     Result<MTest_MainInfo>
-                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -76,7 +96,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             catch (DbEntityValidationException e)
             {
                 return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
-            }            
+            }
         }
 
         public async Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo)
@@ -113,17 +133,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
             MTest_MainInfoDb Test_MainInfoDb =
                  _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
-            var entry = _context.Entry(Test_MainInfoDb);
+            _context.Entry(Test_MainInfoDb).State = EntityState.Added;
 
-            entry.State = EntityState.Modified;
-
+            //_context.Entry(Test_MainInfoDb).State = EntityState.Modified;
             try
             {
                 _context.SaveChanges();
 
                 return
                     Result<MTest_MainInfo>
-                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -154,7 +173,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
 
                 return
                     Result<MTest_MainInfo>
-                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -181,7 +200,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
                 return
                     Result.Ok();
             }
-            catch (DbUpdateConcurrencyException e)
+            catch (NullReferenceException e)
             {
                 return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
             }
@@ -198,7 +217,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization
                 return
                     Result.Ok();
             }
-            catch (DbUpdateConcurrencyException e)
+            catch (NullReferenceException e)
             {
                 return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
             }

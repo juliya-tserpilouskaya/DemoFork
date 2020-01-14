@@ -10,9 +10,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface
 {
     public interface IService_Test : IDisposable
     {
-        MTest_MainInfo GetById(int Id);
+        Result<MTest_MainInfo> GetById(int Id);
 
         Task<MTest_MainInfo> GetByIdAsync(int Id);
+
+        IEnumerable<MTest_MainInfoDb> GetAll();
 
         Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo);
 

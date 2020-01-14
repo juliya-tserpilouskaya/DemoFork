@@ -14,7 +14,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Config
             SetProviderServices(SqlProviderServices.ProviderInvariantName, SqlProviderServices.Instance);
 
             SetProviderFactory(SqlProviderServices.ProviderInvariantName, SqlClientFactory.Instance);
-            
+
             SetDefaultConnectionFactory(new LocalDbConnectionFactory(CONNECTION_NAME));
         }
     }

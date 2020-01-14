@@ -26,9 +26,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult TesatMethod()
         {
-            MTest_MainInfo Test_MainInfo = _service_Test.GetById(1);            
+            var Test_MainInfo = _service_Test.GetById(1);            
 
-            return Ok(Test_MainInfo.Name);
+            return Ok(Test_MainInfo.Data.Name);
         }
     }
 }
