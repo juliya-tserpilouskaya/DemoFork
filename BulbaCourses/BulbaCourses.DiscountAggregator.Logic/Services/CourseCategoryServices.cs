@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 

@@ -1,4 +1,5 @@
-﻿using BulbaCourses.DiscountAggregator.Logic.Models;
+﻿using BulbaCourses.DiscountAggregator.Infrastructure.Models;
+using BulbaCourses.DiscountAggregator.Logic.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,8 +9,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         Task<IEnumerable<SearchCriteria>> GetAllAsync();
         Task<SearchCriteria> GetByIdAsync(string userId);
-        Task<SearchCriteria> AddAsync(SearchCriteria searchCriteria);
-        Task<SearchCriteria> UpdateAsync(SearchCriteria searchCriteria);
-        Task<SearchCriteria> DeleteByIdAsync(string id);
+        Task<Result<SearchCriteria>> AddAsync(SearchCriteria searchCriteria);
+        Task<Result<SearchCriteria>> UpdateAsync(SearchCriteria searchCriteria);
+        Task<Result<SearchCriteria>> DeleteByIdAsync(string id);
     }
 }

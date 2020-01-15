@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using System;
 using System.Collections.Generic;
