@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SampleModule } from './sample/sample.module';
+import { YoutubeModule } from './YouTube/youtube.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SampleModule } from './sample/sample.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SampleModule
+    SampleModule,
+    YoutubeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
