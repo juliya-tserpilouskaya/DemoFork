@@ -7,6 +7,7 @@ using BulbaCourses.DiscountAggregator.Logic;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Web.App_Start;
 using BulbaCourses.DiscountAggregator.Web.Filters;
+using BulbaCourses.DiscountAggregator.Web.Properties;
 using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
@@ -30,20 +31,12 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
 
-            //TODO использовать ресурсы
-            var data = File.ReadAllBytes(
-            //@"D:\Education\It-Academy\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-            //@"D:\git\testReset\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-            //@"E:\Programming\IT-Academy\Project\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-            //@"E:\Programming\IT-Academy\Project\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-            @"D:\asp\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
-
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
                 IssuerName = "BulbaCourses SSO",
                 Authority = "http://localhost:44317 ",
                 ValidationMode = ValidationMode.Local,
-                SigningCertificate = new X509Certificate2(data, "123")
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
 
             });
 
