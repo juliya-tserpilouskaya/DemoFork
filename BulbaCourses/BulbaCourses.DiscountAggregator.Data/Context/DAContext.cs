@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Data.Context
 {
-    public class CourseContext : DbContext
+    public class DAContext : DbContext
     {
-        public CourseContext() : base("DADbConnection")
+        public DAContext() : base("DADbConnection")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CourseContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DAContext, Configuration>());
         }
 
         public DbSet<CourseDb> Courses { get; set; }

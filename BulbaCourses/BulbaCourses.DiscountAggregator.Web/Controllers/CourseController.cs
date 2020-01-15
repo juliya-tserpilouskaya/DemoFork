@@ -16,7 +16,7 @@ using System.Web.Http;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    [Authorize]
+    //[Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;
@@ -127,14 +127,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default")]Course course)
+        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (course == null)
             {
                 return BadRequest();
             }
@@ -154,13 +149,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [HttpPost, Route("")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddCourse,default")]Course course)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
-            //validate course here
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
             if (course == null)
             {
                 return BadRequest();

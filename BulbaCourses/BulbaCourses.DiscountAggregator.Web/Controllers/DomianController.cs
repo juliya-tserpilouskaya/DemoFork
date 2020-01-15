@@ -60,7 +60,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddDomain,default")]Domain domain)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
             if (domain == null)
             {
@@ -97,9 +97,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain updated", typeof(Domain))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
+        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (domain == null)
             {
                 return BadRequest();
             }

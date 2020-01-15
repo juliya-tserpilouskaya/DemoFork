@@ -14,9 +14,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class BookmarkServiceDb : IBookmarkServiceDb
     {
-        private readonly CourseContext context;
+        private readonly DAContext context;
 
-        public BookmarkServiceDb(CourseContext context)
+        public BookmarkServiceDb(DAContext context)
         {
             this.context = context;
         }

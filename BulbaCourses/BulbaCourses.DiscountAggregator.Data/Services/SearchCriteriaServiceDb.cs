@@ -14,9 +14,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class SearchCriteriaServiceDb : ISearchCriteriaServiceDb
     {
-        private readonly CourseContext context;
+        private readonly DAContext context;
 
-        public SearchCriteriaServiceDb(CourseContext context)
+        public SearchCriteriaServiceDb(DAContext context)
         {
             this.context = context;
         }

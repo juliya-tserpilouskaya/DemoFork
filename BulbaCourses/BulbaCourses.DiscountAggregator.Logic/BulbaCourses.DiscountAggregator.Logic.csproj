@@ -119,7 +119,6 @@
     <Compile Include="Services\CourseServices.cs" />
     <Compile Include="Services\CourseUdemyServices.cs" />
     <Compile Include="Services\DomainServices.cs" />
-    <Compile Include="Services\ICourseCategoryServices.cs" />
     <Compile Include="Services\interfaceServices\IDomainServices.cs" />
     <Compile Include="Services\interfaceServices\ICourseBookmarkServices.cs" />
     <Compile Include="Services\interfaceServices\ICourseCategoryServices.cs" />

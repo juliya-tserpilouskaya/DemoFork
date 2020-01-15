@@ -10,43 +10,43 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class CourseCategoryServiceDb : ICourseCategoryServiceDb
     {
-        private readonly CourseContext categoryContext;
+        private readonly DAContext context;
 
-        public CourseCategoryServiceDb(CourseContext context)
+        public CourseCategoryServiceDb(DAContext context)
         {
-            this.categoryContext = context;
+            this.context = context;
         }
 
         public async Task<CourseCategoryDb> AddAsync(CourseCategoryDb category)
         {
-            categoryContext.CourseCategories.Add(category);
-            categoryContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            context.CourseCategories.Add(category);
+            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return await Task.FromResult(category);
         }
 
         public async Task<IEnumerable<CourseCategoryDb>> GetAllAsync()
         {
-            var categoryList = await categoryContext.CourseCategories.ToListAsync().ConfigureAwait(false);
+            var categoryList = await context.CourseCategories.ToListAsync().ConfigureAwait(false);
             return categoryList.AsReadOnly();
         }
 
         public async Task<CourseCategoryDb> GetByIdAsync(string id)
         {
-            var category = await categoryContext.CourseCategories.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            var category = await context.CourseCategories.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return category;
         }
 
         public async Task DeleteAsync(CourseCategoryDb categoryDb)
         {
-            categoryContext.CourseCategories.Remove(categoryDb);
-            await categoryContext.SaveChangesAsync().ConfigureAwait(false);
+            context.CourseCategories.Remove(categoryDb);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteByIdAsync(string id)
         {
-            var category = categoryContext.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
-            categoryContext.CourseCategories.Remove(category);
-            await categoryContext.SaveChangesAsync().ConfigureAwait(false);
+            var category = context.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
+            context.CourseCategories.Remove(category);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<CourseCategoryDb> UpdateAsync(CourseCategoryDb categoryDb)
@@ -55,8 +55,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 throw new ArgumentNullException("course");
             }
-            categoryContext.Entry(categoryDb).State = EntityState.Modified;
-            await categoryContext.SaveChangesAsync().ConfigureAwait(false);
+            context.Entry(categoryDb).State = EntityState.Modified;
+            await context.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(categoryDb);
         }
     }

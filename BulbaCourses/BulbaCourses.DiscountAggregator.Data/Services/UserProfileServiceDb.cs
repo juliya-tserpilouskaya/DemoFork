@@ -13,9 +13,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class UserProfileServiceDb : IUserProfileServiceDb
     {
-        private readonly CourseContext context;
+        private readonly DAContext context;
 
-        public UserProfileServiceDb(CourseContext context)
+        public UserProfileServiceDb(DAContext context)
         {
             this.context = context;
         }

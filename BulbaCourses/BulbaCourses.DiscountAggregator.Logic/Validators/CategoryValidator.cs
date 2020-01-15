@@ -14,10 +14,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleSet("AddCategory", () =>
-            {
-                RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x)).WithMessage("Id must be null or empty");
-            });
+            //RuleSet("AddCategory", () =>
+            //{
+            //    RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x)).WithMessage("Id must be null or empty");
+            //});
+
             RuleFor(x => x.Name).NotEmpty().NotNull().MinimumLength(2).WithMessage("Category name must be not empty or null");
             RuleFor(x => x.Title).NotEmpty().NotNull().MinimumLength(2).WithMessage("Category title must be not empty or null");
 

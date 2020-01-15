@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\CourseContext.cs" />
+    <Compile Include="Context\DAContext.cs" />
     <Compile Include="HashingPassword.cs" />
     <Compile Include="Migrations\201912191112145_InitialCreateTables.cs" />
     <Compile Include="Migrations\201912191112145_InitialCreateTables.Designer.cs">

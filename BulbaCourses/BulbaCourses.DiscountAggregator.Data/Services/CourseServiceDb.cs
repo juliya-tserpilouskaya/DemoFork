@@ -13,55 +13,55 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class CourseServiceDb : ICourseService
     {
-        private readonly CourseContext courseContext;
+        private readonly DAContext context;
         
-        public CourseServiceDb(CourseContext courseService)
+        public CourseServiceDb(DAContext courseService)
         {
-            this.courseContext = courseService;
+            this.context = courseService;
         }
 
         public async Task<CourseDb> AddAsync(CourseDb course)
         { 
-            courseContext.Courses.Add(course);
-            courseContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            context.Courses.Add(course);
+            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return await Task.FromResult(course);
         }
 
         public IEnumerable<CourseDb> GetAll()
         {
-            var coursesList = courseContext.Courses.ToList().AsReadOnly();
+            var coursesList = context.Courses.ToList().AsReadOnly();
             return coursesList;
         }
         
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
-            var coursesList = await courseContext.Courses.ToListAsync().ConfigureAwait(false);
+            var coursesList = await context.Courses.ToListAsync().ConfigureAwait(false);
             return coursesList.AsReadOnly();
         }
 
         public CourseDb GetById(string id)
         {
-            var course = courseContext.Courses.FirstOrDefault(c => c.Id.Equals(id));
+            var course = context.Courses.FirstOrDefault(c => c.Id.Equals(id));
             return course;
         }
         
         public async Task<CourseDb> GetByIdAsync(string id)
         {
-            var course = await courseContext.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            var course = await context.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return course;
         }
 
         public async Task DeleteAsync(CourseDb course)
         {
-            courseContext.Courses.Remove(course);
-            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+            context.Courses.Remove(course);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
         
         public async Task DeleteByIdAsync(string id)
         {
-            var course = courseContext.Courses.SingleOrDefault(c => c.Id.Equals(id));
-            courseContext.Courses.Remove(course);
-            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+            var course = context.Courses.SingleOrDefault(c => c.Id.Equals(id));
+            context.Courses.Remove(course);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<CourseDb> UpdateAsync(CourseDb course)
@@ -70,8 +70,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 throw new ArgumentNullException("course");
             }
-            courseContext.Entry(course).State = EntityState.Modified;
-            await courseContext.SaveChangesAsync().ConfigureAwait(false);
+            context.Entry(course).State = EntityState.Modified;
+            await context.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(course);
         }
     }

@@ -11,43 +11,43 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class DomainServiceDb : IDomainServiceDb
     {
-        private readonly CourseContext domainContext;
+        private readonly DAContext context;
 
-        public DomainServiceDb(CourseContext context)
+        public DomainServiceDb(DAContext context)
         {
-            this.domainContext = context;
+            this.context = context;
         }
 
         public async Task<DomainDb> AddAsync(DomainDb domain)
         {
-            domainContext.Domains.Add(domain);
-            domainContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            context.Domains.Add(domain);
+            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return await Task.FromResult(domain);
         }
 
         public async Task<IEnumerable<DomainDb>> GetAllAsync()
         {
-            var domainList = await domainContext.Domains.ToListAsync().ConfigureAwait(false);
+            var domainList = await context.Domains.ToListAsync().ConfigureAwait(false);
             return domainList.AsReadOnly();
         }
 
         public async Task<DomainDb> GetByIdAsync(string id)
         {
-            var domain = await domainContext.Domains.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            var domain = await context.Domains.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return domain;
         }
 
         public async Task DeleteAsync(DomainDb domainDb)
         {
-            domainContext.Domains.Remove(domainDb);
-            await domainContext.SaveChangesAsync().ConfigureAwait(false);
+            context.Domains.Remove(domainDb);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteByIdAsync(string id)
         {
-            var domain = domainContext.Domains.SingleOrDefault(c => c.Id.Equals(id));
-            domainContext.Domains.Remove(domain);
-            await domainContext.SaveChangesAsync().ConfigureAwait(false);
+            var domain = context.Domains.SingleOrDefault(c => c.Id.Equals(id));
+            context.Domains.Remove(domain);
+            await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<DomainDb> UpdateAsync(DomainDb domainDb)
@@ -56,8 +56,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 throw new ArgumentNullException("domain");
             }
-            domainContext.Entry(domainDb).State = EntityState.Modified;
-            await domainContext.SaveChangesAsync().ConfigureAwait(false);
+            context.Entry(domainDb).State = EntityState.Modified;
+            await context.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(domainDb);
         }
     }

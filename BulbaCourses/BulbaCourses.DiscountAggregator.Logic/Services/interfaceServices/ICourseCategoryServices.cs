@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
-    public interface ICourseCategoryServices<T> : IDisposable where T : class
+    public interface ICourseCategoryServices
     {
-        Task<Result<IEnumerable<T>>> GetAllAsync();
-        Task<Result<T>> GetByIdAsync(string id);
-        Task <Result> AddAsync(T course);
+        Task<IEnumerable<CourseCategory>> GetAllAsync();
+        Task<CourseCategory> GetByIdAsync(string id);
+        Task<Result<CourseCategory>> AddAsync(CourseCategory course);
         Task<Result> DeleteByIdAsync(string id);
-        Task<Result> UpdateAsync(T course);
+        Task<Result<CourseCategory>> UpdateAsync(CourseCategory course);
     }
 }
