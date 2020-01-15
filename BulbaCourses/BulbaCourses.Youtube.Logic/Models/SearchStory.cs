@@ -8,7 +8,8 @@ namespace BulbaCourses.Youtube.Logic.Models
     {
         public int? Id { get; set; }
         public DateTime? SearchDate { get; set; }
-        public User User { get; set; } //reference
+        public string UserId { get; set; } 
         public SearchRequest SearchRequest { get; set; }//reference
+        public int? SearchRequest_Id { get; set; } //reference
     }
 }

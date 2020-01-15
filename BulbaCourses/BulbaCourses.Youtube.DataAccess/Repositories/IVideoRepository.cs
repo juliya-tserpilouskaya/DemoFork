@@ -8,14 +8,12 @@ using System.Web;
 namespace BulbaCourses.Youtube.DataAccess.Repositories
 {
     public interface IVideoRepository : IDisposable
-    {
+    {        
         IEnumerable<ResultVideoDb> GetAll();
         Task<IEnumerable<ResultVideoDb>> GetAllAsync();
         ResultVideoDb GetById(string id);
         Task<ResultVideoDb> GetByIdAsync(string id);
-        void Create(ResultVideoDb video);
-        void Update(ResultVideoDb video);
-        void Delete(string id);
-        void Save();
+        ResultVideoDb Save(ResultVideoDb video);
+        Task<ResultVideoDb> SaveChangeAsync(ResultVideoDb video);
     }
 }

@@ -19,6 +19,15 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Save Changes Async
+        /// </summary>
+        /// <returns></returns>
+        public async Task SaveChangeAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Save story for User
         /// </summary>
         /// <param name="story"></param>
@@ -33,12 +42,15 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Get all stories for all Users
         /// </summary>
         /// <returns></returns>
-        /// <summary>
         public IEnumerable<SearchStoryDb> GetAll()
         {
             return _context.SearchStories.ToList().AsReadOnly();
         }
 
+        /// <summary>
+        /// Get async all stories for all Users
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<SearchStoryDb>> GetAllAsync()
         {
             return await _context.SearchStories.ToListAsync();
@@ -49,14 +61,19 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SearchStoryDb> GetByUserId(int? userId)
+        public IEnumerable<SearchStoryDb> GetByUserId(string userId)
         {
-            return _context.SearchStories.Where(s => s.User.Id == userId).ToList().AsReadOnly();
+            return _context.SearchStories.Where(s => s.UserId == userId).ToList().AsReadOnly();
         }
 
-        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(int? userId)
+        /// <summary>
+        /// Get async all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId)
         {
-            return await _context.SearchStories.Where(s => s.User.Id == userId).ToListAsync();
+            return await _context.SearchStories.Where(s => s.UserId == userId).ToListAsync();
         }
 
         /// <summary>
@@ -69,6 +86,11 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToList().AsReadOnly();
         }
 
+        /// <summary>
+        /// Get async all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SearchStoryDb>> GetByRequestIdAsync(int? requestId)
         {
             return await _context.SearchStories.Where(s => s.SearchRequest.Id == requestId).ToListAsync();
@@ -84,6 +106,11 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
         }
 
+        /// <summary>
+        /// Get async one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         public async Task<SearchStoryDb> GetByStoryIdAsync(int? storyId)
         {
             return await _context.SearchStories.SingleOrDefaultAsync(s => s.Id == storyId);
@@ -93,15 +120,20 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// Delete all records story by User Id
         /// </summary>
         /// <param name="userId"></param>
-        public void DeleteByUserId(int? userId)
+        public void DeleteByUserId(string userId)
         {
-            var delstory = _context.SearchStories.Where(s => s.User.Id == userId);
+            var delstory = _context.SearchStories.Where(s => s.UserId == userId);
             if (delstory != null)
             {
                 _context.SearchStories.RemoveRange(delstory);
                 _context.SaveChanges();
             }
         }
+
+        /// <summary>
+        /// Delete story by id
+        /// </summary>
+        /// <param name="storyId"></param>
         public void DeleteByStoryId(int? storyId)
         {
             var delstory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId);

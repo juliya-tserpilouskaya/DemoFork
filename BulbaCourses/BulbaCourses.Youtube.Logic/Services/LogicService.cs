@@ -8,6 +8,7 @@ using BulbaCourses.Youtube.Logic.Models;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using AutoMapper;
+using FluentValidation;
 using static Google.Apis.YouTube.v3.SearchResource.ListRequest;
 
 namespace BulbaCourses.Youtube.Logic.Services
@@ -16,115 +17,92 @@ namespace BulbaCourses.Youtube.Logic.Services
     {
         IServiceFactory _serviceFactory;
         ICacheService _cache;
-        Mapper _mapper;
+        readonly IMapper _mapper;
+        private readonly IValidator<SearchRequest> _validator;
 
-        public LogicService(IServiceFactory serviceFactory)
+        public LogicService(IServiceFactory serviceFactory, IMapper mapper, IValidator<SearchRequest> validator)
         {
             _serviceFactory = serviceFactory;
             _cache = _serviceFactory.CreateCacheService();
-            _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<SearchRequest, SearchRequestDb>();
-                cfg.CreateMap<User, UserDb>();
-                cfg.CreateMap<ResultVideoDb, ResultVideo>();
-            }));             
+            _mapper = mapper;
+            _validator = validator;
         }
 
-        public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user)
+        public IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, string userId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user)
+        public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, string userId)
         {
+            var result = _validator.Validate(searchRequest, ruleSet: "AddRequest, Search");
+            if (!result.IsValid)
+                return null;
+
             var requestService = _serviceFactory.CreateSearchRequestService();
-            var userService = _serviceFactory.CreateUserService();
             var storyService = _serviceFactory.CreateStoryService();
             var videoService = _serviceFactory.CreateVideoService();
-            var resultVideosDb = new List<ResultVideoDb>();
-            
-            //Mapping models
-            var searchRequestDb = _mapper.Map<SearchRequestDb>(searchRequest);
-            searchRequestDb.CacheId = GenerateCacheId(searchRequestDb);
-            var userDb = _mapper.Map<UserDb>(user);
+
+            var resultVideos = new List<ResultVideo>();
+
+            searchRequest.CacheId = GenerateCacheId(searchRequest);
 
             //Сheck cache
-            var cacheResult = _cache.GetValue(searchRequestDb.CacheId);
+            var cacheResult = _cache.GetValue(searchRequest.CacheId);
             if (cacheResult != null)
             {
                 //Get videos list from cache
-                resultVideosDb = cacheResult;
+                resultVideos = cacheResult;
 
                 //Update cache for search request for refresh storage time in the cache
-                _cache.Update(searchRequestDb.CacheId, resultVideosDb);
+                _cache.Update(searchRequest.CacheId, resultVideos);
             }
             else
             {
                 //Search in Youtube service
-                resultVideosDb = await SearchInYoutubeAsync(searchRequestDb);
+                resultVideos = await SearchInYoutubeAsync(searchRequest);
 
                 //Add result to cache
-                _cache.Add(searchRequestDb.CacheId, resultVideosDb);
+                _cache.Add(searchRequest.CacheId, resultVideos);
             }
-
 
             //Save ResultVideo and SearchRequest if does not exist
-            var videoFromDb = new ResultVideoDb();
-            if (requestService.Exists(searchRequestDb))
+            var videoFromDb = new ResultVideo();
+            if (requestService.Exists(searchRequest))
             {
-                searchRequestDb = await requestService.GetRequestByCacheIdAsync(searchRequestDb.CacheId);
-                foreach (var resultVideo in resultVideosDb)
-                {
-                    videoFromDb = videoService.GetById(resultVideo.Id);
-                    if (videoFromDb != null)
-                    {
-                        if (!searchRequestDb.Videos.Contains(videoFromDb))
-                        searchRequestDb.Videos.Add(videoFromDb);
-                    }
-                    else
-                    {
-                        searchRequestDb.Videos.Add(resultVideo);
-                    }
-                }
-                requestService.Update(searchRequestDb);
-            }
-            else
-            {
-                searchRequestDb.Videos = new List<ResultVideoDb>();
-                foreach (var resultVideo in resultVideosDb)
-                {
-                    videoFromDb = videoService.GetById(resultVideo.Id);
-                    if (videoFromDb != null)
-                    {
-                        searchRequestDb.Videos.Add(videoFromDb);
-                    }
-                    else
-                    {
-                        searchRequestDb.Videos.Add(resultVideo);
-                    }
-                }
-                requestService.Save(searchRequestDb);
-            }
+                searchRequest = await requestService.GetRequestByCacheIdAsync(searchRequest.CacheId);
 
-            //Save user if does not exist
-            if (!userService.Exists(userDb))
-                userDb = userService.Save(userDb);
+                foreach (var resultVideo in resultVideos)
+                {
+                    if (!searchRequest.Videos.Any(v=>v.Id ==resultVideo.Id))
+                        searchRequest.Videos.Add(resultVideo);
+                }
+                requestService.Update(searchRequest);
+            }
             else
-                userDb = userService.GetUserById(userDb.Id);
+            {
+                searchRequest.Videos = resultVideos;
+                searchRequest = requestService.Save(searchRequest);
+            }
 
             //Save user search story
-            storyService.Save(new SearchStoryDb()
+            storyService.Save(new SearchStory()
             {
                 SearchDate = DateTime.Now,
-                SearchRequest = searchRequestDb,
-                User = userDb
+                //SearchRequest = searchRequest,
+                SearchRequest_Id = searchRequest.Id,
+
+                UserId = userId
             });
-            return _mapper.Map<List<ResultVideo>>(resultVideosDb).AsReadOnly();
+            return resultVideos.AsReadOnly();
         }
 
-        private async Task<List<ResultVideoDb>> SearchInYoutubeAsync(SearchRequestDb searchRequest)
+        private async Task<List<ResultVideo>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
-            var _channelService = _serviceFactory.CreateChannelService();
-            var resultVideosDb = new List<ResultVideoDb>();
+            var channelService = _serviceFactory.CreateChannelService();
+            var videoService = _serviceFactory.CreateVideoService();
+
+            var resultVideos = new List<ResultVideo>();
 
             // Create the service.
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -154,32 +132,38 @@ namespace BulbaCourses.Youtube.Logic.Services
                 var responceVideo = await searchListVideo.ExecuteAsync();
                 var videoContentDetails = responceVideo.Items[0].ContentDetails;
 
-                var resultVideoDb = new ResultVideoDb();
-                resultVideoDb.Id = searchResult.Id.VideoId;
-                resultVideoDb.Title = searchResult.Snippet.Title;
-                resultVideoDb.PublishedAt = searchResult.Snippet.PublishedAt;
-                resultVideoDb.Description = searchResult.Snippet.Description;
-                resultVideoDb.Thumbnail = searchResult.Snippet.Thumbnails.High.Url;
-                resultVideoDb.Definition = videoContentDetails.Definition;
-                resultVideoDb.Dimension = videoContentDetails.Dimension;
-                resultVideoDb.Duration = videoContentDetails.Duration;
-                resultVideoDb.VideoCaption = videoContentDetails.Caption;
+                var resultVideo = new ResultVideo();
+                resultVideo.Id = searchResult.Id.VideoId;
+                resultVideo.Title = searchResult.Snippet.Title;
+                resultVideo.PublishedAt = searchResult.Snippet.PublishedAt;
+                resultVideo.Description = searchResult.Snippet.Description;
+                resultVideo.Thumbnail = searchResult.Snippet.Thumbnails.High.Url;
+                resultVideo.Definition = videoContentDetails.Definition;
+                resultVideo.Dimension = videoContentDetails.Dimension;
+                resultVideo.Duration = videoContentDetails.Duration;
+                resultVideo.VideoCaption = videoContentDetails.Caption;
 
-                var channel = new ChannelDb()
+                var channel = new Channel()
                 {
                     Id = searchResult.Snippet.ChannelId,
                     Name = searchResult.Snippet.ChannelTitle,
                 };
-                if (!_channelService.Exists(channel))
-                    _channelService.Save(channel);
+                if (!channelService.Exists(channel))
+                    channelService.Save(channel);
 
-                resultVideoDb.Channel = _channelService.GetChannelById(channel.Id);
+                resultVideo.Channel_Id = channel.Id;
 
-                resultVideosDb.Add(resultVideoDb);
+                var videoFromDb = videoService.GetById(resultVideo.Id);
+                if (videoFromDb == null)
+                    resultVideo = videoService.Save(resultVideo);
+                else
+                    resultVideo = videoFromDb;
+
+                resultVideos.Add(resultVideo);
             }
-            return resultVideosDb;
+            return resultVideos;
         }
-        private string GenerateCacheId(SearchRequestDb searchRequestDb)
+        private string GenerateCacheId(SearchRequest searchRequestDb)
         {
             var cacheId = searchRequestDb.PublishedAfter.ToString()
                 + searchRequestDb.PublishedBefore.ToString()

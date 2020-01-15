@@ -12,7 +12,6 @@ namespace BulbaCourses.Youtube.Logic.Services
         IChannelService CreateChannelService();
         ISearchRequestService CreateSearchRequestService();
         IStoryService CreateStoryService();
-        IUserService CreateUserService();
         IVideoService CreateVideoService();
     }
 }
