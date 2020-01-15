@@ -54,6 +54,40 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb,TaskDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<TaskDb>, List<TaskDTO>>(DataBase.Tasks.GetAll());
         }
+
+        public void UpdateTask(string id, TaskDTO _taskDTO)
+        {
+             if (id == null) throw new ValidationExeption("Not id", "idtask");
+             TaskDb taskDB = DataBase.Tasks.Get(id);
+             var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
+             TaskDb task = mapper2.Map<TaskDTO, TaskDb>(_taskDTO);
+             taskDB.Name = task.Name;
+             taskDB.TaskLevel = task.TaskLevel;
+             taskDB.Text = task.Text;
+             taskDB.Modified = task.Modified;
+             taskDB.Created = task.Created;
+             DataBase.Tasks.Update(taskDB);
+             DataBase.Save();
+            // if (id == null) throw new ValidationExeption("Not id", "idtask");
+            // TaskDb taskDB = DataBase.Tasks.Get(id);
+            // var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb, TaskDTO>()).CreateMapper();
+            // TaskDTO taskdto = mapper.Map<TaskDb, TaskDTO>(taskDB);
+            //// taskdto.Id = _taskDTO.Id;
+            // taskdto.Name = _taskDTO.Name;
+            // taskdto.TaskLevel = _taskDTO.TaskLevel;
+            // taskdto.Text = _taskDTO.Text;
+            // taskdto.Modified = _taskDTO.Modified;
+            // taskdto.Created = _taskDTO.Created;
+            // var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
+            // TaskDb task = mapper2.Map<TaskDTO, TaskDb>(taskdto);
+
+
+        }
+        public void DeleteTask(string id)
+        {
+            DataBase.Tasks.Delete(id);
+        }
+
         public void Dispose()
         {
             DataBase.Dispose();
