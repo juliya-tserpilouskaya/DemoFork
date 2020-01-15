@@ -2,6 +2,7 @@
 using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
+using EasyNetQ;
 using Ninject;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -15,9 +16,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
     {
         private readonly IService_Test _service_Test;
 
-        public TestAPIController(IService_Test service_Test)
+        private readonly IBus _bus;
+
+        public TestAPIController(IService_Test service_Test, IBus bus)
         {
             _service_Test = service_Test;
+
+            _bus = bus;
         }
 
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parametr format")]

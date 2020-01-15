@@ -18,21 +18,21 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
     using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
     using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
 
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -40,7 +40,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -78,6 +78,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
             kernel.Bind<IService_Test>().To<Service_Test>();
 
             kernel.Load<ModuleNinject_Logic>();
-        }        
+
+            // ---------- EasyNetQ
+
+            kernel.RegisterEasyNetQ("host=127.0.0.1");
+        }
     }
 }

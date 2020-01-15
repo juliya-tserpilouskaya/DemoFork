@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using EasyNetQ;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,15 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 {
     public static class WebApiConfig
     {
+        private static IBus bus;
+
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services            
+            IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
+
+            bus = kernel.Get<IBus>();
+
+            bus.Receive("BookService", b => TestMethod());
 
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
@@ -20,6 +27,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+        }
+
+        public static void TestMethod()
+        {
+
         }
     }
 }
