@@ -17,7 +17,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             bus = kernel.Get<IBus>();
 
-            bus.Receive("BookService", b => TestMethod());
+            bus.Receive("BookService", null);
 
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
@@ -27,11 +27,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-        }
-
-        public static void TestMethod()
-        {
-
         }
     }
 }

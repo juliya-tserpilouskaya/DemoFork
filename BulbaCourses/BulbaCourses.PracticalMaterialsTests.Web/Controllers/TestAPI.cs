@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
-{    
+{
     public class TestAPIController : ApiController
     {
         private readonly IService_Test _service_Test;
@@ -29,9 +29,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]
         [SwaggerResponse(HttpStatusCode.OK, "Test found", typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
-        public IHttpActionResult TesatMethod()
+        public IHttpActionResult TestMethod()
         {
-            var Test_MainInfo = _service_Test.GetById(1);            
+            var Test_MainInfo = _service_Test.GetById(1);
 
             return Ok(Test_MainInfo.Data.Name);
         }

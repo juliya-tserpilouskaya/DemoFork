@@ -52,6 +52,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
@@ -73,15 +74,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            // ---------- LayerLogic
 
-            kernel.Bind<IService_Test>().To<Service_Test>();
-
-            kernel.Load<ModuleNinject_Logic>();
-
-            // ---------- EasyNetQ
-
-            kernel.RegisterEasyNetQ("host=127.0.0.1");
         }
     }
 }
