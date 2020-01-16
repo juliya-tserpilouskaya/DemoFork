@@ -1,22 +1,20 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using AutoMapper;
+using Bogus;
+using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.Models;
-using Moq;
-using AutoMapper;
-using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Logic.Services;
 using FluentAssertions;
-using Bogus;
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using BulbaCourses.Video.Logic.Models.ResultModels;
 
-namespace BulbaCourses.Video.WebTests
+namespace BulbaCourses.Video.WebTests.ServicesTests
 {
-    
     [TestFixture]
     public class UserServiceTests
     {
@@ -40,11 +38,11 @@ namespace BulbaCourses.Video.WebTests
         [SetUp]
         public void InitMock()
         {
-            _userDb = new UserDb() { UserId = "id", Login = "A"};
-            _userInfo = new UserInfo() { Login = "A"};
+            _userDb = new UserDb() { UserId = "id", Login = "A" };
+            _userInfo = new UserInfo() { Login = "A" };
 
             _usersDbList = new List<UserDb>() { new UserDb() { UserId = "id", Login = "A" } };
-            _usersInfoList = new List<UserInfo>() { new UserInfo() { Login = "A"} };
+            _usersInfoList = new List<UserInfo>() { new UserInfo() { Login = "A" } };
 
             _mockUserRepository = new Mock<IUserRepository>();
             _mockMapper = new Mock<IMapper>();
@@ -102,11 +100,11 @@ namespace BulbaCourses.Video.WebTests
         public async Task Test_Add_User_Async()
         {
             _mockMapper.Setup(m => m.Map<UserInfo, UserDb>(_userInfo)).Returns(_userDb);
+            _mockMapper.Setup(m => m.Map<UserDb, UserInfo>(_userDb)).Returns(_userInfo);
             _mockUserRepository.Setup(c => c.AddAsync(_userDb)).Returns(async () => _userDb);
-
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var result = await service.AddAsync(_userInfo);
-            result.Should().Be(_userDb);
+            result.IsSuccess.Should().BeTrue();
         }
 
         [Test]
@@ -118,7 +116,7 @@ namespace BulbaCourses.Video.WebTests
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.DeleteAsync(_userInfo);
 
-            res.Should().Be(Task.FromResult(Result.Ok()));
+            res.IsSuccess.Should().BeTrue();
         }
 
         [Test]
@@ -130,7 +128,7 @@ namespace BulbaCourses.Video.WebTests
             UserService service = new UserService(_mockMapper.Object, _mockUserRepository.Object);
             var res = await service.UpdateAsync(_userInfo);
 
-            res.Should().Be(_userDb);
+            res.IsSuccess.Should().BeTrue();
         }
     }
 }

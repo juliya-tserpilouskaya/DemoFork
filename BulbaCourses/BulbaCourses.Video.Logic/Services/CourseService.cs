@@ -149,8 +149,18 @@ namespace BulbaCourses.Video.Logic.Services
         {
             var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
             var courses = await _courseRepository.GetAllAsync();
-            courses = courses.Where(c => c.Tags.Contains(tagDb));
-            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
+            List<CourseDb> listCourses = new List<CourseDb>();
+            foreach (var course in courses)
+            {
+                foreach (var courseTag in course.Tags)
+                {
+                    if (courseTag.Content.Equals(tag.Content))
+                    {
+                        listCourses.Add(course);
+                    }
+                }
+            }
+            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(listCourses.AsEnumerable());
             return result;
         }
 
@@ -179,7 +189,17 @@ namespace BulbaCourses.Video.Logic.Services
 
         public async Task<Result<CourseInfo>> UpdateAsync(CourseInfo course)
         {
-            var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
+            var courseDb = _courseRepository.GetByIdAsync(course.CourseId).GetAwaiter().GetResult();
+            if (courseDb == null)
+            {
+                return (Result<CourseInfo>)Result.Fail($"Invalid course. Course doesn't exist");
+            }
+            courseDb.Name = course.Name;
+            courseDb.Level = course.Level;
+            courseDb.Raiting = course.Raiting;
+            courseDb.Description = course.Description;
+            courseDb.Duration = course.Duration;
+            courseDb.Price = course.Price;
             try
             {
                 await _courseRepository.UpdateAsync(courseDb);

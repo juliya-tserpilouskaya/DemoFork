@@ -1,7 +1,9 @@
 ﻿using BulbaCourses.Video.Logic.Infrastructure;
+using BulbaCourses.Video.Web.App_Start;
 using BulbaCourses.Video.Web.Infrastructure;
-using BulbaCourses.Video.Web.Models.CourseViews;
+using BulbaCourses.Video.Web.Models;
 using FluentValidation;
+using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Ninject;
@@ -51,10 +53,10 @@ namespace BulbaCourses.Video.Web
             var kernel = new StandardKernel(new LogicLoadModule());
             kernel.Load<MapperLoadModule>();
             //// Web API configuration and services
-            //FluentValidationModelValidatorProvider.Configure(config,
-            //    cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+            FluentValidationModelValidatorProvider.Configure(config,
+                cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 
-            AssemblyScanner.FindValidatorsInAssemblyContaining<CourseViewInput>()
+            AssemblyScanner.FindValidatorsInAssemblyContaining<CourseView>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
 

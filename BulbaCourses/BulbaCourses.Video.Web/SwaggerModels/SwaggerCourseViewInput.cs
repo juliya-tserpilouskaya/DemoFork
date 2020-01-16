@@ -1,4 +1,4 @@
-﻿using BulbaCourses.Video.Web.Models.CourseViews;
+﻿using BulbaCourses.Video.Web.Models;
 using Swashbuckle.Examples;
 using System;
 using System.Collections.Generic;
