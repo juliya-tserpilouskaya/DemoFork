@@ -3,10 +3,10 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
 using Microsoft.Owin;
+using Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
-using Owin;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.OwinStartup))]
 

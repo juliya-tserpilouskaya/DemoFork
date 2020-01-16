@@ -91,6 +91,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.SelfHo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Tests", "BulbaCourses.Youtube.Tests\BulbaCourses.Youtube.Tests.csproj", "{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.PracticalMaterialsTests.SelfHosted", "BulbaCourses.PracticalMaterialsTests.SelfHosted\BulbaCourses.PracticalMaterialsTests.SelfHosted.csproj", "{019114A0-2EEB-45DF-BB26-34817A4C1068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -232,6 +234,10 @@ Global
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{019114A0-2EEB-45DF-BB26-34817A4C1068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{019114A0-2EEB-45DF-BB26-34817A4C1068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{019114A0-2EEB-45DF-BB26-34817A4C1068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{019114A0-2EEB-45DF-BB26-34817A4C1068}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -270,6 +276,7 @@ Global
 		{82F072DD-142C-4BCE-936E-077C76EB7802} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{87FDF1A1-4AF5-40E2-A2D2-5FA9EEB4504E} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{019114A0-2EEB-45DF-BB26-34817A4C1068} = {311F5F9E-C078-4585-876B-AD613F87FE29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
