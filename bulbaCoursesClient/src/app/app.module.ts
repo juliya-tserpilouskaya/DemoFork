@@ -5,19 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SampleModule } from './sample/sample.module';
+import { AuthSharedModule } from './auth/auth-shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SampleModule
+    SampleModule,
+    AuthSharedModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }
