@@ -7,13 +7,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdateTables : IMigrationMetadata
+    public sealed partial class UpdateCategory : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateCategory));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912311129079_UpdateTables"; }
+            get { return "202001161114312_UpdateCategory"; }
         }
         
         string IMigrationMetadata.Source

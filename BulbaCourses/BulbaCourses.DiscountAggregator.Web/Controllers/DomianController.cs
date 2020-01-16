@@ -60,6 +60,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [Description("Add new domain")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Domain added", typeof(Domain))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
             if (domain == null)

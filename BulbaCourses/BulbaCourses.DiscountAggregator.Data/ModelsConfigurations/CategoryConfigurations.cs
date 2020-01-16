@@ -16,7 +16,7 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
                 .HasMaxLength(255)
                 .IsUnicode();
 
-            HasOptional<DomainDb>(x => x.Domain);
+            //HasOptional<DomainDb>(x => x.Domain);
         }
     }
 }

@@ -60,6 +60,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [Description("Add new category")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Category added", typeof(CourseCategory))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]CourseCategory courseCategory)
         {
             if (courseCategory == null)

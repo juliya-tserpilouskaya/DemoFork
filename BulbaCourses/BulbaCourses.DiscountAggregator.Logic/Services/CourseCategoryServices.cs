@@ -44,7 +44,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message}");
+                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message + "/n"+ e.EntityValidationErrors}");
             }
         }
 

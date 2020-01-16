@@ -4,6 +4,7 @@ using BulbaCourses.DiscountAggregator.Logic.Services;
 using BulbaCourses.DiscountAggregator.Web.Filters;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
+using Swashbuckle.Examples;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
@@ -147,6 +149,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerRequestExample(typeof(Course),typeof(SwaggerCourse))]
+        [Description("Add new course")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
@@ -157,6 +164,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
 
             course.Id = Guid.NewGuid().ToString();
+            course.Category.Id = Guid.NewGuid().ToString();
+            course.Domain.Id = Guid.NewGuid().ToString();
             var result = await _courseService.AddAsync(course);
             return  result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

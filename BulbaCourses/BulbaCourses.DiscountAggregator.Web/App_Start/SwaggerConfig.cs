@@ -2,6 +2,7 @@ using System.Web.Http;
 using WebActivatorEx;
 using BulbaCourses.DiscountAggregator.Web;
 using Swashbuckle.Application;
+using Swashbuckle.Examples;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -18,6 +19,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
+                c.OperationFilter<ExamplesOperationFilter>();   
             }).EnableSwaggerUi(c =>
             {
             });
