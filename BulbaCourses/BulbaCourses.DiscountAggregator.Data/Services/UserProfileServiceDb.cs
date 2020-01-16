@@ -33,7 +33,48 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 context.Profiles.Add(profileDb);
                 context.SearchCriterias.Add(profileDb.SearchCriteria);
-                await context.SaveChangesAsync().ConfigureAwait(false);
+
+                //context.Database.ExecuteSqlCommand($"Insert into Profiles");
+
+                List<CourseCategoryDb> n = new List<CourseCategoryDb>();
+
+                foreach (var el in profileDb.SearchCriteria.CourseCategories)
+                {
+                    n.Add(context.CourseCategories.Find(el.Id) ?? el);
+                }
+
+                //profileDb.SearchCriteria.CourseCategories = n;
+
+                profileDb.SearchCriteria.CourseCategories.Clear();
+                foreach (var el in n)
+                {
+                    profileDb.SearchCriteria.CourseCategories.Add(el);
+                }
+
+               // profileDb.SearchCriteria.CourseCategories.Add(new CourseCategoryDb());
+
+               //for(var i = 0; i < profileDb.SearchCriteria.CourseCategories.Count; i++)
+               //{
+               //    profileDb.SearchCriteria.CourseCategories.Addk [i]. = context.CourseCategories.Find()
+               //    var category = context.CourseCategories.Where(x => x.Name == el.Name).FirstOrDefault();
+               //    if (context.CourseCategories.Where(x => x.Name == el.Name).FirstOrDefault() != null)
+               //    {
+               //        el.Id = category.Id;
+               //    }
+
+               //}
+               //foreach(var el in profileDb.SearchCriteria.Domains)
+               //{
+               //    if (context.Domains.Where(x => x.DomainURL == el.DomainURL).FirstOrDefault() != null)
+               //    {
+               //        el.
+               //    }
+               //}
+               //context.Domains.Where(x => x.DomainURL == profileDb.SearchCriteria.Domains.DomainProfile);
+
+               //var domen = context.Domains.Find(profileDb.SearchCriteria.Domains);
+
+               await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<UserProfileDb>.Ok(profileDb);
             }
             catch (DbUpdateConcurrencyException e)

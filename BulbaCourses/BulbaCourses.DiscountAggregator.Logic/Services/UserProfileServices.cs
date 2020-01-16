@@ -59,6 +59,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         public async Task<Result<UserProfile>> AddAsync(UserProfile profile)
         {
             profile.Id = Guid.NewGuid().ToString();
+            profile.SearchCriteria.Id = Guid.NewGuid().ToString();
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             var result = await _profileService.AddAsync(profileDb);
             return result.IsSuccess ? Result<UserProfile>.Ok(_mapper.Map<UserProfile>(result.Data)) 

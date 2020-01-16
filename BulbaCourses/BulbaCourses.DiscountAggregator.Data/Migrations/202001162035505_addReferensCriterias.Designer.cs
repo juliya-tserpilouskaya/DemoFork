@@ -7,13 +7,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class asdf : IMigrationMetadata
+    public sealed partial class addReferensCriterias : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(asdf));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addReferensCriterias));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912262019146_asdf"; }
+            get { return "202001162035505_addReferensCriterias"; }
         }
         
         string IMigrationMetadata.Source

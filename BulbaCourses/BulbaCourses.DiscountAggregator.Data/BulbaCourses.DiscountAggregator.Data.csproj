@@ -54,25 +54,21 @@
     <Compile Include="Migrations\201912191112145_InitialCreateTables.Designer.cs">
       <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912261254478_updateUsers.cs" />
-    <Compile Include="Migrations\201912261254478_updateUsers.Designer.cs">
-      <DependentUpon>201912261254478_updateUsers.cs</DependentUpon>
+    <Compile Include="Migrations\202001162003146_NewModel.cs" />
+    <Compile Include="Migrations\202001162003146_NewModel.Designer.cs">
+      <DependentUpon>202001162003146_NewModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912262019146_asdf.cs" />
-    <Compile Include="Migrations\201912262019146_asdf.Designer.cs">
-      <DependentUpon>201912262019146_asdf.cs</DependentUpon>
+    <Compile Include="Migrations\202001162035505_addReferensCriterias.cs" />
+    <Compile Include="Migrations\202001162035505_addReferensCriterias.Designer.cs">
+      <DependentUpon>202001162035505_addReferensCriterias.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912261258026_CreateTable.cs" />
-    <Compile Include="Migrations\201912261258026_CreateTable.Designer.cs">
-      <DependentUpon>201912261258026_CreateTable.cs</DependentUpon>
+    <Compile Include="Migrations\202001162048219_addReferensCategory.cs" />
+    <Compile Include="Migrations\202001162048219_addReferensCategory.Designer.cs">
+      <DependentUpon>202001162048219_addReferensCategory.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001130800236_Changed.cs" />
-    <Compile Include="Migrations\202001130800236_Changed.Designer.cs">
-      <DependentUpon>202001130800236_Changed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001161114312_UpdateCategory.cs" />
-    <Compile Include="Migrations\202001161114312_UpdateCategory.Designer.cs">
-      <DependentUpon>202001161114312_UpdateCategory.cs</DependentUpon>
+    <Compile Include="Migrations\202001162110377_addReferensCategory1.cs" />
+    <Compile Include="Migrations\202001162110377_addReferensCategory1.Designer.cs">
+      <DependentUpon>202001162110377_addReferensCategory1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -109,20 +105,17 @@
     <EmbeddedResource Include="Migrations\201912191112145_InitialCreateTables.resx">
       <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912261254478_updateUsers.resx">
-      <DependentUpon>201912261254478_updateUsers.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001162003146_NewModel.resx">
+      <DependentUpon>202001162003146_NewModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912262019146_asdf.resx">
-      <DependentUpon>201912262019146_asdf.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001162035505_addReferensCriterias.resx">
+      <DependentUpon>202001162035505_addReferensCriterias.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912261258026_CreateTable.resx">
-      <DependentUpon>201912261258026_CreateTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001162048219_addReferensCategory.resx">
+      <DependentUpon>202001162048219_addReferensCategory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001130800236_Changed.resx">
-      <DependentUpon>202001130800236_Changed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001161114312_UpdateCategory.resx">
-      <DependentUpon>202001161114312_UpdateCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001162110377_addReferensCategory1.resx">
+      <DependentUpon>202001162110377_addReferensCategory1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
