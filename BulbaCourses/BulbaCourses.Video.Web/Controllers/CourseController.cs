@@ -4,7 +4,9 @@ using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models;
 using BulbaCourses.Video.Web.SwaggerModels;
+using EasyNetQ;
 using FluentValidation.WebApi;
+using Newtonsoft.Json;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -12,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -22,11 +25,13 @@ namespace BulbaCourses.Video.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
+        private IBus _bus;
 
-        public CourseController(IMapper mapper, ICourseService courseService)
+        public CourseController(IMapper mapper, ICourseService courseService, IBus bus)
         {
             _mapper = mapper;
             _courseService = courseService;
+            _bus = bus;
         }
 
         [HttpGet, Route("{id}")]
@@ -37,10 +42,20 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Get(string id)
         {
+            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            if (userId == null)
+            {
+                userId = "guest";
+            }
+
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
+
+            await _bus.SendAsync("VideoQ", id);
+            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
+
             try
             {
                 var result = await _courseService.GetCourseByIdAsync(id);
@@ -58,6 +73,14 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            if (userId == null)
+            {
+                userId = "guest";
+            }
+
+            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
+
             var courses = await _courseService.GetAllAsync();
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);

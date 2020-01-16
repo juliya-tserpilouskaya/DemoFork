@@ -61,7 +61,7 @@ namespace BulbaCourses.Video.Web
                     .To(result.ValidatorType));
 
 
-            //kernel.RegisterEasyNetQ("host=10.211.55.2");
+            kernel.RegisterEasyNetQ("host=localhost");
             return kernel;
         }
 
