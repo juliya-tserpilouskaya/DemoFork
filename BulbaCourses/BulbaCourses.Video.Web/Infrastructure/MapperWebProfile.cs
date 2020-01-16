@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Models;
-using BulbaCourses.Video.Web.Models.CourseViews;
-using BulbaCourses.Video.Web.Models.UserViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +15,8 @@ namespace BulbaCourses.Video.Web.Infrastructure
             CreateMap<UserProfileView, UserInfo>().ReverseMap();
             CreateMap<CourseView, CourseInfo>().ReverseMap();
             CreateMap<CommentView, CommentInfo>().ReverseMap();
+            CreateMap<VideoView, VideoMaterialInfo>().ReverseMap();
+            CreateMap<AuthorView, AuthorInfo>().ReverseMap();
         }
     }
 }

@@ -3,7 +3,6 @@ using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models;
-using BulbaCourses.Video.Web.Models.CourseViews;
 using BulbaCourses.Video.Web.SwaggerModels;
 using FluentValidation.WebApi;
 using Swashbuckle.Examples;
