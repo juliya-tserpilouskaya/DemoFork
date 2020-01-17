@@ -14,6 +14,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Models
 
         public string DomainURL { get; set; }
 
-        public ICollection<SearchCriteriaDb> SearchCriterias {get; set;}
+        public ICollection<SearchCriteriaDb> SearchCriterias { get; set; }
+
+        //public ICollection<CourseDb> Courses { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Infrastructure;
 using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using System;
@@ -58,6 +59,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public async Task<Result<UserProfile>> AddAsync(UserProfile profile)
         {
+            if (await ExistsAsync(profile.Email))
+                return Result<UserProfile>.Fail<UserProfile>(ErrorMessages.errMessageDublicateProfile);
             profile.Id = Guid.NewGuid().ToString();
             profile.SearchCriteria.Id = Guid.NewGuid().ToString();
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
@@ -100,6 +103,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
                 : (Result<UserProfile>)Result.Fail(result.Message);
         }
 
-        public Task<bool> ExistsAsync(string id) =>  _profileService.ExistsAsync(id);
+        public Task<bool> ExistsAsync(string email) =>  _profileService.ExistsAsync(email);
     }
 }

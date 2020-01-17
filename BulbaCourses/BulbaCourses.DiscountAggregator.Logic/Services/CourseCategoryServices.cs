@@ -27,25 +27,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public async Task<Result<CourseCategory>> AddAsync(CourseCategory courseCategory)
         {
+            courseCategory.Id = Guid.NewGuid().ToString();
             var courseCategoryDb = _mapper.Map<CourseCategory, CourseCategoryDb>(courseCategory);
-
-            try
-            {
-                await _courseCategoryServiceDb.AddAsync(courseCategoryDb);
-                return Result<CourseCategoryDb>.Ok(_mapper.Map<CourseCategory>(courseCategoryDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. {e.Message}");
-            }
-            catch (DbUpdateException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. Duplicate field. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message + "/n"+ e.EntityValidationErrors}");
-            }
+            var result = await _courseCategoryServiceDb.AddAsync(courseCategoryDb);
+            return result.IsSuccess ? Result<CourseCategory>.Ok(_mapper.Map<CourseCategory>(result.Data))
+                 : Result<CourseCategory>.Fail<CourseCategory>(result.Message);
         }
 
         public Task<Result> DeleteByIdAsync(string id)
@@ -71,23 +57,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         public async Task<Result<CourseCategory>> UpdateAsync(CourseCategory category)
         {
             var categoryDb = _mapper.Map<CourseCategory, CourseCategoryDb>(category);
-            try
-            {
-                await _courseCategoryServiceDb.UpdateAsync(categoryDb);
-                return Result<CourseDb>.Ok(_mapper.Map<CourseCategory>(categoryDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. {e.Message}");
-            }
-            catch (DbUpdateException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Cannot save category. Duplicate field. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<CourseCategory>)Result<CourseCategory>.Fail<CourseCategory>($"Invalid category. {e.Message}");
-            }
+            var result = await _courseCategoryServiceDb.UpdateAsync(categoryDb);
+            return result.IsSuccess ? Result<CourseCategory>.Ok(_mapper.Map<CourseCategory>(result.Data))
+                : Result<CourseCategory>.Fail<CourseCategory>(result.Message);
         }
     }
 }

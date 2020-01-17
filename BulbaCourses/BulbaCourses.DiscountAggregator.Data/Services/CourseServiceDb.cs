@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,11 +21,26 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             this.context = courseService;
         }
 
-        public async Task<CourseDb> AddAsync(CourseDb course)
-        { 
-            context.Courses.Add(course);
-            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            return await Task.FromResult(course);
+        public async Task<Result<CourseDb>> AddAsync(CourseDb course)
+        {
+            try
+            {
+                context.Courses.Add(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Invalid course. {e.Message}");
+            }
         }
 
         public IEnumerable<CourseDb> GetAll()
@@ -51,10 +67,22 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return course;
         }
 
-        public async Task DeleteAsync(CourseDb course)
+        public async Task<Result<CourseDb>> DeleteAsync(CourseDb course)
         {
-            context.Courses.Remove(course);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                context.Courses.Remove(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Course not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Invalid profile. {e.Message}");
+            }
         }
         
         public async Task DeleteByIdAsync(string id)
@@ -64,15 +92,26 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<CourseDb> UpdateAsync(CourseDb course)
+        public async Task<Result<CourseDb>> UpdateAsync(CourseDb course)
         {
-            if (course == null)
+            try
             {
-                throw new ArgumentNullException("course");
+                if (course == null)
+                {
+                    throw new ArgumentNullException("course");
+                }
+                context.Entry(course).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
             }
-            context.Entry(course).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return await Task.FromResult(course);
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Invalid course. {e.Message}");
+            }
         }
     }
 }

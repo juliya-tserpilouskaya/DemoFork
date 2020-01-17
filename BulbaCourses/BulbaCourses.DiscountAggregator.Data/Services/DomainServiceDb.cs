@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +21,27 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             this.context = context;
         }
 
-        public async Task<DomainDb> AddAsync(DomainDb domain)
+        public async Task<Result<DomainDb>> AddAsync(DomainDb domain)
         {
-            context.Domains.Add(domain);
-            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            return await Task.FromResult(domain);
+            try
+            {
+                context.Domains.Add(domain);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<DomainDb>.Ok(domain);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<DomainDb>)Result<DomainDb>.Fail<DomainDb>($"Cannot save domain. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<DomainDb>)Result<DomainDb>.Fail<DomainDb>($"Cannot save domain. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<DomainDb>)Result<DomainDb>.Fail<DomainDb>($"Invalid domain. {e.Message}");
+            }
+
         }
 
         public async Task<IEnumerable<DomainDb>> GetAllAsync()
@@ -37,10 +56,23 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return domain;
         }
 
-        public async Task DeleteAsync(DomainDb domainDb)
+        public async Task<Result<DomainDb>> DeleteAsync(DomainDb domainDb)
         {
-            context.Domains.Remove(domainDb);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                context.Domains.Remove(domainDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<DomainDb>.Ok(domainDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<DomainDb>.Fail<DomainDb>($"Domain not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<DomainDb>.Fail<DomainDb>($"Invalid domain. {e.Message}");
+            }
+
         }
 
         public async Task DeleteByIdAsync(string id)
@@ -50,15 +82,28 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             await context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<DomainDb> UpdateAsync(DomainDb domainDb)
+        public async Task<Result<DomainDb>> UpdateAsync(DomainDb domainDb)
         {
-            if (domainDb == null)
+            try
             {
-                throw new ArgumentNullException("domain");
+                if (domainDb == null)
+                {
+                    throw new ArgumentNullException("domain");
+                }
+                context.Entry(domainDb).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(domainDb);
             }
-            context.Entry(domainDb).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return await Task.FromResult(domainDb);
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<DomainDb>)Result<DomainDb>.Fail<DomainDb>($"Cannot save domain. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<DomainDb>)Result<DomainDb>.Fail<DomainDb>($"Invalid domain. {e.Message}");
+            }
+
+
         }
     }
 }

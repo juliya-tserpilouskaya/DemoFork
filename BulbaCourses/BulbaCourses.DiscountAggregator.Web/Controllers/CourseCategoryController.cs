@@ -71,7 +71,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            courseCategory.Id = Guid.NewGuid().ToString();
             var result = await _courseCategoryService.AddAsync(courseCategory);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
