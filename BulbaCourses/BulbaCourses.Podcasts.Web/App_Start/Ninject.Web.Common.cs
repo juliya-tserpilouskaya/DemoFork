@@ -7,7 +7,8 @@ using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.WebApi;
 using Ninject.Web.Common.WebHost;
-using BulbaCourses.Podcasts.Logic.Infrastructure;
+using BulbaCourses.Podcasts.Logic;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.Podcasts.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.Podcasts.Web.App_Start.NinjectWebCommon), "Stop")]
 
@@ -63,9 +64,8 @@ namespace BulbaCourses.Podcasts.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load<LogicLoadModule>();
+            kernel.Load<LogicModule>();
             kernel.Load<MapperLoadModule>();
-            kernel.RegisterEasyNetQ("host=localhost");
         }        
     }
 }

@@ -2,14 +2,26 @@
 using BulbaCourses.Podcasts.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Data.Managers
 {
     class CourseManager : IManager<CourseDb>
     {
-        public CourseDb Add(CourseDb courseDb)
+
+        protected readonly PodcastsContext dbContext;
+        private bool _isDisposed = false;
+
+        public CourseManager(PodcastsContext dbContext)
         {
-            throw new NotImplementedException();
+            this.dbContext = dbContext;
+        }
+
+        public async Task<CourseDb> Add(CourseDb courseDb)
+        {
+            dbContext.Courses.Add(courseDb);
+            await dbContext.SaveChangesAsync();
+            return await Task.FromResult<CourseDb>(courseDb);
         }
         public IEnumerable<CourseDb> GetAll()
         {
@@ -26,6 +38,25 @@ namespace BulbaCourses.Podcasts.Data.Managers
         public CourseDb Update(CourseDb courseDb)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        protected void Dispose(bool flag)
+        {
+            if (_isDisposed) return;
+
+            dbContext?.Dispose();
+            _isDisposed = true;
+            if (flag) GC.SuppressFinalize(this);
+        }
+
+        ~CourseManager()
+        {
+            this.Dispose(false);
         }
     }
 }

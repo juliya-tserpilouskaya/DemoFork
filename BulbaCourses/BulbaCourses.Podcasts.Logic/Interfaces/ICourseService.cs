@@ -9,26 +9,20 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface ICourseService
     {
-        CourseLogic AddCourse(CourseLogic course);
+        Task<Result> Add(CourseLogic course);
 
-        void AddDiscription(string Id, string description);
+        Task<Result> AddFileToCourse(string Id, AudioLogic audio);
 
-        AudioLogic AddFileToCourse(string Id, AudioLogic audio);
+        Task<Result<CourseLogic>> GetById(string Id);
 
-        CourseLogic GetById(string Id);
+        Task<Result<CourseLogic>> GetByName(string courseName);
 
-        CourseLogic GetCourseByName(string courseName);
+        Task<Result<IEnumerable<CourseLogic>>> GetAll();
 
-        IEnumerable<CourseLogic> GetAll();
+        Task<Result> Delete(CourseLogic course);
 
-        void Delete(CourseLogic course);
-
-        CourseLogic Update(CourseLogic course);
-
-        IEnumerable<AudioLogic> GetCourseAudios(string Id);
-
-        IEnumerable<CommentLogic> GetCourseComments(string Id);
-
+        Task<Result> Update(CourseLogic course);
+        
         bool Exists(string name);
     }
 }

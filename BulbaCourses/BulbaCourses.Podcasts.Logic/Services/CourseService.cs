@@ -22,90 +22,110 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<CourseLogic> AddCourse(CourseLogic course)
+        public async Task<Result> Add(CourseLogic course)
         {
-            var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-            var result = await dbmanager.AddCourse(courseDb);
-            return result;
-        }
-
-        public void AddDiscription(string Id, string description)
-        {
-            var course = dbmanager.GetCourseById(Id);
-            course.Description = description;
-            dbmanager.UpdateCourse(course);
-
-        }
-
-        public AudioLogic AddFileToCourse(string Id, AudioLogic audio)
-        {
-            var audiodb = mapper.Map<AudioLogic, AudioDb>(audio);
-            var courseAudios = dbmanager.GetCourseById(Id).Audios;
-            courseAudios.Add(audiodb);
-            return audio;
-        }
-
-        public async Task<CourseLogic> GetById(string Id)
-        {
-            var course = await dbmanager.GetCourseById(Id);
-            var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
-            return CourseLogic;
-        }
-
-        public CourseLogic GetCourseByName(string courseName)
-        {
-            var course = Task.FromResult(dbmanager.GetAllCourses().FirstOrDefault(c => c.Name.Equals(courseName))).Result;
-            var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
-            return CourseLogic;
-        }
-
-        public async Task<IEnumerable<CourseLogic>> GetAll()
-        {
-            var courses = await dbmanager.GetAllCourses();
-            var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
-            return result;
-        } //debug
-
-        public void Delete(CourseLogic course)
-        {
-            var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-            dbmanager.RemoveCourse(courseDb);
-        }
-
-        public async Task<CourseLogic> Update(CourseLogic course)
-        {
-            var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-            var result = await dbmanager.UpdateCourse(courseDb);
-            return result;
-        }
-
-        public IEnumerable<AudioLogic> GetCourseAudios(string Id)
-        {
-            var course = dbmanager.GetCourseById(Id);
-            var audiodb = course.Audios.ToList().AsReadOnly();
-            var result = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audiodb);
-            return result;
-        }
-
-        public IEnumerable<CommentLogic> GetCourseComments(string Id)
-        {
-            var course = dbmanager.GetCourseById(Id);
-            IEnumerable<CommentDb> comments = new List<CommentDb>();
-            foreach (AudioDb audio in course.Audios)
+            try
             {
-                foreach (CommentDb comment in audio.Comments)
-                {
-                    comments.Append<CommentDb>(comment);
-                }
+                var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                var result = await dbmanager.Add(courseDb);
+                return Result.Ok();
             }
-            var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
-            return result;
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+            
+        }
+
+        public async Task<Result<AudioLogic>> AddFileToCourse(string Id, AudioLogic audio)
+        {
+            try
+            {
+                var audiodb = mapper.Map<AudioLogic, AudioDb>(audio);
+                var courseAudios = await dbmanager.GetById(Id).Audios;
+                courseAudios.Add(audiodb);
+                return Result<AudioLogic>.Ok(audio);
+            }
+            catch (Exception)
+            {
+                return Result<AudioLogic>.Fail("Exception");
+            }
+        }
+
+        public async Task<Result<CourseLogic>> GetById(string Id)
+        {
+            try
+            {
+                var course = await dbmanager.GetById(Id);
+                var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
+                return Result<CourseLogic>.Ok(CourseLogic);
+            }
+            catch (Exception)
+            {
+                return Result<CourseLogic>.Fail("Exception");
+            }
+        }
+
+        public async Task<Result<CourseLogic>> GetByName(string courseName)
+        {
+            try
+            {
+                var course = await dbmanager.GetAll().FirstOrDefault(c => c.Name.Equals(courseName));
+                var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
+                return Result<CourseLogic>.Ok(CourseLogic);
+            }
+            catch (Exception)
+            {
+                return Result<CourseLogic>.Fail("Exception");
+            }
+        }
+
+        public async Task<Result<IEnumerable<CourseLogic>>> GetAll()
+        {
+            try
+            {
+                var courses = await dbmanager.GetAll();
+                var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
+                return Result<IEnumerable<CourseLogic>>.Ok(result);
+            }
+            catch (Exception)
+            {
+                return Result<IEnumerable<CourseLogic>>.Fail("Exception");
+            }
+        }
+        
+        public async Task<Result> Delete(CourseLogic course)
+        {
+            
+            try
+            {
+                var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                await dbmanager.Remove(courseDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+        }
+
+        public async Task<Result> Update(CourseLogic course)
+        {
+            try
+            {
+                var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                await dbmanager.Update(courseDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
         }
 
         public bool Exists(string name)
         {
-            return dbmanager.GetAllCourses().Any(b => b.Name == name);
-
+            return dbmanager.GetAll().Any(b => b.Name == name);
         }
     }
 }

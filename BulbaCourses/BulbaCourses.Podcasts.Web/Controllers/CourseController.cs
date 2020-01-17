@@ -119,7 +119,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete([FromBody, CustomizeValidator(RuleSet = "DeleteCourse, default")] CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteCourse, default")] CourseWeb courseWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                courseService.Delete(courselogic);
+                var result = await courseService.Delete(courselogic);
                 return Ok();
             }
             catch (Exception ex)
