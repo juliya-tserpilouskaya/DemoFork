@@ -26,8 +26,9 @@ namespace BulbaCourses.Video.Data.Repositories
         public async Task<VideoMaterialDb> AddAsync(VideoMaterialDb video)
         {
             _videoDbContext.VideoMaterials.Add(video);
-            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
-            return await Task.FromResult(video);
+            _videoDbContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter();
+            var result = await Task.FromResult(video);
+            return result;
         }
 
         public IEnumerable<VideoMaterialDb> GetAll()

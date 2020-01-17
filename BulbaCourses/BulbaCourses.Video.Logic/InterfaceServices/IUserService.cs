@@ -25,5 +25,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         Task<Result> DeleteByIdAsync(string id);
         Task<Result> DeleteAsync(UserInfo user);
         Task<Result> BuySubscription(UserInfo user, Subscription subscription);
+        Task<Result> BuySingleCourse(UserInfo user, CourseInfo course);
     }
 }

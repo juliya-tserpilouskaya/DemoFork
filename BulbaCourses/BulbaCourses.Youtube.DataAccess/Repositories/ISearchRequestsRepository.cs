@@ -9,8 +9,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
 {
     public interface ISearchRequestsRepository : IDisposable
     {
+        Task SaveChangeAsync();
         SearchRequestDb SaveRequest(SearchRequestDb request);
-        void Update(SearchRequestDb request);
+        SearchRequestDb Update(SearchRequestDb request);
         void DeleteRequest(int? requestId);
         IEnumerable<SearchRequestDb> GetAllRequests();
         Task<IEnumerable<SearchRequestDb>> GetAllRequestsAsync();
