@@ -180,6 +180,7 @@
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -189,18 +190,23 @@
     </Compile>
     <Compile Include="Infrastructure\MapperLoadModule.cs" />
     <Compile Include="Infrastructure\MapperWebProfile.cs" />
+    <Compile Include="Models\AuthorView.cs" />
     <Compile Include="Models\CommentView.cs" />
-    <Compile Include="Models\CourseViews\CourseView.cs" />
-    <Compile Include="Models\CourseViews\CourseViewInput.cs" />
-    <Compile Include="Models\UserViews\UserProfileView.cs" />
+    <Compile Include="Models\CourseView.cs" />
+    <Compile Include="Models\CourseViewInput.cs" />
+    <Compile Include="Models\UserProfileView.cs" />
+    <Compile Include="Models\VideoView.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseInfo.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwaggerModels\SwaggerCourseViewInput.cs" />
+    <Compile Include="Validators\AuthorViewValidator.cs" />
+    <Compile Include="Validators\CommentViewValidator.cs" />
     <Compile Include="Validators\CourseViewInputValidator.cs" />
     <Compile Include="Validators\CourseViewValidator.cs" />
     <Compile Include="Validators\UserProfileViewValidator.cs" />
+    <Compile Include="Validators\VideoViewValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dockerfile" />

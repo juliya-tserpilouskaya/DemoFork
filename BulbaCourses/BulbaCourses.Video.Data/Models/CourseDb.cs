@@ -11,7 +11,7 @@ namespace BulbaCourses.Video.Data.Models
 
         public string CourseId { get; set; } = Guid.NewGuid().ToString(); //Guid generate in view layer!! No, Guid generate in data layer :) 
         public string Name { get; set; }
-        public UserDb Author { get; set; }
+        public AuthorDb Author { get; set; }
         public int Level { get; set; }
         public double Raiting { get; set; }
         public int RateCount { get; set; }
