@@ -17,6 +17,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         Task<UserProfileDb> GetByIdAsync(string id);
         void Update(UserProfileDb profile);
         Task<Result<UserProfileDb>> UpdateAsync(UserProfileDb profileDb);
-        Task<bool> ExistsAsync(string id);
+        Task<bool> ExistsAsync(string login);
     }
 }

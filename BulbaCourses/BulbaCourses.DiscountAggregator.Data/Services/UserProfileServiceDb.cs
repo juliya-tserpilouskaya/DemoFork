@@ -31,6 +31,38 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         {
             try
             {
+                List<CourseCategoryDb> courseCategories = new List<CourseCategoryDb>();
+                List<DomainDb> domains = new List<DomainDb>();
+
+                CourseCategoryDb categoryDb;
+                DomainDb domainDb; 
+
+                foreach (var el in profileDb.SearchCriteria.CourseCategories)
+                {
+                    categoryDb = context.CourseCategories.Where(x => x.Name == el.Name)
+                        .Where(y => y.Title == el.Title).FirstOrDefault();
+                    courseCategories.Add(categoryDb ??
+                        new CourseCategoryDb()
+                        {
+                            Name = el.Name,
+                            Title = el.Title
+                        }) ;
+                }
+                profileDb.SearchCriteria.CourseCategories = courseCategories;
+
+                foreach (var el in profileDb.SearchCriteria.Domains)
+                {
+                    domainDb = context.Domains.Where(x => x.DomainURL == el.DomainURL).FirstOrDefault();
+                    domains.Add(domainDb ?? 
+                        new DomainDb()
+                        {
+                            DomainURL = el.DomainURL,
+                            DomainName = el.DomainName
+                        });
+                }
+                //domains.Add(context.Domains.Find(el.Id) ?? el);
+                profileDb.SearchCriteria.Domains = domains;
+
                 context.Profiles.Add(profileDb);
                 context.SearchCriterias.Add(profileDb.SearchCriteria);
                 await context.SaveChangesAsync().ConfigureAwait(false);
@@ -128,7 +160,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string id) 
-            => await context.Profiles.AnyAsync(b => b.Id == id).ConfigureAwait(false);
+        public async Task<bool> ExistsAsync(string email) 
+            => await context.Profiles.AnyAsync(b => b.Email == email).ConfigureAwait(false);
     }
 }
