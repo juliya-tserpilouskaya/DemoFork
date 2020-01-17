@@ -8,7 +8,7 @@ using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Services;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
 using BulbaCourses.GlobalSearch.Data.Services;
-
+using BulbaCourses.GlobalSearch.Data;
 
 namespace BulbaCourses.GlobalSearch.Logic
 {
@@ -27,6 +27,7 @@ namespace BulbaCourses.GlobalSearch.Logic
             Bind<IUserService>().To<UserService>();
             Bind<IUserDbService>().To<UserDbService>();
             Bind<IBookmarkDbService>().To<BookmarkDbService>();
+            Bind<GlobalSearchContext>().ToSelf().InSingletonScope();
         }
     }
 }
