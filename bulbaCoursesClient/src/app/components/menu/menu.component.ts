@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from 'src/app/auth/models/user';
+import { User, CustomUser } from 'src/app/auth/models/user';
 
 @Component({
   selector: 'app-menu',
@@ -9,13 +9,13 @@ import { User } from 'src/app/auth/models/user';
 })
 export class MenuComponent implements OnInit {
   isAuthenticated: boolean;
-  user: User;
+  user: CustomUser;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
-    this.authService.user$.subscribe((user) => this.user = user);
+    this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
 
 }

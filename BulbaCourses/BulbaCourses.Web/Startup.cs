@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Resources;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Web.Cors;
 using System.Web.Http;
 using BulbaCourses.Web.Data;
 using BulbaCourses.Web.Migrations;
@@ -14,6 +15,7 @@ using IdentityServer3.Core.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.Jwt;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
@@ -32,6 +34,20 @@ namespace BulbaCourses.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
+
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine() 
+            });
 
             ConfigSecurity(app);
 
@@ -54,7 +70,7 @@ namespace BulbaCourses.Web
             var options = new IdentityServerOptions
             {
                 Factory = factory,
-                IssuerUri = "BulbaCourses SSO",
+                IssuerUri = "http://localhost:44382",
                 RequireSsl = false,
                 SiteName = "BulbaCourses SSO",
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")

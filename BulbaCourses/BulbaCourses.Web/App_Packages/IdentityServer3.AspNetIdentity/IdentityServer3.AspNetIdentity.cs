@@ -244,6 +244,8 @@ namespace IdentityServer3.AspNetIdentity
                     claims.Add(new Claim("security_stamp", stamp));
                 }
             }
+
+            claims.AddRange(await userManager.GetClaimsAsync(user.Id));
             return claims;
         }
 
