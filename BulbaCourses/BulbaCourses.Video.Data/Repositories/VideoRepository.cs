@@ -23,10 +23,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> AddAsync(VideoMaterialDb video)
+        public async Task<VideoMaterialDb> AddAsync(VideoMaterialDb video)
         {
             _videoDbContext.VideoMaterials.Add(video);
-            var result = await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            _videoDbContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter();
+            var result = await Task.FromResult(video);
             return result;
         }
 
@@ -63,10 +64,25 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> RemoveAsync(VideoMaterialDb video)
+        public async Task RemoveAsync(VideoMaterialDb video)
         {
+            if (video == null)
+            {
+                throw new ArgumentNullException("video");
+            }
             _videoDbContext.VideoMaterials.Remove(video);
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RemoveAsyncById(string videoId)
+        {
+            var video = _videoDbContext.VideoMaterials.SingleOrDefault(b => b.VideoId.Equals(videoId));
+            if (video == null)
+            {
+                throw new ArgumentNullException("video");
+            }
+            _videoDbContext.VideoMaterials.Remove(video);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Update(VideoMaterialDb video)
@@ -80,14 +96,15 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
-        public async Task<int> UpdateAsync(VideoMaterialDb video)
+        public async Task<VideoMaterialDb> UpdateAsync(VideoMaterialDb video)
         {
             if (video == null)
             {
                 throw new ArgumentNullException("video");
             }
             _videoDbContext.Entry(video).State = EntityState.Modified;
-            return await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(video);
         }
     }
 }

@@ -1,14 +1,15 @@
-﻿using System;
+﻿using BulbaCourses.Video.Web.Validators;
+using FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace BulbaCourses.Video.Web.Models
 {
+    [Validator(typeof(CommentViewValidator))]
     public class CommentView
     {
-        public string CommentId { get; set; }
         public string Text { get; set; }
-        public DateTime Date { get; set; }
     }
 }

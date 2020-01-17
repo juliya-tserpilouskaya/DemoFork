@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Web.Models;
-using BulbaCourses.Video.Web.Models.CourseViews;
-using BulbaCourses.Video.Web.Models.UserViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +12,11 @@ namespace BulbaCourses.Video.Web.Infrastructure
     {
         public MapperWebProfile()
         {
-            CreateMap<UserProfileView, UserInfo>();
-            CreateMap<UserInfo, UserProfileView>();
-
-            CreateMap<CourseView, CourseInfo>();
-            CreateMap<CourseInfo, CourseView>();
-
-            CreateMap<CommentView, CommentInfo>();
-            CreateMap<CommentInfo, CommentView>();
+            CreateMap<UserProfileView, UserInfo>().ReverseMap();
+            CreateMap<CourseView, CourseInfo>().ReverseMap();
+            CreateMap<CommentView, CommentInfo>().ReverseMap();
+            CreateMap<VideoView, VideoMaterialInfo>().ReverseMap();
+            CreateMap<AuthorView, AuthorInfo>().ReverseMap();
         }
     }
 }

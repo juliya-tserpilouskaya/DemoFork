@@ -3,8 +3,11 @@ using BulbaCourses.Video.Data.Interfaces;
 using BulbaCourses.Video.Data.Models;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Logic.Models;
+using BulbaCourses.Video.Logic.Models.ResultModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,22 +84,56 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
-        public Task<int> UpdateAsync(CommentInfo comment)
+        public async Task<Result<CommentInfo>> UpdateAsync(CommentInfo comment)
         {
+            comment.UpdateDate = DateTime.Now.Date;
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
-            return _commentRepository.UpdateAsync(commentDb);
+            try
+            {
+                await _commentRepository.UpdateAsync(commentDb);
+                return Result<CommentInfo>.Ok(_mapper.Map<CommentInfo>(commentDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Cannot update comment. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Cannot update comment. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Invalid comment. {e.Message}");
+            }
         }
 
-        public Task<int> AddAsync(CommentInfo comment)
+        public async Task<Result<CommentInfo>> AddAsync(CommentInfo comment)
         {
+            comment.Date = DateTime.Now;
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
-            return _commentRepository.AddAsync(commentDb);
+            try
+            {
+                await _commentRepository.AddAsync(commentDb);
+                return Result<CommentInfo>.Ok(_mapper.Map<CommentInfo>(commentDb));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Cannot save comment. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Cannot save comment. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CommentInfo>)Result<CommentInfo>.Fail($"Invalid comment. {e.Message}");
+            }
         }
 
-        public Task<int> DeleteByIdAsync(string commentId)
+        public Task<Result> DeleteByIdAsync(string commentId)
         {
-            var comment = _commentRepository.GetById(commentId);
-            return _commentRepository.RemoveAsync(comment);
+            _commentRepository.RemoveAsyncById(commentId);
+            return Task.FromResult(Result.Ok());
         }
 
     }

@@ -38,32 +38,20 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             return await _db.Videos.ToListAsync();
         }
 
-        //Create
-        public void Create(ResultVideoDb videoEntity)
-        {
-            _db.Videos.Add(videoEntity);
-        }
-
-        //Update
-        public void Update(ResultVideoDb videoEntity)
-        {
-            _db.Entry(videoEntity).State = EntityState.Modified;
-        }
-
-        //Delete
-        public void Delete(string id)
-        {
-            var video = _db.Videos.Find(id);
-            if (video != null)
-                _db.Videos.Remove(video);
-        }
 
         //Save
-        public void Save()
+        public ResultVideoDb Save(ResultVideoDb video)
         {
+            _db.Videos.Add(video);
             _db.SaveChanges();
+            return video;
         }
-        
+
+        public Task<ResultVideoDb> SaveChangeAsync(ResultVideoDb video)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual void Dispose(bool disposing)
         {
             if (!_isDisposed)
@@ -80,5 +68,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

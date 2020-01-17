@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using IdentityServer3.Core.Models;
 
@@ -16,7 +17,8 @@ namespace BulbaCourses.Web.Security
                 AllowAccessTokensViaBrowser = true,
                 ClientId = "external_test",
                 ClientSecrets = new List<Secret>() { new Secret("secret".Sha256()) },
-                Flow = Flows.ResourceOwner
+                Flow = Flows.ResourceOwner,
+                AlwaysSendClientClaims = true
             };
 
             var angularClient = new Client()
@@ -36,7 +38,12 @@ namespace BulbaCourses.Web.Security
 
         public static IEnumerable<Scope> LoadScopes()
         {
-            return new List<Scope>(StandardScopes.All);
+            return new List<Scope>(StandardScopes.All.Append(new Scope()
+            {
+                Name = "api",
+                DisplayName = "API access scope",
+                Type = ScopeType.Resource
+            }));
         }
     }
 }
