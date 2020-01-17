@@ -7,9 +7,6 @@ import { LoginComponent } from './auth/components/login/login.component';
 const routes: Routes = [
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: 'search-request', component: SearchRequestComponent },
-
-const routes: Routes = [
-  { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent }
 ];
 

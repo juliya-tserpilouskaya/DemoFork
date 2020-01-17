@@ -18,8 +18,7 @@ import { YoutubeModule } from './YouTube/youtube.module';
     BrowserModule,
     AppRoutingModule,
     SampleModule,
-    YoutubeModule
-    SampleModule,
+    YoutubeModule,
     AuthSharedModule
   ],
   providers: [],
