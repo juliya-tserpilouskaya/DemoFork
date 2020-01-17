@@ -71,7 +71,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            domain.Id = Guid.NewGuid().ToString();
             var result = await _domainService.AddAsync(domain);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

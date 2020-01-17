@@ -163,9 +163,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            course.Id = Guid.NewGuid().ToString();
-            course.Category.Id = Guid.NewGuid().ToString();
-            course.Domain.Id = Guid.NewGuid().ToString();
             var result = await _courseService.AddAsync(course);
             return  result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

@@ -13,7 +13,6 @@ namespace BulbaCourses.DiscountAggregator.Web.SwaggerExamples
         {
             return new Course
             {
-                //Id = "00000000-0000-0000-0000-000000000000",
                 Domain = new Domain()
                 {
                     DomainName = "Domain Name",
