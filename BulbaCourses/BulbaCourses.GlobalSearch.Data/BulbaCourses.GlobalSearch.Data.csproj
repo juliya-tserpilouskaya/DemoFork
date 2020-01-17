@@ -83,10 +83,12 @@
   <ItemGroup>
     <Compile Include="DataModule.cs" />
     <Compile Include="EntitiesConfiguration\AuthorConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\BookmarkConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseCategoryConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseItemConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\SearchQueryConfiguration.cs" />
+    <Compile Include="EntitiesConfiguration\UserConfiguration.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
@@ -156,17 +158,43 @@
     <Compile Include="Migrations\201912151001511_optionNone2.Designer.cs">
       <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.cs" />
+    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.Designer.cs">
+      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001101429115_addbookmark.cs" />
+    <Compile Include="Migrations\202001101429115_addbookmark.Designer.cs">
+      <DependentUpon>202001101429115_addbookmark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001111652023_addUsersWithItems.cs" />
+    <Compile Include="Migrations\202001111652023_addUsersWithItems.Designer.cs">
+      <DependentUpon>202001111652023_addUsersWithItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001111713413_searchQueryUserIdIsRequired.cs" />
+    <Compile Include="Migrations\202001111713413_searchQueryUserIdIsRequired.Designer.cs">
+      <DependentUpon>202001111713413_searchQueryUserIdIsRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001111716181_bookmarkUserIdIsRequired.cs" />
+    <Compile Include="Migrations\202001111716181_bookmarkUserIdIsRequired.Designer.cs">
+      <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
+    <Compile Include="Models\BookmarkDB.cs" />
     <Compile Include="Models\CourseDB.cs" />
     <Compile Include="Models\CourseCategoryDB.cs" />
     <Compile Include="Models\CourseItemDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
+    <Compile Include="Models\UserDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BookmarkDbService.cs" />
+    <Compile Include="Services\Interfaces\IBookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryDbService.cs" />
     <Compile Include="Services\Interfaces\ICourseDbService.cs" />
+    <Compile Include="Services\Interfaces\IUserDbService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />
     <Compile Include="Services\CourseDbService.cs" />
+    <Compile Include="Services\UserDbService1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -220,6 +248,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912151001511_optionNone2.resx">
       <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001101209448_DBGenerationOptionNull.resx">
+      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001101429115_addbookmark.resx">
+      <DependentUpon>202001101429115_addbookmark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111652023_addUsersWithItems.resx">
+      <DependentUpon>202001111652023_addUsersWithItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111713413_searchQueryUserIdIsRequired.resx">
+      <DependentUpon>202001111713413_searchQueryUserIdIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001111716181_bookmarkUserIdIsRequired.resx">
+      <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

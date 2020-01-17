@@ -15,7 +15,7 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
         {
             ToTable("course_category");
             HasKey(i => i.Id);
-            Property(i => i.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            Property(i => i.Id).HasColumnName("id").HasDatabaseGeneratedOption(null);
             Property(i => i.Name).HasColumnName("name")
                 .IsRequired()
                 .HasMaxLength(255);

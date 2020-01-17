@@ -15,9 +15,19 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return RegisteredUserStorage.Add(registeredUser);
         }
 
+        public Task<RegisteredUser> AddAsync(RegisteredUser registeredUser)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<RegisteredUser> GetAll()
         {
             return RegisteredUserStorage.GetAll();
+        }
+
+        public Task<IEnumerable<RegisteredUser>> GetAllAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public RegisteredUser GetById(string id)
@@ -25,14 +35,29 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return RegisteredUserStorage.GetById(id);
         }
 
+        public Task<RegisteredUser> GetByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveAll()
         {
             RegisteredUserStorage.RemoveAll();
         }
 
+        public Task<int> RemoveAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveById(string id)
         {
             RegisteredUserStorage.RemoveById(id);
+        }
+
+        public Task<int> RemoveByIdAsync(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
