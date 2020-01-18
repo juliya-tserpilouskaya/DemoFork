@@ -7,215 +7,66 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Modules;
+using BulbaCourses.PracticalMaterialsTests.Tests.Modules;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
+using BulbaCourses.PracticalMaterialsTests.Tests.DataGenerators;
 
-namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Services
+namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
 {
     [TestFixture]
-    public class UnitTest_Service_Test
+    public class Service_Test_UnitTest
     {
         IService_Test _service_Test;
 
         [OneTimeSetUp]
         public void Init()
         {
-            IKernel kernel = new StandardKernel(new[] { new ModuleNinject_LogicLayer() });
+            IKernel kernel = new StandardKernel(new[] { new ModuleNinject_Tests() });
 
             _service_Test = kernel.Get<IService_Test>();
         }
 
-        [Test]
-        public void GetByIdTest()
+        [Test, MaxTime(2000)]
+        [TestCase(1)]
+        public void GetByIdTest(int Id)
         {
-            var Test_MainInfo = _service_Test.GetById(1);
+            Result<MTest_MainInfo> Test_MainInfo = _service_Test.GetById(Id);            
 
-            Assert.Warn($@"{Test_MainInfo.Data.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Data.Name}");            
+            Assert.Warn($@"{Test_MainInfo.Data.Id}");
         }
 
-        [Test]
-        public void GetByIdAsyncTest()
+        [Test, MaxTime(2000)]
+        [TestCase(1)]
+        public void GetByIdAsyncTest(int Id)
         {
-            Task<MTest_MainInfo> Test_MainInfo = _service_Test.GetByIdAsync(1);
+            Task<Result<MTest_MainInfo>> Test_MainInfo = _service_Test.GetByIdAsync(Id);            
 
-            Assert.Warn($@"{Test_MainInfo.Result.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Result.Name}");
-        }     
+            Assert.Warn($@"{Test_MainInfo.Result.Data.Questions_ChoosingAnswerFromList.FirstOrDefault().AnswerVariants.FirstOrDefault().AnswerText} || {Test_MainInfo.Result.Message}");
+        }
 
-        [Test]
+        [Test, MaxTime(2000)]
         public void AddTest()
         {
-            MTest_MainInfo TestData =
-                new MTest_MainInfo()
-                {
-                    Name = "Test_Name_2",
-                    Questions_ChoosingAnswerFromList =
-                        new List<MQuestion_ChoosingAnswerFromList>()
-                        {
-                                new MQuestion_ChoosingAnswerFromList()
-                                {
-                                    QuestionText = "Question_ChoosingAnswerFromListDb_Text_1",
-                                    SortKey = 1,
-                                    AnswerVariants =
-                                    new List<MAnswerVariant_ChoosingAnswerFromList>()
-                                    {
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_1",
-                                            SortKey = 1,
-                                            IsCorrectAnswer = false
-                                        },
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_2",
-                                            SortKey = 2,
-                                            IsCorrectAnswer = false
-                                        },
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_3",
-                                            SortKey = 3,
-                                            IsCorrectAnswer = true
-                                        }
-                                    }
-                                }
-                        },
-                    Questions_SetIntoMissingElements =
-                        new List<MQuestion_SetIntoMissingElements>()
-                        {
-                            new MQuestion_SetIntoMissingElements()
-                            {
-                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                SortKey = 2
-                            }
-                        },
-                    Questions_SetOrder =
-                        new List<MQuestion_SetOrder>()
-                        {
-                                new MQuestion_SetOrder()
-                                {
-                                    QuestionText = "QuestionText_1",
-                                    SortKey = 3,
-                                    AnswerVariants =
-                                    new List<MAnswerVariant_SetOrder>()
-                                    {
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_1",
-                                            SortKey = 1,
-                                            CorrectOrderKey = 1
-                                        },
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_2",
-                                            SortKey = 2,
-                                            CorrectOrderKey = 2
-                                        },
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_3",
-                                            SortKey = 3,
-                                            CorrectOrderKey = 3
-                                        }
-                                    }
-                                }
-                        }
-                };
-
-
-            var ResultId_1 = _service_Test.Add(TestData);
-
-            var ResultId_1_2 = _service_Test.Add(TestData);
+            Result<MTest_MainInfo> Test_MainInfo = 
+                _service_Test.Add(Generator_TestModels.Generate_MTest_MainInfo(1,4,4).FirstOrDefault());
                      
-            Assert.Warn($@"ResultId: {ResultId_1.Data.Id} || {ResultId_1_2.Data.Name}");           
+            Assert.Warn($@"ResultId: {Test_MainInfo.Data.Id} || {Test_MainInfo.Data.Name}");           
         }
 
         [Test]
-        public async Task AddTestAsync()
+        public async Task AddAsyncTest()
         {
-            MTest_MainInfo TestData =
-                new MTest_MainInfo()
-                {
-                    Name = "Test_Name_2",
-                    Questions_ChoosingAnswerFromList =
-                        new List<MQuestion_ChoosingAnswerFromList>()
-                        {
-                                new MQuestion_ChoosingAnswerFromList()
-                                {
-                                    QuestionText = "Question_ChoosingAnswerFromListDb_Text_1",
-                                    SortKey = 1,
-                                    AnswerVariants =
-                                    new List<MAnswerVariant_ChoosingAnswerFromList>()
-                                    {
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_1",
-                                            SortKey = 1,
-                                            IsCorrectAnswer = false
-                                        },
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_2",
-                                            SortKey = 2,
-                                            IsCorrectAnswer = false
-                                        },
-                                        new MAnswerVariant_ChoosingAnswerFromList()
-                                        {
-                                            AnswerText = "AnswerText_3",
-                                            SortKey = 3,
-                                            IsCorrectAnswer = true
-                                        }
-                                    }
-                                }
-                        },
-                    Questions_SetIntoMissingElements =
-                        new List<MQuestion_SetIntoMissingElements>()
-                        {
-                            new MQuestion_SetIntoMissingElements()
-                            {
-                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                SortKey = 2
-                            }
-                        },
-                    Questions_SetOrder =
-                        new List<MQuestion_SetOrder>()
-                        {
-                                new MQuestion_SetOrder()
-                                {
-                                    QuestionText = "QuestionText_1",
-                                    SortKey = 3,
-                                    AnswerVariants =
-                                    new List<MAnswerVariant_SetOrder>()
-                                    {
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_1",
-                                            SortKey = 1,
-                                            CorrectOrderKey = 1
-                                        },
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_2",
-                                            SortKey = 2,
-                                            CorrectOrderKey = 2
-                                        },
-                                        new MAnswerVariant_SetOrder()
-                                        {
-                                            AnswerText = "AnswerText_3",
-                                            SortKey = 3,
-                                            CorrectOrderKey = 3
-                                        }
-                                    }
-                                }
-                        }
-                };
+            var HasAdd = 
+                await _service_Test.AddAsync(Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4).FirstOrDefault());
 
-            var HasAdd = await _service_Test.AddAsync(TestData);
-
-            Assert.Warn($@"ResultId: {HasAdd.IsSuccess}");
+            Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
         }
 
         [Test]
         public void DeleteById()
         {
+            AddTest();
+
             var Test_MainInfo =  _service_Test.DeleteById(1);
 
             Assert.Warn($@"{Test_MainInfo.IsSuccess}");
@@ -400,6 +251,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Services
             var Test_MainInfo = await _service_Test.UpdateAsync(TestData);
 
             Assert.Warn($@"{Test_MainInfo.Data.Name}");
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            _service_Test.Dispose();
         }
     }
 }

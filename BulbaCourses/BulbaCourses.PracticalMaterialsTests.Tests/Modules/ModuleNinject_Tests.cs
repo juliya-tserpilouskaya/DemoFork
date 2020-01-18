@@ -7,9 +7,9 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
 using Ninject.Modules;
 using System.Data.Entity;
 
-namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Modules
+namespace BulbaCourses.PracticalMaterialsTests.Tests.Modules
 {
-    public class ModuleNinject_LogicLayer : NinjectModule
+    public class ModuleNinject_Tests : NinjectModule
     {
         public override void Load()
         {

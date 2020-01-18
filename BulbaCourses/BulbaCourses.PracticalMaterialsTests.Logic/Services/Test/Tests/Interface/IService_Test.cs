@@ -10,7 +10,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
     {
         Result<MTest_MainInfo> GetById(int Id);
 
-        Task<MTest_MainInfo> GetByIdAsync(int Id);
+        Task<Result<MTest_MainInfo>> GetByIdAsync(int Id);
 
         Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo);
 

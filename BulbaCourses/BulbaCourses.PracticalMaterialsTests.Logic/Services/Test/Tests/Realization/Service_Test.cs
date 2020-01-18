@@ -16,60 +16,81 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 {
     public class Service_Test : Service_Base, IService_Test
     {
-        public Service_Test([AttributeDbContext_LocalDb] DbContext context, IMapper mapper) : base (context, mapper)
+        public Service_Test([AttributeDbContext_LocalDb] DbContext context, IMapper mapper) : base(context, mapper)
         {
-            
+
         }
 
         public Result<MTest_MainInfo> GetById(int Id)
-        {    
+        {
             try
             {
                 MTest_MainInfoDb Test_MainInfoDb =
-                _context.Set<MTest_MainInfoDb>()
-                    .Include(_ => _.Questions_ChoosingAnswerFromList)
-                    .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
-                    .FirstOrDefault(_ => _.Id == Id);
+                    _context.Set<MTest_MainInfoDb>()
+                        .Include(_ => _.Questions_ChoosingAnswerFromList)
+                        .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
+                        .AsNoTracking()
+                        .FirstOrDefault(_ => _.Id == Id);
 
                 if (Test_MainInfoDb == null)
                 {
-                    throw new NullReferenceException();
+                    throw
+                        new NullReferenceException();
                 }
 
                 return
                     Result<MTest_MainInfo>
                         .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>
+                        .Fail<MTest_MainInfo>($@"There is no test with the specified Id: {Id} in the system.");
             }
-
         }
-     
-        public async Task<MTest_MainInfo> GetByIdAsync(int Id)
-        {
-            MTest_MainInfoDb Test_MainInfoDb =
-                await _context.Set<MTest_MainInfoDb>()
-                    .Include(_ => _.Questions_ChoosingAnswerFromList)
-                    .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
-                    .FirstOrDefaultAsync(_ => _.Id == Id)
-                    .ConfigureAwait(false);
 
-            return
-                _mapper.Map<MTest_MainInfo>(Test_MainInfoDb);
+        public async Task<Result<MTest_MainInfo>> GetByIdAsync(int Id)
+        {
+            try
+            {
+                MTest_MainInfoDb Test_MainInfoDb =
+                    await
+                        _context.Set<MTest_MainInfoDb>()
+                            .Include(_ => _.Questions_ChoosingAnswerFromList)
+                            .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(_ => _.Id == Id)
+                            .ConfigureAwait(false);
+
+                if (Test_MainInfoDb == null)
+                {
+                    throw
+                        new NullReferenceException();
+                }
+
+                return
+                    Result<MTest_MainInfo>
+                        .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfoDb));
+            }
+            catch (NullReferenceException)
+            {
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>
+                        .Fail<MTest_MainInfo>($@"There is no test with the specified Id: {Id} in the system.");
+            }
         }
 
         public Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo)
         {
-            MTest_MainInfoDb Test_MainInfoDb =
-                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
-
-            _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
-
             try
             {
-                 _context.SaveChanges();
+                MTest_MainInfoDb Test_MainInfoDb =
+                    _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+                _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
+
+                _context.SaveChanges();
 
                 return
                     Result<MTest_MainInfo>
@@ -77,44 +98,52 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot save model. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. Duplicate field. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot save model. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Invalid model. {e.Message}");
             }
         }
 
         public async Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo)
         {
-            MTest_MainInfoDb Test_MainInfoDb =
-                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
-
-            _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
-
             try
             {
-                await _context.SaveChangesAsync();
+                MTest_MainInfoDb Test_MainInfoDb =
+                    _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
-                return 
+                _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
+
+                await
+                    _context
+                        .SaveChangesAsync();                        
+
+                return
                     Result<MTest_MainInfo>
                         .Ok(_mapper.Map<MTest_MainInfo>(Test_MainInfo));
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot save model. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. Duplicate field. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot save model. Duplicate field. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+                return 
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Invalid model. {e.Message}");
             }
         }
 
@@ -124,8 +153,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                  _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
             _context.Entry(Test_MainInfoDb).State = EntityState.Added;
-
-            //_context.Entry(Test_MainInfoDb).State = EntityState.Modified;
+            
             try
             {
                 _context.SaveChanges();
@@ -151,7 +179,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
         public async Task<Result<MTest_MainInfo>> UpdateAsync(MTest_MainInfo Test_MainInfo)
         {
             MTest_MainInfoDb Test_MainInfoDb =
-                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);            
+                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
 
             var entry = _context.Entry(Test_MainInfo);
 
@@ -199,7 +227,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
         public async Task<Result> DeleteByIdAsync(int Id)
         {
             _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
-            
+
             try
             {
                 await _context.SaveChangesAsync();

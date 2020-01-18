@@ -3,10 +3,10 @@ using NUnit.Framework;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Validators.Test;
 
-namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Validation
+namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Validation
 {
     [TestFixture]
-    class UnitTest_Validator
+    class Validator_UnitTest
     {
         [Test]
         [TestCase("  ")]
