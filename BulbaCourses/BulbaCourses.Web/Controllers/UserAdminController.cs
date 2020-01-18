@@ -43,7 +43,6 @@ namespace BulbaCourses.Web.Controllers
             try
             {
                 var user = await _userManager.FindByIdAsync(id);
-                //var result = await _courseService.GetCourseByIdAsync(id);
                 return user == null ? NotFound() : (IHttpActionResult)Ok(user);
             }
             catch (InvalidOperationException ex)
@@ -56,16 +55,11 @@ namespace BulbaCourses.Web.Controllers
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> GetAll()
         {
-            string id = string.Empty;
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
-            {
-                return BadRequest();
-            }
             try
             {
-                var user = await _userManager.Users.ToListAsync();
-                //var result = await _courseService.GetCourseByIdAsync(id);
-                return user == null ? NotFound() : (IHttpActionResult)Ok(user);
+                var users = await _userManager.Users.ToListAsync();
+              
+                return users == null ? NotFound() : (IHttpActionResult)Ok(users);
             }
             catch (InvalidOperationException ex)
             {
