@@ -33,10 +33,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 
         }
 
-        public IEnumerable<UserDTO> GetUsers()
+        public Task<IEnumerable<UserDTO>> GetUsers()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDb, UserDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<UserDb>, List<UserDTO>>(Database.Users.GetAll());
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Task<UserDb>, Task<UserDTO>>()).CreateMapper();
+            return mapper.Map<Task<IEnumerable<UserDb>>, Task<IEnumerable<UserDTO>>>(Database.Users.GetAll());
         }
 
         public UserDTO GetUser(string id)

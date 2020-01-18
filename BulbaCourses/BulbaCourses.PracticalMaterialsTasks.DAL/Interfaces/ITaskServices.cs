@@ -12,6 +12,6 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces
         void MakeTask(TaskDb taskDto);
         TaskDb GetTask(string id);
         Task<TaskDb> GetTaskAsync(string id);
-        IEnumerable<TaskDb> GetTasks();
+        Task<IEnumerable<TaskDb>> GetTasks();
     }
 }

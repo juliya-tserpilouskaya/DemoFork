@@ -28,10 +28,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [HttpGet,Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Task is found")]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAllTasksAsync()
 
         {
-            var result = _taskservice.GetTasks();
+            var result = await _taskservice.GetTasksAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -43,7 +43,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         public async Task<IHttpActionResult> GetTaskAsync(string id)
         {
             
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
             {
                 return BadRequest();
             }
@@ -79,7 +79,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "Task, default")] TaskDTO task)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
             {
                 return BadRequest();
             }

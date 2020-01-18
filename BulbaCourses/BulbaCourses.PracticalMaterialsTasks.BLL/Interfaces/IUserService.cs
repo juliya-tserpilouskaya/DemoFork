@@ -13,7 +13,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
 
         UserDTO GetUser(string id);
 
-        IEnumerable<UserDTO> GetUsers();
+        Task<IEnumerable<UserDTO>> GetUsers();
 
       
     }

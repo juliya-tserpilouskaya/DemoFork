@@ -8,7 +8,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces
 {
     public interface IRepository<T> where T: class
     {
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
         T Get(string id);
         Task<T> GetTaskAsync(string id);
         IEnumerable<T> Find(Func<T, Boolean> predicate);

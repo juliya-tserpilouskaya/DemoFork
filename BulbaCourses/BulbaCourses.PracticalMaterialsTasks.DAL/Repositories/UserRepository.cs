@@ -19,9 +19,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             this.db = context;
         }
 
-        public IEnumerable<UserDb> GetAll()
+        public Task<IEnumerable<UserDb>> GetAll()
         {
-            return db.Users;
+            return Task.FromResult(db.Users.AsEnumerable());
         }
 
         public UserDb Get(string id)

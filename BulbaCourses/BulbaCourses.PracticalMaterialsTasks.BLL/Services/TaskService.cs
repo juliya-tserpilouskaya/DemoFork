@@ -9,6 +9,7 @@ using AutoMapper;
 using BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Infrastructure;
+using System.Collections;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 {
@@ -56,10 +57,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified };
         }
 
-        public IEnumerable<TaskDTO> GetTasks()
+        public async Task<IEnumerable<TaskDTO>> GetTasksAsync()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb,TaskDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<TaskDb>, List<TaskDTO>>(DataBase.Tasks.GetAll());
+            var tasks = await DataBase.Tasks.GetAll();
+            return mapper.Map<IEnumerable<TaskDb>, IEnumerable<TaskDTO>>(tasks);
         }
 
         public void UpdateTask(string id, TaskDTO _taskDTO)

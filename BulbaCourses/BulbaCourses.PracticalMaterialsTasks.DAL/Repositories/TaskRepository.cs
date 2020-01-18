@@ -8,6 +8,7 @@ using BulbaCourses.PracticalMaterialsTasks.DAL.Models;
 using BulbaCourses.PracticalMaterialsTasks.DAL.Context;
 using System.Data.Entity;
 
+
 namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
 {
     public class TaskRepository: IRepository<TaskDb>
@@ -17,9 +18,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             db = context;
         }
-        public IEnumerable<TaskDb> GetAll()
+        public async Task<IEnumerable<TaskDb>> GetAll()
         {
-            return db.Tasks.ToList();
+            return await db.Tasks.ToListAsync();
         }
         public TaskDb Get(string id)
         {
