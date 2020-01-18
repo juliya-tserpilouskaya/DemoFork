@@ -121,7 +121,7 @@ namespace BulbaCourses.Video.Web.Controllers
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseView course)
         {
             var user = this.User as ClaimsPrincipal;
-            user.FindFirst("preferred_username").Value;
+            //user.FindFirst("preferred_username").Value;
 
             if (!ModelState.IsValid)
             {
