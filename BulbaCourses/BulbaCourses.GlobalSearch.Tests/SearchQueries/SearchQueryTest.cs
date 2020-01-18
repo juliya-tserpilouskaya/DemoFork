@@ -1,14 +1,19 @@
-﻿using BulbaCourses.GlobalSearch.Data;
+﻿using AutoMapper;
+using BulbaCourses.GlobalSearch.Data;
 using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Data.Services;
+using BulbaCourses.GlobalSearch.Logic;
+using BulbaCourses.GlobalSearch.Logic.DTO;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
+using BulbaCourses.GlobalSearch.Logic.Services;
 using Moq;
+using Ninject;
 using Moq.EntityFramework.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
 {
@@ -24,13 +29,14 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
         [Test]
         public void remove_all_search_queries()
         {
-
             //Arrange
 
-            var mockSet = new Mock<DbSet<SearchQueryDB>>();
+            var kernel = new StandardKernel();
+            kernel.Load<AutoMapperModule>();
 
-            var globalSearchContextMock = new Mock<GlobalSearchContext>();
+            var mapper = kernel.Get<IMapper>();
 
+            #region
             IList<SearchQueryDB> queries = new List<SearchQueryDB>()
             {
                 new SearchQueryDB
@@ -58,24 +64,31 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
                     Query = "beginner course"
                 },
             };
+            #endregion
 
-            globalSearchContextMock.Setup(x => x.SearchQueries).Returns(queries);
+            var mockContext = new Mock<GlobalSearchContext>();
+            var mockSet = new Mock<DbSet<SearchQueryDB>>();
+            mockContext.Setup(x => x.SearchQueries).Returns(queries);
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
 
-            var service = new SearchQueryService(globalSearchContextMock.Object);
+            var service = new SearchQueryService(mapper, DbService);
 
             //Act
-            var b = new SearchQueryDB
+            var b = new SearchQueryDTO
             {
                 Id = "1",
-                Created = DateTime.Now,
+                Date = DateTime.Now,
                 Query = "search query"
             };
 
             var q = service.Add(b);
 
+            var all = DbService.GetAll().Count();
+
             //Assert
-            globalSearchContextMock.Verify(m => m.SaveChanges(), Times.Once());
-            Assert.AreEqual(q.Id, b);
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+            Assert.AreEqual(q.Query, b.Query);
         }
     }
 }

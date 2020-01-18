@@ -15,7 +15,8 @@ namespace BulbaCourses.GlobalSearch.Logic.Infrastructure
         {
             CreateMap<CourseDB, LearningCourseDTO>().ReverseMap();
             CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
-            CreateMap<SearchQueryDB, SearchQueryDTO>().ReverseMap();
+            CreateMap<SearchQueryDB, SearchQueryDTO>().ReverseMap()
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Date)).ReverseMap();
             CreateMap<BookmarkDB, BookmarkDTO>().ReverseMap();
             CreateMap<UserDB, UserDTO>().ReverseMap();
         }
