@@ -28,7 +28,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Users.Find(id);
         }
-
+        public Task<UserDb> GetTaskAsync(string id)
+        {
+            return db.Users.FindAsync(id);
+        }
         public void Create(UserDb user)
         {
             db.Users.Add(user);

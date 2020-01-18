@@ -40,7 +40,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Book found", typeof(TaskDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetTask(string id)
+        public async Task<IHttpActionResult> GetTaskAsync(string id)
         {
             
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -50,7 +50,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
 
             try
             {
-                var result =  _taskservice.GetTask(id);
+                var result = await _taskservice.GetTaskAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

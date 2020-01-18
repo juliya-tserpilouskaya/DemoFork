@@ -17,9 +17,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
         IUnitOfWork DataBase { get; set; }
         private readonly IMapper _mapper;
 
-        public TaskService(IUnitOfWork unit)
+        public TaskService(IUnitOfWork unitOfWork)
         {
-            DataBase = unit;
+            DataBase = unitOfWork;
         }
 
         public void MakeTask(TaskDTO taskDto)
@@ -45,6 +45,13 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
         {
             if (id == null) throw new ValidationExeption("Not id","idtask");
             var task = DataBase.Tasks.Get(id);
+            if (task == null) throw new ValidationExeption("Not task", "task");
+            return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified };
+        }
+        public async Task<TaskDTO> GetTaskAsync(string id)
+        {
+            if (id == null) throw new ValidationExeption("Not id", "idtask");
+            var task = await DataBase.Tasks.GetTaskAsync(id);
             if (task == null) throw new ValidationExeption("Not task", "task");
             return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified };
         }

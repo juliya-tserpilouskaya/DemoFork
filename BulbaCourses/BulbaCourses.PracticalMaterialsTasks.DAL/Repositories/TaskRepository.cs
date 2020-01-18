@@ -25,6 +25,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Tasks.Find(id);
         }
+        public Task<TaskDb> GetTaskAsync(string id)
+        {
+            return db.Tasks.FindAsync(id);
+        }
         public void Create(TaskDb task)
         {
             db.Tasks.Add(task);

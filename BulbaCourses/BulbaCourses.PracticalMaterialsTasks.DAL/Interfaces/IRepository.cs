@@ -10,6 +10,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(string id);
+        Task<T> GetTaskAsync(string id);
         IEnumerable<T> Find(Func<T, Boolean> predicate);
         void Create(T item);
         void Update(T item);
