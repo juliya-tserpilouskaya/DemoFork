@@ -20,9 +20,19 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             return AnonymousUserStorage.GetAll();
         }
 
+        public Task<IEnumerable<AnonymousUser>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public AnonymousUser GetById(string id)
         {
             return AnonymousUserStorage.GetById(id);
+        }
+
+        public Task<AnonymousUser> GetByIdAsync(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void RemoveAll()

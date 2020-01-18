@@ -18,6 +18,7 @@ namespace BulbaCourses.GlobalSearch.Data.EntitiesConfiguration
             Property(i => i.Query).IsRequired()
                 .HasColumnName("query_string");
             Property(i => i.Created).HasColumnName("date");
+            Property(i => i.UserId).HasColumnName("user_id").IsRequired();
         }
     }
 }
