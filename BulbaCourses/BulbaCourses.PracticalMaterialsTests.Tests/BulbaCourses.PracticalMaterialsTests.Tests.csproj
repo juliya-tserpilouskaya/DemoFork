@@ -81,8 +81,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Layers\Logic\Services\UnitTest_Service_Test.cs" />
-    <Compile Include="Layers\Logic\Validation\UnitTest_Validator.cs" />
+    <Compile Include="LogicLayer\Modules\ModuleNinject_LogicLayer.cs" />
+    <Compile Include="LogicLayer\Services\UnitTest_Service_Test.cs" />
+    <Compile Include="LogicLayer\Validation\UnitTest_Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,8 +91,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Layers\Data\" />
-    <Folder Include="Layers\Web\" />
+    <Folder Include="DataLayer\" />
+    <Folder Include="WebLayer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">

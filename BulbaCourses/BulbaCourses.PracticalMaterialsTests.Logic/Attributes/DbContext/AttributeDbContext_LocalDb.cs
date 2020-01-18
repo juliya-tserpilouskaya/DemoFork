@@ -2,7 +2,7 @@
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext
 {
-    class AttributeDbContext_LocalDb : Attribute
+    public class AttributeDbContext_LocalDb : Attribute
     {
     }
 }

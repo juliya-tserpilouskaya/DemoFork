@@ -1,25 +1,15 @@
-﻿using AutoMapper;
-using BulbaCourses.PracticalMaterialsTests.Data.Context;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.AnswerVariants;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
-using BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper;
-using BulbaCourses.PracticalMaterialsTests.Logic.Models;
-using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.AnswerVariants;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
-using BulbaCourses.PracticalMaterialsTests.Logic.Validators.Test;
 using Ninject;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles;
+using BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Modules;
 
-namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
+namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Services
 {
     [TestFixture]
     public class UnitTest_Service_Test
@@ -29,16 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
         [OneTimeSetUp]
         public void Init()
         {
-            IKernel kernel = new StandardKernel();
-
-            kernel.Bind<IService_Test>().To<Service_Test>();
-
-            kernel.Bind<DbContext>().To<DbContext_LocalDb_Test>();
-
-            kernel.Bind<IMapper>().ToMethod(ctx => new Mapper(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<AutoMapperProfile_DataLogicLayer>();
-            })));
+            IKernel kernel = new StandardKernel(new[] { new ModuleNinject_LogicLayer() });
 
             _service_Test = kernel.Get<IService_Test>();
         }

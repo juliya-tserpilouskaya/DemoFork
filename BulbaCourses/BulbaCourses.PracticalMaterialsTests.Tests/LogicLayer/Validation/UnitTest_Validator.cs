@@ -3,7 +3,7 @@ using NUnit.Framework;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Validators.Test;
 
-namespace BulbaCourses.PracticalMaterialsTests.Tests.Logic
+namespace BulbaCourses.PracticalMaterialsTests.Tests.LogicLayer.Validation
 {
     [TestFixture]
     class UnitTest_Validator

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using BulbaCourses.PracticalMaterialsTests.Data.Context;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
@@ -8,7 +6,6 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
