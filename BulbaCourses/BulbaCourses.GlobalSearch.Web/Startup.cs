@@ -40,10 +40,8 @@ namespace BulbaCourses.GlobalSearch.Web
 
             app.UseWebApi(config);
 
-            var path = Path.Combine(
-                new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath
-                , "bulbacourses.pfx");
-            var cert = File.ReadAllBytes(path);
+            var cert = File.ReadAllBytes(
+               @"C:\Users\pc\Source\BCRepos\bulba-courses\BulbaCourses\BulbaCourses.GlobalSearch.Web\bulbacourses.pfx");
 
             JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();

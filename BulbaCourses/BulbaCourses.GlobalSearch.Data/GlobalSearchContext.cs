@@ -30,7 +30,7 @@ namespace BulbaCourses.GlobalSearch.Data
         }
 
         public DbSet<AuthorDB> Authors { get; set; }
-        public DbSet<SearchQueryDB> SearchQueries { get; set; }
+        public virtual DbSet<SearchQueryDB> SearchQueries { get; set; }
         public DbSet<CourseCategoryDB> Categories { get; set; }
         public DbSet<CourseDB> Courses { get; set; }
         public DbSet<CourseItemDB> CourseItems { get; set; }
