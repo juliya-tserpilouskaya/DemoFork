@@ -89,8 +89,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SearchQueries\SearchQueryAsyncTest.cs" />
     <Compile Include="SearchQueries\SearchQueryTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="TestDbAsyncQueryProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
