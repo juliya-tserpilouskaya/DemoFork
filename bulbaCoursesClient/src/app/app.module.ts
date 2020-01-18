@@ -5,10 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { SampleModule } from './sample/sample.module';
+<<<<<<<<< Temporary merge branch 1
+import { YoutubeModule } from './YouTube/youtube.module';
+=========
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { YoutubeModule } from './YouTube/youtube.module';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +34,8 @@ import { YoutubeModule } from './YouTube/youtube.module';
         ]
       }
     })
+    YoutubeModule,
+    AuthSharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
