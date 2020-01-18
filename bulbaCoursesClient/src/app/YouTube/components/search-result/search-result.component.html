@@ -1,7 +1,11 @@
-<p>search-result works!</p>
+<p>search-result works!!!</p>
 <ul>
   <li *ngFor="let video of resultVideos">
-    {{video.Title}}    {{video.Description}}
+    <div class="video">
+      <img src='{{video.Thumbnail}}' alt="">
+      <h4>{{video.Title}}</h4>
+      <p>{{video.Description}}</p>
+    </div>
     <br>
   </li>
 </ul>

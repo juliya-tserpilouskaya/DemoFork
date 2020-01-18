@@ -9,11 +9,14 @@ import { ResultVideo, YoutubeService } from '../../services/youtube.service';
 export class SearchResultComponent implements OnInit {
 
   resultVideos: ResultVideo[] = [];
+  youtubeService: YoutubeService;
 
-  constructor(private service: YoutubeService) { }
+  constructor(private service: YoutubeService, ) {
+    this.youtubeService = service;
+  }
 
   ngOnInit() {
-    // this.service.searchVideo().subscribe(data => this.resultVideos = data);
+    this.youtubeService.result$.subscribe(data => this.resultVideos = data);
   }
 
 }

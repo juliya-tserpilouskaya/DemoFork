@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResultVideo, YoutubeService } from '../../services/youtube.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-search-request',
@@ -13,7 +14,7 @@ export class SearchRequestComponent implements OnInit {
   resultVideos: ResultVideo[] = [];
   searchForm: FormGroup;
   parameter: string;
-
+  youtubeService: YoutubeService;
 
   constructor(private service: YoutubeService, route: ActivatedRoute, fb: FormBuilder) {
     // route.params.subscribe(params => this.parameter = params['name']);
@@ -25,7 +26,7 @@ export class SearchRequestComponent implements OnInit {
       duration: ['Any'],
       caption: ['Any'],
     });
-
+    this.youtubeService = service;
   }
 
   onSubmit() {
@@ -41,37 +42,35 @@ export class SearchRequestComponent implements OnInit {
 
       switch (dataForm.published) {
         case 'Hour':
-          searchRequest.PublishedBefore = new Date();
-          searchRequest.PublishedAfter = new Date();
-          searchRequest.PublishedAfter.setHours(searchRequest.PublishedBefore.getHours() - 1);
+          searchRequest.PublishedBefore = moment.utc().toDate();
+          searchRequest.PublishedAfter = moment.utc().subtract(1, 'hour').toDate();
           break;
         case 'Today':
-          searchRequest.PublishedBefore = new Date();
-          searchRequest.PublishedAfter = new Date();
-          searchRequest.PublishedAfter.setHours(0, 0, 0, 0);
+          searchRequest.PublishedBefore = moment().toDate();
+          searchRequest.PublishedAfter = moment().startOf('day').toDate();
           break;
         case 'Week':
-          searchRequest.PublishedBefore = new Date();
-          searchRequest.PublishedAfter = new Date();
-          searchRequest.PublishedAfter.setDate(searchRequest.PublishedBefore.getDate() - searchRequest.PublishedBefore.getDay());
+          searchRequest.PublishedBefore = moment().toDate();
+          searchRequest.PublishedAfter = moment().startOf('isoWeek').toDate();
           break;
         case 'Month':
-          searchRequest.PublishedBefore = new Date();
-          searchRequest.PublishedAfter = new Date();
-          searchRequest.PublishedAfter.setDate(0);
+          searchRequest.PublishedBefore = moment().toDate();
+          searchRequest.PublishedAfter = moment().startOf('month').toDate();
           break;
         case 'Year':
-          searchRequest.PublishedBefore = new Date();
-          searchRequest.PublishedAfter = new Date();
-          searchRequest.PublishedAfter.setMonth(0, 0);
+          searchRequest.PublishedBefore = moment().toDate();
+          searchRequest.PublishedAfter = moment().startOf('year').toDate();
           break;
-        case 'Any':
+        default:
           searchRequest.PublishedBefore = null;
           searchRequest.PublishedAfter = null;
           break;
-        default:
       }
-      this.service.searchVideo(searchRequest).subscribe(data => this.resultVideos = data);
+
+      this.service.searchVideo(searchRequest).subscribe(data => {
+          this.resultVideos = data;
+          this.youtubeService.resultSubject.next(this.resultVideos);
+      });
     }
   }
   ngOnInit() {
