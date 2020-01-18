@@ -19,6 +19,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Collections.Concurrent;
+using Microsoft.Owin.Cors;
+using System.Web.Cors;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Youtube.Web.Startup))]
 
@@ -32,6 +34,21 @@ namespace BulbaCourses.Youtube.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
+
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
+
 
             //var cert = File.ReadAllBytes(
             //   @"D:\LearnASPNET\bulba-courses\BulbaCourses\BulbaCourses.Youtube.SelfHosted\bin\debug\cert.pfx");

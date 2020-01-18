@@ -6,6 +6,7 @@ import { SearchStoryComponent } from './components/search-story/search-story.com
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { VideoComponent } from './components/video/video.component';
 import { YoutubeService} from './services/youtube.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { YoutubeService} from './services/youtube.service';
     VideoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [YoutubeService],
   exports: [SearchRequestComponent]

@@ -1,140 +1,73 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
 <p>search-request works!</p>
-<form class="form-inline mt-2 mt-md-0">
-  <input class="form-control mr-sm-2" type="text" placeholder="Поиск" aria-label="Search">
-  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск в YouTube</button>
-</form>
-<hr>
-<h4 class="mb-3">✎Фильтры</h4>
-<h5 class="mb-3">По дате загрузки</h5>
-<div class="d-block my-3">
-  <div class="custom-control custom-radio">
-    <input id="any-published" name="published" type="radio" class="custom-control-input" checked required>
-    <label class="custom-control-label" for="any-published">Любые</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="hour" name="published" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="hour">За последний час</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="today" name="published" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="today">Сегодня</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="week" name="published" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="week">На этой неделе</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="month" name="published" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="month">В этом месяце</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="year" name="published" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="year">За этот год</label>
-  </div>
-</div>
-<h5 class="mb-3">Длительность</h5>
-<div class="d-block my-3">
-  <div class="custom-control custom-radio">
-    <input id="any-duration" name="duration" type="radio" class="custom-control-input" checked required>
-    <label class="custom-control-label" for="any-duration">Любые</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="short" name="duration" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="short">Короткие (до 4 мин.)</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="medium" name="duration" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="medium">Средние (4 - 20 мин.)</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="long" name="duration" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="long">Длинные (более 20 мин.)</label>
-  </div>
-</div>
-<h5 class="mb-3">Качество</h5>
-<div class="d-block my-3">
-  <div class="custom-control custom-radio">
-    <input id="any-definition" name="definition" type="radio" class="custom-control-input" checked required>
-    <label class="custom-control-label" for="any-definition">Любые</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="hd" name="definition" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="hd">HD</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="sd" name="definition" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="sd">SD</label>
-  </div>
-</div>
-<h5 class="mb-3">Формат</h5>
-<div class="d-block my-3">
-  <div class="custom-control custom-radio">
-    <input id="any-dimension" name="dimension" type="radio" class="custom-control-input" checked required>
-    <label class="custom-control-label" for="any-dimension">Любые</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="2d" name="dimension" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="2d">2D</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="3d" name="dimension" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="3d">3D</label>
-  </div>
-</div>
-<h5 class="mb-3">Титры</h5>
-<div class="d-block my-3">
-  <div class="custom-control custom-radio">
-    <input id="any-caption" name="caption" type="radio" class="custom-control-input" checked required>
-    <label class="custom-control-label" for="any-caption">Любые</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="none" name="caption" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="none">Без титров</label>
-  </div>
-  <div class="custom-control custom-radio">
-    <input id="closed" name="caption" type="radio" class="custom-control-input" required>
-    <label class="custom-control-label" for="closed">С титрами</label>
-  </div>
-</div>
+<form class="form-search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for snippets" />
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
-                                  <div class="form-group">
-                                    <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>All Snippets</option>
-                                        <option value="1">Featured</option>
-                                        <option value="2">Most popular</option>
-                                        <option value="3">Top rated</option>
-                                        <option value="4">Most commented</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
-            </div>
-          </div>
+  <div class="input-group" id="boot-search-box">
+    <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
+      <div class="input-group-btn">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </div>
-</div>
+    </div>
+  </div>
+<hr>
+<input type="checkbox" id="filter-checkbox">
+<label class="btn btn-primary" for="filter-checkbox">✎ Фильтры:</label>
 
+<!-- Form for filters -->
+  <div class="form-filters">
+    <div class="form-group">
+      <label for="filter">По дате загрузки:</label>
+      <select class="form-control" formControlName="published">
+        <option value="Any" selected>Любые</option>
+        <option value="Hour">За последний час</option>
+        <option value="Today">Сегодня</option>
+        <option value="Week">На этой неделе</option>
+        <option value="Month">В этом месяце</option>
+        <option value="Year">За этот год</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Длительность:</label>
+      <select class="form-control" formControlName="duration">
+        <option value="Any" selected>Любые</option>
+        <option value="Short__">Короткие (до 4 мин.)</option>
+        <option value="Medium">Средние (4 - 20 мин.)</option>
+        <option value="Long__">Длинные (более 20 мин.)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Качество:</label>
+      <select class="form-control" formControlName="definition">
+        <option value="Any" selected>Любые</option>
+        <option value="High">HD</option>
+        <option value="Standard">SD</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Формат:</label>
+      <select class="form-control" formControlName="dimension">
+        <option value="Any" selected>Любые</option>
+        <option value="Value2d">2D</option>
+        <option value="Value3d">3D</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Титры:</label>
+      <select class="form-control" formControlName="caption">
+        <option value="Any" selected>Любые</option>
+        <option value="ClosedCaption">С титрами</option>
+        <option value="None">Без титров</option>
+      </select>
+    </div>
+  </div>
+</form>
+
+<app-search-result></app-search-result>
+<ul>
+  <li *ngFor="let video of resultVideos">
+    {{video.Title}}    {{video.Description}}
+    <br>
+  </li>
+</ul>

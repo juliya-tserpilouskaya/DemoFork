@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResultVideo, YoutubeService } from '../../services/youtube.service';
 
 @Component({
   selector: 'app-search-result',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchResultComponent implements OnInit {
 
-  constructor() { }
+  resultVideos: ResultVideo[] = [];
+
+  constructor(private service: YoutubeService) { }
 
   ngOnInit() {
+    // this.service.searchVideo().subscribe(data => this.resultVideos = data);
   }
 
 }
