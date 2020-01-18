@@ -16,6 +16,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
         TaskDTO GetTask(string id);
         Task<TaskDTO> GetTaskAsync(string id);
         IEnumerable<TaskDTO> GetTasks();
+
+        void UpdateTask(string id, TaskDTO taskDto);
+
         
     }
 }

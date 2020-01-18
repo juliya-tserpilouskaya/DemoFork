@@ -37,8 +37,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
 
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Book found", typeof(TaskDTO))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Task found", typeof(TaskDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetTaskAsync(string id)
         {
@@ -59,22 +59,40 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             }
         }
 
-        [HttpPost, Route("")]
-        
-        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "AddBook, default")]TaskDTO task)
+        [HttpPost, Route("")]        
+        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "Task, default")]TaskDTO task)
         {
-            // validate book here
-            //var result = _validator.Validate(book);
-            //if (!result.IsValid)
-            //{
-            //    return BadRequest(result.Errors.Select(x => x.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
-            //}
+            try
+            {
+                _taskservice.MakeTask(task);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPut,Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Task found", typeof(TaskDTO))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "Task, default")] TaskDTO task)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _taskservice.UpdateTask(id, task);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
 
-            _taskservice.MakeTask(task);
-            return Ok();
-            
-
-            
         }
 
     }
