@@ -5,6 +5,8 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.User;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
 {    
@@ -13,6 +15,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
         public AutoMapperProfile_DataLogicLayer()
         {
             // ----------- Test
+
             CreateMap<MTest_MainInfo, MTest_MainInfoDb>().ReverseMap();
 
             // ----------- Question
@@ -26,6 +29,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
             CreateMap<MAnswerVariant_ChoosingAnswerFromList, MAnswerVariant_ChoosingAnswerFromListDb>().ReverseMap();
             CreateMap<MQuestion_SetIntoMissingElements, MQuestion_SetIntoMissingElementsDb>().ReverseMap();
             CreateMap<MAnswerVariant_SetOrder, MAnswerVariant_SetOrderDb>().ReverseMap();
+
+            // ------------ User
+
+            CreateMap<MUser_TestAuthor, MUser_TestAuthorDb>().ReverseMap();
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realization
 {
-    public class Service_Question_SetOrderDb : Service_Base, IService_Question
+    public class Service_Question_SetOrder : Service_Base, IService_Question
     {
-        protected Service_Question_SetOrderDb(DbContext context, IMapper mapper) : base(context, mapper)
+        protected Service_Question_SetOrder(DbContext context, IMapper mapper) : base(context, mapper)
         {
 
         }

@@ -8,6 +8,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 {
     public interface IService_Test : IDisposable
     {
+        // ------------ CRUD
+
         Result<MTest_MainInfo> GetById(int Id);
 
         Task<Result<MTest_MainInfo>> GetByIdAsync(int Id);
@@ -23,5 +25,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
         Result DeleteById(int Id);
 
         Task<Result> DeleteByIdAsync(int Id);
+
+        // ------------ Check
+
+
     }
 }

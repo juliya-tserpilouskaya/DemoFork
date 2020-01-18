@@ -6,7 +6,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
     using System;
     using System.Web;
     using System.Web.Http;
-
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -64,6 +63,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
             catch
             {
                 kernel.Dispose();
+
                 throw;
             }
         }
@@ -74,7 +74,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-
+  
         }
     }
 }

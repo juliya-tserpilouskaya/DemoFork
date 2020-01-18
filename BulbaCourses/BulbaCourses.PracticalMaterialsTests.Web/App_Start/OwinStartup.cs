@@ -17,56 +17,56 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
 {
-public class OwinStartup
-{
-    public void Configuration(IAppBuilder app)
+    public class OwinStartup
     {
-        var config = new HttpConfiguration();
+        public void Configuration(IAppBuilder app)
+        {
+            var config = new HttpConfiguration();
 
-        config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes();
 
-        // ---------- IdentityServer3
-        
-        var path =
-            Path.Combine(
-                new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath,
-                "SelfHostedRertificate.pfx");
-        
-        var data = File.ReadAllBytes(path);
+            // ---------- IdentityServer3
 
-        app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
-        {            
-            IssuerName = "My Security Server",
-            
-            Authority = "http://localhost:5050",
-            
-            ValidationMode = ValidationMode.Local,
-            
-            SigningCertificate = new X509Certificate2(data, "123")
-        });
+            var path =
+                Path.Combine(
+                    new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath,
+                    "SelfHostedRertificate.pfx");
 
-        // ---------- AppUse
+            var data = File.ReadAllBytes(path);
 
-        app.UseWebApi(config);
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+            {
+                IssuerName = "My Security Server",
 
-        app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                       
+                Authority = "http://localhost:5050",
+
+                ValidationMode = ValidationMode.Local,
+
+                SigningCertificate = new X509Certificate2(data, "123")
+            });
+
+            // ---------- AppUse
+
+            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
+
+            app.UseWebApi(config);            
+        }
+
+        private IKernel ConfigureValidation(HttpConfiguration config)
+        {
+            StandardKernel kernel = new StandardKernel();
+
+            // ---------- LayerLogic
+
+            kernel.Bind<IService_Test>().To<Service_Test>();
+
+            kernel.Load<ModuleNinject_LogicLayer>();
+
+            // ---------- EasyNetQ
+
+            kernel.RegisterEasyNetQ("host=127.0.0.1");
+
+            return kernel;
+        }
     }
-
-    private IKernel ConfigureValidation(HttpConfiguration config)
-    {
-        var kernel = new StandardKernel();
-
-        // ---------- LayerLogic
-
-        kernel.Bind<IService_Test>().To<Service_Test>();
-
-        kernel.Load<ModuleNinject_LogicLayer>();
-
-        // ---------- EasyNetQ
-
-        kernel.RegisterEasyNetQ("host=127.0.0.1");
-
-        return kernel;
-    }
-}
 }

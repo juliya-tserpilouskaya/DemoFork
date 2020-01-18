@@ -3,6 +3,7 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
 using System;
@@ -20,6 +21,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
         {
 
         }
+
+        // ------------ CRUD
 
         public Result<MTest_MainInfo> GetById(int Id)
         {
@@ -239,6 +242,26 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             {
                 return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
             }
+        }
+
+        // ------------ Check
+
+        public void CheckTest(MTest_MainInfo User_Test_MainInfo)
+        {
+            MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
+
+            // ------------ Check_Question_ChoosingAnswerFromList
+
+            foreach (MQuestion_ChoosingAnswerFromList x in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
+            {
+
+            }
+
+            // ------------ Question_SetIntoMissingElements
+
+
+            // ------------ Question_SetOrder
+
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.AnswerVariants.Realization
 {
-    public class Service_AnswerVariant_SetOrderDb : Service_Base, IService_AnswerVariant
+    public class Service_AnswerVariant_SetOrder : Service_Base, IService_AnswerVariant
     {
-        protected Service_AnswerVariant_SetOrderDb(DbContext context, IMapper mapper) : base(context, mapper)
+        protected Service_AnswerVariant_SetOrder(DbContext context, IMapper mapper) : base(context, mapper)
         {
 
         }

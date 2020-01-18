@@ -7,6 +7,7 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.AnswerVariants;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using System.Data.Entity;
+using BulbaCourses.PracticalMaterialsTests.Data.Mapping.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 {
@@ -58,7 +59,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
             modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetIntoMissingElements());
 
-            modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetOrder());         
+            modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetOrder());
+
+            // ------------ User
+
+            modelBuilder.Configurations.Add(new Mapping_User_TestAuthor());
         }
     }
 }
