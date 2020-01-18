@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using AutoMapper;
 using BulbaCourses.GlobalSearch.Data;
 using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services;
@@ -10,16 +13,18 @@ using Moq;
 using Ninject;
 using Moq.EntityFramework.Helpers;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
 {
+    /// <summary>
+    /// Summary description for SearchQueryAsyncTest
+    /// </summary>
     [TestFixture]
-    public class SearchQueryTest
+    public class SearchQueryAsyncTest
     {
         StandardKernel kernel;
         IMapper mapper;
@@ -67,51 +72,36 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             }.AsQueryable();
 
             mockSet = new Mock<DbSet<SearchQueryDB>>();
-            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.Provider).Returns(queries.Provider);
-            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.Expression).Returns(queries.Expression);
-            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.ElementType).Returns(queries.ElementType);
-            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.GetEnumerator()).Returns(queries.GetEnumerator());
+            mockSet.As<IDbAsyncEnumerable<SearchQueryDB>>()
+                .Setup(m => m.GetAsyncEnumerator())
+                .Returns(new TestDbAsyncEnumerator<SearchQueryDB>(queries.GetEnumerator()));
+
+            mockSet.As<IDbAsyncEnumerable<SearchQueryDB>>()
+                .Setup(m => m.GetAsyncEnumerator())
+                .Returns(new TestDbAsyncEnumerator<SearchQueryDB>(queries.GetEnumerator()));
+
+            mockSet.As<IQueryable<SearchQueryDB>>()
+                .Setup(m => m.Provider)
+                .Returns(new TestDbAsyncQueryProvider<SearchQueryDB>(queries.Provider));
 
             mockContext = new Mock<GlobalSearchContext>();
             mockContext.Setup(x => x.SearchQueries).Returns(mockSet.Object);
         }
 
-        [Test, Category("SearchQuery")]
-        public void add_search_query()
-        {
 
+        [Test, Category("SearchQuery")]
+        public async Task getall_search_queries_async()
+        {
+            //Arrage
             var DbService = new SearchQueryDbService(mockContext.Object);
             var mockLogicService = new Mock<SearchQueryService>();
             var service = new SearchQueryService(mapper, DbService);
 
             //Act
-            var b = new SearchQueryDTO
-            {
-                Id = "1",
-                Date = DateTime.Now,
-                Query = "search query"
-            };
-            var q = service.Add(b);
-            var all = DbService.GetAll().Count();
+            var q = await service.GetAllAsync();
 
             //Assert
-            mockContext.Verify(m => m.SaveChanges(), Times.Once());
-            Assert.AreEqual(q.Query, b.Query);
-        }
-
-        [Test, Category("SearchQuery")]
-        public void remove_all_search_queries()
-        {
-            var DbService = new SearchQueryDbService(mockContext.Object);
-            var mockLogicService = new Mock<SearchQueryService>();
-            var service = new SearchQueryService(mapper, DbService);
-
-            //Act
-            service.RemoveAll();
-
-            //Assert
-            mockContext.Verify(m => m.SaveChanges(), Times.Once());
-            mockSet.Verify(m => m.RemoveRange(It.IsAny<IEnumerable<SearchQueryDB>>()), Times.Once());
+            Assert.AreEqual(queries.Select(p => p).ToList().Count(), q.Count());
         }
     }
 }
