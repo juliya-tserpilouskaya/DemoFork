@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
 using Microsoft.Owin;
 using Owin;
 using Ninject;
@@ -60,7 +60,7 @@ public class OwinStartup
 
         kernel.Bind<IService_Test>().To<Service_Test>();
 
-        kernel.Load<ModuleNinject_Logic>();
+        kernel.Load<ModuleNinject_LogicLayer>();
 
         // ---------- EasyNetQ
 

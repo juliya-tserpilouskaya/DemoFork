@@ -1,7 +1,7 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Tests;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Interface;
-using BulbaCourses.PracticalMaterialsTests.Logic.Services.Tests.Realization;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
 using EasyNetQ;
 using Ninject;
 using Swashbuckle.Swagger.Annotations;

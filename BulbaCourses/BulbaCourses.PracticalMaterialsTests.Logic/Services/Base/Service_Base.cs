@@ -2,7 +2,7 @@
 using System;
 using System.Data.Entity;
 
-namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.BaseService
+namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Base
 {
     public class Service_Base : IDisposable
     {

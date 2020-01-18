@@ -1,15 +1,15 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Context;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.AnswerVariants;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Questions;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Tests;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.AnswerVariants;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
 {
-    public class DbUserInitialization_Test : DropCreateDatabaseAlways<DbContext_Test>
+    public class DbUserInitialization_Test : DropCreateDatabaseAlways<DbContext_LocalDb_Test>
     {
-        protected override void Seed(DbContext_Test context)
+        protected override void Seed(DbContext_LocalDb_Test context)
         {
             // ------------ Test
 
@@ -31,7 +31,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                         {
                                             new MAnswerVariant_ChoosingAnswerFromListDb()
                                             {
-                                                AnswerText = "Ответ_1",
+                                                AnswerText = "AnswerText_1",
                                                 SortKey = 1,
                                                 IsCorrectAnswer = false
                                             },
@@ -93,11 +93,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                     }
                 };
 
-            context.Test_MainInfo.AddRange(default_Test_MainInfoDb);
-
-            // ------------ Questions
-
-            // ------------ AnswerVariants               
+            context.Test_MainInfo.AddRange(default_Test_MainInfoDb);         
 
             // ------------ 
 

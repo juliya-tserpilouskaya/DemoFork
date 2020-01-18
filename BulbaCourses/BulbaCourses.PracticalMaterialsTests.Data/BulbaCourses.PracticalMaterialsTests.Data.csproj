@@ -37,9 +37,6 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -54,29 +51,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\DbConfig_Test.cs" />
-    <Compile Include="Context\DbContext_Test.cs" />
+    <Compile Include="Config\DbConfig_LocalDb_Test.cs" />
+    <Compile Include="Context\DbContext_LocalDb_Test.cs" />
     <Compile Include="Initialization\DbUserInitialization_Test.cs" />
-    <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_ChoosingAnswerFromList.cs" />
-    <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_SetIntoMissingElements.cs" />
-    <Compile Include="Mapping\AnswerVariants\Mapping_AnswerVariant_SetOrder.cs" />
-    <Compile Include="Mapping\Questions\Mapping_Question_ChoosingAnswerFromList.cs" />
-    <Compile Include="Mapping\Questions\Mapping_Question_SetIntoMissingElements.cs" />
-    <Compile Include="Mapping\Questions\Mapping_Question_SetOrder.cs" />
-    <Compile Include="Mapping\Tests\Mapping_Test_MainInfo.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
-    <Compile Include="Models\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
-    <Compile Include="Models\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
-    <Compile Include="Models\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
-    <Compile Include="Models\Questions\MQuestion_SetOrderDb.cs" />
-    <Compile Include="Models\Tests\MTest_MainInfoDb.cs" />
-    <Compile Include="Modules\ModuleNinject_Data.cs" />
+    <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_SetIntoMissingElements.cs" />
+    <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_SetOrder.cs" />
+    <Compile Include="Mapping\Test\Questions\Mapping_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Mapping\Test\Questions\Mapping_Question_SetIntoMissingElements.cs" />
+    <Compile Include="Mapping\Test\Questions\Mapping_Question_SetOrder.cs" />
+    <Compile Include="Mapping\Test\Tests\Mapping_Test_MainInfo.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetIntoMissingElementsDb.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_SetIntoMissingElementsDb.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_SetOrderDb.cs" />
+    <Compile Include="Models\Test\Tests\MTest_MainInfoDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mapping\User\" />
+    <Folder Include="Models\User\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

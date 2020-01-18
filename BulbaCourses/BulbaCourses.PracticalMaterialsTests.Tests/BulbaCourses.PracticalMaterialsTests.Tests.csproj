@@ -81,15 +81,18 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\Services\Tests\UnitTest_Service_Test.cs" />
-    <Compile Include="Logic\Validation\UnitTest_Validator.cs" />
+    <Compile Include="Layers\Logic\Services\UnitTest_Service_Test.cs" />
+    <Compile Include="Layers\Logic\Validation\UnitTest_Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Layers\Data\" />
+    <Folder Include="Layers\Web\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">
       <Project>{4ab20b3a-6e96-4f8a-b5e1-d59bd28de331}</Project>
