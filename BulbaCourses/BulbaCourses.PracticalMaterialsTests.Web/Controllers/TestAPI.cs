@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
+    [Authorize]
     public class TestAPIController : ApiController
     {
         private readonly IService_Test _service_Test;
@@ -34,6 +35,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             var Test_MainInfo = _service_Test.GetById(1);
 
             return Ok(Test_MainInfo.Data.Name);
+        }
+
+        [HttpGet, Route("")]
+        public IHttpActionResult GetData()
+        {
+            return Ok("Test Self-Hosted done!");
         }
     }
 }

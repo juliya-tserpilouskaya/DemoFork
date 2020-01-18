@@ -7,39 +7,66 @@ using Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
+using System.IO;
+using System.Reflection;
+using System;
+using IdentityServer3.AccessTokenValidation;
+using System.Security.Cryptography.X509Certificates;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.OwinStartup))]
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
 {
-    public class OwinStartup
+public class OwinStartup
+{
+    public void Configuration(IAppBuilder app)
     {
-        public void Configuration(IAppBuilder app)
-        {
-            var config = new HttpConfiguration();
+        var config = new HttpConfiguration();
 
-            config.MapHttpAttributeRoutes();
+        config.MapHttpAttributeRoutes();
 
-            app.UseWebApi(config);
+        // ---------- IdentityServer3
+        
+        var path =
+            Path.Combine(
+                new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath,
+                "SelfHostedRertificate.pfx");
+        
+        var data = File.ReadAllBytes(path);
 
-            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                       
-        }
+        app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+        {            
+            IssuerName = "My Security Server",
+            
+            Authority = "http://localhost:5050",
+            
+            ValidationMode = ValidationMode.Local,
+            
+            SigningCertificate = new X509Certificate2(data, "123")
+        });
 
-        private IKernel ConfigureValidation(HttpConfiguration config)
-        {
-            var kernel = new StandardKernel();
+        // ---------- AppUse
 
-            // ---------- LayerLogic
+        app.UseWebApi(config);
 
-            kernel.Bind<IService_Test>().To<Service_Test>();
-
-            kernel.Load<ModuleNinject_Logic>();
-
-            // ---------- EasyNetQ
-
-            kernel.RegisterEasyNetQ("host=127.0.0.1");
-
-            return kernel;
-        }
+        app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                       
     }
+
+    private IKernel ConfigureValidation(HttpConfiguration config)
+    {
+        var kernel = new StandardKernel();
+
+        // ---------- LayerLogic
+
+        kernel.Bind<IService_Test>().To<Service_Test>();
+
+        kernel.Load<ModuleNinject_Logic>();
+
+        // ---------- EasyNetQ
+
+        kernel.RegisterEasyNetQ("host=127.0.0.1");
+
+        return kernel;
+    }
+}
 }
