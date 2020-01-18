@@ -11,9 +11,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
 {
     class ParserITAcademy
     {
-        public IEnumerable<CoursesITAcademy> GetAllCourses()
+        public IEnumerable<CoursesITAcademy> GetAllCourses(CourseCategory courseCategory)
         {
-            var html = CommonValues.urlItAcademy;
+            var html = CommonValues.hostItAcademy + courseCategory.Name;
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(html);
             List<CoursesITAcademy> listCourses = new List<CoursesITAcademy>();
@@ -60,6 +60,26 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                     .Match(htmlNodesDiscount.FirstOrDefault().InnerHtml, @"[\d]+").ToString());
             }
             course.Description = htmlNodesDescription.FirstOrDefault().ChildNodes[4].InnerText;
+        }
+
+        public List<CourseCategory> GetCategories()
+        {
+            var html = CommonValues.urlITAcademyCategories;
+            HtmlWeb web = new HtmlWeb();
+            var htmlDoc = web.Load(html);
+            List<CourseCategory> listCategories = new List<CourseCategory>();
+            var htmlNodes = htmlDoc.DocumentNode
+                .SelectNodes("//ul[@class='panel-section-list panel-section-list_columns']/li");
+            if (htmlNodes is null) return listCategories;
+            foreach (var node in htmlNodes)
+            {
+                listCategories.Add(new CourseCategory()
+                {
+                    Title = node.ChildNodes["a"].ChildNodes["span"].InnerHtml,
+                    Name = node.ChildNodes["a"].Attributes["href"].Value
+                });
+            }
+            return listCategories;
         }
     }
 }

@@ -33,7 +33,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 List<CourseCategoryDb> courseCategories = new List<CourseCategoryDb>();
                 List<DomainDb> domains = new List<DomainDb>();
-
                 CourseCategoryDb categoryDb;
                 DomainDb domainDb; 
 
@@ -47,10 +46,9 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                         {
                             Name = el.Name,
                             Title = el.Title
-                        }) ;
+                        });
                 }
-                profileDb.SearchCriteria.CourseCategories = courseCategories;
-
+                
                 foreach (var el in profileDb.SearchCriteria.Domains)
                 {
                     domainDb = context.Domains.Where(x => x.DomainURL == el.DomainURL)
@@ -63,11 +61,10 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                         });
                 }
                 //domains.Add(context.Domains.Find(el.Id) ?? el);
+                profileDb.SearchCriteria.CourseCategories = courseCategories;
                 profileDb.SearchCriteria.Domains = domains;
 
                 context.Profiles.Add(profileDb);
-
-                //context.Database.ExecuteSqlCommand($"Insert into Profiles");
 
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<UserProfileDb>.Ok(profileDb);

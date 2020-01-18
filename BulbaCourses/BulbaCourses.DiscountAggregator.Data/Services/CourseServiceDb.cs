@@ -45,7 +45,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         public IEnumerable<CourseDb> GetAll()
         {
-            var coursesList = context.Courses.ToList().AsReadOnly();
+            var coursesList = context.Courses.Include(x => x.Domain).ToList().AsReadOnly();
             return coursesList;
         }
         
