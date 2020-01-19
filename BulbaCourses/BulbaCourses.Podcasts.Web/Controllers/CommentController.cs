@@ -49,11 +49,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -63,6 +59,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -78,11 +75,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -109,15 +102,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Add(commentlogic, courselogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name}");
                     return Ok(commentlogic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -147,11 +137,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -181,11 +167,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)

@@ -39,10 +39,18 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001191827393_First.resx">
+      <DependentUpon>202001191827393_First.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
+    <Compile Include="Migrations\202001191827393_First.cs" />
+    <Compile Include="Migrations\202001191827393_First.Designer.cs">
+      <DependentUpon>202001191827393_First.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ContentDb.cs" />
     <Compile Include="PodcastsContext.cs" />

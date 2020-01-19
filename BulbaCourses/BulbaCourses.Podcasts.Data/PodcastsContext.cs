@@ -39,7 +39,6 @@ namespace BulbaCourses.Podcasts.Data
             modelBuilder.Entity<AudioDb>().ToTable("Audios");
             var entityAudio = modelBuilder.Entity<AudioDb>();
             entityAudio.HasKey(b => b.Id);
-            entityAudio.HasKey(b => b.Course);
             entityAudio.Property(b => b.Name).IsRequired().HasMaxLength(255).IsUnicode();
             entityAudio.Property(b => b.Duration).IsRequired();
             entityAudio.Property(b => b.Content).IsRequired();

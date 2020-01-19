@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Principal;
 using Ninject;
+using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
 
 namespace BulbaCourses.Podcasts.Logic.Services
 {
@@ -33,6 +35,18 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
                 var result = await dbmanager.AddAsync(userDb);
                 return Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbUpdateException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result.Fail(e.Message);
             }
             catch (Exception)
             {
@@ -91,6 +105,18 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 await dbmanager.RemoveAsync(userDb);
                 return Result.Ok();
             }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbUpdateException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result.Fail(e.Message);
+            }
             catch (Exception)
             {
                 return Result.Fail("Exception");
@@ -104,6 +130,18 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
                 await dbmanager.UpdateAsync(userDb);
                 return Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbUpdateException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result.Fail(e.Message);
             }
             catch (Exception)
             {

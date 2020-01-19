@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BulbaCourses.Podcasts.Web.Models;
 
+using Microsoft.AspNet.Identity;
+
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
     [RoutePrefix("api/courses")]
@@ -52,11 +54,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (InvalidOperationException ex)
@@ -66,6 +64,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -81,18 +80,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
             }
         }
-
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -110,15 +104,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Add(courselogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Added Course {courseWeb.Name}");
                     return Ok(courselogic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (InvalidOperationException ex)
@@ -132,7 +123,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Put(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]CourseWeb courseWeb)
         {
             try
             {
@@ -148,11 +139,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
 
@@ -179,15 +166,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Delete(courselogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Deleted Course to {courseWeb.Name}");
                     return Ok(courselogic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)

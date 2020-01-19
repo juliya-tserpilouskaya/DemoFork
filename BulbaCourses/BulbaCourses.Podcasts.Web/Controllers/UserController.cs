@@ -2,7 +2,6 @@
 using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Logic.Models;
 using BulbaCourses.Podcasts.Web.Models;
-using BulbaCourses.Video.Web.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -53,11 +52,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (InvalidOperationException ex)
@@ -66,6 +61,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -81,11 +77,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -111,15 +103,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Add(userlogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name}");
                     return Ok(userWeb);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -149,11 +138,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -179,15 +164,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Delete(userLogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Deleted User {userWeb.Name}");
                     return Ok(userLogic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)

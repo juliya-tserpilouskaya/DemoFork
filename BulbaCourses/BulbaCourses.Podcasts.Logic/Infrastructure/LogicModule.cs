@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Ninject.Modules;
 using BulbaCourses.Podcasts.Data;
+using BulbaCourses.Podcasts.Data.Interfaces;
+using BulbaCourses.Podcasts.Data.Managers;
+using BulbaCourses.Podcasts.Data.Models;
 
 namespace BulbaCourses.Podcasts.Logic
 {

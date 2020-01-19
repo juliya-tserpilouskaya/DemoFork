@@ -4,12 +4,15 @@ using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using System.Web.Cors;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Podcasts.Web.Startup))]
@@ -27,11 +30,22 @@ namespace BulbaCourses.Podcasts.Web
             //config.Filters.Add(new BadRequestFilterAttribute());
             var data = File.ReadAllBytes(
                 @"C:\Users\Master\source\repos\Sample.Web\Sample.SelfHosted\bin\Debug\cert.pfx");
-
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
-                IssuerName = "My Security Server",
-                Authority = "http://localhost:5050",
+                IssuerName = "http://localhost:44382",
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });
@@ -50,6 +64,7 @@ namespace BulbaCourses.Podcasts.Web
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
 
+            kernel.RegisterEasyNetQ("host=localhost");
             return kernel;
         }
     }

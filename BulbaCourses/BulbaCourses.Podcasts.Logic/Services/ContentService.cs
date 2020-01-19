@@ -4,11 +4,7 @@ using BulbaCourses.Podcasts.Data.Models;
 using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Logic.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Security.Principal;
 
 namespace BulbaCourses.Podcasts.Logic.Services
 {

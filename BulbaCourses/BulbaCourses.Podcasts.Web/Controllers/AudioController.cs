@@ -49,11 +49,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -63,6 +59,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -78,11 +75,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -109,15 +102,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Add(audiologic, courselogic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Added Audio to {audioWeb.Name}");
                     return Ok(audiologic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -147,11 +137,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -177,15 +163,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Delete(audiologic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Deleted Audio at {audioWeb.Name}");
                     return Ok(audiologic);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)

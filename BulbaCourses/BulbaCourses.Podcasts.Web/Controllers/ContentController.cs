@@ -30,6 +30,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.service = contentService;
             this.bus = bus;
         }
+
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Content doesn't exists")]
@@ -52,11 +53,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (InvalidOperationException ex)
@@ -83,15 +80,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.Add(contentLogic, audiologic);
                 if (result.IsSuccess == true)
                 {
+                    await bus.SendAsync("Podcasts", $"Added Content to {audioWeb.Name}");
                     return Ok(contentWeb);
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -121,11 +115,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
@@ -155,11 +145,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
+                    return BadRequest(result.Message);
                 }
             }
             catch (Exception ex)
