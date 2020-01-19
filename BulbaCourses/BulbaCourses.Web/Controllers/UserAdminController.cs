@@ -68,18 +68,20 @@ namespace BulbaCourses.Web.Controllers
 
         }
 
-        [HttpPost, Route("{id}")]
+        [HttpPost, Route("")]
         public async Task<IHttpActionResult> ChangePassword([FromBody]ChangePassword user)
         {
             if (user == null)
             {
                 return BadRequest();
             }
+            if (await _userManager.FindByIdAsync(user.Id) != null)
+                return NotFound();
             if (!user.NewPassword.Equals(user.NewPasswordConfirm))
                 return BadRequest("New password different");
+
             var result = await _userManager.ChangePasswordAsync(user.Id, user.OldPassword, user.NewPassword);
-            if (result.Succeeded)
-                return (IHttpActionResult)Ok(result);
+
             return result.Succeeded ? (IHttpActionResult)Ok(result) : BadRequest();
 
         }

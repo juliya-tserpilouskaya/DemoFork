@@ -3,6 +3,7 @@ using BulbaCourses.GlobalAdminUser.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.GlobalAdminUser.Web.Controllers
@@ -19,9 +20,9 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
         }
 
         [HttpGet, Route("")]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _userService.GetAll();
+            var result = await _userService.GetAllAsync();
             return result == null? NotFound():(IHttpActionResult)Ok(result);
         }
 

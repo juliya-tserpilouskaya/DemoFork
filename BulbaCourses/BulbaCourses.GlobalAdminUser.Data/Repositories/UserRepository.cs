@@ -12,11 +12,13 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
 {
     public class UserRepository:IUserRepository
     {
+        private IUsersContext _usersContext;
         private GlobalAdminDbContext _globalAdminDbContext;
 
-        public UserRepository(GlobalAdminDbContext globalAdminDbContext)
+        public UserRepository(GlobalAdminDbContext globalAdminDbContext,UsersContext usersContext)
         {
             _globalAdminDbContext = globalAdminDbContext;
+            _usersContext = usersContext;
         }
 
         public void Add(UserDb user)
@@ -25,9 +27,10 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
             _globalAdminDbContext.SaveChanges();
         }
 
-        public IEnumerable<UserDb> GetAll()
+        public async Task<IEnumerable<UserDb>> GetAllAsync()
         {
-            var userList = _globalAdminDbContext.Users.ToList().AsReadOnly();
+            var userList = await _usersContext.GetAll();
+            //var userList = _globalAdminDbContext.Users.ToList().AsReadOnly();
             return userList;
         }
 

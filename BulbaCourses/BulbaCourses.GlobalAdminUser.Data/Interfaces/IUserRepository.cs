@@ -10,7 +10,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
     public interface IUserRepository
     {
         UserDb GetById(string id);
-        IEnumerable<UserDb> GetAll();
+        Task<IEnumerable<UserDb>> GetAllAsync();
         void Add(UserDb user);
         void Update(UserDb user);
         void Remove(UserDb user);

@@ -21,7 +21,7 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
         [HttpGet, Route("")]
         public IHttpActionResult GetAll()
         {
-            var result = _userService.GetAll();
+            var result = _userService.GetAllAsync();
             return result == null? NotFound():(IHttpActionResult)Ok(result);
         }
 
