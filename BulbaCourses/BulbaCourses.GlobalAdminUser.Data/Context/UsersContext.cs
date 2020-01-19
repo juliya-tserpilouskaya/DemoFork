@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalAdminUser.Data.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
     public class UsersContext : IUsersContext
     {
         private HttpClient _client = new HttpClient();
+
         public UsersContext()
         {
             _client.BaseAddress = new Uri("http://localhost:44382/");
@@ -21,6 +23,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
+
         public async Task<IEnumerable<UserDb>> GetAll()
         {
             IEnumerable<UserDb> users = null;
@@ -31,5 +34,24 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             }
             return users;
         }
+
+        public async Task<UserDb> GetById(string id)
+        {
+            UserDb user = null;
+            HttpResponseMessage response = await _client.GetAsync($"api/admin/id?id={id}");
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<UserDb>();
+            }
+            return user;
+        }
+
+        public async Task ChangePassword(UserChangePassword user)
+        {
+            string json = JsonConvert.SerializeObject(user);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpResponse = await _client.PostAsync("api/admin", httpContent);
+        }
+
     }
 }

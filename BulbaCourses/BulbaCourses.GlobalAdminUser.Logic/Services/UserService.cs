@@ -40,7 +40,12 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
 
         public UserDTO GetById(string id)
         {
-            var user = _userRepository.GetById(id);
+            return GetByIdAsync(id).GetAwaiter().GetResult();
+        }
+
+        public async Task<UserDTO> GetByIdAsync(string id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
             var result = _mapper.Map<UserDb, UserDTO>(user);
             return result;
         }
@@ -49,6 +54,11 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
         {
             var userDb = _mapper.Map<UserDTO, UserDb>(user);
             _userRepository.Update(userDb);
+        }
+
+        public void ChangePassword(UserChangePasswordDTO user)
+        {
+            //_userRepository
         }
     }
 }

@@ -31,7 +31,7 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exist")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserDTO))]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id)||Guid.TryParse(id,out var _))
             {
@@ -40,7 +40,7 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
 
             try
             {
-                var result = _userService.GetById(id);
+                var result = await _userService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)

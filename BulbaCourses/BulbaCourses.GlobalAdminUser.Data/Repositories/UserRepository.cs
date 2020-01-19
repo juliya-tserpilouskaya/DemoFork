@@ -23,8 +23,14 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
 
         public void Add(UserDb user)
         {
-            _globalAdminDbContext.Users.Add(user);
-            _globalAdminDbContext.SaveChanges();
+            throw new NotImplementedException();
+            //_globalAdminDbContext.Users.Add(user);
+            //_globalAdminDbContext.SaveChanges();
+        }
+
+        public async Task ChangePassword(UserChangePassword user)
+        {
+            await _usersContext.ChangePassword(user);
         }
 
         public async Task<IEnumerable<UserDb>> GetAllAsync()
@@ -36,14 +42,23 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
 
         public UserDb GetById(string id)
         {
-            var chosenuser = _globalAdminDbContext.Users.SingleOrDefault(x => x.Id.Equals(id));
-            return chosenuser;
+            return GetByIdAsync(id).GetAwaiter().GetResult();
+        }
+
+        public async Task<UserDb> GetByIdAsync(string id)
+        {
+            var user = await _usersContext.GetById(id);
+            return user;
+            throw new NotImplementedException();
+            //var chosenuser = _globalAdminDbContext.Users.SingleOrDefault(x => x.Id.Equals(id));
+            //return chosenuser;
         }
 
         public void Remove(UserDb user)
         {
-            _globalAdminDbContext.Users.Remove(user);
-            _globalAdminDbContext.SaveChanges();
+            throw new NotImplementedException();
+            //_globalAdminDbContext.Users.Remove(user);
+            //_globalAdminDbContext.SaveChanges();
         }
 
         public void Update(UserDb user)

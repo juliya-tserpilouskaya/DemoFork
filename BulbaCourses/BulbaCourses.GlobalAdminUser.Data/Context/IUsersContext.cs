@@ -7,5 +7,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
     public interface IUsersContext
     {
         Task<IEnumerable<UserDb>> GetAll();
+        Task<UserDb> GetById(string id);
+        Task ChangePassword(UserChangePassword user);
     }
 }

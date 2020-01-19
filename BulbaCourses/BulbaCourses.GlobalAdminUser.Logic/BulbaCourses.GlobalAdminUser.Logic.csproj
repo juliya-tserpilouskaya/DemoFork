@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\LogicModule.cs" />
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
+    <Compile Include="Models\UserChangePasswordDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Models\UserProfileDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

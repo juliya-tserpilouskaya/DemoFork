@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Models\Enums\UserRole.cs" />
+    <Compile Include="Models\UserChangePassword.cs" />
     <Compile Include="Models\UserDb.cs" />
     <Compile Include="Models\UserProfileDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

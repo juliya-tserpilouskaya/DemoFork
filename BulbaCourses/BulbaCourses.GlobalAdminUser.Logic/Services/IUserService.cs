@@ -7,6 +7,7 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
     public interface IUserService
     {
         UserDTO GetById(string id);
+        Task<UserDTO> GetByIdAsync(string id);
         //IEnumerable<UserDTO> GetAll();
         Task<IEnumerable<UserDTO>> GetAllAsync();
         void Add(UserDTO user);

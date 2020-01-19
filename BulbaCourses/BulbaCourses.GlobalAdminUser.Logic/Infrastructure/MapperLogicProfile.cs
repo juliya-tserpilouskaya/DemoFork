@@ -15,6 +15,7 @@ namespace BulbaCourses.GlobalAdminUser.Logic
         {
             CreateMap<UserDb, UserDTO>().ReverseMap();
             //CreateMap<UserDTO, UserDb>();
+            CreateMap<UserChangePassword, UserChangePasswordDTO>().ReverseMap();
         }
     }
 }
