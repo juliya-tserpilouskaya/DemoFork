@@ -3,6 +3,7 @@ using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Models;
 using BulbaCourses.GlobalAdminUser.Logic.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalAdminUser.Logic.Services
 {
@@ -30,9 +31,9 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
             _userRepository.Remove(userDb);
         }
 
-        public IEnumerable<UserDTO> GetAll()
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            var usersDb = _userRepository.GetAll();
+            var usersDb = await _userRepository.GetAllAsync();
             var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserDTO>>(usersDb);
             return result;
         }

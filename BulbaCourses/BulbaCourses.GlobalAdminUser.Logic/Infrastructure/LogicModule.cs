@@ -1,4 +1,5 @@
-﻿using BulbaCourses.GlobalAdminUser.Data.Interfaces;
+﻿using BulbaCourses.GlobalAdminUser.Data.Context;
+using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Models;
 using BulbaCourses.GlobalAdminUser.Data.Repositories;
 using BulbaCourses.GlobalAdminUser.Logic.Services;
@@ -20,7 +21,8 @@ namespace BulbaCourses.GlobalAdminUser.Logic
             Bind<IUserService>().To<UserService>();
 
             Bind<IRepository<UserProfileDb>>().To<UserProfileRepository>();
-            
+
+            Bind<UsersContext>().ToSelf().InSingletonScope();
         }
     }
 }

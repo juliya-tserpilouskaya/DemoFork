@@ -13,8 +13,8 @@ namespace BulbaCourses.GlobalAdminUser.Logic
     {
         public MapperLogicProfile()
         {
-            CreateMap<UserDb, UserDTO>();
-            CreateMap<UserDTO, UserDb>();
+            CreateMap<UserDb, UserDTO>().ReverseMap();
+            //CreateMap<UserDTO, UserDb>();
         }
     }
 }

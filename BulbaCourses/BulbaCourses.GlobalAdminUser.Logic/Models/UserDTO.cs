@@ -14,5 +14,6 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Models
             public string Email { get; set; }
 
             public string TelephoneNumber { get; set; }
+
     }
 }

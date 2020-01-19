@@ -35,7 +35,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
 
             modelBuilder.Entity<UserProfileDb>().ToTable("UserProfiles");
             var userProfileEntity = modelBuilder.Entity<UserProfileDb>();
-            userProfileEntity.HasKey(x => x.User);
+            //userProfileEntity.HasKey(x => x.User);
             userProfileEntity.Property(x => x.Surname).HasMaxLength(100).IsUnicode();
             userProfileEntity.Property(x => x.Name).HasMaxLength(100).IsUnicode();
             userProfileEntity.Property(x => x.ProfilePictureUrl).IsOptional();
