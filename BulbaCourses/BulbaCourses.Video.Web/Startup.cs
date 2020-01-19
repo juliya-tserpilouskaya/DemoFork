@@ -38,8 +38,8 @@ namespace BulbaCourses.Video.Web
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
-                IssuerName = "BulbaCourses SSO",
-                Authority = "http://localhost:9000",
+                IssuerName = "http://localhost:44382",
+                Authority = "http://localhost:44382",
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });

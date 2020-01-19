@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../models/user';
+import { User, CustomUser } from '../models/user';
+import { AuthConfig, OAuthService, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
+
+const config: AuthConfig = {
+  clientId: 'external_test',
+  dummyClientSecret: 'secret',
+  oidc: false,
+  scope: 'openid profile api',
+  issuer: 'http://localhost:44382'
+}
 
 @Injectable()
 export class AuthService {
@@ -9,9 +19,13 @@ export class AuthService {
   // setup false as default (no logged in user)
   private authSubject = new BehaviorSubject<boolean>(false);
 
-  private userSubject = new BehaviorSubject<User>(null);
+  private userSubject = new BehaviorSubject<CustomUser>(null);
 
-  constructor() { }
+  constructor(private oauthService: OAuthService, private router: Router) {
+    oauthService.configure(config);
+    oauthService.tokenValidationHandler = new JwksValidationHandler();
+    oauthService.loadDiscoveryDocumentAndTryLogin();
+  }
 
   // read-only property
   get isAuthenticated$() {
@@ -23,10 +37,20 @@ export class AuthService {
     return this.userSubject.asObservable();
   }
 
-  login() {
+  async login(username: string, password: string) {
     // only for example
-    this.authSubject.next(true);
-    this.userSubject.next({ id: '123-123-123' });
+    try {
+      await this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password);
+      const user = await this.oauthService.loadUserProfile() as CustomUser;
+
+      this.authSubject.next(user != null);
+      this.userSubject.next(user);
+
+      this.router.navigate(['/']);
+    } catch (error) {
+
+    }
+
   }
 
   logout() {
