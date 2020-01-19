@@ -24,7 +24,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public Result Add(CourseLogic course)
+        public async Task<Result> Add(CourseLogic course)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 course.Raiting = null;
                 course.Duration = course.Audios.Aggregate(0, (x,y) => x + y.Duration);
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                var result = dbmanager.AddAsync(courseDb);
+                var result = await dbmanager.AddAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -43,11 +43,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             
         }
 
-        public Result<CourseLogic> GetById(string Id)
+        public async Task<Result<CourseLogic>> GetById(string id)
         {
             try
             {
-                var course = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
+                var course = await dbmanager.GetByIdAsync(id);
                 var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
                 return Result<CourseLogic>.Ok(CourseLogic);
             }
@@ -57,13 +57,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result<IEnumerable<CourseLogic>> Search(string Name)
+        public async Task<Result<IEnumerable<CourseLogic>>> Search(string Name)
         {
             try
             {
-                var course = dbmanager.GetAllAsync().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
-                var CourseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course);
-                return Result<IEnumerable<CourseLogic>>.Ok(CourseLogic);
+                var course = await dbmanager.GetAllAsync();
+                var course1 = course.Where(c => c.Name.Contains(Name)).ToList();
+                var courseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course1);
+                return Result<IEnumerable<CourseLogic>>.Ok(courseLogic);
             }
             catch (Exception)
             {
@@ -71,11 +72,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result<IEnumerable<CourseLogic>> GetAll()
+        public async Task<Result<IEnumerable<CourseLogic>>> GetAll()
         {
             try
             {
-                var courses = dbmanager.GetAllAsync().GetAwaiter().GetResult();
+                var courses = await dbmanager.GetAllAsync();
                 var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
                 return Result<IEnumerable<CourseLogic>>.Ok(result);
             }
@@ -85,13 +86,13 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
         
-        public Result Delete(CourseLogic course)
+        public async Task<Result> Delete(CourseLogic course)
         {
             
             try
             {
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                dbmanager.RemoveAsync(courseDb);
+                await dbmanager.RemoveAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -100,12 +101,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result Update(CourseLogic course)
+        public async Task<Result> Update(CourseLogic course)
         {
             try
             {
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                dbmanager.UpdateAsync(courseDb);
+                await dbmanager.UpdateAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -114,9 +115,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public bool Exists(string name)
+        public async Task<bool> Exists(string name)
         {
-            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Name == name);
+            return await dbmanager.ExistAsync(name);
         }
     }
 }

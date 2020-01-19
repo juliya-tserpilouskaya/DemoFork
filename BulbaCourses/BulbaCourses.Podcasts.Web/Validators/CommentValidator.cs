@@ -18,20 +18,25 @@ namespace BulbaCourses.Podcasts.Web.Validators
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleSet("AddCourse", () =>
+            RuleSet("AddComment", () =>
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
+                RuleFor(x => x.Text).NotEmpty().MaximumLength(255).MinimumLength(3);
+                RuleFor(x => x.Id).Must((id) => !(service.Exists(id)));
+
             });
             RuleSet("UpdateComment", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
+                RuleFor(x => x.Id).Must((id) => (service.Exists(id)));
+                RuleFor(x => x.Text).NotEmpty().MaximumLength(255).MinimumLength(3);
             });
             RuleSet("DeleteComment", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
+                RuleFor(x => x.Id).Must((id) => (service.Exists(id)));
             });
 
-            RuleFor(x => x.Text).NotEmpty().MaximumLength(50).MinimumLength(5);
         }
     }
 }

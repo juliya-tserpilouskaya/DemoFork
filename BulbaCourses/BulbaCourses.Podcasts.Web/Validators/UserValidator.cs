@@ -21,19 +21,21 @@ namespace BulbaCourses.Podcasts.Web.Validators
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
                 RuleFor(x => x.Name).Must(((name) => !(service.Exists(name))));
+                RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
+                RuleFor(c => c.Name).MinimumLength(5).WithMessage("Login must contain minimum 5 characters.");
+                RuleFor(c => c.Name).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
             });
             RuleSet("UpdateUser", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
                 RuleFor(x => x.Name).Must(((name) => (service.Exists(name))));
+                RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
             });
             RuleSet("DeleteUser", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
                 RuleFor(x => x.Name).Must(((name) => (service.Exists(name))));
             });
-
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(50).MinimumLength(5);
         }
     }
 }

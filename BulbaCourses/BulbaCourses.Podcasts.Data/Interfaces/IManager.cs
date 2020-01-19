@@ -14,5 +14,6 @@ namespace BulbaCourses.Podcasts.Data.Interfaces
         Task<T> AddAsync(T db);
         Task<T> RemoveAsync(T db);
         Task<T> UpdateAsync(T db);
+        Task<bool> ExistAsync(string name);
     }
 }

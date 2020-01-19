@@ -57,5 +57,10 @@ namespace BulbaCourses.Podcasts.Data.Managers
         {
             return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
         }
+
+        public async Task<bool> ExistAsync(string name)
+        {
+            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
+        }
     }
 }

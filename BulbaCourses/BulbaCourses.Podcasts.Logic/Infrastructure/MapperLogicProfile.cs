@@ -19,6 +19,8 @@ namespace BulbaCourses.Podcasts.Logic.Infrastructure
 
             CreateMap<CourseDb, CourseLogic>().ReverseMap();
 
+            CreateMap<ContentDb, ContentLogic>().ReverseMap();
+
         }
     }
 }

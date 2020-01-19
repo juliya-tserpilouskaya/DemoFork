@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
-    public interface IBaseService<T> where T : class
+    public interface IContentService : IBaseService<ContentLogic>
     {
-        Task<Result<T>> GetById(string Id);
-
-        Task<Result> Delete(T thing);
-
-        Task<Result> Update(T thing);
+        Task<Result> Add(ContentLogic content, AudioLogic audio);
     }
 }

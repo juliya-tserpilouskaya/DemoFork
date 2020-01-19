@@ -43,7 +43,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var course = await courseService.GetById(id);
+                var course = await courseService.GetById(id).Data;
                 var result = mapper.Map<CourseLogic, CourseWeb>(course));
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }

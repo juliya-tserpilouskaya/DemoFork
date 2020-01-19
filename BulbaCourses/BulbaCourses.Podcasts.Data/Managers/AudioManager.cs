@@ -50,5 +50,9 @@ namespace BulbaComments.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(audioDb);
         }
+        public async Task<bool> ExistAsync(string name)
+        {
+            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
+        }
     }
 }

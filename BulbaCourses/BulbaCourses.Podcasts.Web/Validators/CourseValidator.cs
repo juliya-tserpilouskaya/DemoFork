@@ -21,21 +21,22 @@ namespace BulbaCourses.Podcasts.Web.Validators
             RuleSet("AddCourse", () =>
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
-                RuleFor(x => x.Name).Must(((name) => !(service.Exists(name))));
+                RuleFor(x => x.Name).Must((name) => !(service.Exists(name))).WithMessage("Name already taken.");
+                RuleFor(c => c.Name).NotEmpty().MinimumLength(2).MaximumLength(32).WithMessage("Course name is required.");
+                RuleFor(c => c.Price).GreaterThan(0).WithMessage("Course price must be greater than 0.");
+                RuleFor(x => x.Id).Must((id) => !(service.Exists(id))).WithMessage("Course already exists.");
             });
             RuleSet("UpdateCourse", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
-                RuleFor(x => x.Name).Must(((name) => (service.Exists(name))));
+                RuleFor(c => c.Price).GreaterThan(0).WithMessage("Course price must be greater than 0.");
+                RuleFor(x => x.Id).Must((id) => (service.Exists(id))).WithMessage("Course not exists.");
             });
             RuleSet("DeleteCourse", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
-                RuleFor(x => x.Name).Must(((name) => (service.Exists(name))));
+                RuleFor(x => x.Id).Must((id) => (service.Exists(id))).WithMessage("Course not exists.");
             });
-
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(50).MinimumLength(5);
-            RuleFor(x => x.Price).GreaterThan(0.0);
         }
     }
 }

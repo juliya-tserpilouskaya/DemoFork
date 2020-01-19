@@ -9,10 +9,12 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface IUserService : IBaseService<UserLogic>
     {
-        Result Add(UserLogic user);
+        Task<Result> Add(UserLogic user);
 
-        bool Exists(string name);
+        Task<bool> Exists(string name);
 
-        Result<IEnumerable<UserLogic>> Search(string Name);
+        Task<Result<IEnumerable<UserLogic>>> GetAll();
+
+        Task<Result<IEnumerable<UserLogic>>> Search(string Name);
     }
 }

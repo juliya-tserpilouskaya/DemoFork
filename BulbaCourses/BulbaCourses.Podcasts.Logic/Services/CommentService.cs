@@ -24,7 +24,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public Result Add(CommentLogic comment, CourseLogic course)
+        public async Task<Result> Add(CommentLogic comment, CourseLogic course)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 comment.PostDate = DateTime.Now;
                 comment.Course = course;
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                var result = dbmanager.AddAsync(commentDb);
+                var result = await dbmanager.AddAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -42,11 +42,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public Result<CommentLogic> GetById(string Id)
+        public async Task<Result<CommentLogic>> GetById(string Id)
         {
             try
             {
-                var comment = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
+                var comment = await dbmanager.GetByIdAsync(Id);
                 var CommentLogic = mapper.Map<CommentDb, CommentLogic>(comment);
                 return Result<CommentLogic>.Ok(CommentLogic);
             }
@@ -56,11 +56,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result<IEnumerable<CommentLogic>> GetAll()
+        public async Task<Result<IEnumerable<CommentLogic>>> GetAll()
         {
             try
             {
-                var comments = dbmanager.GetAllAsync().GetAwaiter().GetResult();
+                var comments = await dbmanager.GetAllAsync();
                 var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
                 return Result<IEnumerable<CommentLogic>>.Ok(result);
             }
@@ -70,13 +70,13 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result Delete(CommentLogic comment)
+        public async Task<Result> Delete(CommentLogic comment)
         {
 
             try
             {
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                dbmanager.RemoveAsync(commentDb);
+                await dbmanager.RemoveAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -85,12 +85,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result Update(CommentLogic comment)
+        public async Task<Result> Update(CommentLogic comment)
         {
             try
             {
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                dbmanager.UpdateAsync(commentDb);
+                await dbmanager.UpdateAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -99,9 +99,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public bool Exists(string id)
+        public async Task<bool> Exists(string name)
         {
-            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Id == id);
+            return await dbmanager.ExistAsync(name);
         }
     }
 }

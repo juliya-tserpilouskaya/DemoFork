@@ -24,14 +24,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public Result Add(UserLogic user)
+        public async Task<Result> Add(UserLogic user)
         {
             try
             {
                 user.Id = Guid.NewGuid().ToString();
                 user.RegistrationDate = DateTime.Now;
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                var result = dbmanager.AddAsync(userDb);
+                var result = await dbmanager.AddAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -41,11 +41,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public Result<UserLogic> GetById(string Id)
+        public async Task<Result<UserLogic>> GetById(string Id)
         {
             try
             {
-                var user = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
+                var user = await dbmanager.GetByIdAsync(Id);
                 var UserLogic = mapper.Map<UserDb, UserLogic>(user);
                 return Result<UserLogic>.Ok(UserLogic);
             }
@@ -55,12 +55,13 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result<IEnumerable<UserLogic>> Search(string Name)
+        public async Task<Result<IEnumerable<UserLogic>>> Search(string Name)
         {
             try
             {
-                var user = dbmanager.GetAllAsync().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
-                var UserLogic = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(user);
+                var user = await dbmanager.GetAllAsync();
+                var user1 = user.Where(c => c.Name.Contains(Name)).ToList();
+                var UserLogic = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(user1);
                 return Result<IEnumerable<UserLogic>>.Ok(UserLogic);
             }
             catch (Exception)
@@ -69,11 +70,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result<IEnumerable<UserLogic>> GetAll()
+        public async Task<Result<IEnumerable<UserLogic>>> GetAll()
         {
             try
             {
-                var users = dbmanager.GetAllAsync().GetAwaiter().GetResult();
+                var users = await dbmanager.GetAllAsync();
                 var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(users);
                 return Result<IEnumerable<UserLogic>>.Ok(result);
             }
@@ -83,12 +84,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result Delete(UserLogic user)
+        public async Task<Result> Delete(UserLogic user)
         {
             try
             {
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                dbmanager.RemoveAsync(userDb);
+                await dbmanager.RemoveAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -97,12 +98,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public Result Update(UserLogic user)
+        public async Task<Result> Update(UserLogic user)
         {
             try
             {
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                dbmanager.UpdateAsync(userDb);
+                await dbmanager.UpdateAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -111,9 +112,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public bool Exists(string name)
+        public async Task<bool> Exists(string name)
         {
-            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Name == name);
+            return await dbmanager.ExistAsync(name);
         }
     }
 }
