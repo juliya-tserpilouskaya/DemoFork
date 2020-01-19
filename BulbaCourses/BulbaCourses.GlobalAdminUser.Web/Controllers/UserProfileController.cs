@@ -3,6 +3,7 @@ using BulbaCourses.GlobalAdminUser.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.GlobalAdminUser.Web.Controllers
@@ -11,60 +12,26 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
     [RoutePrefix("api/userprofiles")]
     public class UserProfileController : ApiController
     {
-        private readonly IUserService _userService;
+        private readonly IUserProfileService _userProfileService;
 
-        public UserProfileController(IUserService userService)
+        public UserProfileController(IUserProfileService userProfileService)
         {
-            _userService = userService;
+            _userProfileService=userProfileService;
         }
 
-        [HttpGet, Route("")]
-        public IHttpActionResult GetAll()
-        {
-            var result = _userService.GetAllAsync();
-            return result == null? NotFound():(IHttpActionResult)Ok(result);
-        }
-
-        [HttpGet, Route("{id}")]
+        [HttpPost]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exist")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserDTO))]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetByIdAsync([FromBody]UserProfileDTO user)
         {
-            if (string.IsNullOrEmpty(id)||Guid.TryParse(id,out var _))
-            {
-                return BadRequest();
-            }
-
             try
             {
-                var result = _userService.GetById(id);
+                var result = await _userProfileService.GetByIdAsync(user.Id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        [HttpPost, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User created", typeof(UserDTO))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
-        public IHttpActionResult Create([FromBody]UserDTO user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                _userService.Add(user);
-                return Ok(user);
-            }
-            catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
@@ -75,7 +42,7 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
-        public IHttpActionResult Update([FromBody]UserDTO user)
+        public IHttpActionResult Update([FromBody]UserProfileDTO user)
         {
             if (!ModelState.IsValid)
             {
@@ -84,7 +51,7 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
 
             try
             {
-                _userService.Update(user);
+                _userProfileService.Update(user);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -93,27 +60,27 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
             }
         }
 
-        [HttpDelete, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exist")]
-        [SwaggerResponse(HttpStatusCode.OK, "User deleted")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
-        public IHttpActionResult Remove(UserDTO user)
-        {
-            //if (string.IsNullOrEmpty(user))
-            //{
-            //    return BadRequest();
-            //}
+        //[HttpDelete, Route("{id}")]
+        //[SwaggerResponse(HttpStatusCode.BadRequest, "Invalid format")]
+        //[SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exist")]
+        //[SwaggerResponse(HttpStatusCode.OK, "User deleted")]
+        //[SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
+        //public IHttpActionResult Remove(UserDTO user)
+        //{
+        //    //if (string.IsNullOrEmpty(user))
+        //    //{
+        //    //    return BadRequest();
+        //    //}
 
-            try
-            {
-                _userService.Delete(user);
-                return (IHttpActionResult)Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+        //    try
+        //    {
+        //        _userProfileServic.(user);
+        //        return (IHttpActionResult)Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
     }
 }

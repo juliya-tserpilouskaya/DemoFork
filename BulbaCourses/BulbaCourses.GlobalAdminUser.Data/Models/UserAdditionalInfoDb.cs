@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalAdminUser.Data.Models
 {
-    public class UserProfileDb
+    public class UserAdditionalInfoDb
     {
         public string UserId { get; set; } //from UsersDb.AspNetUsers
         public string UserProfileId { get; set; } = Guid.NewGuid().ToString();

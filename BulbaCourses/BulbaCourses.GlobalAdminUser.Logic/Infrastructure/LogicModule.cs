@@ -19,8 +19,9 @@ namespace BulbaCourses.GlobalAdminUser.Logic
             Bind<IUserRepository>().To<UserRepository>();
 
             Bind<IUserService>().To<UserService>();
+            Bind<IUserProfileService>().To<UserProfileService>();
 
-            Bind<IRepository<UserProfileDb>>().To<UserProfileRepository>();
+            Bind<IUserAdditonalInfoRepository>().To<UserAdditionalInfoRepository>();
 
             Bind<UsersContext>().ToSelf().InSingletonScope();
         }

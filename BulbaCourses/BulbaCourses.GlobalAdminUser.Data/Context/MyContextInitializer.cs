@@ -19,15 +19,16 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             //};
             #endregion
 
-            UserProfileDb userprofile = new UserProfileDb
+            UserAdditionalInfoDb usersAdditionalInfo = new UserAdditionalInfoDb
             {
                 UserProfileId=Guid.NewGuid().ToString(),
+                UserId="2b22b89d-3063-4ff1-a444-3831863ba3ae",
                 Sex = "male",
                 Age = 24,
                 City = "Minsk",
             };
 
-            globalAdminDbContext.UserProfiles.Add(userprofile);            
+            globalAdminDbContext.UsersAdditionalInfo.Add(usersAdditionalInfo);            
             globalAdminDbContext.SaveChanges();
         }
     }
