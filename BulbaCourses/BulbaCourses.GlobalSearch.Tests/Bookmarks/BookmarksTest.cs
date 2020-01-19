@@ -26,7 +26,7 @@ namespace BulbaCourses.GlobalSearch.Tests.Bookmarks
     {
         StandardKernel kernel;
         IMapper mapper;
-        IQueryable<BookmarkDB> queries;
+        IQueryable<BookmarkDB> bookmarks;
         Mock<GlobalSearchContext> mockContext;
         Mock<DbSet<BookmarkDB>> mockSet;
 
@@ -41,7 +41,7 @@ namespace BulbaCourses.GlobalSearch.Tests.Bookmarks
         [SetUp]
         public void setupMocks()
         {
-            queries = new List<BookmarkDB>()
+            bookmarks = new List<BookmarkDB>()
             {
                 new BookmarkDB
                 {
@@ -63,10 +63,10 @@ namespace BulbaCourses.GlobalSearch.Tests.Bookmarks
             }.AsQueryable();
 
             mockSet = new Mock<DbSet<BookmarkDB>>();
-            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.Provider).Returns(queries.Provider);
-            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.Expression).Returns(queries.Expression);
-            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.ElementType).Returns(queries.ElementType);
-            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.GetEnumerator()).Returns(queries.GetEnumerator());
+            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.Provider).Returns(bookmarks.Provider);
+            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.Expression).Returns(bookmarks.Expression);
+            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.ElementType).Returns(bookmarks.ElementType);
+            mockSet.As<IQueryable<BookmarkDB>>().Setup(m => m.GetEnumerator()).Returns(bookmarks.GetEnumerator());
 
             mockContext = new Mock<GlobalSearchContext>();
             mockContext.Setup(x => x.Bookmarks).Returns(mockSet.Object);
@@ -117,7 +117,7 @@ namespace BulbaCourses.GlobalSearch.Tests.Bookmarks
             //Act
             var x = service.GetAll();
             //Assert
-            Assert.AreEqual(x.Count(), queries.Select(p => p).ToList().Count());
+            Assert.AreEqual(x.Count(), bookmarks.Select(p => p).ToList().Count());
         }
 
         [Test, Category("Bookmark")]
