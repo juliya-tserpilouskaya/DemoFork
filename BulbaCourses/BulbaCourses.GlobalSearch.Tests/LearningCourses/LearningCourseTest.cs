@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using BulbaCourses.GlobalSearch.Data;
 using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services;
@@ -13,10 +10,11 @@ using Moq;
 using Ninject;
 using Moq.EntityFramework.Helpers;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data.Entity.Infrastructure;
 
 namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
 {
@@ -28,9 +26,11 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
     {
         StandardKernel kernel;
         IMapper mapper;
-        IQueryable<CourseDB> courses;
+        IQueryable<CourseDB> queries;
         Mock<GlobalSearchContext> mockContext;
         Mock<DbSet<CourseDB>> mockSet;
+        Mock<DbSet<CourseItemDB>> mockSetItem;
+
 
         [OneTimeSetUp]
         public void Setup()
@@ -43,119 +43,134 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
         [SetUp]
         public void setupMocks()
         {
-            courses = new List<CourseDB>()
+            queries = new List<CourseDB>()
             {
                 new CourseDB
                 {
                     Id = "123",
-                    Cost = 10,
-                    Description = "Description",
-                    Name = "CourseName",
-                    CourseCategoryDBId = 2,
-                    Modified = DateTime.Now,
                     Created = DateTime.Now,
+                    Items = new List<CourseItemDB>
+                    {
+                        new CourseItemDB
+                        {
+                            Id = "1",
+                            Name = "Item",
+                            Description = "Description",
+                            CourseDBId = "123"
+                        }
+                    },
                     AuthorDBId = 1
                 },
                 new CourseDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Created = DateTime.Now,
+                    Items = new List<CourseItemDB>
+                    {
+                        new CourseItemDB
+                        {
+                            Id = "2",
+                            Name = "Item",
+                            Description = "Description"
+                        }
+                    }
                 },
                 new CourseDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Created = DateTime.Now,
+                    Items = new List<CourseItemDB>
+                    {
+                        new CourseItemDB
+                        {
+                            Id = "2",
+                            Name = "Item",
+                            Description = "Description"
+                        }
+                    },
+                    AuthorDBId = 2
                 },
                 new CourseDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Created = DateTime.Now,
+                    Items = new List<CourseItemDB>
+                    {
+                        new CourseItemDB
+                        {
+                            Id = "3",
+                            Name = "Item",
+                            Description = "Description"
+                        }
+                    }
                 },
             }.AsQueryable();
 
             mockSet = new Mock<DbSet<CourseDB>>();
-            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.Provider).Returns(courses.Provider);
-            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.Expression).Returns(courses.Expression);
-            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.ElementType).Returns(courses.ElementType);
-            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.GetEnumerator()).Returns(courses.GetEnumerator());
+            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.Provider).Returns(queries.Provider);
+            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.Expression).Returns(queries.Expression);
+            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.ElementType).Returns(queries.ElementType);
+            mockSet.As<IQueryable<CourseDB>>().Setup(m => m.GetEnumerator()).Returns(queries.GetEnumerator());
 
             mockContext = new Mock<GlobalSearchContext>();
             mockContext.Setup(x => x.Courses).Returns(mockSet.Object);
         }
 
-        //[Test, Category("LearningCourse")]
-        //public void add_learning_course()
-        //{
-
-        //    var DbService = new CourseDbService(mockContext.Object);
-        //    var mockLogicService = new Mock<LearningCourseService>();
-        //    var service = new LearningCourseService(mapper, DbService);
-
-        //    //Act
-        //    var b = new LearningCourseDTO
-        //    {
-        //        Id = "1",
-        //        Name = "Name"
-        //    };
-        //    var q = service.Add(b);
-        //    var all = DbService.GetAllCourses().Count();
-
-        //    //Assert
-        //    mockContext.Verify(m => m.SaveChanges(), Times.Once());
-        //    Assert.AreEqual(q.Name, b.Name);
-        //}
-
-        [Test, Category("LearningCourse")]
+        [Test, Category("Course")]
         public void get_all_courses()
+        {
+            var DbService = new CourseDbService(mockContext.Object);
+            var mockLogicService = new Mock<LearningCourseService>();
+            var service = new LearningCourseService(mapper, DbService);
+            //Act
+            var x = service.GetAllCourses();
+            //Assert
+            Assert.AreEqual(x.Count(), queries.Select(p => p).ToList().Count());
+        }
+
+        [Test, Category("Course")]
+        public void get_course_by_id()
         {
             var DbService = new CourseDbService(mockContext.Object);
             var mockLogicService = new Mock<LearningCourseService>();
             var service = new LearningCourseService(mapper, DbService);
 
             //Act
-            var x = service.GetAllCourses();
+            var x = service.GetById("123");
             //Assert
-            Assert.AreEqual(x.Count(), courses.Select(p => p).ToList().Count());
+            Assert.AreEqual(x.Id, "123");
         }
 
-        //[Test, Category("LearningCourse")]
-        //public void get_course_by_id()
-        //{
-        //    var DbService = new CourseDbService(mockContext.Object);
-        //    var mockLogicService = new Mock<LearningCourseService>();
-        //    var service = new LearningCourseService(mapper, DbService);
+        [Test, Category("Course")]
+        public void get_course_by_authorId()
+        {
+            var DbService = new CourseDbService(mockContext.Object);
+            var mockLogicService = new Mock<LearningCourseService>();
+            var service = new LearningCourseService(mapper, DbService);
 
-        //    //Act
-        //    var x = service.GetById("123");
-        //    //Assert
-        //    Assert.AreEqual(x.Id, "123");
-        //}
+            //Act
+            var x = service.GetByAuthorId(2).FirstOrDefault();
+            //Assert
+            Assert.AreEqual(2, x.AuthorId);
+        }
 
-        //[Test, Category("LearningCourse")]
-        //public void get_course_by_authorId()
-        //{
-        //    var DbService = new CourseDbService(mockContext.Object);
-        //    var mockLogicService = new Mock<LearningCourseService>();
-        //    var service = new LearningCourseService(mapper, DbService);
+        [Test, Category("Course")]
+        public void remove_course_by_id()
+        {
+            mockSetItem = new Mock<DbSet<CourseItemDB>>();
+            mockContext.Setup(x => x.CourseItems).Returns(mockSetItem.Object);
+            var DbService = new CourseDbService(mockContext.Object);
+            var mockLogicService = new Mock<LearningCourseService>();
+            var service = new LearningCourseService(mapper, DbService);
 
-        //    //Act
-        //    var x = service.GetByAuthorId(1).First();
-        //    //Assert
-        //    Assert.AreEqual(x.AuthorId, 1);
-        //}
+            //Act
+            var result = service.DeleteById("123");
+            //Assert
+            Assert.IsTrue(result);
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+            mockSet.Verify(m => m.Remove(It.IsAny<CourseDB>()), Times.Once());
+            mockSetItem.Verify(m => m.RemoveRange(It.IsAny<IEnumerable<CourseItemDB>>()), Times.Once());
+        }
 
-        //[Test, Category("LearningCourse")]
-        //public void remove_course_by_id()
-        //{
-        //    var DbService = new CourseDbService(mockContext.Object);
-        //    var mockLogicService = new Mock<LearningCourseService>();
-        //    var service = new LearningCourseService(mapper, DbService);
-
-        //    //Act
-        //    service.DeleteById("1");
-        //    //Assert
-        //    mockContext.Verify(m => m.SaveChanges(), Times.Once());
-        //    mockSet.Verify(m => m.Remove(It.IsAny<CourseDB>()), Times.Once());
-        //}
     }
 }

@@ -87,7 +87,7 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
         }
 
 
-        [Test, Category("LearningCourses")]
+        [Test, Category("Course")]
         public async Task get_all_courses_async()
         {
             //Arrage
@@ -102,7 +102,7 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
             Assert.AreEqual(courses.Select(p => p).ToList().Count(), q.Count());
         }
 
-        [Test, Category("LearningCourses")]
+        [Test, Category("Course")]
         public async Task get_course_by_id_async()
         {
             var DbService = new CourseDbService(mockContext.Object);
@@ -115,7 +115,7 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
             Assert.AreEqual(x.Id, "123");
         }
 
-        [Test, Category("LearningCourses")]
+        [Test, Category("Course")]
         public async Task get_course_by_authorId_async()
         {
             var DbService = new CourseDbService(mockContext.Object);

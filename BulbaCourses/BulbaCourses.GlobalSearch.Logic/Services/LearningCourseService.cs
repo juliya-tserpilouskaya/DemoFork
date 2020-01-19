@@ -18,17 +18,17 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         IMapper _mapper;
         ISearchService _lucene;
 
+        public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb)
+        {
+            _learningCourseDb = learningCourseDb;
+            _mapper = mapper;
+        }
+
         public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb, ISearchService lucene)
         {
             _learningCourseDb = learningCourseDb;
             _mapper = mapper;
             _lucene = lucene;
-        }
-
-        public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb)
-        {
-            _learningCourseDb = learningCourseDb;
-            _mapper = mapper;
         }
 
         /// <summary>
