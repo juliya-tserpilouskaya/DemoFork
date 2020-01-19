@@ -47,9 +47,10 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             {
                 new SearchQueryDB
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "123",
                     Created = DateTime.Now,
-                    Query = "course that will make me smarter"
+                    Query = "course that will make me smarter",
+                    UserId = "1"
                 },
                 new SearchQueryDB
                 {
@@ -72,9 +73,6 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             }.AsQueryable();
 
             mockSet = new Mock<DbSet<SearchQueryDB>>();
-            mockSet.As<IDbAsyncEnumerable<SearchQueryDB>>()
-                .Setup(m => m.GetAsyncEnumerator())
-                .Returns(new TestDbAsyncEnumerator<SearchQueryDB>(queries.GetEnumerator()));
 
             mockSet.As<IDbAsyncEnumerable<SearchQueryDB>>()
                 .Setup(m => m.GetAsyncEnumerator())
@@ -84,13 +82,17 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
                 .Setup(m => m.Provider)
                 .Returns(new TestDbAsyncQueryProvider<SearchQueryDB>(queries.Provider));
 
+            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.Expression).Returns(queries.Expression);
+            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.ElementType).Returns(queries.ElementType);
+            mockSet.As<IQueryable<SearchQueryDB>>().Setup(m => m.GetEnumerator()).Returns(queries.GetEnumerator());
+
             mockContext = new Mock<GlobalSearchContext>();
             mockContext.Setup(x => x.SearchQueries).Returns(mockSet.Object);
         }
 
 
         [Test, Category("SearchQuery")]
-        public async Task getall_search_queries_async()
+        public async Task get_all_search_queries_async()
         {
             //Arrage
             var DbService = new SearchQueryDbService(mockContext.Object);
@@ -103,5 +105,32 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             //Assert
             Assert.AreEqual(queries.Select(p => p).ToList().Count(), q.Count());
         }
+
+        [Test, Category("SearchQuery")]
+        public async Task get_search_query_by_id_async()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            var x = await service.GetByIdAsync("123");
+            //Assert
+            Assert.AreEqual(x.Id, "123");
+        }
+
+        [Test, Category("SearchQuery")]
+        public async Task get_search_query_by_userId_async()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            var x = await service.GetByUserIdAsync("1");
+            //Assert
+            Assert.AreEqual(1, x.Count());
+        }
+
     }
 }
