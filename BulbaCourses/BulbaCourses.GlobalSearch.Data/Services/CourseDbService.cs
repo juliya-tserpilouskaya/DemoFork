@@ -31,8 +31,10 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public IEnumerable<CourseDB> GetAllCourses()
         {
-            return _context.Courses
-                .Include(c => c.Items);
+            var query = from course in _context.Courses select course;
+            return query.Include(c => c.Items).AsNoTracking();
+            //return _context.Courses
+            //    .Include(c => c.Items);
         }
 
         /// <summary>
@@ -41,9 +43,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<IEnumerable<CourseDB>> GetAllCoursesAsync()
         {
-            return await _context.Courses
-                .Include(c => c.Items)
-                .ToListAsync().ConfigureAwait(false);
+            var query = from course in _context.Courses select course;
+            return await query.Include(c => c.Items).AsNoTracking().ToListAsync().ConfigureAwait(false);
+
+            //return await _context.Courses
+            //    .Include(c => c.Items)
+            //    .ToListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,10 +58,15 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public CourseDB GetById(string id)
         {
-            return _context.Courses
-                .Include(c => c.Items)
+            var query = from course in _context.Courses select course;
+            return query.Include(c => c.Items)
                 .SingleOrDefault(c => c.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase));
+
+            //return _context.Courses
+            //    .Include(c => c.Items)
+            //    .SingleOrDefault(c => c.Id.Equals(id,
+            //    StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -66,7 +76,8 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<CourseDB> GetByIdAsync(string id)
         {
-            return await _context.Courses
+            var query = from course in _context.Courses select course;
+            return await query
                 .Include(c => c.Items)
                 .SingleOrDefaultAsync(c => c.Id.Equals(id,
                 StringComparison.OrdinalIgnoreCase))
@@ -100,9 +111,10 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public IEnumerable<CourseDB> GetByAuthorId(int id)
         {
-            return _context.Courses
+            var query = from course in _context.Courses select course;
+            return query
                 .Include(c => c.Items)
-                .Where(course => course.AuthorDBId == id);
+                .Where(course => course.AuthorDBId == id).AsNoTracking();
         }
 
         /// <summary>
@@ -112,11 +124,19 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<IEnumerable<CourseDB>> GetByAuthorIdAsync(int id)
         {
-            return await _context.Courses
+
+            var query = from course in _context.Courses select course;
+            return await query
                 .Include(c => c.Items)
                 .Where(course => course.AuthorDBId == id)
                 .ToListAsync()
                 .ConfigureAwait(false);
+
+            //return await _context.Courses
+            //    .Include(c => c.Items)
+            //    .Where(course => course.AuthorDBId == id)
+            //    .ToListAsync()
+            //    .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -245,13 +265,15 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public bool DeleteById(string id)
         {
-            CourseDB courseToDelete = _context.Courses
+            var query = from course in _context.Courses select course;
+            CourseDB courseToDelete = query
                 .Include(p => p.Items)
                 .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
 
             if (courseToDelete != null)
             {
-                _context.CourseItems.RemoveRange(courseToDelete.Items.ToArray());
+                var items = courseToDelete.Items.ToArray();
+                _context.CourseItems.RemoveRange(items);
                 _context.Courses.Remove(courseToDelete);
                 _context.SaveChanges();
             }
