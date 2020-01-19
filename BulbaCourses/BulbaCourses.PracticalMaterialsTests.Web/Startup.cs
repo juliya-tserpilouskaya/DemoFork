@@ -13,11 +13,11 @@ using System;
 using IdentityServer3.AccessTokenValidation;
 using System.Security.Cryptography.X509Certificates;
 
-[assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.OwinStartup))]
+[assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
-namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
+namespace BulbaCourses.PracticalMaterialsTests.Web
 {
-    public class OwinStartup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
@@ -45,11 +45,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
                 SigningCertificate = new X509Certificate2(data, "123")
             });
 
+            // ---------- Swagger
+
+            SwaggerConfig.Register(config);
+
             // ---------- AppUse
 
-            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
-
-            app.UseWebApi(config);            
+            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                    
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)

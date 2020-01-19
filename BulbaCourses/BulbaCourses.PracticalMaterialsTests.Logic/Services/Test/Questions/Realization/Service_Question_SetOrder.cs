@@ -19,12 +19,18 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realizat
             throw new NotImplementedException();
         }
 
+
         public void DropQuestionById(int Id)
         {
             throw new NotImplementedException();
         }
 
         public void GetQuestonById(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CheckQuestion()
         {
             throw new NotImplementedException();
         }

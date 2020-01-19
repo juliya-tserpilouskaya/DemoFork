@@ -28,5 +28,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realizat
         {
             throw new NotImplementedException();
         }
+
+        public int CheckQuestion()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

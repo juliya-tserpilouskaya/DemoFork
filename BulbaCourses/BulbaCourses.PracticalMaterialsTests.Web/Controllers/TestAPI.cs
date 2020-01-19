@@ -7,13 +7,14 @@ using Ninject;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Net;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/tests")]
+    [RoutePrefix("api/test")]
     public class TestAPIController : ApiController
     {
         private readonly IService_Test _service_Test;

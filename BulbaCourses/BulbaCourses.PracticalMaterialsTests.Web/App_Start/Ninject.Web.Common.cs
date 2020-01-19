@@ -1,5 +1,5 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Stop")]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Start")]
+//[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BulbaCourses.PracticalMaterialsTests.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
 {
@@ -12,10 +12,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.App_Start
     using Ninject.Web.Common;
     using Ninject.Web.Common.WebHost;
     using Ninject.Web.WebApi;
-
-    using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
-    using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
-    using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
 
     public static class NinjectWebCommon
     {
