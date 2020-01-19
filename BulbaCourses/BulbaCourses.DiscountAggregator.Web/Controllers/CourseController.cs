@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Security.Claims;
 using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
@@ -180,8 +181,12 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
+        [Authorize]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
+            var user = this.User as ClaimsPrincipal;
+            //user.FindFirst("preferred_username").Value;
+
             if (course == null)
             {
                 return BadRequest();

@@ -8,11 +8,13 @@ import { SampleModule } from './sample/sample.module';
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
+import { CourseComponent } from './src/app/DiscountAggregator/components/course/course.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,

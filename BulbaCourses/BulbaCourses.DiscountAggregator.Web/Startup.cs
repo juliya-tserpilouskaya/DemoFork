@@ -33,8 +33,8 @@ namespace BulbaCourses.DiscountAggregator.Web
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
-                IssuerName = "BulbaCourses SSO",
-                Authority = "http://localhost:44317 ",
+                IssuerName = "http://localhost:44382",
+                Authority = "http://localhost:44382",
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
 
