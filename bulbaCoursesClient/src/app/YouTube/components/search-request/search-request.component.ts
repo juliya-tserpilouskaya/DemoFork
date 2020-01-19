@@ -31,6 +31,8 @@ export class SearchRequestComponent implements OnInit {
 
   onSubmit() {
     if (this.searchForm.valid) {
+      console.log('Search start..');
+
       const dataForm = this.searchForm.value;
 
       const searchRequest =  new SearchRequest();
@@ -66,10 +68,12 @@ export class SearchRequestComponent implements OnInit {
           searchRequest.PublishedAfter = null;
           break;
       }
-
       this.service.searchVideo(searchRequest).subscribe(data => {
-          this.resultVideos = data;
-          this.youtubeService.resultSubject.next(this.resultVideos);
+      this.resultVideos = data;
+      this.youtubeService.resultSubject.next(this.resultVideos);
+      console.log('Search completed!');
+      console.log(this.resultVideos);
+
       });
     }
   }
