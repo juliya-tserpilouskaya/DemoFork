@@ -23,23 +23,23 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             DataBase = unitOfWork;
         }
 
-        public void MakeTask(TaskDTO taskDto)
+        public async Task<TaskDTO> MakeTask(TaskDTO taskDto)
         {
-            TaskDTO task = new TaskDTO()
-            {
-                Id = taskDto.Id,
-                Name = taskDto.Name,
-                Text = taskDto.Text,
-                TaskLevel = taskDto.TaskLevel,
-                Created = taskDto.Created,
-                Modified = taskDto.Modified
-            };
+            //TaskDTO task = new TaskDTO()
+            //{
+            //    Id = taskDto.Id,
+            //    Name = taskDto.Name,
+            //    Text = taskDto.Text,
+            //    TaskLevel = taskDto.TaskLevel,
+            //    Created = taskDto.Created,
+            //    Modified = taskDto.Modified
+            //};
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
-            var taskDB = mapper.Map<TaskDTO, TaskDb>(task);
-            
+            var taskDB = mapper.Map<TaskDTO, TaskDb>(taskDto);
 
-            DataBase.Tasks.Create(taskDB);
+            await DataBase.Tasks.Create(taskDB);
             DataBase.Save();
+            return mapper.Map<TaskDTO>(taskDB);
         }
 
         public TaskDTO GetTask(string id)
@@ -64,10 +64,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             return mapper.Map<IEnumerable<TaskDb>, IEnumerable<TaskDTO>>(tasks);
         }
 
-        public void UpdateTask(string id, TaskDTO _taskDTO)
+        public async Task<TaskDTO> UpdateTask(string id, TaskDTO _taskDTO)
         {
              if (id == null) throw new ValidationExeption("Not id", "idtask");
-             TaskDb taskDB = DataBase.Tasks.Get(id);
+             TaskDb taskDB = await DataBase.Tasks.GetTaskAsync(id);
              var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
              TaskDb task = mapper2.Map<TaskDTO, TaskDb>(_taskDTO);
              taskDB.Name = task.Name;
@@ -75,8 +75,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
              taskDB.Text = task.Text;
              taskDB.Modified = task.Modified;
              taskDB.Created = task.Created;
-             DataBase.Tasks.Update(taskDB);
+             await DataBase.Tasks.Update(taskDB);
              DataBase.Save();
+             return mapper2.Map<TaskDTO>(task);
             // if (id == null) throw new ValidationExeption("Not id", "idtask");
             // TaskDb taskDB = DataBase.Tasks.Get(id);
             // var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb, TaskDTO>()).CreateMapper();
@@ -92,9 +93,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 
 
         }
-        public void DeleteTask(string id)
+        public async Task DeleteTask(string id)
         {
-            DataBase.Tasks.Delete(id);
+           await DataBase.Tasks.Delete(id);
+           DataBase.Save();
         }
 
         public void Dispose()

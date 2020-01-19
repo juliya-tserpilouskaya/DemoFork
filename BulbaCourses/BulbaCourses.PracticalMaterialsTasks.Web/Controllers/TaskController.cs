@@ -60,24 +60,19 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         }
 
         [HttpPost, Route("")]        
-        public IHttpActionResult Create([FromBody, CustomizeValidator(RuleSet = "Task, default")]TaskDTO task)
+        public  async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "Task, default")]TaskDTO task)
         {
-            try
-            {
-                _taskservice.MakeTask(task);
-                return Ok();
-            }
-            catch
-            {
-                return BadRequest();
-            }
+           
+               await  _taskservice.MakeTask(task);
+               return Ok();
+           
         }
         [HttpPut,Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Task found", typeof(TaskDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "Task, default")] TaskDTO task)
+        public async Task<IHttpActionResult> EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "Task, default")] TaskDTO task)
         {
             if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
             {
@@ -85,13 +80,25 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             }
             try
             {
-                _taskservice.UpdateTask(id, task);
+                await _taskservice.UpdateTask(id, task);
                 return Ok();
             }
             catch
             {
                 return BadRequest();
             }
+
+        }
+        [HttpDelete]
+        public async Task<IHttpActionResult> DeleteItem(string id)
+        {
+            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
+            {
+                return BadRequest();
+            }
+            await _taskservice.DeleteTask(id);
+
+            return Ok();
 
         }
 

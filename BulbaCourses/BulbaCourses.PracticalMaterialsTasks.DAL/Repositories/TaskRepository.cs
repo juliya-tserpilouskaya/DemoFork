@@ -30,23 +30,35 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Tasks.FindAsync(id);
         }
-        public void Create(TaskDb task)
+        public async Task<TaskDb> Create(TaskDb task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException("Task");
+            }
             db.Tasks.Add(task);
+            return await Task.FromResult(task);
+
         }
-        public void Update(TaskDb task)
+        public async Task<TaskDb> Update(TaskDb task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException("Task");
+            }
             db.Entry(task).State = EntityState.Modified;
+            return await Task.FromResult(task);
         }
         public IEnumerable<TaskDb> Find(Func<TaskDb, Boolean> predicate)
         {
             return db.Tasks.Where(predicate).ToList();
         }
-        public void Delete(string id)
+        public async Task<TaskDb> Delete(string id)
         {
             TaskDb task = db.Tasks.Find(id);
             if (task != null)
                 db.Tasks.Remove(task);
+            return await Task.FromResult(task);
         }
     }
 }

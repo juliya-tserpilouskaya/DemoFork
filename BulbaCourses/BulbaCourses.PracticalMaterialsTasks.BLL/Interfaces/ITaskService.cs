@@ -12,12 +12,14 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
     public interface ITaskService:IDisposable
     {
 
-        void MakeTask(TaskDTO taskDto);
+        Task<TaskDTO> MakeTask(TaskDTO taskDto);
         TaskDTO GetTask(string id);
         Task<TaskDTO> GetTaskAsync(string id);
         Task<IEnumerable<TaskDTO>> GetTasksAsync();
 
-        void UpdateTask(string id, TaskDTO taskDto);
+        Task<TaskDTO> UpdateTask(string id, TaskDTO taskDto);
+
+        Task DeleteTask(string id);
 
         
     }

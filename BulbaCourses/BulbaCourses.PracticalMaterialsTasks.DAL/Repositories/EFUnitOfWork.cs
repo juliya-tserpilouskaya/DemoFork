@@ -41,7 +41,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         }
         public void Save()
         {
-            db.SaveChanges();
+            db.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
         private bool disposed = false;
         public virtual void Dispose(bool disposing)

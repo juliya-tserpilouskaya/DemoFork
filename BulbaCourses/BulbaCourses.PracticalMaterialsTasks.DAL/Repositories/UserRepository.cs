@@ -32,15 +32,16 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             return db.Users.FindAsync(id);
         }
-        public void Create(UserDb user)
+        public async Task<UserDb> Create(UserDb user)
         {
             db.Users.Add(user);
-
+            return await Task.FromResult(user);
         }
 
-        public void Update(UserDb user)
+        public async Task<UserDb> Update(UserDb user)
         {
             db.Entry(user).State = EntityState.Modified;
+            return await Task.FromResult(user);
         }
 
         public IEnumerable<UserDb> Find(Func<UserDb,Boolean> predicate)
@@ -48,13 +49,14 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             return db.Users.Include(u => u.NickName).Where(predicate).ToList();
         }
 
-        public void Delete(string id)
+        public Task<UserDb> Delete(string id)
         {
             UserDb user = db.Users.Find(id);
             if(user != null)
             {
                 db.Users.Remove(user);
             }
+            return Task.FromResult(user);
         }
     }
 }

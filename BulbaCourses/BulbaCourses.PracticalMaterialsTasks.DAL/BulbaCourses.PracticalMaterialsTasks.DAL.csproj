@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Context\TasksContext.cs" />
     <Compile Include="DataModule.cs" />
-    <Compile Include="Interfaces\ITaskServices.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\202001121527258_updatemodel.cs" />
