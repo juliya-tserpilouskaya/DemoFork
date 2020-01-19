@@ -8,11 +8,15 @@ import { SampleModule } from './sample/sample.module';
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
+import { UserListComponent } from './GlobalAdminUsers/user-list/user-list.component';
+import { UsersComponent } from './GlobalAdminUsers/components/users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    UserListComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
