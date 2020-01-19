@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using BulbaComments.Podcasts.Data.Managers;
 
 namespace BulbaCourses.Podcasts.Data.Managers
 {
@@ -14,32 +15,35 @@ namespace BulbaCourses.Podcasts.Data.Managers
         {
         }
 
-        public async Task<CourseDb> Add(CourseDb courseDb)
+        public async Task<CourseDb> AddAsync(CourseDb courseDb)
         {
             dbContext.Courses.Add(courseDb);
             await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
             return await Task.FromResult(courseDb).ConfigureAwait(false);
         }
-        public async Task<IEnumerable<CourseDb>> GetAll()
+        public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
             var courseList = await dbContext.Courses.ToListAsync().ConfigureAwait(false);
             return courseList.AsReadOnly();
         }
-        public async Task<CourseDb> GetById(string id)
+        public async Task<CourseDb> GetByIdAsync(string id)
         {
             return await dbContext.Courses.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public async Task<CourseDb> Remove(CourseDb courseDb)
+        public async Task<CourseDb> RemoveAsync(CourseDb courseDb)
         {
             if (courseDb == null)
             {
                 throw new ArgumentNullException();
             }
+            dbContext.Audios.RemoveRange(courseDb.Audios.AsEnumerable());
+            dbContext.Comments.RemoveRange(courseDb.Comments.AsEnumerable());
+            List<CommentDb> appended = new List<CommentDb>();
             dbContext.Courses.Remove(courseDb);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return null;
         }
-        public async Task<CourseDb> Update(CourseDb courseDb)
+        public async Task<CourseDb> UpdateAsync(CourseDb courseDb)
         {
             if (courseDb == null)
             {
@@ -49,7 +53,7 @@ namespace BulbaCourses.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(courseDb);
         }
-        public async Task<bool> IsExist(string name)
+        public async Task<bool> IsExistAsync(string name)
         {
             return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
         }

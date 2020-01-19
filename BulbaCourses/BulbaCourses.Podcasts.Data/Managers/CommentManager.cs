@@ -15,22 +15,22 @@ namespace BulbaComments.Podcasts.Data.Managers
         {
         }
 
-        public async Task<CommentDb> Add(CommentDb commentDb)
+        public async Task<CommentDb> AddAsync(CommentDb commentDb)
         {
             dbContext.Comments.Add(commentDb);
             await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
             return await Task.FromResult(commentDb).ConfigureAwait(false);
         }
-        public async Task<IEnumerable<CommentDb>> GetAll()
+        public async Task<IEnumerable<CommentDb>> GetAllAsync()
         {
             var courseList = await dbContext.Comments.ToListAsync().ConfigureAwait(false);
             return courseList.AsReadOnly();
         }
-        public async Task<CommentDb> GetById(string id)
+        public async Task<CommentDb> GetByIdAsync(string id)
         {
             return await dbContext.Comments.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public async Task<CommentDb> Remove(CommentDb commentDb)
+        public async Task<CommentDb> RemoveAsync(CommentDb commentDb)
         {
             if (commentDb == null)
             {
@@ -40,7 +40,7 @@ namespace BulbaComments.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return null;
         }
-        public async Task<CommentDb> Update(CommentDb commentDb)
+        public async Task<CommentDb> UpdateAsync(CommentDb commentDb)
         {
             if (commentDb == null)
             {

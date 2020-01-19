@@ -12,17 +12,15 @@ namespace BulbaCourses.Podcasts.Web.Infrastructure
     {
         public MapperWebProfile()
         {
-            CreateMap<UserWeb, UserLogic>();
-            CreateMap<UserLogic, UserWeb>();
+            CreateMap<UserWeb, UserLogic>().ReverseMap();
 
-            CreateMap<CourseWeb, CourseLogic>();
-            CreateMap<CourseLogic, CourseWeb>();
+            CreateMap<CourseWeb, CourseLogic>().ReverseMap();
 
-            CreateMap<CommentWeb, CommentLogic>();
-            CreateMap<CommentLogic, CommentWeb>();
+            CreateMap<CommentWeb, CommentLogic>().ReverseMap();
 
-            CreateMap<AudioWeb, AudioLogic>();
-            CreateMap<AudioLogic, AudioWeb>();
+            CreateMap<AudioWeb, AudioLogic>().ReverseMap();
+
+            CreateMap<ContentWeb, ContentLogic>().ReverseMap();
         }
     }
 }

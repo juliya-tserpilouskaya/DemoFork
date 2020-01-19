@@ -32,7 +32,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 comment.PostDate = DateTime.Now;
                 comment.Course = course;
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                var result = dbmanager.Add(commentDb);
+                var result = dbmanager.AddAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -46,7 +46,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var comment = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var comment = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
                 var CommentLogic = mapper.Map<CommentDb, CommentLogic>(comment);
                 return Result<CommentLogic>.Ok(CommentLogic);
             }
@@ -60,7 +60,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var comments = dbmanager.GetAll().GetAwaiter().GetResult();
+                var comments = dbmanager.GetAllAsync().GetAwaiter().GetResult();
                 var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
                 return Result<IEnumerable<CommentLogic>>.Ok(result);
             }
@@ -76,7 +76,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                dbmanager.Remove(commentDb);
+                dbmanager.RemoveAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -90,7 +90,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                dbmanager.Update(commentDb);
+                dbmanager.UpdateAsync(commentDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -101,7 +101,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         public bool Exists(string id)
         {
-            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Id == id);
+            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Id == id);
         }
     }
 }

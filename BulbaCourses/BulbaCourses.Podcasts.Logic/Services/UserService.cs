@@ -31,7 +31,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 user.Id = Guid.NewGuid().ToString();
                 user.RegistrationDate = DateTime.Now;
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                var result = dbmanager.Add(userDb);
+                var result = dbmanager.AddAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -45,7 +45,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var user = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var user = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
                 var UserLogic = mapper.Map<UserDb, UserLogic>(user);
                 return Result<UserLogic>.Ok(UserLogic);
             }
@@ -59,7 +59,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var user = dbmanager.GetAll().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
+                var user = dbmanager.GetAllAsync().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
                 var UserLogic = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(user);
                 return Result<IEnumerable<UserLogic>>.Ok(UserLogic);
             }
@@ -73,7 +73,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var users = dbmanager.GetAll().GetAwaiter().GetResult();
+                var users = dbmanager.GetAllAsync().GetAwaiter().GetResult();
                 var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(users);
                 return Result<IEnumerable<UserLogic>>.Ok(result);
             }
@@ -88,7 +88,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                dbmanager.Remove(userDb);
+                dbmanager.RemoveAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -102,7 +102,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var userDb = mapper.Map<UserLogic, UserDb>(user);
-                dbmanager.Update(userDb);
+                dbmanager.UpdateAsync(userDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -113,7 +113,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         public bool Exists(string name)
         {
-            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Name == name);
+            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Name == name);
         }
     }
 }

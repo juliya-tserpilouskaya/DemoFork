@@ -13,6 +13,6 @@ namespace BulbaCourses.Podcasts.Data.Models
         public DateTime RegistrationDate { get; set; }
         public ICollection<CourseDb> UploadedCourses { get; set; }
         public ICollection<CourseDb> BoughtCourses { get; set; }
-        public ICollection<CourseDb> Comments { get; set; }
+        public ICollection<CommentDb> Comments { get; set; }
     }
 }

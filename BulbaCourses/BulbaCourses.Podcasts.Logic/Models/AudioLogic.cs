@@ -9,6 +9,5 @@ namespace BulbaCourses.Podcasts.Logic.Models
         public int Duration { get; set; }
         public string Content { get; set; }
         public CourseLogic Course { get; set; }
-        public ICollection<CommentLogic> Comments { get; set; }
     }
 }

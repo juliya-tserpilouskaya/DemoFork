@@ -30,7 +30,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 audio.Course = course;
                 audio.Id = Guid.NewGuid().ToString();
                 var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                var result = dbmanager.Add(audioDb);
+                var result = dbmanager.AddAsync(audioDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -44,7 +44,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var audio = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var audio = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
                 var AudioLogic = mapper.Map<AudioDb, AudioLogic>(audio);
                 return Result<AudioLogic>.Ok(AudioLogic);
             }
@@ -58,7 +58,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var audio = dbmanager.GetAll().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
+                var audio = dbmanager.GetAllAsync().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
                 var AudioLogic = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audio);
                 return Result<IEnumerable<AudioLogic>>.Ok(AudioLogic);
             }
@@ -72,7 +72,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var audios = dbmanager.GetAll().GetAwaiter().GetResult();
+                var audios = dbmanager.GetAllAsync().GetAwaiter().GetResult();
                 var result = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audios);
                 return Result<IEnumerable<AudioLogic>>.Ok(result);
             }
@@ -88,7 +88,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                dbmanager.Remove(audioDb);
+                dbmanager.RemoveAsync(audioDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -102,7 +102,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                dbmanager.Update(audioDb);
+                dbmanager.UpdateAsync(audioDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -113,7 +113,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         public bool Exists(string name)
         {
-            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Name == name);
+            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Name == name);
         }
     }
 }

@@ -9,10 +9,10 @@ namespace BulbaCourses.Podcasts.Data.Interfaces
 {
     public interface IManager<T>
     {
-        Task<T> GetById(string id);
-        Task<IEnumerable<T>> GetAll();
-        Task<T> Add(T db);
-        Task<T> Remove(T db);
-        Task<T> Update(T db);
+        Task<T> GetByIdAsync(string id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> AddAsync(T db);
+        Task<T> RemoveAsync(T db);
+        Task<T> UpdateAsync(T db);
     }
 }

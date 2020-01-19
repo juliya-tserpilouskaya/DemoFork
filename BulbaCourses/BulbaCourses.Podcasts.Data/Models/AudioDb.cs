@@ -9,6 +9,5 @@ namespace BulbaCourses.Podcasts.Data.Models
         public int Duration { get; set; }
         public string Content { get; set; }
         public CourseDb Course { get; set; }
-        public ICollection<CommentDb> Comments { get; set; }
     }
 }

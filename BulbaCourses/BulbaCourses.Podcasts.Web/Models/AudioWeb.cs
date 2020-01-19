@@ -13,7 +13,6 @@ namespace BulbaCourses.Podcasts.Web.Models
         public int Duration { get; set; }
         public string Content { get; set; }
         public CourseWeb Course { get; set; }
-        public ICollection<CommentWeb> Comments { get; set; }
     }
     
 }

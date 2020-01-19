@@ -1,32 +1,54 @@
 ﻿using BulbaCourses.Podcasts.Data.Interfaces;
 using BulbaCourses.Podcasts.Data.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using BulbaCourses.Podcasts.Data;
 
-namespace BulbaCourses.Podcasts.Data.Managers
+namespace BulbaComments.Podcasts.Data.Managers
 {
-    class AudioManager : IManager<AudioDb>
+    class AudioManager : BaseManager, IManager<AudioDb>
     {
-        public AudioDb Add(AudioDb audioDb)
+        public AudioManager(PodcastsContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
         }
-        public IEnumerable<AudioDb> GetAll()
+
+        public async Task<AudioDb> AddAsync(AudioDb audioDb)
         {
-            throw new NotImplementedException();
+            dbContext.Audios.Add(audioDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
+            return await Task.FromResult(audioDb).ConfigureAwait(false);
         }
-        public AudioDb GetById(string id)
+        public async Task<IEnumerable<AudioDb>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var audioList = await dbContext.Audios.ToListAsync().ConfigureAwait(false);
+            return audioList.AsReadOnly();
         }
-        public AudioDb Remove(AudioDb audioDb)
+        public async Task<AudioDb> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Audios.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public AudioDb Update(AudioDb audioDb)
+        public async Task<AudioDb> RemoveAsync(AudioDb audioDb)
         {
-            throw new NotImplementedException();
+            if (audioDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Audios.Remove(audioDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return null;
+        }
+        public async Task<AudioDb> UpdateAsync(AudioDb audioDb)
+        {
+            if (audioDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Entry(audioDb).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(audioDb);
         }
     }
 }
-

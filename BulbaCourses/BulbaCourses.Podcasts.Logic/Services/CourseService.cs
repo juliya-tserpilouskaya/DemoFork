@@ -33,7 +33,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
                 course.Raiting = null;
                 course.Duration = course.Audios.Aggregate(0, (x,y) => x + y.Duration);
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                var result = dbmanager.Add(courseDb);
+                var result = dbmanager.AddAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -47,7 +47,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var course = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var course = dbmanager.GetByIdAsync(Id).GetAwaiter().GetResult();
                 var CourseLogic = mapper.Map<CourseDb, CourseLogic>(course);
                 return Result<CourseLogic>.Ok(CourseLogic);
             }
@@ -61,7 +61,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var course = dbmanager.GetAll().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
+                var course = dbmanager.GetAllAsync().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
                 var CourseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course);
                 return Result<IEnumerable<CourseLogic>>.Ok(CourseLogic);
             }
@@ -75,7 +75,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var courses = dbmanager.GetAll().GetAwaiter().GetResult();
+                var courses = dbmanager.GetAllAsync().GetAwaiter().GetResult();
                 var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
                 return Result<IEnumerable<CourseLogic>>.Ok(result);
             }
@@ -91,7 +91,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                dbmanager.Remove(courseDb);
+                dbmanager.RemoveAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -105,7 +105,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             try
             {
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                dbmanager.Update(courseDb);
+                dbmanager.UpdateAsync(courseDb);
                 return Result.Ok();
             }
             catch (Exception)
@@ -116,7 +116,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         public bool Exists(string name)
         {
-            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Name == name);
+            return dbmanager.GetAllAsync().GetAwaiter().GetResult().Any(b => b.Name == name);
         }
     }
 }
