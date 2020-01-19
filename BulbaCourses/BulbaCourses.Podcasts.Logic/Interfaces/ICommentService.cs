@@ -9,10 +9,10 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface ICommentService : IBaseService<CommentLogic>
     {
-        Task<Result> Add(CommentLogic comment, CourseLogic course);
+        Task<Result> AddAsync(CommentLogic comment, CourseLogic course);
 
-        Task<Result<IEnumerable<CommentLogic>>> GetAll();
+        Task<Result<IEnumerable<CommentLogic>>> GetAllAsync();
 
-        Task<bool> Exists(string id);
+        Task<bool> ExistsAsync(string id);
     }
 }

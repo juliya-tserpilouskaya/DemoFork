@@ -9,10 +9,10 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface IBaseService<T> where T : class
     {
-        Task<Result<T>> GetById(string Id);
+        Task<Result<T>> GetByIdAsync(string Id);
 
-        Task<Result> Delete(T thing);
+        Task<Result> DeleteAsync(T thing);
 
-        Task<Result> Update(T thing);
+        Task<Result> UpdateAsync(T thing);
     }
 }

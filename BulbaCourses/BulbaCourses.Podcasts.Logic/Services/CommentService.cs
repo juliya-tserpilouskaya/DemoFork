@@ -26,7 +26,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> Add(CommentLogic comment, CourseLogic course)
+        public async Task<Result> AddAsync(CommentLogic comment, CourseLogic course)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public async Task<Result<CommentLogic>> GetById(string Id)
+        public async Task<Result<CommentLogic>> GetByIdAsync(string Id)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<CommentLogic>>> GetAll()
+        public async Task<Result<IEnumerable<CommentLogic>>> GetAllAsync()
         {
             try
             {
@@ -84,7 +84,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Delete(CommentLogic comment)
+        public async Task<Result> DeleteAsync(CommentLogic comment)
         {
 
             try
@@ -111,7 +111,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Update(CommentLogic comment)
+        public async Task<Result> UpdateAsync(CommentLogic comment)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> Exists(string name)
+        public async Task<bool> ExistsAsync(string name)
         {
             return await dbmanager.ExistAsync(name);
         }

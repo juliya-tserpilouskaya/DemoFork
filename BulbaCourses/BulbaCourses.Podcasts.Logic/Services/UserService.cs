@@ -26,7 +26,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> Add(UserLogic user)
+        public async Task<Result> AddAsync(UserLogic user)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public async Task<Result<UserLogic>> GetById(string Id)
+        public async Task<Result<UserLogic>> GetByIdAsync(string Id)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<UserLogic>>> Search(string Name)
+        public async Task<Result<IEnumerable<UserLogic>>> SearchAsync(string Name)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<UserLogic>>> GetAll()
+        public async Task<Result<IEnumerable<UserLogic>>> GetAllAsync()
         {
             try
             {
@@ -97,7 +97,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Delete(UserLogic user)
+        public async Task<Result> DeleteAsync(UserLogic user)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Update(UserLogic user)
+        public async Task<Result> UpdateAsync(UserLogic user)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> Exists(string name)
+        public async Task<bool> ExistsAsync(string name)
         {
             return await dbmanager.ExistAsync(name);
         }

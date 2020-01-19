@@ -21,7 +21,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICommentService service;
-        private readonly IValidator<CommentWeb> validator;
         private readonly IBus bus;
 
         public CommentController(IMapper mapper, ICommentService service, IBus bus)
@@ -40,7 +39,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetById(id);
+                var result = await service.GetByIdAsync(id);
                 if (result.IsSuccess == true)
                 {
                     var commentWeb = result.Data;
@@ -66,7 +65,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetAll();
+                var result = await service.GetAllAsync();
                 if (result.IsSuccess == true)
                 {
                     var commentLogic = result.Data;
@@ -99,7 +98,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.Add(commentlogic, courselogic);
+                var result = await service.AddAsync(commentlogic, courselogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name}");
@@ -130,7 +129,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.Update(commentlogic);
+                var result = await service.UpdateAsync(commentlogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(commentlogic);
@@ -160,7 +159,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.Delete(commentlogic);
+                var result = await service.DeleteAsync(commentlogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(commentlogic);

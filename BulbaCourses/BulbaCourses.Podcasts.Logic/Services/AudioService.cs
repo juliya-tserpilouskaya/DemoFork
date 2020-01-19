@@ -23,7 +23,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> Add(AudioLogic audio, CourseLogic course)
+        public async Task<Result> AddAsync(AudioLogic audio, CourseLogic course)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public async Task<Result<AudioLogic>> GetById(string Id)
+        public async Task<Result<AudioLogic>> GetByIdAsync(string Id)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<AudioLogic>>> Search(string Name)
+        public async Task<Result<IEnumerable<AudioLogic>>> SearchAsync(string Name)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<AudioLogic>>> GetAll()
+        public async Task<Result<IEnumerable<AudioLogic>>> GetAllAsync()
         {
             try
             {
@@ -95,7 +95,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Delete(AudioLogic audio)
+        public async Task<Result> DeleteAsync(AudioLogic audio)
         {
 
             try
@@ -122,7 +122,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Update(AudioLogic audio)
+        public async Task<Result> UpdateAsync(AudioLogic audio)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> Exists(string name)
+        public async Task<bool> ExistsAsync(string name)
         {
             return await dbmanager.ExistAsync(name);
         }

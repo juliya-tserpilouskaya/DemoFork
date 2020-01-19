@@ -22,7 +22,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICourseService service;
-        private readonly IValidator<CourseWeb> validator;
         private readonly IBus bus;
 
         public CourseController(IMapper mapper, ICourseService courseService, IBus bus)
@@ -45,7 +44,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var result = await service.GetById(id);
+                var result = await service.GetByIdAsync(id);
                 if (result.IsSuccess == true)
                 {
                     var course = result.Data;
@@ -71,7 +70,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetAll();
+                var result = await service.GetAllAsync();
                 if (result.IsSuccess == true)
                 {
                     var courses = result.Data;
@@ -101,7 +100,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.Add(courselogic);
+                var result = await service.AddAsync(courselogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Added Course {courseWeb.Name}");
@@ -132,7 +131,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     return BadRequest(ModelState);
                 }
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.Update(courselogic);
+                var result = await service.UpdateAsync(courselogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(courselogic);
@@ -163,7 +162,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.Delete(courselogic);
+                var result = await service.DeleteAsync(courselogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Deleted Course to {courseWeb.Name}");

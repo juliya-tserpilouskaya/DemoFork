@@ -21,7 +21,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IAudioService service;
-        private readonly IValidator<AudioWeb> validator;
         private readonly IBus bus;
 
         public AudioController(IMapper mapper, IAudioService service, IBus bus)
@@ -40,7 +39,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetById(id);
+                var result = await service.GetByIdAsync(id);
                 if (result.IsSuccess == true)
                 {
                     var audioWeb = result.Data;
@@ -66,7 +65,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetAll();
+                var result = await service.GetAllAsync();
                 if (result.IsSuccess == true)
                 {
                     var audioLogic = result.Data;
@@ -99,7 +98,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.Add(audiologic, courselogic);
+                var result = await service.AddAsync(audiologic, courselogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Added Audio to {audioWeb.Name}");
@@ -130,7 +129,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.Update(audiologic);
+                var result = await service.UpdateAsync(audiologic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(audiologic);
@@ -160,7 +159,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.Delete(audiologic);
+                var result = await service.DeleteAsync(audiologic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Deleted Audio at {audioWeb.Name}");

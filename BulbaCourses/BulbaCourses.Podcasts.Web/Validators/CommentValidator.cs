@@ -22,19 +22,19 @@ namespace BulbaCourses.Podcasts.Web.Validators
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
                 RuleFor(x => x.Text).NotEmpty().MaximumLength(255).MinimumLength(3);
-                RuleFor(x => x.Id).Must((id) => !(service.Exists(id)));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsAsync(title))));
 
             });
             RuleSet("UpdateComment", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
-                RuleFor(x => x.Id).Must((id) => (service.Exists(id)));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => (await service.ExistsAsync(title))));
                 RuleFor(x => x.Text).NotEmpty().MaximumLength(255).MinimumLength(3);
             });
             RuleSet("DeleteComment", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
-                RuleFor(x => x.Id).Must((id) => (service.Exists(id)));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => (await service.ExistsAsync(title))));
             });
 
         }

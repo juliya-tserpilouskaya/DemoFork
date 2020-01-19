@@ -9,12 +9,12 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface IAudioService : IBaseService<AudioLogic>
     {
-        Task<Result> Add(AudioLogic audio, CourseLogic course);
+        Task<Result> AddAsync(AudioLogic audio, CourseLogic course);
 
-        Task<bool> Exists(string name);
+        Task<bool> ExistsAsync(string name);
 
-        Task<Result<IEnumerable<AudioLogic>>> GetAll();
+        Task<Result<IEnumerable<AudioLogic>>> GetAllAsync();
 
-        Task<Result<IEnumerable<AudioLogic>>> Search(string Name);
+        Task<Result<IEnumerable<AudioLogic>>> SearchAsync(string Name);
     }
 }

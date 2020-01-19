@@ -21,7 +21,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IUserService service;
-        private readonly IValidator<UserWeb> validator;
         private readonly IBus bus;
 
         public UserController(IMapper mapper, IUserService userService, IBus bus)
@@ -43,7 +42,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var result = await service.GetById(id);
+                var result = await service.GetByIdAsync(id);
                 if (result.IsSuccess == true)
                 {
                     var user = result.Data;
@@ -68,7 +67,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         {
             try
             {
-                var result = await service.GetAll();
+                var result = await service.GetAllAsync();
                 if (result.IsSuccess == true)
                 {
                     var userLogic = result.Data;
@@ -100,7 +99,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Add(userlogic);
+                var result = await service.AddAsync(userlogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name}");
@@ -131,7 +130,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Update(userLogic);
+                var result = await service.UpdateAsync(userLogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(userLogic);
@@ -161,7 +160,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Delete(userLogic);
+                var result = await service.DeleteAsync(userLogic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Deleted User {userWeb.Name}");

@@ -19,7 +19,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> Add(ContentLogic content, AudioLogic audio)
+        public async Task<Result> AddAsync(ContentLogic content, AudioLogic audio)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public async Task<Result<ContentLogic>> GetById(string id)
+        public async Task<Result<ContentLogic>> GetByIdAsync(string id)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Delete(ContentLogic content)
+        public async Task<Result> DeleteAsync(ContentLogic content)
         {
 
             try
@@ -65,7 +65,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> Update(ContentLogic content)
+        public async Task<Result> UpdateAsync(ContentLogic content)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> Exists(string name)
+        public async Task<bool> ExistsAsync(string name)
         {
             return await dbmanager.ExistAsync(name);
         }

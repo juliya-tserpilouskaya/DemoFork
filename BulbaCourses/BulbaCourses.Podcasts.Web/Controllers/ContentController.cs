@@ -21,7 +21,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IContentService service;
-        private readonly IValidator<ContentWeb> validator;
         private readonly IBus bus;
 
         public ContentController(IMapper mapper, IContentService contentService, IBus bus)
@@ -44,7 +43,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var result = await service.GetById(id);
+                var result = await service.GetByIdAsync(id);
                 if (result.IsSuccess == true)
                 {
                     var content = result.Data;
@@ -77,7 +76,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
                 var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.Add(contentLogic, audiologic);
+                var result = await service.AddAsync(contentLogic, audiologic);
                 if (result.IsSuccess == true)
                 {
                     await bus.SendAsync("Podcasts", $"Added Content to {audioWeb.Name}");
@@ -108,7 +107,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                var result = await service.Update(contentLogic);
+                var result = await service.UpdateAsync(contentLogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(contentLogic);
@@ -138,7 +137,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                var result = await service.Delete(contentLogic);
+                var result = await service.DeleteAsync(contentLogic);
                 if (result.IsSuccess == true)
                 {
                     return Ok(contentLogic);

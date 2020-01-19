@@ -9,6 +9,6 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface IContentService : IBaseService<ContentLogic>
     {
-        Task<Result> Add(ContentLogic content, AudioLogic audio);
+        Task<Result> AddAsync(ContentLogic content, AudioLogic audio);
     }
 }
