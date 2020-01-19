@@ -89,6 +89,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LearningCourses\LearningCourseAsyncTest.cs" />
+    <Compile Include="LearningCourses\LearningCourseTest.cs" />
     <Compile Include="SearchQueries\SearchQueryAsyncTest.cs" />
     <Compile Include="SearchQueries\SearchQueryTest.cs" />
     <Compile Include="TestDbAsyncQueryProvider.cs" />

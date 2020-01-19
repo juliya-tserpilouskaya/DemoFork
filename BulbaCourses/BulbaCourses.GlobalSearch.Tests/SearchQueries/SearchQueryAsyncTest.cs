@@ -131,6 +131,5 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             //Assert
             Assert.AreEqual(1, x.Count());
         }
-
     }
 }
