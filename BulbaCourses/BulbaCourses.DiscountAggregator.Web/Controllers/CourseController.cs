@@ -103,6 +103,30 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+        
+        [HttpGet, Route("Search/{idSearch}")]
+        [Description("Get courses by Criteria")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByCriteriaAsync(string idSearch)
+        {
+            if (idSearch == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _courseService.GetByIdCriteriaAsync(idSearch);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]

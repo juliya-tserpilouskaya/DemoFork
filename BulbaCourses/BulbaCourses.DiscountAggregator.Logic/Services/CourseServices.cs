@@ -53,6 +53,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
+        public async Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch)
+        {
+            var courses = await _courseService.GetByIdCriteriaAsync(idSearch);
+            var result = _mapper.Map<IEnumerable<Course>>(courses);
+            return result;
+        }
+
         public async Task<Result<Course>> AddAsync(Course course)
         {
             course.Id = Guid.NewGuid().ToString();
@@ -79,5 +86,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result.IsSuccess ? Result<Course>.Ok(_mapper.Map<Course>(result.Data))
                 : Result<Course>.Fail<Course>(result.Message);
         }
+
     }
 }

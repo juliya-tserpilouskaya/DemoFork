@@ -13,6 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         Task<IEnumerable<CourseDb>> GetAllAsync();
         IEnumerable<CourseDb> GetAll();
         Task<CourseDb> GetByIdAsync(string id);
+        Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idSearch);
         CourseDb GetById(string id);
         Task<Result<CourseDb>> AddAsync(CourseDb courseDb);
         Task <Result<CourseDb>> DeleteAsync(CourseDb courseDb);

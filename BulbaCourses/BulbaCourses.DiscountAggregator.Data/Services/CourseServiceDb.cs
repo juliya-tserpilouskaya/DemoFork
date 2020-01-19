@@ -67,6 +67,22 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return course;
         }
 
+        public async Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idSearch)
+        {
+            //TODO domain and category
+            var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
+            var courses = await context.Courses
+                .Where(x => x.Price >= searchCriteriaDb.MinPrice 
+                && x.Price <= searchCriteriaDb.MaxPrice 
+                //&& x.Domain == searchCriteriaDb.Domains
+                //&& x.Category == searchCriteriaDb.CourseCategories
+                && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+                .ToListAsync()
+                .ConfigureAwait(false);
+            
+            return courses;
+        }
+
         public async Task<Result<CourseDb>> DeleteAsync(CourseDb course)
         {
             try

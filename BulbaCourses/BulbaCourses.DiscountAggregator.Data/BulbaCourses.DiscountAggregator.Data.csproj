@@ -58,6 +58,10 @@
     <Compile Include="Migrations\202001171744552_NewMigration.Designer.cs">
       <DependentUpon>202001171744552_NewMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001182304162_New.cs" />
+    <Compile Include="Migrations\202001182304162_New.Designer.cs">
+      <DependentUpon>202001182304162_New.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
     <Compile Include="ModelsConfigurations\CategoryConfigurations.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001171744552_NewMigration.resx">
       <DependentUpon>202001171744552_NewMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001182304162_New.resx">
+      <DependentUpon>202001182304162_New.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
