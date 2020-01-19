@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
-    public interface IUserService : IBaseService<UserLogic>
+    public interface IBaseService<T> where T : class
     {
-        Result Add(UserLogic user);
+        Result<T> GetById(string Id);
 
-        bool Exists(string name);
+        Result<IEnumerable<T>> GetAll();
 
-        Result<IEnumerable<UserLogic>> Search(string Name);
+        Result Delete(T thing);
+
+        Result Update(T thing);
     }
 }

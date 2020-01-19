@@ -8,62 +8,112 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Principal;
+using Ninject;
 
 namespace BulbaCourses.Podcasts.Logic.Services
 {
     public class UserService : IUserService
     {
         private readonly IMapper mapper;
-        private readonly IManager dbmanager;
+        private readonly IManager<UserDb> dbmanager;
 
-        public UserService(IMapper mapper, IManager dbmanager)
+        public UserService(IMapper mapper, IManager<UserDb> dbmanager)
         {
             this.mapper = mapper;
             this.dbmanager = dbmanager;
         }
-        public void Add(UserLogic user)
+
+        public Result Add(UserLogic user)
         {
-            var userDb = mapper.Map<UserLogic, UserDb>(user);
-            dbmanager.AddUser(userDb);
+            try
+            {
+                user.Id = Guid.NewGuid().ToString();
+                user.RegistrationDate = DateTime.Now;
+                var userDb = mapper.Map<UserLogic, UserDb>(user);
+                var result = dbmanager.Add(userDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+
         }
 
-        public void Delete(UserLogic user)
+        public Result<UserLogic> GetById(string Id)
         {
-            var userDb = mapper.Map<UserLogic, UserDb>(user);
-            dbmanager.RemoveUser(userDb);
+            try
+            {
+                var user = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var UserLogic = mapper.Map<UserDb, UserLogic>(user);
+                return Result<UserLogic>.Ok(UserLogic);
+            }
+            catch (Exception)
+            {
+                return Result<UserLogic>.Fail("Exception");
+            }
         }
 
-        public IEnumerable<UserLogic> GetAll() //debug
+        public Result<IEnumerable<UserLogic>> Search(string Name)
         {
-            var users = dbmanager.GetAllUsers();
-            var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(users);
-            return result;
+            try
+            {
+                var user = dbmanager.GetAll().GetAwaiter().GetResult().Where(c => c.Name.Contains(Name)).ToList();
+                var UserLogic = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(user);
+                return Result<IEnumerable<UserLogic>>.Ok(UserLogic);
+            }
+            catch (Exception)
+            {
+                return Result<IEnumerable<UserLogic>>.Fail("Exception");
+            }
         }
 
-        public UserLogic GetByName(string userName)
+        public Result<IEnumerable<UserLogic>> GetAll()
         {
-            var user = dbmanager.GetAllUsers().FirstOrDefault(c => c.Name.Equals(userName));
-            var result = mapper.Map<UserDb, UserLogic>(user);
-            return result;
+            try
+            {
+                var users = dbmanager.GetAll().GetAwaiter().GetResult();
+                var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(users);
+                return Result<IEnumerable<UserLogic>>.Ok(result);
+            }
+            catch (Exception)
+            {
+                return Result<IEnumerable<UserLogic>>.Fail("Exception");
+            }
         }
 
-        public UserLogic GetById(string id)
+        public Result Delete(UserLogic user)
         {
-            var user = dbmanager.GetUserById(id);
-            var result = mapper.Map<UserDb, UserLogic>(user);
-            return result;
+            try
+            {
+                var userDb = mapper.Map<UserLogic, UserDb>(user);
+                dbmanager.Remove(userDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
         }
 
-        public void Update(UserLogic user)
+        public Result Update(UserLogic user)
         {
-            var userDb = mapper.Map<UserLogic, UserDb>(user);
-            dbmanager.UpdateUser(userDb);
+            try
+            {
+                var userDb = mapper.Map<UserLogic, UserDb>(user);
+                dbmanager.Update(userDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
         }
 
         public bool Exists(string name)
         {
-            return dbmanager.GetAllUsers().Any(b => b.Name == name);
-
+            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Name == name);
         }
     }
 }

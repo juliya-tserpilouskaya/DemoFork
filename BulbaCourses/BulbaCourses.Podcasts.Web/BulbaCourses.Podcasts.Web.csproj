@@ -217,6 +217,7 @@
     </Compile>
     <Compile Include="Infrastructure\MapperLoadModule.cs" />
     <Compile Include="Infrastructure\MapperWebProfile.cs" />
+    <Compile Include="Models\ContentWeb.cs" />
     <Compile Include="Models\AudioWeb.cs" />
     <Compile Include="Models\CommentWeb.cs" />
     <Compile Include="Models\CourseWeb.cs" />

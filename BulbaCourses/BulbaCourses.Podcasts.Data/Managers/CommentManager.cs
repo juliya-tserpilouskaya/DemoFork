@@ -1,31 +1,54 @@
 ﻿using BulbaCourses.Podcasts.Data.Interfaces;
 using BulbaCourses.Podcasts.Data.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using BulbaCourses.Podcasts.Data;
 
-namespace BulbaCourses.Podcasts.Data.Managers
+namespace BulbaComments.Podcasts.Data.Managers
 {
-    class CommentManager : IManager<CommentDb>
+    class CommentManager : BaseManager, IManager<CommentDb>
     {
-        public CommentDb Add(CommentDb commentDb)
+        public CommentManager(PodcastsContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
         }
-        public IEnumerable<CommentDb> GetAll()
+
+        public async Task<CommentDb> Add(CommentDb commentDb)
         {
-            throw new NotImplementedException();
+            dbContext.Comments.Add(commentDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
+            return await Task.FromResult(commentDb).ConfigureAwait(false);
         }
-        public CommentDb GetById(string id)
+        public async Task<IEnumerable<CommentDb>> GetAll()
         {
-            throw new NotImplementedException();
+            var courseList = await dbContext.Comments.ToListAsync().ConfigureAwait(false);
+            return courseList.AsReadOnly();
         }
-        public CommentDb Remove(CommentDb commentDb)
+        public async Task<CommentDb> GetById(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Comments.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public CommentDb Update(CommentDb commentDb)
+        public async Task<CommentDb> Remove(CommentDb commentDb)
         {
-            throw new NotImplementedException();
+            if (commentDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Comments.Remove(commentDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return null;
+        }
+        public async Task<CommentDb> Update(CommentDb commentDb)
+        {
+            if (commentDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Entry(commentDb).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(commentDb);
         }
     }
 }

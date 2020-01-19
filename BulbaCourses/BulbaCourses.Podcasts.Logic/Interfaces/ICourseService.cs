@@ -7,22 +7,12 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
-    public interface ICourseService
+    public interface ICourseService : IBaseService<CourseLogic>
     {
-        Task<Result> Add(CourseLogic course);
+        Result Add(CourseLogic course);
 
-        Task<Result> AddFileToCourse(string Id, AudioLogic audio);
-
-        Task<Result<CourseLogic>> GetById(string Id);
-
-        Task<Result<CourseLogic>> GetByName(string courseName);
-
-        Task<Result<IEnumerable<CourseLogic>>> GetAll();
-
-        Task<Result> Delete(CourseLogic course);
-
-        Task<Result> Update(CourseLogic course);
-        
         bool Exists(string name);
+
+        Result<IEnumerable<CourseLogic>> Search(string Name);
     }
 }

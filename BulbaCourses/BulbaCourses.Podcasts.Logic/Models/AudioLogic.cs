@@ -7,6 +7,7 @@ namespace BulbaCourses.Podcasts.Logic.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
+        public string Content { get; set; }
         public CourseLogic Course { get; set; }
         public ICollection<CommentLogic> Comments { get; set; }
     }

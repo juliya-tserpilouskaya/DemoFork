@@ -41,17 +41,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
+    <Compile Include="Interfaces\IBaseService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\ICommentService.cs" />
     <Compile Include="Interfaces\ICourseService.cs" />
-    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Infrastructure\LogicModule.cs" />
     <Compile Include="Models\AudioLogic.cs" />
     <Compile Include="Models\CommentLogic.cs" />
+    <Compile Include="Models\ContentLogic.cs" />
     <Compile Include="Models\CourseLogic.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\UserLogic.cs" />
     <Compile Include="Services\CommentService.cs" />
+    <Compile Include="Services\AudioService.cs" />
     <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Interfaces\IAudioService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

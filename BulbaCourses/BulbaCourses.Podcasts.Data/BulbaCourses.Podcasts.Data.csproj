@@ -43,9 +43,9 @@
   <ItemGroup>
     <Compile Include="Managers\BaseManager.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ContentDb.cs" />
     <Compile Include="PodcastsContext.cs" />
     <Compile Include="Interfaces\IManager.cs" />
-    <Compile Include="Managers\OrderManager.cs" />
     <Compile Include="Managers\AudioManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Managers\CommentManager.cs" />

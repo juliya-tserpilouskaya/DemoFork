@@ -14,5 +14,6 @@ namespace BulbaCourses.Podcasts.Data.Models
         public double Price { get; set; }
         public DateTime CreationDate { get; set; }
         public ICollection<AudioDb> Audios { get; set; }
+        public ICollection<CommentDb> Comments { get; set; }
     }
 }

@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
-using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Data.Interfaces;
-using BulbaCourses.Podcasts.Logic.Models;
 using BulbaCourses.Podcasts.Data.Models;
+using BulbaCourses.Podcasts.Logic.Interfaces;
+using BulbaCourses.Podcasts.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Principal;
+using Ninject;
 
 namespace BulbaCourses.Podcasts.Logic.Services
 {
     public class CommentService : ICommentService
     {
         private readonly IMapper mapper;
-        private readonly IManager<T> dbmanager;
+        private readonly IManager<CommentDb> dbmanager;
 
         public CommentService(IMapper mapper, IManager<CommentDb> dbmanager)
         {
@@ -22,39 +24,84 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public CommentLogic GetById(string Id)
+        public Result Add(CommentLogic comment, CourseLogic course)
         {
-            var comment = dbmanager.GetCommentById(Id);
-            var result = mapper.Map<CommentDb, CommentLogic>(comment);
-            return result;
-        }
-        public IEnumerable<CommentLogic> GetAll()
-        {
-            var comments = dbmanager.GetAllComments();
-            var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
-            return result;
+            try
+            {
+                comment.Id = Guid.NewGuid().ToString();
+                comment.PostDate = DateTime.Now;
+                comment.Course = course;
+                var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+                var result = dbmanager.Add(commentDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+
         }
 
-        public void Add(CommentLogic comment, CourseLogic course)
+        public Result<CommentLogic> GetById(string Id)
         {
-            var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-            var coursedb = mapper.Map<CourseLogic, CourseDb>(course);
-            course.Comments.Append(comment);
-            dbmanager.UpdateCourse(coursedb);
-            dbmanager.AddComment(commentDb);
+            try
+            {
+                var comment = dbmanager.GetById(Id).GetAwaiter().GetResult();
+                var CommentLogic = mapper.Map<CommentDb, CommentLogic>(comment);
+                return Result<CommentLogic>.Ok(CommentLogic);
+            }
+            catch (Exception)
+            {
+                return Result<CommentLogic>.Fail("Exception");
+            }
         }
 
-        public void Delete(CommentLogic comment)
+        public Result<IEnumerable<CommentLogic>> GetAll()
         {
-            var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-            dbmanager.RemoveComment(commentDb);
+            try
+            {
+                var comments = dbmanager.GetAll().GetAwaiter().GetResult();
+                var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
+                return Result<IEnumerable<CommentLogic>>.Ok(result);
+            }
+            catch (Exception)
+            {
+                return Result<IEnumerable<CommentLogic>>.Fail("Exception");
+            }
         }
 
-        public void Update(CommentLogic comment)
+        public Result Delete(CommentLogic comment)
         {
-            var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-            dbmanager.UpdateComment(commentDb);
+
+            try
+            {
+                var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+                dbmanager.Remove(commentDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+        }
+
+        public Result Update(CommentLogic comment)
+        {
+            try
+            {
+                var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+                dbmanager.Update(commentDb);
+                return Result.Ok();
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+        }
+
+        public bool Exists(string id)
+        {
+            return dbmanager.GetAll().GetAwaiter().GetResult().Any(b => b.Id == id);
         }
     }
-
 }

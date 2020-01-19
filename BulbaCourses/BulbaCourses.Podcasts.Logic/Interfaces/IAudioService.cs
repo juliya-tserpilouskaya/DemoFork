@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
-    public interface IUserService : IBaseService<UserLogic>
+    public interface IAudioService : IBaseService<AudioLogic>
     {
-        Result Add(UserLogic user);
+        Result Add(AudioLogic audio, CourseLogic course);
 
         bool Exists(string name);
 
-        Result<IEnumerable<UserLogic>> Search(string Name);
+        Result<IEnumerable<AudioLogic>> Search(string Name);
     }
 }

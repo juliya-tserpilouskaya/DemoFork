@@ -27,34 +27,31 @@ namespace BulbaCourses.Podcasts.Data.Managers
         }
         public async Task<CourseDb> GetById(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Courses.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
         public async Task<CourseDb> Remove(CourseDb courseDb)
         {
-            throw new NotImplementedException();
+            if (courseDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Courses.Remove(courseDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return null;
         }
         public async Task<CourseDb> Update(CourseDb courseDb)
         {
-            throw new NotImplementedException();
+            if (courseDb == null)
+            {
+                throw new ArgumentNullException();
+            }
+            dbContext.Entry(courseDb).State = EntityState.Modified;
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return await Task.FromResult(courseDb);
         }
-
-        public void Dispose()
+        public async Task<bool> IsExist(string name)
         {
-            this.Dispose(true);
-        }
-
-        protected void Dispose(bool flag)
-        {
-            if (_isDisposed) return;
-
-            dbContext?.Dispose();
-            _isDisposed = true;
-            if (flag) GC.SuppressFinalize(this);
-        }
-
-        ~CourseManager()
-        {
-            this.Dispose(false);
+            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
         }
     }
 }

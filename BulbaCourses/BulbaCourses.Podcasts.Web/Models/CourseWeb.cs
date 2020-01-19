@@ -9,7 +9,7 @@ namespace BulbaCourses.Podcasts.Web.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public UserWeb Author { get; set; }
-        public double Raiting { get; set; }
+        public double? Raiting { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
         public double Price { get; set; }

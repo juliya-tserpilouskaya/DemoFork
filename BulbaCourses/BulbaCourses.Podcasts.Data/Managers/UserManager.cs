@@ -1,31 +1,55 @@
 ﻿using BulbaCourses.Podcasts.Data.Interfaces;
 using BulbaCourses.Podcasts.Data.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using BulbaCourses.Podcasts.Data;
 
-namespace BulbaCourses.Podcasts.Data.Managers
+class CourseManager : BaseManager, IManager<UserDb>
 {
-    class UserManager : IManager<UserDb>
+    public CourseManager(PodcastsContext dbContext) : base(dbContext)
     {
-        public UserDb Add(UserDb userDb)
+    }
+
+    public async Task<UserDb> Add(UserDb userDb)
+    {
+        dbContext.Users.Add(userDb);
+        await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
+        return await Task.FromResult(userDb).ConfigureAwait(false);
+    }
+    public async Task<IEnumerable<UserDb>> GetAll()
+    {
+        var courseList = await dbContext.Users.ToListAsync().ConfigureAwait(false);
+        return courseList.AsReadOnly();
+    }
+    public async Task<UserDb> GetById(string id)
+    {
+        return await dbContext.Users.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
+    }
+    public async Task<UserDb> Remove(UserDb userDb)
+    {
+        if (userDb == null)
         {
-            throw new NotImplementedException();
+            throw new ArgumentNullException();
         }
-        public IEnumerable<UserDb> GetAll()
+        dbContext.Users.Remove(userDb);
+        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+        return null;
+    }
+    public async Task<UserDb> Update(UserDb userDb)
+    {
+        if (userDb == null)
         {
-            throw new NotImplementedException();
+            throw new ArgumentNullException();
         }
-        public UserDb GetById(string id)
-        {
-            throw new NotImplementedException();
-        }
-        public UserDb Remove(UserDb userDb)
-        {
-            throw new NotImplementedException();
-        }
-        public UserDb Update(UserDb userDb)
-        {
-            throw new NotImplementedException();
-        }
+        dbContext.Entry(userDb).State = EntityState.Modified;
+        await dbContext.SaveChangesAsync().ConfigureAwait(false);
+        return await Task.FromResult(userDb);
+    }
+    public async Task<bool> IsExist(string name)
+    {
+        return await dbContext.Users.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
     }
 }

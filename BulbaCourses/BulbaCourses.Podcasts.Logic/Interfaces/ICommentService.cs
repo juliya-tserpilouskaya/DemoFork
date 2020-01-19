@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
-    public interface ICommentService
+    public interface ICommentService : IBaseService<CommentLogic>
     {
-        CommentLogic GetById(string commentId);
-        IEnumerable<CommentLogic> GetAll(); //debug
-        void Add(CommentLogic comment, CourseLogic course);
-        void Update(CommentLogic comment);
-        void Delete(CommentLogic comment);
-        bool Exists(string name);
+        Result Add(CommentLogic comment, CourseLogic course);
+
+        bool Exists(string id);
     }
 }
