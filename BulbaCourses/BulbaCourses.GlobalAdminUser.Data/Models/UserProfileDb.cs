@@ -8,12 +8,11 @@ namespace BulbaCourses.GlobalAdminUser.Data.Models
 {
     public class UserProfileDb
     {
-        public UserDb User { get; set; }
-
-        public string Surname { get; set; }
-        public string Name { get; set; }
-
+        public string UserId { get; set; } //from UsersDb.AspNetUsers
+        public string UserProfileId { get; set; } = Guid.NewGuid().ToString();
+        public int Age { get; set; }
+        public string Sex { get; set; }
+        public string City { get; set; }
         public string ProfilePictureUrl { get; set; }
-        public string TelephoneNumber { get; set; }
     }
 }

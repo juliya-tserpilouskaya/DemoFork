@@ -8,26 +8,26 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
     {
         protected override void Seed(GlobalAdminDbContext globalAdminDbContext)
         {
-            UserDb user1 = new UserDb
+            #region comment addUser
+            //UserDb user1 = new UserDb
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Username = "Lapatelli",
+            //    Password = "Maks",
+            //    Email = "maksim.m.yudin@mail.ru",
+            //    //TelephoneNumber = "+375297837978"
+            //};
+            #endregion
+
+            UserProfileDb userprofile = new UserProfileDb
             {
-                Id = Guid.NewGuid().ToString(),
-                Username = "Lapatelli",
-                Password = "Maks",
-                Email = "maksim.m.yudin@mail.ru",
-                //TelephoneNumber = "+375297837978"
+                UserProfileId=Guid.NewGuid().ToString(),
+                Sex = "male",
+                Age = 24,
+                City = "Minsk",
             };
 
-            UserDb user2 = new UserDb
-            {
-                Id = Guid.NewGuid().ToString(),
-                Username = "Anggod",
-                Password = "Igor",
-                Email = "igor.m.yudin@mail.ru",
-                //TelephoneNumber = "+375298683270"
-            };
-
-            globalAdminDbContext.Users.Add(user1);
-            globalAdminDbContext.Users.Add(user2);
+            globalAdminDbContext.UserProfiles.Add(userprofile);            
             globalAdminDbContext.SaveChanges();
         }
     }
