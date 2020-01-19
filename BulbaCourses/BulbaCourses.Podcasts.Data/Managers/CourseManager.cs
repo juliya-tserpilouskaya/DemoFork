@@ -1,41 +1,39 @@
 ﻿using BulbaCourses.Podcasts.Data.Interfaces;
 using BulbaCourses.Podcasts.Data.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace BulbaCourses.Podcasts.Data.Managers
 {
-    class CourseManager : IManager<CourseDb>
+    class CourseManager : BaseManager, IManager<CourseDb>
     {
-
-        protected readonly PodcastsContext dbContext;
-        private bool _isDisposed = false;
-
-        public CourseManager(PodcastsContext dbContext)
+        public CourseManager(PodcastsContext dbContext) : base(dbContext)
         {
-            this.dbContext = dbContext;
         }
 
         public async Task<CourseDb> Add(CourseDb courseDb)
         {
             dbContext.Courses.Add(courseDb);
-            await dbContext.SaveChangesAsync();
-            return await Task.FromResult<CourseDb>(courseDb);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
+            return await Task.FromResult(courseDb).ConfigureAwait(false);
         }
-        public IEnumerable<CourseDb> GetAll()
+        public async Task<IEnumerable<CourseDb>> GetAll()
+        {
+            var courseList = await dbContext.Courses.ToListAsync().ConfigureAwait(false);
+            return courseList.AsReadOnly();
+        }
+        public async Task<CourseDb> GetById(string id)
         {
             throw new NotImplementedException();
         }
-        public CourseDb GetById(string id)
+        public async Task<CourseDb> Remove(CourseDb courseDb)
         {
             throw new NotImplementedException();
         }
-        public CourseDb Remove(CourseDb courseDb)
-        {
-            throw new NotImplementedException();
-        }
-        public CourseDb Update(CourseDb courseDb)
+        public async Task<CourseDb> Update(CourseDb courseDb)
         {
             throw new NotImplementedException();
         }

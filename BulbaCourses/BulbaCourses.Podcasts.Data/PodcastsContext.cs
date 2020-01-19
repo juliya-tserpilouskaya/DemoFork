@@ -12,7 +12,7 @@ using BulbaCourses.Podcasts.Data.Migrations;
 
 namespace BulbaCourses.Podcasts.Data
 {
-    class PodcastsContext : DbContext
+    public class PodcastsContext : DbContext
     {
         public PodcastsContext() : base("PodcastsDbConnection")
         {
