@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Web", "BulbaCourses.Web\BulbaCourses.Web.csproj", "{B1F4A35F-4B42-4448-9577-CFD2E1EF83F8}"
 EndProject
@@ -90,6 +90,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.SelfHosted", "BulbaCourses.Youtube.SelfHosted\BulbaCourses.Youtube.SelfHosted.csproj", "{87FDF1A1-4AF5-40E2-A2D2-5FA9EEB4504E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Youtube.Tests", "BulbaCourses.Youtube.Tests\BulbaCourses.Youtube.Tests.csproj", "{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.Forecast", "BulbaCourses.Analytics.Forecast\BulbaCourses.Analytics.Forecast.csproj", "{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.ForecastTests", "BulbaCourses.Analytics.ForecastTests\BulbaCourses.Analytics.ForecastTests.csproj", "{EB8AE6D3-1677-4A8A-84CC-C67095E39980}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -232,6 +236,14 @@ Global
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -270,6 +282,8 @@ Global
 		{82F072DD-142C-4BCE-936E-077C76EB7802} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{87FDF1A1-4AF5-40E2-A2D2-5FA9EEB4504E} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
 		{C0CE4C81-7803-4F17-8E1E-0039DBDEC04C} = {CEF33061-8E8C-41CB-936E-EA8D37BF6540}
+		{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7} = {99D812B3-957C-411B-A862-81A6CF59FDA8}
+		{EB8AE6D3-1677-4A8A-84CC-C67095E39980} = {99D812B3-957C-411B-A862-81A6CF59FDA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {248D477B-280A-4E13-9AB8-4D9093A4EBF1}
