@@ -59,9 +59,8 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var audio1 = await dbmanager.GetAllAsync();
-                var audio2 = audio1.Where(c => c.Name.Contains(Name)).ToList();
-                var AudioLogic = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audio2);
+                var audio = (await dbmanager.GetAllAsync()).Where(c => c.Name.Contains(Name)).ToList();
+                var AudioLogic = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audio);
                 return Result<IEnumerable<AudioLogic>>.Ok(AudioLogic);
             }
             catch (Exception)

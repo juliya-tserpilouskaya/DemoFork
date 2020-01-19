@@ -2,7 +2,6 @@
 using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Logic.Models;
 using BulbaCourses.Podcasts.Web.Models;
-using BulbaCourses.Video.Web.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -17,24 +16,24 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    [RoutePrefix("api/contents")]
+    public class ContentController : ApiController
     {
         private readonly IMapper mapper;
-        private readonly IUserService service;
-        private readonly IValidator<UserWeb> validator;
+        private readonly IContentService service;
+        private readonly IValidator<ContentWeb> validator;
         private readonly IBus bus;
 
-        public UserController(IMapper mapper, IUserService userService, IBus bus)
+        public ContentController(IMapper mapper, IContentService contentService, IBus bus)
         {
             this.mapper = mapper;
-            this.service = userService;
+            this.service = contentService;
             this.bus = bus;
         }
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Content doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Content found", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
         {
@@ -47,9 +46,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.GetById(id);
                 if (result.IsSuccess == true)
                 {
-                    var user = result.Data;
-                    var userWeb = mapper.Map<UserLogic, UserWeb>(user);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(userWeb);
+                    var content = result.Data;
+                    var contentWeb = mapper.Map<ContentLogic, ContentWeb>(content);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(contentWeb);
                 }
                 else
                 {
@@ -66,40 +65,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
-        [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
-        public async Task<IHttpActionResult> GetAll()
-        {
-            try
-            {
-                var result = await service.GetAll();
-                if (result.IsSuccess == true)
-                {
-                    var userLogic = result.Data;
-                    var userWeb = mapper.Map<IEnumerable<UserLogic>, IEnumerable<UserWeb>>(userLogic);
-                    return userWeb == null ? NotFound() : (IHttpActionResult)Ok(userWeb);
-                }
-                else
-                {
-                    switch (result.Message)
-                    {
-                        default:
-                            return InternalServerError();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Content post", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddUser, default")]UserWeb userWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddContent, default")]ContentWeb contentWeb, AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -107,11 +78,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Add(userlogic);
+                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                var result = await service.Add(contentLogic, audiologic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userWeb);
+                    return Ok(contentWeb);
                 }
                 else
                 {
@@ -131,9 +103,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Content updated", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser, default")]UserWeb userWeb)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateContent, default")]ContentWeb contentWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -141,11 +113,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Update(userLogic);
+                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                var result = await service.Update(contentLogic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userLogic);
+                    return Ok(contentLogic);
                 }
                 else
                 {
@@ -165,9 +137,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Content deleted", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteUser, default")] UserWeb userWeb)
+        public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteContent, default")] ContentWeb contentWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -175,11 +147,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Delete(userLogic);
+                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                var result = await service.Delete(contentLogic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userLogic);
+                    return Ok(contentLogic);
                 }
                 else
                 {

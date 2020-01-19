@@ -19,14 +19,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     public class CourseController : ApiController
     {
         private readonly IMapper mapper;
-        private readonly ICourseService courseService;
+        private readonly ICourseService service;
         private readonly IValidator<CourseWeb> validator;
         private readonly IBus bus;
 
         public CourseController(IMapper mapper, ICourseService courseService, IBus bus)
         {
             this.mapper = mapper;
-            this.courseService = courseService;
+            this.service = courseService;
             this.bus = bus;
         }
 
@@ -35,7 +35,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Get(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -43,9 +43,21 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var course = await courseService.GetById(id).Data;
-                var result = mapper.Map<CourseLogic, CourseWeb>(course));
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await service.GetById(id);
+                if (result.IsSuccess == true)
+                {
+                    var course = result.Data;
+                    var courseWeb = mapper.Map<CourseLogic, CourseWeb>(course);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(courseWeb);
+                }
+                else
+                {
+                    switch (result.Message)
+                    {
+                        default:
+                            return InternalServerError();
+                    }
+                }
             }
             catch (InvalidOperationException ex)
             {
@@ -54,13 +66,31 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [HttpGet, Route("")] ///For Debug
+        [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> GetAll()
         {
-            var courses = await courseService.GetAll();
-            var result = mapper.Map<IEnumerable<CourseLogic>, IEnumerable<CourseWeb>>(courses);
-            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            try
+            {
+                var result = await service.GetAll();
+                if (result.IsSuccess == true)
+                {
+                    var courses = result.Data;
+                    var coursesWeb = mapper.Map<IEnumerable<CourseLogic>, IEnumerable<CourseWeb>>(courses);
+                    return coursesWeb == null ? NotFound() : (IHttpActionResult)Ok(coursesWeb);
+                }
+                else
+                {
+                    switch (result.Message)
+                    {
+                        default:
+                            return InternalServerError();
+                    }
+                }
+            }catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [Authorize]
@@ -74,16 +104,24 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             try
             {
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await courseService.AddCourse(courselogic);
-                //await bus.SendAsync("Podcasts", course);
-                return Ok(result);
+                var result = await service.Add(courselogic);
+                if (result.IsSuccess == true)
+                {
+                    return Ok(courselogic);
+                }
+                else
+                {
+                    switch (result.Message)
+                    {
+                        default:
+                            return InternalServerError();
+                    }
+                }
             }
-
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
             }
@@ -103,9 +141,19 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     return BadRequest(ModelState);
                 }
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await courseService.Update(courselogic);
-
-                return Ok(result);
+                var result = await service.Update(courselogic);
+                if (result.IsSuccess == true)
+                {
+                    return Ok(courselogic);
+                }
+                else
+                {
+                    switch (result.Message)
+                    {
+                        default:
+                            return InternalServerError();
+                    }
+                }
             }
 
             catch (Exception ex)
@@ -128,8 +176,19 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             try
             {
                 var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await courseService.Delete(courselogic);
-                return Ok();
+                var result = await service.Delete(courselogic);
+                if (result.IsSuccess == true)
+                {
+                    return Ok(courselogic);
+                }
+                else
+                {
+                    switch (result.Message)
+                    {
+                        default:
+                            return InternalServerError();
+                    }
+                }
             }
             catch (Exception ex)
             {

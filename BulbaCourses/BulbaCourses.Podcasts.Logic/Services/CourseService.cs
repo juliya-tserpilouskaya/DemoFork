@@ -61,9 +61,8 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var course = await dbmanager.GetAllAsync();
-                var course1 = course.Where(c => c.Name.Contains(Name)).ToList();
-                var courseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course1);
+                var course = (await dbmanager.GetAllAsync()).Where(c => c.Name.Contains(Name)).ToList();
+                var courseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course);
                 return Result<IEnumerable<CourseLogic>>.Ok(courseLogic);
             }
             catch (Exception)

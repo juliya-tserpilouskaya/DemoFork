@@ -2,7 +2,6 @@
 using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Logic.Models;
 using BulbaCourses.Podcasts.Web.Models;
-using BulbaCourses.Video.Web.Models;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -17,39 +16,36 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UserController : ApiController
+    [RoutePrefix("api/audios")]
+    public class AudioController : ApiController
     {
         private readonly IMapper mapper;
-        private readonly IUserService service;
-        private readonly IValidator<UserWeb> validator;
+        private readonly IAudioService service;
+        private readonly IValidator<AudioWeb> validator;
         private readonly IBus bus;
 
-        public UserController(IMapper mapper, IUserService userService, IBus bus)
+        public AudioController(IMapper mapper, IAudioService service, IBus bus)
         {
             this.mapper = mapper;
-            this.service = userService;
+            this.service = service;
             this.bus = bus;
         }
+
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Audio doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Audio found", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await service.GetById(id);
                 if (result.IsSuccess == true)
                 {
-                    var user = result.Data;
-                    var userWeb = mapper.Map<UserLogic, UserWeb>(user);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(userWeb);
+                    var audioWeb = result.Data;
+                    var audiologic = mapper.Map<AudioLogic, AudioWeb>(audioWeb);
+                    return Ok(audiologic);
                 }
                 else
                 {
@@ -60,14 +56,15 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     }
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
+
         }
 
         [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
         public async Task<IHttpActionResult> GetAll()
         {
             try
@@ -75,9 +72,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.GetAll();
                 if (result.IsSuccess == true)
                 {
-                    var userLogic = result.Data;
-                    var userWeb = mapper.Map<IEnumerable<UserLogic>, IEnumerable<UserWeb>>(userLogic);
-                    return userWeb == null ? NotFound() : (IHttpActionResult)Ok(userWeb);
+                    var audioLogic = result.Data;
+                    var audioWeb = mapper.Map<IEnumerable<AudioLogic>, IEnumerable<AudioWeb>>(audioLogic);
+                    return audioWeb == null ? NotFound() : (IHttpActionResult)Ok(audioWeb);
                 }
                 else
                 {
@@ -97,9 +94,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Audio post", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddUser, default")]UserWeb userWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddAudio, default")] AudioWeb audioWeb, CourseWeb courseWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -107,11 +104,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Add(userlogic);
+                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                var result = await service.Add(audiologic, courselogic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userWeb);
+                    return Ok(audiologic);
                 }
                 else
                 {
@@ -129,11 +127,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [Authorize]
-        [HttpPut, Route("")]
+        [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Audio updated", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser, default")]UserWeb userWeb)
+        public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateAudio, default")]AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -141,11 +139,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Update(userLogic);
+                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                var result = await service.Update(audiologic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userLogic);
+                    return Ok(audiologic);
                 }
                 else
                 {
@@ -163,11 +161,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [Authorize]
-        [HttpDelete, Route("{id})")]
+        [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.OK, "Audio deleted", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteUser, default")] UserWeb userWeb)
+        public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteAudio, default")]AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -175,11 +173,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.Delete(userLogic);
+                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                var result = await service.Delete(audiologic);
                 if (result.IsSuccess == true)
                 {
-                    return Ok(userLogic);
+                    return Ok(audiologic);
                 }
                 else
                 {
@@ -195,5 +193,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
     }
 }
