@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalAdminUser.Logic.Models
 {
-    public class UserProfileDTO
+    public class UserAdditionalInfoDTO
     {
-        public string Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string TelephoneNumber { get; set; }
+        public string UserId { get; set; } //from UsersDb.AspNetUsers
+        public string UserProfileId { get; set; } = Guid.NewGuid().ToString();
         public int Age { get; set; }
         public string Sex { get; set; }
         public string City { get; set; }

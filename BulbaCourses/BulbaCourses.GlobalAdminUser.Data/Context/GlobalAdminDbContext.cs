@@ -18,7 +18,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
 
         //public DbSet<UserDb> Users { get; set; }
 
-        public DbSet<UserProfileDb> UserProfiles { get; set; }
+        public DbSet<UserAdditionalInfoDb> UsersAdditionalInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -36,8 +36,8 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             #endregion
 
 
-            modelBuilder.Entity<UserProfileDb>().ToTable("UserProfiles");
-            var userProfileEntity = modelBuilder.Entity<UserProfileDb>();
+            modelBuilder.Entity<UserAdditionalInfoDb>().ToTable("UsersAdditionalInfo");
+            var userProfileEntity = modelBuilder.Entity<UserAdditionalInfoDb>();
 
             userProfileEntity.HasKey(x => x.UserProfileId);
             userProfileEntity.Property(x => x.UserId); //from UserDB.dbo.ASPNetUsers
