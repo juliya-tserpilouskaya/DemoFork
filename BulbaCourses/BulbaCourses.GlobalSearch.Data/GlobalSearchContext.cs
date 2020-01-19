@@ -29,12 +29,12 @@ namespace BulbaCourses.GlobalSearch.Data
             modelBuilder.Configurations.Add(new UserConfiguration());
         }
 
-        public DbSet<AuthorDB> Authors { get; set; }
+        public virtual DbSet<AuthorDB> Authors { get; set; }
         public virtual DbSet<SearchQueryDB> SearchQueries { get; set; }
-        public DbSet<CourseCategoryDB> Categories { get; set; }
-        public DbSet<CourseDB> Courses { get; set; }
-        public DbSet<CourseItemDB> CourseItems { get; set; }
-        public DbSet<BookmarkDB> Bookmarks { get; set; }
-        public DbSet<UserDB> Users { get; set; }
+        public virtual DbSet<CourseCategoryDB> Categories { get; set; }
+        public virtual DbSet<CourseDB> Courses { get; set; }
+        public virtual DbSet<CourseItemDB> CourseItems { get; set; }
+        public virtual DbSet<BookmarkDB> Bookmarks { get; set; }
+        public virtual DbSet<UserDB> Users { get; set; }
     }
 }

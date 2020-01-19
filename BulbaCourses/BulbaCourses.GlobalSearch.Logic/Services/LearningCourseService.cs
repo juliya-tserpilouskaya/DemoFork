@@ -25,6 +25,12 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             _lucene = lucene;
         }
 
+        public LearningCourseService(IMapper mapper, ICourseDbService learningCourseDb)
+        {
+            _learningCourseDb = learningCourseDb;
+            _mapper = mapper;
+        }
+
         /// <summary>
         /// Returns all stored courses
         /// </summary>

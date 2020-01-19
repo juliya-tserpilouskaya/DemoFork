@@ -11,9 +11,19 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 {
     public class CourseDbService : ICourseDbService
     {
-        private GlobalSearchContext _context = new GlobalSearchContext();
+        private GlobalSearchContext _context;
 
         private bool _isDisposed;
+
+        public CourseDbService()
+        {
+            _context = new GlobalSearchContext();
+        }
+
+        public CourseDbService(GlobalSearchContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         /// Returns all stored courses
