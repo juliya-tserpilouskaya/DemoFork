@@ -46,15 +46,15 @@ namespace BulbaCourses.Youtube.Tests
         [Test, Category("SearchRequest")]
         public void Test_SearchRequest_Save()
         {
+            var requestService = kernel.Get<ISearchRequestService>();
+
+            var searchRequest = fakerRequest.Generate(1).First();
+            var title = searchRequest.Title;
+
+            requestService.Save(searchRequest);
+
             using (var context = new YoutubeContext())
             {
-                var requestService = kernel.Get<ISearchRequestService>();
-
-                var searchRequest = fakerRequest.Generate(1).First();
-                var title = searchRequest.Title;
-
-                requestService.Save(searchRequest);
-
                 var result = context.SearchRequests.Where(r => r.Title == title).First();
                 result.Should().NotBeNull();
             }
@@ -63,40 +63,32 @@ namespace BulbaCourses.Youtube.Tests
         [Test, Category("SearchRequest")]
         public void Test_SearchRequest_Exists_True()
         {
-            using (var context = new YoutubeContext())
-            {
-                var requestService = kernel.Get<ISearchRequestService>();
+            var requestService = kernel.Get<ISearchRequestService>();
 
-                var searchRequest = fakerRequest.Generate(1).First();
-                var title = searchRequest.Title;
+            var searchRequest = fakerRequest.Generate(1).First();
 
-                requestService.Save(searchRequest);
-                requestService.Save(fakerRequest.Generate(1).First());
-                requestService.Save(fakerRequest.Generate(1).First());
+            requestService.Save(searchRequest);
+            requestService.Save(fakerRequest.Generate(1).First());
+            requestService.Save(fakerRequest.Generate(1).First());
 
-                var result = requestService.Exists(searchRequest);
+            var result = requestService.Exists(searchRequest);
 
-                result.Should().BeTrue();
-            }
+            result.Should().BeTrue();
         }
 
         [Test, Category("SearchRequest")]
         public void Test_SearchRequest_Exists_False()
         {
-            using (var context = new YoutubeContext())
-            {
-                var requestService = kernel.Get<ISearchRequestService>();
+            var requestService = kernel.Get<ISearchRequestService>();
 
-                var searchRequest = fakerRequest.Generate(1).First();
-                var title = searchRequest.Title;
+            var searchRequest = fakerRequest.Generate(1).First();
+     
+            requestService.Save(fakerRequest.Generate(1).First());
+            requestService.Save(fakerRequest.Generate(1).First());
 
-                requestService.Save(fakerRequest.Generate(1).First());
-                requestService.Save(fakerRequest.Generate(1).First());
+            var result = requestService.Exists(searchRequest);
 
-                var result = requestService.Exists(searchRequest);
-
-                result.Should().BeFalse();
-            }
+            result.Should().BeFalse();
         }
     }
 }
