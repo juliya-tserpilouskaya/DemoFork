@@ -15,32 +15,39 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        SearchRequestDb Save(SearchRequestDb searchRequest);
+        SearchRequest Save(SearchRequest searchRequest);
+
+        Task<Result<SearchRequest>> SaveAsync(SearchRequest story);
+
         /// <summary>
         /// Update search request
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        void Update(SearchRequestDb searchRequest);
+        SearchRequest Update(SearchRequest searchRequest);
+
+        Task<Result<SearchRequest>> UpdateAsync(SearchRequest story);
 
         /// <summary>
         /// Сheck if record of searchRequest exists in database
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        bool Exists(SearchRequestDb searchRequest);
+        bool Exists(SearchRequest searchRequest);
+
         /// <summary>
         /// Get SearchRequest by CacheId
         /// </summary>
         /// <param name="cacheId"></param>
         /// <returns></returns>
-        SearchRequestDb GetRequestByCacheId(string cacheId);
+        SearchRequest GetRequestByCacheId(string cacheId);
+
         /// <summary>
         /// Get SearchRequest by CacheId (Async method)
         /// </summary>
         /// <param name="cacheId"></param>
         /// <returns></returns>
-        Task<SearchRequestDb> GetRequestByCacheIdAsync(string cacheId);
+        Task<SearchRequest> GetRequestByCacheIdAsync(string cacheId);
 
     }
 }

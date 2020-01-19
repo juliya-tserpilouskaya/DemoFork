@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
@@ -14,40 +15,66 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
     [RoutePrefix("api/bookmark")]
     public class CourseBookmarkController : ApiController
     {
-        private readonly ICourseBookmarkServices courseBookmarkService;
+        private readonly ICourseBookmarkServices _courseBookmarkService;
 
         public CourseBookmarkController(ICourseBookmarkServices coursebookmarkService)
         {
-            courseBookmarkService = coursebookmarkService;
+            _courseBookmarkService = coursebookmarkService;
         }
 
-        [HttpGet, Route("")]
-        [Description("Get all bookmarks")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmarks doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Bookmarks found", typeof(IEnumerable<CourseBookmark>))]
+        [HttpGet, Route("{userId}")]//можно указать какой тип id
+        [Description("Get Bookmark by UserId")]// для описания ,но в данном примере не работает...
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark found", typeof(CourseBookmark))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetByUserId(string userId)
         {
-            var result = courseBookmarkService.GetAll();
-            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await _courseBookmarkService.GetByUserIdAsync(userId);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-            
-        [HttpPut, Route("")]
+        [HttpPost, Route("")]
         [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added", typeof(IEnumerable<CourseBookmark>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Add([FromBody]CourseBookmark courseBookmark)
+        public async Task<IHttpActionResult> Add([FromBody]CourseBookmark courseBookmark)
         {
-            return Ok(courseBookmarkService.Add(courseBookmark));
+            if (courseBookmark == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _courseBookmarkService.AddAsync(courseBookmark);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
-        [HttpDelete, Route("{id}")]
-        public IHttpActionResult Delete(string id)
+        [HttpDelete, Route("")]
+        [Description("Delete bookmark")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Bookmark deleted", typeof(CourseBookmark))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Delete(CourseBookmark bookmark)
         {
-            return Ok(courseBookmarkService.Delete(id));
+            if (bookmark == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _courseBookmarkService.DeleteAsync(bookmark);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
     }
 }

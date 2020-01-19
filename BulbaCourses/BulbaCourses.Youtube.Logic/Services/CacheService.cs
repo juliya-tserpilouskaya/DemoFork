@@ -5,6 +5,7 @@ using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.Youtube.DataAccess.Models;
+using BulbaCourses.Youtube.Logic.Models;
 
 namespace BulbaCourses.Youtube.Logic.Services
 {
@@ -15,10 +16,10 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<ResultVideoDb> GetValue(string id)
+        public List<ResultVideo> GetValue(string id)
         {
             MemoryCache memoryCache = MemoryCache.Default;
-            return memoryCache.Get(id) as List<ResultVideoDb>;
+            return memoryCache.Get(id) as List<ResultVideo>;
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool Add(string key, List<ResultVideoDb> value)
+        public bool Add(string key, List<ResultVideo> value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             return memoryCache.Add(key, value, DateTime.Now.AddMinutes(10));
@@ -36,7 +37,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// Update cache for search request for refresh storage time
         /// </summary>
         /// <param name="value"></param>
-        public void Update(string key, List<ResultVideoDb> value)
+        public void Update(string key, List<ResultVideo> value)
         {
             MemoryCache memoryCache = MemoryCache.Default;
             memoryCache.Set(key, value, DateTime.Now.AddMinutes(10));
