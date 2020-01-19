@@ -73,7 +73,8 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
                             Name = "Item",
                             Description = "Description"
                         }
-                    }
+                    }, 
+                    Complexity = "easy"
                 },
                 new CourseDB
                 {
@@ -88,12 +89,14 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
                             Description = "Description"
                         }
                     },
-                    AuthorDBId = 2
+                    AuthorDBId = 2,
+                    Complexity = "easy"
                 },
                 new CourseDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Created = DateTime.Now,
+                    Complexity = "easy",
                     Items = new List<CourseItemDB>
                     {
                         new CourseItemDB
@@ -172,5 +175,48 @@ namespace BulbaCourses.GlobalSearch.Tests.LearningCourses
             mockSetItem.Verify(m => m.RemoveRange(It.IsAny<IEnumerable<CourseItemDB>>()), Times.Once());
         }
 
+        [Test, Category("Course")]
+        public void update_course()
+        {
+            var DbService = new CourseDbService(mockContext.Object);
+            var mockLogicService = new Mock<LearningCourseService>();
+            var service = new LearningCourseService(mapper, DbService);
+
+            LearningCourseDTO lc = new LearningCourseDTO
+            {
+                Name = "Course",
+                Id = "123",
+                Category = 2,
+                Cost = 10,
+                Language = "EN"
+            };
+            //Act
+            var x = service.UpdateNoIndex(lc);
+            //Assert
+            Assert.AreEqual(queries.First().Id, lc.Id);
+            Assert.AreEqual(queries.Count(), queries.Count());
+
+        }
+
+        [Test, Category("Course")]
+        public void add_course()
+        {
+            var DbService = new CourseDbService(mockContext.Object);
+            var mockLogicService = new Mock<LearningCourseService>();
+            var service = new LearningCourseService(mapper, DbService);
+
+            LearningCourseDTO lc = new LearningCourseDTO
+            {
+                Name = "Course",
+                Id = "33",
+                Category = 2,
+                Cost = 10,
+                Language = "EN"
+            };
+            //Act
+            var x = service.AddNoIndex(lc);
+            //Assert
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+        }
     }
 }

@@ -142,6 +142,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public IEnumerable<LearningCourseDTO> GetCourseByComplexity(string complexity)
         {    
+
             return _mapper.Map<IEnumerable<CourseDB>, List<LearningCourseDTO>>(_learningCourseDb.GetCourseByComplexity(complexity));
         }
 
@@ -178,7 +179,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         }
 
         /// <summary>
-        /// Updates course data
+        /// Updates and index course data
         /// </summary>
         /// <param name="course">Learning course</param>
         /// <returns></returns>
@@ -186,6 +187,17 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         {
             var data = _learningCourseDb.Update(_mapper.Map<LearningCourseDTO, CourseDB>(course));
             _lucene.IndexCourse(course);
+            return _mapper.Map<CourseDB, LearningCourseDTO>(data);
+        }
+
+        /// <summary>
+        /// Updates course data
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public LearningCourseDTO UpdateNoIndex(LearningCourseDTO course)
+        {
+            var data = _learningCourseDb.Update(_mapper.Map<LearningCourseDTO, CourseDB>(course));
             return _mapper.Map<CourseDB, LearningCourseDTO>(data);
         }
 
@@ -208,6 +220,27 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
             LearningCourseDTO LearningCourse = mapper.Map<CourseDB, LearningCourseDTO>(data);
             _lucene.IndexCourse(LearningCourse);
+            return LearningCourse;
+        }
+
+        /// <summary>
+        /// Creates learning course
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public LearningCourseDTO AddNoIndex(LearningCourseDTO course)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()
+                    .ForMember(x => x.AuthorId, opt => opt.MapFrom(c => c.AuthorDBId))
+                    .ForMember(x => x.Category, opt => opt.MapFrom(c => c.CourseCategoryDBId))
+                    .ReverseMap()
+                    .ForPath(x => x.AuthorDBId, opt => opt.MapFrom(c => c.AuthorId))
+                    .ForPath(x => x.CourseCategoryDBId, opt => opt.MapFrom(c => c.Category));
+                cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
+            }).CreateMapper();
+            var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
+            LearningCourseDTO LearningCourse = mapper.Map<CourseDB, LearningCourseDTO>(data);
             return LearningCourse;
         }
 
