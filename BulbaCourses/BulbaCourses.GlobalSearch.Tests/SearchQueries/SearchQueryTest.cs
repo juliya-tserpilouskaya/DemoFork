@@ -42,9 +42,10 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             {
                 new SearchQueryDB
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = "123",
                     Created = DateTime.Now,
-                    Query = "course that will make me smarter"
+                    Query = "course that will make me smarter",
+                    UserId = "1"
                 },
                 new SearchQueryDB
                 {
@@ -112,6 +113,59 @@ namespace BulbaCourses.GlobalSearch.Tests.SearchQueries
             //Assert
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
             mockSet.Verify(m => m.RemoveRange(It.IsAny<IEnumerable<SearchQueryDB>>()), Times.Once());
+        }
+
+        [Test, Category("SearchQuery")]
+        public void get_all_search_queries()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            var x = service.GetAll();
+            //Assert
+            Assert.AreEqual(x.Count(), queries.Select(p => p).ToList().Count());
+        }
+
+        [Test, Category("SearchQuery")]
+        public void get_search_query_by_id()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            var x = service.GetById("123");
+            //Assert
+            Assert.AreEqual(x.Id, "123");
+        }
+
+        [Test, Category("SearchQuery")]
+        public void get_search_query_by_userId()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            var x = service.GetByUserId("1").First();
+            //Assert
+            Assert.AreEqual(x.UserId, "1");
+        }
+
+        [Test, Category("SearchQuery")]
+        public void remove_query_by_id()
+        {
+            var DbService = new SearchQueryDbService(mockContext.Object);
+            var mockLogicService = new Mock<SearchQueryService>();
+            var service = new SearchQueryService(mapper, DbService);
+
+            //Act
+            service.RemoveById("1");
+            //Assert
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+            mockSet.Verify(m => m.Remove(It.IsAny<SearchQueryDB>()), Times.Once());
         }
     }
 }
