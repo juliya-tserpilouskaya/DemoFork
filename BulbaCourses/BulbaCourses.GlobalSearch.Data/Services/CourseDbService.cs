@@ -168,7 +168,9 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public IEnumerable<CourseDB> GetCourseByComplexity(string complexity)
         {
-            return _context.Courses.Where(course => course.Complexity.ToString().Equals(complexity));
+            var query = from course in _context.Courses select course;
+            return query.Where(course => course.Complexity.Equals(complexity,
+                StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
