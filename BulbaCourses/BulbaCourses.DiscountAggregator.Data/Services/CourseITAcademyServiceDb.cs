@@ -29,6 +29,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 List<CourseDb> listUpdateCourses = new List<CourseDb>();
                 CourseDb courseUpd;
                 DomainDb domain;
+                CourseCategoryDb category;
                 foreach (var courseNew in coursesDb)
                 {
                     courseUpd = context.Courses
@@ -41,6 +42,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                             courseNew.Domain = domain;
                         else
                             courseNew.Domain = await CreateDomainDbAsync(courseNew.Domain);
+
+                        category = context.CourseCategories.Where(x => x.Name == courseNew.Category.Name).FirstOrDefault();
+                        if (category != null)
+                            courseNew.Category = category;
+                        else
+                            courseNew.Category = await CreateCategoryDbAsync(courseNew.Category);
+
                         listAddCourses.Add(courseNew);
                     }
                     else
@@ -90,6 +98,13 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             context.Domains.Add(domain);
             await context.SaveChangesAsync().ConfigureAwait(false);
             return context.Domains.Where(x => x.DomainURL == domain.DomainURL).FirstOrDefault();
+        }
+
+        private async Task<CourseCategoryDb> CreateCategoryDbAsync(CourseCategoryDb category)
+        {
+            context.CourseCategories.Add(category);
+            await context.SaveChangesAsync().ConfigureAwait(false);
+            return context.CourseCategories.Where(x => x.Name == category.Name).FirstOrDefault();
         }
     }
 }

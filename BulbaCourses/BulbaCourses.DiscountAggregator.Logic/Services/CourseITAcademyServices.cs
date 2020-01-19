@@ -28,12 +28,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public async Task<Result<IEnumerable<Course>>> AddRangeAsync()
         {
-            var listCategories = _parserITAcademy.GetCategories();
+            var listCategories = _parserITAcademy.GetCategories().Distinct();
             List<Course> listCourses = new List<Course>();
             foreach(var el in listCategories)
             {
-                if (el.Name.Substring(0,1).Equals(@"/"))
-                    listCourses.AddRange(_parserITAcademy.GetAllCourses(el));
+                listCourses.AddRange(_parserITAcademy.GetAllCourses(el));
             }
             var listCoursesDb = _mapper.Map<IEnumerable<CourseDb>>(listCourses);
             var result = await _courseServiceDb.AddRangeAsync(listCoursesDb);

@@ -14,6 +14,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
         public IEnumerable<CoursesITAcademy> GetAllCourses(CourseCategory courseCategory)
         {
             var html = CommonValues.hostItAcademy + courseCategory.Name;
+            if (courseCategory.Name.Contains("http"))
+                html = courseCategory.Name;
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(html);
             List<CoursesITAcademy> listCourses = new List<CoursesITAcademy>();
@@ -23,6 +25,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             {
                 CoursesITAcademy currentCourse = new CoursesITAcademy()
                 {
+                    Category = new CourseCategory()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = courseCategory.Name,
+                        Title = courseCategory.Title
+                    },
                     Domain = new Domain()
                     {
                         DomainURL = CommonValues.hostItAcademy,
@@ -32,8 +40,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                     URL = CommonValues.hostItAcademy + node.Attributes["href"].Value,
                     Title = node.ChildNodes["div"].ChildNodes["h3"].InnerHtml
                 };
-                SetFieldsCourse(currentCourse);
-                listCourses.Add(currentCourse);
+                if (listCourses.Where(x => x.URL.Equals(currentCourse.URL)).FirstOrDefault() == null)
+                {
+                    SetFieldsCourse(currentCourse);
+                    listCourses.Add(currentCourse);
+                }
             }
             return listCourses;
         }
@@ -75,6 +86,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             {
                 listCategories.Add(new CourseCategory()
                 {
+                    Id = null,
                     Title = node.ChildNodes["a"].ChildNodes["span"].InnerHtml,
                     Name = node.ChildNodes["a"].Attributes["href"].Value
                 });
