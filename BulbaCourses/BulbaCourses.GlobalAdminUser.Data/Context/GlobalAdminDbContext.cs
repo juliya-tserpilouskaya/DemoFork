@@ -16,7 +16,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             Database.SetInitializer(new MyContextInitializer());
         }
 
-        public DbSet<UserDb> Users { get; set; }
+        //public DbSet<UserDb> Users { get; set; }
 
         public DbSet<UserProfileDb> UserProfiles { get; set; }
 
@@ -24,22 +24,27 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserDb>().ToTable("Users");
-            var entity = modelBuilder.Entity<UserDb>();
+            #region Comment Users table
+            //modelBuilder.Entity<UserDb>().ToTable("Users");
+            //var entity = modelBuilder.Entity<UserDb>();
 
-            entity.HasKey(x => x.Id);
-            entity.Property(x => x.Username).IsRequired()
-                .HasMaxLength(30).IsUnicode();
-            entity.Property(x => x.Password).IsRequired().HasMaxLength(50).IsUnicode();
-            entity.Property(x => x.Email).IsRequired().HasMaxLength(50).IsUnicode();
+            //entity.HasKey(x => x.Id);
+            //entity.Property(x => x.Username).IsRequired()
+            //    .HasMaxLength(30).IsUnicode();
+            //entity.Property(x => x.Password).IsRequired().HasMaxLength(50).IsUnicode();
+            //entity.Property(x => x.Email).IsRequired().HasMaxLength(50).IsUnicode();
+            #endregion
+
 
             modelBuilder.Entity<UserProfileDb>().ToTable("UserProfiles");
             var userProfileEntity = modelBuilder.Entity<UserProfileDb>();
-            userProfileEntity.HasKey(x => x.User);
-            userProfileEntity.Property(x => x.Surname).HasMaxLength(100).IsUnicode();
-            userProfileEntity.Property(x => x.Name).HasMaxLength(100).IsUnicode();
+
+            userProfileEntity.HasKey(x => x.UserProfileId);
+            userProfileEntity.Property(x => x.UserId); //from UserDB.dbo.ASPNetUsers
+            userProfileEntity.Property(x => x.Sex).HasMaxLength(10).IsUnicode();
+            userProfileEntity.Property(x => x.Age).IsRequired();
+            userProfileEntity.Property(x => x.City).IsRequired().HasMaxLength(50).IsRequired();
             userProfileEntity.Property(x => x.ProfilePictureUrl).IsOptional();
-            userProfileEntity.Property(x => x.TelephoneNumber).IsRequired().HasMaxLength(20).IsUnicode();
         }
     }
 }
