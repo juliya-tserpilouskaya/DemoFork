@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Cors;
 using System.Reflection;
+using BulbaCourses.GlobalSearch.Web.Properties;
 
 [assembly: OwinStartup(typeof(BulbaCourses.GlobalSearch.Web.Startup))]
 
@@ -42,8 +43,7 @@ namespace BulbaCourses.GlobalSearch.Web
 
             app.UseWebApi(config);
 
-            var cert = File.ReadAllBytes(
-               @"D:\ASP.NET_MVC\Project\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
+            
 
             JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
@@ -54,7 +54,7 @@ namespace BulbaCourses.GlobalSearch.Web
                 IssuerName = "BulbaCourses SSO",
                 Authority = "https://localhost:44382",
                 ValidationMode = ValidationMode.Local,
-                SigningCertificate = new X509Certificate2(cert, "123")
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
             }).UseCors(new CorsOptions()
             {
                 PolicyProvider = new CorsPolicyProvider()

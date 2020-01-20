@@ -210,6 +210,11 @@
     <Compile Include="Models\Enums\Section.cs" />
     <Compile Include="Models\Enums\SortingType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +223,7 @@
       <DependentUpon>Dockerfile</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\bulbacourses.pfx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -233,6 +239,12 @@
       <Project>{8508caee-d963-48ba-9b66-096f6e604804}</Project>
       <Name>BulbaCourses.GlobalSearch.Logic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
