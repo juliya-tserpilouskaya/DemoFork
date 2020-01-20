@@ -16,6 +16,8 @@ using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using Microsoft.Owin.Cors;
+using System.Web.Cors;
 
 [assembly: OwinStartup(typeof(BulbaCourses.DiscountAggregator.Web.Startup))]
 
@@ -30,6 +32,21 @@ namespace BulbaCourses.DiscountAggregator.Web
             SwaggerConfig.Register(config);
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
+
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
+
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DiscountAggregatorService, Domains } from '../../services/discount-aggregator.service';
 
 @Component({
   selector: 'app-course',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseComponent implements OnInit {
 
-  constructor() { }
+  domains: Domains[] = [];
+
+  constructor(private service : DiscountAggregatorService) { }
 
   ngOnInit() {
+    this.service.getCourses()
+    .subscribe(data => this.domains = data);
   }
 
 }
