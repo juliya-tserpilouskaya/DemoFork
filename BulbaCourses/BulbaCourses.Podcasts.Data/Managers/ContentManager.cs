@@ -10,7 +10,7 @@ using System.IO;
 
 namespace BulbaComments.Podcasts.Data.Managers
 {
-    class ContentManager : IManager<string>
+    public class ContentManager : IManager<string>
     {
         public ContentManager()
         {
@@ -44,6 +44,10 @@ namespace BulbaComments.Podcasts.Data.Managers
 
         public async Task<bool> ExistAsync(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException();
+            }
             await Task.CompletedTask;
             return true;
         }

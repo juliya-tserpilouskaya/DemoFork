@@ -19,7 +19,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> AddAsync(ContentLogic content, AudioLogic audio)
+        public async Task<Result> AddAsync(ContentLogic content, AudioLogic audio, UserLogic user)// use user
         {
             try
             {
@@ -50,7 +50,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(ContentLogic content)
+        public async Task<Result> DeleteAsync(ContentLogic content, UserLogic user)// use user
         {
 
             try
@@ -65,7 +65,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(ContentLogic content)
+        public async Task<Result> UpdateAsync(ContentLogic content, UserLogic user)// use user
         {
             try
             {

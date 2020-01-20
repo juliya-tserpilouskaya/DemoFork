@@ -26,15 +26,23 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> AddAsync(UserLogic user)
+        public async Task<Result> AddAsync(UserLogic user, UserLogic userY)
         {
             try
             {
-                user.Id = Guid.NewGuid().ToString();
-                user.RegistrationDate = DateTime.Now;
-                var userDb = mapper.Map<UserLogic, UserDb>(user);
-                var result = await dbmanager.AddAsync(userDb);
-                return Result.Ok();
+                if(userY.IsAdmin)
+                {
+                    user.Id = Guid.NewGuid().ToString();
+                    user.RegistrationDate = DateTime.Now;
+                    var userDb = mapper.Map<UserLogic, UserDb>(user);
+                    var result = await dbmanager.AddAsync(userDb);
+                    return Result.Ok();
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
+                
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -97,13 +105,21 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(UserLogic user)
+        public async Task<Result> DeleteAsync(UserLogic user, UserLogic userY)
         {
             try
             {
-                var userDb = mapper.Map<UserLogic, UserDb>(user);
-                await dbmanager.RemoveAsync(userDb);
-                return Result.Ok();
+                if (userY.IsAdmin || (userY.Id == user.Id))
+                {
+                    var userDb = mapper.Map<UserLogic, UserDb>(user);
+                    await dbmanager.RemoveAsync(userDb);
+                    return Result.Ok();
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
+                
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -123,13 +139,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(UserLogic user)
+        public async Task<Result> UpdateAsync(UserLogic user, UserLogic userY)
         {
             try
             {
-                var userDb = mapper.Map<UserLogic, UserDb>(user);
-                await dbmanager.UpdateAsync(userDb);
-                return Result.Ok();
+                if (userY.IsAdmin || (userY.Id == user.Id))
+                {
+                    var userDb = mapper.Map<UserLogic, UserDb>(user);
+                    await dbmanager.UpdateAsync(userDb);
+                    return Result.Ok();
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {

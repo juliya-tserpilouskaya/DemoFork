@@ -5,6 +5,7 @@ using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
@@ -27,28 +28,30 @@ namespace BulbaCourses.Podcasts.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
-            //config.Filters.Add(new BadRequestFilterAttribute());
-            var data = File.ReadAllBytes(
-                @"C:\Users\Master\source\repos\Sample.Web\Sample.SelfHosted\bin\Debug\cert.pfx");
-            app.UseCors(new CorsOptions()
-            {
-                PolicyProvider = new CorsPolicyProvider()
-                {
-                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
-                    {
-                        AllowAnyHeader = true,
-                        AllowAnyMethod = true,
-                        AllowAnyOrigin = true
-                    })
-                },
-                CorsEngine = new CorsEngine()
-            });
+
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
+                AuthenticationMode = AuthenticationMode.Active,
                 IssuerName = "http://localhost:44382",
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123"),
                 ValidationMode = ValidationMode.Local,
-                SigningCertificate = new X509Certificate2(data, "123")
-            });
+
+            })
+                .UseCors(new CorsOptions()
+                {
+                    PolicyProvider = new CorsPolicyProvider()
+                    {
+                        PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                        {
+                            AllowAnyMethod = true,
+                            AllowAnyOrigin = true,
+                            AllowAnyHeader = true
+                        })
+                    }
+                });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
@@ -56,7 +59,6 @@ namespace BulbaCourses.Podcasts.Web
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
             var kernel = new StandardKernel(new LogicModule());
-
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 

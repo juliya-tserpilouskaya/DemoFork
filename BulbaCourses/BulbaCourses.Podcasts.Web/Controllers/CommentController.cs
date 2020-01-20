@@ -13,6 +13,7 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -22,11 +23,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IMapper mapper;
         private readonly ICommentService service;
         private readonly IBus bus;
+        private readonly IUserService Uservice;
 
-        public CommentController(IMapper mapper, ICommentService service, IBus bus)
+        public CommentController(IMapper mapper, ICommentService service, IBus bus, IUserService user)
         {
             this.mapper = mapper;
             this.service = service;
+            this.Uservice = user;
             this.bus = bus;
         }
 
@@ -96,18 +99,31 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.AddAsync(commentlogic, courselogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name}");
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.AddAsync(commentlogic, courselogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name} by {userId.Name}");
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {
@@ -128,16 +144,29 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.UpdateAsync(commentlogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    var result = await service.UpdateAsync(commentlogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {
@@ -158,15 +187,27 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.DeleteAsync(commentlogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    var result = await service.DeleteAsync(commentlogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (Exception ex)

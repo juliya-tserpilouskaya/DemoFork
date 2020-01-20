@@ -19,22 +19,28 @@ namespace BulbaCourses.Podcasts.Logic.Services
     {
         private readonly IMapper mapper;
         private readonly IManager<CourseDb> dbmanager;
+        private readonly IManager<UserDb> UdbManager;
 
-        public CourseService(IMapper mapper, IManager<CourseDb> dbmanager)
+        public CourseService(IMapper mapper, IManager<CourseDb> dbmanager, IManager<UserDb> userM)
         {
             this.mapper = mapper;
             this.dbmanager = dbmanager;
+            this.UdbManager = userM;
         }
 
-        public async Task<Result> AddAsync(CourseLogic course)
+        public async Task<Result> AddAsync(CourseLogic course, UserLogic user)
         {
             try
             {
                 course.Id = Guid.NewGuid().ToString();
+                course.Author = user;
                 course.CreationDate = DateTime.Now;
                 course.Raiting = null;
                 course.Duration = course.Audios.Aggregate(0, (x,y) => x + y.Duration);
+                user.UploadedCourses.Add(course);
+                var userDb = mapper.Map<UserLogic, UserDb>(user);
                 var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                await UdbManager.UpdateAsync(userDb);
                 var result = await dbmanager.AddAsync(courseDb);
                 return Result.Ok();
             }
@@ -99,7 +105,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
         
-        public async Task<Result> DeleteAsync(CourseLogic course)
+        public async Task<Result> DeleteAsync(CourseLogic course, UserLogic user) //use user
         {
             
             try
@@ -126,7 +132,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(CourseLogic course)
+        public async Task<Result> UpdateAsync(CourseLogic course, UserLogic user)// use user
         {
             try
             {
