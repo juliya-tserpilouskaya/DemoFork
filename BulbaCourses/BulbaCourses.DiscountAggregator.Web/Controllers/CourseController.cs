@@ -50,6 +50,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+            }
             var result = await _courseService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }

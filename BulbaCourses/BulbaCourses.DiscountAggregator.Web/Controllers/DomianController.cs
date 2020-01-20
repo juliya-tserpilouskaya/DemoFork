@@ -29,6 +29,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(IEnumerable<Domain>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var result = await _domainService.GetAllAsync();

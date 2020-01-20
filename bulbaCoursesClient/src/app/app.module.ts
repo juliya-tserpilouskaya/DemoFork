@@ -26,6 +26,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
       resourceServer: {
         sendAccessToken: true,
         allowedUrls: [
+          'https://localhost:44317',
           'http://localhost:3300'
           , 'http://localhost:3500'
         ]
