@@ -12,6 +12,7 @@ using System.Reflection;
 using System;
 using IdentityServer3.AccessTokenValidation;
 using System.Security.Cryptography.X509Certificates;
+using BulbaCourses.PracticalMaterialsTests.Web.Properties;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
@@ -25,14 +26,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             config.MapHttpAttributeRoutes();
 
-            // ---------- IdentityServer3
-
-            var path =
-                Path.Combine(
-                    new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath,
-                    "SelfHostedRertificate.pfx");
-
-            var data = File.ReadAllBytes(path);
+            // ---------- IdentityServer3            
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
@@ -42,7 +36,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
                 ValidationMode = ValidationMode.Local,
 
-                SigningCertificate = new X509Certificate2(data, "123")
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
             });
 
             // ---------- Swagger

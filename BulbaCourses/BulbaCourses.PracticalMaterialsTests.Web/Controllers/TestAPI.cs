@@ -14,25 +14,30 @@ using System.Web.Http;
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/test")]
+    [RoutePrefix("api/tests")]
     public class TestAPIController : ApiController
     {
         private readonly IService_Test _service_Test;
 
         private readonly IBus _bus;
 
-        public TestAPIController(IService_Test service_Test, IBus bus)
+        public TestAPIController(IService_Test service_Test)
         {
             _service_Test = service_Test;
-
-            _bus = bus;
         }
 
+        [HttpPost]
         public IHttpActionResult TestMethod()
         {
             var Test_MainInfo = _service_Test.GetById(1);
 
             return Ok(Test_MainInfo.Data.Name);
+        }
+
+        [HttpGet]
+        public IHttpActionResult TestMethod_2()
+        {
+            return Ok("jjjj");
         }
     }
 }
