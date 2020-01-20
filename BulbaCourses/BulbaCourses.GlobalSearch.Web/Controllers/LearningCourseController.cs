@@ -10,6 +10,7 @@ using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Logic.DTO;
+using System.Security.Claims;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -49,6 +50,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+                }
             var result = await _learningCourseService.GetAllCoursesAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }

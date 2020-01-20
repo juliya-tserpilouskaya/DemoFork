@@ -42,7 +42,7 @@ namespace BulbaCourses.GlobalSearch.Web
             config.EnableSwagger(c => { c.SingleApiVersion("v1", "BulbaCourses.GlobalSearch.Web"); })
                 .EnableSwaggerUi();
 
-            app.UseWebApi(config);
+            //app.UseWebApi(config);
 
             JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
