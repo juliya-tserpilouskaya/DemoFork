@@ -12,6 +12,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.Attributes;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 {
