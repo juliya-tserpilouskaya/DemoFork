@@ -5,11 +5,13 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BulbaCourses.GlobalAdminUser.Web.Controllers
 {
 
     [RoutePrefix("api/users")]
+    [EnableCors("*","*","*")]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;

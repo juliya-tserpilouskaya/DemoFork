@@ -12,9 +12,12 @@
     </thead>
     <tbody>
         <tr *ngFor="let user of users">
-            <ng-template [ngTemplateOutlet]="loadTemplate(user)"
+          <td>{{user.Id}}</td>
+          <td>{{user.Username}}</td>
+          <td>{{user.Email}}</td>
+            <!--<ng-template [ngTemplateOutlet]="loadTemplate(user)"
                         [ngTemplateOutletContext]="{ $implicit: user}">
-            </ng-template>
+            </ng-template> -->
         </tr>
     </tbody>
 </table>

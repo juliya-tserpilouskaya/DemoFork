@@ -8,13 +8,12 @@ import { SampleModule } from './sample/sample.module';
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
-import { UsersComponent } from './GlobalAdminUsers/components/users/users.component';
+import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    UsersComponent
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +21,7 @@ import { UsersComponent } from './GlobalAdminUsers/components/users/users.compon
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    GlobalAdminUsersModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,

@@ -5,10 +5,10 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'http://localhost:44352/api/users';
+  private url = 'https://localhost:44352/api/users';
   constructor(private http: HttpClient) { }
 
   getUsers() {
-    return this.http.get(this.url);
+    return this.http.get<User[]>(this.url);
 }
 }
