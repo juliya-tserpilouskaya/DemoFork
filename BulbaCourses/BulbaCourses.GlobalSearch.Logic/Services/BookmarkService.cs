@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Logic.Services
 {
-    class BookmarkService : IBookmarkService
+    public class BookmarkService : IBookmarkService
     {
         IBookmarkDbService _bookmarkDb;
         IMapper _mapper;
