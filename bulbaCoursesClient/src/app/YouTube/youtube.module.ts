@@ -22,6 +22,7 @@ import { AppRoutingModule } from '../app-routing.module';
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     NgxYoutubePlayerModule.forRoot()
   ],
   providers: [YoutubeService],
