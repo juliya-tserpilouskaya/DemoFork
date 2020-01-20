@@ -1,2 +1,15 @@
 <p>search-story works!</p>
 <!-- <span *ngIf="isAuthenticated">Welcom to story</!-->
+  <ul>
+    <li *ngFor="let story of searchStory">
+      <div class="video">
+        <div class="video-info">
+          <h3>>{{story.Id}}</h3>
+
+          <p>{{story.SearchDate}}</p>
+          <p></p>
+        </div>
+      </div>
+      <br>
+    </li>
+  </ul>

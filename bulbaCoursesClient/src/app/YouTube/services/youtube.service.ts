@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SearchRequest } from '../components/search-request/search-request.component';
 import { Subject } from 'rxjs';
+import { SearchStory } from '../models/searchstory';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +19,9 @@ export class YoutubeService {
     return this.client.post<ResultVideo[]>('http://localhost:60601/api/SearchRequest', searchRequest);
   }
   getStory() {
-   // return this.client.get<SearchStory[]>('http://localhost:60601/api/story');
+   return this.client.get<SearchStory[]>('http://localhost:60601/api/story/guest');
   }
-
-
 }
-export interface SearchStory {
-    Id: number;
-    SearchDate: Date;
-    UserId: string;
-    SearchRequest_Id: number;
-  }
 
 export interface ResultVideo {
   Id: string;
