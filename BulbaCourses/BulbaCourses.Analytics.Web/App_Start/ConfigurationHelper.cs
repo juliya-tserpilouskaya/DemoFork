@@ -110,9 +110,29 @@ namespace BulbaCourses.Analytics.Web.App_Start
 
                     // integrate xml comments
                     swagger.IncludeXmlComments(Paths.XmlCommentsFilePath);
+                    swagger.OAuth2("oauth2")
+                        .Description("OAuth2 Implicit Grant")
+                        .Flow("implicit")
+                        .AuthorizationUrl("http://localhost:44382/connect/authorize")
+                        .TokenUrl("http://localhost:44382/connect/token")
+                        .Scopes(scopes =>
+                        {
+                            scopes.Add("openid", "Read access to protected resources");
+                            scopes.Add("profile", "Write access to protected resources");
+                        });
 
                 })
-                .EnableSwaggerUi(swagger => swagger.EnableDiscoveryUrlSelector());
+                .EnableSwaggerUi(swagger =>
+                {
+                    swagger.EnableDiscoveryUrlSelector();
+                    swagger.EnableOAuth2Support(
+                        clientId: "external_app",
+                        clientSecret: null,
+                        realm: "test-realm",
+                        appName: "Swagger UI"
+                    //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
+                    );
+                });
 
             return configuration;
         }
