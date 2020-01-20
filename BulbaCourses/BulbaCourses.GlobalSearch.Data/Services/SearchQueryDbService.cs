@@ -11,9 +11,19 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 {
     public class SearchQueryDbService : ISearchQueryDbService
     {
-        private GlobalSearchContext _context = new GlobalSearchContext();
+        private GlobalSearchContext _context;
 
         private bool _isDisposed;
+
+        public SearchQueryDbService()
+        {
+            _context = new GlobalSearchContext();
+        }
+
+        public SearchQueryDbService(GlobalSearchContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         /// Returns all search queries
