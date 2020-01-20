@@ -17,10 +17,12 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     {
 
         private readonly ISearchService _searchService;
+        private readonly ISearchQueryService _searchQueryService;
 
-        public SearchController(ISearchService searchService)
+        public SearchController(ISearchService searchService, ISearchQueryService searchQueryService)
         {
             _searchService = searchService;
+            _searchQueryService = searchQueryService;
         }
 
         [HttpGet, Route("")]
@@ -43,9 +45,23 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpGet, Route("{query}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "courses not found")]
         [SwaggerResponse(HttpStatusCode.OK, "courses are found", typeof(IEnumerable<LearningCourse>))]
-        public IHttpActionResult Search(string query)
+        public IHttpActionResult SearchByString(string query)
         {
             var result = _searchService.Search(query);
+            return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+        }
+
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query data")]
+        public IHttpActionResult SearchByQuery([FromBody]SearchQueryDTO query)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _searchQueryService.Add(query);
+            var result = _searchService.Search(query.Query);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
     }

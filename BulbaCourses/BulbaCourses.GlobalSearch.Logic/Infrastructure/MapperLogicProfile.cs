@@ -13,11 +13,15 @@ namespace BulbaCourses.GlobalSearch.Logic.Infrastructure
     {
         public MapperLogicProfile()
         {
-            CreateMap<CourseDB, LearningCourseDTO>().ReverseMap();
+            CreateMap<CourseDB, LearningCourseDTO>().ReverseMap()
+                .ForMember(dest => dest.AuthorDBId, opt => opt.MapFrom(src => src.AuthorId));
             CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
-            CreateMap<SearchQueryDB, SearchQueryDTO>().ReverseMap();
+            CreateMap<SearchQueryDB, SearchQueryDTO>().ReverseMap()
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Date)).ReverseMap();
             CreateMap<BookmarkDB, BookmarkDTO>().ReverseMap();
             CreateMap<UserDB, UserDTO>().ReverseMap();
+            CreateMap<LearningCourseDTO, CourseDB>()
+                .ForMember(dest => dest.AuthorDBId, opt => opt.MapFrom(src => src.AuthorId)).ReverseMap();
         }
     }
 }
