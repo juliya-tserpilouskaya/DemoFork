@@ -21,12 +21,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 
         private readonly IBus _bus;
 
-        public TestAPIController(IService_Test service_Test)
+        public TestAPIController(IService_Test service_Test, IBus bus)
         {
             _service_Test = service_Test;
+
+            _bus = bus;
         }
 
-        [HttpPost]
+        [HttpPost, Route("")]
         public IHttpActionResult TestMethod()
         {
             var Test_MainInfo = _service_Test.GetById(1);
@@ -34,7 +36,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             return Ok(Test_MainInfo.Data.Name);
         }
 
-        [HttpGet]
+        [HttpGet, Route("")]
         public IHttpActionResult TestMethod_2()
         {
             return Ok("jjjj");

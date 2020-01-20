@@ -13,13 +13,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
         public static void Register(HttpConfiguration config)
         {
-            //IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
+            IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
 
-            //bus = kernel.Get<IBus>();
+            bus = kernel.Get<IBus>();
 
-            //bus.Receive("BookService", null);
-
-            // Маршруты веб-API
+            bus.Receive("BookService", null);
+            
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
