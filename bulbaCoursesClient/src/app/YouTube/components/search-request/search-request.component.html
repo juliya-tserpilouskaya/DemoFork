@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
 
 <p>search-request works!</p>
 <form class="form-search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
@@ -7,7 +7,7 @@
     <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
       <div class="input-group-btn">
         <div class="btn-group">
-          <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+          <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Поиск</button>
         </div>
     </div>
   </div>
@@ -15,7 +15,6 @@
 <input type="checkbox" id="filter-checkbox">
 <label class="btn btn-primary" for="filter-checkbox">✎ Фильтры &#x25BC;</label>
 
-<!-- Form for filters -->
   <div class="form-filters">
     <div class="form-group">
       <label for="filter">По дате загрузки:</label>
