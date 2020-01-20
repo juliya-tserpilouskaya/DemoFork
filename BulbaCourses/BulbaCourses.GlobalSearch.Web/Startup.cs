@@ -8,6 +8,7 @@ using BulbaCourses.GlobalSearch.Web.App_Start;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
@@ -19,6 +20,7 @@ using System.IdentityModel.Tokens;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Web.Cors;
 using System.Reflection;
 
 [assembly: OwinStartup(typeof(BulbaCourses.GlobalSearch.Web.Startup))]
@@ -41,7 +43,7 @@ namespace BulbaCourses.GlobalSearch.Web
             app.UseWebApi(config);
 
             var cert = File.ReadAllBytes(
-               @"C:\Users\pc\Source\BCRepos\bulba-courses\BulbaCourses\BulbaCourses.GlobalSearch.Web\bulbacourses.pfx");
+               @"D:\ASP.NET_MVC\Project\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
 
             JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
@@ -53,6 +55,18 @@ namespace BulbaCourses.GlobalSearch.Web
                 Authority = "https://localhost:44382",
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(cert, "123")
+            }).UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
             });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
