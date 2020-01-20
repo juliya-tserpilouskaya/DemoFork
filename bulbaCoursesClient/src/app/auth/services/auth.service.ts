@@ -55,6 +55,7 @@ export class AuthService {
 
   logout() {
     // only for example
+    this.oauthService.logOut();
     this.authSubject.next(false);
     this.userSubject.next(null);
   }

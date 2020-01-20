@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,18 +14,33 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class SearchCriteriaServiceDb : ISearchCriteriaServiceDb
     {
-        private readonly CourseContext context;
+        private readonly DAContext context;
 
-        public SearchCriteriaServiceDb(CourseContext context)
+        public SearchCriteriaServiceDb(DAContext context)
         {
             this.context = context;
         }
 
-        public async Task<SearchCriteriaDb> AddAsync(SearchCriteriaDb criteriaDb)
+        public async Task<Result<SearchCriteriaDb>> AddAsync(SearchCriteriaDb criteriaDb)
         {
-            context.SearchCriterias.Add(criteriaDb);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return criteriaDb;
+            try 
+            { 
+                context.SearchCriterias.Add(criteriaDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<SearchCriteriaDb>.Ok(criteriaDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"Cannot save SearchCriteria. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"Cannot save SearchCriteria. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"Invalid SearchCriteria. {e.Message}");
+            }
         }
 
         public async Task<IEnumerable<SearchCriteriaDb>> GetAllAsync()
@@ -43,22 +61,44 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return criteriaDb;
         }
 
-        public async Task<SearchCriteriaDb> UpdateAsync(SearchCriteriaDb criteriaDb)
+        public async Task<Result<SearchCriteriaDb>> UpdateAsync(SearchCriteriaDb criteriaDb)
         {
-            if (criteriaDb == null)
+            try
             {
-                throw new ArgumentNullException("Criteria");
+                context.Entry(criteriaDb).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<SearchCriteriaDb>.Ok(criteriaDb);
             }
-            context.Entry(criteriaDb).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return criteriaDb;
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"SearchCriteria not update. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"SearchCriteria not update. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"Invalid SearchCriteria. {e.Message}");
+            }
         }
 
-        public async Task<SearchCriteriaDb> DeleteAsync(SearchCriteriaDb criteriaDb)
+        public async Task<Result<SearchCriteriaDb>> DeleteAsync(SearchCriteriaDb criteriaDb)
         {
-            context.SearchCriterias.Remove(criteriaDb);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return criteriaDb;
+            try
+            {
+                context.SearchCriterias.Remove(criteriaDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<SearchCriteriaDb>.Ok(criteriaDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"SearchCriteria not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<SearchCriteriaDb>.Fail<SearchCriteriaDb>($"Invalid SearchCriteria. {e.Message}");
+            }
         }
     }
 }

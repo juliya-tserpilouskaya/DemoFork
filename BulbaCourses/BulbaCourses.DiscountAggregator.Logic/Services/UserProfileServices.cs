@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Infrastructure;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using System;
 using System.Collections.Generic;
@@ -26,11 +28,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public async Task<Result<UserProfile>> GetByIdAsync(string id)
+        public async Task<UserProfile> GetByIdAsync(string id)
         {
             var profileDb = await _profileService.GetByIdAsync(id);
             var profile = _mapper.Map<UserProfileDb, UserProfile>(profileDb);
-            return Result<UserProfile>.Ok(profile);
+            return profile;
         }
 
         public IEnumerable<UserProfile> GetAll()
@@ -57,11 +59,14 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public async Task<Result<UserProfile>> AddAsync(UserProfile profile)
         {
+            if (await ExistsAsync(profile.Email))
+                return Result<UserProfile>.Fail<UserProfile>(ErrorMessages.errMessageDublicateProfile);
             profile.Id = Guid.NewGuid().ToString();
+            profile.SearchCriteria.Id = Guid.NewGuid().ToString();
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
             var result = await _profileService.AddAsync(profileDb);
-            return result ? Result<UserProfile>.Ok(profile) 
-                : (Result<UserProfile>)Result<UserProfile>.Fail<UserProfile>("Cannot save model");
+            return result.IsSuccess ? Result<UserProfile>.Ok(_mapper.Map<UserProfile>(result.Data)) 
+                : Result<UserProfile>.Fail<UserProfile>(result.Message);
         }
 
         public void Delete(UserProfile profile)
@@ -82,24 +87,22 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             _profileService.Update(profileDb);
         }
 
-        public Task<Result<UserProfile>> UpdateAsync(UserProfile profile)
+        public async Task<Result<UserProfile>> UpdateAsync(UserProfile profile)
         {
             var profileDb = _mapper.Map<UserProfile, UserProfileDb>(profile);
-            _profileService.UpdateAsync(profileDb);
-            return Task.FromResult(Result<UserProfile>.Ok(profile));
+            var result = await _profileService.UpdateAsync(profileDb);
+            return result.IsSuccess ? Result<UserProfile>.Ok(_mapper.Map<UserProfile>(result.Data))
+                : (Result<UserProfile>)Result.Fail(result.Message);
         }
 
-        public Task<Result<UserProfile>> DeleteByIdAsync(string idProfile)
+        public async Task<Result<UserProfile>> DeleteByIdAsync(string idProfile)
         {
             var profileDb = _profileService.GetById(idProfile);
-            _profileService.DeleteAsync(profileDb);
-            var profile = _mapper.Map<UserProfileDb, UserProfile>(profileDb);
-            return Task.FromResult(Result<UserProfile>.Ok(profile));
+            var result = await _profileService.DeleteAsync(profileDb);
+            return result.IsSuccess ? Result<UserProfile>.Ok(_mapper.Map<UserProfile>(result.Data))
+                : (Result<UserProfile>)Result.Fail(result.Message);
         }
 
-        public Task<bool> ExistsAsync(string login)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<bool> ExistsAsync(string email) =>  _profileService.ExistsAsync(email);
     }
 }

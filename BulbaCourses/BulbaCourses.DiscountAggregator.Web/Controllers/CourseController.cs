@@ -4,6 +4,7 @@ using BulbaCourses.DiscountAggregator.Logic.Services;
 using BulbaCourses.DiscountAggregator.Web.Filters;
 using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
+using Swashbuckle.Examples;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,8 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Security.Claims;
+using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
@@ -44,8 +47,13 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+            }
             var result = await _courseService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
@@ -101,6 +109,30 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+        
+        [HttpGet, Route("Search/{idSearch}")]
+        [Description("Get courses by Criteria")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByCriteriaAsync(string idSearch)
+        {
+            if (idSearch == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _courseService.GetByIdCriteriaAsync(idSearch);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -127,14 +159,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default")]Course course)
+        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (course == null)
             {
                 return BadRequest();
             }
@@ -152,21 +179,24 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
+        [SwaggerRequestExample(typeof(Course),typeof(SwaggerCourse))]
+        [Description("Add new course")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddCourse,default")]Course course)
+        [Authorize]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
-            //validate course here
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            var user = this.User as ClaimsPrincipal;
+            //user.FindFirst("preferred_username").Value;
+
             if (course == null)
             {
                 return BadRequest();
             }
 
-            course.Id = Guid.NewGuid().ToString();
             var result = await _courseService.AddAsync(course);
             return  result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

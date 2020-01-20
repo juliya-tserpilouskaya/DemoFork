@@ -29,6 +29,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(IEnumerable<Domain>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var result = await _domainService.GetAllAsync();
@@ -60,14 +61,17 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         }
 
         [HttpPost, Route("")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddDomain,default")]Domain domain)
+        [Description("Add new domain")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Domain added", typeof(Domain))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
             if (domain == null)
             {
                 return BadRequest();
             }
 
-            domain.Id = Guid.NewGuid().ToString();
             var result = await _domainService.AddAsync(domain);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
@@ -97,9 +101,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain updated", typeof(Domain))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update(string id, [FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
+        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
-            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            if (domain == null)
             {
                 return BadRequest();
             }

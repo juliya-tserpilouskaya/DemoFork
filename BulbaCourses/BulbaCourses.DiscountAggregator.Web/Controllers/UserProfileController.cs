@@ -84,15 +84,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _userProfileService.UpdateAsync(profile);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _userProfileService.UpdateAsync(profile);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
         [HttpDelete, Route("{id})")]
@@ -105,15 +99,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _userProfileService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _userProfileService.DeleteByIdAsync(id);
+            return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
     }
 }
