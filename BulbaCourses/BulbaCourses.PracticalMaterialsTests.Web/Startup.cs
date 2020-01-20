@@ -7,12 +7,15 @@ using Owin;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
-using System.IO;
-using System.Reflection;
-using System;
 using IdentityServer3.AccessTokenValidation;
 using System.Security.Cryptography.X509Certificates;
 using BulbaCourses.PracticalMaterialsTests.Web.Properties;
+using Microsoft.Owin.Security;
+using System.IdentityModel.Tokens;
+using System.Collections.Generic;
+using Microsoft.Owin.Cors;
+using System.Threading.Tasks;
+using System.Web.Cors;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
@@ -28,16 +31,34 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             // ---------- IdentityServer3            
 
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+                        
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
-            {
-                IssuerName = "My Security Server",
+                {
+                    AuthenticationMode = AuthenticationMode.Active,
 
-                Authority = "http://localhost:5050",
+                    IssuerName = "https://localhost:44382",
 
-                ValidationMode = ValidationMode.Local,
+                    SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123"),
 
-                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
-            });
+                    ValidationMode = ValidationMode.Local,
+                })
+                .UseCors(new CorsOptions()
+                {
+                    PolicyProvider = new CorsPolicyProvider()
+                    {
+                        PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                        {
+                            AllowAnyMethod = true,
+
+                            AllowAnyOrigin = true,
+
+                            AllowAnyHeader = true
+                        })
+                    }
+                });
 
             // ---------- Swagger
 
@@ -45,7 +66,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             // ---------- AppUse
 
-            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                    
+            app.UseNinjectMiddleware(() => ConfigureValidation(config))
+               .UseNinjectWebApi(config);                    
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)

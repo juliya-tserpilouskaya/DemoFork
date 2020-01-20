@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
+using BulbaCourses.PracticalMaterialsTests.SelfHosted.Properties;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Models;
 using IdentityServer3.Core.Services.InMemory;
@@ -14,70 +15,63 @@ using Owin;
 
 namespace BulbaCourses.PracticalMaterialsTests.SelfHosted
 {
-public class OwinStartup
-{
-    public void Configuration(IAppBuilder app)
+    public class OwinStartup
     {
-        var httpConfiguration = new HttpConfiguration();
+        public void Configuration(IAppBuilder app)
+        {
+            var httpConfiguration = new HttpConfiguration();
 
-        httpConfiguration.MapHttpAttributeRoutes();
+            httpConfiguration.MapHttpAttributeRoutes();
 
-        // ---------- IdentityServer3
+            // ---------- IdentityServer3
 
-        var identityServerOptions = new IdentityServerOptions();
+            var identityServerOptions = new IdentityServerOptions();
 
-        var factory = new IdentityServerServiceFactory()
-            .UseInMemoryClients(new[]
-            {
+            var factory = new IdentityServerServiceFactory()
+                .UseInMemoryClients(new[]
+                {
                 new Client
-                {                    
+                {
                     ClientId = "client1",
 
                     ClientSecrets = new List<Secret>()
-                    {   
+                    {
                         new Secret("secret".Sha256())
-                    },                    
-                    
+                    },
+
                     Flow = Flows.ResourceOwner,
-                    
+
                     AllowAccessToAllScopes = true
                 }
-            })            
-            .UseInMemoryScopes(StandardScopes.All)            
-            .UseInMemoryUsers(new List<InMemoryUser>()
-            {
+                })
+                .UseInMemoryScopes(StandardScopes.All)
+                .UseInMemoryUsers(new List<InMemoryUser>()
+                {
                 new InMemoryUser()
                 {
                     Username = "user",
 
                     Password = "password",
-                    
+
                     Subject = Guid.NewGuid().ToString()
                 }
-            });
-        
-        identityServerOptions.Factory = factory;
-        
-        identityServerOptions.IssuerUri = "My Security Server";
-        
-        identityServerOptions.RequireSsl = false;            
-                    
-        var path = 
-            Path.Combine(
-                new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath,
-                "SelfHostedRertificate.pfx");
-        
-        var data = File.ReadAllBytes(path);
-        
-        identityServerOptions.SigningCertificate = new X509Certificate2(data, "123");
+                });
 
-        // ---------- AppUse
+            identityServerOptions.Factory = factory;
 
-        app.UseIdentityServer(identityServerOptions);
+            identityServerOptions.IssuerUri = "My Security Server";
 
-        app.UseWebApi(httpConfiguration);
+            identityServerOptions.RequireSsl = false;
+
+            identityServerOptions.SigningCertificate = new X509Certificate2(Resources.SelfHostedRertificate, "123");
+
+            // ---------- AppUse
+
+            app.UseIdentityServer(identityServerOptions);
+
+            app.UseWebApi(httpConfiguration);
+        }
     }
-}
 }
 
     
