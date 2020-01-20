@@ -4,13 +4,15 @@
     <div class="video">
       <div class="video-thumbnail">
         <div class="thumbnail-wrapper">
-          <youtube-player
+          <!-- <youtube-player
       [videoId]="video.Id"
       (ready)="savePlayer($event)"
       (change)="onStateChange($event)"
-    ></youtube-player>
-          <!-- <img class="thumbnail" src='{{video.Thumbnail}}' alt=""> -->
-          <!-- <div class="duration-info">{{video.Duration | duration}}</div> -->
+    ></youtube-player> -->
+    <a [routerLink]="['/video','MKk1u5RMTn4']">
+      <img class="thumbnail" src='{{video.Thumbnail}}' alt="">
+    </a>
+          <div class="duration-info">{{video.Duration | duration}}</div>
         </div>
       </div>
       <div class="video-info">

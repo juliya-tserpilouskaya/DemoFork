@@ -26,11 +26,13 @@ border-bottom-left-radius: 4px;
   margin-left: 0;
   margin-right: 0;
 }
+.result-and-story{
+  margin: auto;
+}
 .form-group .form-control:last-child {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
-
 
 .form-filters{
   display: grid;
@@ -50,6 +52,7 @@ border-bottom-left-radius: 4px;
   display: flex;
 }
 app-search-result{
+  max-width: 70%;
   flex-grow: 2;
   border-right: 1px solid #ccc;
   margin-right: 10px;
