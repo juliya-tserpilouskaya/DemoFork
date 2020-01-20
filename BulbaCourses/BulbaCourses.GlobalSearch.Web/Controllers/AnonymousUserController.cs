@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -18,12 +19,13 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         {
             _anonymousUserService = anonymousUserService;
         }
+
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no users in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Users were found", typeof(AnonymousUser))]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _anonymousUserService.GetAll();
+            var result = await _anonymousUserService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
@@ -32,7 +34,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "User was found", typeof(AnonymousUser))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -40,7 +42,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                var result = _anonymousUserService.GetById(id);
+                var result = await _anonymousUserService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -54,6 +56,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         public IHttpActionResult Create([FromBody]AnonymousUser anonymousUser)
         {
             //validate here
+            if (anonymousUser == null)
+            {
+                return BadRequest();
+            }
             return Ok(_anonymousUserService.Add(anonymousUser));
         }
 

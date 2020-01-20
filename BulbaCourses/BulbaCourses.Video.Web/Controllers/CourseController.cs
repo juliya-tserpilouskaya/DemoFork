@@ -139,8 +139,12 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseView course)
         {
+            var user = this.User as ClaimsPrincipal;
+            //user.FindFirst("preferred_username").Value;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

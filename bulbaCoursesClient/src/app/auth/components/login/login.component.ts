@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.login();
+    if (this.loginForm.valid) {
+      const data = this.loginForm.value;
+      this.authService.login(data.name, data.password);
+    }
   }
 
 }

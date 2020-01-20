@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.Web.Security;
+using IdentityServer3.Core.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -68,6 +69,16 @@ namespace BulbaCourses.Web.Controllers
             //await _userManager.SendEmailAsync(user.Id, "Confirm Email", $"Confirm your email {user.Id} {token}");
 
             return Ok(user.Id);
+        }
+
+        //[Authorize]
+        [HttpPost(), Route("claims")]
+        public async Task<IHttpActionResult> AddClaim([FromBody]Claim claim, [FromUri]string userId)
+        {
+            //validate
+
+            await _userManager.AddClaimAsync(User.GetSubjectId(), claim);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
