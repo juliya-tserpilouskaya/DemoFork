@@ -4,12 +4,17 @@
     <div class="video">
       <div class="video-thumbnail">
         <div class="thumbnail-wrapper">
-          <img class="thumbnail" src='{{video.Thumbnail}}' alt="">
-          <div class="duration-info">{{video.Duration | duration}}</div>
+          <youtube-player
+      [videoId]="video.Id"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)"
+    ></youtube-player>
+          <!-- <img class="thumbnail" src='{{video.Thumbnail}}' alt=""> -->
+          <!-- <div class="duration-info">{{video.Duration | duration}}</div> -->
         </div>
       </div>
       <div class="video-info">
-        <h3>{{video.Title}}</h3>
+        <h3><a>{{video.Title}}</a></h3>
         <p><span>{{video.Channel?.Name}}</span><span>{{video.PublishedAt | publishedAt}}</span></p>
         <p>{{video.Description}}</p>
       </div>
