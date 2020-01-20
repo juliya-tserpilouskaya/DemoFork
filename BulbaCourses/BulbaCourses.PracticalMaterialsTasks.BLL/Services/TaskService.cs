@@ -54,7 +54,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
             if (id == null) throw new ValidationExeption("Not id", "idtask");
             var task = await DataBase.Tasks.GetTaskAsync(id);
             if (task == null) throw new ValidationExeption("Not task", "task");
-            return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified };
+            return new TaskDTO { Id = task.Id, Name = task.Name, TaskLevel = task.TaskLevel, Created = task.Created, Modified = task.Modified, Text = task.Text };
         }
 
         public async Task<IEnumerable<TaskDTO>> GetTasksAsync()
