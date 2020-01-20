@@ -27,7 +27,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
             _service_Test = kernel.Get<IService_Test>();
         }
 
-        [Test, MaxTime(2000)]
+        [Test]
         [TestCase(1)]
         public void GetByIdTest(int Id)
         {
@@ -159,7 +159,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
                                     }
                                 }
                         }
-
                 };
 
             var Test_MainInfo = _service_Test.Update(TestData);
@@ -252,6 +251,103 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
             var Test_MainInfo = await _service_Test.UpdateAsync(TestData);
 
             Assert.Warn($@"{Test_MainInfo.Data.Name}");
+        }
+
+        [Test]
+        public void Check()
+        {
+            MTest_MainInfo TestData =
+                new MTest_MainInfo()
+                {
+                    Name = "Test_Name_1",
+                    Questions_ChoosingAnswerFromList =
+                        new List<MQuestion_ChoosingAnswerFromList>()
+                        {
+                                new MQuestion_ChoosingAnswerFromList()
+                                {
+                                    QuestionText = "Question_ChoosingAnswerFromListDb_Text_2",
+                                    SortKey = 1,
+                                    AnswerVariants =
+                                    new List<MAnswerVariant_ChoosingAnswerFromList>()
+                                    {
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_1",
+                                            SortKey = 1,
+                                            IsCorrectAnswer = false
+                                        },
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_2",
+                                            SortKey = 2,
+                                            IsCorrectAnswer = false
+                                        },
+                                        new MAnswerVariant_ChoosingAnswerFromList()
+                                        {
+                                            AnswerText = "AnswerText_3",
+                                            SortKey = 3,
+                                            IsCorrectAnswer = true
+                                        }
+                                    }
+                                }
+                        },
+                    Questions_SetIntoMissingElements =
+                        new List<MQuestion_SetIntoMissingElements>()
+                        {
+                            new MQuestion_SetIntoMissingElements()
+                            {
+                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
+                                SortKey = 2
+                            }
+                        },
+                    Questions_SetOrder =
+                        new List<MQuestion_SetOrder>()
+                        {
+                                new MQuestion_SetOrder()
+                                {
+                                    QuestionText = "QuestionText_1",
+                                    SortKey = 3,
+                                    AnswerVariants =
+                                    new List<MAnswerVariant_SetOrder>()
+                                    {
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_1",
+                                            SortKey = 1,
+                                            CorrectOrderKey = 1
+                                        },
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_2",
+                                            SortKey = 2,
+                                            CorrectOrderKey = 2
+                                        },
+                                        new MAnswerVariant_SetOrder()
+                                        {
+                                            AnswerText = "AnswerText_3",
+                                            SortKey = 3,
+                                            CorrectOrderKey = 3
+                                        }
+                                    }
+                                }
+                        }
+
+                };
+
+            var MainInfo = 
+                _service_Test.GetById(1);
+
+            Result<MTest_MainInfo> Test_MainInfo = 
+                _service_Test.CheckTest(MainInfo.Data, TestData);
+
+            var X = Test_MainInfo.Data.Questions_ChoosingAnswerFromList;
+
+            var Row = "";
+            foreach (var Y in X)
+            {
+                Row = Y.QuestionText;
+            }
+            Assert.Warn($@"{Row}");
         }
 
         [OneTimeTearDown]

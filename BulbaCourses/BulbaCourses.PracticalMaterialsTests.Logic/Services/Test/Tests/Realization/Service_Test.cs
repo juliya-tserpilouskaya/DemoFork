@@ -246,21 +246,33 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
         // ------------ Check
 
-        public void CheckTest(MTest_MainInfo User_Test_MainInfo)
+        public Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo, MTest_MainInfo Curr_Test_MainInfo)
         {
+
             MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
 
-            // ------------ Check_Question_ChoosingAnswerFromList
 
+            // ------------ Check_Question_ChoosingAnswerFromList
             foreach (MQuestion_ChoosingAnswerFromList x in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
+            {
+                
+            }
+
+            // ------------ Question_SetIntoMissingElements
+            foreach (MQuestion_SetIntoMissingElements x in Current_Test_MainInfo.Questions_SetIntoMissingElements)
             {
 
             }
 
-            // ------------ Question_SetIntoMissingElements
-
-
             // ------------ Question_SetOrder
+            foreach (MQuestion_SetOrder x in Current_Test_MainInfo.Questions_SetOrder)
+            {
+
+            }
+
+            return
+                   Result<MTest_MainInfo>
+                       .Ok(_mapper.Map<MTest_MainInfo>(Curr_Test_MainInfo));
 
         }
     }
