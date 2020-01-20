@@ -23,6 +23,7 @@ using System.IO;
 using System.Web.Cors;
 using System.Reflection;
 using BulbaCourses.GlobalSearch.Web.Properties;
+using Microsoft.Owin.Security;
 
 [assembly: OwinStartup(typeof(BulbaCourses.GlobalSearch.Web.Startup))]
 
@@ -43,18 +44,21 @@ namespace BulbaCourses.GlobalSearch.Web
 
             app.UseWebApi(config);
 
-            
-
-            JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+
+
+            //JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
+            //JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
 
-                IssuerName = "BulbaCourses SSO",
-                Authority = "https://localhost:44382",
+                IssuerName = "https://localhost:44382",
+                AuthenticationMode = AuthenticationMode.Active,
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
+
             }).UseCors(new CorsOptions()
             {
                 PolicyProvider = new CorsPolicyProvider()
