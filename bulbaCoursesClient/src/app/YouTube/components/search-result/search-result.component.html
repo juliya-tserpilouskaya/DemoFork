@@ -9,14 +9,14 @@
       (ready)="savePlayer($event)"
       (change)="onStateChange($event)"
     ></youtube-player> -->
-    <a [routerLink]="['/video','MKk1u5RMTn4']">
+    <a [routerLink]="['/video',video.Id]">
       <img class="thumbnail" src='{{video.Thumbnail}}' alt="">
     </a>
           <div class="duration-info">{{video.Duration | duration}}</div>
         </div>
       </div>
       <div class="video-info">
-        <h3><a [routerLink]="['/video','MKk1u5RMTn4']">{{video.Title}}</a></h3>
+        <h3><a [routerLink]="['/video',video.Id]">{{video.Title}}</a></h3>
         <p><span>{{video.Channel?.Name}}</span><span>{{video.PublishedAt | publishedAt}}</span></p>
         <p>{{video.Description}}</p>
       </div>
