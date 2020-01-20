@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using BulbaCourses.Analytics.BLL.DTO;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.Web.Controllers;
-using BulbaCourses.Analytics.Web.Models;
+using BulbaCourses.Analytics.Infrastructure.Models;
+using BulbaCourses.Analytics.Models.V1;
+using BulbaCourses.Analytics.Web.Controllers.V1;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -15,67 +15,57 @@ namespace BulbaCourses.Analytics.Tests
     [TestFixture]
     public class ReportsControllerTests
     {
-        private List<ReportShortDto> _reportDtos;
-        private List<ReportShortVm> _reportVms;
+        private List<ReportDto> _reportDtos;
+        private List<ReportShort> _reportShorts;
         private Mock<IMapper> _mockMapper;
-        private Mock<IReportService> _mockReportService;
-        private Mock<IValidation> _mockValidation;
+        private Mock<IReportsService> _mockReportService;
 
         [SetUp]
         public void InitGetAll()
         {
-            _reportDtos = new List<ReportShortDto>() { new ReportShortDto { Id = "id", Name = "Name" } };
-            _reportVms = new List<ReportShortVm>() { new ReportShortVm { Id = "id", Name = "Name" } };
+            _reportDtos = new List<ReportDto>() { new ReportDto { Id = "id", Name = "Name" } };
+            _reportShorts = new List<ReportShort>() { new ReportShort { Id = "id", Name = "Name" } };
 
             _mockMapper = new Mock<IMapper>();
-            _mockMapper.Setup(v => v.Map<IEnumerable<ReportShortVm>>(_reportDtos)).Returns(_reportVms);
+            _mockMapper.Setup(v => v.Map<IEnumerable<ReportShort>>(_reportDtos)).Returns(_reportShorts);
 
-            _mockReportService = new Mock<IReportService>();
-            _mockValidation = new Mock<IValidation>();
-
+            _mockReportService = new Mock<IReportsService>();
         }
 
         [Test]
         public void GetAllBeOk()
         {
-            _mockReportService.Setup(v => v.GetAll()).Returns(_reportDtos);
-            _mockValidation.Setup(v => v.IsErrors).Returns(false);
+            _mockReportService.SetupAsync(v => v.GetAllAsync()).Returns(_reportDtos);
 
-            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object, _mockValidation.Object);
+            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object);
 
-            var result = (OkNegotiatedContentResult<IEnumerable<ReportShortVm>>)reportsController.GetAll();
-            result.Content.Should().BeEquivalentTo(_reportVms);
+            var result = (OkNegotiatedContentResult<IEnumerable<ReportShort>>)reportsController.GetAll().Result;
+            result.Content.Should().BeEquivalentTo(_reportShorts);
         }
 
         [Test]
         public void GetAllBeNotFound()
         {
-            _mockReportService.Setup(v => v.GetAll()).Returns(_reportDtos);
+            var freeReportDtos = new List<ReportDto>();
+            _mockReportService.SetupAsync(v => v.GetAllAsync()).Returns(freeReportDtos);
 
-            _mockValidation.Setup(v => v.IsErrors).Returns(true);
-            _mockValidation.Setup(v => v.Error).Returns(new Dictionary<string, string>());
+            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object);
 
-            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object, _mockValidation.Object);
+            var result = (NotFoundResult)reportsController.GetAll().Result;
 
-            var expected = new Dictionary<string, string>();
-
-            var result = (NegotiatedContentResult<Dictionary<string, string>>)reportsController.GetAll();
-
-            result.Content.Should().BeEquivalentTo(expected);
+            result.Should().BeOfType<NotFoundResult>();
         }
 
         [Test]
         public void GetAllBeInvalidOperationException()
         {
-            _mockReportService.Setup(v => v.GetAll()).Throws<InvalidOperationException>();
+            _mockReportService.SetupAsync(v => v.GetAllAsync()).Throws<InvalidOperationException>();
 
-            _mockValidation.Setup(v => v.IsErrors).Returns(true);             
+            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object);
 
-            ReportsController reportsController = new ReportsController(_mockReportService.Object, _mockMapper.Object, _mockValidation.Object);
+            var result = (ExceptionResult)reportsController.GetAll().Result;
 
-            var result = (InternalServerErrorResult)reportsController.GetAll(); 
-
-            result.Should().NotBeNull();
+            result.Exception.Should().BeOfType<InvalidOperationException>();
         }
     }
 }

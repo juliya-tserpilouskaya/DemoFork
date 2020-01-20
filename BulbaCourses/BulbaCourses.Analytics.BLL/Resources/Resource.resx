@@ -123,7 +123,16 @@
   <data name="NotFoundReportById" xml:space="preserve">
     <value>Report doesn't exists (by Id)</value>
   </data>
+  <data name="NotFoundReportByName" xml:space="preserve">
+    <value>Report doesn't exists (by Name)</value>
+  </data>
   <data name="NotFoundReports" xml:space="preserve">
     <value>Reports doesn't exist</value>
+  </data>
+  <data name="ReportExists" xml:space="preserve">
+    <value>A report with the same name already exists.</value>
+  </data>
+  <data name="ReportNameLength" xml:space="preserve">
+    <value>Name must have minimum length 3 and maximum length 128</value>
   </data>
 </root>

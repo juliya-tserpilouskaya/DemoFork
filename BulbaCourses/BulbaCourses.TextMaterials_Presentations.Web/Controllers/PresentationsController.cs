@@ -8,34 +8,34 @@ using System.Web.Http;
 using Presentations.Logic.Services;
 using Presentations.Logic.Repositories;
 using Presentations.Logic.Interfaces;
+using System.Threading.Tasks;
+using FluentValidation.WebApi;
+using EasyNetQ;
+using Presentations.Logic;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
-{/// <summary>
-/// The controller of all Presentations list
-/// </summary>
+{
     [RoutePrefix("api/presentations")]
     public class PresentationsController : ApiController
     {
-        private readonly IPresentationsBaseService _presentationsBase;
+        private readonly IPresentationsService _presentationsBase;
+        private readonly IBus _bus;
 
-        public PresentationsController(IPresentationsBaseService presentationsBase)
+        public PresentationsController(IPresentationsService presentationBase, IBus bus)
         {
-            _presentationsBase = presentationsBase;
+            _presentationsBase = presentationBase;
+            _bus = bus;
         }
 
-        /// <summary>
-        /// Get all Presentations from the all Presentations list
-        /// </summary>
-        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentations doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Presentation))]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAllPresentationsAsync()
         {
             try
             {
-                var result = _presentationsBase.GetAll();
+                var result = await _presentationsBase.GetAllPresentationsAsync();
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -44,17 +44,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Get Presentation from the all Presentations list by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation found", typeof(Presentation))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string id)
+        public async Task<IHttpActionResult> GetPresentationByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -63,7 +58,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = _presentationsBase.GetById(id);
+                var result = await _presentationsBase.GetPresentationByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -72,27 +67,22 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Add Presentation to the all Presentations list
-        /// </summary>
-        /// <param name="presentation"></param>
-        /// <returns></returns>
         [HttpPost, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation added", typeof(Presentation))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create([FromBody]Presentation presentation)
+        public async Task<IHttpActionResult> CreatePresentationAsync
+            ([FromBody, CustomizeValidator(RuleSet = "AddPresentation, default")]PresentationAdd_DTO presentation)
         {
-            if (presentation is null)
+            if (presentation is null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                var result = _presentationsBase.Add(presentation);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _presentationsBase.AddPresentationAsync(presentation);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -100,27 +90,22 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Find the Presentation whis the same Id from the all Presentations list delete it and add new
-        /// </summary>
-        /// <param name="presentation"></param>
-        /// <returns></returns>
         [HttpPut, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentation updated", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation updated", typeof(Presentation))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]Presentation presentation)
+        public async Task<IHttpActionResult> UpdatePresentationAsync
+            ([FromBody, CustomizeValidator(RuleSet = "UpdatePresentation, default")]Presentation presentation)
         {
-            if (presentation is null)
+            if (presentation is null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                var result = _presentationsBase.Update(presentation);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _presentationsBase.UpdatePresentationAsync(presentation);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -128,17 +113,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete by Id Presentation from the all Presentations list
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpDelete, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> DeletePresentationAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -147,8 +127,80 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = _presentationsBase.DeleteById(id);
-                return (IHttpActionResult)Ok(result);
+                var result = await _presentationsBase.DeletePresentationByIdAsync(id);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("{id}/viewed")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Students found", typeof(IEnumerable<Student>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllWhoViewedThisPresentationAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _presentationsBase.GetAllWhoViewedThisPresentationAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("{id}/like")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Students found", typeof(IEnumerable<Student>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllWhoLikeThisPresentationAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _presentationsBase.GetAllWhoLikeThisPresentationAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("{id}/feedbacks")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllFeedbacksPresentationAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _presentationsBase.GetAllFeedbacksPresentationAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {

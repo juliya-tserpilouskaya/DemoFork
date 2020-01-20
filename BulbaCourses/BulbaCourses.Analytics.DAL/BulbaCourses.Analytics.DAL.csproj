@@ -54,16 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\AlfaContext.cs" />
+    <Compile Include="Context\AnalyticsContext.cs" />
     <Compile Include="Context\Configurations\ChartConfigurations.cs" />
     <Compile Include="Context\Configurations\DashboardConfigurations.cs" />
     <Compile Include="Context\Configurations\ReportConfigurations.cs" />
-    <Compile Include="Interface\IDashboardRepository.cs" />
-    <Compile Include="Interface\IReportRepository.cs" />
+    <Compile Include="DbConfig.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Models\ChartDb.cs" />
     <Compile Include="Models\DashboardDb.cs" />
     <Compile Include="Models\ReportDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Base\BaseRepository.cs" />
+    <Compile Include="Repositories\ReportRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
