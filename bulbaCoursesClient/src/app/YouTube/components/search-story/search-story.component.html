@@ -1,15 +1,19 @@
 <p>search-story works!</p>
+<input type="checkbox" id="story-checkbox">
+<label class="btn btn-primary" for="story-checkbox">⌚ История&#x25BC;</label>
+
 <!-- <span *ngIf="isAuthenticated">Welcom to story</!-->
   <ul>
     <li *ngFor="let story of searchStory">
-      <div class="video">
-        <div class="video-info">
-          <h3>>{{story.Id}}</h3>
-
-          <p>{{story.SearchDate}}</p>
-          <p></p>
+      <div class="story-info">
+        <div class="info">
+          <h4>{{story.SearchRequest.Title}}</h4>
+          {{story.SearchDate | searchDate}}
+        </div>
+        <div class="delete-button">
+          <button>X</button>
         </div>
       </div>
-      <br>
+      <hr>
     </li>
   </ul>

@@ -72,8 +72,6 @@ export class SearchRequestComponent implements OnInit {
       this.resultVideos = data;
       this.youtubeService.resultSubject.next(this.resultVideos);
       console.log('Search completed!');
-      console.log(this.resultVideos);
-
       });
     }
   }

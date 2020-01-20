@@ -52,6 +52,7 @@ border-bottom-left-radius: 4px;
   display: flex;
 }
 app-search-result{
+  min-width: 300px;
   max-width: 70%;
   flex-grow: 2;
   border-right: 1px solid #ccc;
@@ -60,4 +61,8 @@ app-search-result{
 }
 app-search-story{
   flex-grow: 1;
+}
+.search::before{
+  display: block;
+  content: '\1F50D Поиск';
 }

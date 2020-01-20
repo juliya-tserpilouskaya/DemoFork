@@ -63,7 +63,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<SearchStoryDb> GetByUserId(string userId)
         {
-            return _context.SearchStories.Where(s => s.UserId == userId).ToList().AsReadOnly();
+            return _context.SearchStories.Include(_=>_.SearchRequest).Where(s => s.UserId == userId).ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId)
         {
-            return await _context.SearchStories.Where(s => s.UserId == userId).ToListAsync();
+            return await _context.SearchStories.Include(_ => _.SearchRequest).Where(s => s.UserId == userId).ToListAsync();
         }
 
         /// <summary>

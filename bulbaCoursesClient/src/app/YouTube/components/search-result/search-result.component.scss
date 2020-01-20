@@ -1,4 +1,5 @@
 .video{
+  min-width: 300px;
   display: flex;
   padding: 5px;
   border: 1px solid #5cb85c;
@@ -40,4 +41,8 @@ img{
   font-weight: 500;
   line-height: 1.2rem;
   align-items: center;
+}
+.video-info{
+  overflow: hidden;
+  word-wrap: break-word;
 }
