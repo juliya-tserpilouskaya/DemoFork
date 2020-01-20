@@ -36,7 +36,7 @@ namespace BulbaCourses.Youtube.Tests
 
             fakerRequest = new Faker<SearchRequest>()
                 .RuleFor(r => r.Title, f => f.Random.Word())
-                .RuleFor(r => r.CacheId, f => f.Random.Word())
+                .RuleFor(r => r.CacheId, f => f.Random.String())
                 .RuleFor(r => r.Definition, f => f.PickRandom(definition))
                 .RuleFor(r => r.Dimension, f => f.PickRandom(dimension))
                 .RuleFor(r => r.Duration, f => f.PickRandom(duration))

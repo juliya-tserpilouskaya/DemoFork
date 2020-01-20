@@ -17,8 +17,18 @@ export class YoutubeService {
   searchVideo(searchRequest: SearchRequest) {
     return this.client.post<ResultVideo[]>('http://localhost:60601/api/SearchRequest', searchRequest);
   }
+  getStory() {
+   // return this.client.get<SearchStory[]>('http://localhost:60601/api/story');
+  }
+
 
 }
+export interface SearchStory {
+    Id: number;
+    SearchDate: Date;
+    UserId: string;
+    SearchRequest_Id: number;
+  }
 
 export interface ResultVideo {
   Id: string;
