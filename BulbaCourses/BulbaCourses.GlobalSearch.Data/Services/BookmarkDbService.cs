@@ -11,8 +11,19 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 {
     public class BookmarkDbService : IBookmarkDbService
     {
-        private GlobalSearchContext _context = new GlobalSearchContext();
+        private GlobalSearchContext _context;
+
         private bool _isDisposed;
+
+        public BookmarkDbService()
+        {
+            _context = new GlobalSearchContext();
+        }
+
+        public BookmarkDbService(GlobalSearchContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         /// Returns all bookmarks
