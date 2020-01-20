@@ -18,6 +18,9 @@ using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using Microsoft.Owin.Cors;
 using System.Web.Cors;
+using Microsoft.Owin.Security;
+using System.IdentityModel.Tokens;
+using System.Collections.Generic;
 
 [assembly: OwinStartup(typeof(BulbaCourses.DiscountAggregator.Web.Startup))]
 
@@ -33,7 +36,17 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
 
-            app.UseCors(new CorsOptions()
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+
+            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
+            {
+                IssuerName = "http://localhost:44382",
+                AuthenticationMode = AuthenticationMode.Active,
+                ValidationMode = ValidationMode.Local,
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
+
+            }).UseCors(new CorsOptions()
             {
                 PolicyProvider = new CorsPolicyProvider()
                 {
@@ -45,16 +58,6 @@ namespace BulbaCourses.DiscountAggregator.Web
                     })
                 },
                 CorsEngine = new CorsEngine()
-            });
-
-
-            app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
-            {
-                IssuerName = "http://localhost:44382",
-                Authority = "http://localhost:44382",
-                ValidationMode = ValidationMode.Local,
-                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")
-
             });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);

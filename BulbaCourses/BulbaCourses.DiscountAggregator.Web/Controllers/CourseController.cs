@@ -47,6 +47,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var result = await _courseService.GetAllAsync();

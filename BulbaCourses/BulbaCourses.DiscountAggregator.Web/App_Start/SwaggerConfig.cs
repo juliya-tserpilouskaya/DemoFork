@@ -19,9 +19,27 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.EnableSwagger(c =>
             {
                 c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
-                c.OperationFilter<ExamplesOperationFilter>();   
+                c.OperationFilter<ExamplesOperationFilter>();
+                c.OAuth2("oauth2")
+                                      .Description("OAuth2 Implicit Grant")
+                                      .Flow("implicit")
+                                      .AuthorizationUrl("http://localhost:44382/connect/authorize")
+                                      .TokenUrl("http://localhost:44382/connect/token")
+                                      .Scopes(scopes =>
+                                      {
+                                          scopes.Add("openid", "Read access to protected resources");
+                                          scopes.Add("profile", "Write access to protected resources");
+                                      });
             }).EnableSwaggerUi(c =>
             {
+                c.EnableDiscoveryUrlSelector();
+                c.EnableOAuth2Support(
+                                      clientId: "external_app",
+                                      clientSecret: "secret",
+                                      realm: "test-realm",
+                                      appName: "Swagger UI"
+                                      );
+                                      //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
             });
       //          .EnableSwagger(c =>
       //              {
