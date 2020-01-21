@@ -12,9 +12,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test
 
         // ------------ Content
 
-        public ICollection<MQuestion_ChoosingAnswerFromList> Questions_ChoosingAnswerFromList { get; set; }
-
-        public ICollection<MQuestion_SetIntoMissingElements> Questions_SetIntoMissingElements { get; set; }
+        public ICollection<MQuestion_ChoosingAnswerFromList> Questions_ChoosingAnswerFromList { get; set; }        
 
         public ICollection<MQuestion_SetOrder> Questions_SetOrder { get; set; }        
     }

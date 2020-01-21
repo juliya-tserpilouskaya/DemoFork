@@ -27,15 +27,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
         public DbSet<MQuestion_ChoosingAnswerFromListDb> Question_ChoosingAnswerFromList { get; set; }
 
-        public DbSet<MQuestion_SetIntoMissingElementsDb> Question_SetIntoMissingElements { get; set; }
-
         public DbSet<MQuestion_SetOrderDb> Question_SetOrder { get; set; }
 
         // ------------ AnswerVariants
 
-        public DbSet<MAnswerVariant_ChoosingAnswerFromListDb> AnswerVariant_ChoosingAnswerFromList { get; set; }
-
-        public DbSet<MAnswerVariant_SetIntoMissingElementsDb> AnswerVariant_SetIntoMissingElements { get; set; }
+        public DbSet<MAnswerVariant_ChoosingAnswerFromListDb> AnswerVariant_ChoosingAnswerFromList { get; set; }        
 
         public DbSet<MAnswerVariant_SetOrderDb> AnswerVariant_SetOrder { get; set; }
 
@@ -49,15 +45,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
             modelBuilder.Configurations.Add(new Mapping_Question_ChoosingAnswerFromList());
 
-            modelBuilder.Configurations.Add(new Mapping_Question_SetIntoMissingElements());
-
             modelBuilder.Configurations.Add(new Mapping_Question_SetOrder());
 
             // ------------ AnswerVariants
 
             modelBuilder.Configurations.Add(new Mapping_AnswerVariant_ChoosingAnswerFromList());            
-
-            modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetIntoMissingElements());
 
             modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetOrder());
 

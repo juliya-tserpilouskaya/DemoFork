@@ -20,14 +20,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
 
             // ----------- Question
 
-            CreateMap<MQuestion_ChoosingAnswerFromList, MQuestion_ChoosingAnswerFromListDb>().ReverseMap();
-            CreateMap<MQuestion_SetIntoMissingElements, MQuestion_SetIntoMissingElementsDb>().ReverseMap();
+            CreateMap<MQuestion_ChoosingAnswerFromList, MQuestion_ChoosingAnswerFromListDb>().ReverseMap();            
             CreateMap<MQuestion_SetOrder, MQuestion_SetOrderDb>().ReverseMap();
 
             // ----------- AnswerVariant
 
             CreateMap<MAnswerVariant_ChoosingAnswerFromList, MAnswerVariant_ChoosingAnswerFromListDb>().ReverseMap();
-            CreateMap<MQuestion_SetIntoMissingElements, MQuestion_SetIntoMissingElementsDb>().ReverseMap();
             CreateMap<MAnswerVariant_SetOrder, MAnswerVariant_SetOrderDb>().ReverseMap();
 
             // ------------ User

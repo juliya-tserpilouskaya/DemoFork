@@ -51,22 +51,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                         }
                                  }
                             },
-                        Questions_SetIntoMissingElements =
-                            new List<MQuestion_SetIntoMissingElementsDb>()
-                            {
-                                new MQuestion_SetIntoMissingElementsDb()
-                                {
-                                    QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                    SortKey = 2
-                                }
-                            },
                         Questions_SetOrder =
                             new List<MQuestion_SetOrderDb>()
                             {
                                  new MQuestion_SetOrderDb()
                                  {
                                      QuestionText = "Question_SetOrderDb_Text_1",
-                                     SortKey = 3,
+                                     SortKey = 2,
                                      AnswerVariants =
                                         new List<MAnswerVariant_SetOrderDb>()
                                         {

@@ -31,9 +31,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                 MTest_MainInfoDb Test_MainInfoDb =
                     _context.Set<MTest_MainInfoDb>()
                         .Include(_ => _.Questions_ChoosingAnswerFromList)
-                        .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
-                        .Include(_ => _.Questions_SetIntoMissingElements)
-                        .Include(_ => _.Questions_SetIntoMissingElements.Select(c => c.AnswerVariants))
+                        .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))                                                
                         .Include(_ => _.Questions_SetOrder)
                         .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
                         .AsNoTracking()
@@ -65,9 +63,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                     await
                         _context.Set<MTest_MainInfoDb>()
                             .Include(_ => _.Questions_ChoosingAnswerFromList)
-                            .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
-                            .Include(_ => _.Questions_SetIntoMissingElements)
-                            .Include(_ => _.Questions_SetIntoMissingElements.Select(c => c.AnswerVariants))
+                            .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))   
                             .Include(_ => _.Questions_SetOrder)
                             .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
                             .AsNoTracking()
@@ -268,12 +264,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             foreach (MQuestion_ChoosingAnswerFromList x in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
             {
                 
-            }
-
-            // ------------ Question_SetIntoMissingElements
-            foreach (MQuestion_SetIntoMissingElements x in Current_Test_MainInfo.Questions_SetIntoMissingElements)
-            {
-
             }
 
             // ------------ Question_SetOrder

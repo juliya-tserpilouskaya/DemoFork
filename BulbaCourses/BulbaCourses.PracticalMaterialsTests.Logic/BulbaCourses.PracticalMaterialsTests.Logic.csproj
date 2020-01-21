@@ -71,10 +71,8 @@
     <Compile Include="Attributes\DbContext\AttributeDbContext_LocalDb.cs" />
     <Compile Include="AutoMapper\Profiles\AutoMapperProfile_DataLogicLayer.cs" />
     <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_ChoosingAnswerFromList.cs" />
-    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetIntoMissingElements.cs" />
     <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetOrder.cs" />
     <Compile Include="Models\Test\Questions\MQuestion_ChoosingAnswerFromList.cs" />
-    <Compile Include="Models\Test\Questions\MQuestion_SetIntoMissingElements.cs" />
     <Compile Include="Models\Test\Questions\MQuestion_SetOrder.cs" />
     <Compile Include="Models\Common\Result.cs" />
     <Compile Include="Models\Test\Tests\MTest_MainInfo.cs" />
@@ -94,10 +92,8 @@
     <Compile Include="Services\Test\Tests\Interface\IService_Test.cs" />
     <Compile Include="Services\Test\Tests\Realization\Service_Test.cs" />
     <Compile Include="Validators\Test\AnswerVariants\Validator_AnswerVariant_ChoosingAnswerFromList.cs" />
-    <Compile Include="Validators\Test\AnswerVariants\Validator_AnswerVariant_SetIntoMissingElements.cs" />
     <Compile Include="Validators\Test\AnswerVariants\Validator_AnswerVariant_SetOrder.cs" />
     <Compile Include="Validators\Test\Questions\Validator_Question_ChoosingAnswerFromList.cs" />
-    <Compile Include="Validators\Test\Questions\Validator_Question_SetIntoMissingElements.cs" />
     <Compile Include="Validators\Test\Questions\Validator_Question_SetOrder.cs" />
     <Compile Include="Validators\Test\Tests\Validator_Test_MainInfo.cs" />
   </ItemGroup>

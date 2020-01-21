@@ -122,15 +122,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
                                     }
                                 }
                         },
-                    Questions_SetIntoMissingElements =
-                        new List<MQuestion_SetIntoMissingElements>()
-                        {
-                            new MQuestion_SetIntoMissingElements()
-                            {
-                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                SortKey = 2
-                            }
-                        },
                     Questions_SetOrder =
                         new List<MQuestion_SetOrder>()
                         {
@@ -208,15 +199,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
                                     }
                                 }
                         },
-                    Questions_SetIntoMissingElements =
-                        new List<MQuestion_SetIntoMissingElements>()
-                        {
-                            new MQuestion_SetIntoMissingElements()
-                            {
-                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                SortKey = 2
-                            }
-                        },
                     Questions_SetOrder =
                         new List<MQuestion_SetOrder>()
                         {
@@ -293,15 +275,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
                                         }
                                     }
                                 }
-                        },
-                    Questions_SetIntoMissingElements =
-                        new List<MQuestion_SetIntoMissingElements>()
-                        {
-                            new MQuestion_SetIntoMissingElements()
-                            {
-                                QuestionText = "Question_SetIntoMissingElementsDb_Text_1",
-                                SortKey = 2
-                            }
                         },
                     Questions_SetOrder =
                         new List<MQuestion_SetOrder>()
