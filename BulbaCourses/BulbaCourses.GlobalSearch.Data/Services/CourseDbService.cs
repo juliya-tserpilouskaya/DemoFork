@@ -20,12 +20,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public CourseDbService()
         {
-            _context = new GlobalSearchContext();
+            this._context = new GlobalSearchContext();
         }
 
         public CourseDbService(GlobalSearchContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         /// <summary>
@@ -183,7 +183,10 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<IEnumerable<CourseDB>> GetCourseByComplexityAsync(string complexity)
         {
-            return await _context.Courses.Where(course => course.Complexity.ToString().Equals(complexity)).ToListAsync().ConfigureAwait(false);
+            return await _context.Courses.Where(course => course.Complexity.ToString()
+            .Equals(complexity))
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +206,11 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<IEnumerable<CourseDB>> GetCourseByLanguageAsync(string lang)
         {
-            return await _context.Courses.Where(course => course.Language.Contains(lang)).ToListAsync().ConfigureAwait(false);
+            return await _context.Courses
+                .Where(course => course.Language
+                .Contains(lang))
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -286,8 +293,9 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             try
             {
+                course.Id = Guid.NewGuid().ToString();
                 _context.Courses.Add(course);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<CourseDB>.Ok(course);
             }
             catch (DbUpdateConcurrencyException e)
@@ -348,18 +356,19 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// </summary>
         /// <param name="id">Course id</param>
         /// <returns></returns>
-        public async Task<Result<CourseDB>> DeleteByIdAsync(string id)
+        public async Task<Result> DeleteByIdAsync(string id)
         {
+
+            var query = from course in _context.Courses select course;
+            CourseDB courseToDelete = query
+                .Include(p => p.Items)
+                .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            var items = courseToDelete.Items.ToArray();
             try
             {
-                var query = from course in _context.Courses select course;
-                CourseDB courseToDelete = query
-                    .Include(p => p.Items)
-                    .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
-                var items = courseToDelete.Items.ToArray();
                 _context.CourseItems.RemoveRange(items);
                 _context.Courses.Remove(courseToDelete);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false); ;
                 return Result<CourseDB>.Ok(courseToDelete);
             }
             catch (DbUpdateConcurrencyException e)

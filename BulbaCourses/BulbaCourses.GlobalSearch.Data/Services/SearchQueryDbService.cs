@@ -20,12 +20,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public SearchQueryDbService()
         {
-            _context = new GlobalSearchContext();
+            this._context = new GlobalSearchContext();
         }
 
         public SearchQueryDbService(GlobalSearchContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             try
             {
-                //bookmark.Id = Guid.NewGuid().ToString();
+                query.Id = Guid.NewGuid().ToString();
                 _context.SearchQueries.Add(query);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<SearchQueryDB>.Ok(query);
@@ -150,7 +150,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             {
                 var query = _context.SearchQueries.SingleOrDefault(c => c.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
                 _context.SearchQueries.Remove(query);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<SearchQueryDB>.Ok(query);
             }
             catch (DbUpdateConcurrencyException e)

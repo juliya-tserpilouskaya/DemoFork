@@ -20,12 +20,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public BookmarkDbService()
         {
-            _context = new GlobalSearchContext();
+            this._context = new GlobalSearchContext();
         }
 
         public BookmarkDbService(GlobalSearchContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<BookmarkDB> GetByIdAsync(string id)
         {
-            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -187,7 +187,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public LearningCourseDTO Update(LearningCourseDTO course)
         {
             var data = _learningCourseDb.Update(_mapper.Map<LearningCourseDTO, CourseDB>(course));
-            _lucene.IndexCourse(course);
+            //_lucene.IndexCourse(course);
             return _mapper.Map<CourseDB, LearningCourseDTO>(data);
         }
 
@@ -202,7 +202,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             var courseDb = _mapper.Map<LearningCourseDTO, CourseDB>(course);
 
             var result = await _learningCourseDb.UpdateAsync(courseDb);
-            _lucene.IndexCourse(course);
+            //_lucene.IndexCourse(course);
             return result.IsSuccess ? Result<LearningCourseDTO>.Ok(_mapper.Map<LearningCourseDTO>(result.Data))
                 : Result<LearningCourseDTO>.Fail<LearningCourseDTO>(result.Message);
         }
@@ -237,7 +237,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             }).CreateMapper();
             var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
             LearningCourseDTO LearningCourse = mapper.Map<CourseDB, LearningCourseDTO>(data);
-            _lucene.IndexCourse(LearningCourse);
+            //_lucene.IndexCourse(LearningCourse);
             return LearningCourse;
         }
 
@@ -260,11 +260,10 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
 
             var courseDb = mapper.Map<LearningCourseDTO, CourseDB>(course);
             var result = await _learningCourseDb.AddAsync(courseDb);
-            _lucene.IndexCourse(course);
+            //_lucene.IndexCourse(course);
 
             return result.IsSuccess ? Result<LearningCourseDTO>.Ok(mapper.Map<LearningCourseDTO>(result.Data))
                 : Result<LearningCourseDTO>.Fail<LearningCourseDTO>(result.Message);
-
         }
 
         /// <summary>
@@ -305,7 +304,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string id)
         {
-            _learningCourseDb.DeleteById(id);
+            _learningCourseDb.DeleteByIdAsync(id);
             return Task.FromResult(Result.Ok());
         }
     }

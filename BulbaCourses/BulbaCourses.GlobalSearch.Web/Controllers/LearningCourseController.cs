@@ -173,17 +173,17 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(LearningCourseDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Update([FromBody]LearningCourseDTO course)
         {
 
-            if (!ModelState.IsValid)
+            if (course is null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             try
             {
-                var result = _learningCourseService.Update(course);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _learningCourseService.UpdateAsync(course);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -193,13 +193,15 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
-        public IHttpActionResult Create([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Create([FromBody]LearningCourseDTO course)
         {
-            if (!ModelState.IsValid)
+            if (course is null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_learningCourseService.Add(course));
+
+            var result = await _learningCourseService.AddAsync(course);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id}")]
@@ -207,7 +209,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -216,8 +218,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
             try
             {
-                var result = _learningCourseService.DeleteById(id);
-                return result == false ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _learningCourseService.DeleteByIdAsync(id);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
             }
             catch (InvalidOperationException ex)
             {

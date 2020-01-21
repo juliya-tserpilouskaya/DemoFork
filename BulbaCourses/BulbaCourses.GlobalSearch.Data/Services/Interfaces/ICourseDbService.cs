@@ -162,7 +162,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         /// </summary>
         /// <param name="id">Course id</param>
         /// <returns></returns>
-        Task<Result<CourseDB>> DeleteByIdAsync(string id);
+        Task<Result> DeleteByIdAsync(string id);
 
     }
 }

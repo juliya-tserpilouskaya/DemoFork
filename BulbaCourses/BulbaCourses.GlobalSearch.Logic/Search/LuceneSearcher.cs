@@ -93,7 +93,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Search
                 else
                 {
                     var parser = new MultiFieldQueryParser
-                        (Lucene.Net.Util.Version.LUCENE_30, new[] { "Id", "Description" }, analyzer);
+                        (Lucene.Net.Util.Version.LUCENE_30, new[] { "Id", "Name", "Description" }, analyzer);
                     var query = parseQuery(searchQuery, parser);
                     var hits = searcher.Search
                     (query, null, hits_limit, Sort.RELEVANCE).ScoreDocs;
