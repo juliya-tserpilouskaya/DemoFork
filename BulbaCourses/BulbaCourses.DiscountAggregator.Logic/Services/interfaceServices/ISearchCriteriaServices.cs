@@ -8,7 +8,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     public interface ISearchCriteriaServices
     {
         Task<IEnumerable<SearchCriteria>> GetAllAsync();
-        Task<SearchCriteria> GetByIdAsync(string userId);
+        Task<SearchCriteria> GetByIdAsync(string id);
         Task<Result<SearchCriteria>> AddAsync(SearchCriteria searchCriteria);
         Task<Result<SearchCriteria>> UpdateAsync(SearchCriteria searchCriteria);
         Task<Result<SearchCriteria>> DeleteByIdAsync(string id);

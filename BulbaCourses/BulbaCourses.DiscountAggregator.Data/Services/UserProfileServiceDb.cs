@@ -64,7 +64,6 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 profileDb.SearchCriteria.Domains = domains;
 
                 context.Profiles.Add(profileDb);
-                context.SearchCriterias.Add(profileDb.SearchCriteria);
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<UserProfileDb>.Ok(profileDb);
             }
@@ -105,9 +104,11 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return profileDb;
         }
 
-        public void Delete(UserProfileDb profile)
+        public void Delete(UserProfileDb profileDb)
         {
-            context.Profiles.Remove(profile);
+
+            context.SearchCriterias.Remove(context.SearchCriterias.Find(profileDb.SearchCriteria.Id));
+            context.Profiles.Remove(profileDb);
             context.SaveChanges();
         }
 
