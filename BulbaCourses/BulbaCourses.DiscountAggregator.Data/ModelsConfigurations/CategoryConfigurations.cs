@@ -15,8 +15,17 @@ namespace BulbaCourses.DiscountAggregator.Data.ModelsConfigurations
             Property(x => x.Title).IsRequired()
                 .HasMaxLength(255)
                 .IsUnicode();
+            HasMany(x => x.SearchCriterias)
+                .WithMany(p => p.CourseCategories)
+                .Map(m =>
+                {
+                    m.ToTable("SearchCriteriaDbCourseCategoryDbs");
 
-            HasOptional<DomainDb>(x => x.Domain);
+                    m.MapLeftKey("SearchCriteriaDb_Id");
+                    m.MapRightKey("CourseCategoryDb_Id");
+                }
+                );
+            //HasOptional<DomainDb>(x => x.Domain);
         }
     }
 }
