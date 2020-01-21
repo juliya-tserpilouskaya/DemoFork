@@ -1,3 +1,6 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace BulbaCourses.Web.Migrations
 {
     using System;
@@ -18,6 +21,20 @@ namespace BulbaCourses.Web.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            if (context.Users.Any())
+            {
+                return;
+            }
+
+            var user = new IdentityUser("user@test.com")
+            {
+                Email = "user@test.com",
+                EmailConfirmed = true
+            };
+            var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+            manager.PasswordValidator = new MinimumLengthValidator(3);
+            manager.Create(user, "123");
         }
     }
 }

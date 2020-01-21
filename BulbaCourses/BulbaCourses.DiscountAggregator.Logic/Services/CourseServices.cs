@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
@@ -52,27 +53,23 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
+        public async Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch)
+        {
+            var courses = await _courseService.GetByIdCriteriaAsync(idSearch);
+            var result = _mapper.Map<IEnumerable<Course>>(courses);
+            return result;
+        }
+
         public async Task<Result<Course>> AddAsync(Course course)
         {
+            course.Id = Guid.NewGuid().ToString();
+            course.Category.Id = Guid.NewGuid().ToString();
+            course.Domain.Id = Guid.NewGuid().ToString();
             var courseDb = _mapper.Map<Course, CourseDb>(course);
+            var result = await _courseService.AddAsync(courseDb);
+            return result.IsSuccess ? Result<Course>.Ok(_mapper.Map<Course>(result.Data))
+                : Result<Course>.Fail<Course>(result.Message);
 
-            try
-            {
-                await _courseService.AddAsync(courseDb);
-                return Result<CourseDb>.Ok(_mapper.Map<Course>(courseDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. {e.Message}");
-            }
-            catch (DbUpdateException e)
-            {
-                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. Duplicate field. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<Course>)Result<Course>.Fail<Course>($"Invalid course. {e.Message}");
-            }
         }
 
         public Task<Result> DeleteByIdAsync(string id)
@@ -84,19 +81,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         public async Task<Result<Course>> UpdateAsync(Course course)
         {
             var courseDb = _mapper.Map<Course, CourseDb>(course);
-            try
-            {
-                await _courseService.UpdateAsync(courseDb);
-                return Result<CourseDb>.Ok(_mapper.Map<Course>(courseDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<Course>)Result<Course>.Fail<Course>($"Cannot save course. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<Course>)Result<Course>.Fail<Course>($"Invalid course. {e.Message}");
-            }
+
+            var result = await _courseService.UpdateAsync(courseDb);
+            return result.IsSuccess ? Result<Course>.Ok(_mapper.Map<Course>(result.Data))
+                : Result<Course>.Fail<Course>(result.Message);
         }
+
     }
 }

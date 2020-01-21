@@ -8,29 +8,48 @@ using System.Net;
 using Swashbuckle.Swagger.Annotations;
 using System.Net.Http;
 using System.Web.Http;
+using System.Threading.Tasks;
+using FluentValidation.WebApi;
+using EasyNetQ;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
-    [RoutePrefix("api/presentationFeadbacks")]
+    [RoutePrefix("api/feadbacks")]
     public class FeedbackController : ApiController
     {
-        private readonly IFeedbackService _feedbackService;
-        private readonly IPresentationsBaseService _presentationsBaseService;
-        private readonly IStudentBaseService _studentBaseService;
+        private readonly IFeedbacksService _feedbackBase;
+        private readonly IBus _bus;
 
-        public FeedbackController(IFeedbackService feedbackService, IPresentationsBaseService presentationsBaseService, IStudentBaseService studentBaseService)
+        public FeedbackController(IFeedbacksService feedbackBase, IBus bus)
         {
-            _feedbackService = feedbackService;
-            _presentationsBaseService = presentationsBaseService;
-            _studentBaseService = studentBaseService;
+            _feedbackBase = feedbackBase;
+            _bus = bus;
+        }
+
+        [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Feedbacks doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllFeedbacksAsync()
+        {
+            try
+            {
+                var result = await _feedbackBase.GetAllFeedbacksAsync();
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpGet, Route("{id}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Feedback doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback found", typeof(Feedback))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetAll(string id)
+        public async Task<IHttpActionResult> GetFeedbackByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -39,17 +58,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                Presentation presentation = _presentationsBaseService.GetById(id);
+                var result = await _feedbackBase.GetFeedbackByIdAsync(id);
 
-                if (presentation != null)
-                {
-                    var result = _feedbackService.GetAll(presentation);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {
@@ -57,68 +68,23 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        [HttpGet, Route("{idPresentation}Presentation/{idFeedback}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Feedback found", typeof(Feedback))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult GetById(string idPresentation, string idFeedback)
-        {
-            if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)
-                || string.IsNullOrEmpty(idFeedback) || !Guid.TryParse(idFeedback, out var _))
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
-
-                if (presentation != null)
-                {
-                    var result = _feedbackService.GetById(presentation, idFeedback);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        [HttpPost, Route("{idPresentation}Presentation/{idFeedback}/{idUser}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedback added", typeof(Feedback))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Create(string idPresentation, string idFeedback, string idUser)
+        public async Task<IHttpActionResult> CreateFeedbackAsync
+            ([FromBody, CustomizeValidator(RuleSet = "AddFeedback, default")]FeedbackAdd_DTO feedback)
         {
-            if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)
-                || string.IsNullOrEmpty(idFeedback) || !Guid.TryParse(idFeedback, out var _)
-                    || string.IsNullOrEmpty(idUser) || !Guid.TryParse(idUser, out var _))
+            if (feedback is null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
-                Feedback feedbackToAdd = _feedbackService.GetById(presentation, idFeedback);
-                User user = _studentBaseService.GetById(idUser);
+                var result = await _feedbackBase.AddFeedbackAsync(feedback);
 
-                if (presentation != null && user != null && feedbackToAdd != null)
-                {
-                    var result = _feedbackService.Add(feedbackToAdd, presentation, user);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -126,33 +92,46 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        [HttpDelete, Route("{idPresentation}Presentation/{idFeedback}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Presentation or Feedback doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Feedback deleted", typeof(Feedback))]
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback updated", typeof(Feedback))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Delete(string idPresentation, string idFeedback)
+        public async Task<IHttpActionResult> UpdateFeedbackAsync
+            ([FromBody, CustomizeValidator(RuleSet = "UpdateFeedback, default")]Feedback feedback)
         {
-            if (string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _)
-                || string.IsNullOrEmpty(idFeedback) || !Guid.TryParse(idFeedback, out var _))
+            if (feedback is null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var result = await _feedbackBase.UpdateFeedbackAsync(feedback);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedback deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> DeleteFeedbackAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
 
             try
             {
-                Presentation presentation = _presentationsBaseService.GetById(idPresentation);
-                Feedback feedbackToDelete = _feedbackService.GetById(presentation, idFeedback);
+                var result = await _feedbackBase.DeleteFeedbackByIdAsync(id);
 
-                if (presentation != null && feedbackToDelete != null)
-                {
-                    var result = _feedbackService.DeleteById(presentation, feedbackToDelete.Id);
-                    return (IHttpActionResult)Ok(result);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
             }
             catch (InvalidOperationException ex)
             {

@@ -8,11 +8,13 @@ import { SampleModule } from './sample/sample.module';
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
+import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
       resourceServer: {
         sendAccessToken: true,
         allowedUrls: [
+          'https://localhost:44317',
           'http://localhost:3300'
           , 'http://localhost:3500'
         ]
