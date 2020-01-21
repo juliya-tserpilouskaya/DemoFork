@@ -49,9 +49,9 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
         public void InitMock()
         {
             _coursesDb = new List<CourseDb>() {
-                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Duration = 15, Level = 1, Raiting = 5 },
-                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Duration = 25, Level = 2, Raiting = 4 },
-                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Duration = 35, Level = 2, Raiting = 3 }
+                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Level = 1, Raiting = 5 },
+                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Level = 2, Raiting = 4 },
+                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Level = 2, Raiting = 3 }
             };
 
             _coursesInfo = new List<CourseInfo>() {

@@ -198,7 +198,6 @@ namespace BulbaCourses.Video.Logic.Services
             courseDb.Level = course.Level;
             courseDb.Raiting = course.Raiting;
             courseDb.Description = course.Description;
-            courseDb.Duration = course.Duration;
             courseDb.Price = course.Price;
             try
             {

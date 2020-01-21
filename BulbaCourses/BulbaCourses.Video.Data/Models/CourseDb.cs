@@ -18,7 +18,6 @@ namespace BulbaCourses.Video.Data.Models
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public int Duration { get; set; }
         public double Price { get; set; }
 
         public ICollection<VideoMaterialDb> Videos { get; set; }

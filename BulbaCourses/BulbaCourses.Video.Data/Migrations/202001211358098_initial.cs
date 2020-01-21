@@ -3,7 +3,7 @@ namespace BulbaCourses.Video.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class first : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -16,11 +16,8 @@ namespace BulbaCourses.Video.Data.Migrations
                         Lastname = c.String(nullable: false),
                         Annotation = c.String(nullable: false, maxLength: 1024),
                         Professions = c.String(nullable: false),
-                        User_UserId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.AuthorId)
-                .ForeignKey("dbo.Users", t => t.User_UserId)
-                .Index(t => t.User_UserId);
+                .PrimaryKey(t => t.AuthorId);
             
             CreateTable(
                 "dbo.Courses",
@@ -34,7 +31,6 @@ namespace BulbaCourses.Video.Data.Migrations
                         Description = c.String(nullable: false, maxLength: 1024),
                         Date = c.DateTime(nullable: false),
                         UpdateDate = c.DateTime(),
-                        Duration = c.Int(nullable: false),
                         Price = c.Double(nullable: false),
                         CourseAuthorId = c.String(maxLength: 128),
                         UserDb_UserId = c.String(maxLength: 128),
@@ -62,7 +58,6 @@ namespace BulbaCourses.Video.Data.Migrations
                         VideoId = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 255),
                         Url = c.String(),
-                        Duration = c.Int(nullable: false),
                         Created = c.DateTime(nullable: false),
                         NumberOfViews = c.Int(nullable: false),
                         Raiting = c.Double(nullable: false),
@@ -131,7 +126,6 @@ namespace BulbaCourses.Video.Data.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Authors", "User_UserId", "dbo.Users");
             DropForeignKey("dbo.Videos", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Comments", "VideoId_VideoId", "dbo.Videos");
             DropForeignKey("dbo.Comments", "UserCommentsId", "dbo.Users");
@@ -149,7 +143,6 @@ namespace BulbaCourses.Video.Data.Migrations
             DropIndex("dbo.Tags", new[] { "Content" });
             DropIndex("dbo.Courses", new[] { "UserDb_UserId" });
             DropIndex("dbo.Courses", new[] { "CourseAuthorId" });
-            DropIndex("dbo.Authors", new[] { "User_UserId" });
             DropTable("dbo.CourseTag");
             DropTable("dbo.Transactions");
             DropTable("dbo.Users");

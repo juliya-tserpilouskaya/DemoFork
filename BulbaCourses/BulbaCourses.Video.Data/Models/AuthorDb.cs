@@ -9,7 +9,6 @@ namespace BulbaCourses.Video.Data.Models
     public class AuthorDb
     {
         public string AuthorId { get; set; } = Guid.NewGuid().ToString();
-        public UserDb User { get; set; }
         public string Name { get; set; }
         public string Lastname { get; set; }
         public string Annotation { get; set; }
