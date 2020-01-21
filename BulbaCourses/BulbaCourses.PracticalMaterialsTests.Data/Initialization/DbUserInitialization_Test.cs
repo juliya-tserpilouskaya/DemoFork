@@ -18,9 +18,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                 new List<MTest_MainInfoDb>()
                 {
                     new MTest_MainInfoDb()
-                    {
-                        Name = "Test_Name_1",
-                        User_TestAuthor = new MUser_TestAuthorDb(),                        
+                    {   
+                        Name = "Test_Name_1",                     
                         Questions_ChoosingAnswerFromList =
                             new List<MQuestion_ChoosingAnswerFromListDb>()
                             {
@@ -66,38 +65,38 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                             {
                                  new MQuestion_SetOrderDb()
                                  {
-                                     QuestionText = "QuestionText_1",
+                                     QuestionText = "Question_SetOrderDb_Text_1",
                                      SortKey = 3,
                                      AnswerVariants =
-                                     new List<MAnswerVariant_SetOrderDb>()
-                                     {
-                                         new MAnswerVariant_SetOrderDb()
-                                         {
-                                             AnswerText = "AnswerText_1",
-                                             SortKey = 1,
-                                             CorrectOrderKey = 1
-                                         },
-                                         new MAnswerVariant_SetOrderDb()
-                                         {
-                                             AnswerText = "AnswerText_2",
-                                             SortKey = 2,
-                                             CorrectOrderKey = 2
-                                         },
-                                         new MAnswerVariant_SetOrderDb()
-                                         {
-                                             AnswerText = "AnswerText_3",
-                                             SortKey = 3,
-                                             CorrectOrderKey = 3
-                                         }
-                                     }
+                                        new List<MAnswerVariant_SetOrderDb>()
+                                        {
+                                            new MAnswerVariant_SetOrderDb()
+                                            {
+                                                AnswerText = "AnswerText_1",
+                                                SortKey = 1,
+                                                CorrectOrderKey = 1
+                                            },
+                                            new MAnswerVariant_SetOrderDb()
+                                            {
+                                                AnswerText = "AnswerText_2",
+                                                SortKey = 2,
+                                                CorrectOrderKey = 2
+                                            },
+                                            new MAnswerVariant_SetOrderDb()
+                                            {
+                                                AnswerText = "AnswerText_3",
+                                                SortKey = 3,
+                                                CorrectOrderKey = 3
+                                            }
+                                        }
                                  }
-                            }
-                    }
+                            },
+                        User_TestAuthor = new MUser_TestAuthorDb(){ Id = "5012f850-9c59-4fd9-9e50-4d93ecac03fb" },
+                    }                    
                 };
 
             context.Test_MainInfo.AddRange(default_Test_MainInfoDb);
-
-
+            
             // ------------ 
 
             base.Seed(context);

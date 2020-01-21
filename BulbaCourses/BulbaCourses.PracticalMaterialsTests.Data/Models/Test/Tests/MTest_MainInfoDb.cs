@@ -20,7 +20,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Test
 
         // ------------ User
 
-        public int User_TestAuthorDb_Id { get; set; }
+        public string User_TestAuthorDb_Id { get; set; }
 
         public MUser_TestAuthorDb User_TestAuthor { get; set; }
     }

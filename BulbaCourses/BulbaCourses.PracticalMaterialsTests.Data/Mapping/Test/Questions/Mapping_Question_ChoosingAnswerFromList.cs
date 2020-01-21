@@ -28,7 +28,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.Questions
 
             this.HasMany(g => g.AnswerVariants)
                 .WithRequired(s => s.Question_ChoosingAnswerFromListDb)
-                .HasForeignKey<int>(s => s.Question_ChoosingAnswerFromListDb_Id);            
+                .HasForeignKey<int>(s => s.Question_ChoosingAnswerFromListDb_Id)
+                .WillCascadeOnDelete();
         }
     }
 }

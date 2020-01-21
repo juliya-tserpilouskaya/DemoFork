@@ -48,19 +48,22 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
         [Test, MaxTime(2000)]
         public void AddTest()
         {
-            Result<MTest_MainInfo> Test_MainInfo = 
-                _service_Test.Add(Generator_TestModels.Generate_MTest_MainInfo(1,4,4, new MUser_TestAuthor()).FirstOrDefault());
-                     
-            Assert.Warn($@"UserId: {Test_MainInfo.Data.User_TestAuthor.Id} | TestId: {Test_MainInfo.Data.Id}");           
+            foreach (MTest_MainInfo Test_MainInfo in Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4))
+            {
+                var HasAdd =
+                    _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+
+                Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
+            }         
         }
 
         [Test]
         public async Task AddAsyncTest()
         {
-            var HasAdd = 
-                await _service_Test.AddAsync(Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4, new MUser_TestAuthor()).FirstOrDefault());
+            //var HasAdd = 
+            //    await _service_Test.AddAsync(Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4, new MUser_TestAuthor()).FirstOrDefault());
 
-            Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
+            //Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
         }
 
         [Test]

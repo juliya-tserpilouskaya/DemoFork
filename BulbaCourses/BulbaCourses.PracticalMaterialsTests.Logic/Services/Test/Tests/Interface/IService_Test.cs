@@ -14,9 +14,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         Task<Result<MTest_MainInfo>> GetByIdAsync(int Id);
 
-        Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo);
+        Result<MTest_MainInfo> Add(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo);
+        Task<Result<MTest_MainInfo>> AddAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
         Result<MTest_MainInfo> Update(MTest_MainInfo Test_MainInfo);
 

@@ -48,26 +48,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]        
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
-        public IHttpActionResult AddNewTest([FromBody, CustomizeValidator(RuleSet = "Insert_New_Test_MainInfo")]MTest_MainInfo Test_MainInfo)
+        public IHttpActionResult AddNewTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
-            var VResult = new Validator_Test_MainInfo().Validate(Test_MainInfo);
+            var Rez = 
+                _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
 
-            string ErrorMessage = "";
-
-            if (!VResult.IsValid)
-            {
-                foreach (var fail in VResult.Errors)
-                {
-                    ErrorMessage = $"{fail.PropertyName} : {fail.ErrorMessage}";
-                }
-                return BadRequest(ErrorMessage);
-            }
-            else
-            {
-                // var Rez = _service_Test.Add(Test_MainInfo);
-
-                return Ok(Test_MainInfo.Name);
-            }
+            return Ok(Test_MainInfo.Name);            
         }
 
         [HttpDelete, Route("{Id}")]

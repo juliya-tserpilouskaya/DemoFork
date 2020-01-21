@@ -12,7 +12,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.DataGenerators
     {
         // ---------- TestModels
 
-        public static ICollection<MTest_MainInfo> Generate_MTest_MainInfo(int countTest, int countQuestionInTest, int countAnswerVariantsFromQuestion, MUser_TestAuthor User_TestAuthor)
+        public static ICollection<MTest_MainInfo> Generate_MTest_MainInfo(int countTest, int countQuestionInTest, int countAnswerVariantsFromQuestion)
         {
             ICollection<MTest_MainInfo> GenerateCollection = new Collection<MTest_MainInfo>();
 
@@ -22,7 +22,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.DataGenerators
                     new MTest_MainInfo()
                     {
                         Name = $"Test_Name_{i}",
-                        User_TestAuthor = User_TestAuthor,
                         Questions_ChoosingAnswerFromList = Generate_MQuestion_ChoosingAnswerFromList(i, countQuestionInTest, countAnswerVariantsFromQuestion),
                         Questions_SetIntoMissingElements = Generate_MQuestion_SetIntoMissingElements(i, countQuestionInTest, countAnswerVariantsFromQuestion),
                         Questions_SetOrder = Generate_MQuestion_SetOrder(i, countQuestionInTest, countAnswerVariantsFromQuestion)                        

@@ -24,15 +24,18 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test
 
             this.HasMany(g => g.Questions_ChoosingAnswerFromList)
                 .WithRequired(s => s.Test_MainInfoDb)
-                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id)
+                .WillCascadeOnDelete(); 
 
             this.HasMany(g => g.Questions_SetIntoMissingElements)
                 .WithRequired(s => s.Test_MainInfoDb)
-                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id)
+                .WillCascadeOnDelete();
 
             this.HasMany(g => g.Questions_SetOrder)
                 .WithRequired(s => s.Test_MainInfoDb)
-                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id);
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id)
+                .WillCascadeOnDelete();
         }
     }
 }

@@ -32,6 +32,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                     _context.Set<MTest_MainInfoDb>()
                         .Include(_ => _.Questions_ChoosingAnswerFromList)
                         .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
+                        .Include(_ => _.Questions_SetIntoMissingElements)
+                        .Include(_ => _.Questions_SetIntoMissingElements.Select(c => c.AnswerVariants))
+                        .Include(_ => _.Questions_SetOrder)
+                        .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
                         .AsNoTracking()
                         .FirstOrDefault(_ => _.Id == Id);
 
@@ -62,6 +66,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                         _context.Set<MTest_MainInfoDb>()
                             .Include(_ => _.Questions_ChoosingAnswerFromList)
                             .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))
+                            .Include(_ => _.Questions_SetIntoMissingElements)
+                            .Include(_ => _.Questions_SetIntoMissingElements.Select(c => c.AnswerVariants))
+                            .Include(_ => _.Questions_SetOrder)
+                            .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
                             .AsNoTracking()
                             .FirstOrDefaultAsync(_ => _.Id == Id)
                             .ConfigureAwait(false);
@@ -84,12 +92,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
         }
 
-        public Result<MTest_MainInfo> Add(MTest_MainInfo Test_MainInfo)
+        public Result<MTest_MainInfo> Add(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo)
         {
             try
             {
                 MTest_MainInfoDb Test_MainInfoDb =
                     _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+                Test_MainInfoDb.User_TestAuthorDb_Id = User_TestAuthor_Id;
 
                 _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
 
@@ -116,12 +126,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
         }
 
-        public async Task<Result<MTest_MainInfo>> AddAsync(MTest_MainInfo Test_MainInfo)
+        public async Task<Result<MTest_MainInfo>> AddAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo)
         {
             try
             {
                 MTest_MainInfoDb Test_MainInfoDb =
                     _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+                Test_MainInfoDb.User_TestAuthorDb_Id = User_TestAuthor_Id;
 
                 _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
 

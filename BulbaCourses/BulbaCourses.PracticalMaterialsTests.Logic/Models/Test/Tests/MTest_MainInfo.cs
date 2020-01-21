@@ -16,10 +16,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test
 
         public ICollection<MQuestion_SetIntoMissingElements> Questions_SetIntoMissingElements { get; set; }
 
-        public ICollection<MQuestion_SetOrder> Questions_SetOrder { get; set; }
-
-        // ------------ Author        
-
-        public MUser_TestAuthor User_TestAuthor { get; set; }
+        public ICollection<MQuestion_SetOrder> Questions_SetOrder { get; set; }        
     }
 }

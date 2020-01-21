@@ -19,12 +19,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.User
 
             Property(i => i.Id)
                 .HasColumnName("Id")
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None)
                 .IsRequired();
 
             this.HasMany(g => g.CreateTests)
                 .WithRequired(c => c.User_TestAuthor)
-                .HasForeignKey(c => c.User_TestAuthorDb_Id);
+                .HasForeignKey(c => c.User_TestAuthorDb_Id)
+                .WillCascadeOnDelete();
         }
     }
 }
