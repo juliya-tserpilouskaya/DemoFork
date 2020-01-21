@@ -16,8 +16,8 @@ using System.Web.Http;
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/Tests")]
-    public class TestAPIController : ApiController
+    [RoutePrefix("api/WorkWithTheTest")]
+    public class WorkWithTheTestController : ApiController
     {
         private readonly IService_Test _service_Test;
 
@@ -25,29 +25,28 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 
         Validator_Test_MainInfo VTest_MainInfo = new Validator_Test_MainInfo();
 
-        public TestAPIController(IService_Test service_Test, IBus bus)
+        public WorkWithTheTestController(IService_Test service_Test, IBus bus)
         {
             _service_Test = service_Test;
 
             _bus = bus;
         }
 
-        [HttpPost, Route("")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Error")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Test not find")]
-        [SwaggerResponse(HttpStatusCode.OK, "Test find", typeof(string))]
+        [HttpGet, Route("getTestById")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test found")]        
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult TestMethod()
+        public IHttpActionResult GetTestById(int TestId)
         {
             var Test_MainInfo = _service_Test.GetById(1);
 
-            return Ok(Test_MainInfo.Data.Name);
+            return Ok(Test_MainInfo.Data);
         }
 
-        [HttpPost, Route("add")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]
+        [HttpPost, Route("addTest")]
         [SwaggerResponse(HttpStatusCode.OK, "Test added", typeof(MTest_MainInfo))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]        
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult AddNewTest([FromBody, CustomizeValidator(RuleSet = "Insert_New_Test_MainInfo")]MTest_MainInfo Test_MainInfo)
         {
@@ -72,6 +71,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         }
 
         [HttpDelete, Route("{Id}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test delete")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult DeleteTestById(int Id)
         {
             var Test_MainInfo = _service_Test.DeleteById(Id);

@@ -9,13 +9,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions
     /// </summary>
     public class MQuestion_SetIntoMissingElements
     {
-        public int Id { get; set; }
-
         public string QuestionText { get; set; }
 
-        public int SortKey { get; set; }        
-
-        public MTest_MainInfo Test_MainInfo { get; set; }
+        public int SortKey { get; set; }                
 
         public ICollection<MAnswerVariant_SetIntoMissingElements> AnswerVariants { get; set; }
     }

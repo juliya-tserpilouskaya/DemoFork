@@ -18,9 +18,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test
 
         public ICollection<MQuestion_SetOrder> Questions_SetOrder { get; set; }
 
-        // ------------ Author
-
-        public int User_TestAuthor_Id { get; set; }
+        // ------------ Author        
 
         public MUser_TestAuthor User_TestAuthor { get; set; }
     }

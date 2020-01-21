@@ -29,6 +29,5 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
         // ------------ Check
 
         Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo, MTest_MainInfo Curr_Test_MainInfo);
-
     }
 }
