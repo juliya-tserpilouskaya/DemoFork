@@ -51,7 +51,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
-            var coursesList = await context.Courses.ToListAsync().ConfigureAwait(false);
+            var coursesList = await context.Courses.Include(x => x.Domain).Include(y => y.Category).ToListAsync().ConfigureAwait(false);
             return coursesList.AsReadOnly();
         }
 

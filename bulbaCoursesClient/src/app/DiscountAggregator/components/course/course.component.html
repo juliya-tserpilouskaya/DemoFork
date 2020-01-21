@@ -1,8 +1,40 @@
 <p>Discount Aggregator course works!</p>
-<ul>
-    <li *ngFor="let item of domains">
-    
-     {{item.DomainName}} | {{item.DomainURL}}
-     <!-- {{item.Cur_Code}} {{item.Cur_Name}}-->
+<!-- <ul>
+    <li *ngFor="let item of courses">
+    ------------------
+     {{item.Id}} |{{item.Domain}} {{item.URL}} 
+     {{item.Category}} 
+     {{item.Title}} 
+     {{item.Description}} 
+     {{item.Price}} 
+     {{item.OldPrice}} 
+     {{item.DateOldPrice}} 
+     {{item.Discount}} 
+     {{item.DateStartCourse}} 
+     {{item.DateChange}} 
+     ------------------
     </li>
-</ul>
+</ul> -->
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Платный</h4>
+    </div>
+    <div class="card-body" *ngFor="let item of courses">
+      <h1 class="card-title pricing-card-title"><small class="text-muted">{{item.Title}} / </small>{{item.Price}} </h1>
+      <!--<li *ngFor="let course of items"> -->
+         <li>{{item.Domain?.DomainName}} </li>
+         <li>{{item.Category?.Title}} </li>
+         <li>{{item.URL}} </li>
+         <li>{{item.Title}} </li>
+         <li>{{item.Description}} </li>
+         <li>{{item.Price}} </li>
+         <li>{{item.OldPrice}} </li>
+         <li>{{item.DateOldPrice}} </li>
+         <li>{{item.Discount}} </li>
+         <li>{{item.DateStartCourse}} </li>
+         <li>{{item.DateChange}} </li>
+      <!--</li> -->
+      <button type="button" class="btn btn-lg btn-block btn-outline-primary">Перейти</button>
+    </div>
+  </div>

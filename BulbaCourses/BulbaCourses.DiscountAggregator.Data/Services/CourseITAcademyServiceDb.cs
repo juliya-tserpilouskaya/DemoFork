@@ -33,17 +33,17 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 foreach (var courseNew in coursesDb)
                 {
                     courseUpd = context.Courses
-                        .Where(x => x.URL == courseNew.URL).FirstOrDefault();
+                        .FirstOrDefault(x => x.URL == courseNew.URL);
                     if (courseUpd == null)
                     {
                         courseNew.Id = Guid.NewGuid().ToString();
-                        domain = context.Domains.Where(x => x.DomainURL == courseNew.Domain.DomainURL).FirstOrDefault();
+                        domain = context.Domains.FirstOrDefault(x => x.DomainURL == courseNew.Domain.DomainURL);
                         if (domain != null)
                             courseNew.Domain = domain;
                         else
                             courseNew.Domain = await CreateDomainDbAsync(courseNew.Domain);
 
-                        category = context.CourseCategories.Where(x => x.Name == courseNew.Category.Name).FirstOrDefault();
+                        category = context.CourseCategories.FirstOrDefault(x => x.Name == courseNew.Category.Name);
                         if (category != null)
                             courseNew.Category = category;
                         else
@@ -97,14 +97,14 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         {
             context.Domains.Add(domain);
             await context.SaveChangesAsync().ConfigureAwait(false);
-            return context.Domains.Where(x => x.DomainURL == domain.DomainURL).FirstOrDefault();
+            return context.Domains.FirstOrDefault(x => x.DomainURL == domain.DomainURL);
         }
 
         private async Task<CourseCategoryDb> CreateCategoryDbAsync(CourseCategoryDb category)
         {
             context.CourseCategories.Add(category);
             await context.SaveChangesAsync().ConfigureAwait(false);
-            return context.CourseCategories.Where(x => x.Name == category.Name).FirstOrDefault();
+            return context.CourseCategories.FirstOrDefault(x => x.Name == category.Name);
         }
     }
 }

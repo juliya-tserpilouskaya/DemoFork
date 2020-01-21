@@ -47,13 +47,13 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [Authorize]
+        //[Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var sub = (User as ClaimsPrincipal).FindFirst("sub");
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+            //}
             var result = await _courseService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
