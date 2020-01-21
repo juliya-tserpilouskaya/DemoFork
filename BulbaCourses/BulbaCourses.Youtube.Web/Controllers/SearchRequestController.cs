@@ -37,9 +37,10 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> SearchRun([FromBody]SearchRequest searchRequest)
         {
+            var id = this.Request.Headers.GetValues("UserSub").FirstOrDefault();
             var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
             if (userId == null)
-                userId = "guest";
+                userId = id;//"guest";
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

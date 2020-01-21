@@ -3,6 +3,8 @@ import { ResultVideo, YoutubeService } from '../../services/youtube.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+import { User, CustomUser } from 'src/app/auth/models/user';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-search-request',
@@ -16,7 +18,10 @@ export class SearchRequestComponent implements OnInit {
   parameter: string;
   youtubeService: YoutubeService;
 
-  constructor(private service: YoutubeService, route: ActivatedRoute, fb: FormBuilder) {
+  isAuthenticated: boolean;
+  user: CustomUser;
+
+  constructor(private service: YoutubeService, route: ActivatedRoute, fb: FormBuilder, private authService: AuthService) {
     // route.params.subscribe(params => this.parameter = params['name']);
     this.searchForm = fb.group({
       title: [''],
@@ -68,7 +73,7 @@ export class SearchRequestComponent implements OnInit {
           searchRequest.PublishedAfter = null;
           break;
       }
-      this.service.searchVideo(searchRequest).subscribe(data => {
+      this.service.searchVideo(searchRequest, this.user).subscribe(data => {
       this.resultVideos = data;
       this.youtubeService.resultSubject.next(this.resultVideos);
       console.log('Search completed!');
@@ -76,6 +81,8 @@ export class SearchRequestComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
+    this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
 }
 
