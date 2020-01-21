@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using System.Web.Cors;
 using FluentValidation.WebApi;
 using FluentValidation;
+using BulbaCourses.PracticalMaterialsTests.Web.App_Start;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
@@ -68,8 +70,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             // ---------- AppUse
 
-            app.UseNinjectMiddleware(() => ConfigureValidation(config))
-               .UseNinjectWebApi(config);                    
+            app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);                    
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)
@@ -83,6 +84,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
             kernel.Load<ModuleNinject_LogicLayer>();
 
             // ---------- FluentValidation
+
+            FluentValidationModelValidatorProvider.Configure(config,
+                cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
+
+            AssemblyScanner.FindValidatorsInAssemblyContaining<MTest_MainInfo>()
+                .ForEach(result => kernel.Bind(result.InterfaceType)
+                    .To(result.ValidatorType));
 
             // ---------- EasyNetQ
 

@@ -4,10 +4,12 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
 using BulbaCourses.PracticalMaterialsTests.Logic.Validators.Test;
 using EasyNetQ;
+using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;
 using Swashbuckle.Swagger.Annotations;
 using System;
+using System.Linq;
 using System.Net;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -21,13 +23,17 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
     {
         private readonly IService_Test _service_Test;
 
+        private readonly IValidator<MTest_MainInfo> _validator;
+
         private readonly IBus _bus;
 
         Validator_Test_MainInfo VTest_MainInfo = new Validator_Test_MainInfo();
 
-        public WorkWithTheTestController(IService_Test service_Test, IBus bus)
+        public WorkWithTheTestController(IService_Test service_Test, IValidator<MTest_MainInfo> validator, IBus bus)
         {
-            _service_Test = service_Test;
+            _service_Test = service_Test;           
+
+            _validator = validator;
 
             _bus = bus;
         }
@@ -50,10 +56,18 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult AddNewTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
-            var Rez = 
-                _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+            var result = _validator.Validate(Test_MainInfo);
 
-            return Ok(Test_MainInfo.Name);            
+            if (!result.IsValid)
+            {
+                return 
+                    BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a,b) => $"{a} {b}"));
+            }
+
+            var Rez =
+                   _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+
+            return Ok(Test_MainInfo.Name);                     
         }
 
         [HttpPost, Route("updateTest")]
@@ -63,6 +77,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult UpdateTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
+            if (!ModelState.IsValid)
+            {
+                return 
+                    BadRequest(ModelState);
+            }
+
             var Rez =
                 _service_Test.Update("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
 
