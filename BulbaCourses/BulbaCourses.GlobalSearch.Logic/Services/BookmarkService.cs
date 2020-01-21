@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System;
@@ -96,6 +97,19 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         }
 
         /// <summary>
+        /// Creates bookmark async
+        /// </summary>
+        /// <param name="bookmark">search query</param>
+        /// <returns></returns>
+        public async Task<Result<BookmarkDTO>> AddAsync(BookmarkDTO bookmark)
+        {
+            BookmarkDB bookmarkDb = new BookmarkDB() { Id = bookmark.Id, UserId = bookmark.UserId, Title = bookmark.Title, URL = bookmark.URL };
+            var result = await _bookmarkDb.AddAsync(bookmarkDb);
+            return result.IsSuccess ? Result<BookmarkDTO>.Ok(_mapper.Map<BookmarkDTO>(result.Data))
+                : Result<BookmarkDTO>.Fail<BookmarkDTO>(result.Message);
+        }
+
+        /// <summary>
         /// Removes bookmarks by id
         /// </summary>
         /// <param name="id">Bookmark id</param>
@@ -103,6 +117,17 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public void RemoveById(string id)
         {
             _bookmarkDb.RemoveById(id);
+        }
+
+        /// <summary>
+        /// Removes bookmarks by id async
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        public Task<Result> RemoveByIdAsync(string id)
+        {
+            _bookmarkDb.RemoveByIdAsync(id);
+            return Task.FromResult(Result.Ok());
         }
 
         /// <summary>
