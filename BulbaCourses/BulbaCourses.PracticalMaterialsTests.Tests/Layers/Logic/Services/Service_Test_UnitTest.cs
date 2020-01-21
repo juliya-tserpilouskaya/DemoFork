@@ -19,6 +19,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
     {
         IService_Test _service_Test;
 
+        const string User_TestAuthor_Id = "5012f850-9c59-4fd9-9e50-4d93ecac03fb";
+
         [OneTimeSetUp]
         public void Init()
         {
@@ -51,10 +53,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
             foreach (MTest_MainInfo Test_MainInfo in Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4))
             {
                 var HasAdd =
-                    _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+                    _service_Test.Add(User_TestAuthor_Id, Test_MainInfo);
 
                 Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
-            }         
+            }
         }
 
         [Test]
@@ -67,30 +69,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
         }
 
         [Test]
-        public void DeleteById()
-        {
-            AddTest();
-
-            var Test_MainInfo =  _service_Test.DeleteById(1);
-
-            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
-        }
-
-        [Test]
-        public async Task DeleteByIdAsync()
-        {
-            var Test_MainInfo = await _service_Test.DeleteByIdAsync(1);
-
-            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
-        }
-
-        [Test]
         public void Update()
         {
             MTest_MainInfo TestData =
                 new MTest_MainInfo()
                 {
-                    Name = "Test_Name_3",
+                    Id = 1,
+                    Name = "XXXXXXXXXXXXXXXXXXXXXXXX",
                     Questions_ChoosingAnswerFromList =
                         new List<MQuestion_ChoosingAnswerFromList>()
                         {
@@ -155,7 +140,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
                         }
                 };
 
-            var Test_MainInfo = _service_Test.Update(TestData);
+            var Test_MainInfo = 
+                _service_Test.Update(User_TestAuthor_Id, TestData);
 
             Assert.Warn($@"{Test_MainInfo.Data.Name}");
         }
@@ -237,6 +223,27 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
 
             Assert.Warn($@"{Test_MainInfo.Data.Name}");
         }
+
+
+        [Test]
+        public void DeleteById()
+        {
+            AddTest();
+
+            var Test_MainInfo =  _service_Test.DeleteById(1);
+
+            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
+        }
+
+        [Test]
+        public async Task DeleteByIdAsync()
+        {
+            var Test_MainInfo = await _service_Test.DeleteByIdAsync(1);
+
+            Assert.Warn($@"{Test_MainInfo.IsSuccess}");
+        }
+
+       
 
         [Test]
         public void Check()

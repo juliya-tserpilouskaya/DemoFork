@@ -158,15 +158,20 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
         }
 
-        public Result<MTest_MainInfo> Update(MTest_MainInfo Test_MainInfo)
+        public Result<MTest_MainInfo> Update(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo)
         {
-            MTest_MainInfoDb Test_MainInfoDb =
-                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
-
-            _context.Entry(Test_MainInfoDb).State = EntityState.Added;
-            
             try
             {
+                MTest_MainInfoDb Test_MainInfoDb =
+                _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+                Test_MainInfoDb.User_TestAuthorDb_Id = User_TestAuthor_Id;
+
+                _context.Set<MTest_MainInfoDb>().Remove(
+                    _context.Set<MTest_MainInfoDb>().Find(Test_MainInfo.Id));
+
+                _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
+
                 _context.SaveChanges();
 
                 return
@@ -175,29 +180,35 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot update model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
         }
 
-        public async Task<Result<MTest_MainInfo>> UpdateAsync(MTest_MainInfo Test_MainInfo)
+        public async Task<Result<MTest_MainInfo>> UpdateAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo)
         {
-            MTest_MainInfoDb Test_MainInfoDb =
-                 _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
-
-            var entry = _context.Entry(Test_MainInfo);
-
-            entry.State = EntityState.Modified;
-
             try
             {
+                MTest_MainInfoDb Test_MainInfoDb =
+                _mapper.Map<MTest_MainInfoDb>(Test_MainInfo);
+
+                Test_MainInfoDb.User_TestAuthorDb_Id = User_TestAuthor_Id;
+
+                _context.Set<MTest_MainInfoDb>().Remove(
+                    _context.Set<MTest_MainInfoDb>().Find(Test_MainInfo.Id));
+
+                _context.Set<MTest_MainInfoDb>().Add(Test_MainInfoDb);
+
                 await _context.SaveChangesAsync();
 
                 return
@@ -206,24 +217,27 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
             catch (DbUpdateConcurrencyException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot save model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
             catch (DbUpdateException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot update model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
             catch (DbEntityValidationException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Invalid model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot update model. {e.Message}");
             }
         }
 
         public Result DeleteById(int Id)
         {
-            _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
-
             try
             {
+                _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
+
                 _context.SaveChanges();
 
                 return
@@ -231,16 +245,17 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
             catch (NullReferenceException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot delete model. {e.Message}");
             }
         }
 
         public async Task<Result> DeleteByIdAsync(int Id)
         {
-            _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
-
             try
             {
+                _context.Entry(new MTest_MainInfoDb() { Id = Id }).State = EntityState.Deleted;
+
                 await _context.SaveChangesAsync();
 
                 return
@@ -248,13 +263,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
             catch (NullReferenceException e)
             {
-                return (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail($"Cannot delete model. {e.Message}");
+                return
+                    (Result<MTest_MainInfo>)Result<MTest_MainInfo>.Fail<MTest_MainInfo>($"Cannot delete model. {e.Message}");
             }
         }
 
-        // ------------ Check
+        // ------------ CheckCorrectAnswer
 
-        public Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo, MTest_MainInfo Curr_Test_MainInfo)
+        public Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo)
         {
 
             MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
@@ -274,7 +290,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
             return
                    Result<MTest_MainInfo>
-                       .Ok(_mapper.Map<MTest_MainInfo>(Curr_Test_MainInfo));
+                       .Ok(_mapper.Map<MTest_MainInfo>(Current_Test_MainInfo));
 
         }
     }

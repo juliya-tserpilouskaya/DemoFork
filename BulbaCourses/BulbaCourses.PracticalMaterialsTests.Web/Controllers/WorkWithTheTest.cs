@@ -38,7 +38,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetTestById(int TestId)
         {
-            var Test_MainInfo = _service_Test.GetById(1);
+            var Test_MainInfo = _service_Test.GetById(TestId);
 
             return Ok(Test_MainInfo.Data);
         }
@@ -46,7 +46,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [HttpPost, Route("addTest")]
         [SwaggerResponse(HttpStatusCode.OK, "Test added", typeof(MTest_MainInfo))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]        
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test doesn't existing")]        
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult AddNewTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
@@ -56,13 +56,26 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             return Ok(Test_MainInfo.Name);            
         }
 
+        [HttpPost, Route("updateTest")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test update", typeof(MTest_MainInfo))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Test not update")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test doesn't existing")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
+        public IHttpActionResult UpdateTest([FromBody]MTest_MainInfo Test_MainInfo)
+        {
+            var Rez =
+                _service_Test.Update("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+
+            return Ok(Test_MainInfo.Name);
+        }
+
         [HttpDelete, Route("{Id}")]
         [SwaggerResponse(HttpStatusCode.OK, "Test delete")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteTestById(int Id)
+        public IHttpActionResult DeleteTestById(int TestId)
         {
-            var Test_MainInfo = _service_Test.DeleteById(Id);
+            var Test_MainInfo = _service_Test.DeleteById(TestId);
 
             return Ok(Test_MainInfo.Message);
         }

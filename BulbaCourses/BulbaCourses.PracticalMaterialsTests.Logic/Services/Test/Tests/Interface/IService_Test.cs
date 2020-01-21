@@ -18,9 +18,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         Task<Result<MTest_MainInfo>> AddAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Result<MTest_MainInfo> Update(MTest_MainInfo Test_MainInfo);
+        Result<MTest_MainInfo> Update(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Task<Result<MTest_MainInfo>> UpdateAsync(MTest_MainInfo Test_MainInfo);
+        Task<Result<MTest_MainInfo>> UpdateAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
         Result DeleteById(int Id);
 
@@ -28,6 +28,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         // ------------ Check
 
-        Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo, MTest_MainInfo Curr_Test_MainInfo);
+        Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo);
     }
 }
