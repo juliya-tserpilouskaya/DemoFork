@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using Microsoft.Owin.Cors;
 using System.Threading.Tasks;
 using System.Web.Cors;
+using FluentValidation.WebApi;
+using FluentValidation;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
@@ -79,6 +81,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
             kernel.Bind<IService_Test>().To<Service_Test>();
 
             kernel.Load<ModuleNinject_LogicLayer>();
+
+            // ---------- FluentValidation
 
             // ---------- EasyNetQ
 

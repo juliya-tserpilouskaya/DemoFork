@@ -44,12 +44,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             return Ok(Test_MainInfo.Data.Name);
         }
 
-        [HttpGet, Route("")]
-        public IHttpActionResult TestMethod_2()
-        {
-            return Ok("jjjj");
-        }
-
         [HttpPost, Route("add")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Book doesn't existing")]
@@ -57,9 +51,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult AddNewTest([FromBody, CustomizeValidator(RuleSet = "Insert_New_Test_MainInfo")]MTest_MainInfo Test_MainInfo)
         {
-            var Rez = _service_Test.Add(Test_MainInfo);
-
-            var VResult = VTest_MainInfo.Validate(Test_MainInfo);
+            var VResult = new Validator_Test_MainInfo().Validate(Test_MainInfo);
 
             string ErrorMessage = "";
 
@@ -73,7 +65,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             }
             else
             {
-                return Ok(Rez.Message);
+                // var Rez = _service_Test.Add(Test_MainInfo);
+
+                return Ok(Test_MainInfo.Name);
             }
         }
 
