@@ -14,7 +14,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage
         static CourseITAcademyStorage()
         {
             ParserITAcademy parserITAcademy = new ParserITAcademy();
-            _course.AddRange((List<CoursesITAcademy>)parserITAcademy.GetAllCourses());
+            _course.AddRange((List<CoursesITAcademy>)parserITAcademy
+                .GetAllCourses(new CourseCategory()
+                    { Name = CommonValues.programmirovanieCategoryItAcademy,
+                      Title = "Programs" 
+                    }));
         }
         public static IEnumerable<CoursesITAcademy> GetAll()
         {

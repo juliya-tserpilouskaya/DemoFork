@@ -117,10 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Target" xml:space="preserve">
-    <value>H4sIAAAAAAAEAM1YzW7jNhC+F+g7CDq1QNZMHCywG8i7yNpJETROgijZOy2NZaIUqZJUYGPRJ+uhj9RX2NH/n+1I9qYocomHMx9nhuQ3M/r373+cz+uQWy+gNJNiYp+NTm0LhCd9JoKJHZvluw/2508//+Rc+eHa+lronSd6aCn0xF4ZE10Qor0VhFSPQuYpqeXSjDwZEupLMj49/UjOzggghI1YluU8xsKwENIf+HMqhQeRiSmfSx+4zuW44qao1h0NQUfUg4n9JeYLOpWx0qBHM6Y9iViXQaAgoEaq0YwaOkJAA2tjW5ecUfTRBb60LSqENNRgBBfPGlyjpAjcCAWUP20iQL0l5RryyC4q9b5Bno6TIEllWEB5sTYyHAh4dp5njbTND8q9XWYV83qF+TebJOo0txM7y+hsYVvtzS6mXCWKPVOfneCowDux+lidlFcLb2Dyd2JNY25iBRMBsVGUn1gP8YIz73fYPMk/QExEzHk9JAwK1xoCFD0oGYEym0dY5oHe+LZFmnakbVia1WyyFOClwZdhW3O6vgURmBW+mfEH27pma/ALSX6LngXDh4RGRsX48w4dpgsO5TrZu+cMz4CJPfviv7323b/N8+Ptm+8xpQYCqTZvvtETMxz27DJ+//5Njgq0p1iUvcw3DvFBMa8McSbxTQz39577PwIGHy50oFD2hMz+qm3OA4XdjTDn44M8cA1VJqOXwU6g3nRFRfCKpUMquuySaFJr8KWCajBpWYE6dIqlJ2dUnR9508kM1QXTwNO2VTmRFbRRxdnbvC39qqopycppUXbJjrrrzGkU4fWt1eFcYrlZEZ6+c4fXoDDDIJ7eUopKb8udsDbQAFqrSTp8uGZKm6RuLGhy6lM/3KJWP4UdGS72aia6XUOqvBf6yf+ZzZBupDqv1g5Vfq8x5BCESaOH0s9aee6Ypk0S5VRtqVlTyeNQ7Kp7+6yL6lNHKGT9UdLiUodIBf3tq8JRB6mk/ZHyylCHyUUDclKn+UZi6gv98XLirCPlov4YFf/WYSrpgOgabN4Ir7EyALHk+AZaKR3mW4Pn2+41FofhFgWgDVnIu2gOab3WNmGQDmO0+s02Ae1j77ZKuXvJ4i22dnLmfH2U6lBppmJbmKYX5ic06m60gTCjMfdPPuUMkqMrFOZUsCVok7XkNs4s49bM9f+Zf4jWPj94CLoRPqwn9jfrr/9+6BAvVHkrqrpjx1EzRQH7S0jXv9axBs4NR+G0Z4OjwBr9/9aspRPA8e39UV42GuYll9Qc3cEfhrKtgfdRZtIOeFhQ7YaeicP82dLOH+xSp73vhzS03W/3o33a+YRj9vTzGRGjwwuJvmeOlnPAgc1+tyw4pP4dzsF7zoIKIvkqJ8BLrn0FWujciKUs0o2x1T0qVFqnMQdDMf/0Uhm2pJ7BZQ+0Tqfkr5THqHIVLsC/EfexiWJzqTWEC97o8hyyf/90omn67NynD1f/iBDQTZZcoXvxJWbcL/2+7l7uXRDJbfkNUJ5WFdeohP42JdKdFD2B8vTNIAKsTMI8QRhxBNP3wqUvcIhvOJje4tjibYrqvhvk9YNopt2ZMRooGuoco7JPvi2T5OPyp++nYkO8jhYAAA==</value>
-  </data>
-  <data name="DefaultSchema" xml:space="preserve">
-    <value>dbo</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="bulbacourses" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bulbacourses.pfx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

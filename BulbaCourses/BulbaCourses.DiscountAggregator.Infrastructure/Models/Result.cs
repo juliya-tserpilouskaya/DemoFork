@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulbaCourses.DiscountAggregator.Logic.Models
+namespace BulbaCourses.DiscountAggregator.Infrastructure.Models
 {
     public class Result
     {
@@ -51,6 +51,4 @@ namespace BulbaCourses.DiscountAggregator.Logic.Models
             return new Result<T>(false, message, null);
         }
     }
-
-
 }

@@ -27,7 +27,11 @@ namespace BulbaCourses.Web.Migrations
                 return;
             }
 
-            var user = new IdentityUser("user@test.com");
+            var user = new IdentityUser("user@test.com")
+            {
+                Email = "user@test.com",
+                EmailConfirmed = true
+            };
             var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
             manager.PasswordValidator = new MinimumLengthValidator(3);
             manager.Create(user, "123");
