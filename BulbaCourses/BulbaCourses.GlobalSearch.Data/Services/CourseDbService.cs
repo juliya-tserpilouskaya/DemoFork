@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -248,6 +251,60 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         }
 
         /// <summary>
+        /// Updates course data async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public async Task<Result<CourseDB>> UpdateAsync(CourseDB course)
+        {
+            try
+            {
+                _context.Entry(course).State = EntityState.Modified;
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDB>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Course can not be updated. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Course can not be updated. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Invalid SearchCriteria. {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Updates course data async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public async Task<Result<CourseDB>> AddAsync(CourseDB course)
+        {
+            try
+            {
+                _context.Courses.Add(course);
+                await _context.SaveChangesAsync();
+                return Result<CourseDB>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Cannot save course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Cannot save course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Invalid course. {e.Message}");
+            }
+        }
+
+        /// <summary>
         /// Creates learning course
         /// </summary>
         /// <param name="course">Learning course</param>
@@ -284,6 +341,35 @@ namespace BulbaCourses.GlobalSearch.Data.Services
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Deletes course from database
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
+        public async Task<Result<CourseDB>> DeleteByIdAsync(string id)
+        {
+            try
+            {
+                var query = from course in _context.Courses select course;
+                CourseDB courseToDelete = query
+                    .Include(p => p.Items)
+                    .SingleOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+                var items = courseToDelete.Items.ToArray();
+                _context.CourseItems.RemoveRange(items);
+                _context.Courses.Remove(courseToDelete);
+                await _context.SaveChangesAsync();
+                return Result<CourseDB>.Ok(courseToDelete);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Course not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDB>.Fail<CourseDB>($"Course invalid. {e.Message}");
+            }
         }
 
         public void Dispose()
