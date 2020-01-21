@@ -138,44 +138,31 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteById(string id)
+        public async Task<IHttpActionResult> DeleteById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
-            try
-            {
-                _courseService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _courseService.DeleteByIdAsync(id);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+
+            
         }
 
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
             if (course == null)
             {
                 return BadRequest();
             }
-
-            try
-            {
-                _courseService.UpdateAsync(course);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _courseService.UpdateAsync(course);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPost, Route("")]
@@ -184,9 +171,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        //[OverrideActionFilters]
         //[BadRequestFilter]
-        [Authorize]
+        //[Authorize]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
             var user = this.User as ClaimsPrincipal;

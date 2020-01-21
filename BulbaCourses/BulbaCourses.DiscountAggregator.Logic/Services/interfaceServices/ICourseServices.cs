@@ -22,7 +22,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         Task<Result<Course>> AddAsync(Course course);
 
-        Task<Result> DeleteByIdAsync(string id);
+        Task<Result<Course>> DeleteByIdAsync(string id);
 
         Task<Result<Course>> UpdateAsync(Course course);    
     }   

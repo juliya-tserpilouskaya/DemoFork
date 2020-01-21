@@ -11,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         Task<CourseCategoryDb> GetByIdAsync(string id);
         Task<Result<CourseCategoryDb>> AddAsync(CourseCategoryDb courseCategoryDb);
         Task <Result<CourseCategoryDb>> DeleteAsync(CourseCategoryDb courseCategoryDb);
-        Task DeleteByIdAsync(string id);
+        Task<Result<CourseCategoryDb>> DeleteByIdAsync(string id);
         Task<Result<CourseCategoryDb>> UpdateAsync(CourseCategoryDb courseCategoryDb);
     }
 }

@@ -72,10 +72,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         }
 
-        public Task<Result> DeleteByIdAsync(string id)
+        public async Task<Result<Course>> DeleteByIdAsync(string id)
         {
-            _courseService.DeleteByIdAsync(id);
-            return Task.FromResult(Result.Ok());
+            var result = await _courseService.DeleteByIdAsync(id);
+            return result.IsSuccess ? Result<Course>.Ok(_mapper.Map<Course>(result.Data))
+                : (Result<Course>)Result.Fail(result.Message);
         }
 
         public async Task<Result<Course>> UpdateAsync(Course course)
