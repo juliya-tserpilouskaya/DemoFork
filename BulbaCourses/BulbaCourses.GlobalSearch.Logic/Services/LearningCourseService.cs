@@ -198,7 +198,6 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         /// <returns></returns>
         public async Task<Result<LearningCourseDTO>> UpdateAsync(LearningCourseDTO course)
         {
-
             var courseDb = _mapper.Map<LearningCourseDTO, CourseDB>(course);
 
             var result = await _learningCourseDb.UpdateAsync(courseDb);

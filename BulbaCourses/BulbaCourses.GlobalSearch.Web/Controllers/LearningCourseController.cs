@@ -10,6 +10,7 @@ using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Logic.DTO;
+using FluentValidation.WebApi;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -173,7 +174,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(LearningCourseDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default,UpdateCourse")]LearningCourseDTO course)
         {
 
             if (course is null || !ModelState.IsValid)
@@ -193,7 +194,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
-        public async Task<IHttpActionResult> Create([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]LearningCourseDTO course)
         {
             if (course is null || !ModelState.IsValid)
             {

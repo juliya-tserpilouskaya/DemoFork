@@ -1,6 +1,7 @@
 ﻿using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
-        public async Task<IHttpActionResult> Create([FromBody]BookmarkDTO bookmark)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]BookmarkDTO bookmark)
         {
             if (!ModelState.IsValid)
             {
