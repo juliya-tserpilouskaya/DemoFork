@@ -111,6 +111,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             try
             {
                 query.Id = Guid.NewGuid().ToString();
+                query.Created = DateTime.Now;
                 _context.SearchQueries.Add(query);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<SearchQueryDB>.Ok(query);

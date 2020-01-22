@@ -267,14 +267,27 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             try
             {
                 CourseDB deletedCourse = _context.Courses
+                    .Include(i => i.Items)
                     .SingleOrDefault(p => p.Id.Equals(course.Id, StringComparison.OrdinalIgnoreCase));
-                _context.Courses.Remove(deletedCourse);
-                course.Id = Guid.NewGuid().ToString();
-                _context.Courses.Add(course);
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-                //_context.Entry(course).State = EntityState.Modified;
-                //await _context.SaveChangesAsync().ConfigureAwait(false);
-                return Result<CourseDB>.Ok(course);
+
+                if (deletedCourse != null)
+                {
+                    //var items = deletedCourse.Items.ToArray();
+                    //if (items != null)
+                    //{
+                    //    _context.CourseItems.RemoveRange(items);
+                    //}
+                    //_context.CourseItems.RemoveRange(items);
+                    _context.Courses.Remove(deletedCourse);
+                    course.Id = Guid.NewGuid().ToString();
+                    _context.Courses.Add(course);
+                    await _context.SaveChangesAsync();
+                    return Result<CourseDB>.Ok(course);
+                }
+                else
+                {
+                    return Result<CourseDB>.Fail<CourseDB>($"Course not found."); ;
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
