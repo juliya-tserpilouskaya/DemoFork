@@ -80,9 +80,9 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet, Route("id/{id}")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "dashboard doesn`t exists.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Dashboard doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [SwaggerResponse(HttpStatusCode.OK, "dashboard founds.", typeof(DashboardShort))]
+        [SwaggerResponse(HttpStatusCode.OK, "Dashboard founds.", typeof(DashboardShort))]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardShortExample))]
         public async Task<IHttpActionResult> GetById(string id)
         {
@@ -106,7 +106,7 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete, Route("id/{id}")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "dashboard doesn`t exists.")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Dashboard doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> DeleteById(string id)
         {
@@ -130,8 +130,8 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "dashboard not created.")]
-        [SwaggerResponse(HttpStatusCode.OK, "dashboard created", typeof(DashboardNew))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Dashboard not created.")]
+        [SwaggerResponse(HttpStatusCode.OK, "Dashboard created", typeof(DashboardNew))]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardCreateExample))]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "Create")]DashboardNew dashboardNew)
         {
@@ -160,8 +160,8 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "dashboard not updated.")]
-        [SwaggerResponse(HttpStatusCode.OK, "dashboard updated", typeof(DashboardShort))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Dashboard not updated.")]
+        [SwaggerResponse(HttpStatusCode.OK, "Dashboard updated", typeof(DashboardShort))]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardShortExample))]
         public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "Update")]DashboardShort dashboard)
         {
