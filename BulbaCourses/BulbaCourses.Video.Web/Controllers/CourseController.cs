@@ -4,7 +4,6 @@ using BulbaCourses.Video.Logic.Models;
 using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models;
 using BulbaCourses.Video.Web.SwaggerModels;
-using EasyNetQ;
 using FluentValidation.WebApi;
 using Newtonsoft.Json;
 using Swashbuckle.Examples;
@@ -25,13 +24,11 @@ namespace BulbaCourses.Video.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
-        private IBus _bus;
 
-        public CourseController(IMapper mapper, ICourseService courseService, IBus bus)
+        public CourseController(IMapper mapper, ICourseService courseService)
         {
             _mapper = mapper;
             _courseService = courseService;
-            _bus = bus;
         }
 
         [HttpGet, Route("{id}")]
@@ -52,9 +49,6 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 return BadRequest();
             }
-
-            await _bus.SendAsync("VideoQ", id);
-            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
 
             try
             {
@@ -78,8 +72,6 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 userId = "guest";
             }
-
-            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
 
             var courses = await _courseService.GetAllAsync();
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);

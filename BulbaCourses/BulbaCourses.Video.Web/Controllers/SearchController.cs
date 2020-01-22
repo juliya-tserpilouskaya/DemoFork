@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.Video.Logic.InterfaceServices;
 using BulbaCourses.Video.Web.Models;
-using EasyNetQ;
 using Newtonsoft.Json;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -19,12 +18,10 @@ namespace BulbaCourses.Video.Web.Controllers
     public class SearchController : ApiController
     {
         private readonly ISearchService _searchService;
-        private IBus _bus;
 
-        public SearchController(ISearchService searchService, IBus bus)
+        public SearchController(ISearchService searchService)
         {
             _searchService = searchService;
-            _bus = bus;
         }
 
         [HttpGet, Route("{request}")]
@@ -39,9 +36,6 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 userId = "guest";
             }
-
-            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
-
 
             Logic.Models.Enums.SearchVariant searchVariant;
             if (variant == 1)
