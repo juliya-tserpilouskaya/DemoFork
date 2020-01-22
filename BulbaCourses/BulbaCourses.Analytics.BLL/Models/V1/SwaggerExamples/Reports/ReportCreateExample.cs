@@ -1,7 +1,7 @@
 ﻿using BulbaCourses.Analytics.Models.V1;
 using Swashbuckle.Examples;
 
-namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports
+namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples
 {
     /// <summary>
     /// Represents a example of model view new report.
