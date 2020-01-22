@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -27,6 +28,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+            }
             var result = await _bookmarkService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
