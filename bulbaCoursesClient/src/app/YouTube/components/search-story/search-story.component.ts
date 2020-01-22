@@ -29,10 +29,10 @@ export class SearchStoryComponent implements OnInit {
     this.service.getStory(this.user).subscribe(data => this.searchStory = data);
   }
 
-  DeleteByStoryId(storyId: number) {
+  DeleteByStoryId(story: SearchStory) {
     console.log('Del story..');
-    this.service.delStoryById(storyId).subscribe(data => {
-      console.log('Deleted story..');
+    this.service.delStoryById(story).subscribe(data => {
+      console.log('go to service..');
     },
     (error) => console.log(error)
     );

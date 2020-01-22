@@ -203,6 +203,13 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<SearchStory>(await _storyRepository.GetByStoryIdAsync(storyId));
         }
 
+        public bool HideStoryForUser(int? storyId)
+        {
+            if (storyId == null)
+                return false;
+            return _storyRepository.HideStoryForUser(storyId);
+        }
+
         public async Task<bool> ExistsAsync(int? storyId)
         {
             return await _storyRepository.ExistsAsync(storyId);

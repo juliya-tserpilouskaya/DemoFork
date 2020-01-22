@@ -46,8 +46,8 @@ namespace BulbaCourses.Youtube.Web.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _bus.SendAsync("YoutubeQ", searchRequest);
-            await _bus.SendAsync("YoutubeQ", JsonConvert.SerializeObject(userId));
+            //await _bus.SendAsync("YoutubeQ", searchRequest);
+            //await _bus.SendAsync("YoutubeQ", JsonConvert.SerializeObject(userId));
 
             //_bus.Advanced.Consume("YoutubeQ", 
             //    (data,props,info) =>

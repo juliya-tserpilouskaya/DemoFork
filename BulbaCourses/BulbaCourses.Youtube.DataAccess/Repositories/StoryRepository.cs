@@ -63,7 +63,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<SearchStoryDb> GetByUserId(string userId)
         {
-            return _context.SearchStories.Include(_=>_.SearchRequest).Where(s => s.UserId == userId).ToList().AsReadOnly();
+            return _context.SearchStories.Include(_=>_.SearchRequest).Where(s => s.UserId == userId && s.IsHideForUser == false).ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -150,9 +150,9 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <param name="storyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool HideStoryForUser(int? storyId, string userId)
+        public bool HideStoryForUser(int? storyId)
         {
-            var hideStory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId && s.UserId == userId);
+            var hideStory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId);
             var isHide = false;
             if (hideStory != null)
             {

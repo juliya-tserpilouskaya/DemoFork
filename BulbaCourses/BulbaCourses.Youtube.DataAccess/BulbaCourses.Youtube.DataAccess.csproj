@@ -84,6 +84,10 @@
     <Compile Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.Designer.cs">
       <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001221955243_add  ishide field.cs" />
+    <Compile Include="Migrations\202001221955243_add  ishide field.Designer.cs">
+      <DependentUpon>202001221955243_add  ishide field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChannelDb.cs" />
     <Compile Include="Repositories\IStoryRepository.cs" />
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001102244010_deleted_User_Course_Mentor_Student.resx">
       <DependentUpon>202001102244010_deleted_User_Course_Mentor_Student.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001221955243_add  ishide field.resx">
+      <DependentUpon>202001221955243_add  ishide field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
