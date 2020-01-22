@@ -17,7 +17,8 @@ const routes: Routes = [
   // {path: 'discountMenu', component: CourseComponent},
   { path: 'bookmarks', component: BookmarksComponent },
   { path: 'query-result', component: QueryResultComponent},
-  { path: 'course-items', component: CourseItemComponent}
+  { path: 'course-items', component: CourseItemComponent},
+  // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 
 @NgModule({

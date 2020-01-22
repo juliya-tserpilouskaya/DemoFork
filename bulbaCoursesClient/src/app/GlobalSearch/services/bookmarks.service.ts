@@ -8,11 +8,12 @@ export class  BookmarksService {
 
   constructor(private client: HttpClient) { }
   getBookmarks() {
-    return this.client.get<Domains[]>('https://localhost:44317/api/domains');
+    return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks');
   }
 }
-export interface Domains {
+export interface Bookmarks {
   Id: string;
-  DomainName: string;
-  DomainURL: string;
+  UserId: string;
+  Title: string;
+  URL: string;
 }
