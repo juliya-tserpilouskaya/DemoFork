@@ -39,8 +39,12 @@ namespace BulbaCourses.Youtube.Web.Controllers
         {
             var id = this.Request.Headers.GetValues("UserSub").FirstOrDefault();
             var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-            if (userId == null)
-                userId = id;//"guest";
+            if (id != null)
+                userId = id;
+            else
+                userId = "guest";
+            //if (userId == null)
+            //    userId = "guest";
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

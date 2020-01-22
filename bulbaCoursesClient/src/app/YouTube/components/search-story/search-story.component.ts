@@ -17,6 +17,7 @@ export class SearchStoryComponent implements OnInit {
   isAuthenticated: boolean;
   user: CustomUser;
   searchStory: SearchStory[] = [];
+  story: SearchStory;
 
   constructor(private authService: AuthService, private service: YoutubeService) { }
 
@@ -25,7 +26,16 @@ export class SearchStoryComponent implements OnInit {
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
 
     console.log('Get story..');
-    this.service.getStory().subscribe(data => this.searchStory = data);
+    this.service.getStory(this.user).subscribe(data => this.searchStory = data);
+  }
+
+  DeleteByStoryId(storyId: number) {
+    console.log('Del story..');
+    this.service.delStoryById(storyId).subscribe(data => {
+      console.log('Deleted story..');
+    },
+    (error) => console.log(error)
+    );
   }
 
 }

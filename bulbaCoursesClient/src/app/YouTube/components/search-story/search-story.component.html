@@ -11,7 +11,7 @@
           {{story.SearchDate | searchDate}}
         </div>
         <div class="delete-button">
-          <button>X</button>
+          <button (click)="DeleteByStoryId(story.Id)">X</button>
         </div>
       </div>
       <hr>

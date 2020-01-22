@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 import { User, CustomUser } from 'src/app/auth/models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { SearchStory } from '../../models/searchstory';
 
 @Component({
   selector: 'app-search-request',
@@ -17,7 +18,6 @@ export class SearchRequestComponent implements OnInit {
   searchForm: FormGroup;
   parameter: string;
   youtubeService: YoutubeService;
-
   isAuthenticated: boolean;
   user: CustomUser;
 
