@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Security.Claims;
 using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
@@ -46,8 +47,13 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        //[Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+            //}
             var result = await _courseService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
@@ -103,49 +109,60 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+        
+        [HttpGet, Route("Search/{idSearch}")]
+        [Description("Get courses by Criteria")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByCriteriaAsync(string idSearch)
+        {
+            if (idSearch == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _courseService.GetByIdCriteriaAsync(idSearch);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteById(string id)
+        public async Task<IHttpActionResult> DeleteById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
-            try
-            {
-                _courseService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _courseService.DeleteByIdAsync(id);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+
+            
         }
 
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
             if (course == null)
             {
                 return BadRequest();
             }
-
-            try
-            {
-                _courseService.UpdateAsync(course);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _courseService.UpdateAsync(course);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPost, Route("")]
@@ -154,18 +171,18 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        //[OverrideActionFilters]
         //[BadRequestFilter]
+        //[Authorize]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default")]Course course)
         {
+            var user = this.User as ClaimsPrincipal;
+            //user.FindFirst("preferred_username").Value;
+
             if (course == null)
             {
                 return BadRequest();
             }
 
-            course.Id = Guid.NewGuid().ToString();
-            course.Category.Id = Guid.NewGuid().ToString();
-            course.Domain.Id = Guid.NewGuid().ToString();
             var result = await _courseService.AddAsync(course);
             return  result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

@@ -42,7 +42,7 @@
       <HintPath>..\BulbaCourses.Analytics.BLL\bin\Debug\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.6.0\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>

@@ -12,14 +12,14 @@ namespace BulbaCourses.Youtube.Logic.Services
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, User user);
+        IEnumerable<ResultVideo> SearchRun(SearchRequest searchRequest, string user);
 
         /// <summary>
         /// YouTube video search
         /// </summary>
         /// <param name="searchRequest"></param>
         /// <returns></returns>
-        Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, User user);
+        Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, string user);
 
     }
 }

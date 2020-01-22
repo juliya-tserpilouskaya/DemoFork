@@ -29,6 +29,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(IEnumerable<Domain>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [Authorize]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var result = await _domainService.GetAllAsync();
@@ -71,7 +72,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            domain.Id = Guid.NewGuid().ToString();
             var result = await _domainService.AddAsync(domain);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
@@ -80,44 +80,30 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain deleted", typeof(Domain))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteById(string id)
+        public async Task<IHttpActionResult> DeleteByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
-            try
-            {
-                _domainService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+           
+            var result = await _domainService.DeleteByIdAsync(id);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain updated", typeof(Domain))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default")]Domain domain)
         {
             if (domain == null)
             {
                 return BadRequest();
             }
 
-            try
-            {
-                _domainService.UpdateAsync(domain);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _domainService.UpdateAsync(domain);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
     }
 }

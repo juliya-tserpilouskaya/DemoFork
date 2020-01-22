@@ -33,26 +33,26 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 List<CourseCategoryDb> courseCategories = new List<CourseCategoryDb>();
                 List<DomainDb> domains = new List<DomainDb>();
-
                 CourseCategoryDb categoryDb;
                 DomainDb domainDb; 
 
                 foreach (var el in profileDb.SearchCriteria.CourseCategories)
                 {
-                    categoryDb = context.CourseCategories.Where(x => x.Name == el.Name)
+                    categoryDb = context.CourseCategories
+                        .Where(x => x.Name == el.Name)
                         .Where(y => y.Title == el.Title).FirstOrDefault();
                     courseCategories.Add(categoryDb ??
                         new CourseCategoryDb()
                         {
                             Name = el.Name,
                             Title = el.Title
-                        }) ;
+                        });
                 }
-                profileDb.SearchCriteria.CourseCategories = courseCategories;
-
+                
                 foreach (var el in profileDb.SearchCriteria.Domains)
                 {
-                    domainDb = context.Domains.Where(x => x.DomainURL == el.DomainURL).FirstOrDefault();
+                    domainDb = context.Domains.Where(x => x.DomainURL == el.DomainURL)
+                        .FirstOrDefault();
                     domains.Add(domainDb ?? 
                         new DomainDb()
                         {
@@ -61,6 +61,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                         });
                 }
                 //domains.Add(context.Domains.Find(el.Id) ?? el);
+                profileDb.SearchCriteria.CourseCategories = courseCategories;
                 profileDb.SearchCriteria.Domains = domains;
 
                 context.Profiles.Add(profileDb);

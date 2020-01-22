@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,59 +21,131 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             this.context = courseService;
         }
 
-        public async Task<CourseDb> AddAsync(CourseDb course)
-        { 
-            context.Courses.Add(course);
-            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            return await Task.FromResult(course);
+        public async Task<Result<CourseDb>> AddAsync(CourseDb course)
+        {
+            try
+            {
+                context.Courses.Add(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Invalid course. {e.Message}");
+            }
         }
 
         public IEnumerable<CourseDb> GetAll()
         {
-            var coursesList = context.Courses.ToList().AsReadOnly();
+            var coursesList = context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).ToList().AsReadOnly();
             return coursesList;
         }
         
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
-            var coursesList = await context.Courses.ToListAsync().ConfigureAwait(false);
+            var coursesList = await context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).ToListAsync().ConfigureAwait(false);
             return coursesList.AsReadOnly();
         }
 
         public CourseDb GetById(string id)
         {
-            var course = context.Courses.FirstOrDefault(c => c.Id.Equals(id));
+            var course = context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).FirstOrDefault(c => c.Id.Equals(id));
             return course;
         }
         
         public async Task<CourseDb> GetByIdAsync(string id)
         {
-            var course = await context.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            var course = await context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return course;
         }
 
-        public async Task DeleteAsync(CourseDb course)
+        public async Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idSearch)
         {
-            context.Courses.Remove(course);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-        }
-        
-        public async Task DeleteByIdAsync(string id)
-        {
-            var course = context.Courses.SingleOrDefault(c => c.Id.Equals(id));
-            context.Courses.Remove(course);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            //TODO domain and category
+            var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
+            var courses = await context.Courses
+                .Where(x => x.Price >= searchCriteriaDb.MinPrice 
+                && x.Price <= searchCriteriaDb.MaxPrice 
+                //&& x.Domain == searchCriteriaDb.Domains
+                //&& x.Category == searchCriteriaDb.CourseCategories
+                && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+                .ToListAsync()
+                .ConfigureAwait(false);
+            
+            return courses;
         }
 
-        public async Task<CourseDb> UpdateAsync(CourseDb course)
+        public async Task<Result<CourseDb>> DeleteAsync(CourseDb course)
         {
-            if (course == null)
+            try
             {
-                throw new ArgumentNullException("course");
+                context.Courses.Remove(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
             }
-            context.Entry(course).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return await Task.FromResult(course);
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Course not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Invalid profile. {e.Message}");
+            }
+        }
+        
+        public async Task<Result<CourseDb>> DeleteByIdAsync(string id)
+        {
+            try
+            {
+                var course = context.Courses
+                    .Include(x => x.Domain)
+                    .Include(y => y.Category).SingleOrDefault(c => c.Id.Equals(id));
+                context.Courses.Remove(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Course not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Invalid profile. {e.Message}");
+            }
+        }
+
+        public async Task<Result<CourseDb>> UpdateAsync(CourseDb course)
+        {
+            try
+            {
+                context.Entry(course).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Cannot save course. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseDb>)Result<CourseDb>.Fail<CourseDb>($"Invalid course. {e.Message}");
+            }
         }
     }
 }

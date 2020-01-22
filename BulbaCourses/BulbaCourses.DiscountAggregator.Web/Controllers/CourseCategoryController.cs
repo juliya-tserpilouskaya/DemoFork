@@ -71,7 +71,6 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return BadRequest();
             }
 
-            courseCategory.Id = Guid.NewGuid().ToString();
             var result = await _courseCategoryService.AddAsync(courseCategory);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
@@ -80,44 +79,31 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Category deleted", typeof(CourseCategory))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult DeleteById(string id)
+        public async Task<IHttpActionResult> DeleteById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
-            try
-            {
-                _courseCategoryService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _courseCategoryService.DeleteByIdAsync(id);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Category updated", typeof(CourseCategory))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody, CustomizeValidator(RuleSet = "default")]CourseCategory courseCategory)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default")]CourseCategory courseCategory)
         {
             if (courseCategory == null)
             {
                 return BadRequest();
             }
 
-            try
-            {
-                _courseCategoryService.UpdateAsync(courseCategory);
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _courseCategoryService.UpdateAsync(courseCategory);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+               
         }
     }
 }

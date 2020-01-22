@@ -12,6 +12,8 @@ using BulbaCourses.Youtube.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Logic;
 using EasyNetQ;
+using AutoMapper;
+using FluentValidation;
 
 namespace BulbaCourses.Youtube.Tests
 {
@@ -27,7 +29,10 @@ namespace BulbaCourses.Youtube.Tests
             kernel.Load<LogicModule>();
             kernel.RegisterEasyNetQ("host=localhost");
 
-            var lService = new LogicService(kernel.Get<IServiceFactory>());
+            var lService = new LogicService(
+                                            kernel.Get<IServiceFactory>(), 
+                                            kernel.Get<IMapper>(),
+                                            kernel.Get<IValidator<SearchRequest>>());
             srController = new SearchRequestController(lService, kernel.Get<IBus>());
         }
 

@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +20,26 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             this.context = context;
         }
 
-        public async Task<CourseCategoryDb> AddAsync(CourseCategoryDb category)
+        public async Task<Result<CourseCategoryDb>> AddAsync(CourseCategoryDb category)
         {
-            context.CourseCategories.Add(category);
-            context.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            return await Task.FromResult(category);
+            try
+            {
+                context.CourseCategories.Add(category);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseCategoryDb>.Ok(category);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Cannot save category. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Cannot save category. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Invalid category. {e.Message + "/n" + e.EntityValidationErrors}");
+            }
         }
 
         public async Task<IEnumerable<CourseCategoryDb>> GetAllAsync()
@@ -36,28 +54,69 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return category;
         }
 
-        public async Task DeleteAsync(CourseCategoryDb categoryDb)
+        public async Task<Result<CourseCategoryDb>> DeleteAsync(CourseCategoryDb categoryDb)
         {
-            context.CourseCategories.Remove(categoryDb);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task DeleteByIdAsync(string id)
-        {
-            var category = context.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
-            context.CourseCategories.Remove(category);
-            await context.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task<CourseCategoryDb> UpdateAsync(CourseCategoryDb categoryDb)
-        {
-            if (categoryDb == null)
+            try
             {
-                throw new ArgumentNullException("course");
+                context.CourseCategories.Remove(categoryDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseCategoryDb>.Ok(categoryDb);
             }
-            context.Entry(categoryDb).State = EntityState.Modified;
-            await context.SaveChangesAsync().ConfigureAwait(false);
-            return await Task.FromResult(categoryDb);
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Category not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Invalid category. {e.Message}");
+            }
+
+        }
+
+        public async Task<Result<CourseCategoryDb>> DeleteByIdAsync(string id)
+        {
+            try
+            {
+                var categoryDb = context.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
+                context.CourseCategories.Remove(categoryDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseCategoryDb>.Ok(categoryDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Category not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Invalid category. {e.Message}");
+            }
+        }
+
+        public async Task<Result<CourseCategoryDb>> UpdateAsync(CourseCategoryDb categoryDb)
+        {
+            try
+            {
+                if (categoryDb == null)
+                {
+                    throw new ArgumentNullException("category");
+                }
+                context.Entry(categoryDb).State = EntityState.Modified;
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseCategoryDb>.Ok(categoryDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Cannot save category. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Cannot save category. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return (Result<CourseCategoryDb>)Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Invalid category. {e.Message}");
+            }
+
         }
     }
 }
