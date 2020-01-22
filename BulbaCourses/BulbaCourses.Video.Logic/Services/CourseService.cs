@@ -122,11 +122,10 @@ namespace BulbaCourses.Video.Logic.Services
             _courseRepository.Update(course);
         }
 
-        public IEnumerable<VideoMaterialInfo> GetCourseVideos(string courseId)
+        public async Task<IEnumerable<VideoMaterialInfo>> GetCourseVideosAsync(string courseId)
         {
-            var course = _courseRepository.GetById(courseId);
-            var videoListDb = course.Videos.ToList().AsReadOnly();
-            var result = _mapper.Map<IEnumerable<VideoMaterialDb>, IEnumerable<VideoMaterialInfo>>(videoListDb);
+            var videos = await _courseRepository.GetCoursesAsync(courseId);
+            var result = _mapper.Map<IEnumerable<VideoMaterialDb>, IEnumerable<VideoMaterialInfo>>(videos);
             return result;
         }
 

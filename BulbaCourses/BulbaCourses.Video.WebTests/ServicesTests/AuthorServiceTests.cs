@@ -85,22 +85,6 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
         }
 
         [Test]
-        public void Test_GetAll_Authors_Courses()
-        {
-            _mockSet.As<IQueryable<AuthorDb>>().Setup(m => m.Provider).Returns(_autorsDb.Provider);
-
-            _mockContext.Setup(c => c.Authors).Returns(_mockSet.Object);
-            _mockRepo = new AuthorRepository(_mockContext.Object);
-            _mockMapper.Setup(m => m.Map<AuthorInfo, AuthorDb>(_authorsInfo.First())).Returns(_autorsDb.First());
-            _mockMapper.Setup(m => m.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(_coursesDb)).Returns(_coursesInfo);
-            _service = new AuthorService(_mockMapper.Object, _mockRepo);
-            var courses = _service.GetAllCourses(_authorsInfo.First());
-            courses.Count().Should().Be(_coursesDb.Count);
-            courses.First().Should().Be(_coursesInfo.First());
-            courses.Should().BeEquivalentTo(_coursesInfo);
-        }
-
-        [Test]
         public async Task Test_GettAll_Author_Async()
         {
 

@@ -40,7 +40,7 @@ namespace BulbaCourses.Video.Web.Controllers
                 userId = "guest";
             }
 
-            await _bus.SendAsync("YoutubeQ", JsonConvert.SerializeObject(userId));
+            await _bus.SendAsync("VideoQ", JsonConvert.SerializeObject(userId));
 
 
             Logic.Models.Enums.SearchVariant searchVariant;
