@@ -50,9 +50,9 @@
   <ItemGroup>
     <Compile Include="Context\DAContext.cs" />
     <Compile Include="HashingPassword.cs" />
-    <Compile Include="Migrations\202001210931424_NewMigration.cs" />
-    <Compile Include="Migrations\202001210931424_NewMigration.Designer.cs">
-      <DependentUpon>202001210931424_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202001221802002_FirstMigration.cs" />
+    <Compile Include="Migrations\202001221802002_FirstMigration.Designer.cs">
+      <DependentUpon>202001221802002_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -94,8 +94,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001210931424_NewMigration.resx">
-      <DependentUpon>202001210931424_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001221802002_FirstMigration.resx">
+      <DependentUpon>202001221802002_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
