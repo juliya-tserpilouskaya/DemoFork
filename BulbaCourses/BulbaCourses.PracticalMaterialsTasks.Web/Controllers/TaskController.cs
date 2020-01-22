@@ -60,7 +60,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         }
 
         [HttpPost, Route("")]        
-        public  async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "Task, default")]TaskDTO task)
+        public async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "addTask")]TaskDTO task)
         {
            
                await  _taskservice.MakeTask(task);
