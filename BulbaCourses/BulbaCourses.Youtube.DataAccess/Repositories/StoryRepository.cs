@@ -144,6 +144,25 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
             }
         }
 
+        /// <summary>
+        /// Hide story for user
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool HideStoryForUser(int? storyId, string userId)
+        {
+            var hideStory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId && s.UserId == userId);
+            var isHide = false;
+            if (hideStory != null)
+            {
+                isHide = true;
+                hideStory.IsHideForUser = isHide;
+                _context.SaveChanges();
+            }
+            return isHide;
+        }
+
         public async Task<bool> ExistsAsync(int? storyId)
         {
             return await _context.SearchStories.AnyAsync(s => s.Id == storyId);

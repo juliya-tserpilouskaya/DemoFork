@@ -27,18 +27,21 @@ export class YoutubeService {
      params: new HttpParams().set('userId', user.sub)
    });
  }
+// getStory(user: CustomUser) {
+//   return this.client.get<SearchStory[]>(`http://localhost:60601/api/story/${user.sub}`);
+// }
 
-//  delStoryById(item: number) {
-//     console.log('Del story on service, item = ', item);
-//     return this.client.delete('http://localhost:60601/api/story', {
-//       params: new HttpParams().set('storyid', item.toString())
-//     });
-//  }
-
-  delStoryById(item: number) {
+ delStoryById(item: number) {
     console.log('Del story on service, item = ', item);
-    return this.client.delete(`http://localhost:60601/api/story/${item}`);
-  }
+    return this.client.delete('http://localhost:60601/api/story/bystoryid', {
+      params: new HttpParams().set('storyid', item.toString())
+    });
+ }
+
+  // delStoryById(item: number) {
+  //   console.log('Del story on service, item = ', item);
+  //   return this.client.delete(`http://localhost:60601/api/story/bystoryid/${item}`);
+  // }
 }
 
 export interface ResultVideo {
