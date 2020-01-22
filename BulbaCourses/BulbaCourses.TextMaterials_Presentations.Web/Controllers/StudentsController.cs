@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using FluentValidation.WebApi;
 using EasyNetQ;
 using Presentations.Logic.Models;
+using System.Security.Claims;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 {
