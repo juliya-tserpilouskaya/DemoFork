@@ -10,7 +10,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
 const routes: Routes = [
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'discountCourses', component: CourseComponent}
+  { path: 'discountAggregator', component: CourseComponent}
   //{path: 'discountMenu', component: CourseComponent},
 ];
 
