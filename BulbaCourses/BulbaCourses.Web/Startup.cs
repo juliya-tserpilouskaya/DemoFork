@@ -43,10 +43,11 @@ namespace BulbaCourses.Web
                     {
                         AllowAnyHeader = true,
                         AllowAnyMethod = true,
-                        AllowAnyOrigin = true
+                        Origins = { "http://localhost:4200" },
+                        SupportsCredentials = true
                     })
                 },
-                CorsEngine = new CorsEngine() 
+                CorsEngine = new CorsEngine()
             });
 
             ConfigSecurity(app);
@@ -63,8 +64,8 @@ namespace BulbaCourses.Web
             factory.UseInMemoryClients(SecurityConfig.LoadClients())
                 .UseInMemoryScopes(SecurityConfig.LoadScopes());
 
-            factory.Register(new Registration<UserManager<IdentityUser,string>>(resolver => new BulbaUserManager(new UserStore<IdentityUser>(new UserContext()))));
-            factory.Register(new Registration<AspNetIdentityUserService<IdentityUser,string>>());
+            factory.Register(new Registration<UserManager<IdentityUser, string>>(resolver => new BulbaUserManager(new UserStore<IdentityUser>(new UserContext()))));
+            factory.Register(new Registration<AspNetIdentityUserService<IdentityUser, string>>());
             factory.UserService = new Registration<IUserService, AspNetIdentityUserService<IdentityUser, string>>();
 
             var options = new IdentityServerOptions
