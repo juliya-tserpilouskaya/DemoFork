@@ -54,18 +54,26 @@
     <Compile Include="Config\DbConfig_LocalDb_Test.cs" />
     <Compile Include="Context\DbContext_LocalDb_Test.cs" />
     <Compile Include="Initialization\DbUserInitialization_Test.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_SetOrderDb.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_MainInfoDb.cs" />
     <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_ChoosingAnswerFromList.cs" />
     <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_SetOrder.cs" />
     <Compile Include="Mapping\Test\Questions\Mapping_Question_ChoosingAnswerFromList.cs" />
     <Compile Include="Mapping\Test\Questions\Mapping_Question_SetOrder.cs" />
     <Compile Include="Mapping\Test\Tests\Mapping_Test_MainInfo.cs" />
+    <Compile Include="Mapping\User\Mapping_User_TestReader.cs" />
     <Compile Include="Mapping\User\Mapping_User_TestAuthor.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_SetOrderDb.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_MainInfoDb.cs" />
     <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
     <Compile Include="Models\Test\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Models\Test\Questions\MQuestion_SetOrderDb.cs" />
     <Compile Include="Models\Test\Tests\MTest_MainInfoDb.cs" />
+    <Compile Include="Models\User\MUser_TestReaderDb.cs" />
     <Compile Include="Models\User\MUser_TestAuthorDb.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

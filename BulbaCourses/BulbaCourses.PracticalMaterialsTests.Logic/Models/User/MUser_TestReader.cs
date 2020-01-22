@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.User
 {
-    public class MUser_TestReaderDb
+    public class MUser_TestReader
     {
-        public int Id { get; set; }        
-
-        public ICollection<MTest_MainInfoDb> Test_MainInfoDbs { get; set; }
+        public int Id { get; set; }
     }
 }

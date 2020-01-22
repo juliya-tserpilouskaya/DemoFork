@@ -18,18 +18,16 @@ using System.Web.Http;
 namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
 {
     // [Authorize]
-    [RoutePrefix("api/WorkWithTheTest")]
-    public class WorkWithTheTestController : ApiController
+    [RoutePrefix("api/WorkWithTest")]
+    public class WorkWithTestController : ApiController
     {
         private readonly IService_Test _service_Test;
 
         private readonly IValidator<MTest_MainInfo> _validator;
 
-        private readonly IBus _bus;
-
-        Validator_Test_MainInfo VTest_MainInfo = new Validator_Test_MainInfo();
-
-        public WorkWithTheTestController(IService_Test service_Test, IValidator<MTest_MainInfo> validator, IBus bus)
+        private readonly IBus _bus;        
+        
+        public WorkWithTestController(IService_Test service_Test, IValidator<MTest_MainInfo> validator, IBus bus)
         {
             _service_Test = service_Test;           
 
@@ -38,7 +36,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             _bus = bus;
         }
 
-        [HttpGet, Route("getTestById")]
+        [HttpGet, Route("GetTestById")]
         [SwaggerResponse(HttpStatusCode.OK, "Test found")]        
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -89,7 +87,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             return Ok(Test_MainInfo.Name);
         }
 
-        [HttpDelete, Route("{Id}")]
+        [HttpDelete, Route("DeleteTestById")]
         [SwaggerResponse(HttpStatusCode.OK, "Test delete")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -98,6 +96,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             var Test_MainInfo = _service_Test.DeleteById(TestId);
 
             return Ok(Test_MainInfo.Message);
+        }
+
+        [HttpPost, Route("CheckTest")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test check")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult CheckTest([FromBody]MTest_MainInfo Test_MainInfo)
+        {
+            return 
+                Ok(_service_Test.CheckTest("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo).Data);
         }
     }
 }

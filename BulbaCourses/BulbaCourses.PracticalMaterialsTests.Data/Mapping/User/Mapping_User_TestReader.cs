@@ -4,11 +4,11 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.User
 {
-    public class Mapping_User_TestAuthor : EntityTypeConfiguration<MUser_TestAuthorDb>
+    public class Mapping_User_TestReader : EntityTypeConfiguration<MUser_TestReaderDb>
     {
-        public Mapping_User_TestAuthor()
+        public Mapping_User_TestReader()
         {
-            ToTable("User_TestAuthor");
+            ToTable("User_TestReader");
 
             HasKey(i => i.Id);
 
@@ -18,9 +18,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.User
                 .HasMaxLength(128)
                 .IsRequired();
 
-            this.HasMany(g => g.CreateTests)
-                .WithRequired(c => c.User_TestAuthor)
-                .HasForeignKey(c => c.User_TestAuthorDb_Id)
+            this.HasMany(g => g.ResultsOfTheTest)
+                .WithRequired(c => c.User_TestReader)
+                .HasForeignKey(c => c.User_TestReaderDb_Id)
                 .WillCascadeOnDelete();
         }
     }

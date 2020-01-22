@@ -13,6 +13,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions
 
         public int SortKey { get; set; }                
 
-        public ICollection<MAnswerVariant_SetOrder> AnswerVariants { get; set; }
+        public IList<MAnswerVariant_SetOrder> AnswerVariants { get; set; }
     }
 }

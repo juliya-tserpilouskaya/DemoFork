@@ -31,6 +31,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test
                 .WithRequired(s => s.Test_MainInfoDb)
                 .HasForeignKey<int>(s => s.Test_MainInfoDb_Id)
                 .WillCascadeOnDelete();
+
+            this.HasMany(g => g.ResultsOfTheTest)
+                .WithRequired(s => s.Test_MainInfo)
+                .HasForeignKey<int>(s => s.Test_MainInfoDb_Id)
+                .WillCascadeOnDelete();
         }
     }
 }

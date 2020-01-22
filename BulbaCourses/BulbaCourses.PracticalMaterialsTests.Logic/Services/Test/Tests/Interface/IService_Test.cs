@@ -1,4 +1,4 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Common;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using System;
 using System.Collections.Generic;
@@ -10,24 +10,24 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
     {
         // ------------ CRUD
 
-        Result<MTest_MainInfo> GetById(int Id);
+        MResultRequest<MTest_MainInfo> GetById(int Id);
 
-        Task<Result<MTest_MainInfo>> GetByIdAsync(int Id);
+        Task<MResultRequest<MTest_MainInfo>> GetByIdAsync(int Id);
 
-        Result<MTest_MainInfo> Add(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
+        MResultRequest<MTest_MainInfo> Add(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Task<Result<MTest_MainInfo>> AddAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
+        Task<MResultRequest<MTest_MainInfo>> AddAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Result<MTest_MainInfo> Update(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
+        MResultRequest<MTest_MainInfo> Update(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Task<Result<MTest_MainInfo>> UpdateAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
+        Task<MResultRequest<MTest_MainInfo>> UpdateAsync(string User_TestAuthor_Id, MTest_MainInfo Test_MainInfo);
 
-        Result DeleteById(int Id);
+        MResultRequest DeleteById(int Id);
 
-        Task<Result> DeleteByIdAsync(int Id);
+        Task<MResultRequest> DeleteByIdAsync(int Id);
 
         // ------------ Check
 
-        Result<MTest_MainInfo> CheckTest(MTest_MainInfo User_Test_MainInfo);
+        MResultRequest<string> CheckTest(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo);
     }
 }
