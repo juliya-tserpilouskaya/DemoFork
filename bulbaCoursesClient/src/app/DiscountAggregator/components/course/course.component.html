@@ -1,7 +1,10 @@
 <p>Discount Aggregator course works!</p>
+
+<app-filters></app-filters>
+
 <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h4 class="my-0 font-weight-normal">Платный</h4>
+      <h4 class="my-0 font-weight-normal">Курсы</h4>
     </div>
     <div class="card-body" *ngFor="let item of courses">
       <h1 class="card-title pricing-card-title"><small class="text-muted">{{item.Title}} / </small>{{item.Price}} </h1>
