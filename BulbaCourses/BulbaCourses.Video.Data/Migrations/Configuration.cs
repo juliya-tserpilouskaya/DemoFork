@@ -2,6 +2,7 @@ namespace BulbaCourses.Video.Data.Migrations
 {
     using BulbaCourses.Video.Data.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -40,11 +41,13 @@ namespace BulbaCourses.Video.Data.Migrations
                 TagId = Guid.NewGuid().ToString(),
                 Content = "C#"
             };
+            List<TagDb> tagDbC = new List<TagDb>() { tag1};
             var tag2 = new TagDb()
             {
                 TagId = Guid.NewGuid().ToString(),
                 Content = "ASP.Net"
             };
+            List<TagDb> tagDbCSharp = new List<TagDb>() { tag1, tag2 };
             var tag3 = new TagDb()
             {
                 TagId = Guid.NewGuid().ToString(),
@@ -60,17 +63,26 @@ namespace BulbaCourses.Video.Data.Migrations
                 TagId = Guid.NewGuid().ToString(),
                 Content = "Testing"
             };
+            List<TagDb> tagDbJava = new List<TagDb>() { tag3, tag4, tag5 };
             var tag6 = new TagDb()
             {
                 TagId = Guid.NewGuid().ToString(),
                 Content = "Network"
             };
+            var tag7 = new TagDb()
+            {
+                TagId = Guid.NewGuid().ToString(),
+                Content = "DHCP"
+            };
+            List<TagDb> tagDbNet = new List<TagDb>() { tag6, tag7 };
+
             context.Tags.Add(tag1);
             context.Tags.Add(tag2);
             context.Tags.Add(tag3);
             context.Tags.Add(tag4);
             context.Tags.Add(tag5);
             context.Tags.Add(tag6);
+            context.Tags.Add(tag7);
             #endregion
 
             #region Authors
@@ -117,10 +129,9 @@ namespace BulbaCourses.Video.Data.Migrations
                 Description = ".NET is a developer platform made up of tools, programming languages, and libraries for building many different types of applications." +
                 "ASP.NET extends the.NET developer platform with tools and libraries specifically for building web apps.",
                 Date = DateTime.Now,
-                Price = 850
+                Price = 850,
+                Tags = tagDbCSharp
             };
-            //course1.Tags.Add(tag1);
-            //course1.Tags.Add(tag2);
 
             var course2 = new CourseDb()
             {
@@ -132,9 +143,9 @@ namespace BulbaCourses.Video.Data.Migrations
                 RateCount = 12,
                 Description = "C#(Sharp) is an object-oriented programming language developed by Microsoft.",
                 Date = DateTime.Now,
-                Price = 50
+                Price = 50,
+                Tags = tagDbC
             };
-            //course2.Tags.Add(tag1);
 
             var course3 = new CourseDb()
             {
@@ -146,11 +157,9 @@ namespace BulbaCourses.Video.Data.Migrations
                 RateCount = 10,
                 Description = "Test automation, a formalized testing process, can automate repetitive but necessary tasks that would be difficult to do manually.",
                 Date = DateTime.Now,
-                Price = 70
+                Price = 70,
+                Tags = tagDbJava
             };
-            //course3.Tags.Add(tag3);
-            //course3.Tags.Add(tag4);
-            //course3.Tags.Add(tag5);
 
             var course4 = new CourseDb()
             {
@@ -162,9 +171,9 @@ namespace BulbaCourses.Video.Data.Migrations
                 RateCount = 6,
                 Description = "A local area network (LAN) is a computer network that interconnects computers within a limited area.",
                 Date = DateTime.Now,
-                Price = 10
+                Price = 10,
+                Tags = tagDbNet
             };
-            //course4.Tags.Add(tag6);
 
             context.Courses.Add(course1);
             context.Courses.Add(course2);
@@ -286,7 +295,7 @@ namespace BulbaCourses.Video.Data.Migrations
             context.VideoMaterials.Add(video10);
             #endregion
 
-            context.SaveChanges();
+            base.Seed(context);
 
         }
     }

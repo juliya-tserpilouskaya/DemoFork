@@ -145,25 +145,6 @@ namespace BulbaCourses.Video.Logic.Services
             return courseInfo;
         }
 
-        public async Task<IEnumerable<CourseInfo>> GetListByTagAsync(TagInfo tag)
-        {
-            var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
-            var courses = await _courseRepository.GetAllAsync();
-            List<CourseDb> listCourses = new List<CourseDb>();
-            foreach (var course in courses)
-            {
-                foreach (var courseTag in course.Tags)
-                {
-                    if (courseTag.Content.Equals(tag.Content))
-                    {
-                        listCourses.Add(course);
-                    }
-                }
-            }
-            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(listCourses.AsEnumerable());
-            return result;
-        }
-
         public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);

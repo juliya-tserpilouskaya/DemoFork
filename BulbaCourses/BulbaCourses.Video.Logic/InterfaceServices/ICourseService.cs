@@ -27,7 +27,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
 
         Task<IEnumerable<CourseInfo>> GetAllAsync();
         Task<CourseInfo> GetCourseByIdAsync(string courseId);
-        Task<IEnumerable<CourseInfo>> GetListByTagAsync(TagInfo tag);
         Task<IEnumerable<CourseInfo>> GetCoursesByNameAsync(string courseName);
         Task<Result<CourseInfo>> RateCourse(CourseInfo course, int Assessment);
 
