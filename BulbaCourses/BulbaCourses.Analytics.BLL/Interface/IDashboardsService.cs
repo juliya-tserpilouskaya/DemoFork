@@ -49,6 +49,20 @@ namespace BulbaCourses.Analytics.BLL.Interface
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<bool> ExistsIdAsync(string id);               
+        Task<bool> ExistsIdAsync(string id);
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> ExistsReportIdAsync(string id);
+
+        /// <summary>
+        /// Checks if a chart exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> ExistsChartIdAsync(int id);
     }
 }

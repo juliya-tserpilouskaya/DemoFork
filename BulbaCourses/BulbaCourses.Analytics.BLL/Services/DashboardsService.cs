@@ -17,19 +17,19 @@ namespace BulbaCourses.Analytics.BLL.Services
     public class DashboardsService : IDashboardsService
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<DashboardDb> _repository;
+        private readonly IDashboardsRepository _repository;
 
         /// <summary>
         /// Creates a new dashboard service.
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="repository"></param>
-        public DashboardsService(IMapper mapper, IRepository<DashboardDb> repository)
+        public DashboardsService(IMapper mapper, IDashboardsRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
             // if need adding data to uncomment Seed.SeedDatabase(repository);
-        }        
+        }
 
         /// <summary>
         /// Updates a dashboard.
@@ -136,6 +136,26 @@ namespace BulbaCourses.Analytics.BLL.Services
         public async Task<bool> ExistsIdAsync(string id)
         {
             return await _repository.ExistsAsync(_ => _.Id == id).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsReportIdAsync(string id)
+        {
+            return await _repository.ExistsReportAsync(_ => _.Id == id).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if a chart exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> ExistsChartIdAsync(int id)
+        {
+            return await _repository.ExistsChartAsync(_ => _.Id == id).ConfigureAwait(false);
         }
 
         private Expression<Func<DashboardDb, bool>> GetSearchNameOptions(string name, Search.StringOption stringOption)

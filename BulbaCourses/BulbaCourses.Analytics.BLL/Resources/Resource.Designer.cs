@@ -61,6 +61,15 @@ namespace BulbaCourses.Analytics.BLL.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Chart doesn&apos;t exists (by Id).
+        /// </summary>
+        public static string NotFoundChartById {
+            get {
+                return ResourceManager.GetString("NotFoundChartById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Dashboard doesn&apos;t exists.
         /// </summary>
         public static string NotFoundDashboard {
