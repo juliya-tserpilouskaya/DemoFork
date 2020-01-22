@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Repositories
 {
-    public class ReportRepository : BaseRepository, IRepository<ReportDb>
+    public class ReportsRepository : BaseRepository, IRepository<ReportDb>
     {
         public async Task<ReportDb> CreateAsync(ReportDb item)
         {            
