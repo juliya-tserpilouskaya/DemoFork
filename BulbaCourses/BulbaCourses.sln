@@ -103,7 +103,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations.Client", "BulbaCourses.TextMaterials_Presentations.Client\BulbaCourses.TextMaterials_Presentations.Client.csproj", "{68AAE3DA-50EF-4467-BB77-DEF05A632501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalSearch.Infrastructure", "BulbaCourses.GlobalSearch.Infrastructure\BulbaCourses.GlobalSearch.Infrastructure.csproj", "{B52BF21B-7695-4F00-B8EF-AE8F36D6C3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulbaCourses.GlobalSearch.Infrastructure", "BulbaCourses.GlobalSearch.Infrastructure\BulbaCourses.GlobalSearch.Infrastructure.csproj", "{B52BF21B-7695-4F00-B8EF-AE8F36D6C3FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -250,15 +250,12 @@ Global
 		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB8AE6D3-1677-4A8A-84CC-C67095E39980}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9343B11E-6295-42E3-988F-5760569FBDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9343B11E-6295-42E3-988F-5760569FBDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9343B11E-6295-42E3-988F-5760569FBDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9343B11E-6295-42E3-988F-5760569FBDAC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47F40014-F2B6-4FFB-A66A-95306E2FAF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47F40014-F2B6-4FFB-A66A-95306E2FAF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47F40014-F2B6-4FFB-A66A-95306E2FAF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47F40014-F2B6-4FFB-A66A-95306E2FAF96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4641C1D5-989D-4E36-B2C1-85AD03F4F333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4641C1D5-989D-4E36-B2C1-85AD03F4F333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4641C1D5-989D-4E36-B2C1-85AD03F4F333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4641C1D5-989D-4E36-B2C1-85AD03F4F333}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19D5EAFA-B00F-40A0-9C36-0B283BF3A6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
