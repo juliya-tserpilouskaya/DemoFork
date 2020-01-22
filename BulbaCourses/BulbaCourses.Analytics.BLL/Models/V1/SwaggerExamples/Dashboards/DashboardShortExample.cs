@@ -5,21 +5,22 @@ using System;
 namespace BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples
 {
     /// <summary>
-    /// Represents a example of model view report.
+    /// Represents a example of model view dashboard short.
     /// </summary>
-    public class ReportExample : IExamplesProvider
+    public class DashboardShortExample : IExamplesProvider
     {
         /// <summary>
-        /// Gets a example of model view report.
+        /// Gets a example of model view dashboard short.
         /// </summary>
         /// <returns></returns>
         public virtual object GetExamples()
         {
-            var value = new Report()
+            var value = new DashboardShort()
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = "Number of requests per day",
-                Description = "The dynamics of the number of requests per day",
+                Name = "Exchange rates per day",
+                ReportId = Guid.NewGuid().ToString(),
+                ChartId = 1
             };
 
             return value;
