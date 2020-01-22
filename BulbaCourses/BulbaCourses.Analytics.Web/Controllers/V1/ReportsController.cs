@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.Ensure;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports;
+using BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples;
 using BulbaCourses.Analytics.Infrastructure.Models;
 using BulbaCourses.Analytics.Models.V1;
 using FluentValidation.WebApi;
