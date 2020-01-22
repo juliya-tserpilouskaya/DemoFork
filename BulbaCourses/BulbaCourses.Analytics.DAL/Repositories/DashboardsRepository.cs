@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Analytics.DAL.Repositories
 {
-    public class DashboardsRepository : BaseRepository, IRepository<DashboardDb>
+    public class DashboardsRepository : BaseRepository, IDashboardsRepository
     {
         public async Task<DashboardDb> CreateAsync(DashboardDb item)
         {            
@@ -40,6 +40,16 @@ namespace BulbaCourses.Analytics.DAL.Repositories
         public async Task<bool> ExistsAsync(Expression<Func<DashboardDb, bool>> anyAsyncCondition)
         {
             return await _context.Dashboards.AnyAsync(anyAsyncCondition).ConfigureAwait(false);
+        }
+
+        public async Task<bool> ExistsChartAsync(Expression<Func<ChartDb, bool>> anyAsyncCondition)
+        {
+            return await _context.Charts.AnyAsync(anyAsyncCondition).ConfigureAwait(false);
+        }
+
+        public async Task<bool> ExistsReportAsync(Expression<Func<ReportDb, bool>> anyAsyncCondition)
+        {
+            return await _context.Reports.AnyAsync(anyAsyncCondition).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<DashboardDb>> ReadAllAsync(
@@ -86,12 +96,10 @@ namespace BulbaCourses.Analytics.DAL.Repositories
             {
                 return false;
             }
-            else
-            {
-                _context.Dashboards.Remove(DashboardDb);
-                await _context.SaveChangesAsync();
-                return true;
-            }
+
+            _context.Dashboards.Remove(DashboardDb);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
