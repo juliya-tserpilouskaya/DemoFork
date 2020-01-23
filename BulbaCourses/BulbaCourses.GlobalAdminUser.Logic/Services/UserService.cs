@@ -3,6 +3,7 @@ using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Models;
 using BulbaCourses.GlobalAdminUser.Logic.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.GlobalAdminUser.Logic.Services
@@ -12,17 +13,17 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository,IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            _mapper = mapper;            
+            _mapper = mapper;
         }
 
         public void Add(UserDTO user)
         {
-            
+
             var userDb = _mapper.Map<UserDTO, UserDb>(user);
-             _userRepository.Add(userDb);
+            _userRepository.Add(userDb);
         }
 
         public void Delete(UserDTO user)
@@ -33,10 +34,27 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            var usersDb = await _userRepository.GetAllAsync();
+            var usersDb = await _userRepository.GetAllAsync();            
+            var roles = await _userRepository.GetRolesAsync();
+            var roleDictionary = roles.ToDictionary(x => x.Id, x => x.Name);
+
+            foreach (var user in usersDb)
+            {
+                var userRole = new List<string>();
+                foreach (var role in user.Roles)
+                {
+                    if (roleDictionary.TryGetValue(role.RoleId, out string value))
+                        userRole.Add(value);
+                }
+                user.UserRoles = string.Join("; ",userRole);
+            }
+
             var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserDTO>>(usersDb);
+
             return result;
         }
+
+     
 
         public UserDTO GetById(string id)
         {
@@ -60,5 +78,6 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
         {
             //_userRepository
         }
+        
     }
 }

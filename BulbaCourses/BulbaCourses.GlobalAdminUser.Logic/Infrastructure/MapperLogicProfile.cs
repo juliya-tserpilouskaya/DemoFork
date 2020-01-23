@@ -13,7 +13,11 @@ namespace BulbaCourses.GlobalAdminUser.Logic
     {
         public MapperLogicProfile()
         {
-            CreateMap<UserDb, UserDTO>().ReverseMap();
+            CreateMap<UserDb, UserDTO>()
+                .ForMember(x => x.Lockout, opt => opt.MapFrom(y => BoolToText(y.LockoutEnabled)))
+                .ForMember(x=>x.Username, opt=>opt.MapFrom(y=>y.UserName));
+            CreateMap<UserDTO, UserDb>();
+            CreateMap<RoleDb, RoleDTO>().ReverseMap();
             CreateMap<UserAdditionalInfoDb, UserAdditionalInfoDTO>().ReverseMap();
             CreateMap<UserChangePassword, UserChangePasswordDTO>().ReverseMap();
 
@@ -28,6 +32,11 @@ namespace BulbaCourses.GlobalAdminUser.Logic
                 //.ForMember(d => d.Password, opt => opt.MapFrom(s => s.Item1.Password))
                 //.ForMember(d => d.Email, opt => opt.MapFrom(s => s.Item1.Email))
                 //.ForMember(d => d.TelephoneNumber, opt => opt.MapFrom(s => s.Item1.TelephoneNumber));
+        }
+
+        private string BoolToText(bool y)
+        {
+            return y ? "Yes" : "No";
         }
     }
 

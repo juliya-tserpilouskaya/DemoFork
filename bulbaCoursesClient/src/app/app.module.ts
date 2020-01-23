@@ -9,7 +9,7 @@ import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
-
+import { RegisterModule} from './register/register/register.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +22,7 @@ import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/gl
     AuthSharedModule,
     HttpClientModule,
     GlobalAdminUsersModule,
+    RegisterModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,

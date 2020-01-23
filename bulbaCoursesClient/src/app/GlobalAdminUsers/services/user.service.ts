@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
+import { CustomUser } from 'src/app/auth/models/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,5 +11,8 @@ export class UserService {
 
   getUsers() {
     return this.http.get<User[]>(this.url);
+}
+register(user: CustomUser) {
+  return this.http.post(`http://localhost:44382/api/users/register`, user);
 }
 }

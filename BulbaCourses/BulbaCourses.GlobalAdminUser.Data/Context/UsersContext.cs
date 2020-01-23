@@ -53,5 +53,19 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             var httpResponse = await _client.PostAsync("api/admin", httpContent);
         }
 
+
+
+        #region roles
+        public async Task<IEnumerable<RoleDb>> GetRolesAsync()
+        {
+            IEnumerable<RoleDb> roles = null;
+            HttpResponseMessage response = await _client.GetAsync("api/admin/roles");
+            if (response.IsSuccessStatusCode)
+            {
+                roles = await response.Content.ReadAsAsync<IEnumerable<RoleDb>>();
+            }
+            return roles;
+        }
+        #endregion
     }
 }

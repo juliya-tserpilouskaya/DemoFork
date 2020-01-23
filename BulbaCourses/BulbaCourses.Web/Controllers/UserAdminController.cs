@@ -1,4 +1,5 @@
-﻿using BulbaCourses.Web.Security;
+﻿using BulbaCourses.Web.Data;
+using BulbaCourses.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -26,10 +27,12 @@ namespace BulbaCourses.Web.Controllers
     public class UserAdminController : ApiController
     {
         private readonly BulbaUserManager _userManager;
+        private readonly UserContext _context;
 
-        public UserAdminController(BulbaUserManager userManager)
+        public UserAdminController(BulbaUserManager userManager, UserContext context)
         {
             this._userManager = userManager;
+            this._context = context;            
         }
 
         [HttpGet, Route("{id}")]
@@ -42,6 +45,7 @@ namespace BulbaCourses.Web.Controllers
             }
             try
             {
+                //_userManager.GetRolesAsync()
                 var user = await _userManager.FindByIdAsync(id);
                 return user == null ? NotFound() : (IHttpActionResult)Ok(user);
             }
@@ -57,9 +61,24 @@ namespace BulbaCourses.Web.Controllers
         {
             try
             {
-                var users = await _userManager.Users.ToListAsync();
-              
+                var users = await _context.Users.ToListAsync();
+
                 return users == null ? NotFound() : (IHttpActionResult)Ok(users);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        [HttpGet, Route("roles")]
+        public async Task<IHttpActionResult> GetAllRoles()
+        {
+            try
+            {
+                var roles = await _context.Roles.ToListAsync();                
+                return roles == null ? NotFound() : (IHttpActionResult)Ok(roles);
             }
             catch (InvalidOperationException ex)
             {

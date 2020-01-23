@@ -18,5 +18,11 @@ namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
         void Add(UserDb user);
         void Update(UserDb user);
         void Remove(UserDb user);
+
+
+        Task<IEnumerable<RoleDb>> GetRolesAsync();
+
+
+
     }
 }

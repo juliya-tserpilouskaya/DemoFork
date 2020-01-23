@@ -1,3 +1,5 @@
+import { Role } from './role';
+
 /*export interface User {
   //constructor(
      Id: string;
@@ -9,6 +11,8 @@
 export interface  User {
   Id: string;
   Username: string;
-  Password: string;
+  PhoneNumber: string;
   Email: string;
+  UserRoles: string;
+  Lockout: string;
 }

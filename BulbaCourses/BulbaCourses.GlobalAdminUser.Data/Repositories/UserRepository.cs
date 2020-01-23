@@ -35,7 +35,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
 
         public async Task<IEnumerable<UserDb>> GetAllAsync()
         {
-            var userList = await _usersContext.GetAll();
+            var userList = await _usersContext.GetAll();            
             //var userList = _globalAdminDbContext.Users.ToList().AsReadOnly();
             return userList;
         }
@@ -66,5 +66,10 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
             _globalAdminDbContext.Entry(user).State = EntityState.Modified;
             _globalAdminDbContext.SaveChanges();
         }
+        public async Task<IEnumerable<RoleDb>> GetRolesAsync()
+        {
+            return await _usersContext.GetRolesAsync();
+        }
+
     }
 }
