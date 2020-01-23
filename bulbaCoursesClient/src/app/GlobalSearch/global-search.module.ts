@@ -11,14 +11,15 @@ import { SearchService } from './services/search.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ResultsComponent } from './components/results/results.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, ResultsComponent],
   imports: [
-    CommonModule, NgbModule, RouterModule
+    CommonModule, NgbModule, RouterModule, FormsModule
   ],
-  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService ],
+  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService],
   exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent]
 })
 export class GlobalSearchModule { }

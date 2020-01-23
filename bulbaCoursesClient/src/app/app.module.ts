@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -10,6 +9,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
+import { FormsModule } from '@angular/forms';
+
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { GlobalSearchModule } from './GlobalSearch/global-search.module';
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    FormsModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
@@ -36,7 +38,7 @@ import { GlobalSearchModule } from './GlobalSearch/global-search.module';
         ]
       }
     }),
-    GlobalSearchModule
+    GlobalSearchModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

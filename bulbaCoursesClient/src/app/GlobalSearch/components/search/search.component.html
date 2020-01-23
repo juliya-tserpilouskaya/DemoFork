@@ -9,11 +9,11 @@
                       </div>
                       <!--end of col-->
                       <div class="col">
-                          <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Type search query here">
+                          <input class="form-control form-control-lg form-control-borderless" [value]="query" (input)="query = $event.target.value" type="search" placeholder="Type search query here">
                       </div>
                       <!--end of col-->
                       <div class="col-auto">
-                        <button class="btn btn-lg btn-success" type="submit" [routerLink]="['/results']" routerLinkActive="router-link-active" >Search</button>
+                        <button class="btn btn-lg btn-success" type="submit" [routerLink]="['/results', query]" routerLinkActive="router-link-active" >Search</button>
                       </div>
                       <!--end of col-->
                   </div>

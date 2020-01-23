@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
-  { path: 'results', component: ResultsComponent },
+  { path: 'results/:query', component: ResultsComponent },
   // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 
