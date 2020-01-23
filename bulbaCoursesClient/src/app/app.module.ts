@@ -10,6 +10,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { YoutubeModule } from './YouTube/youtube.module';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { YoutubeModule } from './YouTube/youtube.module';
         ]
       }
     }),
-    YoutubeModule
+    YoutubeModule,
+    NgxUiLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -6,6 +6,10 @@ import * as moment from 'moment';
 import { User, CustomUser } from 'src/app/auth/models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SearchStory } from '../../models/searchstory';
+import { SearchRequestService, SearchRequest } from '../../youtube-client-generated';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-request',
@@ -21,7 +25,12 @@ export class SearchRequestComponent implements OnInit {
   isAuthenticated: boolean;
   user: CustomUser;
 
-  constructor(private service: YoutubeService, route: ActivatedRoute, fb: FormBuilder, private authService: AuthService) {
+  constructor(private service: YoutubeService,
+    route: ActivatedRoute,
+    fb: FormBuilder,
+    private authService: AuthService,
+    private searchService: SearchRequestService,
+    private loader: NgxUiLoaderService) {
     // route.params.subscribe(params => this.parameter = params['name']);
     this.searchForm = fb.group({
       title: [''],
@@ -40,44 +49,66 @@ export class SearchRequestComponent implements OnInit {
 
       const dataForm = this.searchForm.value;
 
-      const searchRequest =  new SearchRequest();
-      searchRequest.Title = dataForm.title;
-      searchRequest.Definition = dataForm.definition;
-      searchRequest.Dimension = dataForm.dimension;
-      searchRequest.Duration = dataForm.duration;
-      searchRequest.VideoCaption = dataForm.caption;
+      // const searchRequest = new SearchRequest();
+      // searchRequest.Title = dataForm.title;
+      // searchRequest.Definition = dataForm.definition;
+      // searchRequest.Dimension = dataForm.dimension;
+      // searchRequest.Duration = dataForm.duration;
+      // searchRequest.VideoCaption = dataForm.caption;
+
+      const searchRequest: SearchRequest = {
+        title: dataForm.title,
+        definition: dataForm.definition,
+        dimension: dataForm.dimension,
+        duration: dataForm.duration,
+        videoCaption: dataForm.caption
+      };
 
       switch (dataForm.published) {
         case 'Hour':
-          searchRequest.PublishedBefore = moment.utc().toDate();
-          searchRequest.PublishedAfter = moment.utc().subtract(1, 'hour').toDate();
+          searchRequest.publishedBefore = moment.utc().toDate();
+          searchRequest.publishedAfter = moment.utc().subtract(1, 'hour').toDate();
           break;
         case 'Today':
-          searchRequest.PublishedBefore = moment().toDate();
-          searchRequest.PublishedAfter = moment().startOf('day').toDate();
+          searchRequest.publishedBefore = moment().toDate();
+          searchRequest.publishedAfter = moment().startOf('day').toDate();
           break;
         case 'Week':
-          searchRequest.PublishedBefore = moment().toDate();
-          searchRequest.PublishedAfter = moment().startOf('isoWeek').toDate();
+          searchRequest.publishedBefore = moment().toDate();
+          searchRequest.publishedAfter = moment().startOf('isoWeek').toDate();
           break;
         case 'Month':
-          searchRequest.PublishedBefore = moment().toDate();
-          searchRequest.PublishedAfter = moment().startOf('month').toDate();
+          searchRequest.publishedBefore = moment().toDate();
+          searchRequest.publishedAfter = moment().startOf('month').toDate();
           break;
         case 'Year':
-          searchRequest.PublishedBefore = moment().toDate();
-          searchRequest.PublishedAfter = moment().startOf('year').toDate();
+          searchRequest.publishedBefore = moment().toDate();
+          searchRequest.publishedAfter = moment().startOf('year').toDate();
           break;
         default:
-          searchRequest.PublishedBefore = null;
-          searchRequest.PublishedAfter = null;
+          searchRequest.publishedBefore = null;
+          searchRequest.publishedAfter = null;
           break;
       }
-      this.service.searchVideo(searchRequest, this.user).subscribe(data => {
-      this.resultVideos = data;
-      this.youtubeService.resultSubject.next(this.resultVideos);
-      console.log('Search completed!');
-      });
+
+      // this.service.searchVideo(searchRequest, this.user);
+
+      this.loader.start();
+
+      this.searchService.searchRequestSearchRun(searchRequest).
+        pipe(
+          map(items => items.map(item => <ResultVideo>{
+            Channel: item.channel,
+            Channel_Id: item.channelId,
+            Title: item.title,
+            // TODO: map another fields
+          })),
+        ).subscribe(data => {
+          this.resultVideos.push(...data);
+          this.youtubeService.resultSubject.next(this.resultVideos);
+          console.log('Search completed!');
+          this.loader.stop();
+        }, err => this.loader.stop());
     }
   }
   ngOnInit() {
@@ -86,13 +117,13 @@ export class SearchRequestComponent implements OnInit {
   }
 }
 
-export class SearchRequest {
-  Id: string;
-  Title: string;
-  PublishedBefore: Date;
-  PublishedAfter: Date;
-  Definition: string;
-  Dimension: string;
-  Duration: string;
-  VideoCaption: string;
-}
+// export class SearchRequest {
+//   Id: string;
+//   Title: string;
+//   publishedBefore: Date;
+//   publishedAfter: Date;
+//   Definition: string;
+//   Dimension: string;
+//   Duration: string;
+//   VideoCaption: string;
+// }
