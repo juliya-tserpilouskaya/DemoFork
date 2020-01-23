@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
-
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
       }
     }),
     YoutubeModule,
+    AnalyticsModule,
     NgxUiLoaderModule
   ],
   providers: [],
