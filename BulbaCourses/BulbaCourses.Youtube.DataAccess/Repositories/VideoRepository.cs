@@ -19,7 +19,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         //GetById
         public ResultVideoDb GetById(string id)
         {
-            return _db.Videos.Find(id);
+            return _db.Videos.Include(_ => _.Channel).SingleOrDefault(x => x.Id == id);
         }
 
         public async Task<ResultVideoDb> GetByIdAsync(string id)

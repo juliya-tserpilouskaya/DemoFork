@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Context;
 using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,60 +14,54 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 {
     public class BookmarkServiceDb : IBookmarkServiceDb
     {
-        private readonly CourseContext context;
+        private readonly DAContext context;
 
-        public BookmarkServiceDb(CourseContext context)
+        public BookmarkServiceDb(DAContext context)
         {
             this.context = context;
         }
 
-        public async Task<bool> AddAsync(CourseBookmarkDb bookmark)
+        public async Task<Result<CourseBookmarkDb>> AddAsync(CourseBookmarkDb bookmarkDb)
         {
             try
             {
-                context.CourseBookmarks.Add(bookmark);
+                context.CourseBookmarks.Add(bookmarkDb);
                 await context.SaveChangesAsync();
-                return true;
+                return Result<CourseBookmarkDb>.Ok(bookmarkDb);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                return false;
+                return Result<CourseBookmarkDb>.Fail<CourseBookmarkDb>($"Cannot save bookmark. {e.Message}");
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
-                return false;
+                return Result<CourseBookmarkDb>.Fail<CourseBookmarkDb>($"Cannot save bookmark. Duplicate field. {e.Message}");
             }
-            catch (DbEntityValidationException)
+            catch (DbEntityValidationException e)
             {
-                return false;
+                return Result<CourseBookmarkDb>.Fail<CourseBookmarkDb>($"Invalid bookmark. {e.Message}");
             }
         }
 
         public async Task<IEnumerable<CourseBookmarkDb>> GetByUserIdAsync(string userId)
-        {
-            var bookmark = await context.CourseBookmarks.Where(c => c.UserProfile.Id.Equals(userId)).ToListAsync().ConfigureAwait(false); ;
-            return bookmark;
-        }
+             => await context.CourseBookmarks.Where(c => c.UserProfile.Id.Equals(userId)).ToListAsync().ConfigureAwait(false);
+           
 
-        public async Task<bool> DeleteAsync(CourseBookmarkDb bookmarkDb)
+        public async Task<Result<CourseBookmarkDb>> DeleteAsync(CourseBookmarkDb bookmarkDb)
         {
             try
             {
                 context.CourseBookmarks.Remove(bookmarkDb);
                 await context.SaveChangesAsync().ConfigureAwait(false);
-                return true;
+                return Result<CourseBookmarkDb>.Ok(bookmarkDb);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                return false;
+                return Result<CourseBookmarkDb>.Fail<CourseBookmarkDb>($"Bookmark not deleted. {e.Message}");
             }
-            catch (DbUpdateException)
+            catch (DbEntityValidationException e)
             {
-                return false;
-            }
-            catch (DbEntityValidationException)
-            {
-                return false;
+                return Result<CourseBookmarkDb>.Fail<CourseBookmarkDb>($"Invalid bookmark. {e.Message}");
             }
         }
     }
