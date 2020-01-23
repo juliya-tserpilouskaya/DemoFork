@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgxLoadingModule } from 'ngx-loading';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgxLoadingModule } from 'ngx-loading';
     ReactiveFormsModule,
     AppRoutingModule,
     NgxYoutubePlayerModule.forRoot(),
-    NgxLoadingModule
+    NgxLoadingModule,
+    NgxPaginationModule
   ],
   providers: [YoutubeService],
   exports: [SearchRequestComponent]

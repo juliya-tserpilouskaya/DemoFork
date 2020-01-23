@@ -1,6 +1,6 @@
 <p>Seach result:</p>
 <ul>
-  <li *ngFor="let video of resultVideos">
+  <li *ngFor="let video of resultVideos | paginate: config">
     <div class="video">
       <div class="video-thumbnail">
         <div class="thumbnail-wrapper">
@@ -18,3 +18,5 @@
     <br>
   </li>
 </ul>
+<pagination-controls [autoHide]="autoHide" (pageChange)="pageChanged($event)"></pagination-controls>
+ 

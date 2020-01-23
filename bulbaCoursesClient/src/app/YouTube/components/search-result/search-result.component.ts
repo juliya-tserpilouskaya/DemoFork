@@ -19,6 +19,13 @@ export class SearchResultComponent implements OnInit {
 
   player: YT.Player;
 
+  config = {
+    itemsPerPage: 5,
+    currentPage: 1,
+    totalItems: this.resultVideos.length
+  }; 
+  public autoHide: boolean = true;
+
   savePlayer(player) {
     this.player = player;
     console.log('player instance', player);
@@ -28,13 +35,17 @@ export class SearchResultComponent implements OnInit {
   }
 
   constructor(private service: YoutubeService) {
-    this.youtubeService = service;
+    this.youtubeService = service;  
   }
 
   ngOnInit() {
     this.youtubeService.result$.subscribe(data => {
-      this.resultVideos = data;
+      this.resultVideos = data;     
     });
+  }
+
+  pageChanged(event){
+    this.config.currentPage = event;
   }
 }
 
