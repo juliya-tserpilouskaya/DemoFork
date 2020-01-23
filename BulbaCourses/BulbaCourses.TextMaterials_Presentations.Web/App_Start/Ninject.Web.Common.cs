@@ -68,7 +68,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.App_Start
         {
             kernel.Load<MapperLogicModule>();
             kernel.Load<LogicModule>();
-            kernel.RegisterEasyNetQ("host = localhost");
+            kernel.RegisterEasyNetQ("host=localhost");
         }
     }
 }

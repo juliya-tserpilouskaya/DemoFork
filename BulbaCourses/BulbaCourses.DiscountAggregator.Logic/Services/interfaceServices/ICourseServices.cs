@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.DiscountAggregator.Data.Models;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         Course GetById(string id);
 
         Task<Course> GetByIdAsync(string id);
+        Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch);
 
         Task<Result<Course>> AddAsync(Course course);
 

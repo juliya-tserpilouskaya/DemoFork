@@ -16,6 +16,15 @@
       <li class="nav-item">
         <span class="nav-link" *ngIf="isAuthenticated">Welcome {{user.preferred_username}}</span>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" (click)="this.authService.logout()">Logout</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/search-request']" routerLinkActive="active">YouTube
+          Search</a>
+      </li>
+
       <li class="nav-item" *ngIf="isAuthenticated">
         <a class="nav-link" [routerLink]="['/admin']" routerLinkActive="active">AdminMenu</a>
       </li>

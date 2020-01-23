@@ -26,6 +26,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                 .To(result.ValidatorType));
 
+            //RabbitMQ configuration
+            var bus = kernel.Get<IBus>();
+            bus.Receive<Course>("Test", m => OnMessage(m));
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -34,6 +38,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+        }
+
+        private static void OnMessage(Course obj)
+        {
+            Console.WriteLine(obj.Update);
         }
     }
 }

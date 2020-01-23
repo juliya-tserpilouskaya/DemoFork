@@ -8,12 +8,18 @@ import { SampleModule } from './sample/sample.module';
 import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
+import { CourseComponent } from './DiscountAggregator/components/course/course.component';
+import { YoutubeModule } from './YouTube/youtube.module';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
 import { RegisterModule} from './register/register/register.module';
+
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    CourseComponent
   ],
   imports: [
     BrowserModule,
@@ -27,11 +33,15 @@ import { RegisterModule} from './register/register/register.module';
       resourceServer: {
         sendAccessToken: true,
         allowedUrls: [
-          'http://localhost:3300'
-          , 'http://localhost:3500'
+          'https://localhost:44317',
+          'http://localhost:3300',
+          'http://localhost:3500',
+          'http://localhost:60601'
         ]
       }
-    })
+    }),
+    YoutubeModule,
+    NgxUiLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

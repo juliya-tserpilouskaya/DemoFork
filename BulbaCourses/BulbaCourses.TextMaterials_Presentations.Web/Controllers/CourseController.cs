@@ -84,6 +84,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             var result = await _courseBase.AddCourseAsync(course);
 
+            _bus.Send("Test", result.Data);
+
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
