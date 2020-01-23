@@ -8,6 +8,12 @@ import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
+import { YoutubeModule } from './YouTube/youtube.module';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
+import { RegisterModule} from './register/register/register.module';
+import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 
@@ -18,7 +24,7 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     MenuComponent,
     CourseComponent,
-    // BookmarksComponent
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +32,8 @@ import { FormsModule } from '@angular/forms';
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    GlobalAdminUsersModule,
+    RegisterModule,
     FormsModule,
     OAuthModule.forRoot({
       resourceServer: {
@@ -34,10 +42,14 @@ import { FormsModule } from '@angular/forms';
           'https://localhost:44317',
           'http://localhost:3300',
           'http://localhost:3500',
+          'http://localhost:60601',
           'https://localhost:44320'
         ]
       }
     }),
+    YoutubeModule,
+    AnalyticsModule,
+    NgxUiLoaderModule,
     GlobalSearchModule,
   ],
   providers: [],
