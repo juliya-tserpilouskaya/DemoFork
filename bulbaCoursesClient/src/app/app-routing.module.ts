@@ -7,8 +7,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
 import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 import { QueryResultComponent } from './GlobalSearch/components/query-result/query-result.component';
 import { CourseItemComponent } from './GlobalSearch/components/course-item/course-item.component';
-
-
+import { SearchComponent } from './GlobalSearch/components/search/search.component';
 
 const routes: Routes = [
   { path: '', component: SampleComponent, pathMatch: 'full' },
@@ -18,6 +17,7 @@ const routes: Routes = [
   { path: 'bookmarks', component: BookmarksComponent },
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
+  { path: 'search', component: SearchComponent},
   // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 

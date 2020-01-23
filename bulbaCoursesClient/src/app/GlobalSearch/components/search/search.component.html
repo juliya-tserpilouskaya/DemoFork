@@ -1,0 +1,50 @@
+<div class="container">
+  <br/>
+<div class="row justify-content-center">
+          <div class="col-12 col-md-10 col-lg-8">
+              <form class="card card-sm">
+                  <div class="card-body row no-gutters align-items-center">
+                      <div class="col-auto">
+                          <i class="fas fa-search h4 text-body"></i>
+                      </div>
+                      <!--end of col-->
+                      <div class="col">
+                          <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Type carefully">
+                      </div>
+                      <!--end of col-->
+                      <div class="col-auto">
+                          <button class="btn btn-lg btn-success" type="submit" >Search</button>
+                      </div>
+                      <!--end of col-->
+                  </div>
+              </form>
+          </div>
+          <!--end of col-->
+      </div>
+</div>
+<br/>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10 col-lg-8">
+    <h2>Search results</h2>
+        <div class="card" *ngFor="let course of courses | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-header">
+            <div class="card-title">{{course.id}}</div>
+          </div>
+          <div class="card-body">
+          <h5 class="card-title">{{course.id}}</h5>
+          <p class="card-text">{{course.title}}</p>
+          <a href="#" class="card-link">В закладки</a>
+          <br>
+          <a href="#" class="btn btn-primary">Что внутри</a>
+          </div>
+        </div>
+  </div>
+</div>
+<br/>
+<div class="row justify-content-center">
+  <ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="courses.length"></ngb-pagination>
+</div>

@@ -6,15 +6,17 @@ import { CourseItemComponent } from './components/course-item/course-item.compon
 import { BookmarksService } from './services/bookmarks.service';
 import { QueryResultService } from './services/query-result.service';
 import { CourseItemService } from './services/course-item.service';
-
+import { SearchComponent } from './components/search/search.component';
+import { SearchService } from './services/search.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent],
+  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent],
   imports: [
-    CommonModule
+    CommonModule, NgbModule
   ],
-  providers: [BookmarksService, QueryResultService, CourseItemService ],
-  exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent]
+  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService ],
+  exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent]
 })
 export class GlobalSearchModule { }
