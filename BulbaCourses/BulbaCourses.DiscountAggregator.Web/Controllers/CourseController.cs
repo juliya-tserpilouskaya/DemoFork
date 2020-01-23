@@ -19,7 +19,7 @@ using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    //[Authorize]
+    [Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;
@@ -110,23 +110,29 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
         
-        [HttpGet, Route("Search/{idSearch}")]
+        //[HttpGet, Route("Search/{idSearch}")]
+        [HttpGet, Route("Search")]
         [Description("Get courses by Criteria")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetByCriteriaAsync(string idSearch)
+        public async Task<IHttpActionResult> GetByCriteriaAsync(/*idSearch*/)
         {
-            if (idSearch == null)
-            {
-                return BadRequest();
-            }
+            //if (idSearch == null)
+            //{
+            //    return BadRequest();
+            //}
 
             try
             {
-                var result = await _courseService.GetByIdCriteriaAsync(idSearch);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                    var result = await _courseService.GetByIdCriteriaAsync(sub.Value);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                }
+                return BadRequest();
             }
             catch (InvalidOperationException ex)
             {

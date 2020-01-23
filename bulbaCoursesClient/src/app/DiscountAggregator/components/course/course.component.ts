@@ -17,13 +17,15 @@ export class CourseComponent implements OnInit {
    }
 
   ngOnInit() {
+    console.log('1');
     //this.service.getCourses()
     //.subscribe(data => this.courses = data);
-    this.service.getCoursesForCriteria(this.user).subscribe(data => this.courses = data);
+    this.service.getCoursesForCriteria(/*this.user*/).subscribe(data => this.courses = data);
+    //console.log(this.user.sub);
   }
 
   onSubmitCriteria(){
-    this.service.getCoursesForCriteria(this.user)
+    this.service.getCoursesForCriteria(/*this.user*/)
     .subscribe(data => this.courses = data); 
   }
   

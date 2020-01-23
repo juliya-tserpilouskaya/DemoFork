@@ -3,7 +3,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigration : DbMigration
+    public partial class CreateTables : DbMigration
     {
         public override void Up()
         {

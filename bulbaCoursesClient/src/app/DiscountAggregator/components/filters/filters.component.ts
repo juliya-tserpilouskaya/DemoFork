@@ -36,7 +36,7 @@ export class FiltersComponent implements OnInit {
   
   onSubmitCriteria(){
     console.log('123')
-    this.service.getCoursesForCriteria(this.user)
+    this.service.getCoursesForCriteria(/*this.user*/)
     .subscribe(data => this.courses = data); 
   }
 

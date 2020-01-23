@@ -1,3 +1,17 @@
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+  <div class="navbar-collapse collapse" id="navbarsExample06">
+    <form class="form-inline my-2 my-md-0" (submit)="onSubmitCriteria()">
+      <input class="form-control" type="text" placeholder="Домен" formControlName = "domainName">
+      <input class="form-control" type="text" placeholder="Категория" formControlName = "categoryName">
+      <input class="form-control" type="text" placeholder="Максимальная цена" formControlName = "maxPrice">
+      <input class="form-control" type="text" placeholder="Минимальная цена" formControlName = "minPrice">
+      <input class="form-control" type="text" placeholder="Максимальная скидка" formControlName = "maxDiscount">
+      <input class="form-control" type="text" placeholder="Минимальная скидка" formControlName = "minDiscount">
+      <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+    </form>
+  </div>
+</nav>
+
 <!-- <p>filterss works! </p> 
 
 <form class="form-group" [formGroup]="filterForm" (submit)="onSubmit()">
@@ -54,19 +68,7 @@
         </li>
       </ul> 
 -->
-  <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <div class="navbar-collapse collapse" id="navbarsExample06">
-      <form class="form-inline my-2 my-md-0" (submit)="onSubmitCriteria()">
-        <input class="form-control" type="text" placeholder="Домен" formControlName = "domainName">
-        <input class="form-control" type="text" placeholder="Категория" formControlName = "categoryName">
-        <input class="form-control" type="text" placeholder="Максимальная цена" formControlName = "maxPrice">
-        <input class="form-control" type="text" placeholder="Минимальная цена" formControlName = "minPrice">
-        <input class="form-control" type="text" placeholder="Максимальная скидка" formControlName = "maxDiscount">
-        <input class="form-control" type="text" placeholder="Минимальная скидка" formControlName = "minDiscount">
-        <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-      </form>
-    </div>
-  </nav>
+  
 
   
 
