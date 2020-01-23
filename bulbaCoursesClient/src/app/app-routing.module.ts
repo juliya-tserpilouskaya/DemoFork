@@ -11,6 +11,11 @@ import { AnalyticsComponent } from './analytics/components/analytics/analytics.c
 import { UsersComponent } from './GlobalAdminUsers/components/users/users.component';
 import { RegisterComponent } from './register/register/register.component';
 import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
+import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
+import { QueryResultComponent } from './GlobalSearch/components/query-result/query-result.component';
+import { CourseItemComponent } from './GlobalSearch/components/course-item/course-item.component';
+import { SearchComponent } from './GlobalSearch/components/search/search.component';
+import { ResultsComponent } from './GlobalSearch/components/results/results.component';
 
 
 const routes: Routes = [
@@ -23,7 +28,13 @@ const routes: Routes = [
   { path: 'admin', component: UsersComponent},
   { path: 'register', component: RegisterComponent},
   { path: '', component: SampleComponent, pathMatch: 'full' },
-  { path: '**', component: PagenotfoundComponent }
+  { path: '**', component: PagenotfoundComponent },
+  { path: 'bookmarks', component: BookmarksComponent },
+  { path: 'query-result', component: QueryResultComponent},
+  { path: 'course-items', component: CourseItemComponent},
+  { path: 'search', component: SearchComponent},
+  { path: 'results/:query', component: ResultsComponent },
+  // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 
 @NgModule({

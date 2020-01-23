@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.Models;
 
@@ -57,10 +58,24 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         SearchQueryDTO Add(SearchQueryDTO query);
 
         /// <summary>
+        /// Creates search query async
+        /// </summary>
+        /// <param name="query">search query</param>
+        /// <returns></returns>
+        Task<Result<SearchQueryDTO>> AddAsync(SearchQueryDTO course);
+
+        /// <summary>
         /// Removes search query by id
         /// </summary>
         /// <param name="id"></param>
         void RemoveById(string id);
+
+        /// <summary>
+        /// Removes search query by id async
+        /// </summary>
+        /// <param name="id"></param>
+        Task<Result> RemoveByIdAsync(string id);
+
 
         /// <summary>
         /// Removes search query from database

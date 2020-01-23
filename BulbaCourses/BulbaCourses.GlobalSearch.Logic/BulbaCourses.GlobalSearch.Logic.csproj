@@ -120,6 +120,10 @@
       <Project>{14e229ba-727c-43a1-8cad-00158f4ceb05}</Project>
       <Name>BulbaCourses.GlobalSearch.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.GlobalSearch.Infrastructure\BulbaCourses.GlobalSearch.Infrastructure.csproj">
+      <Project>{b52bf21b-7695-4f00-b8ef-ae8f36d6c3fc}</Project>
+      <Name>BulbaCourses.GlobalSearch.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
