@@ -87,12 +87,12 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
 
-        [HttpPut, Route("hide/{storyId})")]
+        [HttpPut, Route("hide/")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "SearchStory hided")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult HideByStoryId(int? storyId)
+        public IHttpActionResult HideByStoryId([FromBody]int? storyId)
         {
             if (storyId == null)
             {

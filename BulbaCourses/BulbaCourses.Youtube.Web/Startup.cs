@@ -44,7 +44,8 @@ namespace BulbaCourses.Youtube.Web
                     {
                         AllowAnyHeader = true,
                         AllowAnyMethod = true,
-                        AllowAnyOrigin = true
+                        Origins = { "http://localhost:4200" },
+                        SupportsCredentials = true
                     })
                 },
                 CorsEngine = new CorsEngine()

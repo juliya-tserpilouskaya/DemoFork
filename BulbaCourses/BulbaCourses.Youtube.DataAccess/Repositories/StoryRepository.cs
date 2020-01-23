@@ -73,7 +73,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId)
         {
-            return await _context.SearchStories.Include(_ => _.SearchRequest).Where(s => s.UserId == userId).ToListAsync();
+            return await _context.SearchStories.Include(_ => _.SearchRequest).Where(s => s.UserId == userId && s.IsHideForUser == false).ToListAsync();
         }
 
         /// <summary>

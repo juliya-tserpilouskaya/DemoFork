@@ -40,7 +40,7 @@ export class YoutubeService {
 
   delStoryById(story: SearchStory) {
     console.log('Del story on service, item = ', story.Id);
-    return this.client.put(`http://localhost:60601/api/story/hide/${story.Id}`, story);
+    return this.client.put(`http://localhost:60601/api/story/hide`, story.Id);
   }
 }
 
