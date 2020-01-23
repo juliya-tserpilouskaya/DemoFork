@@ -21,6 +21,8 @@ export class SearchRequestComponent implements OnInit {
   isAuthenticated: boolean;
   user: CustomUser;
 
+  public loading = false;
+
   constructor(private service: YoutubeService, route: ActivatedRoute, fb: FormBuilder, private authService: AuthService) {
     // route.params.subscribe(params => this.parameter = params['name']);
     this.searchForm = fb.group({
@@ -73,11 +75,16 @@ export class SearchRequestComponent implements OnInit {
           searchRequest.PublishedAfter = null;
           break;
       }
+      this.loading = true;
       this.service.searchVideo(searchRequest, this.user).subscribe(data => {
+      this.loading = false;
       this.resultVideos = data;
       this.youtubeService.resultSubject.next(this.resultVideos);
       console.log('Search completed!');
-      });
+      },
+      (error) => console.log('Search completed!'),
+      () => this.service.getStory(this.user)
+      );
     }
   }
   ngOnInit() {

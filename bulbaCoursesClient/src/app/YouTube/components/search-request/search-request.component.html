@@ -1,6 +1,6 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
 
-<p>search-request works!</p>
+<p>Search in youtube:</p>
 <form class="form-search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
 
   <div class="input-group" id="boot-search-box">
@@ -63,8 +63,8 @@
   </div>
 </form>
 <hr>
-<p>{{user.sub}}</p>
 <div class="result-and-story">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
   <app-search-result></app-search-result>
   <app-search-story></app-search-story>
 </div>

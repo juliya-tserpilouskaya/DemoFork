@@ -25,16 +25,21 @@ export class SearchStoryComponent implements OnInit {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
 
+    this.GetStoryForUser();
+  }
+
+  GetStoryForUser() {
     console.log('Get story..');
     this.service.getStory(this.user).subscribe(data => this.searchStory = data);
+    console.log('Get story completed!');
   }
 
   DeleteByStoryId(story: SearchStory) {
     console.log('Del story..');
     this.service.delStoryById(story).subscribe(data => {
-      console.log('go to service..');
     },
-    (error) => console.log(error)
+    (error) => console.log(error),
+    () => this.GetStoryForUser()
     );
   }
 

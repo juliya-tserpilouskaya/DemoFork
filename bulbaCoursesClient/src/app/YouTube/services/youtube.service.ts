@@ -22,14 +22,15 @@ export class YoutubeService {
     }});
   }
 
-  getStory(user: CustomUser) {
-    return this.client.get<SearchStory[]>('http://localhost:60601/api/story/guest', {
-     params: new HttpParams().set('userId', user.sub)
-   });
- }
-// getStory(user: CustomUser) {
-//   return this.client.get<SearchStory[]>(`http://localhost:60601/api/story/${user.sub}`);
-// }
+//   getStory(user: CustomUser) {
+//     return this.client.get<SearchStory[]>('http://localhost:60601/api/story/guest', {
+//      params: new HttpParams().set('userId', user.sub)
+//    });
+//  }
+getStory(user: CustomUser) {
+  console.log('Get stories on service, item = ', user.sub);
+  return this.client.get<SearchStory[]>(`http://localhost:60601/api/story/${user.sub}`);
+}
 
 //  delStoryById(item: number) {
 //     console.log('Del story on service, item = ', item);

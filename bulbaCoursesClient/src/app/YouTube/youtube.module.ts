@@ -8,6 +8,7 @@ import { YoutubeService} from './services/youtube.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { AppRoutingModule } from '../app-routing.module';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AppRoutingModule } from '../app-routing.module';
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgxYoutubePlayerModule.forRoot()
+    NgxYoutubePlayerModule.forRoot(),
+    NgxLoadingModule
   ],
   providers: [YoutubeService],
   exports: [SearchRequestComponent]
