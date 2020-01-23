@@ -29,7 +29,7 @@ namespace BulbaCourses.Podcasts.Web
             config.MapHttpAttributeRoutes();
             //config.Filters.Add(new BadRequestFilterAttribute());
             var data = File.ReadAllBytes(
-                @"C:\Users\Master\source\repos\Sample.Web\Sample.SelfHosted\bin\Debug\cert.pfx");
+                @"C:\Users\drjir\source\repos\bulba-courses\BulbaCourses\BulbaCourses.Web\Resources\bulbacourses.pfx");
             app.UseCors(new CorsOptions()
             {
                 PolicyProvider = new CorsPolicyProvider()
