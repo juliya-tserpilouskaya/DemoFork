@@ -63,6 +63,7 @@ namespace BulbaCourses.Youtube.DataAccess
         public StoryConfiguration()
         {
             ToTable("SearchStories").HasKey(p => p.Id);
+            Property(p => p.IsHideForUser).IsRequired();
             Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(p => p.SearchDate).IsRequired();
         }

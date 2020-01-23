@@ -1,0 +1,11 @@
+
+#story-checkbox, ul{
+  display: none;
+}
+#story-checkbox:checked~ul{
+  display: block;
+}
+.story-info{
+  display: flex;
+  justify-content: space-between;
+}

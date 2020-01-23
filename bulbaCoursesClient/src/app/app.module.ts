@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { FiltersComponent } from './DiscountAggregator/components/filters/filters.component';
 import { DiscountAggregatorService } from './DiscountAggregator/services/discount-aggregator.service';
+import { YoutubeModule } from './YouTube/youtube.module';
+
 
 @NgModule({
   declarations: [
@@ -31,10 +33,12 @@ import { DiscountAggregatorService } from './DiscountAggregator/services/discoun
         allowedUrls: [
           'https://localhost:44317',
           'http://localhost:3300',
-          'http://localhost:3500'
+          'http://localhost:3500',
+          'http://localhost:60601'
         ]
       }
-    })
+    }),
+    YoutubeModule
   ],
   providers: [DiscountAggregatorService],
   bootstrap: [AppComponent],
