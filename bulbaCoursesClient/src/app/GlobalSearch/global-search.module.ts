@@ -9,12 +9,14 @@ import { CourseItemService } from './services/course-item.service';
 import { SearchComponent } from './components/search/search.component';
 import { SearchService } from './services/search.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ResultsComponent } from './components/results/results.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
-  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent],
+  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, ResultsComponent],
   imports: [
-    CommonModule, NgbModule
+    CommonModule, NgbModule, RouterModule
   ],
   providers: [BookmarksService, QueryResultService, CourseItemService, SearchService ],
   exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent]

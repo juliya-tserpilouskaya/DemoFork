@@ -8,16 +8,10 @@ import { SearchService, Courses } from '../../services/search.service';
 })
 export class SearchComponent implements OnInit {
 
-  courses: Courses[] = [];
-  page = 2;
-  pageSize = 2;
-
-  constructor(private service: SearchService) {
+  constructor() {
 
   }
 
   ngOnInit() {
-    this.service.search()
-    .subscribe(data => this.courses = data);
   }
 }

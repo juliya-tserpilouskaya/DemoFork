@@ -8,6 +8,8 @@ import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmark
 import { QueryResultComponent } from './GlobalSearch/components/query-result/query-result.component';
 import { CourseItemComponent } from './GlobalSearch/components/course-item/course-item.component';
 import { SearchComponent } from './GlobalSearch/components/search/search.component';
+import { ResultsComponent } from './GlobalSearch/components/results/results.component';
+
 
 const routes: Routes = [
   { path: '', component: SampleComponent, pathMatch: 'full' },
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
+  { path: 'results', component: ResultsComponent },
   // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 
