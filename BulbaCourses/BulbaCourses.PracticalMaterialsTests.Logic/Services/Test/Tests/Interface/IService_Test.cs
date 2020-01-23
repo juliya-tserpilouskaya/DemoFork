@@ -30,6 +30,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo);
 
-        void AddUserPassingTestAsync(MTest_MainInfo User_Test_MainInfo);
+        void AddUserPassingTest(MTest_MainInfo User_Test_MainInfo);
     }
 }

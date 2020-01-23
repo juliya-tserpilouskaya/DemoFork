@@ -278,7 +278,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
         public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo)
         {
-            AddUserPassingTestAsync(User_Test_MainInfo);
+            AddUserPassingTest(User_Test_MainInfo);
 
             MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
 
@@ -355,7 +355,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
         // ------------ AddPassingTest
 
-        public void AddUserPassingTestAsync(MTest_MainInfo User_Test_MainInfo)
+        public void AddUserPassingTest(MTest_MainInfo User_Test_MainInfo)
         {
             // Наполнение данными
             List<MReaderChoice_ChoosingAnswerFromList> LReaderChoice_ChoosingAnswerFromList = 
@@ -389,7 +389,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             }
 
             int Answer_SetOrder = 1;
+
             int Question_SetOrder = 1;
+
             foreach (var Row in User_Test_MainInfo.Questions_SetOrder)
             {
                 MReaderChoice_SetOrder ReaderChoice_SetOrder =
@@ -406,8 +408,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                     ReaderChoice_SetOrder.AnswerVariant_SetOrderDb_Id = Answer_SetOrder++;
 
                     ReaderChoice_SetOrder.OrderKey = X.SortKey;
-                }
-                LReaderChoice_SetOrderDb.Add(ReaderChoice_SetOrder);
+
+                    LReaderChoice_SetOrderDb.Add(ReaderChoice_SetOrder);
+                }                
             }
 
             // Подготовка к записи

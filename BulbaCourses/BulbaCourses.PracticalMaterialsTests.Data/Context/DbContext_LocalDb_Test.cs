@@ -8,6 +8,8 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using System.Data.Entity;
 using BulbaCourses.PracticalMaterialsTests.Data.Mapping.User;
+using BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 {
@@ -35,6 +37,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
         public DbSet<MAnswerVariant_SetOrderDb> AnswerVariant_SetOrder { get; set; }
 
+        // ------------ WorkWithResultTest
+
+        public DbSet<MReaderChoice_MainInfoDb> ReaderChoice_MainInfo { get; set; }        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // ------------ Tests
@@ -53,9 +59,19 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
             modelBuilder.Configurations.Add(new Mapping_AnswerVariant_SetOrder());
 
+            // ------------ WorkWithResultTest
+
+            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_MainInfoDb());
+
+            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_ChoosingAnswerFromListDb());
+
+            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_SetOrderDb());
+
             // ------------ User
 
             modelBuilder.Configurations.Add(new Mapping_User_TestAuthor());
+
+            //modelBuilder.Configurations.Add(new Mapping_User_TestReader());
         }
     }
 }

@@ -8,7 +8,7 @@ using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
 {
-    public class DbUserInitialization_Test : CreateDatabaseIfNotExists<DbContext_LocalDb_Test>
+    public class DbUserInitialization_Test : DropCreateDatabaseAlways<DbContext_LocalDb_Test>
     {
         protected override void Seed(DbContext_LocalDb_Test context)
         {
