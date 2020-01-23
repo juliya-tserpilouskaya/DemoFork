@@ -10,7 +10,20 @@
         <a class="nav-link" [routerLink]="['/']" routerLinkActive="active"
           [routerLinkActiveOptions]="{exact: true}">Home</a>
       </li>
-      <li class="nav-item" *ngIf="!isAuthenticated">
+
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/search-request']" routerLinkActive="active">YouTube Search</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/analytics']" routerLinkActive="active">Analytics</a>
+      </li>
+        
+        <li class="nav-item">
+            <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/admin']" routerLinkActive="active">AdminMenu</a>
+        </li>
+
+        <li class="nav-item" *ngIf="!isAuthenticated">
         <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
       </li>
       <li class="nav-item">
@@ -19,15 +32,9 @@
       <li class="nav-item">
         <a class="nav-link" *ngIf="isAuthenticated" (click)="this.authService.logout()">Logout</a>
       </li>
+        
 
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/search-request']" routerLinkActive="active">YouTube
-          Search</a>
-      </li>
-
-      <li class="nav-item" *ngIf="isAuthenticated">
-        <a class="nav-link" [routerLink]="['/admin']" routerLinkActive="active">AdminMenu</a>
-      </li>
+      
     </ul>
     <form class="form-inline mt-2 mt-md-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
