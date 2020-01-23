@@ -1,31 +1,34 @@
-<!-- <p>filterss works! [formGroup]="filterForm"</p> 
+<!-- <p>filterss works! </p> 
 
-<form class="form-group"  (ngSubmit)="onSubmit()">
+<form class="form-group" [formGroup]="filterForm" (submit)="onSubmit()">
   <label>Домен</label>
-  <input class="form-control" formcontrolName="domainName" [(ngModel)]="domainName" #name="ngModel" required />
+  <input class="form-control" formcontrolName="domainName"/>
   <label>Категория</label>
-  <input class="form-control" formControlName="categoryName" [(ngModel)]="categoryName" #name="ngModel" required />
+  <input class="form-control" formControlName="categoryName"/>
   <label>Минимальная цена</label>
-  <input class="form-control" formControlName="minPrice" [(ngModel)]="minPrice" #name="ngModel" required />
+  <input class="form-control" formControlName="minPrice"/>
   <label>Максимальная цена</label>
-  <input class="form-control" formControlName="maxPrice" [(ngModel)]="maxPrice" #name="ngModel" required />
+  <input class="form-control" formControlName="maxPrice"/>
   <label>Минимальная скидка</label>
-  <input class="form-control" formControlName="minDiscount" [(ngModel)]="minDiscount" #name="ngModel" required />
+  <input class="form-control" formControlName="minDiscount"/>
   <label>Максимальная скидка</label>
-  <input class="form-control" formControlName="maxDiscount" [(ngModel)]="maxDiscount" #name="ngModel" required />
+  <input class="form-control" formControlName="maxDiscount"/>
   <div class="input-group" id="boot-search-box">
-    <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
+    <input type="text" class="form-control" placeholder="" formControlName="title" required/>
       <div class="input-group-btn">
         <div class="btn-group">
           <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </div>
     </div>
   </div>
-</form>-->
+</form>
 
+-->
 
- <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Критерии поиска</a>
+<!--
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Критерии</a> 
+    <br>
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -49,12 +52,21 @@
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
-      </ul>
-      <form class="form-inline my-2 my-md-0">
-        <input class="form-control" type="text" placeholder="Search">
+      </ul> 
+-->
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div class="navbar-collapse collapse" id="navbarsExample06">
+      <form class="form-inline my-2 my-md-0" (submit)="onSubmitCriteria()">
+        <input class="form-control" type="text" placeholder="Домен" formControlName = "domainName">
+        <input class="form-control" type="text" placeholder="Категория" formControlName = "categoryName">
+        <input class="form-control" type="text" placeholder="Максимальная цена" formControlName = "maxPrice">
+        <input class="form-control" type="text" placeholder="Минимальная цена" formControlName = "minPrice">
+        <input class="form-control" type="text" placeholder="Максимальная скидка" formControlName = "maxDiscount">
+        <input class="form-control" type="text" placeholder="Минимальная скидка" formControlName = "minDiscount">
+        <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
     </div>
   </nav>
 
+  
 
- 

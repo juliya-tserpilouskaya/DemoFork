@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { DiscountAggregatorService } from '../../services/discount-aggregator.service';
+import { FormGroup, FormBuilder, NgModel } from '@angular/forms';
+import { DiscountAggregatorService, Courses } from '../../services/discount-aggregator.service';
 import { User, CustomUser } from 'src/app/auth/models/user';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-filters',
@@ -11,18 +12,20 @@ import { User, CustomUser } from 'src/app/auth/models/user';
 })
 export class FiltersComponent implements OnInit {
 
+  searchResult : Courses[] = [];
   user : CustomUser;
   filterForm : FormGroup;
   discountAggregatorService : DiscountAggregatorService;
+  courses: Courses[] = [];
 
   constructor(private service: DiscountAggregatorService, private formBuilder: FormBuilder, private authService: AuthService) {
     this.filterForm = formBuilder.group({
-      domainName:[""],
-      categoryName:[""],
-      minPrice:[""],
-      maxPrice:[""],
-      minDiscount:[""],
-      maxDiscount:[""]
+      domainName:NgModel,
+      categoryName:NgModel,
+      minPrice:NgModel,
+      maxPrice:NgModel,
+      minDiscount:NgModel,
+      maxDiscount:NgModel
     });
     this.discountAggregatorService = service;
   }
@@ -30,24 +33,31 @@ export class FiltersComponent implements OnInit {
   ngOnInit() {
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
+  
+  onSubmitCriteria(){
+    console.log('123')
+    this.service.getCoursesForCriteria(this.user)
+    .subscribe(data => this.courses = data); 
+  }
 
   onSubmit(){
     if(this.filterForm.valid){
     
       const dataForm = this.filterForm.value;
-      const newSearchCriteria = new  SearchCriteria();
-      newSearchCriteria.Domains = dataForm.domainName;
-      newSearchCriteria.CourseCategories = dataForm.categoryName;
-      newSearchCriteria.MinPrice = dataForm.minPrice; 
-      newSearchCriteria.MaxPrice = dataForm.maxPrice; 
-      newSearchCriteria.MinDiscount = dataForm.minDiscount; 
-      newSearchCriteria.MaxDiscount = dataForm.maxDiscount;  
+      const newSearchCriteria : SearchCriteria = {
+        Domains : dataForm.domainName,
+        CourseCategories: dataForm.categoryName,
+        MinPrice : dataForm.minPrice,
+        MaxPrice : dataForm.maxPrice, 
+        MinDiscount : dataForm.minDiscount, 
+        MaxDiscount : dataForm.maxDiscount 
+      };
     }
   }
 }
 
 export class SearchCriteria {
-  Id: string;
+  Id?: string;
   Domains: string//Domain[];
   CourseCategories: string//CourseCategory[];
   MinPrice: number;

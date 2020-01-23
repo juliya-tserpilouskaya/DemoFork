@@ -75,19 +75,38 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return course;
         }
 
-        public async Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idSearch)
+        public async Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idUser)
         {
-            //TODO domain and category
-            var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
-            var courses = await context.Courses
-                .Where(x => x.Price >= searchCriteriaDb.MinPrice 
-                && x.Price <= searchCriteriaDb.MaxPrice 
-                //&& x.Domain == searchCriteriaDb.Domains
-                //&& x.Category == searchCriteriaDb.CourseCategories
-                && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+            var criteria = context.Profiles.Include(x => x.SearchCriteria)
+                .Include(x => x.SearchCriteria.Domains)
+                .Include(x => x.SearchCriteria.CourseCategories)
+                .Where(p => p.Id == idUser).FirstOrDefault();
+
+            var domain = (IEnumerable<DomainDb>)criteria.SearchCriteria.Domains;
+
+            var courses = await context.Courses.Include(i => i.Domain)
+                .Where(x => x.Price >= criteria.SearchCriteria.MinPrice
+                && x.Price <= criteria.SearchCriteria.MaxPrice
+                //&& domain.Any(y => y.DomainURL == x.Domain.DomainURL)//   criteria.SearchCriteria.Domains.Contains(x.Domain)
+                //&& criteria.SearchCriteria.CourseCategories.Contains(x.Category)
+
+                //&& domain.Any(a => a.DomainURL == x.Domain.DomainURL)
+                //&& x.Domain == context.Domains.FirstOrDefault(f => f.DomainURL == @"/specialization/web-dizayn/")
+
+                && x.Discount >= criteria.SearchCriteria.MinDiscount && x.Discount <= criteria.SearchCriteria.MaxDiscount)
                 .ToListAsync()
                 .ConfigureAwait(false);
-            
+            //TODO domain and category
+            //var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
+            //var courses = await context.Courses
+            //    .Where(x => x.Price >= searchCriteriaDb.MinPrice 
+            //    && x.Price <= searchCriteriaDb.MaxPrice 
+            //    //&& x.Domain == searchCriteriaDb.Domains
+            //    //&& x.Category == searchCriteriaDb.CourseCategories
+            //    && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+            //    .ToListAsync()
+            //    .ConfigureAwait(false);
+
             return courses;
         }
 

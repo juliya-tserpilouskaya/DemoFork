@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from "rxjs";
+import { CustomUser } from 'src/app/auth/models/user'; 
 
 
 @Injectable({
@@ -16,6 +17,17 @@ export class DiscountAggregatorService {
   getCourses() {
     return this.client.get<Courses[]>('https://localhost:44317/api/courses/async');
   }
+
+  getCoursesForCriteria(user: CustomUser){
+    return this.client.get<Courses[]>('https://localhost:44317/api/courses/Search/',
+      { params: new HttpParams().set('idSearch', '100b4ac7-320a-48eb-946a-708acff71bdc')//user.sub)
+    });
+  } 
+
+  //updateSearchCriteria(){
+
+  //}
+
   /*
   postCourses(){
     return this.client.post<Domains[]>('https://localhost:44317/api/domains');
