@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Subject} from 'rxjs';
 
 
 @Injectable({
@@ -7,16 +9,26 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SearchService {
 
-  query: string = "querye"
+  public query: string = "";
+  url: string;
+  constructor(private client: HttpClient) {}
 
-  constructor(private client: HttpClient) {
-  }
-  search() {
-    return this.client.get<Courses[]>('https://my-json-server.typicode.com/typicode/demo/posts');
+  search(qry: string) {
+    // return this.client.get<Courses[]>('https://my-json-server.typicode.com/typicode/demo/posts');
+    return this.client.get<Courses[]>('https://localhost:44320/api/search/' + qry)
   }
 }
 
-export interface Courses {
-  id: string;
-  title: string;
+// export interface Courses {
+//   id: string;
+//   title: string;
+// }
+
+export interface Courses 
+{
+    Id: string;
+    Name: string;
+    Cost: number;
+    Complexity: string;
+    Description: string;
 }

@@ -4,14 +4,14 @@
         <div class="card" *ngFor="let course of courses | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
           <div class="card-header">
-            <div class="card-title">{{course.id}}</div>
+            <div class="card-title">{{course.Id}}</div>
           </div>
           <div class="card-body">
-          <h5 class="card-title">{{course.id}}</h5>
-          <p class="card-text">{{course.title}}</p>
+          <h5 class="card-title">Курс: {{course.Name}}</h5>
+          <p class="card-text">Описание{{course.Description}}</p>
           <a href="#" class="card-link">В закладки</a>
           <br>
-          <a href="#" class="btn btn-primary">Что внутри</a>
+          <a href="#" class="card-link">Состав курса</a>
           </div>
         </div>
   </div>

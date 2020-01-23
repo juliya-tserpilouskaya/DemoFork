@@ -11,7 +11,7 @@ export class ResultsComponent implements OnInit {
 
   courses: Courses[] = [];
   page = 2;
-  pageSize = 2;
+  pageSize = 10;
   parameter: string;
 
   constructor(private service: SearchService, route: ActivatedRoute) { 
@@ -19,8 +19,7 @@ export class ResultsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.search()
+    this.service.search(this.parameter)
     .subscribe(data => this.courses = data);
   }
-
 }
