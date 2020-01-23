@@ -9,9 +9,9 @@ using BulbaCourses.Podcasts.Data;
 
 namespace BulbaCourses.Podcasts.Data.Managers
 {
-    public class CourseManager : BaseManager, IManager<UserDb>
+    public class UserManager : BaseManager, IManager<UserDb>
     {
-        public CourseManager(PodcastsContext dbContext) : base(dbContext)
+        public UserManager(PodcastsContext dbContext) : base(dbContext)
         {
         }
 
@@ -21,16 +21,26 @@ namespace BulbaCourses.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
             return await Task.FromResult(userDb).ConfigureAwait(false);
         }
-        public async Task<IEnumerable<UserDb>> GetAllAsync()
+
+        public async Task<IEnumerable<UserDb>> GetAllAsync(string filter)
         {
-            var courseList = await dbContext.Users.AsNoTracking().ToListAsync().ConfigureAwait(false);
-            return courseList.AsReadOnly();
+            if (string.IsNullOrEmpty(filter))
+            {
+                var courseList = await dbContext.Users.AsNoTracking().ToListAsync().ConfigureAwait(false);
+                return courseList.AsReadOnly();
+            }
+            else
+            {
+                var courseList = await dbContext.Users.AsNoTracking().Where(c => c.Name.Contains(filter)).ToListAsync().ConfigureAwait(false);
+                return courseList.AsReadOnly();
+            }
         }
         public async Task<UserDb> GetByIdAsync(string id)
         {
             return await dbContext.Users.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public async Task<UserDb> RemoveAsync(UserDb userDb)
+
+        public async void RemoveAsync(UserDb userDb)
         {
             if (userDb == null)
             {
@@ -40,8 +50,8 @@ namespace BulbaCourses.Podcasts.Data.Managers
             dbContext.Users.Remove(userDb);
             dbContext.Courses.ToList().ForEach(x => x.Author = null);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
-            return null;
         }
+
         public async Task<UserDb> UpdateAsync(UserDb userDb)
         {
             if (userDb == null)
@@ -52,18 +62,23 @@ namespace BulbaCourses.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(userDb);
         }
-        public async Task<bool> IsExistAsync(string name)
-        {
-            return await dbContext.Users.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
-        }
 
-        public async Task<bool> ExistAsync(string name)
+        public async Task<bool> ExistIdAsync(string id)
         {
-            if (name == null)
+            if (id == null)
             {
                 throw new ArgumentNullException();
             }
-            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
+            return await dbContext.Courses.AnyAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> ExistNameAsync(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(id)).ConfigureAwait(false);
         }
     }
 }

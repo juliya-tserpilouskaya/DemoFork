@@ -64,11 +64,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(string filter)
         {
             try
             {
-                var result = await service.GetAllAsync();
+                var result = await service.GetAllAsync(filter);
                 if (result.IsSuccess == true)
                 {
                     var userLogic = result.Data;
@@ -90,6 +90,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddUser, default")]UserWeb userWeb)
         {
@@ -98,37 +99,30 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return BadRequest(ModelState);
             }
             try
-            {
-                var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.AddAsync(userlogic);
-                if (result.IsSuccess == true)
+            {   
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await service.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
-                    string subString = sub.Value;
-                    var user = (await service.GetByIdAsync(subString));
-                    if (user.IsSuccess == true)
-                    {
-                        var userId = user.Data;
+                    var userId = user.Data;
 
-                        if (result.IsSuccess == true)
-                        {
-                            await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name} by {userId.Name}");
-                            return Ok(userWeb);
-                        }
-                        else
-                        {
-                            return BadRequest(result.Message);
-                        }
+                    var userlogic = mapper.Map<UserWeb, UserLogic>(userWeb);
+                    var result = await service.AddAsync(userlogic, userId);
+
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name} by {userId.Name}");
+                        return Ok(userWeb);
                     }
                     else
                     {
-                        return BadRequest("Unundentified user");
+                        return BadRequest(result.Message);
                     }
-                    
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)
@@ -141,6 +135,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateUser, default")]UserWeb userWeb)
         {
@@ -170,7 +165,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)
@@ -184,6 +179,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteUser, default")] UserWeb userWeb)
         {
             if (!ModelState.IsValid)
@@ -213,7 +209,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -226,6 +222,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetMe()
         {
@@ -243,7 +240,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("UnIndentitified User");
+                    return Unauthorized();
                 }
             }
             catch (InvalidOperationException ex)

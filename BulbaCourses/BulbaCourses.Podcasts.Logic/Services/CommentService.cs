@@ -26,13 +26,12 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> AddAsync(CommentLogic comment, CourseLogic course, UserLogic user)// use user
+        public async Task<Result> AddAsync(CommentLogic comment)
         {
             try
             {
                 comment.Id = Guid.NewGuid().ToString();
                 comment.PostDate = DateTime.Now;
-                comment.Course = course;
                 var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
                 var result = await dbmanager.AddAsync(commentDb);
                 return Result.Ok();
@@ -70,11 +69,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<CommentLogic>>> GetAllAsync()
+        public async Task<Result<IEnumerable<CommentLogic>>> GetAllAsync(string filter)
         {
             try
             {
-                var comments = await dbmanager.GetAllAsync();
+                var comments = await dbmanager.GetAllAsync(filter);
                 var result = mapper.Map<IEnumerable<CommentDb>, IEnumerable<CommentLogic>>(comments);
                 return Result<IEnumerable<CommentLogic>>.Ok(result);
             }
@@ -84,14 +83,21 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(CommentLogic comment, UserLogic user)// use user
+        public Result DeleteAsync(CommentLogic comment, UserLogic user)
         {
 
             try
             {
-                var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                await dbmanager.RemoveAsync(commentDb);
-                return Result.Ok();
+                if (user.Comments.Contains(comment) || user.IsAdmin)
+                {
+                    var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+                    dbmanager.RemoveAsync(commentDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -111,13 +117,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(CommentLogic comment, UserLogic user)// use user
+        public async Task<Result> UpdateAsync(CommentLogic comment, UserLogic user)
         {
             try
             {
-                var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
-                await dbmanager.UpdateAsync(commentDb);
-                return Result.Ok();
+                if (user.Comments.Contains(comment) || user.IsAdmin)
+                {
+                    var commentDb = mapper.Map<CommentLogic, CommentDb>(comment);
+                    await dbmanager.UpdateAsync(commentDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -137,9 +150,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        public async Task<bool> ExistsIdAsync(string id)
         {
-            return await dbmanager.ExistAsync(name);
+            return await dbmanager.ExistIdAsync(id);
         }
     }
 }

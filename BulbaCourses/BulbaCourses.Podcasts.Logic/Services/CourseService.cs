@@ -81,7 +81,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var course = (await dbmanager.GetAllAsync()).Where(c => c.Name.Contains(Name)).ToList();
+                var course = (await dbmanager.GetAllAsync("")).Where(c => c.Name.Contains(Name)).ToList();
                 var courseLogic = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(course);
                 return Result<IEnumerable<CourseLogic>>.Ok(courseLogic);
             }
@@ -91,11 +91,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<CourseLogic>>> GetAllAsync()
+        public async Task<Result<IEnumerable<CourseLogic>>> GetAllAsync(string filter)
         {
             try
             {
-                var courses = await dbmanager.GetAllAsync();
+                var courses = await dbmanager.GetAllAsync(filter);
                 var result = mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseLogic>>(courses);
                 return Result<IEnumerable<CourseLogic>>.Ok(result);
             }
@@ -105,14 +105,21 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
         
-        public async Task<Result> DeleteAsync(CourseLogic course, UserLogic user) //use user
+        public Result DeleteAsync(CourseLogic course, UserLogic user)
         {
             
             try
             {
-                var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                await dbmanager.RemoveAsync(courseDb);
-                return Result.Ok();
+                if (user.UploadedCourses.Contains(course) || user.IsAdmin)
+                {
+                    var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                    dbmanager.RemoveAsync(courseDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unathorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -132,13 +139,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(CourseLogic course, UserLogic user)// use user
+        public async Task<Result> UpdateAsync(CourseLogic course, UserLogic user)
         {
             try
             {
-                var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
-                await dbmanager.UpdateAsync(courseDb);
-                return Result.Ok();
+                if (user.UploadedCourses.Contains(course) || user.IsAdmin)
+                {
+                    var courseDb = mapper.Map<CourseLogic, CourseDb>(course);
+                    await dbmanager.UpdateAsync(courseDb);
+                    return Result.Ok();
+                }
+                else
+                {
+                    return Result.Fail("Unathorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -158,9 +172,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        public async Task<bool> ExistsNameAsync(string name)
         {
-            return await dbmanager.ExistAsync(name);
+            return await dbmanager.ExistNameAsync(name);
+        }
+
+        public async Task<bool> ExistsIdAsync(string id)
+        {
+            return await dbmanager.ExistIdAsync(id);
         }
     }
 }

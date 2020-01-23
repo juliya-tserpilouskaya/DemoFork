@@ -61,14 +61,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(string courseId)
         {
             try
             {
-                var result = await service.GetAllAsync();
+                var result = await service.GetAllAsync(courseId);
                 if (result.IsSuccess == true)
                 {
                     var commentLogic = result.Data;
@@ -90,8 +90,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddComment, default")] CommentWeb commentWeb, CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddComment, default")] CommentWeb commentWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -107,11 +108,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                    var result = await service.AddAsync(commentlogic, courselogic, userId);
+                    var result = await service.AddAsync(commentlogic, userId);
                     if (result.IsSuccess == true)
                     {
-                        await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name} by {userId.Name}");
+                        await bus.SendAsync("Podcasts", $"Added Comment to {commentlogic.Course.Name} by {userId.Name}");
                         return Ok(commentlogic);
                     }
                     else
@@ -121,7 +121,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -135,6 +135,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateComment, default")]CommentWeb commentWeb)
         {
@@ -164,7 +165,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -178,6 +179,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteComment, default")]CommentWeb commentWeb)
         {
@@ -207,7 +209,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)

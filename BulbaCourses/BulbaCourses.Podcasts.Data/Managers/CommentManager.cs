@@ -21,16 +21,19 @@ namespace BulbaComments.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
             return await Task.FromResult(commentDb).ConfigureAwait(false);
         }
-        public async Task<IEnumerable<CommentDb>> GetAllAsync()
+
+        public async Task<IEnumerable<CommentDb>> GetAllAsync(string courseId)
         {
-            var courseList = await dbContext.Comments.AsNoTracking().ToListAsync().ConfigureAwait(false);
+            var courseList = await dbContext.Comments.AsNoTracking().Where(c => c.Course.Id == courseId).ToListAsync().ConfigureAwait(false);
             return courseList.AsReadOnly();
         }
+
         public async Task<CommentDb> GetByIdAsync(string id)
         {
             return await dbContext.Comments.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public async Task<CommentDb> RemoveAsync(CommentDb commentDb)
+
+        public async void RemoveAsync(CommentDb commentDb)
         {
             if (commentDb == null)
             {
@@ -38,8 +41,8 @@ namespace BulbaComments.Podcasts.Data.Managers
             }
             dbContext.Comments.Remove(commentDb);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
-            return null;
         }
+
         public async Task<CommentDb> UpdateAsync(CommentDb commentDb)
         {
             if (commentDb == null)
@@ -51,13 +54,18 @@ namespace BulbaComments.Podcasts.Data.Managers
             return await Task.FromResult(commentDb);
         }
 
-        public async Task<bool> ExistAsync(string name)
+        public async Task<bool> ExistIdAsync(string name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException();
             }
-            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
+            return await dbContext.Courses.AnyAsync(c => c.Id.Equals(name)).ConfigureAwait(false);
+        }
+
+        public Task<bool> ExistNameAsync(string name)
+        {
+            throw new InvalidOperationException();
         }
     }
 }

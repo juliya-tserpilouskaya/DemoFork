@@ -81,7 +81,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var user = (await dbmanager.GetAllAsync()).Where(c => c.Name.Contains(Name)).ToList();
+                var user = (await dbmanager.GetAllAsync("")).Where(c => c.Name.Contains(Name)).ToList();
                 var UserLogic = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(user);
                 return Result<IEnumerable<UserLogic>>.Ok(UserLogic);
             }
@@ -91,11 +91,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<UserLogic>>> GetAllAsync()
+        public async Task<Result<IEnumerable<UserLogic>>> GetAllAsync(string filter)
         {
             try
             {
-                var users = await dbmanager.GetAllAsync();
+                var users = await dbmanager.GetAllAsync(filter);
                 var result = mapper.Map<IEnumerable<UserDb>, IEnumerable<UserLogic>>(users);
                 return Result<IEnumerable<UserLogic>>.Ok(result);
             }
@@ -105,14 +105,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(UserLogic user, UserLogic userY)
+        public Result DeleteAsync(UserLogic user, UserLogic userY)
         {
             try
             {
                 if (userY.IsAdmin || (userY.Id == user.Id))
                 {
                     var userDb = mapper.Map<UserLogic, UserDb>(user);
-                    await dbmanager.RemoveAsync(userDb);
+                    dbmanager.RemoveAsync(userDb);
                     return Result.Ok();
                 }
                 else
@@ -172,9 +172,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        public async Task<bool> ExistsNameAsync(string name)
         {
-            return await dbmanager.ExistAsync(name);
+            return await dbmanager.ExistNameAsync(name);
+        }
+
+        public async Task<bool> ExistsIdAsync(string id)
+        {
+            return await dbmanager.ExistIdAsync(id);
         }
     }
 }

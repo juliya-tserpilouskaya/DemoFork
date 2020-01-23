@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Podcasts.Logic;
 using BulbaCourses.Podcasts.Web.App_Start;
+using BulbaCourses.Podcasts.Web.Properties;
 using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
@@ -10,6 +11,8 @@ using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;

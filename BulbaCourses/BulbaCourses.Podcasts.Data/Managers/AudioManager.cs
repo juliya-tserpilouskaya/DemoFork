@@ -21,16 +21,27 @@ namespace BulbaComments.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false); ;
             return await Task.FromResult(audioDb).ConfigureAwait(false);
         }
-        public async Task<IEnumerable<AudioDb>> GetAllAsync()
+
+        public async Task<IEnumerable<AudioDb>> GetAllAsync(string filter)
         {
-            var audioList = await dbContext.Audios.AsNoTracking().ToListAsync().ConfigureAwait(false);
-            return audioList.AsReadOnly();
+            if (string.IsNullOrEmpty(filter))
+            {
+                var audioList = await dbContext.Audios.AsNoTracking().ToListAsync().ConfigureAwait(false);
+                return audioList.AsReadOnly();
+            }
+            else
+            {
+                var audioList = await dbContext.Audios.AsNoTracking().Where(c => c.Name.Contains(filter)).ToListAsync().ConfigureAwait(false);
+                return audioList.AsReadOnly();
+            }
         }
+
         public async Task<AudioDb> GetByIdAsync(string id)
         {
             return await dbContext.Audios.SingleOrDefaultAsync(b => b.Id.Equals(id)).ConfigureAwait(false);
         }
-        public async Task<AudioDb> RemoveAsync(AudioDb audioDb)
+
+        public async void RemoveAsync(AudioDb audioDb)
         {
             if (audioDb == null)
             {
@@ -38,8 +49,8 @@ namespace BulbaComments.Podcasts.Data.Managers
             }
             dbContext.Audios.Remove(audioDb);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
-            return null;
         }
+
         public async Task<AudioDb> UpdateAsync(AudioDb audioDb)
         {
             if (audioDb == null)
@@ -50,13 +61,23 @@ namespace BulbaComments.Podcasts.Data.Managers
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(audioDb);
         }
-        public async Task<bool> ExistAsync(string name)
+
+        public async Task<bool> ExistIdAsync(string id)
         {
-            if (name == null)
+            if (id == null)
             {
                 throw new ArgumentNullException();
             }
-            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
+            return await dbContext.Courses.AnyAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> ExistNameAsync(string id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException();
+            }
+            return await dbContext.Courses.AnyAsync(c => c.Name.Equals(id)).ConfigureAwait(false);
         }
     }
 }

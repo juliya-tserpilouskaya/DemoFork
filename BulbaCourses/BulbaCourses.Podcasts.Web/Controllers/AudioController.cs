@@ -64,11 +64,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(string filter)
         {
             try
             {
-                var result = await service.GetAllAsync();
+                var result = await service.GetAllAsync(filter);
                 if (result.IsSuccess == true)
                 {
                     var audioLogic = result.Data;
@@ -90,8 +90,9 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio post", typeof(AudioWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddAudio, default")] AudioWeb audioWeb, CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddAudio, default")] AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -107,11 +108,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                    var result = await service.AddAsync(audiologic, courselogic, userId);
+                    var result = await service.AddAsync(audiologic, userId);
                     if (result.IsSuccess == true)
                     {
-                        await bus.SendAsync("Podcasts", $"Added Audio to {audioWeb.Name} by {userId.Name}");
+                        await bus.SendAsync("Podcasts", $"Added Audio {audioWeb.Name} to {audioWeb.Course.Name} by {userId.Name}");
                         return Ok(audiologic);
                     }
                     else
@@ -121,7 +121,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -135,6 +135,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio updated", typeof(AudioWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateAudio, default")]AudioWeb audioWeb)
         {
@@ -165,7 +166,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)
@@ -179,6 +180,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio deleted", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteAudio, default")]AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
@@ -199,7 +201,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var result = await service.DeleteAsync(audiologic, userId);
                     if (result.IsSuccess == true)
                     {
-                        await bus.SendAsync("Podcasts", $"Deleted Audio at {audioWeb.Name} by {userId.Name}");
+                        await bus.SendAsync("Podcasts", $"Deleted Audio {audioWeb.Name} from {audioWeb.Course.Name} by {userId.Name}");
                         return Ok(audiologic);
                     }
                     else
@@ -209,7 +211,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)

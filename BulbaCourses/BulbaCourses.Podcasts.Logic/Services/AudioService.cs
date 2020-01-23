@@ -23,16 +23,23 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> AddAsync(AudioLogic audio, CourseLogic course, UserLogic user)// use user
+        public async Task<Result> AddAsync(AudioLogic audio, UserLogic user)
         {
             try
             {
-                audio.Course = course;
-                audio.Content = Guid.NewGuid().ToString();
-                audio.Id = Guid.NewGuid().ToString();
-                var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                var result = await dbmanager.AddAsync(audioDb);
-                return Result.Ok();
+                if (user.UploadedCourses.Contains(audio.Course) ||user.IsAdmin)
+                {
+                    var course = audio.Course;
+                    audio.Content = Guid.NewGuid().ToString();
+                    audio.Id = Guid.NewGuid().ToString();
+                    var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
+                    var result = await dbmanager.AddAsync(audioDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -71,7 +78,7 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             try
             {
-                var audio = (await dbmanager.GetAllAsync()).Where(c => c.Name.Contains(Name)).ToList();
+                var audio = (await dbmanager.GetAllAsync("")).Where(c => c.Name.Contains(Name)).ToList();
                 var AudioLogic = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audio);
                 return Result<IEnumerable<AudioLogic>>.Ok(AudioLogic);
             }
@@ -81,11 +88,11 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result<IEnumerable<AudioLogic>>> GetAllAsync()
+        public async Task<Result<IEnumerable<AudioLogic>>> GetAllAsync(string filter)
         {
             try
             {
-                var audios = await dbmanager.GetAllAsync();
+                var audios = await dbmanager.GetAllAsync(filter);
                 var result = mapper.Map<IEnumerable<AudioDb>, IEnumerable<AudioLogic>>(audios);
                 return Result<IEnumerable<AudioLogic>>.Ok(result);
             }
@@ -95,14 +102,21 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(AudioLogic audio, UserLogic user)// use user
+        public Result DeleteAsync(AudioLogic audio, UserLogic user)
         {
 
             try
             {
-                var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                await dbmanager.RemoveAsync(audioDb);
-                return Result.Ok();
+                if (user.IsAdmin || user.UploadedCourses.Contains(audio.Course))
+                {
+                    var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
+                    dbmanager.RemoveAsync(audioDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -122,13 +136,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(AudioLogic audio, UserLogic user)// use user
+        public async Task<Result> UpdateAsync(AudioLogic audio, UserLogic user)
         {
             try
             {
-                var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
-                await dbmanager.UpdateAsync(audioDb);
-                return Result.Ok();
+                if (user.IsAdmin || user.UploadedCourses.Contains(audio.Course))
+                    {
+                    var audioDb = mapper.Map<AudioLogic, AudioDb>(audio);
+                    await dbmanager.UpdateAsync(audioDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -148,9 +169,14 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        public async Task<bool> ExistsNameAsync(string name)
         {
-            return await dbmanager.ExistAsync(name);
+            return await dbmanager.ExistNameAsync(name);
+        }
+
+        public async Task<bool> ExistsIdAsync(string id)
+        {
+            return await dbmanager.ExistIdAsync(id);
         }
     }
 }

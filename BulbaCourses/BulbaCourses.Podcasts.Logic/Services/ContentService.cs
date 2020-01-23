@@ -5,6 +5,7 @@ using BulbaCourses.Podcasts.Logic.Interfaces;
 using BulbaCourses.Podcasts.Logic.Models;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace BulbaCourses.Podcasts.Logic.Services
 {
@@ -19,15 +20,23 @@ namespace BulbaCourses.Podcasts.Logic.Services
             this.dbmanager = dbmanager;
         }
 
-        public async Task<Result> AddAsync(ContentLogic content, AudioLogic audio, UserLogic user)// use user
+        public async Task<Result> AddAsync(ContentLogic content, UserLogic user)
         {
             try
             {
-                content.Audio = audio;
-                content.Id = audio.Content;
-                var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
-                await dbmanager.AddAsync(contentDb);
-                return Result.Ok();
+                var audio = content.Audio;
+                if (user.UploadedCourses.Any(c => c.Audios.Contains(audio)) || user.IsAdmin)
+                {
+                    content.Audio = audio;
+                    content.Id = audio.Content;
+                    var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
+                    await dbmanager.AddAsync(contentDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (Exception)
             {
@@ -36,13 +45,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
 
         }
 
-        public async Task<Result<ContentLogic>> GetByIdAsync(string id)
+        public async Task<Result<ContentLogic>> GetByIdAsync(string id, UserLogic user)
         {
             try
             {
-                var content = await dbmanager.GetByIdAsync(id);
-                var ContentLogic = mapper.Map<ContentDb, ContentLogic>(content);
-                return Result<ContentLogic>.Ok(ContentLogic);
+                if (user.UploadedCourses.Any(c => c.Audios.Any(a => a.Id == id)) || user.BoughtCourses.Any(c => c.Audios.Any(a => a.Id == id)) || user.IsAdmin)
+                {
+                    var content = await dbmanager.GetByIdAsync(id);
+                    var ContentLogic = mapper.Map<ContentDb, ContentLogic>(content);
+                    return Result<ContentLogic>.Ok(ContentLogic); 
+                }
+                else
+                {
+                    return Result<ContentLogic>.Fail("Unauthorized");
+                }
             }
             catch (Exception)
             {
@@ -50,14 +66,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteAsync(ContentLogic content, UserLogic user)// use user
+        public Result DeleteAsync(ContentLogic content, UserLogic user)
         {
-
             try
             {
-                var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
-                await dbmanager.RemoveAsync(contentDb);
-                return Result.Ok();
+                if (user.UploadedCourses.Any(c => c.Audios.Any(a => a.Content == content.Id)) || user.IsAdmin)
+                {
+                    var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
+                    dbmanager.RemoveAsync(contentDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (Exception)
             {
@@ -65,13 +87,20 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<Result> UpdateAsync(ContentLogic content, UserLogic user)// use user
+        public async Task<Result> UpdateAsync(ContentLogic content, UserLogic user)
         {
             try
             {
-                var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
-                await dbmanager.UpdateAsync(contentDb);
-                return Result.Ok();
+                if (user.UploadedCourses.Any(c => c.Audios.Any(a => a.Content == content.Id)) || user.IsAdmin)
+                {
+                    var contentDb = mapper.Map<ContentLogic, ContentDb>(content);
+                    await dbmanager.UpdateAsync(contentDb);
+                    return Result.Ok(); 
+                }
+                else
+                {
+                    return Result.Fail("Unauthorized");
+                }
             }
             catch (Exception)
             {
@@ -79,9 +108,9 @@ namespace BulbaCourses.Podcasts.Logic.Services
             }
         }
 
-        public async Task<bool> ExistsAsync(string name)
+        public async Task<bool> ExistsIdAsync(string id)
         {
-            return await dbmanager.ExistAsync(name);
+            return await dbmanager.ExistIdAsync(id);
         }
     }
 }

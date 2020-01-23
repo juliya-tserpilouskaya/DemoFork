@@ -64,10 +64,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         [Authorize]
         [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Content post", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddContent, default")]ContentWeb contentWeb, AudioWeb audioWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddContent, default")]ContentWeb contentWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -83,8 +84,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                    var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                    var result = await service.AddAsync(contentLogic, audiologic, userId);
+                    var result = await service.AddAsync(contentLogic, userId);
                     if (result.IsSuccess == true)
                     {
                         return Ok(contentWeb);
@@ -96,7 +96,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -109,6 +109,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Content updated", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateContent, default")]ContentWeb contentWeb)
@@ -139,7 +140,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
@@ -152,6 +153,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [Authorize]
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Content deleted", typeof(ContentWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteContent, default")] ContentWeb contentWeb)
@@ -182,7 +184,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 }
                 else
                 {
-                    return BadRequest("Unundentified user");
+                    return Unauthorized();
                 }
                 
             }
