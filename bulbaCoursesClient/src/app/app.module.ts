@@ -40,7 +40,7 @@ import { YoutubeModule } from './YouTube/youtube.module';
     }),
     YoutubeModule
   ],
-  providers: [DiscountAggregatorService],
+  providers: [],
   bootstrap: [AppComponent],
   exports: []
 })
