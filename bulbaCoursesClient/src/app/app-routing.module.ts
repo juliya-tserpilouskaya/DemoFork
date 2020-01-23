@@ -10,10 +10,10 @@ import { VideoComponent } from './YouTube/components/video/video.component';
 import { AnalyticsComponent } from './analytics/components/analytics/analytics.component';
 import { UsersComponent } from './GlobalAdminUsers/components/users/users.component';
 import { RegisterComponent } from './register/register/register.component';
+import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
-  { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'discountCourses', component: CourseComponent},
   //{path: 'discountMenu', component: CourseComponent},
@@ -21,7 +21,9 @@ const routes: Routes = [
   { path: 'video/:id', component: VideoComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
-  { path: 'register', component: RegisterComponent}
+  { path: 'register', component: RegisterComponent},
+  { path: '', component: SampleComponent, pathMatch: 'full' },
+  { path: '**', component: PagenotfoundComponent }
 ];
 
 @NgModule({

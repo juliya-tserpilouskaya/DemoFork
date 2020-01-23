@@ -14,12 +14,14 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
 import { RegisterModule} from './register/register/register.module';
+import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    CourseComponent
+    CourseComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
