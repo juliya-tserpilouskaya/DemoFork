@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using BulbaComments.Podcasts.Data.Managers;
-
+[assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
 namespace BulbaCourses.Podcasts.Data.Managers
 {
     public class CourseManager : BaseManager, IManager<CourseDb>

@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Podcasts.Logic;
 using BulbaCourses.Podcasts.Web.App_Start;
+using BulbaCourses.Podcasts.Web.Infrastructure;
 using BulbaCourses.Podcasts.Web.Properties;
 using FluentValidation;
 using FluentValidation.WebApi;
@@ -11,11 +12,14 @@ using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Cors;
 using System.Web.Http;
 
@@ -61,7 +65,10 @@ namespace BulbaCourses.Podcasts.Web
 
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
-            var kernel = new StandardKernel(new LogicModule());
+            
+            var kernel = new StandardKernel(new LogicModule(), new DataModule());
+            kernel.Load<MapperLoadModule>();
+
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
 

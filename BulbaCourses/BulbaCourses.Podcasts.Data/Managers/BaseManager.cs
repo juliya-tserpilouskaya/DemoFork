@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+[assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
 namespace BulbaCourses.Podcasts.Data
 {
     public abstract class BaseManager : IDisposable

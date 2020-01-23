@@ -275,7 +275,9 @@
       <DependentUpon>Dockerfile</DependentUpon>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\bulbacourses.pfx" />
+    <Content Include="Resources\bulbacourses.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

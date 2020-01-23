@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Podcasts.Web.App_Start;
 using BulbaCourses.Podcasts.Web.Models;
+using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;
@@ -29,6 +30,7 @@ namespace BulbaCourses.Podcasts.Web
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+
             );
         }
     }

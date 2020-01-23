@@ -65,7 +65,9 @@ namespace BulbaCourses.Podcasts.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<LogicModule>();
+            kernel.Load<DataModule>();
             kernel.Load<MapperLoadModule>();
+            kernel.RegisterEasyNetQ("host=localhost");
         }        
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using BulbaCourses.Podcasts.Data;
-
+[assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
 namespace BulbaComments.Podcasts.Data.Managers
 {
     public class AudioManager : BaseManager, IManager<AudioDb>
