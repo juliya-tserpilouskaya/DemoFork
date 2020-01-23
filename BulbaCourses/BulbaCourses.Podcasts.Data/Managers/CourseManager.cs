@@ -9,7 +9,7 @@ using BulbaComments.Podcasts.Data.Managers;
 
 namespace BulbaCourses.Podcasts.Data.Managers
 {
-    class CourseManager : BaseManager, IManager<CourseDb>
+    public class CourseManager : BaseManager, IManager<CourseDb>
     {
         public CourseManager(PodcastsContext dbContext) : base(dbContext)
         {
@@ -23,7 +23,7 @@ namespace BulbaCourses.Podcasts.Data.Managers
         }
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
-            var courseList = await dbContext.Courses.ToListAsync().ConfigureAwait(false);
+            var courseList = await dbContext.Courses.AsNoTracking().ToListAsync().ConfigureAwait(false);
             return courseList.AsReadOnly();
         }
         public async Task<CourseDb> GetByIdAsync(string id)
@@ -60,6 +60,10 @@ namespace BulbaCourses.Podcasts.Data.Managers
 
         public async Task<bool> ExistAsync(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException();
+            }
             return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
         }
     }

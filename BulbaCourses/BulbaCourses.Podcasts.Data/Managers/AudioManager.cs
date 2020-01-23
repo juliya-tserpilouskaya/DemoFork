@@ -9,7 +9,7 @@ using BulbaCourses.Podcasts.Data;
 
 namespace BulbaComments.Podcasts.Data.Managers
 {
-    class AudioManager : BaseManager, IManager<AudioDb>
+    public class AudioManager : BaseManager, IManager<AudioDb>
     {
         public AudioManager(PodcastsContext dbContext) : base(dbContext)
         {
@@ -23,7 +23,7 @@ namespace BulbaComments.Podcasts.Data.Managers
         }
         public async Task<IEnumerable<AudioDb>> GetAllAsync()
         {
-            var audioList = await dbContext.Audios.ToListAsync().ConfigureAwait(false);
+            var audioList = await dbContext.Audios.AsNoTracking().ToListAsync().ConfigureAwait(false);
             return audioList.AsReadOnly();
         }
         public async Task<AudioDb> GetByIdAsync(string id)
@@ -52,6 +52,10 @@ namespace BulbaComments.Podcasts.Data.Managers
         }
         public async Task<bool> ExistAsync(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException();
+            }
             return await dbContext.Courses.AnyAsync(c => c.Name.Equals(name)).ConfigureAwait(false);
         }
     }

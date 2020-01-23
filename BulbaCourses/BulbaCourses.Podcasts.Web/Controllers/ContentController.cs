@@ -13,6 +13,7 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -21,13 +22,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IContentService service;
-        private readonly IBus bus;
+        private readonly IUserService Uservice;
 
-        public ContentController(IMapper mapper, IContentService contentService, IBus bus)
+        public ContentController(IMapper mapper, IContentService contentService, IUserService userService)
         {
             this.mapper = mapper;
             this.service = contentService;
-            this.bus = bus;
+            this.Uservice = userService;
         }
 
         [HttpGet, Route("{id}")]
@@ -74,18 +75,30 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.AddAsync(contentLogic, audiologic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added Content to {audioWeb.Name}");
-                    return Ok(contentWeb);
+                    var userId = user.Data;
+
+                    var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                    var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                    var result = await service.AddAsync(contentLogic, audiologic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(contentWeb);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {
@@ -106,16 +119,29 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                var result = await service.UpdateAsync(contentLogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(contentLogic);
+                    var userId = user.Data;
+
+                    var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                    var result = await service.UpdateAsync(contentLogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(contentLogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {
@@ -136,16 +162,29 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                var result = await service.DeleteAsync(contentLogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(contentLogic);
+                    var userId = user.Data;
+
+                    var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
+                    var result = await service.DeleteAsync(contentLogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(contentLogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {

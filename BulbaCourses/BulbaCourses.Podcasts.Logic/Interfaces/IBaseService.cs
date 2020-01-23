@@ -11,8 +11,8 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
     {
         Task<Result<T>> GetByIdAsync(string Id);
 
-        Task<Result> DeleteAsync(T thing);
+        Task<Result> DeleteAsync(T thing, UserLogic user);
 
-        Task<Result> UpdateAsync(T thing);
+        Task<Result> UpdateAsync(T thing, UserLogic user);
     }
 }

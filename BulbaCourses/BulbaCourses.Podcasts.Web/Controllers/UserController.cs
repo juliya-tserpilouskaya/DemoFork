@@ -13,6 +13,7 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -102,8 +103,28 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 var result = await service.AddAsync(userlogic);
                 if (result.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name}");
-                    return Ok(userWeb);
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                    string subString = sub.Value;
+                    var user = (await service.GetByIdAsync(subString));
+                    if (user.IsSuccess == true)
+                    {
+                        var userId = user.Data;
+
+                        if (result.IsSuccess == true)
+                        {
+                            await bus.SendAsync("Podcasts", $"Added User to {userWeb.Name} by {userId.Name}");
+                            return Ok(userWeb);
+                        }
+                        else
+                        {
+                            return BadRequest(result.Message);
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest("Unundentified user");
+                    }
+                    
                 }
                 else
                 {
@@ -129,15 +150,27 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.UpdateAsync(userLogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await service.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(userLogic);
+                    var userId = user.Data;
+
+                    var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
+                    var result = await service.UpdateAsync(userLogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(userLogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (Exception ex)
@@ -147,7 +180,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         [Authorize]
-        [HttpDelete, Route("{id})")]
+        [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -159,19 +192,61 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                var result = await service.DeleteAsync(userLogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await service.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Deleted User {userWeb.Name}");
-                    return Ok(userLogic);
+                    var userId = user.Data;
+
+                    var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
+                    var result = await service.DeleteAsync(userLogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Deleted User {userWeb.Name} by {userId.Name}");
+                        return Ok(userLogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Authorize]
+        [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetMe()
+        {
+            try
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await service.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
+                {
+                    var userData = user.Data;
+
+                    var audiologic = mapper.Map<UserLogic, UserWeb>(userData);
+                    return Ok(userData);
+                }
+                else
+                {
+                    return BadRequest("UnIndentitified User");
+                }
+            }
+            catch (InvalidOperationException ex)
             {
                 return InternalServerError(ex);
             }

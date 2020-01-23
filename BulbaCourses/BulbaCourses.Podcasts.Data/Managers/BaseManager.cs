@@ -22,7 +22,7 @@ namespace BulbaCourses.Podcasts.Data
 
         }
 
-        protected void Dispose(bool flag)
+        protected virtual void Dispose(bool flag)
         {
             if (_isDisposed) return;
 

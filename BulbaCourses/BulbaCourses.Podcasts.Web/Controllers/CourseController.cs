@@ -12,8 +12,8 @@ using FluentValidation.WebApi;
 using System.Linq;
 using System.Threading.Tasks;
 using BulbaCourses.Podcasts.Web.Models;
-
 using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -22,12 +22,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly ICourseService service;
+        private readonly IUserService Uservice;
         private readonly IBus bus;
 
-        public CourseController(IMapper mapper, ICourseService courseService, IBus bus)
+        public CourseController(IMapper mapper, ICourseService courseService, IBus bus, IUserService userService)
         {
             this.mapper = mapper;
             this.service = courseService;
+            this.Uservice = userService;
             this.bus = bus;
         }
 
@@ -63,7 +65,6 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -86,6 +87,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -99,16 +101,28 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.AddAsync(courselogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added Course {courseWeb.Name}");
-                    return Ok(courselogic);
+                    var userId = user.Data;
+
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.AddAsync(courselogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Added Course {courseWeb.Name} by {userId.Name}");
+                        return Ok(courselogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (InvalidOperationException ex)
@@ -122,32 +136,45 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]CourseWeb courseWeb)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
-                if (!ModelState.IsValid)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return BadRequest(ModelState);
-                }
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.UpdateAsync(courselogic);
-                if (result.IsSuccess == true)
-                {
-                    return Ok(courselogic);
+                    var userId = user.Data;
+
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.UpdateAsync(courselogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(courselogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
-            }
 
+
+               
+            }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
-
         [Authorize]
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -161,16 +188,28 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.DeleteAsync(courselogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Deleted Course to {courseWeb.Name}");
-                    return Ok(courselogic);
+                    var userId = user.Data;
+
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.DeleteAsync(courselogic, userId);
+                    if (result.IsSuccess == true)//
+                    {
+                        await bus.SendAsync("Podcasts", $"Deleted Course {courseWeb.Name} by {userId.Name}");
+                        return Ok(courselogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (Exception ex)

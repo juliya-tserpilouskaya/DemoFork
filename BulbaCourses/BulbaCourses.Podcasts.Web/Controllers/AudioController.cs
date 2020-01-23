@@ -13,6 +13,7 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
@@ -21,12 +22,14 @@ namespace BulbaCourses.Podcasts.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly IAudioService service;
+        private readonly IUserService Uservice;
         private readonly IBus bus;
 
-        public AudioController(IMapper mapper, IAudioService service, IBus bus)
+        public AudioController(IMapper mapper, IAudioService service, IBus bus, IUserService userService)
         {
             this.mapper = mapper;
             this.service = service;
+            this.Uservice = userService;
             this.bus = bus;
         }
 
@@ -58,7 +61,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
         public async Task<IHttpActionResult> GetAll()
@@ -96,18 +99,31 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.AddAsync(audiologic, courselogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added Audio to {audioWeb.Name}");
-                    return Ok(audiologic);
+                    var userId = user.Data;
+
+                    var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.AddAsync(audiologic, courselogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Added Audio to {audioWeb.Name} by {userId.Name}");
+                        return Ok(audiologic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
+                
             }
             catch (Exception ex)
             {
@@ -120,7 +136,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio updated", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateAudio, default")]AudioWeb audioWeb)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateAudio, default")]AudioWeb audioWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -128,15 +144,28 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.UpdateAsync(audiologic);
-                if (result.IsSuccess == true)
+
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(audiologic);
+                    var userId = user.Data;
+
+                    var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                    var result = await service.UpdateAsync(audiologic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(audiologic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (Exception ex)
@@ -158,16 +187,29 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                var result = await service.DeleteAsync(audiologic);
-                if (result.IsSuccess == true)
+
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Deleted Audio at {audioWeb.Name}");
-                    return Ok(audiologic);
+                    var userId = user.Data;
+
+                    var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
+                    var result = await service.DeleteAsync(audiologic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Deleted Audio at {audioWeb.Name} by {userId.Name}");
+                        return Ok(audiologic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return BadRequest("Unundentified user");
                 }
             }
             catch (Exception ex)

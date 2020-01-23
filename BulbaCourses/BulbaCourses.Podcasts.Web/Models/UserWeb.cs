@@ -9,6 +9,7 @@ namespace BulbaCourses.Podcasts.Web.Models
     public class UserWeb
     {
         public string Id { get; set; }
+        public bool IsAdmin { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
