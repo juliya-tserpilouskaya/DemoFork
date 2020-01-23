@@ -13,6 +13,9 @@ import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { VideoModule } from './Video/video.module';
 
+import { AnalyticsModule } from './analytics/analytics.module';
+import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
+import { RegisterModule} from './register/register/register.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,8 @@ import { VideoModule } from './Video/video.module';
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    GlobalAdminUsersModule,
+    RegisterModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
@@ -39,6 +44,7 @@ import { VideoModule } from './Video/video.module';
     }),
     VideoModule,
     YoutubeModule,
+    AnalyticsModule,
     NgxUiLoaderModule
   ],
   providers: [],

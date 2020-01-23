@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'discountCourses', component: CourseComponent},
   //{path: 'discountMenu', component: MenuComponent},
   { path: 'search-request', component: SearchRequestComponent },
-  { path: 'video', component: VideoplayerComponent }
+  { path: 'video/:id', component: VideoComponent }
 ];
 
 @NgModule({

@@ -6,6 +6,9 @@ import { CourseComponent } from './components/course/course.component';
 import { VideoplayerComponent } from './components/videoplayer/videoplayer.component';
 import { VgCoreModule } from 'videogular2/compiled/core';
 import { VgControlsModule } from 'videogular2/compiled/controls';
+import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -13,15 +16,19 @@ import { VgControlsModule } from 'videogular2/compiled/controls';
 @NgModule({
   declarations: [
     CourseComponent,
-    VideoplayerComponent],
+    VideoplayerComponent,
+    SearchCoursesComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
     BrowserModule,
     VgCoreModule,
     VgControlsModule,
   ],
   providers: [
     VideoService
-  ]
+  ],
+  exports: [SearchCoursesComponent]
 })
 export class VideoModule { }

@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BulbaCourses.Web.Security
 {
+
     public class BulbaUserManager : UserManager<IdentityUser, string>
     {
         public BulbaUserManager(IUserStore<IdentityUser, string> store) : base(store)

@@ -24,6 +24,7 @@
     "moment": "^2.24.0",
     "ngx-ui-loader": "^8.0.0",
     "ngx-youtube-player": "^7.1.1",
+    "ng-multiselect-dropdown": "^0.2.10",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "videogular2": "^7.0.1",
