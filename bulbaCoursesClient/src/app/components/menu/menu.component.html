@@ -12,11 +12,11 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/search-request']" routerLinkActive="active">YouTube Search</a>
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/search-request']" routerLinkActive="active">YouTube Search</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/analytics']" routerLinkActive="active">Analytics</a>
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/analytics']" routerLinkActive="active">Analytics</a>
       </li>
 
       <li class="nav-item" *ngIf="!isAuthenticated">
@@ -27,11 +27,6 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" *ngIf="isAuthenticated" (click)="this.authService.logout()">Logout</a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/search-request']" routerLinkActive="active">YouTube
-          Search</a>
       </li>
 
     </ul>
