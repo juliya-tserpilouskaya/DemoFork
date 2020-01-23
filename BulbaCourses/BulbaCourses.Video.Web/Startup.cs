@@ -44,7 +44,7 @@ namespace BulbaCourses.Video.Web
             };
             fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = false;
             app.UseFileServer(fileServerOptions);
-
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             //config.Filters.Add(new BadRequestFilterAttribute());
 
             var data = File.ReadAllBytes(
