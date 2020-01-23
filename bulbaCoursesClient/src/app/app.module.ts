@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { VideoModule } from './Video/video.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
         ]
       }
     }),
+    VideoModule,
     YoutubeModule,
     NgxUiLoaderModule
   ],
