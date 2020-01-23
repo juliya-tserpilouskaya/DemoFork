@@ -1,5 +1,27 @@
-<!-- <p>filterss works!</p> -->
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+<!-- <p>filterss works! [formGroup]="filterForm"</p> -->
+<form class="form-group"  (ngSubmit)="onSubmit()">
+  <label>Домен</label>
+  <input class="form-control" formcontrolName="domainName" [(ngModel)]="domainName" #name="ngModel" required />
+  <label>Категория</label>
+  <input class="form-control" formControlName="categoryName" [(ngModel)]="categoryName" #name="ngModel" required />
+  <label>Минимальная цена</label>
+  <input class="form-control" formControlName="minPrice" [(ngModel)]="minPrice" #name="ngModel" required />
+  <label>Максимальная цена</label>
+  <input class="form-control" formControlName="maxPrice" [(ngModel)]="maxPrice" #name="ngModel" required />
+  <label>Минимальная скидка</label>
+  <input class="form-control" formControlName="minDiscount" [(ngModel)]="minDiscount" #name="ngModel" required />
+  <label>Максимальная скидка</label>
+  <input class="form-control" formControlName="maxDiscount" [(ngModel)]="maxDiscount" #name="ngModel" required />
+  <div class="input-group" id="boot-search-box">
+    <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
+      <div class="input-group-btn">
+        <div class="btn-group">
+          <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+    </div>
+  </div>
+<!--
+ <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Критерии поиска</a>
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -30,3 +52,7 @@
       </form>
     </div>
   </nav>
+
+-->
+ 
+</form>
