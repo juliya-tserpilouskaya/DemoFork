@@ -7,7 +7,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 //import { MenuComponent } from './DiscountAggregator/components/menu/menu.component';
 import { VideoComponent } from './YouTube/components/video/video.component';
-
+import { AnalyticsComponent } from './analytics/components/analytics/analytics.component';
 
 
 const routes: Routes = [
@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'discountCourses', component: CourseComponent},
   //{path: 'discountMenu', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
-  { path: 'video/:id', component: VideoComponent }
+  { path: 'video/:id', component: VideoComponent },
+  { path: 'analytics', component: AnalyticsComponent },
 ];
 
 @NgModule({
