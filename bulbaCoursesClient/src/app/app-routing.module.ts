@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'discountCourses', component: CourseComponent},
   //{path: 'discountMenu', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
-  { path: 'video/:id', component: VideoComponent }
+  { path: 'video/:id', component: VideoComponent },
   { path: 'admin', component: UsersComponent},
   { path: 'register', component: RegisterComponent}
 ];

@@ -13,6 +13,6 @@ export class UserService {
     return this.http.get<User[]>(this.url);
 }
 register(user: CustomUser) {
-  return this.http.post(`http://localhost:44382/api/users/register`, user);
+  return this.http.post('http://localhost:44382/api/users/register', user);
 }
 }
