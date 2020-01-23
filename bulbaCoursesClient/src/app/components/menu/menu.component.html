@@ -13,8 +13,14 @@
       <li class="nav-item" *ngIf="!isAuthenticated">
         <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
       </li>
+      <li class="nav-item" *ngIf="!isAuthenticated">
+        <a class="nav-link" [routerLink]="['/discountAggregator']" routerLinkActive="active">Discount Aggregator</a>
+      </li>
       <li class="nav-item">
         <span class="nav-link" *ngIf="isAuthenticated">Welcome {{user.preferred_username}}</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" (click)="this.authService.logout()">Logout</a>
       </li>
     </ul>
     <form class="form-inline mt-2 mt-md-0">

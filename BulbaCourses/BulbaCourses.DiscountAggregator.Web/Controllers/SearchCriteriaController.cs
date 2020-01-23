@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Search criteria added", typeof(IEnumerable<SearchCriteria>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Add([FromBody]SearchCriteria searchCriteria)
+        public async Task<IHttpActionResult> Add([FromBody, CustomizeValidator(RuleSet = "*")]SearchCriteria searchCriteria)
         {
             if (searchCriteria == null)
             {

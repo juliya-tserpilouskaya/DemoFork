@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiscountAggregatorService {
+
+  //resultSubject = new Subject<Courses[]>();
+  //result$ = this.resultSubject.asObservable();
 
   constructor(private client: HttpClient) { }
 

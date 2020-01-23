@@ -9,8 +9,10 @@ const config: AuthConfig = {
   dummyClientSecret: 'secret',
   oidc: false,
   scope: 'openid profile api',
-  issuer: 'http://localhost:44382'
-}
+  issuer: 'http://localhost:44382',
+  logoutUrl: '/',
+  requireHttps: false
+};
 
 @Injectable()
 export class AuthService {
@@ -24,7 +26,7 @@ export class AuthService {
   constructor(private oauthService: OAuthService, private router: Router) {
     oauthService.configure(config);
     oauthService.tokenValidationHandler = new JwksValidationHandler();
-    oauthService.loadDiscoveryDocumentAndTryLogin();
+    oauthService.loadDiscoveryDocument().then(() => this.loadUserInfo());
   }
 
   // read-only property
@@ -40,8 +42,7 @@ export class AuthService {
   async login(username: string, password: string) {
     // only for example
     try {
-      await this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password);
-      const user = await this.oauthService.loadUserProfile() as CustomUser;
+      const user = await this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(username, password) as CustomUser;
 
       this.authSubject.next(user != null);
       this.userSubject.next(user);
@@ -50,7 +51,6 @@ export class AuthService {
     } catch (error) {
 
     }
-
   }
 
   logout() {
@@ -58,5 +58,14 @@ export class AuthService {
     this.oauthService.logOut();
     this.authSubject.next(false);
     this.userSubject.next(null);
+  }
+
+  private loadUserInfo() {
+    if (this.oauthService.hasValidAccessToken()) {
+      const claims = this.oauthService.getIdentityClaims();
+      const user = Object.assign(<CustomUser>{}, claims);
+      this.authSubject.next(true);
+      this.userSubject.next(user);
+    }
   }
 }

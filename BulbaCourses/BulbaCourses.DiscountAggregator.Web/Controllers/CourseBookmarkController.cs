@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
@@ -50,7 +51,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added", typeof(IEnumerable<CourseBookmark>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Add([FromBody]CourseBookmark courseBookmark)
+        public async Task<IHttpActionResult> Add([FromBody, CustomizeValidator(RuleSet = "*")]CourseBookmark courseBookmark)
         {
             if (courseBookmark == null)
             {
