@@ -1,10 +1,13 @@
-﻿using System;
+﻿using BulbaCourses.PracticalMaterialsTasks.BLL.Validators;
+using FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL.Models
 {
+    //[Validator(typeof(TaskValidator))]
     public class TaskDTO
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();

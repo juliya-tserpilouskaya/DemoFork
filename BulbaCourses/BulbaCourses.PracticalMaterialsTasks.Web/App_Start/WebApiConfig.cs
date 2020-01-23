@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
 using BulbaCourses.PracticalMaterialsTasks.WEB.App_Start;
+using BulbaCourses.PracticalMaterialsTasks.WEB.filters;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;
@@ -24,6 +25,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB
             AssemblyScanner.FindValidatorsInAssemblyContaining<TaskDTO>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
+            config.Filters.Add(new BadRequestFilterAttribute());
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 

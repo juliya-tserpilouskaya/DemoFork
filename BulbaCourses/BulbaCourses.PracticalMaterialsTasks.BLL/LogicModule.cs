@@ -9,6 +9,8 @@ using BulbaCourses.PracticalMaterialsTasks.BLL.Services;
 using BulbaCourses.PracticalMaterialsTasks.DAL;
 using BulbaCourses.PracticalMaterialsTasks.DAL.Interfaces;
 using BulbaCourses.PracticalMaterialsTasks.DAL.Repositories;
+using FluentValidation;
+using BulbaCourses.PracticalMaterialsTasks.BLL.Validators;
 
 namespace BulbaCourses.PracticalMaterialsTasks.BLL
 {
@@ -17,6 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL
         public override void Load()
         {
             Bind<ITaskService>().To<TaskService>();
+            //Bind<IValidator>().To<TaskValidator>();
             //Bind<IUnitOfWork>().To<EFUnitOfWork>();
             //this.Kernel?.Load(new[] { new DataModule() });
         }

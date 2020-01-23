@@ -16,8 +16,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
     public class TaskService : ITaskService
     {
         IUnitOfWork DataBase { get; set; }
-        private readonly IMapper _mapper;
-
+       
         public TaskService(IUnitOfWork unitOfWork)
         {
             DataBase = unitOfWork;
@@ -25,16 +24,8 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
 
         public async Task<TaskDTO> MakeTask(TaskDTO taskDto)
         {
-            //TaskDTO task = new TaskDTO()
-            //{
-            //    Id = taskDto.Id,
-            //    Name = taskDto.Name,
-            //    Text = taskDto.Text,
-            //    TaskLevel = taskDto.TaskLevel,
-            //    Created = taskDto.Created,
-            //    Modified = taskDto.Modified
-            //};
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>().ReverseMap()).CreateMapper();
+            taskDto.Id = Guid.NewGuid().ToString();
             var taskDB = mapper.Map<TaskDTO, TaskDb>(taskDto);
 
             await DataBase.Tasks.Create(taskDB);
@@ -68,8 +59,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
         {
              if (id == null) throw new ValidationExeption("Not id", "idtask");
              TaskDb taskDB = await DataBase.Tasks.GetTaskAsync(id);
-             var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
+             var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>().ReverseMap()).CreateMapper();
              TaskDb task = mapper2.Map<TaskDTO, TaskDb>(_taskDTO);
+             //taskDB.Id = id;
              taskDB.Name = task.Name;
              taskDB.TaskLevel = task.TaskLevel;
              taskDB.Text = task.Text;
@@ -78,20 +70,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Services
              await DataBase.Tasks.Update(taskDB);
              DataBase.Save();
              return mapper2.Map<TaskDTO>(task);
-            // if (id == null) throw new ValidationExeption("Not id", "idtask");
-            // TaskDb taskDB = DataBase.Tasks.Get(id);
-            // var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskDb, TaskDTO>()).CreateMapper();
-            // TaskDTO taskdto = mapper.Map<TaskDb, TaskDTO>(taskDB);
-            //// taskdto.Id = _taskDTO.Id;
-            // taskdto.Name = _taskDTO.Name;
-            // taskdto.TaskLevel = _taskDTO.TaskLevel;
-            // taskdto.Text = _taskDTO.Text;
-            // taskdto.Modified = _taskDTO.Modified;
-            // taskdto.Created = _taskDTO.Created;
-            // var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskDTO, TaskDb>()).CreateMapper();
-            // TaskDb task = mapper2.Map<TaskDTO, TaskDb>(taskdto);
-
-
+            
         }
         public async Task DeleteTask(string id)
         {

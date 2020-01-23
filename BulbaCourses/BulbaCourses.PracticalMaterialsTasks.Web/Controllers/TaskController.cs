@@ -5,12 +5,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Filters;
-using System.Web;
 using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
+using BulbaCourses.PracticalMaterialsTasks.WEB.filters;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces;
 using BulbaCourses.PracticalMaterialsTasks.BLL.Models;
+
 
 namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
 {
@@ -19,10 +20,12 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
     public class TaskController: ApiController
     {
         private readonly ITaskService _taskservice;
-        
+        private readonly IValidator<TaskDTO> _validator;
+
         public TaskController(ITaskService taskService)
         {
             _taskservice = taskService;
+            //_validator = validator;
         }
 
         [HttpGet,Route("")]
@@ -59,12 +62,21 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             }
         }
 
-        [HttpPost, Route("")]        
-        public async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "addTask")]TaskDTO task)
+        [HttpPost, Route("")]
+        //[OverrideActionFilters]
+        //[BadRequestFilter]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(TaskDTO))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "*")]TaskDTO task)
         {
-           
-               await  _taskservice.MakeTask(task);
-               return Ok();
+            //var validator = _validator.Validate(task);
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(); 
+            }
+            await  _taskservice.MakeTask(task);
+            return Ok();
            
         }
         [HttpPut,Route("{id}")]
@@ -72,9 +84,9 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Task found", typeof(TaskDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "Task, default")] TaskDTO task)
+        public async Task<IHttpActionResult> EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "*")] TaskDTO task)
         {
-            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
+            if (!ModelState.IsValid) /*|| !Guid.TryParse(id, out var _)*/
             {
                 return BadRequest();
             }
