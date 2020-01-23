@@ -7,6 +7,7 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest.Interface
@@ -28,7 +29,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest
 
                 return
                     MResultRequest<string>
-                        .Ok("Complite !!!");
+                        .Ok(String.Join("",_context.Set<MReaderChoice_MainInfoDb>().Where(_ => _.Id == ResultOfTheTestDb.Id).Select(_ => _.ResultTest)));
             }
             catch (DbUpdateConcurrencyException e)
             {

@@ -104,8 +104,15 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult CheckTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
+            var result = _validator.Validate(Test_MainInfo);
+
+            if (!result.IsValid)
+            {
+                return
+                    BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
+            }
             return 
-                Ok(_service_Test.CheckTest("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo).Data);
+                Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo));
         }
     }
 }

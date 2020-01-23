@@ -1,5 +1,4 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.AnswerVariants;
-using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
 using System.Collections.Generic;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions
