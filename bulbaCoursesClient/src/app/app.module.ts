@@ -12,6 +12,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
 import { FiltersComponent } from './DiscountAggregator/components/filters/filters.component';
 import { DiscountAggregatorService } from './DiscountAggregator/services/discount-aggregator.service';
 import { YoutubeModule } from './YouTube/youtube.module';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { YoutubeModule } from './YouTube/youtube.module';
         ]
       }
     }),
-    YoutubeModule
+    YoutubeModule,
+    NgxUiLoaderModule
   ],
   providers: [DiscountAggregatorService],
   bootstrap: [AppComponent],
