@@ -16,9 +16,14 @@ namespace BulbaCourses.Analytics.BLL.Ensure
         /// Loads binds.
         /// </summary>
         public override void Load()
-        {            
+        {
+            // Bind Reports
             Bind<IReportsService>().To<ReportsService>();
-            Bind<IRepository<ReportDb>>().To<ReportRepository>();
+            Bind<IRepository<ReportDb>>().To<ReportsRepository>();
+
+            // Bind Dashboards
+            Bind<IDashboardsService>().To<DashboardsService>();
+            Bind<IDashboardsRepository>().To<DashboardsRepository>();
         }
     }
 }

@@ -63,7 +63,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public IEnumerable<SearchStoryDb> GetByUserId(string userId)
         {
-            return _context.SearchStories.Where(s => s.UserId == userId).ToList().AsReadOnly();
+            return _context.SearchStories.Include(_=>_.SearchRequest).Where(s => s.UserId == userId).ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId)
         {
-            return await _context.SearchStories.Where(s => s.UserId == userId).ToListAsync();
+            return await _context.SearchStories.Include(_ => _.SearchRequest).Where(s => s.UserId == userId).ToListAsync();
         }
 
         /// <summary>
@@ -142,6 +142,25 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
                 _context.SearchStories.Remove(delstory);
                 _context.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Hide story for user
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool HideStoryForUser(int? storyId, string userId)
+        {
+            var hideStory = _context.SearchStories.SingleOrDefault(s => s.Id == storyId && s.UserId == userId);
+            var isHide = false;
+            if (hideStory != null)
+            {
+                isHide = true;
+                hideStory.IsHideForUser = isHide;
+                _context.SaveChanges();
+            }
+            return isHide;
         }
 
         public async Task<bool> ExistsAsync(int? storyId)

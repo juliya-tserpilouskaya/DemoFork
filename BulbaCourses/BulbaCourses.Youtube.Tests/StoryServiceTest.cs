@@ -23,6 +23,7 @@ namespace BulbaCourses.Youtube.Tests
         Faker<SearchRequest> fakerRequest;
         Faker<SearchStory> fakerStory;
         StandardKernel kernel;
+        SearchRequest searchRequest;
 
         [OneTimeSetUp]
         public void Init()
@@ -43,26 +44,27 @@ namespace BulbaCourses.Youtube.Tests
                 .RuleFor(r => r.Duration, f => f.PickRandom(duration))
                 .RuleFor(r => r.VideoCaption, f => f.PickRandom(caption));
 
-
             fakerStory = new Faker<SearchStory>();
-            fakerStory.RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
-                .RuleFor(s => s.SearchDate, f => f.Date.Past(1, null))
-                .RuleFor(s => s.UserId, f => f.Random.String());
+            fakerStory.RuleFor(s => s.SearchDate, f => f.Date.Past(1, null))
+                .RuleFor(s => s.UserId, f => f.Random.String())
+                .RuleFor(s => s.SearchRequest_Id, f => searchRequest.Id);
+
+            var requestService = kernel.Get<ISearchRequestService>();
+            searchRequest = requestService.Save(fakerRequest.Generate(1).First());
         }
 
         [Test, Category("SearchStory")]
         public void Test_SearchStory_Save()
         {
+            var storyService = kernel.Get<IStoryService>();
+
+            var storyDb = fakerStory.Generate(1).First();
+            var userId = storyDb.UserId;
+
+            storyService.Save(storyDb);
+
             using (var context = new YoutubeContext())
             {
-                var storyService = kernel.Get<IStoryService>();
-
-                var storyDb = fakerStory.Generate(1).First();
-                var userId = storyDb.UserId;
-                var requestTitle = storyDb.SearchRequest.Title;
-
-                storyService.Save(storyDb);
-
                 var result = context.SearchStories.Where(r => r.UserId == userId).First();
                 result.Should().NotBeNull();
             }
@@ -71,22 +73,25 @@ namespace BulbaCourses.Youtube.Tests
         [Test, Category("SearchStory")]
         public void Test_SearchStory_DeleteByUserId()
         {
+            var result = new SearchStoryDb();
+            var storyService = kernel.Get<IStoryService>();
+
+            var storyDb = fakerStory.Generate(1).First();
+            storyService.Save(storyDb);
+            var userId = storyDb.UserId;
+
+            storyService.Save(fakerStory.Generate(1).First());
+
             using (var context = new YoutubeContext())
             {
-                var storyService = kernel.Get<IStoryService>();
-
-                var storyDb = fakerStory.Generate(1).First();
-
-                storyService.Save(storyDb);
-                var userId = storyDb.UserId;
-
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
-
-                var result = context.SearchStories.FirstOrDefault(r => r.UserId == userId);
+                result = context.SearchStories.FirstOrDefault(r => r.UserId == userId);
                 result.Should().NotBeNull();
+            }
 
-                storyService.DeleteByUserId(userId);
+            storyService.DeleteByUserId(userId);
+
+            using (var context = new YoutubeContext())
+            {
                 result = context.SearchStories.FirstOrDefault(r => r.UserId == userId);
                 result.Should().BeNull();
             }
@@ -95,21 +100,25 @@ namespace BulbaCourses.Youtube.Tests
         [Test, Category("SearchStory")]
         public void Test_SearchStory_DeleteByStoryId()
         {
+            var result = new SearchStoryDb();
+            var storyService = kernel.Get<IStoryService>();
+
+            var storyDb = fakerStory.Generate(1).First();
+            storyDb = storyService.Save(storyDb);
+            var storyId = storyDb.Id;
+
+            storyService.Save(fakerStory.Generate(1).First());
+
             using (var context = new YoutubeContext())
             {
-                var storyService = kernel.Get<IStoryService>();
-
-                var storyDb = fakerStory.Generate(1).First();
-                storyDb = storyService.Save(storyDb);
-                var storyId = storyDb.Id;
-
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
-
-                var result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
+                result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
                 result.Should().NotBeNull();
+            }
 
-                storyService.DeleteByStoryId(storyId);
+            storyService.DeleteByStoryId(storyId);
+
+            using (var context = new YoutubeContext())
+            {
                 result = context.SearchStories.FirstOrDefault(r => r.Id == storyId);
                 result.Should().BeNull();
             }
@@ -118,80 +127,71 @@ namespace BulbaCourses.Youtube.Tests
         [Test, Category("SearchStory")]
         public void Test_SearchStory_GetAllStories()
         {
+            var storyService = kernel.Get<IStoryService>();
+            var count = 0;
+
             using (var context = new YoutubeContext())
             {
-                var storyService = kernel.Get<IStoryService>();
-
-                var count = context.SearchStories.Count();
-
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
-
-                var allStories = storyService.GetAllStories().ToList();
-
-                allStories.Should().HaveCount(count + 3);
+                count = context.SearchStories.Count();
             }
+
+            storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
+
+            var allStories = storyService.GetAllStories().ToList();
+
+            allStories.Should().HaveCount(count + 2);
         }
 
         [Test, Category("SearchStory")]
         public void Test_SearchStory_GetStoriesByUserId()
         {
-            using (var context = new YoutubeContext())
-            {
-                var storyService = kernel.Get<IStoryService>();
+            var storyService = kernel.Get<IStoryService>();
 
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
 
-                var storyDb = fakerStory.Generate(1).First();
-                storyService.Save(storyDb);
-                var userId = storyDb.UserId;
+            var storyDb = fakerStory.Generate(1).First();
+            storyService.Save(storyDb);
+            var userId = storyDb.UserId;
 
-                var story = storyService.GetStoriesByUserId(userId).First();
+            var story = storyService.GetStoriesByUserId(userId).First();
 
-                story.UserId.Should().Be(userId);
-            }
+            story.UserId.Should().Be(userId);
         }
 
         [Test, Category("SearchStory")]
         public void Test_SearchStory_GetStoriesByRequestId()
         {
-            using (var context = new YoutubeContext())
-            {
-                var storyService = kernel.Get<IStoryService>();
+            var storyService = kernel.Get<IStoryService>();
 
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
 
-                var storyDb = fakerStory.Generate(1).First();
-                storyDb = storyService.Save(storyDb);
-                var requestId = storyDb.SearchRequest.Id;
+            var storyDb = fakerStory.Generate(1).First();
+            storyDb = storyService.Save(storyDb);
+            var requestId = storyDb.SearchRequest.Id;
 
-                var story = storyService.GetStoriesByRequestId(requestId).First();
+            var story = storyService.GetStoriesByRequestId(requestId).First();
 
-                story.SearchRequest.Id.Should().Be(requestId);
-            }
+            story.SearchRequest.Id.Should().Be(requestId);
         }
 
         [Test, Category("SearchStory")]
         public void Test_SearchStory_GetStoriesByStoryId()
         {
-            using (var context = new YoutubeContext())
-            {
-                var storyService = kernel.Get<IStoryService>();
+            var storyService = kernel.Get<IStoryService>();
 
-                storyService.Save(fakerStory.Generate(1).First());
-                storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
+            storyService.Save(fakerStory.Generate(1).First());
 
-                var storyDb = fakerStory.Generate(1).First();
-                storyDb = storyService.Save(storyDb);
-                var storyId = storyDb.Id;
+            var storyDb = fakerStory.Generate(1).First();
+            storyDb = storyService.Save(storyDb);
+            var storyId = storyDb.Id;
 
-                var story = storyService.GetStoryByStoryId(storyId);
+            var story = storyService.GetStoryByStoryId(storyId);
 
-                story.Id.Should().Be(storyId);
-            }
+            story.Id.Should().Be(storyId);
         }
     }
 }
