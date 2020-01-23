@@ -19,6 +19,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
             CreateMap<CourseCategoryDb, CourseCategory>().ReverseMap();
             CreateMap<DomainDb, Domain>().ReverseMap();
             CreateMap<SearchCriteriaDb, SearchCriteria>().ReverseMap();
+            CreateMap<CourseDb,CoursesITAcademy>().ReverseMap();
         }
     }
 }

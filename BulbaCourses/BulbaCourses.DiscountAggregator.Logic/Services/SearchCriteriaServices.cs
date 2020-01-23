@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using BulbaCourses.DiscountAggregator.Data.Services;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Models.ModelsStorage;
 using System;
@@ -35,27 +36,29 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public Task<SearchCriteria> AddAsync(SearchCriteria criteria)
+        public async Task<Result<SearchCriteria>> AddAsync(SearchCriteria criteria)
         {
             criteria.Id = Guid.NewGuid().ToString();
             var criteriaDb = _mapper.Map<SearchCriteria, SearchCriteriaDb>(criteria);
-            _criteriaServiceDb.AddAsync(criteriaDb);
-            return Task.FromResult(criteria);
+            var result = await _criteriaServiceDb.AddAsync(criteriaDb);
+            return result.IsSuccess ? Result<SearchCriteria>.Ok(_mapper.Map<SearchCriteria>(result.Data))
+                : (Result<SearchCriteria>)Result.Fail(result.Message);
         }
-
-        public Task<SearchCriteria> UpdateAsync(SearchCriteria criteria)
+        
+        public async Task<Result<SearchCriteria>> UpdateAsync(SearchCriteria criteria)
         {
             var criteriaDb = _mapper.Map<SearchCriteria, SearchCriteriaDb>(criteria);
-            _criteriaServiceDb.UpdateAsync(criteriaDb);
-            return Task.FromResult(criteria);
+            var result = await _criteriaServiceDb.UpdateAsync(criteriaDb);
+            return result.IsSuccess ? Result<SearchCriteria>.Ok(_mapper.Map<SearchCriteria>(result.Data))
+                : (Result<SearchCriteria>)Result.Fail(result.Message);
         }    
 
-        public Task<SearchCriteria> DeleteByIdAsync(string idCriteria)
+        public async Task<Result<SearchCriteria>> DeleteByIdAsync(string idCriteria)
         {
             var criteriaDb = _criteriaServiceDb.GetByIdAsync(idCriteria);
-            _criteriaServiceDb.DeleteAsync(criteriaDb.Result);
-            var criteria = _mapper.Map<SearchCriteriaDb, SearchCriteria>(criteriaDb.Result);
-            return Task.FromResult(criteria);
+            var result = await _criteriaServiceDb.DeleteAsync(criteriaDb.Result);
+            return result.IsSuccess ? Result<SearchCriteria>.Ok(_mapper.Map<SearchCriteria>(result.Data))
+                : (Result<SearchCriteria>)Result.Fail(result.Message);
         }
 
     }

@@ -83,14 +83,23 @@
   <ItemGroup>
     <Compile Include="Ensure\BLLModule.cs" />
     <Compile Include="Ensure\Correct.cs" />
+    <Compile Include="Ensure\MappingProfiles\DashboardProfile.cs" />
     <Compile Include="Ensure\MappingProfiles\ReportProfile.cs" />
     <Compile Include="Ensure\Search.cs" />
+    <Compile Include="Ensure\Validators\Dashboards\DashboardCreateValidator.cs" />
+    <Compile Include="Ensure\Validators\Dashboards\DashboardValidator.cs" />
     <Compile Include="Ensure\Validators\Reports\ReportCreateValidator.cs" />
     <Compile Include="Ensure\Validators\Reports\ReportValidator.cs" />
+    <Compile Include="Interface\IDashboardsService.cs" />
     <Compile Include="Interface\IReportsService.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\V1\Dashboards\DashboardNew.cs" />
+    <Compile Include="Models\V1\Dashboards\DashboardShort.cs" />
     <Compile Include="Models\V1\Reports\ReportNew.cs" />
     <Compile Include="Models\V1\Reports\ReportShort.cs" />
     <Compile Include="Models\V1\Reports\Report.cs" />
+    <Compile Include="Models\V1\SwaggerExamples\Dashboards\DashboardCreateExample.cs" />
+    <Compile Include="Models\V1\SwaggerExamples\Dashboards\DashboardShortExample.cs" />
     <Compile Include="Models\V1\SwaggerExamples\Reports\ReportCreateExample.cs" />
     <Compile Include="Models\V1\SwaggerExamples\Reports\ReportShortExample.cs" />
     <Compile Include="Models\V1\SwaggerExamples\Reports\ReportExample.cs" />
@@ -100,6 +109,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\DashboardsService.cs" />
     <Compile Include="Services\ReportsService.cs" />
     <Compile Include="Services\SeedDatabase\Seed.cs" />
   </ItemGroup>

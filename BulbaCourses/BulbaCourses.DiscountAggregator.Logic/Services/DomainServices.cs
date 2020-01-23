@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BulbaCourses.DiscountAggregator.Data.Models;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using BulbaCourses.DiscountAggregator.Infrastructure.Models;
 
 namespace BulbaCourses.DiscountAggregator.Logic.Services
 {
@@ -26,25 +27,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         public async Task<Result<Domain>> AddAsync(Domain domain)
         {
+            domain.Id = Guid.NewGuid().ToString();
             var domainDb = _mapper.Map<Domain, DomainDb>(domain);
-
-            try
-            {
-                await _domains.AddAsync(domainDb);
-                return Result<DomainDb>.Ok(_mapper.Map<Domain>(domainDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. {e.Message}");
-            }
-            catch (DbUpdateException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. Duplicate field. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Invalid domain. {e.Message}");
-            }
+            var result = await _domains.AddAsync(domainDb);
+            return result.IsSuccess ? Result<Domain>.Ok(_mapper.Map<Domain>(result.Data))
+                : Result<Domain>.Fail<Domain>(result.Message);
         }
 
         public Task<Result> DeleteByIdAsync(string id)
@@ -70,23 +57,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         public async Task<Result<Domain>> UpdateAsync(Domain domain)
         {
             var domainDb = _mapper.Map<Domain, DomainDb>(domain);
-            try
-            {
-                await _domains.UpdateAsync(domainDb);
-                return Result<DomainDb>.Ok(_mapper.Map<Domain>(domainDb));
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. {e.Message}");
-            }
-            catch (DbUpdateException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Cannot save domain. Duplicate field. {e.Message}");
-            }
-            catch (DbEntityValidationException e)
-            {
-                return (Result<Domain>)Result<Domain>.Fail<Domain>($"Invalid domain. {e.Message}");
-            }
+            var result = await _domains.UpdateAsync(domainDb);
+            return result.IsSuccess ? Result<Domain>.Ok(_mapper.Map<Domain>(result.Data))
+            : Result<Domain>.Fail<Domain>(result.Message);
         }
     }
 }

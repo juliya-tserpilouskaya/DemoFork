@@ -19,6 +19,9 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Collections.Concurrent;
+using Microsoft.Owin.Cors;
+using System.Web.Cors;
+using Microsoft.Owin.Security;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Youtube.Web.Startup))]
 
@@ -33,8 +36,21 @@ namespace BulbaCourses.Youtube.Web
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
-            //var cert = File.ReadAllBytes(
-            //   @"D:\LearnASPNET\bulba-courses\BulbaCourses\BulbaCourses.Youtube.SelfHosted\bin\debug\cert.pfx");
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
+
+
             var path = Path.Combine(
                 new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)).LocalPath
                 , "bulbacourses.pfx");
@@ -49,12 +65,9 @@ namespace BulbaCourses.Youtube.Web
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
-                //IssuerName = "BulbaCourses security server",
-                //Authority = "http://localhost:9000",
-                //ValidationMode = ValidationMode.Local,
-                //SigningCertificate = new X509Certificate2(cert, "123")
+                AuthenticationMode = AuthenticationMode.Active,
 
-                IssuerName = "BulbaCourses SSO",
+                IssuerName = "http://localhost:44382",
                 Authority = "https://localhost:44382",
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(cert, "123")

@@ -1,1 +1,20 @@
-<p>search-result works!</p>
+<p>search-result works!!!</p>
+<ul>
+  <li *ngFor="let video of resultVideos">
+    <div class="video">
+      <div class="video-thumbnail">
+        <div class="thumbnail-wrapper">
+            <a [routerLink]="['/video',video.Id]">
+                <img class="thumbnail" src='{{video.Thumbnail}}' alt=""></a>
+          <div class="duration-info">{{video.Duration | duration}}</div>
+        </div>
+      </div>
+      <div class="video-info">
+        <h5><a [routerLink]="['/video',video.Id]">{{video.Title}}</a></h5>
+        <p><span>{{video.Channel?.Name}}</span><span>{{video.PublishedAt | publishedAt}}</span></p>
+        <p>{{video.Description}}</p>
+      </div>
+    </div>
+    <br>
+  </li>
+</ul>

@@ -59,13 +59,15 @@
     <Compile Include="Context\Configurations\DashboardConfigurations.cs" />
     <Compile Include="Context\Configurations\ReportConfigurations.cs" />
     <Compile Include="DbConfig.cs" />
+    <Compile Include="Interface\IDashboardsRepository.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Models\ChartDb.cs" />
     <Compile Include="Models\DashboardDb.cs" />
     <Compile Include="Models\ReportDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
-    <Compile Include="Repositories\ReportRepository.cs" />
+    <Compile Include="Repositories\DashboardsRepository.cs" />
+    <Compile Include="Repositories\ReportsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

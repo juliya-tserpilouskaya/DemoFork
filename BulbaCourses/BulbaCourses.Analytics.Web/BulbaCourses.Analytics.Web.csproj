@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\V1\DashboardsController.cs" />
     <Compile Include="Controllers\V1\ReportsController.cs" />
     <Compile Include="Ensure\NinjectValidationFactory.cs" />
     <Compile Include="Ensure\XmlCommentsFilePath.cs" />

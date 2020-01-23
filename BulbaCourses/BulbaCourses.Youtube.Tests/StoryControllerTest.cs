@@ -25,6 +25,7 @@ namespace BulbaCourses.Youtube.Tests
         IStoryService stService;
         StoryController stController;
         StandardKernel kernel;
+        List<SearchRequest> searchRequest = new List<SearchRequest>();
         string user1 = "user1";
 
         [OneTimeSetUp]
@@ -42,12 +43,17 @@ namespace BulbaCourses.Youtube.Tests
                 .RuleFor(r => r.Duration, f => f.PickRandom(duration))
                 .RuleFor(r => r.VideoCaption, f => f.PickRandom(caption));
 
-            fakerStory = new Faker<SearchStory>();
-            fakerStory.RuleFor(s => s.SearchRequest, f => fakerRequest.Generate(1).First())
-                .RuleFor(s => s.SearchDate, f => f.Date.Past(1, null));
-
             kernel = new StandardKernel();
             kernel.Load<LogicModule>();
+            var requestService = kernel.Get<ISearchRequestService>();
+
+            for (int i = 0; i < 3; i++)
+                searchRequest.Add(requestService.Save(fakerRequest.Generate(1).First()));
+
+            fakerStory = new Faker<SearchStory>();
+            fakerStory.RuleFor(s => s.SearchDate, f => f.Date.Past(1, null))
+                .RuleFor(s => s.SearchRequest_Id, f => f.PickRandom(searchRequest).Id)
+                .RuleFor(s => s.UserId, f => user1);
 
             stService = kernel.Get<IStoryService>();
             stController = new StoryController(stService);
@@ -57,23 +63,17 @@ namespace BulbaCourses.Youtube.Tests
         public void Test_GetStory_ByUserId()
         {
             var countBefore = 0;
-            var resultListStory =
-                (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1)
-                .GetAwaiter().GetResult();
+            var resultListStory = (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController
+                .GetStoryByUserID(user1).GetAwaiter().GetResult();
 
             countBefore = resultListStory.Content.ToList().Count;
 
-            //generate stories
             var storiesDb = fakerStory.Generate(3);
             foreach (var item in storiesDb)
-            {
-                item.UserId = user1;
                 stService.Save(item);
-            }
 
-            resultListStory =
-                (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController.GetStoryByUserID(user1)
-                .GetAwaiter().GetResult();
+            resultListStory = (OkNegotiatedContentResult<IEnumerable<SearchStory>>)stController
+                .GetStoryByUserID(user1).GetAwaiter().GetResult();
 
             var result = resultListStory.Content.ToList();
 
