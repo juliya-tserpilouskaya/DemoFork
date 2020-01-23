@@ -11,7 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
-
+import { AnalyticsModule } from './analytics/analytics.module';
+import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
+import { RegisterModule} from './register/register/register.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    GlobalAdminUsersModule,
+    RegisterModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
@@ -37,6 +41,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
       }
     }),
     YoutubeModule,
+    AnalyticsModule,
     NgxUiLoaderModule
   ],
   providers: [],
