@@ -27,7 +27,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
                                                                   .RuleFor(x => x.Created, DateTime.Now);
 
             Faker<TeacherDB> _fakeTeacher = new Faker<TeacherDB>().RuleFor(x => x.PhoneNumber, y => y.Phone.PhoneNumber())
-                                                                  .RuleFor(x => x.Created, DateTime.Now);
+                                                                  .RuleFor(x => x.Created, DateTime.Now)
+                                                                  .RuleFor(x=>x.Position,y=>y.Company.CompanyName());
 
             List<CourseDB> _fakeCourseDB = _fakeCourse.Generate(3);
             context.Courses.AddRange(_fakeCourseDB);
