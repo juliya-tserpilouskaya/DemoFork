@@ -84,8 +84,8 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [Authorize]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseView course)
+        //[Authorize]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
 
@@ -94,7 +94,7 @@ namespace BulbaCourses.Video.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
@@ -105,14 +105,14 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateCourse")]CourseView course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateCourse")]CourseViewInput course)
         {
             if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
             {
                 return BadRequest();
             }
 
-            var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.UpdateAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

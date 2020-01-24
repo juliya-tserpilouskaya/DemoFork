@@ -16,14 +16,14 @@ import { QueryResultComponent } from './GlobalSearch/components/query-result/que
 import { CourseItemComponent } from './GlobalSearch/components/course-item/course-item.component';
 import { SearchComponent } from './GlobalSearch/components/search/search.component';
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
-
+import{VideoplayerComponent} from './Video/components/videoplayer/videoplayer.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'discountCourses', component: CourseComponent},
   //{path: 'discountMenu', component: MenuComponent},
   { path: 'search-request', component: SearchRequestComponent },
-  { path: 'video/:id', component: VideoComponent },
+  { path: 'video', component: VideoplayerComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
   { path: 'register', component: RegisterComponent},

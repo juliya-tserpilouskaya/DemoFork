@@ -34,7 +34,7 @@ namespace BulbaCourses.Video.Web
 
             //Owin middleware for static files
             string root = AppDomain.CurrentDomain.BaseDirectory;
-            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, @"D:\TestCourses"));
+            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, @"c:\TestCourses"));
             var fileServerOptions = new FileServerOptions
             {
                 RequestPath = PathString.Empty,
@@ -48,7 +48,7 @@ namespace BulbaCourses.Video.Web
             //config.Filters.Add(new BadRequestFilterAttribute());
 
             var data = File.ReadAllBytes(
-                @"D:\bulbacourses.pfx");
+                @"c:\bulbacourses.pfx");
 
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()

@@ -13,7 +13,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
     {
         public VideoDbContext() : base("VideoConnect")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<VideoDbContext>());
         }
         public DbSet<UserDb> Users { get; set; }
         public virtual DbSet<AuthorDb> Authors { get; set; }
