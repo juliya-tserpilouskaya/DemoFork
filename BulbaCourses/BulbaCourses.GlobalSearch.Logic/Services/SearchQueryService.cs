@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
@@ -95,6 +96,19 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         }
 
         /// <summary>
+        /// Creates search query async
+        /// </summary>
+        /// <param name="query">search query</param>
+        /// <returns></returns>
+        public async Task<Result<SearchQueryDTO>> AddAsync(SearchQueryDTO query)
+        {
+            SearchQueryDB queryDb = new SearchQueryDB() { Id = query.Id, Created = query.Date, Query = query.Query, UserId = query.UserId };
+            var result = await _searchQueryDb.AddAsync(queryDb);
+            return result.IsSuccess ? Result<SearchQueryDTO>.Ok(_mapper.Map<SearchQueryDTO>(result.Data))
+                : Result<SearchQueryDTO>.Fail<SearchQueryDTO>(result.Message);
+        }
+
+        /// <summary>
         /// Removes search query by id
         /// </summary>
         /// <param name="id"></param>
@@ -109,6 +123,12 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public void RemoveAll()
         {
             _searchQueryDb.RemoveAll();
+        }
+
+        public Task<Result> RemoveByIdAsync(string id)
+        {
+            _searchQueryDb.RemoveByIdAsync(id);
+            return Task.FromResult(Result.Ok());
         }
 
         //useless method for test only
