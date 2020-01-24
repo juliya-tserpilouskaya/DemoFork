@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {SearchCourses} from '../components/search-courses/search-courses.component';
 import { CustomUser } from 'src/app/auth/models/user';
 import { Subject } from 'rxjs';
-
+import {CourseShort} from 'src/app/Video/models/courseShort';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,7 @@ export class VideoService {
 }
 
   getCourses() {
-    return this.client.get<ResultCourses[]>('https://localhost:44369/api/courses');
+    return this.client.get<CourseShort[]>('https://localhost:44369/api/courses');
   }
 }
 

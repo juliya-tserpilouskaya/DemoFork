@@ -1,7 +1,7 @@
 export interface  CourseShort {
-    CourseId: string;
-    Name: string;
-    CourseLevel:string;
-    Description:string;
-    Price:number;
+    CourseId (string, optional),
+    Name (string, optional),
+    Level (integer, optional),
+    Description (string, optional),
+    Price (number, optional)
     }
