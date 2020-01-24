@@ -8,10 +8,4 @@
     <DockerServiceUrl>http://{ServiceIPAddress}</DockerServiceUrl>
     <DockerServiceName>bulbacourses.youtube.web</DockerServiceName>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="docker-compose.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
-    <None Include="docker-compose.yml" />
-  </ItemGroup>
 </Project>
