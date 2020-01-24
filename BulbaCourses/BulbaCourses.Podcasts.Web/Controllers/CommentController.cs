@@ -108,7 +108,8 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                    var result = await service.AddAsync(commentlogic, userId);
+                    commentlogic.User = userId;
+                    var result = await service.AddAsync(commentlogic);
                     if (result.IsSuccess == true)
                     {
                         await bus.SendAsync("Podcasts", $"Added Comment to {commentlogic.Course.Name} by {userId.Name}");
@@ -197,7 +198,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                    var result = await service.DeleteAsync(commentlogic, userId);
+                    var result = service.DeleteAsync(commentlogic, userId);
                     if (result.IsSuccess == true)
                     {
                         return Ok(commentlogic);

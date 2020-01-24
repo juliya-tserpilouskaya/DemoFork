@@ -198,7 +198,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var audiologic = mapper.Map<AudioWeb, AudioLogic>(audioWeb);
-                    var result = await service.DeleteAsync(audiologic, userId);
+                    var result = service.DeleteAsync(audiologic, userId);
                     if (result.IsSuccess == true)
                     {
                         await bus.SendAsync("Podcasts", $"Deleted Audio {audioWeb.Name} from {audioWeb.Course.Name} by {userId.Name}");

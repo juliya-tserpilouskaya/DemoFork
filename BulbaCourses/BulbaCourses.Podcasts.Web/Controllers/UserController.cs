@@ -196,7 +196,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var userLogic = mapper.Map<UserWeb, UserLogic>(userWeb);
-                    var result = await service.DeleteAsync(userLogic, userId);
+                    var result = service.DeleteAsync(userLogic, userId);
                     if (result.IsSuccess == true)
                     {
                         await bus.SendAsync("Podcasts", $"Deleted User {userWeb.Name} by {userId.Name}");

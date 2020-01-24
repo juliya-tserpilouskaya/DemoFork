@@ -44,17 +44,30 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var result = await service.GetByIdAsync(id);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    var content = result.Data;
-                    var contentWeb = mapper.Map<ContentLogic, ContentWeb>(content);
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(contentWeb);
+                    var userId = user.Data;
+
+                    var result = await service.GetByIdAsync(id, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        var content = result.Data;
+                        var contentWeb = mapper.Map<ContentLogic, ContentWeb>(content);
+                        return result == null ? NotFound() : (IHttpActionResult)Ok(contentWeb);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return Unauthorized();
                 }
+                
             }
             catch (InvalidOperationException ex)
             {
@@ -172,7 +185,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var contentLogic = mapper.Map<ContentWeb, ContentLogic>(contentWeb);
-                    var result = await service.DeleteAsync(contentLogic, userId);
+                    var result = service.DeleteAsync(contentLogic, userId);
                     if (result.IsSuccess == true)
                     {
                         return Ok(contentLogic);

@@ -12,7 +12,6 @@ using FluentValidation.WebApi;
 using System.Linq;
 using System.Threading.Tasks;
 using BulbaCourses.Podcasts.Web.Models;
-using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
@@ -199,8 +198,8 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                     var userId = user.Data;
 
                     var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                    var result = await service.DeleteAsync(courselogic, userId);
-                    if (result.IsSuccess == true)//
+                    var result = service.DeleteAsync(courselogic, userId);
+                    if (result.IsSuccess == true)
                     {
                         await bus.SendAsync("Podcasts", $"Deleted Course {courseWeb.Name} by {userId.Name}");
                         return Ok(courselogic);

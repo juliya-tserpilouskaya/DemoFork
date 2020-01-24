@@ -8,6 +8,8 @@ using System.Data.Entity;
 using BulbaCourses.Podcasts.Data;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.CompilerServices;
+
 [assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
 namespace BulbaComments.Podcasts.Data.Managers
 {

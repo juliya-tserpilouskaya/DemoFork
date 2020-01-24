@@ -15,13 +15,13 @@ using Owin;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Cors;
 using System.Web.Http;
+using System.IdentityModel.Tokens;
+using System.Collections.Concurrent;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Podcasts.Web.Startup))]
 
@@ -36,29 +36,30 @@ namespace BulbaCourses.Podcasts.Web
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
-            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true,
+                        AllowAnyHeader = true
+                    })
+                }
+            });
+
+            //JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            //JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
-                AuthenticationMode = AuthenticationMode.Active,
+                AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active,
                 IssuerName = "http://localhost:44382",
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123"),
                 ValidationMode = ValidationMode.Local,
 
-            })
-                .UseCors(new CorsOptions()
-                {
-                    PolicyProvider = new CorsPolicyProvider()
-                    {
-                        PolicyResolver = request => Task.FromResult(new CorsPolicy()
-                        {
-                            AllowAnyMethod = true,
-                            AllowAnyOrigin = true,
-                            AllowAnyHeader = true
-                        })
-                    }
-                });
+            });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
