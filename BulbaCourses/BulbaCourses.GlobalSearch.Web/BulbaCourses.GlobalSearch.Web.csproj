@@ -195,13 +195,10 @@
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AnonymousUserController.cs" />
     <Compile Include="Controllers\LearningCourseController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SearchQueryController.cs" />
     <Compile Include="Controllers\BookmarkController.cs" />
-    <Compile Include="Controllers\RegisteredUserController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
