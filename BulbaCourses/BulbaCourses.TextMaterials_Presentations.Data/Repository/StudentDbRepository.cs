@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,54 +75,46 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             _db.Entry(new StudentDB() { Id = id }).State = EntityState.Deleted;
         }
 
-        public async Task AddLovedPresentationAsync(string idStudent, string idPresentation)
+        public void AddLovedPresentationAsync(string idStudent, string idPresentation)
         {
-            var queryStudent = from student in _db.Students select student;
-            var changedStudent = await queryStudent.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idStudent));
+            var user = _db.Students.Include(_ => _.FavoritePresentations).Single(_ => _.Id == idStudent);
+            var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
 
-            var queryPresentation = from presentation in _db.Presentations select presentation;
-            var addPresentation = await queryPresentation.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idPresentation));
-
-            changedStudent.FavoritePresentations.Add(addPresentation);
+            user.FavoritePresentations.Add(presentation);
+            _db.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task DeleteLovedPresentationAsync(string idStudent, string idPresentation)
+        public void DeleteLovedPresentationAsync(string idStudent, string idPresentation)
         {
-            var queryStudent = from student in _db.Students select student;
-            var changedStudent = await queryStudent.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idStudent));
+            var user = _db.Students.Include(_ => _.FavoritePresentations).Single(_ => _.Id == idStudent);
+            var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
 
-            var queryPresentation = from presentation in _db.Presentations select presentation;
-            var deletePresentation = await queryPresentation.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idPresentation));
-
-            changedStudent.FavoritePresentations.Remove(deletePresentation);
+            user.FavoritePresentations.Remove(presentation);
+            _db.Entry(user).State = EntityState.Modified;
         }
 
         public async Task<StudentDB> GetAllLovedPresentationAsync(string id)
         {
             var query = from student in _db.Students select student;
-            return await query.AsNoTracking().Include(_=>_.FavoritePresentations).FirstOrDefaultAsync(_ => _.Id.Equals(id));
+            return await query.AsNoTracking().Include(_ => _.FavoritePresentations).FirstOrDefaultAsync(_ => _.Id.Equals(id));
         }
 
-        public async Task AddViewedPresentationAsync(string idStudent, string idPresentation)
+        public void AddViewedPresentationAsync(string idStudent, string idPresentation)
         {
-            var queryStudent = from student in _db.Students select student;
-            var changedStudent = await queryStudent.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idStudent));
+            var user = _db.Students.Include(_ => _.ViewedPresentations).Single(_ => _.Id == idStudent);
+            var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
 
-            var queryPresentation = from presentation in _db.Presentations select presentation;
-            var addPresentation = await queryPresentation.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idPresentation));
-
-            changedStudent.ViewedPresentations.Add(addPresentation);
+            user.FavoritePresentations.Add(presentation);
+            _db.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task DeleteViewedPresentationAsync(string idStudent, string idPresentation)
+        public void DeleteViewedPresentationAsync(string idStudent, string idPresentation)
         {
-            var queryStudent = from student in _db.Students select student;
-            var changedStudent = await queryStudent.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idStudent));
+            var user = _db.Students.Include(_ => _.ViewedPresentations).Single(_ => _.Id == idStudent);
+            var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
 
-            var queryPresentation = from presentation in _db.Presentations select presentation;
-            var deletePresentation = await queryPresentation.AsNoTracking().FirstOrDefaultAsync(_ => _.Id.Equals(idPresentation));
-
-            changedStudent.ViewedPresentations.Remove(deletePresentation);
+            user.FavoritePresentations.Remove(presentation);
+            _db.Entry(user).State = EntityState.Modified;
         }
 
         public async Task<StudentDB> GetAllViewedPresentationAsync(string id)
