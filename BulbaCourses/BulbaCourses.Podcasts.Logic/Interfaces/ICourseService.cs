@@ -20,5 +20,6 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
         Task<Result<IEnumerable<CourseLogic>>> SearchAsync(string Name);
 
         Task<bool> ExistsIdAsync(string id);
+        Task<Result> BuyAsync(CourseLogic courselogic, UserLogic userId);
     }
 }

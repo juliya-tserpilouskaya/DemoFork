@@ -181,5 +181,33 @@ namespace BulbaCourses.Podcasts.Logic.Services
         {
             return await dbmanager.ExistIdAsync(id);
         }
+
+        public async Task<Result> BuyAsync(CourseLogic courselogic, UserLogic userId)
+        {
+            try
+            {
+                userId.BoughtCourses.Add(courselogic);
+                var userDb = mapper.Map<UserLogic, UserDb>(userId);
+                await UdbManager.UpdateAsync(userDb);
+                return Result.Ok();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbUpdateException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result.Fail(e.Message);
+            }
+            catch (Exception)
+            {
+                return Result.Fail("Exception");
+            }
+
+        }
     }
 }

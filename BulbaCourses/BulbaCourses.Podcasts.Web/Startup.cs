@@ -49,8 +49,9 @@ namespace BulbaCourses.Podcasts.Web
                 }
             });
 
-            //JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
-            //JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {

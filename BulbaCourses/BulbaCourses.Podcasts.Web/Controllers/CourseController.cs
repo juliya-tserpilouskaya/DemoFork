@@ -219,6 +219,46 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+        [Authorize]
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course bought", typeof(CourseWeb))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Buy(CourseWeb courseWeb)
+        {
+            try
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
+                {
+                    var userId = user.Data;
+
+
+                    var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
+                    var result = await service.BuyAsync(courselogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Bought Course {courseWeb.Name} by {userId.Name}");
+                        return Ok(courselogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
     }
 }
