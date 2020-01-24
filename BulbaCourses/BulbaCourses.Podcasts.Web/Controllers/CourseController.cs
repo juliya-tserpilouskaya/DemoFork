@@ -66,11 +66,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
-        public async Task<IHttpActionResult> GetAll(string filter)
+        public async Task<IHttpActionResult> GetAll(string author)
         {
             try
             {
-                var result = await service.GetAllAsync(filter);
+                var result = await service.GetAllAsync(author);
                 if (result.IsSuccess == true)
                 {
                     var courses = result.Data;

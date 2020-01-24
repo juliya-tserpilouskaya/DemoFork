@@ -33,7 +33,7 @@ namespace BulbaCourses.Podcasts.Data.Managers
             }
             else
             {
-                var courseList = await dbContext.Courses.AsNoTracking().Where(c => c.Name.Contains(filter)).ToListAsync().ConfigureAwait(false);
+                var courseList = await dbContext.Courses.AsNoTracking().Where(c => c.Author.Name.Contains(filter)).ToListAsync().ConfigureAwait(false);
                 return courseList.AsReadOnly();
             }
         }
