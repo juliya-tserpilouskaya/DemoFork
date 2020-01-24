@@ -27,7 +27,7 @@ namespace BulbaCourses.GlobalSearch.Logic
             Bind<IUserService>().To<UserService>();
             Bind<IUserDbService>().To<UserDbService>();
             Bind<IBookmarkDbService>().To<BookmarkDbService>();
-            Bind<GlobalSearchContext>().ToSelf().InSingletonScope();
+            Bind<GlobalSearchContext>().ToSelf();
         }
     }
 }

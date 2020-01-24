@@ -14,7 +14,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Validators
         public SearchQueryValidator(ISearchQueryService service)
         {
             RuleFor(x => x.Id).Null().WithMessage("Id must be empty or null");
-            RuleFor(x => x.Query).NotEmpty().WithMessage("Search Query must not be empty or null");
+            RuleFor(x => x.Query).NotNull().MinimumLength(3).WithMessage("Name must be more than 3 characters");
             RuleFor(x => x.Date).NotEmpty().WithMessage("Date must not be empty or null");
             //RuleFor(x => x.Id).MustAsync((async
             //    (id, token) => !(await service.AnyAsync

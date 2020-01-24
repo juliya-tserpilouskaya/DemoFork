@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -13,12 +12,20 @@ import { FiltersComponent } from './DiscountAggregator/components/filters/filter
 import { DiscountAggregatorService } from './DiscountAggregator/services/discount-aggregator.service';
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
+import { RegisterModule} from './register/register/register.module';
+import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
+import { GlobalSearchModule } from './GlobalSearch/global-search.module';
+import { FormsModule } from '@angular/forms';
 
+// import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
+    PagenotfoundComponent
     CourseComponent,
     FiltersComponent
   ],
@@ -28,6 +35,9 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     SampleModule,
     AuthSharedModule,
     HttpClientModule,
+    GlobalAdminUsersModule,
+    RegisterModule,
+    FormsModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
@@ -35,12 +45,15 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
           'https://localhost:44317',
           'http://localhost:3300',
           'http://localhost:3500',
-          'http://localhost:60601'
+          'http://localhost:60601',
+          'https://localhost:44320'
         ]
       }
     }),
     YoutubeModule,
-    NgxUiLoaderModule
+    AnalyticsModule,
+    NgxUiLoaderModule,
+    GlobalSearchModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

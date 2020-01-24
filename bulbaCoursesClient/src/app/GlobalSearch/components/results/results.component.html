@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10 col-lg-8">
+    <h2>Search results for "{{parameter}}"</h2>
+      <br>
+        <div class="card" *ngFor="let course of courses | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+          <div class="card-header">
+            <div class="card-title">Название: {{course.Name}}</div>
+          </div>
+          <div class="card-body">
+          <!-- <h5 class="card-title">id: {{course.Id}}</h5> -->
+          <p class="card-text">Описание: {{course.Description}}</p>
+          <ul class="list-group">
+            <li class="list-group-item">Стоимость: {{course.Cost}}</li>
+            <li class="list-group-item">Сложность: {{course.Complexity}}</li>
+          </ul>
+          <br>
+          <a href="#" class="card-link">В закладки</a>
+          <br>
+          <a href="#" class="card-link">Состав курса</a>
+          </div>
+        </div>
+  </div>
+</div>
+<br/>
+<div class="row justify-content-center">
+  <ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="courses.length"></ngb-pagination>
+</div>
