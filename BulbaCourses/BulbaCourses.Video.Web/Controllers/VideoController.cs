@@ -64,15 +64,15 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "video post", typeof(VideoView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Post([FromBody, CustomizeValidator(RuleSet = "AddVideo")]VideoView video)
+        public async Task<IHttpActionResult> Post(string courseId ,[FromBody, CustomizeValidator(RuleSet = "AddVideo")]VideoView video)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+           
             var videoInfo = _mapper.Map<VideoView, VideoMaterialInfo>(video);
-            var result = await _videoService.AddAsync(videoInfo);
+            var result = await _videoService.AddAsync(videoInfo, courseId);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 

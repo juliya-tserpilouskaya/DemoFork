@@ -1,0 +1,31 @@
+<p>search-courses works!</p>
+<form class="form-search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+
+  <div class="input-group" id="boot-search-box">
+    <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
+      <div class="input-group-btn">
+        <div class="btn-group">
+          <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+    </div>
+  </div>
+<hr>
+<input type="checkbox" id="filter-checkbox">
+<label class="btn btn-primary" for="filter-checkbox">✎ Фильтр &#x25BC;</label>
+
+  <div class="form-filters">
+    <div class="form-group">
+      <label for="filter">Формат:</label>
+      <select class="form-control" formControlName="dimension">
+        <option value="ByName" selected>Courses by name</option>
+        <option value="ByTag">Courses by tag</option>
+        <option value="ByAuthor">Courses by author</option>
+      </select>
+    </div>
+  </div>
+</form>
+<hr>
+<p>{{user.sub}}</p>
+<div class="result-and-story">
+  <app-search-courses></app-search-courses>
+</div>

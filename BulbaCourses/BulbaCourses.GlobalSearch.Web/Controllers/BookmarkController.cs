@@ -15,6 +15,7 @@ using System.Web.Http;
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
     [RoutePrefix("api/bookmarks")]
+    [Authorize]
     public class BookmarkController : ApiController
     {
         private readonly IBookmarkService _bookmarkService;
@@ -23,6 +24,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             _bookmarkService = bookmarkService;
         }
 
+        //Role - admin
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
@@ -30,13 +32,15 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                //var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
 
             }
             var result = await _bookmarkService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        //Role - admin
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]

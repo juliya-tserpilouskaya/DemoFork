@@ -38,6 +38,12 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        public async Task<IEnumerable<CourseDb>> GetCoursesAsync(TagDb tag)
+        {
+            var courses = await _videoDbContext.Tags.Where(c => c.TagId == tag.TagId)?.SelectMany(c => c.Courses).ToListAsync();
+            return courses.AsReadOnly(); ;
+        }
+
         public async Task<IEnumerable<TagDb>> GetAllAsync()
         {
             var tagList = await _videoDbContext.Tags.ToListAsync().ConfigureAwait(false);

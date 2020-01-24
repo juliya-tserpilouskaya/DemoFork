@@ -8,7 +8,7 @@ namespace BulbaCourses.Video.Logic.Models
 {
     public class CourseInfo
     {
-        public string CourseId { get; set; }
+        public string CourseId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public UserInfo Author { get; set; }
         public int Level { get; set; }

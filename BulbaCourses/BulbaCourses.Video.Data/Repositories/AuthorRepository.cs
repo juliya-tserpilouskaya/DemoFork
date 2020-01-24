@@ -35,6 +35,12 @@ namespace BulbaCourses.Video.Data.Repositories
             return author;
         }
 
+        public async Task<IEnumerable<CourseDb>> GetCoursesAsync(string id)
+        {
+            var courses = await _videoDbContext.Authors.Where(c => c.AuthorId.Equals(id))?.SelectMany(c => c.AuthorCourses).ToListAsync();
+            return courses.AsReadOnly(); ;
+        }
+
         public async Task RemoveAsync(AuthorDb author)
         {
             if (author == null)
