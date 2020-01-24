@@ -1,0 +1,101 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+ul li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+ul li.selected {
+  background-color: #dddddd;
+}
+
+ul li:hover {
+  background-color: #cce6ee;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+
+  li {
+      padding: 10px;
+      cursor: pointer;
+
+      &.selected {
+          background-color: #dddddd;
+      }
+
+      &:hover {
+          background-color: #cce6ee;
+      }
+  }
+}
+
+videogular my-replay-plugin {
+	position: absolute;
+	z-index: 50;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+videogular my-replay-plugin div {
+	background-color: #000000;
+	width: 100%;
+	height: 100%;
+}
+
+videogular my-replay-plugin div span {
+	color: white;
+	cursor: pointer;
+	font-family: 'trebuchet ms', verdana, arial;
+	font-size: 36px;
+	display: table;
+	position: absolute;
+	text-align: center;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.videogular-container {
+	width: 100%;
+	height: 320px;
+	margin: auto;
+	overflow: hidden;
+}
+
+@media (min-width: 1200px) {
+	.videogular-container {
+		width: 1170px;
+		height: 658.125px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.videogular-container {
+		width: 940px;
+		height: 528.75px;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	.videogular-container {
+		width: 728px;
+		height: 409.5px;
+	}
+}

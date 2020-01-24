@@ -6,6 +6,8 @@ using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
@@ -30,10 +32,23 @@ namespace BulbaCourses.Video.Web
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
+            //Owin middleware for static files
+            string root = AppDomain.CurrentDomain.BaseDirectory;
+            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, @"c:\TestCourses"));
+            var fileServerOptions = new FileServerOptions
+            {
+                RequestPath = PathString.Empty,
+                EnableDefaultFiles = true,
+                FileSystem = physicalFileSystem,
+                EnableDirectoryBrowsing = false
+            };
+            fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = false;
+            app.UseFileServer(fileServerOptions);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             //config.Filters.Add(new BadRequestFilterAttribute());
 
             var data = File.ReadAllBytes(
-                @"D:\bulbacourses.pfx");
+                @"c:\bulbacourses.pfx");
 
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
@@ -61,7 +76,7 @@ namespace BulbaCourses.Video.Web
                     .To(result.ValidatorType));
 
 
-            //kernel.RegisterEasyNetQ("host=10.211.55.2");
+            kernel.RegisterEasyNetQ("host=localhost");
             return kernel;
         }
 
