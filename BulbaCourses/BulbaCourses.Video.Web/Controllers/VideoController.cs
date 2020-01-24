@@ -70,8 +70,7 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //var cId = courseId;
-            //var videoInfo = new VideoMaterialInfo() { }
+           
             var videoInfo = _mapper.Map<VideoView, VideoMaterialInfo>(video);
             var result = await _videoService.AddAsync(videoInfo, courseId);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
