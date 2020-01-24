@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     GlobalAdminUsersModule,
     RegisterModule,
+    GlobalSearchModule,
     FormsModule,
     OAuthModule.forRoot({
       resourceServer: {
@@ -49,8 +50,7 @@ import { FormsModule } from '@angular/forms';
     }),
     YoutubeModule,
     AnalyticsModule,
-    NgxUiLoaderModule,
-    GlobalSearchModule,
+    NgxUiLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent],
