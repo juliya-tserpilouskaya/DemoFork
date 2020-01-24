@@ -14,7 +14,7 @@ export class CoursesService {
   getCourses(query: string, id: string)
   {
     // return this.client.get<Courses[]>('https://my-json-server.typicode.com/typicode/demo/posts');
-    return this.client.get<Course>('https://localhost:44320/api/course/' + id)
+    return this.client.get<Course>('https://localhost:44320/api/courses/' + id);
   }
 }
 

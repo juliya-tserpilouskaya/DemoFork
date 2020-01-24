@@ -4,8 +4,6 @@
       <div class="starter-template">
       <h1>{{course.Id}}</h1>
       <p class="lead">{{course.Description}}
-        <br>Use this document as a way to quickly start any new project.
-        <br> All you get is this text and a mostly barebones HTML document.</p>
       </div>
       <!-- {{courses}}
       <br>
@@ -16,10 +14,10 @@
     <br>
     <h2></h2>
     <div class="card" *ngFor="let item of course.Items">
-    <h5 class="card-header">{{item.Id}}Айди материала</h5>
+    <h5 class="card-header">{{item.Id}}</h5>
       <div class="card-body">
-      <h5 class="card-title">{{item.Name}}Заготолок материала</h5>
-        <p class="card-text">Описание материала</p>
+      <h5 class="card-title">{{item.Name}}</h5>
+      <p class="card-text">{{item.Description}}</p>
       </div>
     </div><!-- /.container -->
   </div>
