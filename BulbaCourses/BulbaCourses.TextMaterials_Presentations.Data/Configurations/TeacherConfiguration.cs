@@ -17,6 +17,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
 
+            Property(x => x.Position).IsRequired().HasMaxLength(50);
+
             Property(_ => _.Created).IsRequired();
 
             Property(_ => _.Modified).IsOptional();

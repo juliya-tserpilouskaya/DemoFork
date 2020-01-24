@@ -8,7 +8,6 @@ namespace Presentations.Logic
 {
     public class Teacher : User
     {
-        public ICollection<Feedback> Feedbacks { get; set; }
-        public ICollection<Presentation> ChangedPresentatons { get; set; }
+        public string Position { get; set; }
     }
 }

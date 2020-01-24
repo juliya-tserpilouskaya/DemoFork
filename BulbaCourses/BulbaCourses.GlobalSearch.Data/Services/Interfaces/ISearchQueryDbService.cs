@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,15 +56,29 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         SearchQueryDB Add(SearchQueryDB query);
 
         /// <summary>
+        /// Creates search query async
+        /// </summary>
+        /// <param name="query">search query</param>
+        Task<Result<SearchQueryDB>> AddAsync(SearchQueryDB query);
+
+        /// <summary>
         /// Removes search query by id
         /// </summary>
         /// <param name="id"></param>
         void RemoveById(string id);
 
         /// <summary>
+        /// Removes search query by id async
+        /// </summary>
+        /// <param name="id"></param>
+        Task<Result<SearchQueryDB>> RemoveByIdAsync(string id);
+
+
+        /// <summary>
         /// Removes search query from database
         /// </summary>
         void RemoveAll();
+
         Task<bool> AnyAsync(string id);
     }
 }

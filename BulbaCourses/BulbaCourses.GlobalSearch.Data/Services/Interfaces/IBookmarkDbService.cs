@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,12 +57,28 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         /// <returns></returns>
         BookmarkDB Add(BookmarkDB bookmark);
 
+
+        /// <summary>
+        /// Creates new bookmark async
+        /// </summary>
+        /// <param name="bookmark">New user</param>
+        /// <returns></returns>
+        Task<Result<BookmarkDB>> AddAsync(BookmarkDB bookmark);
+
+
         /// <summary>
         /// Removes bookmarks by id
         /// </summary>
         /// <param name="id">Bookmark id</param>
         /// <returns></returns>
         void RemoveById(string id);
+
+        /// <summary>
+        /// Removes bookmarks by id async
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        Task<Result<BookmarkDB>> RemoveByIdAsync(string id);
 
         /// <summary>
         /// Removes all bookmarks from database

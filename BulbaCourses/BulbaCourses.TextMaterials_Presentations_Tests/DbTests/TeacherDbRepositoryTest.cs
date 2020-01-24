@@ -24,7 +24,8 @@ namespace TextMaterials_Presentations_Tests.DbTests
         List<TeacherDB> _fakeTeachers;
 
         Faker<TeacherDB> _fake = new Faker<TeacherDB>().RuleFor(x => x.PhoneNumber, y => y.Phone.PhoneNumber())
-                                                              .RuleFor(x => x.Created, DateTime.Now);
+                                                              .RuleFor(x => x.Created, DateTime.Now)
+                                                              .RuleFor(x => x.Position, y => y.Company.CompanyName());
 
         [OneTimeSetUp]
         public void Starter()

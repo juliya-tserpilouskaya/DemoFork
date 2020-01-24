@@ -40,8 +40,6 @@ namespace Presentations.Logic
             var mapper = new Mapper(mapperConfig);
 
             Bind<IMapper>().ToConstant(mapper);
-
-            this.Kernel?.Load(new[] { new DbModule() });
         }
     }
 }
