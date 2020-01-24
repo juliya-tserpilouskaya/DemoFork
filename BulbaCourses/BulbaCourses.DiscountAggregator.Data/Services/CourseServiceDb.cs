@@ -86,6 +86,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
             var courses = await context.Courses
                 .Include(i => i.Domain)
+                .Include(c => c.Category)
                 .Where(x => x.Price >= criteria.SearchCriteria.MinPrice
                 && x.Price <= criteria.SearchCriteria.MaxPrice
                 //&& domain.Any(y => y.DomainURL == x.Domain.DomainURL)//   criteria.SearchCriteria.Domains.Contains(x.Domain)
