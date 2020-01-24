@@ -69,15 +69,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _searchCriteriaService.AddAsync(searchCriteria);
-                return Ok(searchCriteria);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _searchCriteriaService.AddAsync(searchCriteria);
+            return result.IsSuccess ? Ok(result.Data) : (IHttpActionResult)BadRequest(result.Message);
         }
 
         [HttpPut, Route("")]
@@ -90,15 +84,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _searchCriteriaService.UpdateAsync(searchCriteria);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _searchCriteriaService.UpdateAsync(searchCriteria);
+            return result.IsSuccess ? Ok(result.Data) : (IHttpActionResult)BadRequest(result.Message);
         }
 
         [HttpDelete, Route("{id})")]
@@ -111,15 +99,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 return BadRequest();
             }
-            try
-            {
-                await _searchCriteriaService.DeleteByIdAsync(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
+
+            var result = await _searchCriteriaService.DeleteByIdAsync(id);
+            return result.IsSuccess ? Ok(result.Data) : (IHttpActionResult)BadRequest(result.Message);
         }
     }
 }

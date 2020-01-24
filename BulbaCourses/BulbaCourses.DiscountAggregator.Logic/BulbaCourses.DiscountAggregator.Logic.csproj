@@ -42,7 +42,7 @@
       <HintPath>..\BulbaCourses.Analytics.BLL\bin\Debug\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.8.6.0\lib\net45\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
@@ -106,7 +106,6 @@
     <Compile Include="Models\ModelsStorage\DomainStorage.cs" />
     <Compile Include="Models\ModelsStorage\SearchCriteriaStorage.cs" />
     <Compile Include="Models\ModelsStorage\UserProfileStorage.cs" />
-    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SearchCriteria.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Parsers\CommonValues.cs" />
@@ -120,7 +119,6 @@
     <Compile Include="Services\CourseServices.cs" />
     <Compile Include="Services\CourseUdemyServices.cs" />
     <Compile Include="Services\DomainServices.cs" />
-    <Compile Include="Services\ICourseCategoryServices.cs" />
     <Compile Include="Services\interfaceServices\IDomainServices.cs" />
     <Compile Include="Services\interfaceServices\ICourseBookmarkServices.cs" />
     <Compile Include="Services\interfaceServices\ICourseCategoryServices.cs" />
@@ -146,6 +144,10 @@
     <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Data\BulbaCourses.DiscountAggregator.Data.csproj">
       <Project>{02ebd441-46f9-45a8-8998-705ea01d8caa}</Project>
       <Name>BulbaCourses.DiscountAggregator.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Infrastructure\BulbaCourses.DiscountAggregator.Infrastructure.csproj">
+      <Project>{BEE48F9D-0C56-4385-A217-C405C7721F20}</Project>
+      <Name>BulbaCourses.DiscountAggregator.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

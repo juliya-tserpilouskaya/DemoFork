@@ -14,7 +14,6 @@ namespace BulbaCourses.Video.Data.Models
         //public DateTime? Birthdate { get; set; }
         //public string Gender { get; set; }
         //public string Religion { get; set; }
-        public string Biography { get; set; }
 
         public int SubscriptionType { get; set; }
         public DateTime? SubscriptionStartDate { get; set; }

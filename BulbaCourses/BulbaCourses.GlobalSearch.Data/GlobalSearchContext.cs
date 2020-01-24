@@ -16,7 +16,6 @@ namespace BulbaCourses.GlobalSearch.Data
         {
             Database.Log = s => Debug.WriteLine(s);
             //Database.SetInitializer(new GlobalSearchDbInitializer());
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -26,12 +25,16 @@ namespace BulbaCourses.GlobalSearch.Data
             modelBuilder.Configurations.Add(new CourseConfiguration());
             modelBuilder.Configurations.Add(new CourseCategoryConfiguration());
             modelBuilder.Configurations.Add(new SearchQueryConfiguration());
+            modelBuilder.Configurations.Add(new BookmarkConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
         }
 
-        public DbSet<AuthorDB> Authors { get; set; }
-        public DbSet<SearchQueryDB> SearchQueries { get; set; }
-        public DbSet<CourseCategoryDB> Categories { get; set; }
-        public DbSet<CourseDB> Courses { get; set; }
-        public DbSet<CourseItemDB> CourseItems { get; set; }
+        public virtual DbSet<AuthorDB> Authors { get; set; }
+        public virtual DbSet<SearchQueryDB> SearchQueries { get; set; }
+        public virtual DbSet<CourseCategoryDB> Categories { get; set; }
+        public virtual DbSet<CourseDB> Courses { get; set; }
+        public virtual DbSet<CourseItemDB> CourseItems { get; set; }
+        public virtual DbSet<BookmarkDB> Bookmarks { get; set; }
+        public virtual DbSet<UserDB> Users { get; set; }
     }
 }

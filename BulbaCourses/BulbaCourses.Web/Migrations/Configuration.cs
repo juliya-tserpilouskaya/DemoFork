@@ -27,10 +27,27 @@ namespace BulbaCourses.Web.Migrations
                 return;
             }
 
-            var user = new IdentityUser("user@test.com");
-            var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
-            manager.PasswordValidator = new MinimumLengthValidator(3);
-            manager.Create(user, "123");
+            var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context))
+            {
+                PasswordValidator = new MinimumLengthValidator(3)
+            };
+
+            manager.Create(NewUser("user@test.com", "8C7362B6-AAD5-42F7-B366-CE45304D03A5"), "123");
+            manager.Create(NewUser("admin@test.com", "D4AE2E6E-AA52-4D7E-A1E6-6AB2A101BBFD"), "admin");
         }
+
+        /// <summary>
+        /// Creates a new IdentityUser.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private static IdentityUser NewUser(string email, string id) =>
+            new IdentityUser(email)
+            {
+                Email = email,
+                EmailConfirmed = true,
+                Id = id
+            };
     }
 }

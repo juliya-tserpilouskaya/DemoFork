@@ -9,6 +9,9 @@ using BulbaCourses.GlobalSearch.Logic.Models;
 using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System.Threading.Tasks;
+using BulbaCourses.GlobalSearch.Logic.DTO;
+using System.Security.Claims;
+using FluentValidation.WebApi;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -48,6 +51,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+                }
             var result = await _learningCourseService.GetAllCoursesAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
@@ -155,6 +163,70 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             {
                 var result = await _learningCourseService.GetCourseByLanguageAsync(lang);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Update course
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
+        [HttpPut, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(LearningCourseDTO))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default,UpdateCourse")]LearningCourseDTO course)
+        {
+
+            if (course is null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _learningCourseService.UpdateAsync(course);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]LearningCourseDTO course)
+        {
+            if (course is null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _learningCourseService.AddAsync(course);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+        }
+
+        [HttpDelete, Route("{id}")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _learningCourseService.DeleteByIdAsync(id);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
             }
             catch (InvalidOperationException ex)
             {

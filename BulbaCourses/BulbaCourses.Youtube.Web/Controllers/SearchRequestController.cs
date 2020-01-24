@@ -18,7 +18,7 @@ using System.Web.Http;
 namespace BulbaCourses.Youtube.Web.Controllers
 {
     [RoutePrefix("api/SearchRequest")]
-    [Authorize]
+    //[Authorize]
     public class SearchRequestController : ApiController
     {
         private readonly ILogicService _logicService;
@@ -37,7 +37,9 @@ namespace BulbaCourses.Youtube.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> SearchRun([FromBody]SearchRequest searchRequest)
         {
-            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            var userId = this.Request.Headers.GetValues("UserSub").FirstOrDefault();
+            //var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
             if (userId == null)
                 userId = "guest";
 

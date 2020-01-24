@@ -39,6 +39,10 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetAll();
 
+        /// <summary>
+        /// Get async all stories for all Users
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<SearchStoryDb>> GetAllAsync();
 
         /// <summary>
@@ -48,6 +52,11 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetByUserId(string userId);
 
+        /// <summary>
+        /// Get async all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         Task<IEnumerable<SearchStoryDb>> GetByUserIdAsync(string userId);
 
         /// <summary>
@@ -57,6 +66,11 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         IEnumerable<SearchStoryDb> GetByRequestId(int? requestId);
 
+        /// <summary>
+        /// Get async all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
         Task<IEnumerable<SearchStoryDb>> GetByRequestIdAsync(int? requestId);
 
         /// <summary>
@@ -66,8 +80,26 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <returns></returns>
         SearchStoryDb GetByStoryId(int? storyId);
 
+        /// <summary>
+        /// Get async one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         Task<SearchStoryDb> GetByStoryIdAsync(int? storyId);
 
+        /// <summary>
+        /// Check story async
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         Task<bool> ExistsAsync(int? storyId);
+
+        /// <summary>
+        /// Hide async story for user when user click delete
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool HideStoryForUser(int? storyId, string userId);
     }
 }

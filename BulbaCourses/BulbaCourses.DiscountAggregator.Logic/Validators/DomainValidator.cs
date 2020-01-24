@@ -14,14 +14,15 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleSet("AddDomain", () =>
-            {
-                // TODO add DTO without ID field
-                RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x)).WithMessage("Id must be null or empty");
-            });
+            //RuleSet("AddDomain", () =>
+            //{
+            //    // TODO add DTO without ID field
+            //    RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x)).WithMessage("Id must be null or empty");
+            //});
 
+            //RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x)).WithMessage("Id must be null or empty");
             RuleFor(x => x.DomainName).NotEmpty().NotNull().MinimumLength(5).WithMessage("Domain name must be not empty or null");
-            RuleFor(x => x.DomainURL).NotEmpty().NotNull().MinimumLength(5).WithMessage("Domain URL must be not empty or null");   
+            RuleFor(x => x.DomainURL).NotEmpty().NotNull().MinimumLength(5).WithMessage("Domain URL must be not empty or null");
         }
     }
 }

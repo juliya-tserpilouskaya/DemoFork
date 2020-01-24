@@ -31,6 +31,7 @@ namespace BulbaCourses.DiscountAggregator.Logic
             Bind<IBookmarkServiceDb>().To<BookmarkServiceDb>();
             Bind<IUserProfileServiceDb>().To<UserProfileServiceDb>();
             Bind<ISearchCriteriaServiceDb>().To<SearchCriteriaServiceDb>();
+            Bind<ICourseITAcademyServiceDb>().To<CourseITAcademyServiceDb>();
         }
     }
 }

@@ -1,1 +1,8 @@
 <p>video works!</p>
+<youtube-player
+[videoId]="id"
+[height]="500"
+[width]="700"
+(ready)="savePlayer($event)"
+(change)="onStateChange($event)"
+></youtube-player>

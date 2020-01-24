@@ -30,7 +30,7 @@ namespace BulbaCourses.Web.Controllers
         public string Password { get; set; }
     }
 
-    [RoutePrefix("api/users")]
+    [RoutePrefix("api/users")]    
     public class UserController : ApiController
     {
         private readonly BulbaUserManager _userManager;
@@ -40,7 +40,8 @@ namespace BulbaCourses.Web.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost, Route("register")]
+       
+        [HttpPost, Route("register")]        
         public async Task<IHttpActionResult> Register([FromBody] RegisterUserModel model)
         {
             if (!ModelState.IsValid)

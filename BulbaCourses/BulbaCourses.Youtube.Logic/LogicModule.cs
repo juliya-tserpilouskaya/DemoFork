@@ -31,7 +31,7 @@ namespace BulbaCourses.Youtube.Logic
             Bind<ISearchRequestsRepository>().To<SearchRequestsRepository>();
             Bind<IStoryRepository>().To<StoryRepository>();
             Bind<IVideoRepository>().To<VideoRepository>();
-            Bind<YoutubeContext>().ToSelf().InSingletonScope();
+            Bind<YoutubeContext>().ToSelf().InThreadScope();
 
             //Binding for IValidators
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchRequest>()

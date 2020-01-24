@@ -8,35 +8,36 @@ using Presentations.Logic.Repositories;
 using Presentations.Logic.Interfaces;
 using Presentations.Logic.Services;
 using Swashbuckle.Swagger.Annotations;
+using Presentations.Logic;
+using System.Threading.Tasks;
+using FluentValidation.WebApi;
+using EasyNetQ;
+using Presentations.Logic.Models;
+using System.Security.Claims;
 
 namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
-{/// <summary>
-/// The controller of all Users list
-/// </summary>
+{
     [RoutePrefix("api/users")]
     public class StudentsController : ApiController
     {
+        private readonly IStudentService _studentService;
+        private readonly IBus _bus;
 
-        private readonly IStudentBaseService _studentService;
-        public StudentsController(IStudentBaseService studentService)
+        public StudentsController(IStudentService studentService, IBus bus)
         {
             _studentService = studentService;
+            _bus = bus;
         }
 
-        /// <summary>
-        /// Get all Users from the list of Users
-        /// </summary>
-        /// <returns></returns>
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Student>))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpGet, Route("")]
-        public IHttpActionResult GetAll()
+        [SwaggerResponse(HttpStatusCode.NotFound, "Students doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Students found", typeof(IEnumerable<Student>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllStudentsAsync()
         {
             try
             {
-                var result = _studentService.GetAll();
+                var result = await _studentService.GetAllStudentsAsync();
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -44,17 +45,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-        /// <summary>
-        /// Get User from the list of Users by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+
         [HttpGet, Route("{id}")]
-        public IHttpActionResult GetById(string id)
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Student found", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetStudentByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -63,7 +60,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = _studentService.GetById(id);
+                var result = await _studentService.GetStudentByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -72,55 +69,40 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Add User to the list of Users
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpPost, Route("")]
-        public IHttpActionResult Create([FromBody]Student student)
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Student added", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> CreateStudentAsync
+            ([FromBody]UserAdd_DTO user)
         {
-            if (student is null)
+            if (user is null)
             {
                 return BadRequest();
             }
 
-            try
-            {
-                var result = _studentService.Add(student);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            user.Created = DateTime.Now;
+            var result = await _studentService.AddStudentAsync(user);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
-        /// <summary>
-        /// Find the User whis the same Id from the list of Users, delete it and add new
-        /// </summary>
-        /// <param name="student"></param>
-        /// <returns></returns>
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Student))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpPut, Route("")]
-        public IHttpActionResult Update([FromBody]Student student)
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Student found", typeof(Student))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> UpdateStudentAsync
+            ([FromBody, CustomizeValidator]Student student)
         {
-            if (student is null)
+            if (student is null || !ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                var result = _studentService.Update(student);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _studentService.UpdateStudentAsync(student);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -128,17 +110,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete by Id User from the list of Users, returns true if was deleted
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(Boolean))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [HttpDelete, Route("{id}")]
-        public IHttpActionResult Delete(string id)
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Student deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> DeleteStudentAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -147,8 +123,203 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = _studentService.DeleteById(id);
-                return (IHttpActionResult)Ok(result);
+                var result = await _studentService.DeleteStudentByIdAsync(id);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("{idStudent}/{idPresentation}/likeAdd")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation added", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> AddLovedPresentationAsync(string idStudent, string idPresentation)
+        {
+            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _) 
+                || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.AddLovedPresentationAsync(idStudent, idPresentation);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("{idStudent}/{idPresentation}/likeDel")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> DeleteLovedPresentationAsync(string idStudent, string idPresentation)
+        {
+            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+                || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.DeleteLovedPresentationAsync(idStudent, idPresentation);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("{id}/like")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllLovedPresentationAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.GetAllLovedPresentationAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("{idStudent}/{idPresentation}/viewAdd")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations added", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> AddViewedPresentationAsync(string idStudent, string idPresentation)
+        {
+            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+                || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.AddViewedPresentationAsync(idStudent, idPresentation);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("{idStudent}/{idPresentation}/viewDel")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> DeleteViewedPresentationAsync(string idStudent, string idPresentation)
+        {
+            if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
+                || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.DeleteViewedPresentationAsync(idStudent, idPresentation);
+
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("{id}/view")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllViewedPresentationAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.GetAllViewedPresentationAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPut, Route("{id}/payment")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Payment updated", typeof(Boolean))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> UpdateIsPaidAsync(string id, bool hasPayment)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.UpdateIsPaidAsync(id, hasPayment);
+
+                return result.IsError ? NotFound() : (IHttpActionResult)Ok(result.IsSuccess);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        [HttpGet, Route("{id}/feedbacks")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetAllFeedbacksFromStudentAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _studentService.GetAllFeedbacksFromStudentAsync(id);
+
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.Analytics.BLL.Ensure;
 using BulbaCourses.Analytics.BLL.Interface;
-using BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples.Reports;
+using BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples;
 using BulbaCourses.Analytics.Infrastructure.Models;
 using BulbaCourses.Analytics.Models.V1;
 using FluentValidation.WebApi;
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -55,6 +56,12 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         {
             try
             {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+                }
+
                 var reportDtos = await _reportService.GetAllAsync();
                 if (!reportDtos.Any()) { return NotFound(); }
                 var reportShorts = _mapper.Map<IEnumerable<ReportShort>>(reportDtos);

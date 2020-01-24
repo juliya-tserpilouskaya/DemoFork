@@ -1,1 +1,70 @@
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+
 <p>search-request works!</p>
+<form class="form-search" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+
+  <div class="input-group" id="boot-search-box">
+    <input type="text" class="form-control" placeholder="Поиск в YouTube" formControlName="title" required/>
+      <div class="input-group-btn">
+        <div class="btn-group">
+          <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+    </div>
+  </div>
+<hr>
+<input type="checkbox" id="filter-checkbox">
+<label class="btn btn-primary" for="filter-checkbox">✎ Фильтры &#x25BC;</label>
+
+  <div class="form-filters">
+    <div class="form-group">
+      <label for="filter">По дате загрузки:</label>
+      <select class="form-control" formControlName="published">
+        <option value="Any" selected>Любые</option>
+        <option value="Hour">За последний час</option>
+        <option value="Today">Сегодня</option>
+        <option value="Week">На этой неделе</option>
+        <option value="Month">В этом месяце</option>
+        <option value="Year">За этот год</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Длительность:</label>
+      <select class="form-control" formControlName="duration">
+        <option value="Any" selected>Любые</option>
+        <option value="Short__">Короткие (до 4 мин.)</option>
+        <option value="Medium">Средние (4 - 20 мин.)</option>
+        <option value="Long__">Длинные (более 20 мин.)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Качество:</label>
+      <select class="form-control" formControlName="definition">
+        <option value="Any" selected>Любые</option>
+        <option value="High">HD</option>
+        <option value="Standard">SD</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Формат:</label>
+      <select class="form-control" formControlName="dimension">
+        <option value="Any" selected>Любые</option>
+        <option value="Value2d">2D</option>
+        <option value="Value3d">3D</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="filter">Титры:</label>
+      <select class="form-control" formControlName="caption">
+        <option value="Any" selected>Любые</option>
+        <option value="ClosedCaption">С титрами</option>
+        <option value="None">Без титров</option>
+      </select>
+    </div>
+  </div>
+</form>
+<hr>
+<p>{{user.sub}}</p>
+<div class="result-and-story">
+  <app-search-result></app-search-result>
+  <app-search-story></app-search-story>
+</div>
