@@ -1,16 +1,16 @@
 <p>Seach result:</p>
 <ul>
-  <li *ngFor="let video of resultVideos | paginate: config">
+  <li *ngFor="let video of resultVideos | paginate: { itemsPerPage: 5, currentPage: pgNumber, totalItems: totalItems, id: 'first'}">
     <div class="video">
       <div class="video-thumbnail">
         <div class="thumbnail-wrapper">
-            <a [routerLink]="['/video',video.Id]">
+            <a (click)="setVideo(video)"  [routerLink]="['/video',video.Id]">
                 <img class="thumbnail" src='{{video.Thumbnail}}' alt=""></a>
           <div class="duration-info">{{video.Duration | duration}}</div>
         </div>
       </div>
       <div class="video-info">
-        <h5><a [routerLink]="['/video',video.Id]">{{video.Title}}</a></h5>
+        <h5><a (click)="setVideo(video)" [routerLink]="['/video',video.Id]">{{video.Title}}</a></h5>
         <p><span>{{video.Channel?.Name}}</span><span>{{video.PublishedAt | publishedAt}}</span></p>
         <p>{{video.Description}}</p>
       </div>
@@ -18,5 +18,4 @@
     <br>
   </li>
 </ul>
-<pagination-controls [autoHide]="autoHide" (pageChange)="pageChanged($event)"></pagination-controls>
- 
+<pagination-controls id="first" [autoHide]="autoHide" (pageChange)="pgNumber = $event"></pagination-controls>

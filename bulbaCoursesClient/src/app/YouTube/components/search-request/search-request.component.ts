@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultVideo, YoutubeService } from '../../services/youtube.service';
+import { YoutubeService } from '../../services/youtube.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 import { User, CustomUser } from 'src/app/auth/models/user';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { SearchStory } from '../../models/searchstory';
+import { ResultVideo } from '../../models/resultvideo';
+import { SearchRequest } from '../../models/searchrequest';
 
 @Component({
   selector: 'app-search-request',
@@ -91,15 +93,4 @@ export class SearchRequestComponent implements OnInit {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
-}
-
-export class SearchRequest {
-  Id: string;
-  Title: string;
-  PublishedBefore: Date;
-  PublishedAfter: Date;
-  Definition: string;
-  Dimension: string;
-  Duration: string;
-  VideoCaption: string;
 }

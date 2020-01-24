@@ -1,8 +1,29 @@
-<p>video works!</p>
+<!-- <p>video works!</p>
 <youtube-player
 [videoId]="id"
 [height]="500"
 [width]="700"
 (ready)="savePlayer($event)"
 (change)="onStateChange($event)"
-></youtube-player>
+></youtube-player> -->
+
+<div class="video">
+  <div class="video-thumbnail">
+    <div class="thumbnail-wrapper">
+      <youtube-player
+      [videoId]="id"
+      [height]="500"
+      [width]="700"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)"
+      ></youtube-player>
+    </div>
+  </div>
+  <div class="video-info">
+    <p>Duration: <span>{{video.Duration | duration}}</span></p>
+    <h3>{{video.Title}}</h3>
+    <p>Channel: <span>{{video.Channel?.Name}} </span></p>
+    <p>PublishDate: <span>{{video.PublishedAt | publishedAt}}</span></p>
+    <p>Description: <span>{{video.Description}}</span></p>
+  </div>
+</div>

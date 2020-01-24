@@ -12,6 +12,7 @@ using System.Web.Http;
 namespace BulbaCourses.Youtube.Web.Controllers
 {
     [RoutePrefix("api/story")]
+    [Authorize]
     public class StoryController : ApiController
     {
         private readonly IStoryService _storyService;

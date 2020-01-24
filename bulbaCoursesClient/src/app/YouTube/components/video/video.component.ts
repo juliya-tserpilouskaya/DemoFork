@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ResultVideo } from '../../models/resultvideo';
+import { YoutubeService } from '../../services/youtube.service';
 
 @Component({
   selector: 'app-video',
@@ -9,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 export class VideoComponent implements OnInit {
   id: string;
   player: YT.Player;
+  video: ResultVideo;
+  youtubeService: YoutubeService;
 
   savePlayer(player) {
     this.player = player;
@@ -18,13 +22,13 @@ export class VideoComponent implements OnInit {
     console.log('player state', event.data);
   }
 
-
-  constructor(private activateRoute: ActivatedRoute) {
+  constructor(private service: YoutubeService, private activateRoute: ActivatedRoute) {
     activateRoute.params.subscribe(params => this.id = params['id']);
+    this.youtubeService = service;
   }
 
-
   ngOnInit() {
+    this.youtubeService.video$.subscribe((video) => this.video = video as ResultVideo);
   }
 
 }

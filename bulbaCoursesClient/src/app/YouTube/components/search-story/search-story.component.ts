@@ -18,6 +18,7 @@ export class SearchStoryComponent implements OnInit {
   user: CustomUser;
   searchStory: SearchStory[] = [];
   story: SearchStory;
+  totalItems = this.searchStory.length;
 
   constructor(private authService: AuthService, private service: YoutubeService) { }
 

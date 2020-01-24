@@ -1,8 +1,9 @@
 import { Component, OnInit, PipeTransform, Pipe } from '@angular/core';
-import { ResultVideo, YoutubeService } from '../../services/youtube.service';
+import { YoutubeService } from '../../services/youtube.service';
 import { AppRoutingModule } from '../../../app-routing.module';
 import * as moment from 'moment';
 import 'moment/locale/ru';
+import { ResultVideo } from '../../models/resultvideo';
 
 @Component({
   selector: 'app-search-result',
@@ -13,6 +14,7 @@ export class SearchResultComponent implements OnInit {
 
   youtubeService: YoutubeService;
   resultVideos: ResultVideo[] = [];
+  video: ResultVideo;
   channel: string[];
   publichedAt: string;
   durtion: string;
@@ -23,8 +25,15 @@ export class SearchResultComponent implements OnInit {
     itemsPerPage: 5,
     currentPage: 1,
     totalItems: this.resultVideos.length
-  }; 
-  public autoHide: boolean = true;
+  };
+  totalItems = this.resultVideos.length;
+  public autoHide = true;
+
+  setVideo(video: ResultVideo) {
+    this.video = video;
+    this.youtubeService.videoSubject.next(this.video);
+    console.log('video id ', this.video.Id);
+  }
 
   savePlayer(player) {
     this.player = player;
@@ -35,16 +44,16 @@ export class SearchResultComponent implements OnInit {
   }
 
   constructor(private service: YoutubeService) {
-    this.youtubeService = service;  
+    this.youtubeService = service;
   }
 
   ngOnInit() {
     this.youtubeService.result$.subscribe(data => {
-      this.resultVideos = data;     
+      this.resultVideos = data;
     });
   }
 
-  pageChanged(event){
+  pageChanged(event) {
     this.config.currentPage = event;
   }
 }
