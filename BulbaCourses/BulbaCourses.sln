@@ -103,8 +103,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.GlobalAdminUse
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations_Tests", "BulbaCourses.TextMaterials_Presentations_Tests\BulbaCourses.TextMaterials_Presentations_Tests.csproj", "{2ED30113-FB36-4C90-AC80-A51FEE51BA37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.TextMaterials_Presentations.Client", "BulbaCourses.TextMaterials_Presentations.Client\BulbaCourses.TextMaterials_Presentations.Client.csproj", "{68AAE3DA-50EF-4467-BB77-DEF05A632501}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulbaCourses.Analytics.ForecastTests", "BulbaCourses.Analytics.ForecastTests\BulbaCourses.Analytics.ForecastTests.csproj", "{EB8AE6D3-1677-4A8A-84CC-C67095E39980}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulbaCourses.GlobalSearch.Infrastructure", "BulbaCourses.GlobalSearch.Infrastructure\BulbaCourses.GlobalSearch.Infrastructure.csproj", "{B52BF21B-7695-4F00-B8EF-AE8F36D6C3FC}"
