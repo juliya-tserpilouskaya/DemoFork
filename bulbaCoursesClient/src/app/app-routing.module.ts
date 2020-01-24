@@ -27,14 +27,14 @@ const routes: Routes = [
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
   { path: 'register', component: RegisterComponent},
-  { path: '', component: SampleComponent, pathMatch: 'full' },
-  { path: '**', component: PagenotfoundComponent },
   { path: 'bookmarks', component: BookmarksComponent },
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
   { path: 'results/:query', component: ResultsComponent },
-  // { path: 'bookmarks/:id', component: BookmarksComponent }
+  // { path: 'bookmarks/:id', component: BookmarksComponent },
+  { path: '', component: SampleComponent, pathMatch: 'full' },
+  { path: '**', component: PagenotfoundComponent }
 ];
 
 @NgModule({
