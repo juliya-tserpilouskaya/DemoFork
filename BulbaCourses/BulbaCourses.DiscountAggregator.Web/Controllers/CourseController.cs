@@ -29,6 +29,10 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this._courseService = courseService;
         }
 
+        /// <summary>
+        /// Get all course from DB
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...

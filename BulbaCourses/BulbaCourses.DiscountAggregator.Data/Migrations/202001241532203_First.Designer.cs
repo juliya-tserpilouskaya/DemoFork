@@ -13,7 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202001240644097_First"; }
+            get { return "202001241532203_First"; }
         }
         
         string IMigrationMetadata.Source

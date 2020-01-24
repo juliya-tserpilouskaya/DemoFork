@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     MenuComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
     CourseComponent,
     FiltersComponent
   ],

@@ -3,6 +3,8 @@ using WebActivatorEx;
 using BulbaCourses.DiscountAggregator.Web;
 using Swashbuckle.Application;
 using Swashbuckle.Examples;
+using System.IO;
+using System;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -20,6 +22,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             {
                 c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
                 c.OperationFilter<ExamplesOperationFilter>();
+                c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.DiscountAggregator.Web.xml"));
                 c.OAuth2("oauth2")
                                       .Description("OAuth2 Implicit Grant")
                                       .Flow("implicit")

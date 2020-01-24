@@ -10,24 +10,23 @@ import { CustomUser } from 'src/app/auth/models/user';
 })
 export class CourseComponent implements OnInit {
 
-  user : CustomUser;
+  user: CustomUser;
   courses: Courses[] = [];
 
-  constructor(private service : DiscountAggregatorService) {
+  constructor(private service: DiscountAggregatorService) {
    }
 
   ngOnInit() {
     console.log('1');
-    //this.service.getCourses()
-    //.subscribe(data => this.courses = data);
+    // this.service.getCourses()
+    // .subscribe(data => this.courses = data);
     this.service.getCoursesForCriteria(/*this.user*/).subscribe(data => this.courses = data);
-    //console.log(this.user.sub);
+    // console.log(this.user.sub);
   }
 
-  onSubmitCriteria(){
+  onSubmitCriteria() {
     this.service.getCoursesForCriteria(/*this.user*/)
-    .subscribe(data => this.courses = data); 
+    .subscribe(data => this.courses = data);
   }
-  
 
 }

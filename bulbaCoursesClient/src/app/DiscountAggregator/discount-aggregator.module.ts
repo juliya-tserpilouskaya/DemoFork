@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { DiscountAggregatorService } from './services/discount-aggregator.service';
 import { CourseComponent } from './components/course/course.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { FiltersComponent } from "./components/filters/filters.component";
+import { FiltersComponent } from './components/filters/filters.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    CourseComponent, 
-    MenuComponent, 
+    CourseComponent,
+    MenuComponent,
     FiltersComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DiscountAggregatorService
