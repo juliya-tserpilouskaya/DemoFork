@@ -110,29 +110,47 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
         
-        //[HttpGet, Route("Search/{idSearch}")]
         [HttpGet, Route("Search")]
-        [Description("Get courses by Criteria")]
+        [Description("Get courses for UserProfile")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetByCriteriaAsync(/*idSearch*/)
+        public async Task<IHttpActionResult> GetByUserCriteriaAsync()
         {
-            //if (idSearch == null)
-            //{
-            //    return BadRequest();
-            //}
-
             try
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     var sub = (User as ClaimsPrincipal).FindFirst("sub");
-                    var result = await _courseService.GetByIdCriteriaAsync(sub.Value);
+                    var result = await _courseService.GetByIdUserAsync(sub.Value);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
                 }
                 return BadRequest();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet, Route("Search/{idUser}")]
+        [Description("Get courses by idUser")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByCriteriaAsync(string idUser)
+        {
+            if (idUser == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var result = await _courseService.GetByIdUserAsync(idUser);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {

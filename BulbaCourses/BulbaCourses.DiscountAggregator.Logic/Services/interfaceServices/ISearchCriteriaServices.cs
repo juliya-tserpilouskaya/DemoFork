@@ -9,6 +9,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
     {
         Task<IEnumerable<SearchCriteria>> GetAllAsync();
         Task<SearchCriteria> GetByIdAsync(string id);
+        Task<SearchCriteria> GetByUserIdAsync(string userId);
         Task<Result<SearchCriteria>> AddAsync(SearchCriteria searchCriteria);
         Task<Result<SearchCriteria>> UpdateAsync(SearchCriteria searchCriteria);
         Task<Result<SearchCriteria>> DeleteByIdAsync(string id);

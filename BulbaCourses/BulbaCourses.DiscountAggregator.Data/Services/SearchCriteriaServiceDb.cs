@@ -61,6 +61,16 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return criteriaDb;
         }
 
+        public async Task<SearchCriteriaDb> GetByUserIdAsync(string userId)
+        {
+            var user = context.Profiles.Include(i => i.SearchCriteria).FirstOrDefault(p => p.Id == userId);
+            var criteriaDb = await context.SearchCriterias
+                .Include(c => c.Domains)
+                .Include(v => v.CourseCategories)
+                .SingleOrDefaultAsync(c => c.Id.Equals(user.SearchCriteria.Id)).ConfigureAwait(false);
+            return criteriaDb;
+        }
+
         public async Task<Result<SearchCriteriaDb>> UpdateAsync(SearchCriteriaDb criteriaDb)
         {
             try

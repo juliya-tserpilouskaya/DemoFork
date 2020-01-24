@@ -53,9 +53,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public async Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch)
+        public async Task<IEnumerable<Course>> GetByIdUserAsync(string idUser)
         {
-            var courses = await _courseService.GetByIdCriteriaAsync(idSearch);
+            var courses = await _courseService.GetByIdUserAsync(idUser);
             var result = _mapper.Map<IEnumerable<Course>>(courses);
             return result;
         }

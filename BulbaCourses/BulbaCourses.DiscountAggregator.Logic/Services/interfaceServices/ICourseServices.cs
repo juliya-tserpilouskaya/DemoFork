@@ -18,7 +18,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         Course GetById(string id);
 
         Task<Course> GetByIdAsync(string id);
-        Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch);
+        Task<IEnumerable<Course>> GetByIdUserAsync(string idUser);
 
         Task<Result<Course>> AddAsync(Course course);
 

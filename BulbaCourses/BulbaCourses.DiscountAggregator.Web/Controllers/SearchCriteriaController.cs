@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -35,7 +36,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
-        [HttpGet, Route("{userId}")]//можно указать какой тип id
+        [HttpGet, Route("{id}")]//можно указать какой тип id
         [Description("Get criterias by UserId")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
         [SwaggerResponse(HttpStatusCode.NotFound, "Criteria doesn't exists")]
@@ -51,6 +52,31 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             {
                 var result = await _searchCriteriaService.GetByIdAsync(id);
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        [HttpGet, Route("User")]//можно указать какой тип id
+        [Description("Get criterias for User")]// для описания ,но в данном примере не работает...
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [SwaggerResponse(HttpStatusCode.NotFound, "Criteria doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.OK, "Criteria found", typeof(SearchCriteria))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByUser()
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                    var result = await _searchCriteriaService.GetByUserIdAsync(sub.Value);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                }
+                return BadRequest();
             }
             catch (InvalidOperationException ex)
             {
