@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Subject} from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class CoursesService {
 
-  public query: string = "";
-  url: string;
-  constructor(private client: HttpClient) {}
+  course: Course;
 
-  search(qry: string) {
+  constructor(private client: HttpClient) { }
+
+  getCourses(query: string, id: string)
+  {
     // return this.client.get<Courses[]>('https://my-json-server.typicode.com/typicode/demo/posts');
-    return this.client.get<Courses[]>('https://localhost:44320/api/search/' + qry)
+    return this.client.get<Course>('https://localhost:44320/api/course/' + id)
   }
 }
 
@@ -24,11 +23,15 @@ export class SearchService {
 //   title: string;
 // }
 
-export interface Courses
+export interface Course
 {
     Id: string;
     Name: string;
     Cost: number;
     Complexity: string;
     Description: string;
+    Items: {
+      Id: string;
+      Name: string;
+    }
 }

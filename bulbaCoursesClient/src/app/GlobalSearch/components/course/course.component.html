@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10 col-lg-8">
+    <main role="main" class="container">
+      <div class="starter-template">
+      <h1>{{course.Id}}</h1>
+      <p class="lead">{{course.Description}}
+        <br>Use this document as a way to quickly start any new project.
+        <br> All you get is this text and a mostly barebones HTML document.</p>
+      </div>
+      <!-- {{courses}}
+      <br>
+      {{id}}
+      <br>
+      {{query}} -->
+    </main>
+    <br>
+    <h2></h2>
+    <div class="card" *ngFor="let item of course.Items">
+    <h5 class="card-header">{{item.Id}}Айди материала</h5>
+      <div class="card-body">
+      <h5 class="card-title">{{item.Name}}Заготолок материала</h5>
+        <p class="card-text">Описание материала</p>
+      </div>
+    </div><!-- /.container -->
+  </div>
+</div>
