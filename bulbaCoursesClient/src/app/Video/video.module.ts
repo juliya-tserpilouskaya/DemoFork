@@ -9,15 +9,18 @@ import { VgControlsModule } from 'videogular2/compiled/controls';
 import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
-
-
+import{UploadComponent} from './components/upload/upload.component'
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 @NgModule({
   declarations: [
     CourseComponent,
     VideoplayerComponent,
-    SearchCoursesComponent],
+    SearchCoursesComponent,
+    UploadComponent,
+    FileSelectDirective
+    ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
