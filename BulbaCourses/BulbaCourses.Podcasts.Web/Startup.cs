@@ -7,20 +7,19 @@ using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
-using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Jwt;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Cors;
 using System.Web.Http;
-using System.IdentityModel.Tokens;
 using System.Collections.Concurrent;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Podcasts.Web.Startup))]
@@ -50,8 +49,8 @@ namespace BulbaCourses.Podcasts.Web
             });
 
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
@@ -61,6 +60,8 @@ namespace BulbaCourses.Podcasts.Web
                 ValidationMode = ValidationMode.Local,
 
             });
+
+            //SwaggerConfig.Register(config);
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
