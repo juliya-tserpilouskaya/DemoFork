@@ -27,6 +27,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get all teacher presentation accounts from the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Teachers doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Teachers found", typeof(IEnumerable<Teacher>))]
@@ -45,6 +49,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get teacher presentation account from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Teacher doesn't exists")]
@@ -69,6 +78,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new teacher presentation account to the database
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher added", typeof(Teacher))]
@@ -85,6 +99,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update the teacher presentation account in the database
+        /// </summary>
+        /// <param name="techer"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher found", typeof(Teacher))]
@@ -101,6 +120,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete the teacher presentation account from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher deleted", typeof(Boolean))]
@@ -116,6 +140,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
+        /// <summary>
+        /// Get all feedbacks of teacher by the teacher presentation account ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/feedbacks")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Teacher doesn't exists")]
@@ -140,6 +169,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all added presentations of this teacher by the teacher presentation account ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/presentations")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Teacher doesn't exists")]

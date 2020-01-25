@@ -27,6 +27,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get all courses from the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
@@ -46,6 +50,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -70,6 +79,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new course to the database
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
@@ -86,6 +100,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update the course in the database
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
@@ -102,6 +121,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete the course from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
@@ -117,6 +141,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
+        /// <summary>
+        /// Get all presentations from the course by course ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/presentations")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
