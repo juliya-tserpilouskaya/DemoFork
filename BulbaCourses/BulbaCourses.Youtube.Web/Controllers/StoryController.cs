@@ -1,6 +1,7 @@
 ﻿using BulbaCourses.Youtube.Logic.Models;
 using BulbaCourses.Youtube.Logic.Models.SwaggerExamples.SearchStories;
 using BulbaCourses.Youtube.Logic.Services;
+using Microsoft.Web.Http;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -16,8 +17,8 @@ namespace BulbaCourses.Youtube.Web.Controllers
     /// <summary>
     /// Represents a RESTful SearchStory service.
     /// </summary>
-    /// [ApiVersion("1.0")]
-    [RoutePrefix("api/story")]
+    [ApiVersion("1.0")]
+    [RoutePrefix("api/v{version:apiVersion}/story")]
     [Authorize]
     public class StoryController : ApiController
     {

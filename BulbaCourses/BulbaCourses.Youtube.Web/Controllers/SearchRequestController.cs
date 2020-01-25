@@ -4,6 +4,7 @@ using BulbaCourses.Youtube.Logic.Services;
 using EasyNetQ;
 using EasyNetQ.Consumer;
 using FluentValidation.WebApi;
+using Microsoft.Web.Http;
 using Newtonsoft.Json;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
@@ -22,8 +23,8 @@ namespace BulbaCourses.Youtube.Web.Controllers
     /// <summary>
     /// Represents a RESTful YoutubeSearch service.
     /// </summary>
-    /// [ApiVersion("1.0")]
-    [RoutePrefix("api/SearchRequest")]
+    [ApiVersion("1.0")]
+    [RoutePrefix("api/v{version:apiVersion}/SearchRequest")]
     public class SearchRequestController : ApiController
     {
         private readonly ILogicService _logicService;

@@ -21,7 +21,7 @@ export class YoutubeService {
 
   searchVideo(searchRequest: SearchRequest, user: CustomUser) {
 
-    return this.client.post<ResultVideo[]>('http://localhost:60601/api/SearchRequest', searchRequest, {
+    return this.client.post<ResultVideo[]>('http://localhost:60601/api/v1/SearchRequest', searchRequest, {
       headers: {
         UserSub: `${user.sub}`
       }
@@ -30,12 +30,12 @@ export class YoutubeService {
 
   getStory(user: CustomUser) {
     console.log('Get stories on service, item = ', user.sub);
-    return this.client.get<SearchStory[]>(`http://localhost:60601/api/story/${user.sub}`);
+    return this.client.get<SearchStory[]>(`http://localhost:60601/api/v1/story/${user.sub}`);
   }
 
   delStoryById(story: SearchStory) {
     console.log('Del story on service, item = ', story.Id);
-    return this.client.put(`http://localhost:60601/api/story/hide`, story.Id);
+    return this.client.put(`http://localhost:60601/api/v1/story/hide`, story.Id);
   }
 }
 
