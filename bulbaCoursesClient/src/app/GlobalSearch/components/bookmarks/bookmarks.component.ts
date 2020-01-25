@@ -27,15 +27,16 @@ export class BookmarksComponent implements OnInit {
     .subscribe(data => this.bookmarks = data);
   }
 
-  onDelete(id) {
-    // this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
-    // this.authService.user$.subscribe((user) => this.user = user as CustomUser);
+  onDelete(id: string) {
     this.service.deleteBookmark(id)
     .subscribe(data => {
       const indexToDelete = this.bookmarks.findIndex((mark: Bookmarks) => mark.Id === id);
-      this.bookmarks.slice(indexToDelete - 1, indexToDelete + 1);
-
+      this.bookmarks.splice(indexToDelete, 1);
     });
+  }
+
+  parseUrl(url: string) {
+    return 'https://www.google.com/search?q=' + url;
   }
 
 }

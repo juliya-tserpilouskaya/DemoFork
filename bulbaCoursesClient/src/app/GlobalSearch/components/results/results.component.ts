@@ -16,7 +16,7 @@ export class ResultsComponent implements OnInit {
   parameter: string;
 
   constructor(private service: SearchService, private bookmarkService: BookmarksService, route: ActivatedRoute) {
-    route.params.subscribe(params => this.parameter = params['query']);
+    route.params.subscribe(params => this.parameter = params.query);
   }
 
   ngOnInit() {
