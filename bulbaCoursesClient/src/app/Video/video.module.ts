@@ -1,25 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VideoService } from './services/video.service';
+//import { VideoService } from './services/video.service';
 import { CourseComponent } from './components/course/course.component';
 import { VideoplayerComponent } from './components/videoplayer/videoplayer.component';
 import { VgCoreModule } from 'videogular2/compiled/core';
 import { VgControlsModule } from 'videogular2/compiled/controls';
-import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
+//import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
 import{UploadComponent} from './components/upload/upload.component'
 import { FileSelectDirective } from 'ng2-file-upload';
+import { MainvideoComponent } from './components/mainvideo/mainvideo.component';
 
 
 @NgModule({
   declarations: [
     CourseComponent,
     VideoplayerComponent,
-    SearchCoursesComponent,
+   // SearchCoursesComponent,
     UploadComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    MainvideoComponent
     ],
   imports: [
     CommonModule,
@@ -30,8 +32,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     VgControlsModule,
   ],
   providers: [
-    VideoService
+    //VideoService
   ],
-  exports: [SearchCoursesComponent]
+ // exports: [SearchCoursesComponent]
 })
 export class VideoModule { }

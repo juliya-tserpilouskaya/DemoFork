@@ -45,6 +45,7 @@ import { FormsModule } from '@angular/forms';
           'https://localhost:44317',
           'http://localhost:3300',
           'http://localhost:3500',
+          'https://localhost:44369',
           'http://localhost:60601',
           'https://localhost:44320'
         ]

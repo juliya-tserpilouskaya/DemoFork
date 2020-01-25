@@ -18,14 +18,14 @@ import { SearchComponent } from './GlobalSearch/components/search/search.compone
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
 import{VideoplayerComponent} from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
-
+import {MainvideoComponent} from './Video/components/mainvideo/mainvideo.component'
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'discountCourses', component: CourseComponent},
   // {path: 'discountMenu', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
-  { path: 'video', component: VideoplayerComponent },
+  { path: 'video', component: MainvideoComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
   { path: 'register', component: RegisterComponent},

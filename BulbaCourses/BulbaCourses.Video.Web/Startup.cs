@@ -7,19 +7,24 @@ using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.StaticFiles;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+//using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Http;
 
+//using IdentityServer3.AccessTokenValidation;
 [assembly: OwinStartup(typeof(BulbaCourses.Video.Web.Startup))]
 namespace BulbaCourses.Video.Web
 {
@@ -49,12 +54,12 @@ namespace BulbaCourses.Video.Web
 
             var data = File.ReadAllBytes(
                 @"c:\bulbacourses.pfx");
-
-
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
                 IssuerName = "http://localhost:44382",
-                Authority = "http://localhost:44382",
+                AuthenticationMode = AuthenticationMode.Active,
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });

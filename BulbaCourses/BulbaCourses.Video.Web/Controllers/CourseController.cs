@@ -24,13 +24,21 @@ namespace BulbaCourses.Video.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
-
+        /// <summary>
+        /// Course Controller.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="courseService"></param>
         public CourseController(IMapper mapper, ICourseService courseService)
         {
             _mapper = mapper;
             _courseService = courseService;
         }
-
+        /// <summary>
+        /// Get course info.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -61,7 +69,10 @@ namespace BulbaCourses.Video.Web.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Get all courses.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
@@ -77,24 +88,28 @@ namespace BulbaCourses.Video.Web.Controllers
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
-
+        /// <summary>
+        /// Post new course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        //[Authorize]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseViewInput course)
+        [Authorize]
+        public async Task<IHttpActionResult> Create([FromBody]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid)//, CustomizeValidator (RuleSet = "AddCourse")
             {
-                return BadRequest(ModelState);
+            return BadRequest(ModelState);
             }
-
-            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
+            //user.Identities.
+                var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

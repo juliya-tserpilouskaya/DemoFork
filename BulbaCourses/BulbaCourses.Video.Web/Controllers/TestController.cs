@@ -1,39 +1,50 @@
-﻿using System;
+﻿//using MvcApplication1.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
-namespace BulbaCourses.Video.Web.Controllers
+namespace MvcApplication1.Controllers
 {
-    public class TestController : ApiController
+    public class FileUploadController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+       // db_videoEntities1 wmsEN = new db_videoEntities1();
+        [HttpPost()]
+        public HttpResponseMessage UploadFiles()
         {
-            return new string[] { "value1", "value2" };
+            var httpRequest = HttpContext.Current.Request;
+            //Upload Image    
+            System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+            try
+            {
+                for (int iCnt = 0; iCnt <= hfc.Count - 1; iCnt++)
+                {
+                    System.Web.HttpPostedFile hpf = hfc[iCnt];
+                    if (hpf.ContentLength > 0)
+                    {
+                        //var filename = (Path.GetFileName(hpf.FileName));
+                        //var filePath = HttpContext.Current.Server.MapPath("~/Vedios/" + filename);
+                        //hpf.SaveAs(filePath);
+                        //VideoMaster obj = new VideoMaster();
+                        //obj.Videos = "http://localhost:50401/Vedios/" + filename;
+                        //wmsEN.VideoMasters.Add(obj);
+                        //wmsEN.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
+            return Request.CreateResponse(HttpStatusCode.Created);
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpPost]
+        public object Vedios()
         {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return null;//wmsEN.VideoMasters;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace BulbaCourses.Video.Web.Models
 {
-    [Validator(typeof(CourseViewInputValidator))]
+    //[Validator(typeof(CourseViewInputValidator))]
     public class CourseViewInput
     {
         public string Name { get; set; }
