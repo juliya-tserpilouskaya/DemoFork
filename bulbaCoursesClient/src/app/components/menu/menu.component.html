@@ -47,6 +47,10 @@
         <a class="nav-link" *ngIf="isAuthenticated" (click)="this.authService.logout()">Logout</a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/testform']" routerLinkActive="active">Test</a>
+      </li>
+
     </ul>
   </div>
 </nav>

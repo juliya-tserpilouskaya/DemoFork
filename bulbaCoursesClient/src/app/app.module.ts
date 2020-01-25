@@ -22,6 +22,7 @@ import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.compon
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
+import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
 
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
@@ -61,7 +62,8 @@ import { AnalyticsConstants } from './analytics/components/constants/analytics.c
     VideoModule,
     YoutubeModule,
     AnalyticsModule,
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
+    PracticalMaterialsTestModule
   ],
   providers: [],
   bootstrap: [AppComponent],
