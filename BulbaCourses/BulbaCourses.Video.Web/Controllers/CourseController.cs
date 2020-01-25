@@ -5,6 +5,7 @@ using BulbaCourses.Video.Logic.Models.Enums;
 using BulbaCourses.Video.Web.Models;
 using BulbaCourses.Video.Web.SwaggerModels;
 using FluentValidation.WebApi;
+using Newtonsoft.Json;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
@@ -38,10 +39,17 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Get(string id)
         {
+            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            if (userId == null)
+            {
+                userId = "guest";
+            }
+
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
                 return BadRequest();
             }
+
             try
             {
                 var result = await _courseService.GetCourseByIdAsync(id);
@@ -59,57 +67,16 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            if (userId == null)
+            {
+                userId = "guest";
+            }
+
             var courses = await _courseService.GetAllAsync();
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
-
-        [HttpGet, Route("{list}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<CourseView>))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetByName(string courseName)
-        {
-            if (string.IsNullOrEmpty(courseName) || !Guid.TryParse(courseName, out var _))
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await _courseService.GetCoursesByNameAsync(courseName);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-
-        }
-
-        [HttpGet, Route("{list-tags}")]
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<CourseView>))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetByTags(TagInfo tag)
-        {
-            if (string.IsNullOrEmpty(tag.Content) || !Guid.TryParse(tag.Content, out var _))
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await _courseService.GetListByTagAsync(tag);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
-
-        }
-
 
         [HttpPost, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
@@ -117,18 +84,17 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [Authorize]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseView course)
+        //[Authorize]
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
-            //user.FindFirst("preferred_username").Value;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
@@ -139,14 +105,14 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateCourse")]CourseView course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "UpdateCourse")]CourseViewInput course)
         {
             if (course == null || !Enum.IsDefined(typeof(CourseLevel), course.Level))
             {
                 return BadRequest();
             }
 
-            var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
+            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.UpdateAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

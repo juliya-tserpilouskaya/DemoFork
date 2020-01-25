@@ -79,11 +79,11 @@
       <DependentUpon>202001231559219_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\CourseAndPresentations\CourseDB.cs" />
-    <Compile Include="Models\CourseAndPresentations\FeedbackDB.cs" />
-    <Compile Include="Models\CourseAndPresentations\PresentationDB.cs" />
-    <Compile Include="Models\Users\StudentDB.cs" />
-    <Compile Include="Models\Users\TeacherDB.cs" />
+    <Compile Include="Models\CourseDB.cs" />
+    <Compile Include="Models\FeedbackDB.cs" />
+    <Compile Include="Models\PresentationDB.cs" />
+    <Compile Include="Models\StudentDB.cs" />
+    <Compile Include="Models\TeacherDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CourseDbRepository.cs" />
     <Compile Include="Repository\FeedbackDbRepository.cs" />

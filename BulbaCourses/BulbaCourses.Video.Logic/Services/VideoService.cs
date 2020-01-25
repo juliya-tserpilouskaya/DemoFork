@@ -30,11 +30,11 @@ namespace BulbaCourses.Video.Logic.Services
             _videoRepository.Add(videoDb);
         }
 
-        public async Task<Result<VideoMaterialInfo>> AddAsync(VideoMaterialInfo video)
+        public async Task<Result<VideoMaterialInfo>> AddAsync(VideoMaterialInfo video, string courseId)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
             videoDb.Created = DateTime.Now;
-            videoDb.CourseId = Guid.NewGuid().ToString(); //заменить на ID курса
+            videoDb.CourseId = courseId; //заменить на ID курса
             try
             {
                 await _videoRepository.AddAsync(videoDb);

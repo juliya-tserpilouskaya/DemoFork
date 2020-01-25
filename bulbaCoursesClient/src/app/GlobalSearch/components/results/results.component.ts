@@ -14,7 +14,7 @@ export class ResultsComponent implements OnInit {
   pageSize = 10;
   parameter: string;
 
-  constructor(private service: SearchService, route: ActivatedRoute) { 
+  constructor(private service: SearchService, route: ActivatedRoute) {
     route.params.subscribe(params => this.parameter = params['query'])
   }
 

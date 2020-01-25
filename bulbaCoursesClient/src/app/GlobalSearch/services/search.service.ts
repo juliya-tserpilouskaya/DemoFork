@@ -24,7 +24,7 @@ export class SearchService {
 //   title: string;
 // }
 
-export interface Courses 
+export interface Courses
 {
     Id: string;
     Name: string;

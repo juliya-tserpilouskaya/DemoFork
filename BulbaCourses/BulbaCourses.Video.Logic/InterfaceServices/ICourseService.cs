@@ -18,7 +18,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         CourseInfo GetCourseByName(string courseName);
         void AddTagToCourse(string courseId, TagInfo tag);
         IEnumerable<TagInfo> GetTags(string courseId);
-        IEnumerable<VideoMaterialInfo> GetCourseVideos(string courseId);
         VideoMaterialInfo GetVideoByOrder(string courseId, int videoOrder);
         int GetCourseLevel(string courseId);
         void UpdateCourseLevel(string courseId, int level);
@@ -26,8 +25,9 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         void AddDiscription(string courseId, string description);
 
         Task<IEnumerable<CourseInfo>> GetAllAsync();
+
+        Task<IEnumerable<VideoMaterialInfo>> GetCourseVideosAsync(string courseId);
         Task<CourseInfo> GetCourseByIdAsync(string courseId);
-        Task<IEnumerable<CourseInfo>> GetListByTagAsync(TagInfo tag);
         Task<IEnumerable<CourseInfo>> GetCoursesByNameAsync(string courseName);
         Task<Result<CourseInfo>> RateCourse(CourseInfo course, int Assessment);
 
