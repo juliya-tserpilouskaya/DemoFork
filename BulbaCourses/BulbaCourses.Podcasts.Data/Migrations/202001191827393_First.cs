@@ -18,7 +18,7 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                         Course_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
+                .ForeignKey("dbo.Courses", t => t.Course_Id, cascadeDelete: true)
                 .Index(t => t.Course_Id);
             
             CreateTable(
@@ -67,7 +67,7 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                         User_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
+                .ForeignKey("dbo.Courses", t => t.Course_Id, cascadeDelete: true)
                 .ForeignKey("dbo.Users", t => t.User_Id)
                 .Index(t => t.Course_Id)
                 .Index(t => t.User_Id);

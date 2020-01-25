@@ -100,6 +100,6 @@ namespace BulbaCourses.Youtube.DataAccess.Repositories
         /// <param name="storyId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool HideStoryForUser(int? storyId, string userId);
+        bool HideStoryForUser(int? storyId);
     }
 }

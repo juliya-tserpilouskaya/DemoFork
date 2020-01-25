@@ -20,7 +20,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             Property(_ => _.Update).IsRequired();
 
-            HasMany<PresentationDB>(_ => _.CoursePresentations);
+            HasMany<PresentationDB>(_ => _.CoursePresentations).WithOptional(_ => _.CourseDB).HasForeignKey(_ => _.CourseDBId);
         }
     }
 }

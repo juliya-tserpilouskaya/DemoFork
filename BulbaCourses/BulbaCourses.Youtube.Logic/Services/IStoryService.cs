@@ -102,5 +102,7 @@ namespace BulbaCourses.Youtube.Logic.Services
 
         Task<bool> ExistsAsync(int? storyId);
 
+        bool HideStoryForUser(int? storyId);
+
     }
 }

@@ -9,12 +9,17 @@ namespace BulbaCourses.Podcasts.Logic.Interfaces
 {
     public interface ICourseService : IBaseService<CourseLogic>
     {
-        Task<Result> AddAsync(CourseLogic course);
+        Task<Result> AddAsync(CourseLogic course, UserLogic user);
 
-        Task<bool> ExistsAsync(string name);
+        Task<bool> ExistsNameAsync(string name);
 
-        Task<Result<IEnumerable<CourseLogic>>> GetAllAsync();
+        Task<Result<CourseLogic>> GetByIdAsync(string Id);
+
+        Task<Result<IEnumerable<CourseLogic>>> GetAllAsync(string filter);
 
         Task<Result<IEnumerable<CourseLogic>>> SearchAsync(string Name);
+
+        Task<bool> ExistsIdAsync(string id);
+        Task<Result> BuyAsync(CourseLogic courselogic, UserLogic userId);
     }
 }

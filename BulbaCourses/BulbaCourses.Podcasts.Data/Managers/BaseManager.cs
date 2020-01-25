@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+[assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
 namespace BulbaCourses.Podcasts.Data
 {
     public abstract class BaseManager : IDisposable
@@ -22,7 +23,7 @@ namespace BulbaCourses.Podcasts.Data
 
         }
 
-        protected void Dispose(bool flag)
+        protected virtual void Dispose(bool flag)
         {
             if (_isDisposed) return;
 

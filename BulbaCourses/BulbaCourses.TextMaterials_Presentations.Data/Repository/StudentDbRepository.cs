@@ -73,6 +73,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         public void DeleteById(string id)
         {
             _db.Entry(new StudentDB() { Id = id }).State = EntityState.Deleted;
+            _db.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Feedbacks " +
+                "ADD CONSTRAINT Feedbacks_Students " +
+                "FOREIGN KEY (StudentDBId) " +
+                "REFERENCES dbo.Students (Id) " +
+                "ON DELETE SET NULL");
         }
 
         public void AddLovedPresentationAsync(string idStudent, string idPresentation)
