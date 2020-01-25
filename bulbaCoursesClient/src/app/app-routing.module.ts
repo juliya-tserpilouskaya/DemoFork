@@ -18,7 +18,6 @@ import { ResultsComponent } from './GlobalSearch/components/results/results.comp
 import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'discount-aggregator', component: CourseComponent},
