@@ -217,7 +217,6 @@
   <ItemGroup>
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
-    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\SwaggerDefaultValues.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\SearchRequestController.cs" />
