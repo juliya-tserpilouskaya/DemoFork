@@ -11,7 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
         Task<IEnumerable<Domain>> GetAllAsync();
         Task<Domain> GetByIdAsync(string id);
         Task<Result<Domain>> AddAsync(Domain domain);
-        Task<Result> DeleteByIdAsync(string id);
+        Task<Result<Domain>> DeleteByIdAsync(string id);
         Task<Result<Domain>> UpdateAsync(Domain domain);
     }
 }

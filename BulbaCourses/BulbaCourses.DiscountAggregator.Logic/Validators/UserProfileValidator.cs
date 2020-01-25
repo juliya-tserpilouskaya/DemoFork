@@ -25,6 +25,8 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.DateOfBirth).NotEmpty();
             RuleFor(x => x.Subscription).NotEmpty();
+            RuleFor(x => x.SearchCriteria.MinDiscount).GreaterThanOrEqualTo(0).WithMessage("Dicount must be greater or equal than 0");
+            RuleFor(x => x.SearchCriteria.MaxDiscount).LessThan(100).GreaterThanOrEqualTo(0).WithMessage("Dicount must be less than 100");
         }
     }
 }

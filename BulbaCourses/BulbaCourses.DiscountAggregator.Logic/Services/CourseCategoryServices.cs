@@ -34,10 +34,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
                  : Result<CourseCategory>.Fail<CourseCategory>(result.Message);
         }
 
-        public Task<Result> DeleteByIdAsync(string id)
+        public async Task<Result<CourseCategory>> DeleteByIdAsync(string id)
         {
-            _courseCategoryServiceDb.DeleteByIdAsync(id);
-            return Task.FromResult(Result.Ok());
+            var result = await _courseCategoryServiceDb.DeleteByIdAsync(id);
+            return result.IsSuccess ? Result<CourseCategory>.Ok(_mapper.Map<CourseCategory>(result.Data))
+                 : Result<CourseCategory>.Fail<CourseCategory>(result.Message);
         }
 
         public async Task<IEnumerable<CourseCategory>> GetAllAsync()

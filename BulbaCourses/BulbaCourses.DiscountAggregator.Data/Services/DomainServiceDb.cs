@@ -75,11 +75,23 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task<Result<DomainDb>> DeleteByIdAsync(string id)
         {
-            var domain = context.Domains.SingleOrDefault(c => c.Id.Equals(id));
-            context.Domains.Remove(domain);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                var domainDb = context.Domains.SingleOrDefault(c => c.Id.Equals(id));
+                context.Domains.Remove(domainDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<DomainDb>.Ok(domainDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<DomainDb>.Fail<DomainDb>($"Domain not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<DomainDb>.Fail<DomainDb>($"Invalid domain. {e.Message}");
+            }
         }
 
         public async Task<Result<DomainDb>> UpdateAsync(DomainDb domainDb)
