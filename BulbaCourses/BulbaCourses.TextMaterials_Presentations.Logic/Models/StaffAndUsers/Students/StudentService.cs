@@ -148,7 +148,7 @@ namespace Presentations.Logic.Services
 
         public async Task<Result> AddLovedPresentationAsync(string idStudent, string idPresentation)
         {
-            await _uow.StudentLoading.AddLovedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.AddLovedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -171,7 +171,7 @@ namespace Presentations.Logic.Services
 
         public async Task<Result> DeleteLovedPresentationAsync(string idStudent, string idPresentation)
         {
-            await _uow.StudentLoading.DeleteLovedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.DeleteLovedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -194,14 +194,13 @@ namespace Presentations.Logic.Services
 
         public async Task<IEnumerable<Presentation>> GetAllLovedPresentationAsync(string id)
         {
-            var student = await _uow.Students.GetByIdAsync(id);
-            var presentations = student.FavoritePresentations;
-            return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(presentations);
+            var student = await _uow.StudentLoading.GetAllLovedPresentationAsync(id);
+            return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(student.FavoritePresentations);
         }
 
         public async Task<Result> AddViewedPresentationAsync(string idStudent, string idPresentation)
         {
-            await _uow.StudentLoading.AddViewedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.AddViewedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -224,7 +223,7 @@ namespace Presentations.Logic.Services
 
         public async Task<Result> DeleteViewedPresentationAsync(string idStudent, string idPresentation)
         {
-            await _uow.StudentLoading.DeleteViewedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.DeleteViewedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -247,9 +246,8 @@ namespace Presentations.Logic.Services
 
         public async Task<IEnumerable<Presentation>> GetAllViewedPresentationAsync(string id)
         {
-            var student = await _uow.Students.GetByIdAsync(id);
-            var presentations = student.ViewedPresentations;
-            return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(presentations);
+            var student = await _uow.StudentLoading.GetAllViewedPresentationAsync(id);
+            return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(student.ViewedPresentations);
         }
 
         public async Task<Result> UpdateIsPaidAsync(string id, bool hasPayment)
@@ -277,9 +275,8 @@ namespace Presentations.Logic.Services
 
         public async Task<IEnumerable<Feedback>> GetAllFeedbacksFromStudentAsync(string id)
         {
-            var student = await _uow.Students.GetByIdAsync(id);
-            var feedbacks = student.Feedbacks;
-            return _mapper.Map<IEnumerable<FeedbackDB>, IEnumerable<Feedback>>(feedbacks);
+            var student = await _uow.StudentLoading.GetAllFeedbacksFromStudentAsync(id);
+            return _mapper.Map<IEnumerable<FeedbackDB>, IEnumerable<Feedback>>(student.Feedbacks);
         }
     }
 }

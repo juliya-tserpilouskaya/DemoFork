@@ -54,7 +54,7 @@ namespace BulbaCourses.GlobalSearch.Web
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
 
-                IssuerName = "https://localhost:44382",
+                IssuerName = "http://localhost:44382",
                 AuthenticationMode = AuthenticationMode.Active,
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123")

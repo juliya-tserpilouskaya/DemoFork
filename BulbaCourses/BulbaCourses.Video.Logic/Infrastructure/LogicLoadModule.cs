@@ -30,6 +30,7 @@ namespace BulbaCourses.Video.Logic.Infrastructure
             Bind<ICommentService>().To<CommentService>();
             Bind<IVideoService>().To<VideoService>();
             Bind<IAuthorService>().To<AuthorService>();
+            Bind<ISearchService>().To<SearchService>();
 
         }
     }

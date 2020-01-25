@@ -1,16 +1,34 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuComponent } from './components/menu/menu.component';
-import { CourseComponent} from './components/course/course.component';
-import { VideoComponent} from './components/video/video.component';
-import { ResultListComponent} from './components/result-list/result-list.component';
+import { VideoService } from './services/video.service';
+import { CourseComponent } from './components/course/course.component';
+import { VideoplayerComponent } from './components/videoplayer/videoplayer.component';
+import { VgCoreModule } from 'videogular2/compiled/core';
+import { VgControlsModule } from 'videogular2/compiled/controls';
+import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
+
 
 
 
 @NgModule({
-  declarations: [MenuComponent, CourseComponent, VideoComponent, ResultListComponent],
+  declarations: [
+    CourseComponent,
+    VideoplayerComponent,
+    SearchCoursesComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    BrowserModule,
+    VgCoreModule,
+    VgControlsModule,
+  ],
+  providers: [
+    VideoService
+  ],
+  exports: [SearchCoursesComponent]
 })
 export class VideoModule { }

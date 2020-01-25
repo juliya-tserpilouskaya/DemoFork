@@ -9,11 +9,11 @@
                       </div>
                       <!--end of col-->
                       <div class="col">
-                          <input class="form-control form-control-lg form-control-borderless" [ngModel]="username" (input)="query = $event.target.value" (ngModelChange)="query = $event" type="search" placeholder="Type search query here">
+                          <input class="form-control form-control-lg form-control-borderless" [ngModel]="query" (input)="query = $event.target.value" (ngModelChange)="query = $event" type="search" placeholder="Type search query here">
                       </div>
                       <!--end of col-->
                       <div class="col-auto">
-                        <button type="submit" class="btn btn-lg btn-success" [routerLink]="['/results/' + query]" routerLinkActive="router-link-active" >Search</button>
+                        <button type="submit" class="btn btn-lg btn-success" [routerLink]="['/search/results/' + query]" routerLinkActive="router-link-active" >Search</button>
                       </div>
                       <!--end of col-->
                   </div>

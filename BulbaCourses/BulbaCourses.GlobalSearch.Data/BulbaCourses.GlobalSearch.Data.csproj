@@ -88,7 +88,6 @@
     <Compile Include="EntitiesConfiguration\CourseConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\CourseItemConfiguration.cs" />
     <Compile Include="EntitiesConfiguration\SearchQueryConfiguration.cs" />
-    <Compile Include="EntitiesConfiguration\UserConfiguration.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\Complexity.cs" />
     <Compile Include="Enums\Section.cs" />
@@ -178,6 +177,10 @@
     <Compile Include="Migrations\202001111716181_bookmarkUserIdIsRequired.Designer.cs">
       <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001241056463_models_refactoring.cs" />
+    <Compile Include="Migrations\202001241056463_models_refactoring.Designer.cs">
+      <DependentUpon>202001241056463_models_refactoring.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorDB.cs" />
     <Compile Include="Models\BookmarkDB.cs" />
@@ -185,16 +188,13 @@
     <Compile Include="Models\CourseCategoryDB.cs" />
     <Compile Include="Models\CourseItemDB.cs" />
     <Compile Include="Models\SearchQueryDB.cs" />
-    <Compile Include="Models\UserDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\IBookmarkDbService.cs" />
     <Compile Include="Services\Interfaces\ISearchQueryDbService.cs" />
     <Compile Include="Services\Interfaces\ICourseDbService.cs" />
-    <Compile Include="Services\Interfaces\IUserDbService.cs" />
     <Compile Include="Services\SearchQueryDbService.cs" />
     <Compile Include="Services\CourseDbService.cs" />
-    <Compile Include="Services\UserDbService1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -263,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001111716181_bookmarkUserIdIsRequired.resx">
       <DependentUpon>202001111716181_bookmarkUserIdIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001241056463_models_refactoring.resx">
+      <DependentUpon>202001241056463_models_refactoring.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
