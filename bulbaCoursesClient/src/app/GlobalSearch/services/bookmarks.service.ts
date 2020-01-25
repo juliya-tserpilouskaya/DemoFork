@@ -8,26 +8,25 @@ export class  BookmarksService {
 
   constructor(private client: HttpClient) { }
   getBookmarks() {
-    // return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks/user/' + id);
     return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks/user/');
   }
 
-  deleteBookmark(id) {
+  deleteBookmark(id: string) {
     return this.client.delete<Bookmarks[]>('https://localhost:44320/api/bookmarks/' + id);
   }
 
-  addToBookmarks(id: string, name: string) {
-    // return this.client.get<Course>('https://localhost:44320/api/courses/' + id);
+  addToBookmarks(name: string, description: string, courseid: string) {
     return this.client.put('https://localhost:44320/api/bookmarks/', {
-      CourseId: id,
-      Name:
-    }); //ТУт
+      Title: name,
+      Description: description,
+      URL: courseid
+    });
   }
 }
 export interface Bookmarks {
   Id: string;
   UserId: string;
   Title: string;
-  Category: string;
+  Description: string;
   URL: string;
 }

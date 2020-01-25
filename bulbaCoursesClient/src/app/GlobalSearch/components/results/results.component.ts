@@ -16,7 +16,7 @@ export class ResultsComponent implements OnInit {
   parameter: string;
 
   constructor(private service: SearchService, private bookmarkService: BookmarksService, route: ActivatedRoute) {
-    route.params.subscribe(params => this.parameter = params['query'])
+    route.params.subscribe(params => this.parameter = params['query']);
   }
 
   ngOnInit() {
@@ -24,9 +24,9 @@ export class ResultsComponent implements OnInit {
     .subscribe(data => this.courses = data);
   }
 
-  onAddToBookmarks(courseId: string) {
-    //b.Name = c.Name;
-    this.bookmarkService.addToBookmarks(courseId)
-    .subscribe(data => console.log(data));
+  onAddToBookmarks(name: string, description: string, courseid: string) {
+    this.bookmarkService.addToBookmarks(name, description, courseid)
+    // .subscribe(data => console.log(data));
+    .subscribe();
   }
 }

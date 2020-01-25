@@ -1,15 +1,3 @@
-<p>bookmarks works!</p>
-{{user.id}}
-
-<ul>
-  <li *ngFor="let item of bookmarks">
-   {{item.Id}} | {{item.Title}} | {{item.URL}}
-   <button class="btn btn-outline-success my-2 my-sm-0" (click)="onDelete(item.Id)" type="submit">Delete</button>
-   <!-- {{item.Cur_Code}} {{item.Cur_Name}}-->
-
-  </li>
-</ul>
-
 <div class="card" *ngFor="let item of bookmarks">
   <h5 class="card-header">{{item.Title}}</h5>
   <div class="card-body">
@@ -25,4 +13,4 @@
       </div>
     </div>
   </div>
-</div><!-- /.container -->
+

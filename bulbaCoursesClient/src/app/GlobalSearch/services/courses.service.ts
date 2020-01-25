@@ -19,6 +19,7 @@ export class CoursesService {
 export interface Course {
     Id: string;
     Name: string;
+    Category: number;
     Cost: number;
     Complexity: string;
     Description: string;

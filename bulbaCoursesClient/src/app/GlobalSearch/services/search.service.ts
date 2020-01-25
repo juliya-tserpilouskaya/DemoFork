@@ -18,11 +18,11 @@ export class SearchService {
   }
 }
 
-export interface Courses
-{
+export interface Courses {
     Id: string;
     Name: string;
     Cost: number;
     Complexity: string;
     Description: string;
+    Category: number;
 }
