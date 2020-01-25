@@ -12,7 +12,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(BulbaCourses.PracticalMaterialsTasks.DAL.Context.TasksContext context)

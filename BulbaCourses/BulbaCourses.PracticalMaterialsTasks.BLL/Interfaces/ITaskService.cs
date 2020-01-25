@@ -24,7 +24,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.BLL.Interfaces
         /// <returns></returns>
         TaskDTO GetTask(string id);
         /// <summary>
-        /// Get async Task by id
+        /// Get Task by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

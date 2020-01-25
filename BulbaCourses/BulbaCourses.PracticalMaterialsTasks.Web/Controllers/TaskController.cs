@@ -27,7 +27,10 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             _taskservice = taskService;
             //_validator = validator;
         }
-
+        /// <summary>
+        /// Get all Tasks
+        /// </summary>
+        /// <returns></returns>
         [HttpGet,Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Task is found")]
@@ -37,7 +40,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             var result = await _taskservice.GetTasksAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
-
+        /// <summary>
+        /// Get one Task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
@@ -61,7 +68,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
                 return InternalServerError(ex);
             }
         }
-
+        /// <summary>
+        /// Add Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         //[OverrideActionFilters]
         //[BadRequestFilter]
@@ -79,6 +90,12 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             return Ok();
            
         }
+        /// <summary>
+        /// Update Task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPut,Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
@@ -101,6 +118,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             }
 
         }
+        /// <summary>
+        /// Delete Task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteItem(string id)
         {

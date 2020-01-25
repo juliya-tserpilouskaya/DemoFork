@@ -18,18 +18,37 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
         {
             db = context;
         }
+        /// <summary>
+        /// Get all Tasks
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<TaskDb>> GetAll()
         {
             return await db.Tasks.ToListAsync();
         }
+        /// <summary>
+        /// Get Task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TaskDb Get(string id)
         {
             return db.Tasks.Find(id);
         }
+        /// <summary>
+        /// Get tasks async
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<TaskDb> GetTaskAsync(string id)
         {
             return db.Tasks.FindAsync(id);
         }
+        /// <summary>
+        /// Add task object in database
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         public async Task<TaskDb> Create(TaskDb task)
         {
             if (task == null)
@@ -40,6 +59,11 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             return await Task.FromResult(task);
 
         }
+        /// <summary>
+        /// Update Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         public async Task<TaskDb> Update(TaskDb task)
         {
             if (task == null)
@@ -49,10 +73,20 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Repositories
             db.Entry(task).State = EntityState.Modified;
             return await Task.FromResult(task);
         }
+        /// <summary>
+        /// Search Task
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<TaskDb> Find(Func<TaskDb, Boolean> predicate)
         {
             return db.Tasks.Where(predicate).ToList();
         }
+        /// <summary>
+        /// Dekete Task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TaskDb> Delete(string id)
         {
             TaskDb task = db.Tasks.Find(id);
