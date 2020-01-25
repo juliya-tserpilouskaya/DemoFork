@@ -17,6 +17,10 @@ export class SearchComponent {
   constructor(private _fb: FormBuilder) {
     this.myForm = this._fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
+      description: [''],
+      price: [''],
+      complexity: [''],
+      language: [''],
       items: this._fb.array([
           this.initItem(),
       ])
@@ -50,6 +54,9 @@ export class SearchComponent {
 export interface Course {
   name: string;
   description: string;
+  price: number;
+  complexity: string;
+  language: string;
   items: Items[];
 }
 
