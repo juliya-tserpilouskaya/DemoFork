@@ -20,9 +20,11 @@ namespace BulbaCourses.DiscountAggregator.Web
             //GlobalConfiguration.Configuration
             config.EnableSwagger(c =>
             {
+                c.BasicAuth("basic").Description("Basic HTTP Authentication");
+                c.OperationFilter<MarkSecuredMethodsOperationFilter>();
                 c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
                 c.OperationFilter<ExamplesOperationFilter>();
-                c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.DiscountAggregator.Web.xml"));
+                c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.DiscountAggregator.Web.xml")); 
                 c.OAuth2("oauth2")
                                       .Description("OAuth2 Implicit Grant")
                                       .Flow("implicit")

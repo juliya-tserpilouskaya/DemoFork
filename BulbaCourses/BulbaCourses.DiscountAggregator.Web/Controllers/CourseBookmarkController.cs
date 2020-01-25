@@ -23,10 +23,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             _courseBookmarkService = coursebookmarkService;
         }
 
-        [HttpGet, Route("{userId}")]//можно указать какой тип id
-        [Description("Get Bookmark by UserId")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
+        /// <summary>
+        /// Get bookmark by user ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet, Route("{userId}")]
+        [Description("Get Bookmark by UserId")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark found", typeof(CourseBookmark))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetByUserId(string userId)
@@ -46,6 +51,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new bookmark
+        /// </summary>
+        /// <param name="courseBookmark"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [Description("Add new bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
@@ -62,6 +72,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
+        /// <summary>
+        /// Delete bookmark
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns></returns>
         [HttpDelete, Route("")]
         [Description("Delete bookmark")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]

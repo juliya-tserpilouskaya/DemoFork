@@ -14,19 +14,23 @@ using System.Web.Http;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/domains")]
-    public class DomianController : ApiController
+    public class DomainController : ApiController
     {
         private readonly IDomainServices _domainService;
 
-        public DomianController(IDomainServices domainService)
+        public DomainController(IDomainServices domainService)
         {
             this._domainService = domainService;
         }
 
+        /// <summary>
+        /// Get all domains
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [Description("Get all domains")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(IEnumerable<Domain>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         [Authorize]
@@ -36,11 +40,16 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Get domain by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [Description("Get domain by Id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Domains found", typeof(Domain))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Domains doesn't exist")]
+        [SwaggerResponse(HttpStatusCode.OK, "Domain found", typeof(Domain))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetByIdAsync(string id)
         {
@@ -60,6 +69,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new domain
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [Description("Add new domain")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
@@ -76,6 +90,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete domain by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain deleted", typeof(Domain))]
@@ -91,6 +110,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update domain by ID
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Domain updated", typeof(Domain))]

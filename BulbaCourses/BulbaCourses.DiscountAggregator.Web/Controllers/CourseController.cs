@@ -19,7 +19,7 @@ using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    [Authorize]
+    //[Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;
@@ -36,7 +36,7 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()
@@ -45,10 +45,14 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
         
+        /// <summary>
+        /// Get all courses from DB (async)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("Async")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         //[Authorize]
@@ -62,12 +66,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
-
-
+        /// <summary>
+        /// Get course by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]//можно указать какой тип id
         [Description("Get course by Id")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetById(string id)
@@ -88,11 +95,16 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-        
+
+        /// <summary>
+        /// Get course by Id (async)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("Async/{id}")]
         [Description("Get course by Id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetByIdAsync(string id)
@@ -113,11 +125,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-        
+
+        /// <summary>
+        /// Get courses for user profile
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("Search")]
         [Description("Get courses for UserProfile")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetByUserCriteriaAsync()
@@ -138,10 +154,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get courses by user ID
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
         [HttpGet, Route("Search/{idUser}")]
         [Description("Get courses by idUser")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetByCriteriaAsync(string idUser)
@@ -162,6 +183,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete course by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Course))]
@@ -179,6 +205,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             
         }
 
+        /// <summary>
+        /// Update course by ID
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut, Route("id")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
@@ -193,6 +224,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Add new course
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerRequestExample(typeof(Course),typeof(SwaggerCourse))]
         [Description("Add new course")]
