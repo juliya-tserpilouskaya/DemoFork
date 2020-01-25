@@ -36,6 +36,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             try
             {
                 var result = await _teacherService.GetAllTeachersAsync();
+
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -59,6 +60,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             try
             {
                 var result = await _teacherService.GetTeacherByIdAsync(id);
+
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -70,24 +72,22 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher added", typeof(Teacher))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> CreateTeacherAsync
-            ([FromBody]UserAdd_DTO user)
+            ([FromBody]TeacherAdd_DTO user)
         {
             if (user is null)
             {
                 return BadRequest();
             }
 
-            user.Created = DateTime.Now;
             var result = await _teacherService.AddTeacherAsync(user);
+
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher found", typeof(Teacher))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> UpdateTeacherAsync
             ([FromBody, CustomizeValidator]Teacher techer)
         {
@@ -96,22 +96,14 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _teacherService.UpdateTeacherAsync(techer);
+            var result = await _teacherService.UpdateTeacherAsync(techer);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher deleted", typeof(Boolean))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> DeleteTeacherAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -119,16 +111,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                var result = await _teacherService.DeleteTeacherByIdAsync(id);
+            var result = await _teacherService.DeleteTeacherByIdAsync(id);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         [HttpGet, Route("{id}/feedbacks")]

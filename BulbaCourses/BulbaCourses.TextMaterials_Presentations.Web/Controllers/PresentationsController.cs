@@ -36,6 +36,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             try
             {
                 var result = await _presentationsBase.GetAllPresentationsAsync();
+
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -59,6 +60,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             try
             {
                 var result = await _presentationsBase.GetPresentationByIdAsync(id);
+
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
@@ -70,7 +72,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation added", typeof(Presentation))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> CreatePresentationAsync
             ([FromBody, CustomizeValidator(RuleSet = "AddPresentation, default")]PresentationAdd_DTO presentation)
         {
@@ -79,21 +80,14 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _presentationsBase.AddPresentationAsync(presentation);
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _presentationsBase.AddPresentationAsync(presentation);
+
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation updated", typeof(Presentation))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> UpdatePresentationAsync
             ([FromBody, CustomizeValidator(RuleSet = "UpdatePresentation, default")]Presentation presentation)
         {
@@ -102,22 +96,15 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _presentationsBase.UpdatePresentationAsync(presentation);
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _presentationsBase.UpdatePresentationAsync(presentation);
+
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> DeletePresentationAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -125,15 +112,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                var result = await _presentationsBase.DeletePresentationByIdAsync(id);
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            var result = await _presentationsBase.DeletePresentationByIdAsync(id);
+
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         [HttpGet, Route("{id}/viewed")]

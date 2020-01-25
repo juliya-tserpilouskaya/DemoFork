@@ -13,7 +13,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
         public string Position { get; set; }
 
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; set; } = DateTime.Now;
         public DateTime? Modified { get; set; } = DateTime.Now;
 
         public ICollection<FeedbackDB> Feedbacks { get; set; }

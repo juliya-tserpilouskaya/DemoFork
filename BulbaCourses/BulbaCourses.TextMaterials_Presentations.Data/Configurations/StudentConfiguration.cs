@@ -25,7 +25,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             HasMany<PresentationDB>(x => x.FavoritePresentations).WithMany(_=>_.Students);
 
-            HasMany<FeedbackDB>(_ => _.Feedbacks);
+            HasMany<FeedbackDB>(_ => _.Feedbacks).WithOptional(_=>_.StudentDB).HasForeignKey(_=>_.StudentDBId);
 
             Property(x => x.IsPaid).IsRequired();
         }
