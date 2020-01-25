@@ -11,7 +11,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
         public string PhoneNumber { get; set; }
 
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; set; } = DateTime.Now;
         public DateTime? Modified { get; set; } = DateTime.Now;
 
         public bool IsPaid { get; set; } = false;

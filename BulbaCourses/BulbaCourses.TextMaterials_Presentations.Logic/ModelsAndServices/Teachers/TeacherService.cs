@@ -29,9 +29,9 @@ namespace Presentations.Logic.Repositories
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<Result<Teacher>> AddTeacherAsync(UserAdd_DTO model)
+        public async Task<Result<Teacher>> AddTeacherAsync(TeacherAdd_DTO model)
         {
-            var teacherDb = _mapper.Map<UserAdd_DTO, TeacherDB>(model);
+            var teacherDb = _mapper.Map<TeacherAdd_DTO, TeacherDB>(model);
             _uow.Teachers.Add(teacherDb);
 
             try
