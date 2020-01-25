@@ -16,7 +16,6 @@ export class ReportsService {
   }
 
   deleteReport(id: string) {
-    this.httpClient.delete(this.deleteUrl + id);
-    console.log(this.deleteUrl + id);
+    return this.httpClient.delete(this.deleteUrl + id);
   }
 }
