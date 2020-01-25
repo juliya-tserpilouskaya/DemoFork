@@ -2,6 +2,7 @@ using System.Web.Http;
 using WebActivatorEx;
 using BulbaCourses.Podcasts.Web;
 using Swashbuckle.Application;
+using System;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -9,7 +10,7 @@ namespace BulbaCourses.Podcasts.Web
 {
     public class SwaggerConfig
     {
-        public static void Register()
+        public static void Register(HttpConfiguration config)
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
@@ -61,7 +62,7 @@ namespace BulbaCourses.Podcasts.Web
                         //c.BasicAuth("basic")
                         //    .Description("Basic HTTP Authentication");
                         //
-						// NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
+                        // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                         //c.ApiKey("apiKey")
                         //    .Description("API Key Authentication")
                         //    .Name("apiKey")
@@ -101,7 +102,7 @@ namespace BulbaCourses.Podcasts.Web
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+                        c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.Podcasts.Web.xml"));
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -232,7 +233,7 @@ namespace BulbaCourses.Podcasts.Web
                         // a discovery URL for each version. This provides a convenient way for users to browse documentation
                         // for different API versions.
                         //
-                        //c.EnableDiscoveryUrlSelector();
+                        c.EnableDiscoveryUrlSelector();
 
                         // If your API supports the OAuth2 Implicit flow, and you've described it correctly, according to
                         // the Swagger 2.0 specification, you can enable UI support as shown below.

@@ -11,30 +11,33 @@ using FluentValidation.Validators;
 
 namespace BulbaCourses.Podcasts.Web.Validators
 {
-    class UserValidator : AbstractValidator<UserWeb>
+    class AudioValidator : AbstractValidator<AudioWeb>
     {
-        public UserValidator(IUserService service)
+        public AudioValidator(IAudioService service)
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleSet("AddUser", () =>
+            RuleSet("AddAudio", () =>
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
+                RuleFor(x => x.Course).NotEmpty();
                 RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
                 RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsNameAsync(title))));
-                RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
-                RuleFor(c => c.Name).MinimumLength(5).WithMessage("Login must contain minimum 5 characters.");
-                RuleFor(c => c.Name).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
+                RuleFor(c => c.Name).NotEmpty().WithMessage("Name is required.");
+                RuleFor(c => c.Name).NotEmpty().WithMessage("Name is required.");
+                RuleFor(c => c.Name).NotEmpty().WithMessage("Name is required.");
             });
-            RuleSet("UpdateUser", () =>
+            RuleSet("UpdateAudio", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
+                RuleFor(x => x.Course).NotEmpty();
                 RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
                 RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
             });
-            RuleSet("DeleteUser", () =>
+            RuleSet("DeleteAudio", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
+                RuleFor(x => x.Course).NotEmpty();
                 RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
             });
         }
