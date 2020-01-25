@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { SearchStory } from '../../models/searchstory';
 import { ResultVideo } from '../../models/resultvideo';
 import { SearchRequest } from '../../models/searchrequest';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-request',

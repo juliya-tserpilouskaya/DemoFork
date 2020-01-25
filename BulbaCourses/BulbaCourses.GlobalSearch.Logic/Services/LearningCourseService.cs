@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
@@ -186,9 +187,25 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public LearningCourseDTO Update(LearningCourseDTO course)
         {
             var data = _learningCourseDb.Update(_mapper.Map<LearningCourseDTO, CourseDB>(course));
-            _lucene.IndexCourse(course);
+            //_lucene.IndexCourse(course);
             return _mapper.Map<CourseDB, LearningCourseDTO>(data);
         }
+
+        /// <summary>
+        /// Updates and index course data async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public async Task<Result<LearningCourseDTO>> UpdateAsync(LearningCourseDTO course)
+        {
+            var courseDb = _mapper.Map<LearningCourseDTO, CourseDB>(course);
+
+            var result = await _learningCourseDb.UpdateAsync(courseDb);
+            //_lucene.IndexCourse(course);
+            return result.IsSuccess ? Result<LearningCourseDTO>.Ok(_mapper.Map<LearningCourseDTO>(result.Data))
+                : Result<LearningCourseDTO>.Fail<LearningCourseDTO>(result.Message);
+        }
+
 
         /// <summary>
         /// Updates course data
@@ -219,8 +236,33 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
             }).CreateMapper();
             var data = _learningCourseDb.Add(mapper.Map<LearningCourseDTO, CourseDB>(course));
             LearningCourseDTO LearningCourse = mapper.Map<CourseDB, LearningCourseDTO>(data);
-            _lucene.IndexCourse(LearningCourse);
+            //_lucene.IndexCourse(LearningCourse);
             return LearningCourse;
+        }
+
+        /// <summary>
+        /// Creates learning course async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        public async Task<Result<LearningCourseDTO>> AddAsync(LearningCourseDTO course)
+        {
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<CourseDB, LearningCourseDTO>()
+                    .ForMember(x => x.AuthorId, opt => opt.MapFrom(c => c.AuthorDBId))
+                    .ForMember(x => x.Category, opt => opt.MapFrom(c => c.CourseCategoryDBId))
+                    .ReverseMap()
+                    .ForPath(x => x.AuthorDBId, opt => opt.MapFrom(c => c.AuthorId))
+                    .ForPath(x => x.CourseCategoryDBId, opt => opt.MapFrom(c => c.Category));
+                cfg.CreateMap<CourseItemDB, LearningCourseItemDTO>().ReverseMap();
+            }).CreateMapper();
+
+            var courseDb = mapper.Map<LearningCourseDTO, CourseDB>(course);
+            var result = await _learningCourseDb.AddAsync(courseDb);
+            //_lucene.IndexCourse(course);
+
+            return result.IsSuccess ? Result<LearningCourseDTO>.Ok(mapper.Map<LearningCourseDTO>(result.Data))
+                : Result<LearningCourseDTO>.Fail<LearningCourseDTO>(result.Message);
         }
 
         /// <summary>
@@ -252,6 +294,17 @@ namespace BulbaCourses.GlobalSearch.Logic.Services
         public bool DeleteById(string id)
         {
             return _learningCourseDb.DeleteById(id);
+        }
+
+        /// <summary>
+        /// Deletes course from database async
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
+        public Task<Result> DeleteByIdAsync(string id)
+        {
+            _learningCourseDb.DeleteByIdAsync(id);
+            return Task.FromResult(Result.Ok());
         }
     }
 }

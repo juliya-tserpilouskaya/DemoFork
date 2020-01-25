@@ -122,11 +122,10 @@ namespace BulbaCourses.Video.Logic.Services
             _courseRepository.Update(course);
         }
 
-        public IEnumerable<VideoMaterialInfo> GetCourseVideos(string courseId)
+        public async Task<IEnumerable<VideoMaterialInfo>> GetCourseVideosAsync(string courseId)
         {
-            var course = _courseRepository.GetById(courseId);
-            var videoListDb = course.Videos.ToList().AsReadOnly();
-            var result = _mapper.Map<IEnumerable<VideoMaterialDb>, IEnumerable<VideoMaterialInfo>>(videoListDb);
+            var videos = await _courseRepository.GetCoursesAsync(courseId);
+            var result = _mapper.Map<IEnumerable<VideoMaterialDb>, IEnumerable<VideoMaterialInfo>>(videos);
             return result;
         }
 
@@ -143,25 +142,6 @@ namespace BulbaCourses.Video.Logic.Services
             var course = await _courseRepository.GetByIdAsync(courseId);
             var courseInfo = _mapper.Map<CourseDb, CourseInfo>(course);
             return courseInfo;
-        }
-
-        public async Task<IEnumerable<CourseInfo>> GetListByTagAsync(TagInfo tag)
-        {
-            var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
-            var courses = await _courseRepository.GetAllAsync();
-            List<CourseDb> listCourses = new List<CourseDb>();
-            foreach (var course in courses)
-            {
-                foreach (var courseTag in course.Tags)
-                {
-                    if (courseTag.Content.Equals(tag.Content))
-                    {
-                        listCourses.Add(course);
-                    }
-                }
-            }
-            var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(listCourses.AsEnumerable());
-            return result;
         }
 
         public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
@@ -198,7 +178,6 @@ namespace BulbaCourses.Video.Logic.Services
             courseDb.Level = course.Level;
             courseDb.Raiting = course.Raiting;
             courseDb.Description = course.Description;
-            courseDb.Duration = course.Duration;
             courseDb.Price = course.Price;
             try
             {

@@ -1,18 +1,21 @@
 ﻿using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.Models;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
     [RoutePrefix("api/bookmarks")]
+    [Authorize]
     public class BookmarkController : ApiController
     {
         private readonly IBookmarkService _bookmarkService;
@@ -21,15 +24,23 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             _bookmarkService = bookmarkService;
         }
 
+        //Role - admin
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                //var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
+
+            }
             var result = await _bookmarkService.GetAllAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        //Role - admin
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
@@ -77,13 +88,14 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
-        public IHttpActionResult Create([FromBody]BookmarkDTO bookmark)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]BookmarkDTO bookmark)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_bookmarkService.Add(bookmark));
+            var result = await _bookmarkService.AddAsync(bookmark);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("{id}")]
@@ -91,7 +103,7 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark deleted")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something goes wrong")]
-        public IHttpActionResult RemoveById(string id)
+        public async Task<IHttpActionResult> RemoveById(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _) || _bookmarkService.GetById(id) == null)
             {
@@ -99,8 +111,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
             try
             {
-                _bookmarkService.RemoveById(id);
-                return Ok();
+                var result = await _bookmarkService.RemoveByIdAsync(id);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
             }
             catch (InvalidOperationException ex)
             {

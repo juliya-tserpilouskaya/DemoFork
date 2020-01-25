@@ -76,35 +76,25 @@
     <Compile Include="DTO\SearchQueryDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
-    <Compile Include="InterfaceServices\IAnonymousUserService.cs" />
     <Compile Include="InterfaceServices\IBookmarkService.cs" />
     <Compile Include="InterfaceServices\ILearningCourseService.cs" />
-    <Compile Include="InterfaceServices\IRegisteredUserService.cs" />
     <Compile Include="InterfaceServices\ISearchQueryService.cs" />
     <Compile Include="InterfaceServices\ISearchService.cs" />
-    <Compile Include="InterfaceServices\IUserService.cs" />
     <Compile Include="LogicModule.cs" />
-    <Compile Include="Models\AnonymousUser.cs" />
-    <Compile Include="Models\AnonymousUserStorage.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Bookmark.cs" />
     <Compile Include="Models\BookmarkStorage.cs" />
     <Compile Include="Models\LearningCourse.cs" />
     <Compile Include="Models\LearningCourseItem.cs" />
-    <Compile Include="Models\RegisteredUser.cs" />
-    <Compile Include="Models\RegisteredUserStorage.cs" />
     <Compile Include="Models\SearchQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\LuceneIndexer.cs" />
     <Compile Include="Search\LuceneSearcher.cs" />
     <Compile Include="Search\Mapping\LearningCourseMapper.cs" />
-    <Compile Include="Services\AnonymousUserService.cs" />
     <Compile Include="Services\BookmarkService.cs" />
     <Compile Include="Services\LearningCourseService.cs" />
-    <Compile Include="Services\RegisteredUserService.cs" />
     <Compile Include="Services\SearchQueryService.cs" />
     <Compile Include="Services\SearchService.cs" />
-    <Compile Include="Services\UserService.cs" />
     <Compile Include="Validators\BookmarkValidator.cs" />
     <Compile Include="Validators\LearningCourseItemValidator.cs" />
     <Compile Include="Validators\LearningCourseValidator.cs" />
@@ -119,6 +109,10 @@
     <ProjectReference Include="..\BulbaCourses.GlobalSearch.Data\BulbaCourses.GlobalSearch.Data.csproj">
       <Project>{14e229ba-727c-43a1-8cad-00158f4ceb05}</Project>
       <Name>BulbaCourses.GlobalSearch.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.GlobalSearch.Infrastructure\BulbaCourses.GlobalSearch.Infrastructure.csproj">
+      <Project>{b52bf21b-7695-4f00-b8ef-ae8f36d6c3fc}</Project>
+      <Name>BulbaCourses.GlobalSearch.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

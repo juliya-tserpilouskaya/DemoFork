@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +20,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 
         public SearchQueryDbService()
         {
-            _context = new GlobalSearchContext();
+            this._context = new GlobalSearchContext();
         }
 
         public SearchQueryDbService(GlobalSearchContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         /// <summary>
@@ -99,6 +102,35 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         }
 
         /// <summary>
+        /// Creates search query
+        /// </summary>
+        /// <param name="query">search query</param>
+        /// <returns></returns>
+        public async Task<Result<SearchQueryDB>> AddAsync(SearchQueryDB query)
+        {
+            try
+            {
+                query.Id = Guid.NewGuid().ToString();
+                query.Created = DateTime.Now;
+                _context.SearchQueries.Add(query);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<SearchQueryDB>.Ok(query);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<SearchQueryDB>.Fail<SearchQueryDB>($"Cannot save SearchQuery. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<SearchQueryDB>.Fail<SearchQueryDB>($"Cannot save SearchQuery. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<SearchQueryDB>.Fail<SearchQueryDB>($"Invalid SearchQuery. {e.Message}");
+            }
+        }
+
+        /// <summary>
         /// Removes search query by id
         /// </summary>
         /// <param name="id"></param>
@@ -107,6 +139,29 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             var query = _context.SearchQueries.SingleOrDefault(c => c.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.SearchQueries.Remove(query);
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Removes search query by id async
+        /// </summary>
+        /// <param name="id"></param>
+        public async Task<Result<SearchQueryDB>> RemoveByIdAsync(string id)
+        {
+            try
+            {
+                var query = _context.SearchQueries.SingleOrDefault(c => c.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+                _context.SearchQueries.Remove(query);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<SearchQueryDB>.Ok(query);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<SearchQueryDB>.Fail<SearchQueryDB>($"Bookmark not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<SearchQueryDB>.Fail<SearchQueryDB>($"Bookmark invalid. {e.Message}");
+            }
         }
 
         /// <summary>

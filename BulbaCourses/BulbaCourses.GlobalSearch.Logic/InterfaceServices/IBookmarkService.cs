@@ -1,4 +1,5 @@
-﻿using BulbaCourses.GlobalSearch.Logic.DTO;
+﻿using BulbaCourses.GlobalSearch.Infrastructure.Models;
+using BulbaCourses.GlobalSearch.Logic.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,11 +58,26 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         BookmarkDTO Add(BookmarkDTO bookmark);
 
         /// <summary>
+        /// Creates bookmark
+        /// </summary>
+        /// <param name="bookmark">search query</param>
+        /// <returns></returns>
+        Task<Result<BookmarkDTO>> AddAsync(BookmarkDTO bookmark);
+
+        /// <summary>
         /// Removes bookmarks by id
         /// </summary>
         /// <param name="id">Bookmark id</param>
         /// <returns></returns>
         void RemoveById(string id);
+
+        /// <summary>
+        /// Removes bookmarks by id async
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        Task<Result> RemoveByIdAsync(string id);
+
 
         /// <summary>
         /// Removes all bookmarks from database

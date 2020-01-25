@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,6 +112,12 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         /// <param name="query"></param>
         /// <returns></returns>
         IEnumerable<CourseDB> GetCourseByQuery(string query);
+
+        /// <summary>
+        /// Returns course by query async
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         Task<IEnumerable<CourseDB>> GetCourseByQueryAsync(string query);
 
         /// <summary>
@@ -121,6 +128,14 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         CourseDB Update(CourseDB course);
 
         /// <summary>
+        /// Updates course data async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        Task<Result<CourseDB>> UpdateAsync(CourseDB course);
+
+
+        /// <summary>
         /// Creates learning course
         /// </summary>
         /// <param name="course">Learning course</param>
@@ -128,10 +143,26 @@ namespace BulbaCourses.GlobalSearch.Data.Services.Interfaces
         CourseDB Add(CourseDB course);
 
         /// <summary>
+        /// Creates learning course async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        Task<Result<CourseDB>> AddAsync(CourseDB course);
+
+
+        /// <summary>
         /// Deletes course from database
         /// </summary>
         /// <param name="id">Course id</param>
         /// <returns></returns>
         bool DeleteById(string id);
+
+        /// <summary>
+        /// Deletes course from database async
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
+        Task<Result> DeleteByIdAsync(string id);
+
     }
 }

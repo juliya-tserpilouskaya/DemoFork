@@ -21,9 +21,11 @@ export class YoutubeService {
 
   searchVideo(searchRequest: SearchRequest, user: CustomUser) {
 
-      return this.client.post<ResultVideo[]>('http://localhost:60601/api/SearchRequest', searchRequest, { headers: {
-      UserSub: `${user.sub}`
-    }});
+    return this.client.post<ResultVideo[]>('http://localhost:60601/api/SearchRequest', searchRequest, {
+      headers: {
+        UserSub: `${user.sub}`
+      }
+    });
   }
 
   getStory(user: CustomUser) {

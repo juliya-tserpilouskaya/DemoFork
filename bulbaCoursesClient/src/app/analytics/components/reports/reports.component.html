@@ -1,0 +1,20 @@
+<p>reports works!</p>
+<p *ngIf="user">UserID is {{user.sub}}</p>
+
+<h3 class="first">Reports</h3>
+<p-table [value]="reportShorts">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Operation</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+        <tr>
+            <td>{{report.Name}}</td>
+        <td>
+          <button pButton type="button" label="Delete" class="ui-button-secondary" (click)="deleteReport(report.Id)"></button>
+        </td>
+        </tr>
+    </ng-template>
+</p-table>

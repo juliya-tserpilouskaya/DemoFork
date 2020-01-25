@@ -11,6 +11,7 @@ namespace BulbaCourses.Video.Data.Interfaces
     {
         Task<AuthorDb> GetByIdAsync(string id);
         Task<IEnumerable<AuthorDb>> GetAllAsync();
+        Task<IEnumerable<CourseDb>> GetCoursesAsync(string id);
         Task<AuthorDb> AddAsync(AuthorDb author);
         Task<AuthorDb> UpdateAsync(AuthorDb author);
         Task RemoveAsync(AuthorDb author);

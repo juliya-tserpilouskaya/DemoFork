@@ -8,12 +8,12 @@ namespace BulbaCourses.TextMaterials_Presentations.Data.Interfaces
 {
     public interface IStudentLoadingRepository
     {
-        Task AddLovedPresentationAsync(string idStudent, string idPresentation);
-        Task DeleteLovedPresentationAsync(string idStudent, string idPresentation);
+        void AddLovedPresentationAsync(string idStudent, string idPresentation);
+        void DeleteLovedPresentationAsync(string idStudent, string idPresentation);
         Task<StudentDB> GetAllLovedPresentationAsync(string id);
 
-        Task AddViewedPresentationAsync(string idStudent, string idPresentation);
-        Task DeleteViewedPresentationAsync(string idStudent, string idPresentation);
+        void AddViewedPresentationAsync(string idStudent, string idPresentation);
+        void DeleteViewedPresentationAsync(string idStudent, string idPresentation);
         Task<StudentDB> GetAllViewedPresentationAsync(string id);
 
         Task UpdateIsPaidAsync(string id, bool hasPayment);
