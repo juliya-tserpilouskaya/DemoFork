@@ -22,6 +22,7 @@ import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.compon
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
+
 import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
 
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
@@ -66,7 +67,6 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     PracticalMaterialsTestModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: []
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

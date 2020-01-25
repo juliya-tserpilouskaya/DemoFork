@@ -18,8 +18,8 @@ import { SearchComponent } from './GlobalSearch/components/search/search.compone
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
 import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
-import { TestFormComponent } from './PracticalMaterialsTests/components/test-form.component';
-
+import { TestMainFormComponent } from './PracticalMaterialsTests/components/MainForm/test-main-form.component';
+import { TestFormComponent } from './PracticalMaterialsTests/components/TestForm/test-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -36,7 +36,8 @@ const routes: Routes = [
   { path: 'results/:query', component: ResultsComponent },
   { path: 'search/results/:query', component: ResultsComponent },
   { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
-  { path: 'testform', component: TestFormComponent},
+  { path: 'test/userTestInfo', component: TestMainFormComponent },
+  { path: 'test/passingTest', component: TestFormComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
 ];

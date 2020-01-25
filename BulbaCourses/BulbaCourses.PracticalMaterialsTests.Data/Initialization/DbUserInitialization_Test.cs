@@ -26,6 +26,33 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  new MQuestion_ChoosingAnswerFromListDb()
                                  {
                                      QuestionText = "Question_ChoosingAnswerFromListDb_Text_1",
+                                     SortKey = 0,
+                                     AnswerVariants =
+                                        new List<MAnswerVariant_ChoosingAnswerFromListDb>()
+                                        {
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "Ответ_1",
+                                                SortKey = 0,
+                                                IsCorrectAnswer = false
+                                            },
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "AnswerText_2",
+                                                SortKey = 1,
+                                                IsCorrectAnswer = false
+                                            },
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "AnswerText_3",
+                                                SortKey = 2,
+                                                IsCorrectAnswer = true
+                                            }
+                                        }
+                                 },
+                                 new MQuestion_ChoosingAnswerFromListDb()
+                                 {
+                                     QuestionText = "Question_ChoosingAnswerFromListDb_Text_2",
                                      SortKey = 1,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
@@ -33,19 +60,46 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                             new MAnswerVariant_ChoosingAnswerFromListDb()
                                             {
                                                 AnswerText = "Ответ_1",
-                                                SortKey = 1,
+                                                SortKey = 0,
                                                 IsCorrectAnswer = false
                                             },
                                             new MAnswerVariant_ChoosingAnswerFromListDb()
                                             {
                                                 AnswerText = "AnswerText_2",
-                                                SortKey = 2,
+                                                SortKey = 1,
                                                 IsCorrectAnswer = false
                                             },
                                             new MAnswerVariant_ChoosingAnswerFromListDb()
                                             {
                                                 AnswerText = "AnswerText_3",
-                                                SortKey = 3,
+                                                SortKey = 2,
+                                                IsCorrectAnswer = true
+                                            }
+                                        }
+                                 },
+                                 new MQuestion_ChoosingAnswerFromListDb()
+                                 {
+                                     QuestionText = "Question_ChoosingAnswerFromListDb_Text_3",
+                                     SortKey = 2,
+                                     AnswerVariants =
+                                        new List<MAnswerVariant_ChoosingAnswerFromListDb>()
+                                        {
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "Ответ_1",
+                                                SortKey = 0,
+                                                IsCorrectAnswer = false
+                                            },
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "AnswerText_2",
+                                                SortKey = 1,
+                                                IsCorrectAnswer = false
+                                            },
+                                            new MAnswerVariant_ChoosingAnswerFromListDb()
+                                            {
+                                                AnswerText = "AnswerText_3",
+                                                SortKey = 2,
                                                 IsCorrectAnswer = true
                                             }
                                         }
@@ -57,26 +111,26 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  new MQuestion_SetOrderDb()
                                  {
                                      QuestionText = "Question_SetOrderDb_Text_1",
-                                     SortKey = 2,
+                                     SortKey = 3,
                                      AnswerVariants =
                                         new List<MAnswerVariant_SetOrderDb>()
                                         {
                                             new MAnswerVariant_SetOrderDb()
                                             {
                                                 AnswerText = "AnswerText_1",
-                                                SortKey = 1,
+                                                SortKey = 0,
                                                 CorrectOrderKey = 1
                                             },
                                             new MAnswerVariant_SetOrderDb()
                                             {
                                                 AnswerText = "AnswerText_2",
-                                                SortKey = 2,
+                                                SortKey = 1,
                                                 CorrectOrderKey = 2
                                             },
                                             new MAnswerVariant_SetOrderDb()
                                             {
                                                 AnswerText = "AnswerText_3",
-                                                SortKey = 3,
+                                                SortKey = 2,
                                                 CorrectOrderKey = 3
                                             }
                                         }
