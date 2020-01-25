@@ -21,13 +21,7 @@ export class SearchResultComponent implements OnInit {
 
   player: YT.Player;
 
-  config = {
-    itemsPerPage: 5,
-    currentPage: 1,
-    totalItems: this.resultVideos.length
-  };
   totalItems = this.resultVideos.length;
-  public autoHide = true;
 
   setVideo(video: ResultVideo) {
     this.video = video;
@@ -51,10 +45,6 @@ export class SearchResultComponent implements OnInit {
     this.youtubeService.result$.subscribe(data => {
       this.resultVideos = data;
     });
-  }
-
-  pageChanged(event) {
-    this.config.currentPage = event;
   }
 }
 

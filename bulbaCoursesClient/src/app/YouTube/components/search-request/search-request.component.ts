@@ -78,14 +78,14 @@ export class SearchRequestComponent implements OnInit {
           break;
       }
       this.loading = true;
-      this.service.searchVideo(searchRequest, this.user).subscribe(data => {
+      this.youtubeService.searchVideo(searchRequest, this.user).subscribe(data => {
       this.loading = false;
       this.resultVideos = data;
       this.youtubeService.resultSubject.next(this.resultVideos);
       console.log('Search completed!');
       },
-      (error) => console.log('Search completed!'),
-      () => this.service.getStory(this.user)
+      (error) => console.log('Search exception...'),
+      () => this.youtubeService.getStory(this.user)
       );
     }
   }

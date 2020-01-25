@@ -1,4 +1,3 @@
-<p>Seach result:</p>
 <ul>
   <li *ngFor="let video of resultVideos | paginate: { itemsPerPage: 5, currentPage: pgNumber, totalItems: totalItems, id: 'first'}">
     <div class="video">
@@ -18,4 +17,4 @@
     <br>
   </li>
 </ul>
-<pagination-controls id="first" [autoHide]="autoHide" (pageChange)="pgNumber = $event"></pagination-controls>
+<pagination-controls id="first" [autoHide]="true" (pageChange)="pgNumber = $event"></pagination-controls>
