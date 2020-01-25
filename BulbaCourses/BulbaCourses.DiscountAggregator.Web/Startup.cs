@@ -32,10 +32,10 @@ namespace BulbaCourses.DiscountAggregator.Web
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             var config = new HttpConfiguration();
-            SwaggerConfig.Register(config);
-            //config.Filters.Add(new AuthorizeAttribute());
             //config.Filters.Add(new BasicAuthenticationFilter()); // реализация IAuthenticationFilter
-
+            config.Filters.Add(new AuthorizeAttribute());
+            SwaggerConfig.Register(config);            
+            
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
 

@@ -352,7 +352,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\MarkSecuredMethodsOperationFilter.cs" />
+    <Compile Include="Filters\MarkSecuredMethodsOperationFilter.cs" />
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />

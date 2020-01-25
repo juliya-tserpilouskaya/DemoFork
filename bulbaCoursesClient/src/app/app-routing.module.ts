@@ -21,7 +21,7 @@ import { SearchCourseComponent } from './GlobalSearch/components/course/course.c
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'discountAggregator', component: CourseComponent},
+  { path: 'discount-aggregator', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
   { path: 'video', component: VideoplayerComponent },
   { path: 'analytics', component: AnalyticsComponent },

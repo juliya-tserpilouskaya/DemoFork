@@ -21,7 +21,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             config.EnableSwagger(c =>
             {
                 c.BasicAuth("basic").Description("Basic HTTP Authentication");
-                c.OperationFilter<MarkSecuredMethodsOperationFilter>();
+                //c.OperationFilter<MarkSecuredMethodsOperationFilter>();
                 c.SingleApiVersion("v1", "BulbaCourses.DiscountAggregator");
                 c.OperationFilter<ExamplesOperationFilter>();
                 c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.DiscountAggregator.Web.xml")); 
