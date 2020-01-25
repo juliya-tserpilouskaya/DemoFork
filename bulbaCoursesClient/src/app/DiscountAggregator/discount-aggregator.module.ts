@@ -4,7 +4,7 @@ import { DiscountAggregatorService } from './services/discount-aggregator.servic
 import { CourseComponent } from './components/course/course.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { FiltersComponent } from './components/filters/filters.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 

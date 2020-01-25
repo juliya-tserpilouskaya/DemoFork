@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountAggregatorService, Courses } from '../../services/discount-aggregator.service';
+import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
 import { ActivatedRoute } from '@angular/router';
 import { CustomUser } from 'src/app/auth/models/user';
 

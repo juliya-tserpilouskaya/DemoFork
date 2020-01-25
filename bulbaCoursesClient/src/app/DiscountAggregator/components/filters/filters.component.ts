@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FormGroup, FormBuilder, NgModel } from '@angular/forms';
-import { DiscountAggregatorService, Courses } from '../../services/discount-aggregator.service';
+import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
 import { User, CustomUser } from 'src/app/auth/models/user';
 import { map } from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ export class FiltersComponent implements OnInit {
   filterForm: FormGroup;
   discountAggregatorService: DiscountAggregatorService;
   courses: Courses[] = [];
+  searchCriteria: SearchCriteria;
 
   constructor(private service: DiscountAggregatorService, private formBuilder: FormBuilder, private authService: AuthService) {
     /*this.filterForm = formBuilder.group({
@@ -32,36 +33,56 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() {
    // this.authService.user$.subscribe((user) => this.user = user as CustomUser);
+   this.service.getSearchCriteria()
+    .subscribe(data => this.searchCriteria = data);
+   console.log('get criteria good');
   }
 
   onSubmitCriteria() {
-    console.log('123');
+    console.log('press submit criteria');
+    this.service.putSearch(this.searchCriteria, this.user)
+      .subscribe(data => this.searchCriteria = data);
+      // .subscribe(data => this.searchCriteria = data);
+    console.log('criteria updated');
     this.service.getCoursesForCriteria(/*this.user*/)
     .subscribe(data => this.courses = data);
+    console.log('finish load courses!');
   }
 
   onSubmit() {
-    if (this.filterForm.valid) {
+    // if (this.filterForm.valid) {
 
-      const dataForm = this.filterForm.value;
-      const newSearchCriteria: SearchCriteria = {
-        Domains : dataForm.domainName,
-        CourseCategories: dataForm.categoryName,
-        MinPrice : dataForm.minPrice,
-        MaxPrice : dataForm.maxPrice,
-        MinDiscount : dataForm.minDiscount,
-        MaxDiscount : dataForm.maxDiscount
-      };
-    }
+    //   const dataForm = this.filterForm.value;
+    //   const newSearchCriteria: SearchCriteria = {
+    //    Domains : dataForm.domainName,
+    //     CourseCategories: dataForm.categoryName,
+    //     MinPrice : dataForm.minPrice,
+    //     MaxPrice : dataForm.maxPrice,
+    //     MinDiscount : dataForm.minDiscount,
+    //     MaxDiscount : dataForm.maxDiscount
+    //   };
+    // }
   }
 }
 
-export class SearchCriteria {
+// export class SearchCriteria {
+//   Id?: string;
+//   Domains: Domain[]; // string
+//   CourseCategories: CourseCategory[]; // string;
+//   MinPrice: number;
+//   MaxPrice: number;
+//   MinDiscount: number;
+//   MaxDiscount: number;
+// }
+
+export class Domain {
   Id?: string;
-  Domains: string; // Domain[];
-  CourseCategories: string; // CourseCategory[];
-  MinPrice: number;
-  MaxPrice: number;
-  MinDiscount: number;
-  MaxDiscount: number;
+  DomainName: string;
+  DomainURL: string;
+}
+
+export class CourseCategory {
+  Id?: string;
+  Name: string;
+  Title: string;
 }

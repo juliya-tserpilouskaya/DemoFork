@@ -3,7 +3,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Firtst : DbMigration
+    public partial class First : DbMigration
     {
         public override void Up()
         {
