@@ -16,14 +16,13 @@ import { QueryResultComponent } from './GlobalSearch/components/query-result/que
 import { CourseItemComponent } from './GlobalSearch/components/course-item/course-item.component';
 import { SearchComponent } from './GlobalSearch/components/search/search.component';
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
-import{VideoplayerComponent} from './Video/components/videoplayer/videoplayer.component';
+import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'discountCourses', component: CourseComponent},
-  // {path: 'discountMenu', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
   { path: 'video', component: VideoplayerComponent },
   { path: 'analytics', component: AnalyticsComponent },
@@ -33,13 +32,11 @@ const routes: Routes = [
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
-    { path: 'results/:query', component: ResultsComponent },
-    { path: 'search/results/:query', component: ResultsComponent },
-    { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
-  // { path: 'bookmarks/:id', component: BookmarksComponent },
+  { path: 'results/:query', component: ResultsComponent },
+  { path: 'search/results/:query', component: ResultsComponent },
+  { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
-  // { path: 'bookmarks/:id', component: BookmarksComponent }
 ];
 
 @NgModule({
