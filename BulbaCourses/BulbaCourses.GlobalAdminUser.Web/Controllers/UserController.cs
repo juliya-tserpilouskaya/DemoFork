@@ -11,7 +11,8 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
 {
 
     [RoutePrefix("api/users")]
-    [EnableCors("*","*","*")]
+    [EnableCors("http://localhost:44382", "*","*")]    
+    //[EnableCors("*", "*","*")]
     public class UserController : ApiController
     {
         private readonly IUserService _userService;

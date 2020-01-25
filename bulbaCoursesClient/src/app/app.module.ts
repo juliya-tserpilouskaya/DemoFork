@@ -38,7 +38,8 @@ import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.compon
           'https://localhost:44317',
           'http://localhost:3300',
           'http://localhost:3500',
-          'http://localhost:60601'
+          'http://localhost:60601',
+          'https://localhost:44352'
         ]
       }
     }),
