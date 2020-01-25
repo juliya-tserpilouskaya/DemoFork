@@ -21,6 +21,7 @@ namespace BulbaCourses.Podcasts.Logic
             Bind<ICourseService>().To<CourseService>();
             Bind<ICommentService>().To<CommentService>();
             Bind<IAudioService>().To<AudioService>();
+            Bind<IContentService>().To<ContentService>();
         }
     }
 }

@@ -27,14 +27,14 @@ namespace TextMaterials_Presentations_Tests.ServicesTest
         Mapper _mapper;
 
         List<TeacherDB> _listTeacherDB;
-        List<UserAdd_DTO> _listTeacherAdd_DTO;
+        List<TeacherAdd_DTO> _listTeacherAdd_DTO;
 
         [OneTimeSetUp]
         public void OneTimeInitialize()
         {
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UserAdd_DTO, TeacherDB>();
+                cfg.CreateMap<TeacherAdd_DTO, TeacherDB>();
                 cfg.CreateMap<Teacher, TeacherDB>()
                     .ReverseMap();
             });
@@ -55,11 +55,11 @@ namespace TextMaterials_Presentations_Tests.ServicesTest
                 new TeacherDB(){ PhoneNumber = "3", Created = DateTime.Now}
             };
 
-            _listTeacherAdd_DTO = new List<UserAdd_DTO>()
+            _listTeacherAdd_DTO = new List<TeacherAdd_DTO>()
             {
-                new UserAdd_DTO(){ PhoneNumber = "4", Created = DateTime.Now},
-                new UserAdd_DTO(){ PhoneNumber = "5", Created = DateTime.Now},
-                new UserAdd_DTO(){ PhoneNumber = "6", Created = DateTime.Now}
+                new TeacherAdd_DTO(){ PhoneNumber = "4"},
+                new TeacherAdd_DTO(){ PhoneNumber = "5"},
+                new TeacherAdd_DTO(){ PhoneNumber = "6"}
             };
         }
 

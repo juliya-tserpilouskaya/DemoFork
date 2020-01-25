@@ -27,6 +27,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get all courses from the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
@@ -46,6 +50,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -70,10 +79,14 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new course to the database
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course added", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> CreateCourseAsync
             ([FromBody, CustomizeValidator]CourseAdd_DTO course)
         {
@@ -84,15 +97,17 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             var result = await _courseBase.AddCourseAsync(course);
 
-            _bus.Send("Test", result.Data);
-
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update the course in the database
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(Course))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> UpdateCourseAsync
             ([FromBody, CustomizeValidator(RuleSet = "UpdateCourse, default")]Course course)
         {
@@ -101,22 +116,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _courseBase.UpdateCourseAsync(course);
+            var result = await _courseBase.UpdateCourseAsync(course);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete the course from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> DeleteCourseByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -124,18 +136,16 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                var result = await _courseBase.DeleteCourseByIdAsync(id);
+            var result = await _courseBase.DeleteCourseByIdAsync(id);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
+        /// <summary>
+        /// Get all presentations from the course by course ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/presentations")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -152,7 +162,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             {
                 var result = await _courseBase.GetAllPresentationsFromCourseAsync(id);
 
-                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
             catch (InvalidOperationException ex)
             {

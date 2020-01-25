@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Presentations.Logic
 {
-    public class UserAdd_DTO
+    public class TeacherAdd_DTO : UserAdd_DTO
     {
-        public DateTime? Created { get; set; } = DateTime.Now;
-
-        public string PhoneNumber { get; set; }
+        public string Position { get; set; }
     }
 }

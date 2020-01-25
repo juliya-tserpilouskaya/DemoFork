@@ -12,7 +12,7 @@ namespace Presentations.Logic.Repositories
 
         public bool IsAccessible { get; set; }
 
-        public string TeacherId { get; set; }
-        public string CourseId { get; set; }
+        public string TeacherDBId { get; set; }
+        public string CourseDBId { get; set; }
     }
 }
