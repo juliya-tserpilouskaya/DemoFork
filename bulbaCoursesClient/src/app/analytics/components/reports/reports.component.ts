@@ -23,11 +23,23 @@ export class ReportsComponent implements OnInit {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
 
-    this.reportsService.getReports().subscribe(data => this.reportShorts = data);
+    this.getReports();
+  }
+
+  getReports() {
+    const sub = this.reportsService.getReports().subscribe(
+      data => this.reportShorts = data,
+      () => console.log('Error getReports'),
+      () => sub.unsubscribe);
   }
 
   deleteReport(id: string) {
-    this.reportsService.deleteReport(id);
-    this.reportsService.getReports();
+    const sub = this.reportsService.deleteReport(id).subscribe(
+      () => null,
+      () => console.log('Error deleteReport'),
+      () => {
+        this.getReports();
+      }
+    );
   }
 }
