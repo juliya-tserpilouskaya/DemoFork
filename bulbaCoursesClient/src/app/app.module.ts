@@ -14,6 +14,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { VideoModule } from './Video/video.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AnalyticsModule } from './analytics/analytics.module';
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
@@ -45,6 +46,7 @@ import { AnalyticsConstants } from './analytics/components/constants/analytics.c
     RegisterModule,
     GlobalSearchModule,
     FormsModule,
+    ReactiveFormsModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
