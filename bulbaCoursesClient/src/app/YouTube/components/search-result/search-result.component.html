@@ -3,13 +3,13 @@
     <div class="video">
       <div class="video-thumbnail">
         <div class="thumbnail-wrapper">
-            <a (click)="setVideo(video)"  [routerLink]="['/video',video.Id]">
+            <a (click)="setVideo(video)"  [routerLink]="['/youtubevideo',video.Id]">
                 <img class="thumbnail" src='{{video.Thumbnail}}' alt=""></a>
           <div class="duration-info">{{video.Duration | duration}}</div>
         </div>
       </div>
       <div class="video-info">
-        <h5><a (click)="setVideo(video)" [routerLink]="['/video',video.Id]">{{video.Title}}</a></h5>
+        <h5><a (click)="setVideo(video)" [routerLink]="['/youtubevideo',video.Id]">{{video.Title}}</a></h5>
         <p><span>{{video.Channel?.Name}}</span><span>{{video.PublishedAt | publishedAt}}</span></p>
         <p>{{video.Description}}</p>
       </div>

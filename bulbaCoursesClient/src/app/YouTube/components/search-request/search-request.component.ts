@@ -46,7 +46,7 @@ export class SearchRequestComponent implements OnInit {
 
       const dataForm = this.searchForm.value;
 
-      const searchRequest =  new SearchRequest();
+      const searchRequest = new SearchRequest();
       searchRequest.Title = dataForm.title;
       searchRequest.Definition = dataForm.definition;
       searchRequest.Dimension = dataForm.dimension;
