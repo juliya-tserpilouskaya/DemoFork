@@ -1,5 +1,7 @@
 ﻿using BulbaCourses.Youtube.Logic.Models;
+using BulbaCourses.Youtube.Logic.Models.SwaggerExamples.SearchStories;
 using BulbaCourses.Youtube.Logic.Services;
+using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,10 @@ using System.Web.Http;
 
 namespace BulbaCourses.Youtube.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful SearchStory service.
+    /// </summary>
+    /// [ApiVersion("1.0")]
     [RoutePrefix("api/story")]
     [Authorize]
     public class StoryController : ApiController
@@ -22,6 +28,11 @@ namespace BulbaCourses.Youtube.Web.Controllers
             _storyService = storyService;
         }
 
+        /// <summary>
+        /// Get all search story for user by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet, Route("{userId}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
@@ -44,6 +55,39 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Save search story
+        /// </summary>
+        /// <param name="story"></param>
+        /// <returns></returns>
+        [HttpPost, Route("")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "SearchStory validation failed")]
+        [SwaggerResponse(HttpStatusCode.OK, "Search story saved", typeof(SearchStory))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SearchStoryExample))]
+        public async Task<IHttpActionResult> SaveStoryAsync([FromBody] SearchStory story)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var result = _storyService.SaveAsync(story);
+                if (result == null) return BadRequest();
+
+                return Ok(result);
+            }
+            catch (InvalidOperationException exc)
+            {
+                return InternalServerError(exc);
+            }
+        }
+
+        /// <summary>
+        /// Delete search story by storyId
+        /// </summary>
+        /// <param name="storyid"></param>
+        /// <returns></returns>
         [HttpDelete, Route("bystoryid/{storyid}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid input format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
@@ -66,6 +110,11 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete all user search story by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpDelete, Route("byuserid/{userId}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]
@@ -88,6 +137,11 @@ namespace BulbaCourses.Youtube.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Hide user search story by storyId if user needs to delete story
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         [HttpPut, Route("hide/")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "SearchStory doesn't exists")]

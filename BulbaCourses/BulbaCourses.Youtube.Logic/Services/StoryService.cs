@@ -42,6 +42,11 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<SearchStory>(_storyRepository.Save(storyDb));
         }
 
+        /// <summary>
+        /// Save async current search request as story for User
+        /// </summary>
+        /// <param name="story"></param>
+        /// <returns></returns>
         public async Task<Result<SearchStory>> SaveAsync(SearchStory story)
         {
             //validation
@@ -119,7 +124,7 @@ namespace BulbaCourses.Youtube.Logic.Services
         }
 
         /// <summary>
-        ///Delete one record from story by Story Id
+        ///Delete async one record from story by Story Id
         /// </summary>
         /// <param name="storyId"></param>
         public async Task<Result> DeleteByStoryIdAsync(int? storyId)
@@ -153,6 +158,10 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetAll());
         }
 
+        /// <summary>
+        /// Get async all stories for all Users
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<SearchStory>> GetAllStoriesAsync()
         {
             return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetAllAsync());
@@ -168,6 +177,11 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetByUserId(userId));
         }
 
+        /// <summary>
+        /// Get async all stories by User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SearchStory>> GetStoriesByUserIdAsync(string userId)
         {
             return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetByUserIdAsync(userId));
@@ -183,6 +197,11 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<IEnumerable<SearchStory>>(_storyRepository.GetByRequestId(requestId));
         }
 
+        /// <summary>
+        /// Get async all stories by Request Id
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<SearchStory>> GetStoriesByRequestIdAsync(int? requestId)
         {
             return _mapper.Map<IEnumerable<SearchStory>>(await _storyRepository.GetByRequestIdAsync(requestId));            
@@ -198,11 +217,21 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _mapper.Map<SearchStory>(_storyRepository.GetByStoryId(storyId));
         }
 
+        /// <summary>
+        /// Get async one record from story by Story Id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         public async Task<SearchStory> GetStoryByStoryIdAsync(int? storyId)
         {
             return _mapper.Map<SearchStory>(await _storyRepository.GetByStoryIdAsync(storyId));
         }
 
+        /// <summary>
+        /// Hide search story by storyId for user
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         public bool HideStoryForUser(int? storyId)
         {
             if (storyId == null)
@@ -210,6 +239,11 @@ namespace BulbaCourses.Youtube.Logic.Services
             return _storyRepository.HideStoryForUser(storyId);
         }
 
+        /// <summary>
+        /// Check async story by story id
+        /// </summary>
+        /// <param name="storyId"></param>
+        /// <returns></returns>
         public async Task<bool> ExistsAsync(int? storyId)
         {
             return await _storyRepository.ExistsAsync(storyId);
