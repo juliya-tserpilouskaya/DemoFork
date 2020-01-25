@@ -7,8 +7,10 @@ import {HttpClient} from '@angular/common/http';
 export class  BookmarksService {
 
   constructor(private client: HttpClient) { }
-  getBookmarks() {
-    return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks');
+  getBookmarks(id: string) {
+    return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks/user/' + id);
+    // return this.client.get<Bookmarks[]>('https://localhost:44320/api/bookmarks');
+
   }
 }
 export interface Bookmarks {

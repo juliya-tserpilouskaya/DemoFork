@@ -48,15 +48,15 @@ namespace BulbaCourses.GlobalSearch.Logic.Search
                 // add new index entry
                 var doc = new Document();
 
-                // add lucene fields mapped to db fields
-                doc.Add(new Field("Id", courseData.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                doc.Add(new Field("Description", courseData.Description.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("Name", courseData.Name.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("Category", courseData.Category.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("Cost", courseData.Cost.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("Complexity", courseData.Complexity.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("Language", courseData.Language.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-                doc.Add(new Field("AuthorId", courseData.AuthorId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            // add lucene fields mapped to db fields
+            doc.Add(new Field("Id", courseData.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("Description", courseData.Description.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("Name", courseData.Name.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("Category", courseData.Category.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("Cost", courseData.Cost.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            //doc.Add(new Field("Complexity", courseData.Complexity.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            //doc.Add(new Field("Language", courseData.Language.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("AuthorId", courseData.AuthorId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
                 // add entry to index
                 writer.AddDocument(doc);
