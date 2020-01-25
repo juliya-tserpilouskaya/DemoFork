@@ -117,8 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="API" xml:space="preserve">
+    <value>API</value>
+  </data>
+  <data name="AuthorizationUrl" xml:space="preserve">
+    <value>http://localhost:44382/connect/authorize</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="bulbacourses" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bulbacourses.pfx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DeprecatedAPI" xml:space="preserve">
+    <value>&amp;nbsp;This API version has been deprecated.</value>
+  </data>
+  <data name="DescriptionDomain" xml:space="preserve">
+    <value>&lt;br&gt;Analytics help you see what works and fix what doesn't. Analytics provides you with information on major changes and new trends.&lt;br&gt;This API provides information for working with Analytics domain data.</value>
+  </data>
+  <data name="EmailDeveloper" xml:space="preserve">
+    <value>dmitriy@bulova.com</value>
+  </data>
+  <data name="MIT" xml:space="preserve">
+    <value>MIT</value>
+  </data>
+  <data name="NameDeveloper" xml:space="preserve">
+    <value>Dmitriy Bulova</value>
+  </data>
+  <data name="NameDomain" xml:space="preserve">
+    <value>Analytics.</value>
+  </data>
+  <data name="OAuth2Description" xml:space="preserve">
+    <value>OAuth2 Implicit Grant</value>
+  </data>
+  <data name="OpenIdDescription" xml:space="preserve">
+    <value>Represents openId</value>
+  </data>
+  <data name="ProfileDescription" xml:space="preserve">
+    <value>Represents profile</value>
+  </data>
+  <data name="TermsOfService" xml:space="preserve">
+    <value>Shareware</value>
+  </data>
+  <data name="TokenUrl" xml:space="preserve">
+    <value>http://localhost:44382/connect/token</value>
+  </data>
+  <data name="UrlMIT" xml:space="preserve">
+    <value>https://opensource.org/licenses/MIT</value>
   </data>
 </root>
