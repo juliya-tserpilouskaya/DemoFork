@@ -12,6 +12,11 @@ import { ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationDialogModule } from './ensure/dialog/confirmdialog/confirmdialog.module';
+import { ConfirmationDialogService } from './ensure/dialog/confirmdialog/confirmdialog.service';
 
 @NgModule({
   declarations: [AnalyticsComponent, ReportsComponent],
@@ -22,11 +27,14 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     MessagesModule,
     TableModule,
     ButtonModule,
+    ToastModule,
     ListboxModule,
     DropdownModule,
-    SplitButtonModule
+    SplitButtonModule,
+    ConfirmDialogModule,
+    ConfirmationDialogModule
   ],
-  providers: [AnalyticsService, ReportsService],
+  providers: [AnalyticsService, ReportsService, ConfirmationDialogService, ConfirmationService, MessageService],
   exports: [AnalyticsComponent]
 })
 export class AnalyticsModule { }
