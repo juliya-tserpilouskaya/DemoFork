@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using System.Security.Claims;
 using FluentValidation.WebApi;
+using EasyNetQ;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -20,9 +21,12 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class LearningCourseController : ApiController
     {
         private readonly ILearningCourseService _learningCourseService;
-        public LearningCourseController(ILearningCourseService learningCourseService)
+        private readonly IBus _bus;
+
+        public LearningCourseController(ILearningCourseService learningCourseService, IBus bus)
         {
             _learningCourseService = learningCourseService;
+            _bus = bus;
         }
 
         [HttpGet, Route("{id}")]
@@ -208,7 +212,15 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
 
             var result = await _learningCourseService.AddAsync(course);
-            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
+            if (result.IsError)
+            {
+                return BadRequest(result.Message);
+            }
+            else
+            {
+                await _bus.SendAsync("IndexService", result.Data);
+                return (IHttpActionResult)Ok(result.Data);
+            }
         }
 
         [HttpDelete, Route("{id}")]
