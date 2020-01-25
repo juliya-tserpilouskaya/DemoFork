@@ -5,7 +5,6 @@ using System.Linq;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
-//using BulbaCourses.TextMaterials_Presentations.Data.Migrations;
 
 namespace BulbaCourses.TextMaterials_Presentations.Data
 {
@@ -15,7 +14,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         {
             Database.Log = s => Debug.WriteLine(s);
             Database.SetInitializer<PresentationsContext>(new PresentationsContextInitializer());
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<PresentationsContext, Configuration>());
         }
 
         public PresentationsContext(string connectionString) : base(connectionString)

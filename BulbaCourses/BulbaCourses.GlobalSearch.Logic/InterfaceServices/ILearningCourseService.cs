@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using BulbaCourses.GlobalSearch.Logic.Models;
 
@@ -115,6 +116,14 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         LearningCourseDTO Update(LearningCourseDTO course);
 
         /// <summary>
+        /// Updates course data async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        Task<Result<LearningCourseDTO>> UpdateAsync(LearningCourseDTO course);
+
+
+        /// <summary>
         /// Creates learning course
         /// </summary>
         /// <param name="course">Learning course</param>
@@ -122,10 +131,25 @@ namespace BulbaCourses.GlobalSearch.Logic.InterfaceServices
         LearningCourseDTO Add(LearningCourseDTO course);
 
         /// <summary>
+        /// Creates learning course async
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns></returns>
+        Task<Result<LearningCourseDTO>> AddAsync(LearningCourseDTO course);
+
+
+        /// <summary>
         /// Deletes course from database
         /// </summary>
         /// <param name="id">Course id</param>
         /// <returns></returns>
         bool DeleteById(string id);
+
+        /// <summary>
+        /// Deletes course from database async
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
+        Task<Result> DeleteByIdAsync(string id);
     }
 }

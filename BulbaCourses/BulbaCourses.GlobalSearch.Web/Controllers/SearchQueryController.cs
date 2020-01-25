@@ -11,6 +11,7 @@ using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using BulbaCourses.GlobalSearch.Logic.DTO;
 using System.Threading.Tasks;
+using FluentValidation.WebApi;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -79,13 +80,14 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query data")]
-        public IHttpActionResult Create([FromBody]SearchQueryDTO query)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]SearchQueryDTO query)
         {
-            if(!ModelState.IsValid)
+            if (query == null|| !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_searchQueryService.Add(query));
+            var result = await _searchQueryService.AddAsync(query);
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
         [HttpDelete, Route("")]

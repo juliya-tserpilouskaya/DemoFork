@@ -16,7 +16,7 @@ namespace Presentations.Logic.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<Result<Teacher>> AddTeacherAsync(UserAdd_DTO model);
+        Task<Result<Teacher>> AddTeacherAsync(TeacherAdd_DTO model);
 
         /// <summary>
         /// Map TeacherDB to Teacher, passes to GetByIdAsync DB-method the id for getting teacher
