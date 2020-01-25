@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService, Courses } from '../../services/search.service';
 import { ActivatedRoute } from '@angular/router';
+import { BookmarksService} from '../../services/bookmarks.service';
 
 
 @Component({
@@ -14,12 +15,18 @@ export class ResultsComponent implements OnInit {
   pageSize = 10;
   parameter: string;
 
-  constructor(private service: SearchService, route: ActivatedRoute) {
+  constructor(private service: SearchService, private bookmarkService: BookmarksService, route: ActivatedRoute) {
     route.params.subscribe(params => this.parameter = params['query'])
   }
 
   ngOnInit() {
     this.service.search(this.parameter)
     .subscribe(data => this.courses = data);
+  }
+
+  onAddToBookmarks(courseId: string) {
+    //b.Name = c.Name;
+    this.bookmarkService.addToBookmarks(courseId)
+    .subscribe(data => console.log(data));
   }
 }
