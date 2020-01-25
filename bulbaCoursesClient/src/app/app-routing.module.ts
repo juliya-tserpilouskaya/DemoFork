@@ -21,7 +21,6 @@ import { ResultsComponent } from './GlobalSearch/components/results/results.comp
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'discountCourses', component: CourseComponent},
-  // {path: 'discountMenu', component: CourseComponent},
   { path: 'search-request', component: SearchRequestComponent },
   { path: 'video/:id', component: VideoComponent },
   { path: 'analytics', component: AnalyticsComponent },
@@ -32,7 +31,6 @@ const routes: Routes = [
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
   { path: 'results/:query', component: ResultsComponent },
-  // { path: 'bookmarks/:id', component: BookmarksComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
 ];
