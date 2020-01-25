@@ -1,4 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +21,7 @@ import { RegisterModule} from './register/register/register.module';
 import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.component';
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
+import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
 
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
@@ -30,6 +34,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    TableModule,
+    ButtonModule,
     AppRoutingModule,
     SampleModule,
     AuthSharedModule,
@@ -46,7 +53,8 @@ import { FormsModule } from '@angular/forms';
           'http://localhost:3300',
           'http://localhost:3500',
           'http://localhost:60601',
-          'https://localhost:44320'
+          'https://localhost:44320',
+          AnalyticsConstants.ANALYTICS_BASE_HTTPS_URL
         ]
       }
     }),
