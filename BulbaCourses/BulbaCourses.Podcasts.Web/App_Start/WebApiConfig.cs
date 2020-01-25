@@ -4,6 +4,7 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;
+using System;
 using System.Web.Http;
 
 namespace BulbaCourses.Podcasts.Web
@@ -22,7 +23,7 @@ namespace BulbaCourses.Podcasts.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<CourseWeb>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-            
+
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 

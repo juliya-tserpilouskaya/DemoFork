@@ -30,6 +30,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.service = userService;
             this.bus = bus;
         }
+
+        /// <summary>
+        /// Gets user from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
@@ -61,14 +68,49 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet, Route("")]
-        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
-        public async Task<IHttpActionResult> GetAll(string filter)
+
+        /// <summary>
+        /// Get all users from the database that have substring in name
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet, Route("{substring}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all users", typeof(IEnumerable<UserWeb>))]
+        public async Task<IHttpActionResult> Search(string substring)
         {
             try
             {
-                var result = await service.GetAllAsync(filter);
+                var result = await service.SearchAsync(substring);
+                if (result.IsSuccess == true)
+                {
+                    var users = result.Data;
+                    var usersWeb = mapper.Map<IEnumerable<UserLogic>, IEnumerable<UserWeb>>(users);
+                    return usersWeb == null ? NotFound() : (IHttpActionResult)Ok(usersWeb);
+                }
+                else
+                {
+                    return BadRequest(result.Message);
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets all users from the database
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet, Route("")]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
+        public async Task<IHttpActionResult> GetAll(string name)
+        {
+            try
+            {
+                var result = await service.GetAllAsync(name);
                 if (result.IsSuccess == true)
                 {
                     var userLogic = result.Data;
@@ -86,6 +128,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds user to the database
+        /// </summary>
+        /// <param name="userWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -131,6 +178,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes user in the database
+        /// </summary>
+        /// <param name="userWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -174,6 +226,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes user in the database
+        /// </summary>
+        /// <param name="userWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -219,6 +276,10 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets current user from the database
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]

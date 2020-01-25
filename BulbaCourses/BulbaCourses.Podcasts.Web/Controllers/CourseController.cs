@@ -31,7 +31,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.Uservice = userService;
             this.bus = bus;
         }
-
+        /// <summary>
+        /// Get course from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -64,6 +69,39 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Get all courses from the database that have substring in name
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet, Route("{substring}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
+        public async Task<IHttpActionResult> Search(string substring)
+        {
+            try
+            {
+                var result = await service.SearchAsync(substring);
+                if (result.IsSuccess == true)
+                {
+                    var courses = result.Data;
+                    var coursesWeb = mapper.Map<IEnumerable<CourseLogic>, IEnumerable<CourseWeb>>(courses);
+                    return coursesWeb == null ? NotFound() : (IHttpActionResult)Ok(coursesWeb);
+                }
+                else
+                {
+                    return BadRequest(result.Message);
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        /// <summary>
+        /// Get all courses from the database (with a author filter)
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> GetAll(string author)
@@ -86,7 +124,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-
+        /// <summary>
+        /// Add new course to the database
+        /// </summary>
+        /// <param name="courseWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -130,7 +172,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
                 return InternalServerError(ex);
             }
         }
-
+        /// <summary>
+        /// Update the course in the database
+        /// </summary>
+        /// <param name="courseWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -175,9 +221,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 return InternalServerError(ex);
             }
-        }
+        }/// <summary>
+         /// Delete the course from the database
+         /// </summary>
+         /// <param name="courseWeb"></param>
+         /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("{id}")]
+        [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -218,7 +268,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             {
                 return InternalServerError(ex);
             }
-        }
+        }/// <summary>
+         /// Buys course for current user
+         /// </summary>
+         /// <param name="courseWeb"></param>
+         /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]

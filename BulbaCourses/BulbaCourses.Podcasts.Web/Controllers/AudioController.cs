@@ -32,7 +32,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.Uservice = userService;
             this.bus = bus;
         }
-
+        /// <summary>
+        /// Gets audiodata from the database by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Audio doesn't exists")]
@@ -61,14 +66,48 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [Authorize]
-        [HttpGet, Route("")]
+
+        /// <summary>
+        /// Get all audios from the database that have substring in name
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet, Route("{substring}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
-        public async Task<IHttpActionResult> GetAll(string filter)
+        public async Task<IHttpActionResult> Search(string substring)
         {
             try
             {
-                var result = await service.GetAllAsync(filter);
+                var result = await service.SearchAsync(substring);
+                if (result.IsSuccess == true)
+                {
+                    var audios = result.Data;
+                    var audiosWeb = mapper.Map<IEnumerable<AudioLogic>, IEnumerable<AudioWeb>>(audios);
+                    return audiosWeb == null ? NotFound() : (IHttpActionResult)Ok(audiosWeb);
+                }
+                else
+                {
+                    return BadRequest(result.Message);
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        /// <summary>
+        /// Gets all audiodata for course from the database
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet, Route("{courseId}")]
+        [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
+        public async Task<IHttpActionResult> GetAll(string courseId)
+        {
+            try
+            {
+                var result = await service.GetAllAsync(courseId);
                 if (result.IsSuccess == true)
                 {
                     var audioLogic = result.Data;
@@ -86,6 +125,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds audiodata to the database
+        /// </summary>
+        /// <param name="audioWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -131,6 +175,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates audiodata in the database
+        /// </summary>
+        /// <param name="audioWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -175,6 +224,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes audiodata in the database
+        /// </summary>
+        /// <param name="audioWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]

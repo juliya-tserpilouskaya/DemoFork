@@ -31,6 +31,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.Uservice = userService;
         }
 
+        /// <summary>
+        /// Gets audiofile by id from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Content doesn't exists")]
@@ -75,6 +81,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds audiofile to the database
+        /// </summary>
+        /// <param name="contentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -119,6 +130,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates audiofile in the database
+        /// </summary>
+        /// <param name="contentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -163,6 +179,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes audiofile in the database
+        /// </summary>
+        /// <param name="contentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]

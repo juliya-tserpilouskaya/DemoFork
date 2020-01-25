@@ -33,7 +33,7 @@ namespace BulbaComments.Podcasts.Data.Managers
             }
             else
             {
-                var audioList = await dbContext.Audios.AsNoTracking().Where(c => c.Name.Contains(filter)).ToListAsync().ConfigureAwait(false);
+                var audioList = await dbContext.Audios.AsNoTracking().Where(c => c.Course.Id == filter).ToListAsync().ConfigureAwait(false);
                 return audioList.AsReadOnly();
             }
         }

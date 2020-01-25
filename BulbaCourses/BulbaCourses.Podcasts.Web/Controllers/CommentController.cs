@@ -33,6 +33,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             this.bus = bus;
         }
 
+        /// <summary>
+        /// Gets comment by id from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
@@ -61,8 +67,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Gets all comments for course in the database
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("")]
+        [HttpGet, Route("{courseId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
         public async Task<IHttpActionResult> GetAll(string courseId)
         {
@@ -86,6 +97,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds comment to the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -132,6 +148,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates comment in the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -176,6 +197,11 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes comment in the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
