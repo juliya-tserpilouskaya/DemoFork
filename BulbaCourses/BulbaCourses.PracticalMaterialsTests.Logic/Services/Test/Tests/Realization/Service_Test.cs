@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.Test.Questions;
@@ -12,7 +13,6 @@ using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Questions.Interfaсe;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest.Interface;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -287,12 +287,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
         // ------------ CheckCorrectAnswer
         
-        public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo)
+        public MResultRequest<string> CheckTestAsync(string User_TestReaderr_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo)
         {
             try
             {
                 MTest_MainInfo Current_Test_MainInfo =
-                    GetById(ReaderChoice_MainInfo.Test_MainInfo_Id).Data;
+                    GetById(ReaderChoice_MainInfo.Test_MainInfoDb_Id).Data;
 
                 int NumberOfCorrectAnswer = 0;
 
@@ -304,19 +304,21 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
 
                 int NumberOfAttempt = 1;
 
-                if (_context.Set<MReaderChoice_MainInfoDb>().Any(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfo_Id && c.User_TestReaderDb_Id == User_TestAuthor_Id))
+                if (_context.Set<MReaderChoice_MainInfoDb>().Any(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfoDb_Id && c.User_TestReaderDb_Id == User_TestReaderr_Id))
                 {
                     NumberOfAttempt =
                         _context.Set<MReaderChoice_MainInfoDb>()
-                            .Where(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfo_Id && c.User_TestReaderDb_Id == User_TestAuthor_Id)
+                            .Where(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfoDb_Id && c.User_TestReaderDb_Id == User_TestReaderr_Id)
                             .Select(c => c.NumberOfAttempt)
                             .Max() + 1;
                 }
 
+                ReaderChoice_MainInfo.User_TestReaderDb_Id = User_TestReaderr_Id;
+
                 ReaderChoice_MainInfo.NumberOfAttempt = NumberOfAttempt;
 
                 ReaderChoice_MainInfo.ResultTest =
-                    $@"{NumberOfCorrectAnswer} из {((Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Any()) ? Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count : 0)}";                            
+                    $@"{NumberOfCorrectAnswer} из {((Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Any()) ? Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count : 0)}";
 
                 return
                     MResultRequest<string>.Ok(ReaderChoice_MainInfo.ResultTest);

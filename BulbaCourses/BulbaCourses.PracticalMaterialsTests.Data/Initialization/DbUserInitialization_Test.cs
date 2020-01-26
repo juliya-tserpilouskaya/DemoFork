@@ -16,6 +16,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
             MUser_TestAuthorDb User_TestAuthor =
                 new MUser_TestAuthorDb() { Id = "5012f850-9c59-4fd9-9e50-4d93ecac03fb" };
 
+            List<MUser_TestReaderDb> User_TestReaderDb =
+                new List<MUser_TestReaderDb>()
+                {
+                    new MUser_TestReaderDb() { FIO = "Романенко Андрей Витальевич" },
+                    new MUser_TestReaderDb() { FIO = "Онуфриюк Сергей Сергеевич" }
+                };
             // ------------ TestData
 
             List<MTest_MainInfoDb> default_Test_MainInfoDb =
@@ -259,7 +265,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                     },
                     new MTest_MainInfoDb()
                     {
-                        Name = "Решите ли вы 10 задач на смекалку?",
+                        Name = "Решите ли вы 7 задач на смекалку?",
                         Description = "Тест, определяющий ваш уровень смекалки на основе решения базовых задач",
                         DateCreate = DateTime.Now,
                         Questions_ChoosingAnswerFromList =
@@ -522,6 +528,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                  };
 
             context.Test_MainInfo.AddRange(default_Test_MainInfoDb);
+
+            context.User_TestReader.AddRange(User_TestReaderDb);
 
             // ------------ 
 

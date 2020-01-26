@@ -1,8 +1,11 @@
-﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Base;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
@@ -29,6 +32,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         // ------------ CheckCorrectAnswer
 
+        /// <summary>
+        /// Сheck the results of the test
+        /// </summary>
+        /// <param name="User_TestAuthor_Id"></param>
+        /// <param name="ReaderChoice_MainInfo"></param>
+        /// <returns></returns>
         MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo);        
     }
 }

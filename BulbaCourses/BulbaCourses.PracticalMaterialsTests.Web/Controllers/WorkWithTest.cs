@@ -49,11 +49,19 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             var Test_MainInfo = 
                 _service_Test.GetByIdAsync(TestId);
 
-            return
-                Ok(Test_MainInfo.Result.Data);
+            if (Test_MainInfo.Result.IsSuccess)
+            {
+                return
+                    Ok(Test_MainInfo.Result.Data);                
+            }
+            else
+            {
+                return
+                    BadRequest(Test_MainInfo.Result.Message);
+            }            
         }
 
-        [HttpPost, Route("addTest")]
+        [HttpPost, Route("AddTest")]
         [SwaggerResponse(HttpStatusCode.OK, "Test added", typeof(MTest_MainInfo))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Test not added")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test doesn't existing")]        
@@ -71,10 +79,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             var Rez =
                 _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
 
-            return Ok(Rez.Data.Id);                     
+            return
+                Ok(Rez.Data.Id);
         }
 
-        [HttpPost, Route("updateTest")]
+        [HttpPost, Route("UpdateTest")]
         [SwaggerResponse(HttpStatusCode.OK, "Test update", typeof(MTest_MainInfo))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Test not update")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test doesn't existing")]
@@ -120,7 +129,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             MReaderChoice_MainInfo ReaderChoice_MainInfo =
                 new MReaderChoice_MainInfo()
                 {
-                    Test_MainInfo_Id = Test_MainInfo.Id,
+                    Test_MainInfoDb_Id = Test_MainInfo.Id,
                     ReaderChoices_ChoosingAnswerFromList = new List<MReaderChoice_ChoosingAnswerFromList>()
                 };
 
@@ -143,15 +152,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult CheckTest([FromBody]MReaderChoice_MainInfo ReaderChoice_MainInf)
         {
-            //var result = _validator.Validate(Test_MainInfo);
-
-            //if (!result.IsValid)
-            //{
-            //    return
-            //        BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
-            //}            
-
-            var x = _service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInf).Data;
+            var x = 
+                _service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInf).Data;
 
             return                
                 Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInf).Data);        

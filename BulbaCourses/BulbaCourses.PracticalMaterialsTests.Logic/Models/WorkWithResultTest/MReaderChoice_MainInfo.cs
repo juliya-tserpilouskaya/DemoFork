@@ -20,13 +20,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest
 
         // ------------ Test
 
-        public int Test_MainInfo_Id { get; set; }
+        public int Test_MainInfoDb_Id { get; set; }
 
         public MTest_MainInfo Test_MainInfo { get; set; }
 
         // ------------ User
 
-        public string User_TestReader_Id { get; set; }
+        public string User_TestReaderDb_Id { get; set; }
 
         public MUser_TestReader User_TestReader { get; set; }
 

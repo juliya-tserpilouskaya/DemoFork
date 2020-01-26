@@ -22,18 +22,35 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest
 
         public MResultRequest<string> Add(MReaderChoice_MainInfo ReaderChoice_MainInfo)
         {
-           
+            try
+            {
                 MReaderChoice_MainInfoDb ResultOfTheTestDb =
                    _mapper.Map<MReaderChoice_MainInfoDb>(ReaderChoice_MainInfo);
 
                 _context.Set<MReaderChoice_MainInfoDb>().Add(ResultOfTheTestDb);
-
-                _context.SaveChanges();                
+                
+                _context
+                    .SaveChanges();
 
                 return
                     MResultRequest<string>
-                        .Ok(String.Join("",_context.Set<MReaderChoice_MainInfoDb>().Where(_ => _.Id == ResultOfTheTestDb.Id).Select(_ => _.ResultTest)));
-           
+                        .Ok("Complite !!!");
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return
+                    (MResultRequest<string>)MResultRequest<string>.Fail<string>($"Cannot save model. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return
+                    (MResultRequest<string>)MResultRequest<string>.Fail<string>($"Cannot save model. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return
+                    (MResultRequest<string>)MResultRequest<string>.Fail<string>($"Invalid model. {e.Message}");
+            }
         }
 
         public async Task<MResultRequest<string>> AddAsync(MReaderChoice_MainInfo ReaderChoice_MainInfo)

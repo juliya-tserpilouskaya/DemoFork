@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
+using System;
 using System.Collections.Generic;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.User
@@ -7,8 +8,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.User
     /// User who passes tests
     /// </summary>
     public class MUser_TestReaderDb
-    {        
-        public string Id { get; set; }
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        public string FIO { get; set; }
 
         public ICollection<MReaderChoice_MainInfoDb> ResultsOfTheTest { get; set; }
     }

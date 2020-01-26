@@ -26,12 +26,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest
                 .HasColumnType("date")
                 .IsRequired();
 
-            this.HasMany(g => g.ReaderChoices_ChoosingAnswerFromListDb)
+            this.HasMany(g => g.ReaderChoices_ChoosingAnswerFromList)
                 .WithRequired(s => s.ReaderChoice_MainInfoDb)
                 .HasForeignKey<int>(s => s.ReaderChoice_MainInfoDb_Id)
                 .WillCascadeOnDelete();
 
-            this.HasMany(g => g.ReaderChoices_SetOrderDb)
+            this.HasMany(g => g.ReaderChoices_SetOrder)
                 .WithRequired(s => s.ReaderChoice_MainInfoDb)
                 .HasForeignKey<int>(s => s.ReaderChoice_MainInfoDb_Id)
                 .WillCascadeOnDelete();

@@ -18,6 +18,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.User
                 .HasMaxLength(128)
                 .IsRequired();
 
+            Property(i => i.FIO)
+                .HasColumnName("FIO")
+                .HasMaxLength(70)
+                .IsRequired();
+
             this.HasMany(g => g.ResultsOfTheTest)
                 .WithRequired(c => c.User_TestReader)
                 .HasForeignKey(c => c.User_TestReaderDb_Id)

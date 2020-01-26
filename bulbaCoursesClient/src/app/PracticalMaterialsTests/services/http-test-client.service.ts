@@ -29,4 +29,3 @@ export class HttpService {
       return this.http.post(this.url_3, readerChoice_MainInfo);
     }
 }
-

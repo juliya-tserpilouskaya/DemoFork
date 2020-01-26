@@ -18,35 +18,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Configuration
                 "swagger/{apiVersion}",
                 swagger =>
                 {
-                    //// build a swagger document and endpoint for each discovered API version
-                    //swagger.MultipleApiVersions(
-                    //    (apiDescription, version) => apiDescription.GetGroupName() == version,
-                    //    info =>
-                    //    {
-                    //        foreach (var group in apiExplorer.ApiDescriptions)
-                    //        {
-                    //            var description = "Analytics.";
-
-                    //            if (group.IsDeprecated)
-                    //            {
-                    //                description += " This API version has been deprecated.";
-                    //            }
-
-                    //            info.Version(group.Name, $"API {group.ApiVersion}")
-                    //                .Contact(c => c.Name("Dmitriy Bulova").Email("dm.bu@lova.com"))
-                    //                .Description(description)
-                    //                .License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
-                    //                .TermsOfService("Shareware");
-                    //        }
-                    //    });
-
-                    //// add a custom operation filter which sets default values
-                    //swagger.OperationFilter<SwaggerDefaultValues>();
-                    //swagger.OperationFilter<ExamplesOperationFilter>();
-
-                    //// integrate xml comments
-                    //swagger.IncludeXmlComments(Paths.XmlCommentsFilePath);
-
                     swagger.OAuth2("oauth2")
                         .Description("OAuth2 Implicit Grant")
                         .Flow("implicit")

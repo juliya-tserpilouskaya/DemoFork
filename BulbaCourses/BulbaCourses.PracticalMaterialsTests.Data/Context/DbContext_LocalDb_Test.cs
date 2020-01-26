@@ -10,6 +10,7 @@ using System.Data.Entity;
 using BulbaCourses.PracticalMaterialsTests.Data.Mapping.User;
 using BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 {
@@ -20,6 +21,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
         {
             Database.SetInitializer(new DbUserInitialization_Test());
         }
+
+        // ------------ Users
+
+        public DbSet<MUser_TestReaderDb> User_TestReader { get; set; }
 
         // ------------ Tests
 

@@ -31,8 +31,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest
 
         // ------------ ResultOfTheTest
 
-        public ICollection<MReaderChoice_ChoosingAnswerFromListDb> ReaderChoices_ChoosingAnswerFromListDb { get; set; }
+        public ICollection<MReaderChoice_ChoosingAnswerFromListDb> ReaderChoices_ChoosingAnswerFromList { get; set; }
 
-        public ICollection<MReaderChoice_SetOrderDb> ReaderChoices_SetOrderDb { get; set; }
+        public ICollection<MReaderChoice_SetOrderDb> ReaderChoices_SetOrder { get; set; }
     }
 }

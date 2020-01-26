@@ -18,7 +18,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     FormsModule,
     RadioButtonModule
   ],
-  declarations: [TestMainFormComponent, UserTestListComponent, TestFormComponent],
-  bootstrap: [TestMainFormComponent]
+  declarations: [TestFormComponent, UserTestListComponent],
+  bootstrap: [TestFormComponent]
 })
 export class PracticalMaterialsTestModule { }

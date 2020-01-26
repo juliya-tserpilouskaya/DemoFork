@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.User
 {
     /// <summary>
-    /// User who created the test
+    /// User, who created the test
     /// </summary>
     public class MUser_TestAuthorDb
     {        
