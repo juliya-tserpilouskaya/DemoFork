@@ -72,12 +72,15 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         public void DeleteById(string id)
         {
             _db.Entry(new CourseDB() { Id = id }).State = EntityState.Deleted;
-            _db.Database.ExecuteSqlCommand(
-                "ALTER TABLE dbo.Presentations " +
-                "ADD CONSTRAINT Presentations_Courses " +
-                "FOREIGN KEY (CourseDBId) " +
-                "REFERENCES dbo.Courses (Id) " +
-                "ON DELETE SET NULL");
+
+            // uncomment code if there are no settings for model properties
+
+            //_db.Database.ExecuteSqlCommand(
+            //    "ALTER TABLE dbo.Presentations " +
+            //    "ADD CONSTRAINT Presentations_Courses " +
+            //    "FOREIGN KEY (CourseDBId) " +
+            //    "REFERENCES dbo.Courses (Id) " +
+            //    "ON DELETE SET NULL");
         }
 
         public async Task<CourseDB> GetAllPresentationsFromCourseAsync(string id)

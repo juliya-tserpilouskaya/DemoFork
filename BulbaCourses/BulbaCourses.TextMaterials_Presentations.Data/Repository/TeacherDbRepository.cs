@@ -72,18 +72,21 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         public void DeleteById(string id)
         {
             _db.Entry(new TeacherDB() { Id = id }).State = EntityState.Deleted;
-            _db.Database.ExecuteSqlCommand(
-                "ALTER TABLE dbo.Feedbacks " +
-                "ADD CONSTRAINT Feedbacks_Teachers " +
-                "FOREIGN KEY (TeacherDBId) " +
-                "REFERENCES dbo.Teachers (Id) " +
-                "ON DELETE SET NULL");
-            _db.Database.ExecuteSqlCommand(
-                "ALTER TABLE dbo.Presentations " +
-                "ADD CONSTRAINT Presentations_Students " +
-                "FOREIGN KEY (TeacherDBId) " +
-                "REFERENCES dbo.Teachers (Id) " +
-                "ON DELETE SET NULL");
+
+            // uncomment code if there are no settings for model properties
+
+            //_db.Database.ExecuteSqlCommand(
+            //    "ALTER TABLE dbo.Feedbacks " +
+            //    "ADD CONSTRAINT Feedbacks_Teachers " +
+            //    "FOREIGN KEY (TeacherDBId) " +
+            //    "REFERENCES dbo.Teachers (Id) " +
+            //    "ON DELETE SET NULL");
+            //_db.Database.ExecuteSqlCommand(
+            //    "ALTER TABLE dbo.Presentations " +
+            //    "ADD CONSTRAINT Presentations_Students " +
+            //    "FOREIGN KEY (TeacherDBId) " +
+            //    "REFERENCES dbo.Teachers (Id) " +
+            //    "ON DELETE SET NULL");
         }
 
         public async Task<TeacherDB> GetAllFeedbacksFromTeacherAsync(string id)
