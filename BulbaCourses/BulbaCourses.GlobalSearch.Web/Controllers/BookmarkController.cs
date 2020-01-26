@@ -96,6 +96,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add bookmark
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
