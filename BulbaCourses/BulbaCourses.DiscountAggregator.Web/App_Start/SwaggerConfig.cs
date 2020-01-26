@@ -41,7 +41,7 @@ namespace BulbaCourses.DiscountAggregator.Web
                 c.EnableDiscoveryUrlSelector();
                 c.EnableOAuth2Support(
                                       clientId: "external_app",
-                                      //clientSecret: "secret",
+                                      clientSecret: "secret",
                                       realm: "test-realm",
                                       appName: "Swagger UI"
                                       );

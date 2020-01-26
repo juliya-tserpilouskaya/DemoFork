@@ -1,4 +1,4 @@
-<h2 class="modnews">Агрегатор скидок! Собирает информацию с ресурсов для вас!</h2>
+<h2 class="modnews">Агрегатор скидок! Собирает информацию с ресурсов для Dас!</h2>
 
 <app-filters></app-filters>
   <div class="card mb-4 shadow-sm">
@@ -6,13 +6,18 @@
       <h4 class="my-0 font-weight-normal">Курсы</h4>
     </div>
       <ol class="rounded">
-        <li *ngFor="let item of courses"><a href={{item.URL}}>{{item.Title}}</a>
+        <li *ngFor="let item of courses"><h5><a href={{item.URL}}>{{item.Title}} | {{item.Price}} BYN</a></h5>
+          <!-- <li *ngFor="let item of courses">
+            <a href={{item.URL}}>
+              <div style="width: 50%; hi text-align: left; float: left;">{{item.Title}}</div>
+              <div style="width: 50%; text-align: right; float: left;">{{item.Price}}</div>
+            </a> -->
           <div class="card-body">
-            <p>{{item.Domain?.DomainName}} | {{item.Category?.Title}}</p>
+            <h3><p>{{item.Domain?.DomainName}} | {{item.Category?.Title}}</p></h3>
             <!-- <a class="btnLink" href={{item.URL}}>Перейти по ссылке</a> -->
             <p>{{item.Description}} </p>
-            <p>{{item.Price}} BYN | Текущая скидка: {{item.Discount}} </p>
-            <p>Предыдущая цена - {{item.OldPrice}}, была изменеа {{item.DateOldPrice}} </p>
+            <h3><p>{{item.Price}} BYN | Текущая скидка: {{item.Discount}} </p></h3>
+            <p>Предыдущая стоимость курса: {{item.OldPrice}}, Последнее изменение стоимости: {{item.DateOldPrice}} </p>
             <p>Дата начала курса: {{item.DateStartCourse}} </p>
           </div>
         </li>

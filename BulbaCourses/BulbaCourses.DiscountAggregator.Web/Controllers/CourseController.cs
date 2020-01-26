@@ -19,7 +19,7 @@ using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    [Authorize]
+    //[Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;
@@ -34,8 +34,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("")]
-        [Description("Get all courses")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [Description("Get all courses")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -50,8 +50,8 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("Async")]
-        [Description("Get all courses")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [Description("Get all courses")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -71,9 +71,9 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet, Route("{id}")]//можно указать какой тип id
-        [Description("Get course by Id")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
+        [HttpGet, Route("{id}")]
+        [Description("Get course by Id")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(Course))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
