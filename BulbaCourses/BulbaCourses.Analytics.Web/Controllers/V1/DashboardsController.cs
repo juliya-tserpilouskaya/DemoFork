@@ -101,6 +101,32 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         }
 
         /// <summary>
+        /// Shows a dashboard details by report id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, Route("reportId/{id}")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Dashboard doesn`t exists.")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponse(HttpStatusCode.OK, "Dashboard founds.", typeof(DashboardShort))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardShortExample))]
+        public async Task<IHttpActionResult> GetByReportId(string id)
+        {
+            try
+            {
+                var dashboardDtos = await _Dashboardservice.GetByReportIdAsync(id);
+                if (!dashboardDtos.Any()) { return NotFound(); }
+                var Dashboardshorts = _mapper.Map<IEnumerable<DashboardShort>>(dashboardDtos);
+
+                return Ok(Dashboardshorts);
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return InternalServerError(ioe);
+            }
+        }
+
+        /// <summary>
         /// Deletes a dashboard by id.
         /// </summary>
         /// <param name="id"></param>

@@ -116,6 +116,15 @@ namespace BulbaCourses.Analytics.Web.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на http://localhost:44382.
+        /// </summary>
+        internal static string IssuerNameUrl {
+            get {
+                return ResourceManager.GetString("IssuerNameUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на MIT.
         /// </summary>
         internal static string MIT {
@@ -157,6 +166,15 @@ namespace BulbaCourses.Analytics.Web.Properties {
         internal static string OpenIdDescription {
             get {
                 return ResourceManager.GetString("OpenIdDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на http://localhost:4200.
+        /// </summary>
+        internal static string OriginsUrl {
+            get {
+                return ResourceManager.GetString("OriginsUrl", resourceCulture);
             }
         }
         
