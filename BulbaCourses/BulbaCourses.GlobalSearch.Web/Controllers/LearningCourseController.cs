@@ -23,12 +23,18 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         private readonly ILearningCourseService _learningCourseService;
         private readonly IBus _bus;
 
+
         public LearningCourseController(ILearningCourseService learningCourseService, IBus bus)
         {
             _learningCourseService = learningCourseService;
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Learning course</returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The course doesn't exists")]
@@ -50,6 +56,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// Get all courses
+        /// </summary>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
@@ -64,6 +75,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Get courses by category
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("category/{domain}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid domain")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses in that category")]
@@ -86,6 +102,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course by author
+        /// </summary>
+        /// <param name="id">Author id</param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("author/{id:int}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid author id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses of author found")]
@@ -108,6 +129,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course items
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns>Learning course items</returns>
         [HttpGet, Route("{id}/items")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The course is not found")]
@@ -130,6 +156,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get courses by complexity
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("complexity/{level}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid complexity level parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
@@ -152,6 +183,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get courses by language
+        /// </summary>
+        /// <param name="lang"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("language/{lang}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid language parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
@@ -177,8 +213,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         /// <summary>
         /// Update course
         /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
+        /// <param name="course">Learning course</param>
+        /// <returns>Learning course</returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -202,6 +238,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new course
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns>Learning course</returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]LearningCourseDTO course)
@@ -223,6 +264,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete course
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
@@ -246,6 +292,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Obsolete search
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet, Route("search/{query}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
