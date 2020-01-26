@@ -11,11 +11,13 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
     class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUsersContext _usersContext;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IUsersContext usersContext, IMapper mapper)
         {
             _userRepository = userRepository;
+            this._usersContext = usersContext;
             _mapper = mapper;
         }
 
@@ -26,16 +28,15 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
             _userRepository.Add(userDb);
         }
 
-        public void Delete(UserDTO user)
+        public Task<bool> Delete(string id)
         {
-            var userDb = _mapper.Map<UserDTO, UserDb>(user);
-            _userRepository.Remove(userDb);
+            return _usersContext.Remove(id);
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            var usersDb = await _userRepository.GetAllAsync();            
-            var roles = await _userRepository.GetRolesAsync();
+            var usersDb = await _usersContext.GetAll();            
+            var roles = await _usersContext.GetRoles();
             var roleDictionary = roles.ToDictionary(x => x.Id, x => x.Name);
 
             foreach (var user in usersDb)
@@ -74,10 +75,42 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
             _userRepository.Update(userDb);
         }
 
-        public void ChangePassword(UserChangePasswordDTO user)
+        public async Task<Result> ChangePassword(UserChangePasswordDTO user)
         {
-            //_userRepository
+            var usermodel = _mapper.Map<UserChangePasswordDTO, UserChangePassword>(user);
+
+            try
+            {
+                var result = await _usersContext.ChangePassword(usermodel);
+                return result ? Result.Ok() : Result.Fail("PasswordChange Error");
+            }
+            catch
+            {
+                return Result.Fail("Error in change password");
+
+            }
         }
-        
+
+        public Task<string> RegisterUser(RegisterUserDTO registerUser)
+        {
+            //validate user
+            var registerUserModel = _mapper.Map<RegisterUserDTO, RegisterUserDb>(registerUser);
+            return _usersContext.RegisterUser(registerUserModel);            
+        }
+
+        public async Task GetUserProfile(string id)
+        {
+            var user = await _usersContext.GetById(id);
+            //new System.Security.Claims.Claim();
+
+        }
+
+        public async Task<UserProfileDTO>  GetUserProfileAsync(string id)
+        {
+            var user = await _usersContext.GetById(id);
+            var userprofile = _mapper.Map<UserDb, UserProfileDTO>(user);
+            return userprofile;
+
+        }
     }
 }

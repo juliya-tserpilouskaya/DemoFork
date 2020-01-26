@@ -17,6 +17,8 @@ import { SearchComponent } from './GlobalSearch/components/search/search.compone
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
 import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
+import { ProfileComponent } from './GlobalAdminUsers/components/profile/profile.component';
+import { ChangePasswordComponent } from './GlobalAdminUsers/components/change-password/change-password.component';
 import { TestFormComponent } from './PracticalMaterialsTests/components/TestForm/test-form.component';
 
 const routes: Routes = [
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'video', component: VideoplayerComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
+  { path: 'profile/:id', component: ProfileComponent},
+  { path: 'profile/password/:id', component: ChangePasswordComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'bookmarks', component: BookmarksComponent },
   { path: 'query-result', component: QueryResultComponent},
