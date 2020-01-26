@@ -42,7 +42,7 @@ namespace BulbaCourses.Video.Web
 
             //Owin middleware for static files
             string root = AppDomain.CurrentDomain.BaseDirectory;
-            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, @"c:\TestCourses"));
+            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, @"d:\TestCourses"));
             var fileServerOptions = new FileServerOptions
             {
                 RequestPath = PathString.Empty,

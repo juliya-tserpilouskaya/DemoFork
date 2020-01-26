@@ -10,11 +10,11 @@ using System.Web.Http;
 
 namespace MvcApplication1.Controllers
 {
-   
+    [RoutePrefix("api/upload")]
     public class FileUploadController : ApiController
     {
-       // db_videoEntities1 wmsEN = new db_videoEntities1();
-        [HttpPost()]
+        // db_videoEntities1 wmsEN = new db_videoEntities1();
+        [HttpPost, Route("")]
         public HttpResponseMessage UploadFiles()
         {
             var httpRequest = HttpContext.Current.Request;
@@ -27,25 +27,26 @@ namespace MvcApplication1.Controllers
                     System.Web.HttpPostedFile hpf = hfc[iCnt];
                     if (hpf.ContentLength > 0)
                     {
-                        //var filename = (Path.GetFileName(hpf.FileName));
-                        //var filePath = HttpContext.Current.Server.MapPath("~/Vedios/" + filename);
-                        //hpf.SaveAs(filePath);
+                        var filename = (Path.GetFileName(hpf.FileName));
+                        var filePath = HttpContext.Current.Server.MapPath("~/Temp1/" + filename);
+                        hpf.SaveAs(filePath);
                         //VideoMaster obj = new VideoMaster();
                         //obj.Videos = "http://localhost:50401/Vedios/" + filename;
                         //wmsEN.VideoMasters.Add(obj);
                         //wmsEN.SaveChanges();
                     }
                 }
+
             }
             catch (Exception ex)
             { }
-            return Request.CreateResponse(HttpStatusCode.Created);
+            return Request.CreateResponse(HttpStatusCode.Created, @"http://localhost:50401/Temp1/" +);
         }
 
-        [HttpPost]
-        public object Vedios()
-        {
-            return null;//wmsEN.VideoMasters;
-        }
+        //[HttpPost]
+        //public object Vedios()
+        //{
+        //    return null;//wmsEN.VideoMasters;
+        //}
     }
 }

@@ -18,8 +18,9 @@ import { FormsModule }   from '@angular/forms';
 import { AddVideoComponent } from './components/add-video/add-video.component';
 import { NgbdTabsetSelectbyid } from './components/tabset-selectbyid/tabset-selectbyid.component';
 //import { TabsetComponent } from 'ngx-bootstrap';
-
+import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 
 //import { NgbdTabsetSelectbyid } from './tabset-selectbyid';
 @NgModule({
@@ -33,6 +34,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AddCourseComponent,
     AddVideoComponent,
     NgbdTabsetSelectbyid,
+    UploadVideoComponent,
     //TabsetSelectbyidComponent,
     
     ],
@@ -44,7 +46,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     VgCoreModule,
     VgControlsModule,
-    
+    HttpClientModule,
     FormsModule
   ],//bootstrap: [TabsetComponent],
  
