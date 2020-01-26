@@ -36,6 +36,7 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     FiltersComponent
   ],
   imports: [
+    PracticalMaterialsTestModule,
     BrowserModule,
     AppRoutingModule,
     SampleModule,

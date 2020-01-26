@@ -16,7 +16,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     BrowserAnimationsModule,
     TabViewModule,
     FormsModule,
-    RadioButtonModule
+    RadioButtonModule,
+    
   ],
   declarations: [TestFormComponent, UserTestListComponent],
   bootstrap: [TestFormComponent]
