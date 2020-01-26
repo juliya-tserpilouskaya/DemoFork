@@ -37,13 +37,12 @@ namespace BulbaCourses.GlobalSearch.Web
 
         public void Configuration(IAppBuilder app)
         {
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
-            SwaggerConfig.Register(config);
-
-            config.EnableSwagger(c => { c.SingleApiVersion("v1", "BulbaCourses.GlobalSearch.Web"); })
+            config.EnableSwagger(c => { c.SingleApiVersion("v1", "Global Search API");
+                c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.GlobalSearch.Web.xml"));
+            })
                 .EnableSwaggerUi();
 
             //app.UseWebApi(config);
@@ -78,6 +77,7 @@ namespace BulbaCourses.GlobalSearch.Web
             });
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
+
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)

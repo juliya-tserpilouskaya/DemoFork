@@ -18,6 +18,9 @@ import { ResultsComponent } from './GlobalSearch/components/results/results.comp
 import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
 import {MainvideoComponent} from './Video/components/mainvideo/mainvideo.component'
+import { ProfileComponent } from './GlobalAdminUsers/components/profile/profile.component';
+import { ChangePasswordComponent } from './GlobalAdminUsers/components/change-password/change-password.component';
+import { TestFormComponent } from './PracticalMaterialsTests/components/TestForm/test-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +29,8 @@ const routes: Routes = [
   { path: 'video', component: MainvideoComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'admin', component: UsersComponent},
+  { path: 'profile/:id', component: ProfileComponent},
+  { path: 'profile/password/:id', component: ChangePasswordComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'bookmarks', component: BookmarksComponent },
   { path: 'query-result', component: QueryResultComponent},
@@ -34,7 +39,9 @@ const routes: Routes = [
   { path: 'results/:query', component: ResultsComponent },
   { path: 'search/results/:query', component: ResultsComponent },
   { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
+  { path: 'bookmarks/course/:id', component: SearchCourseComponent },
   { path: 'youtubevideo/:id', component: VideoComponent },
+  { path: 'testform', component: TestFormComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
 ];

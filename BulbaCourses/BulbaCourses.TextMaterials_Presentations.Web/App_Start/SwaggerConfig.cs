@@ -33,8 +33,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "BulbaCourses.TextMaterials_Presentations.Web");
-                        c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.TextMaterials_Presentations.Web.xml"));
+                        c.SingleApiVersion("v1", "Presentations")
+                        .Description("A simple example ASP.NET Web API")
+                        .TermsOfService("None")
+                        .Contact(_=>_
+                            .Name("Denis Makarchuk")
+                            .Url("https://www.linkedin.com/in/denis-makarchuk-1816b0177/")
+                            .Email("hiedmant@gmail.com"))
+                        .License(_=>_
+                            .Name("LinkedIn")
+                            .Url("https://www.linkedin.com/in/denis-makarchuk-1816b0177/"));
+
+                        c.IncludeXmlComments(System.IO.Path.Combine
+                            (AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.TextMaterials_Presentations.Web.xml"));
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //

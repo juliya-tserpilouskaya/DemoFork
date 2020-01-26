@@ -100,7 +100,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Update the teacher presentation account in the database
+        /// Update the teacher presentation account in the database (PhoneNumber, Position)
         /// </summary>
         /// <param name="techer"></param>
         /// <returns></returns>
@@ -128,7 +128,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Teacher deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeleteTeacherAsync(string id)
+        public async Task<IHttpActionResult> DeleteTeacherByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {

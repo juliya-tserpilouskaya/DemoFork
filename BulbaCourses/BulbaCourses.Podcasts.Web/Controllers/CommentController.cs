@@ -17,6 +17,9 @@ using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Comment service.
+    /// </summary>
     [RoutePrefix("api/comments")]
     public class CommentController : ApiController
     {
@@ -25,6 +28,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IBus bus;
         private readonly IUserService Uservice;
 
+        /// <summary>
+        /// Creates Comment controller.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="mapper"></param>
+        /// <param name="service"></param>
+        /// <param name="user"></param>
         public CommentController(IMapper mapper, ICommentService service, IBus bus, IUserService user)
         {
             this.mapper = mapper;
@@ -39,7 +49,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentWeb))]
@@ -73,7 +83,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="courseId"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("{courseId}")]
+        [HttpGet, Route("GetFor/{courseId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
         public async Task<IHttpActionResult> GetAll(string courseId)
         {
@@ -103,7 +113,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="commentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -154,7 +164,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="commentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("{id}")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -203,7 +213,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="commentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("{id}")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]

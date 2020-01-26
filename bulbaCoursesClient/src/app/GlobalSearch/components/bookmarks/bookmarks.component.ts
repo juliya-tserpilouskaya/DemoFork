@@ -4,6 +4,7 @@ import { userInfo } from 'os';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CustomUser } from 'src/app/auth/models/user';
 import { timingSafeEqual } from 'crypto';
+import { CoursesService } from '../../services/courses.service';
 
 
 
@@ -18,7 +19,7 @@ export class BookmarksComponent implements OnInit {
   isAuthenticated: boolean;
   user: CustomUser;
 
-  constructor(private service: BookmarksService, private authService: AuthService) { }
+  constructor(private service: BookmarksService, private authService: AuthService, private courseService: CoursesService) { }
 
   ngOnInit() {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
@@ -27,15 +28,21 @@ export class BookmarksComponent implements OnInit {
     .subscribe(data => this.bookmarks = data);
   }
 
-  onDelete(id) {
-    // this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
-    // this.authService.user$.subscribe((user) => this.user = user as CustomUser);
+  onDelete(id: string) {
     this.service.deleteBookmark(id)
     .subscribe(data => {
       const indexToDelete = this.bookmarks.findIndex((mark: Bookmarks) => mark.Id === id);
-      this.bookmarks.slice(indexToDelete - 1, indexToDelete + 1);
-
+      this.bookmarks.splice(indexToDelete, 1);
     });
+  }
+
+  onCourseClick(id: string)
+  {
+    this.courseService.getCourses(id);
+  }
+
+  parseUrl(url: string) {
+    return 'https://www.google.com/search?q=' + url;
   }
 
 }

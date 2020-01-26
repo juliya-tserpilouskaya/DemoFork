@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.AnswerVariants
-{   
+{
     public class Mapping_AnswerVariant_SetOrder : EntityTypeConfiguration<MAnswerVariant_SetOrderDb>
     {
         public Mapping_AnswerVariant_SetOrder()
@@ -19,7 +19,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.AnswerVariants
 
             Property(i => i.AnswerText)
                 .HasColumnName("AnswerText")
-                .HasMaxLength(50)                
+                .HasMaxLength(250)
                 .IsRequired();
 
             Property(i => i.SortKey)

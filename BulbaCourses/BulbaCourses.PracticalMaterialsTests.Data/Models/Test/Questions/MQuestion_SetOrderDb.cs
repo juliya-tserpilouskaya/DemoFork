@@ -15,6 +15,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions
 
         public int SortKey { get; set; }
 
+        public string Description { get; set; }
+
         public int Test_MainInfoDb_Id { get; set; }
 
         public MTest_MainInfoDb Test_MainInfoDb { get; set; }

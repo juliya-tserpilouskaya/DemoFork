@@ -100,7 +100,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Update the presentation in the database
+        /// Update the presentation in the database (Title, IsAccessible, TeacherDB, CourseDB)
         /// </summary>
         /// <param name="presentation"></param>
         /// <returns></returns>
@@ -129,7 +129,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeletePresentationAsync(string id)
+        public async Task<IHttpActionResult> DeletePresentationByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -142,7 +142,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Get all students who like this presentation by presentation ID
+        /// Get all students who watched this presentation by presentation ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -151,7 +151,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Students found", typeof(IEnumerable<Student>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetAllWhoViewedThisPresentationAsync(string id)
+        public async Task<IHttpActionResult> GetAllWhoWatchedThisPresentationAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -160,7 +160,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = await _presentationsBase.GetAllWhoViewedThisPresentationAsync(id);
+                var result = await _presentationsBase.GetAllWhoWatchedThisPresentationAsync(id);
 
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
@@ -171,7 +171,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Get all students who viewed this presentation by presentation ID
+        /// Get all students who like this presentation by presentation ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

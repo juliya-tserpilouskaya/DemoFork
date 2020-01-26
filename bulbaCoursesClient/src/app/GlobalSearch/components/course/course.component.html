@@ -1,22 +1,26 @@
 <div class="row justify-content-center">
   <div class="col-12 col-md-10 col-lg-8">
+    <h1>{{course.Name}}</h1>
+
     <main role="main" class="container">
       <div class="starter-template">
-      <h1>{{course.Id}}</h1>
       <p class="lead">{{course.Description}}
       </div>
-      <!-- {{courses}}
-      <br>
-      {{id}}
-      <br>
-      {{query}} -->
     </main>
-    <br>
-    <h2></h2>
-    <div class="card" *ngFor="let item of course.Items">
-    <h5 class="card-header">{{item.Id}}</h5>
+    <h3>Info:</h3>
+    <div class="card-body">
+      <ul class="list-group">
+        <li class="list-group-item">Language: {{course.Language}}</li>
+        <li class="list-group-item">Complexity: {{course.Complexity}}</li>
+        <li class="list-group-item">Cost: {{course.Cost}}$</li>
+      </ul>
+    </div>
+
+    <h3>What's Inside:</h3>
+    <div class="card-body" *ngFor="let item of course.Items">
+    <h5 class="card-header">{{item.Name}}</h5>
       <div class="card-body">
-      <h5 class="card-title">{{item.Name}}</h5>
+      <!-- <h5 class="card-title">{{item.Name}}</h5> -->
       <p class="card-text">{{item.Description}}</p>
       </div>
     </div><!-- /.container -->

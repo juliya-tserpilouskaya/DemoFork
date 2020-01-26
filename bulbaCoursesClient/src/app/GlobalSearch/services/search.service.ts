@@ -23,6 +23,7 @@ export interface Courses {
     Name: string;
     Cost: number;
     Complexity: string;
+    Language: string;
     Description: string;
     Category: number;
 }

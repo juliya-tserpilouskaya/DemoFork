@@ -32,7 +32,7 @@ namespace BulbaCourses.Web.Controllers
         public UserAdminController(BulbaUserManager userManager, UserContext context)
         {
             this._userManager = userManager;
-            this._context = context;            
+            this._context = context;
         }
 
         [HttpGet, Route("{id}")]
@@ -77,7 +77,7 @@ namespace BulbaCourses.Web.Controllers
         {
             try
             {
-                var roles = await _context.Roles.ToListAsync();                
+                var roles = await _context.Roles.ToListAsync();
                 return roles == null ? NotFound() : (IHttpActionResult)Ok(roles);
             }
             catch (InvalidOperationException ex)
@@ -99,10 +99,42 @@ namespace BulbaCourses.Web.Controllers
             if (!user.NewPassword.Equals(user.NewPasswordConfirm))
                 return BadRequest("New password different");
 
-            var result = await _userManager.ChangePasswordAsync(user.Id, user.OldPassword, user.NewPassword);
+            try
+            {
+                var result = await _userManager.ChangePasswordAsync(user.Id, user.OldPassword, user.NewPassword);
+                return result.Succeeded ? (IHttpActionResult)Ok(result) : BadRequest();
 
-            return result.Succeeded ? (IHttpActionResult)Ok(result) : BadRequest();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
+
+        [HttpDelete, Route("{id}")]
+        public async Task<IHttpActionResult> RemoveAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null)
+                    return NotFound();
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return (IHttpActionResult)Ok();
+                else
+                    return BadRequest(string.Join("\n",result.Errors));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+      
     }
 }

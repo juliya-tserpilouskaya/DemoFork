@@ -23,6 +23,8 @@ import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
 
+import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
+
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
 @NgModule({
@@ -53,6 +55,7 @@ import { AnalyticsConstants } from './analytics/components/constants/analytics.c
           'http://localhost:3500',
           'https://localhost:44369',
           'http://localhost:60601',
+          'https://localhost:44352',
           'https://localhost:44320',
           AnalyticsConstants.ANALYTICS_BASE_HTTPS_URL
         ]
@@ -61,10 +64,9 @@ import { AnalyticsConstants } from './analytics/components/constants/analytics.c
     VideoModule,
     YoutubeModule,
     AnalyticsModule,
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: []
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

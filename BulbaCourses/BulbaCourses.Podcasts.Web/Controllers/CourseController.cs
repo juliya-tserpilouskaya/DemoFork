@@ -16,6 +16,9 @@ using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Course service.
+    /// </summary>
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
@@ -24,10 +27,17 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IUserService Uservice;
         private readonly IBus bus;
 
-        public CourseController(IMapper mapper, ICourseService courseService, IBus bus, IUserService userService)
+        /// <summary>
+        /// Creates Course controller.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="mapper"></param>
+        /// <param name="service"></param>
+        /// <param name="userService"></param>
+        public CourseController(IMapper mapper, ICourseService service, IBus bus, IUserService userService)
         {
             this.mapper = mapper;
-            this.service = courseService;
+            this.service = service;
             this.Uservice = userService;
             this.bus = bus;
         }
@@ -37,7 +47,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course found", typeof(CourseWeb))]
@@ -74,7 +84,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{substring}")]
+        [HttpGet, Route("Search/{substring}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> Search(string substring)
         {
@@ -102,7 +112,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("")]
+        [HttpGet, Route("GetFor/{author}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseWeb>))]
         public async Task<IHttpActionResult> GetAll(string author)
         {
@@ -130,7 +140,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="courseWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseWeb))]
@@ -178,7 +188,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="courseWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("{id}")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -227,7 +237,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
          /// <param name="courseWeb"></param>
          /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(CourseWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -274,7 +284,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
          /// <param name="courseWeb"></param>
          /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Buy")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Course bought", typeof(CourseWeb))]

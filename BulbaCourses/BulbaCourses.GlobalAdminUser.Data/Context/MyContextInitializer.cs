@@ -2,7 +2,7 @@
 using System;
 using System.Data.Entity;
 
-namespace BulbaCourses.GlobalAdminUser.Data.Context
+namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
 {
     class MyContextInitializer : CreateDatabaseIfNotExists<GlobalAdminDbContext>
     {
