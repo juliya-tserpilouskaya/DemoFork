@@ -2,11 +2,19 @@
   <div class="navbar-collapse collapse" id="navbarsExample06">
     <!-- <input class="form-control" type="text" placeholder="Домен" >
     <input class="form-control" type="text" placeholder="Категория"> -->
-     <p><select size="5" multiple name="Domains[]" >
+    <!-- <p><select size="5" multiple name="Domains[]" >
       <option *ngFor="let item of searchCriteria.Domains" value="{{item.DomainName}}">{{item.DomainName}}</option>
       </select>
-    </p>
-     <p><select size="5" multiple name="Domains2[]" >
+    </p> -->
+
+
+  <p><select [(ngModel)]="currentCategory" (ngModelChange)="toNumber()">
+      <option *ngFor="let item of categories" [ngValue]="item">{{item.Title}}</option>
+    </select>
+  </p>
+
+
+     <!-- <p><select size="5" multiple name="Domains2[]" >
       <option *ngFor="let item of domains" value="{{item.DomainName}}">{{item.DomainName}}</option>
       </select>
     </p>
@@ -14,11 +22,11 @@
      <p><select size="5" multiple name="Category[]">
        <option *ngFor="let item of category" value="{{item.Title}}">{{item.Title}}</option>
       </select>
-    </p>
+    </p> -->
 
     <br>
-    <p>MinPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinPrice" >
-    <p>MaxPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxPrice" >
+    <p>MinPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinPrice">
+    <p>MaxPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxPrice">
     <br>
     <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinDiscount">
     <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxDiscount">
@@ -26,8 +34,6 @@
   </div>
 </nav>
 
-
-<p>filterss works! </p>
 
 <!-- <form class="form-group" [formGroup]="filterForm" (submit)="onSubmit()">
   <label>Домен</label>

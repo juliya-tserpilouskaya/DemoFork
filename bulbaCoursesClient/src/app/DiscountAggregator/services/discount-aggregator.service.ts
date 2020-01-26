@@ -47,13 +47,6 @@ export class DiscountAggregatorService {
       }
     });
   }
-
-
-
-  /*
-  postCourses(){
-    return this.client.post<Domains[]>('https://localhost:44317/api/domains');
-  }*/
 }
 
 export interface Domain {
