@@ -100,16 +100,16 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         //    return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         //}
 
-        [HttpPut, Route("")]
+        [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default,UpdateCourse")]BookmarkDTO bookmark)
         {
-            bookmark.UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            bookmark.UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
             var result = await _bookmarkService.AddAsync(bookmark);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }

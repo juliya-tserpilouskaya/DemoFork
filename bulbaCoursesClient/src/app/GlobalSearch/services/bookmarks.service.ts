@@ -16,7 +16,7 @@ export class  BookmarksService {
   }
 
   addToBookmarks(name: string, description: string, courseid: string) {
-    return this.client.put('https://localhost:44320/api/bookmarks/', {
+    return this.client.post<Bookmarks[]>('https://localhost:44320/api/bookmarks/', {
       Title: name,
       Description: description,
       URL: courseid
