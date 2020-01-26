@@ -57,6 +57,7 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
           'http://localhost:60601',
           'https://localhost:44352',
           'https://localhost:44320',
+          'https://localhost:44333',
           AnalyticsConstants.ANALYTICS_BASE_HTTPS_URL
         ]
       }
