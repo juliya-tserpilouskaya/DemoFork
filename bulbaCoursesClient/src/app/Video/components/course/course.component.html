@@ -1,17 +1,3 @@
-<p>course works!</p>
-<!-- <input type="button" value="Добавить" class="btn btn-default" (click)="addUser()"/>
-<table mdbTable bordered="true">
-    <tbody>
-      <tr mdbTableCol *ngFor="let item of course"></tr>
-        <th scope="row">{{item.CourseId}}</th>
-        <td>{{item.Name}}</td>
-        <td>{{item.Price}}</td>
-        
-      </tr>
-    </tbody>
-  </table> -->
-  <p>You can bind our <code>NgbPagination</code> component with slicing the data list</p>
-
 <table class="table table-striped">
   <thead>
   <tr>
@@ -29,19 +15,10 @@
     <td>{{ course.Level}}</td>
     <td>{{ course.Description}}</td>
     <td>{{ course.Price}}</td>
-    <td><input type="button" value="Добавить" class="btn btn-default" (click)="addUser(course.CourseId)"/></td>
+    <td><input type="button" value="Info" class="btn btn-default" (click)="infoCourse(course.CourseId)"/></td>
+    <td><input type="button" value="Delete" class="btn btn-default" (click)="deleteCourse(course.CourseId)"/></td>
   </tr>
   </tbody>
 </table>
 
-<!-- <div class="d-flex justify-content-between p-2">
-  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-  </ngb-pagination>
-
-  <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-    <option [ngValue]="2">2 items per page</option>
-    <option [ngValue]="4">4 items per page</option>
-    <option [ngValue]="6">6 items per page</option>
-  </select>
-</div> -->
 

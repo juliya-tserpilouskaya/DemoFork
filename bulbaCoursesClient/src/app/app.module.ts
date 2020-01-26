@@ -11,7 +11,7 @@ import { CourseComponent } from './DiscountAggregator/components/course/course.c
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { VideoModule } from './Video/video.module';
-import { TabsetComponent } from 'ngx-bootstrap';
+//import { TabsetComponent } from 'ngx-bootstrap';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
 import { RegisterModule} from './register/register/register.module';
@@ -27,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     MenuComponent,
     CourseComponent,
     PagenotfoundComponent,
-    TabsetComponent,
+    //TabsetComponent,
   ],
   imports: [
     BrowserModule,

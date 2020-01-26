@@ -1,0 +1,17 @@
+<ngb-tabset #t="ngbTabset">
+    <ngb-tab id="tab-selectbyid1" title="Simple">
+      <ng-template ngbTabContent>
+        <app-add-course></app-add-course>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid2">
+      <ng-template ngbTabTitle><b>Fancy</b> title</ng-template>
+      <ng-template ngbTabContent>List of courses.
+        <app-course></app-course>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  
+  <p>
+    <button class="btn btn-outline-primary" (click)="t.select('tab-selectbyid2')">Selected tab with "tab-selectbyid2" id</button>
+  </p>

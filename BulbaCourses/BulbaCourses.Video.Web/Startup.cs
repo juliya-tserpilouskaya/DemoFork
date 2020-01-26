@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.StaticFiles;
@@ -21,7 +22,9 @@ using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Cors;
 using System.Web.Http;
 
 //using IdentityServer3.AccessTokenValidation;
@@ -49,7 +52,23 @@ namespace BulbaCourses.Video.Web
             };
             fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = false;
             app.UseFileServer(fileServerOptions);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
+
+
+
+
             //config.Filters.Add(new BadRequestFilterAttribute());
 
             var data = File.ReadAllBytes(
