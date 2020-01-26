@@ -24,20 +24,23 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realizat
         {
             int CorrectAnswerCount = 0;
 
-            foreach (MQuestion_SetOrder CurrentQuestions_SetOrder in Current_Test_MainInfo.Questions_SetOrder)
+            if (ReaderChoice_MainInfo.ReaderChoices_SetOrder != null)
             {
-                IEnumerable<int> CorrectAnswerId =
-                    CurrentQuestions_SetOrder.AnswerVariants
-                        .Select(c => c.CorrectOrderKey);
-
-                IEnumerable<int> ReaderAnswerId =
-                    ReaderChoice_MainInfo.ReaderChoices_SetOrder
-                        .Where(c => c.Question_SetOrderDb_Id == CurrentQuestions_SetOrder.Id)
-                        .Select(c => c.AnswerVariant_SetOrderDb_Id);
-
-                if (CorrectAnswerId.SequenceEqual(ReaderAnswerId))
+                foreach (MQuestion_SetOrder CurrentQuestions_SetOrder in Current_Test_MainInfo.Questions_SetOrder)
                 {
-                    CorrectAnswerCount++;
+                    IEnumerable<int> CorrectAnswerId =
+                        CurrentQuestions_SetOrder.AnswerVariants
+                            .Select(c => c.CorrectOrderKey);
+
+                    IEnumerable<int> ReaderAnswerId =
+                        ReaderChoice_MainInfo.ReaderChoices_SetOrder
+                            .Where(c => c.Question_SetOrderDb_Id == CurrentQuestions_SetOrder.Id)
+                            .Select(c => c.AnswerVariant_SetOrderDb_Id);
+
+                    if (CorrectAnswerId.SequenceEqual(ReaderAnswerId))
+                    {
+                        CorrectAnswerCount++;
+                    }
                 }
             }
 

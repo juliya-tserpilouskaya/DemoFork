@@ -36,6 +36,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
 
             // ----------- ReaderChoice
 
+            CreateMap<MReaderChoice_MainInfo, MReaderChoice_MainInfoDb>().ReverseMap();
             CreateMap<MReaderChoice_ChoosingAnswerFromList, MReaderChoice_ChoosingAnswerFromListDb>().ReverseMap();
             CreateMap<MReaderChoice_SetOrder, MReaderChoice_SetOrderDb>().ReverseMap();                       
 

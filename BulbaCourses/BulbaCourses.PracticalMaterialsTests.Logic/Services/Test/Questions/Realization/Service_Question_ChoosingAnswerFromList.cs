@@ -26,23 +26,26 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realizat
         {
             int CorrectAnswerCount = 0;
 
-            foreach (MQuestion_ChoosingAnswerFromList CurrentQuestions_ChoosingAnswerFromList in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
+            if (Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Any())
             {
-                IEnumerable<int> CorrectAnswerId =
-                    CurrentQuestions_ChoosingAnswerFromList.AnswerVariants
-                        .Where(c => c.IsCorrectAnswer)
-                        .Select(c => c.Id)
-                        .OrderBy(c => c);
-
-                IEnumerable<int> ReaderAnswerId =
-                    ReaderChoice_MainInfo.ReaderChoices_ChoosingAnswerFromList
-                        .Where(c => c.Question_ChoosingAnswerFromList_Id == CurrentQuestions_ChoosingAnswerFromList.Id)
-                        .Select(c => c.AnswerVariant_ChoosingAnswerFromList_Id)
-                        .OrderBy(c => c);
-
-                if (CorrectAnswerId.SequenceEqual(ReaderAnswerId))
+                foreach (MQuestion_ChoosingAnswerFromList CurrentQuestions_ChoosingAnswerFromList in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
                 {
-                    CorrectAnswerCount++;
+                    IEnumerable<int> CorrectAnswerId =
+                        CurrentQuestions_ChoosingAnswerFromList.AnswerVariants
+                            .Where(c => c.IsCorrectAnswer)
+                            .Select(c => c.Id)
+                            .OrderBy(c => c);
+
+                    IEnumerable<int> ReaderAnswerId =
+                        ReaderChoice_MainInfo.ReaderChoices_ChoosingAnswerFromList
+                            .Where(c => c.Question_ChoosingAnswerFromList_Id == CurrentQuestions_ChoosingAnswerFromList.Id)
+                            .Select(c => c.AnswerVariant_ChoosingAnswerFromList_Id)
+                            .OrderBy(c => c);
+
+                    if (CorrectAnswerId.SequenceEqual(ReaderAnswerId))
+                    {
+                        CorrectAnswerCount++;
+                    }
                 }
             }
 

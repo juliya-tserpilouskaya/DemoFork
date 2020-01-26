@@ -269,7 +269,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  {
                                      QuestionText = "Начнём с простейшего. Отгадайте загадку! Странный дождь порой идет: сотней струй он кверху бьет.",
                                      Description = "Не расстраивайтесь, сейчас разогреем вашу смекалку",
-                                     SortKey = 1,
+                                     SortKey = 0,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -297,7 +297,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  {
                                      QuestionText = "Чем больше из неё берёшь, тем больше она становится.",
                                      Description = "Вам стоит поднапрячься в дальнейшем!",
-                                     SortKey = 2,
+                                     SortKey = 1,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -325,7 +325,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  {
                                      QuestionText = "У отца Мэри есть 5 дочерей: Чача, Чичи, Чече, Чочо. Как зовут 5 дочь?",
                                      Description = "Пойдемте, я познакомлю Вас с настоящей чачей)",
-                                     SortKey = 3,
+                                     SortKey = 2,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -353,7 +353,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  {
                                      QuestionText = "На столе лежит яблоко. Его разделили на 4 части. Сколько яблок лежит на столе?",
                                      Description = "Мы делили апельсин...много наших полегло. Это высказывание, видимо, про Вас! =)",
-                                     SortKey = 4,
+                                     SortKey = 3,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -379,37 +379,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  },
                                  new MQuestion_ChoosingAnswerFromListDb()
                                  {
-                                     QuestionText = "Что можно видеть с закрытыми глазами?",
-                                     Description = "",
-                                     SortKey = 5,
-                                     AnswerVariants =
-                                        new List<MAnswerVariant_ChoosingAnswerFromListDb>()
-                                        {
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Ничего",
-                                                SortKey = 1,
-                                                IsCorrectAnswer = false
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Сны",
-                                                SortKey = 2,
-                                                IsCorrectAnswer = true
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Свои глаза",
-                                                SortKey = 3,
-                                                IsCorrectAnswer = false
-                                            }
-                                        }
-                                 },
-                                 new MQuestion_ChoosingAnswerFromListDb()
-                                 {
                                      QuestionText = "Чем оканчиваются день и ночь? ",
                                      Description = "Похоже, Вы все еще не успели открыть глаза",
-                                     SortKey = 6,
+                                     SortKey = 4,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -435,37 +407,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  },
                                  new MQuestion_ChoosingAnswerFromListDb()
                                  {
-                                     QuestionText = "У трех братьев по одной сестре. Сколько всего детей в семье?",
-                                     Description = "С математикой у Вас все отлично)",
-                                     SortKey = 7,
-                                     AnswerVariants =
-                                        new List<MAnswerVariant_ChoosingAnswerFromListDb>()
-                                        {
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "3 ребенка",
-                                                SortKey = 1,
-                                                IsCorrectAnswer = false
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "2 ребенка",
-                                                SortKey = 2,
-                                                IsCorrectAnswer = false
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "4 ребенка",
-                                                SortKey = 3,
-                                                IsCorrectAnswer = true
-                                            }
-                                        }
-                                 },
-                                 new MQuestion_ChoosingAnswerFromListDb()
-                                 {
                                      QuestionText = "Что принадлежит вам, однако другие им пользуются чаще, чем вы? ",
                                      Description = "Зато мании величия у вас нет",
-                                     SortKey = 8,
+                                     SortKey = 5,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {
@@ -491,37 +435,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Initialization
                                  },
                                  new MQuestion_ChoosingAnswerFromListDb()
                                  {
-                                     QuestionText = "У человека — две, у коровы — две, а у ястреба – ни одной =(. Что это?",
-                                     Description = "Кажется, задачки на смекалку не для Вас",
-                                     SortKey = 9,
-                                     AnswerVariants =
-                                        new List<MAnswerVariant_ChoosingAnswerFromListDb>()
-                                        {
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Руки",
-                                                SortKey = 1,
-                                                IsCorrectAnswer = false
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Рога",
-                                                SortKey = 2,
-                                                IsCorrectAnswer = false
-                                            },
-                                            new MAnswerVariant_ChoosingAnswerFromListDb()
-                                            {
-                                                AnswerText = "Буква О",
-                                                SortKey = 3,
-                                                IsCorrectAnswer = true
-                                            }
-                                        }
-                                 },
-                                 new MQuestion_ChoosingAnswerFromListDb()
-                                 {
                                      QuestionText = "Каких камней в море нет?",
                                      Description = "Мы делили апельсин...много наших полегло. Это высказывание, видимо, про Вас! =)",
-                                     SortKey = 10,
+                                     SortKey = 6,
                                      AnswerVariants =
                                         new List<MAnswerVariant_ChoosingAnswerFromListDb>()
                                         {

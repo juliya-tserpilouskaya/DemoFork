@@ -10,6 +10,7 @@ using FluentValidation.WebApi;
 using Ninject;
 using Swashbuckle.Swagger.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Principal;
@@ -37,15 +38,19 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             _bus = bus;
         }
 
+        // ------------ CRUD
+
         [HttpGet, Route("GetTestById")]
         [SwaggerResponse(HttpStatusCode.OK, "Test found")]        
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetTestById(int TestId)
         {
-            var Test_MainInfo = _service_Test.GetById(TestId);
+            var Test_MainInfo = 
+                _service_Test.GetByIdAsync(TestId);
 
-            return Ok(Test_MainInfo.Data);
+            return
+                Ok(Test_MainInfo.Result.Data);
         }
 
         [HttpPost, Route("addTest")]
@@ -64,9 +69,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             }
 
             var Rez =
-                   _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
+                _service_Test.Add("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo);
 
-            return Ok(Test_MainInfo.Name);                     
+            return Ok(Rez.Data.Id);                     
         }
 
         [HttpPost, Route("updateTest")]
@@ -76,7 +81,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something Wrong")]
         public IHttpActionResult UpdateTest([FromBody]MTest_MainInfo Test_MainInfo)
         {
-            if (!ModelState.IsValid)
+            var result = _validator.Validate(Test_MainInfo);
+
+            if (!result.IsValid)
             {
                 return 
                     BadRequest(ModelState);
@@ -99,11 +106,42 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             return Ok(Test_MainInfo.Message);
         }
 
+        // ------------ CheckTest
+
+        [HttpGet, Route("ResultTestStructure")]
+        [SwaggerResponse(HttpStatusCode.OK, "Test check")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public IHttpActionResult ResultTestStructure(int TestId)
+        {
+            MTest_MainInfo Test_MainInfo =
+                _service_Test.GetById(TestId).Data;
+
+            MReaderChoice_MainInfo ReaderChoice_MainInfo =
+                new MReaderChoice_MainInfo()
+                {
+                    Test_MainInfo_Id = Test_MainInfo.Id,
+                    ReaderChoices_ChoosingAnswerFromList = new List<MReaderChoice_ChoosingAnswerFromList>()
+                };
+
+            foreach (var x in Test_MainInfo.Questions_ChoosingAnswerFromList)
+            {
+                ReaderChoice_MainInfo.ReaderChoices_ChoosingAnswerFromList.Add(
+                    new MReaderChoice_ChoosingAnswerFromList()
+                    {
+                        Question_ChoosingAnswerFromList_Id = x.Id
+                    });
+            }
+
+            return
+                Json(ReaderChoice_MainInfo);
+        }
+
         [HttpPost, Route("CheckTest")]
         [SwaggerResponse(HttpStatusCode.OK, "Test check")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult CheckTest([FromBody]MReaderChoice_MainInfo ReaderChoice_MainInfo)
+        public IHttpActionResult CheckTest([FromBody]MReaderChoice_MainInfo ReaderChoice_MainInf)
         {
             //var result = _validator.Validate(Test_MainInfo);
 
@@ -113,8 +151,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
             //        BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
             //}            
 
-            return 
-                Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInfo).Data);
+            var x = _service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInf).Data;
+
+            return                
+                Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInf).Data);        
         }
     }
 }
