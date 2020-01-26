@@ -30,29 +30,47 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                 Description = "test",
                 Duration = 13,
                 Price = 13,
+                Comments = null,
+                Audios = null,
+                CreationDate = DateTime.Now,
+                Author = null,
             };
             var user1 = new UserDb()
             {
                 Id = "0",
                 IsAdmin = true,
                 Name = "TestUser",
+                Avatar = null,
+                BoughtCourses = null,
+                UploadedCourses = null,
+                Comments = null,
+                Description = "",
+                RegistrationDate = DateTime.Now,
+                Email = "",
             };
 
             var audio1 = new AudioDb()
             {
                 Id = "0",
                 Name = "Test",
-                Duration = 13
+                Duration = 13,
+                Content = "0",
+                Course = null,
             };
             var comment1 = new CommentDb()
             {
                 Id = "0",
                 Text = "TestComment",
+                Course = null,
+                PostDate = DateTime.Now,
+                User = null,
             };
             var content1 = new ContentDb()
             {
                 Id = "0",
-                Data = "qwerty"
+                Data = "qwerty",
+                Audio = null,
+                
             };
 
             course1.Author = user1;

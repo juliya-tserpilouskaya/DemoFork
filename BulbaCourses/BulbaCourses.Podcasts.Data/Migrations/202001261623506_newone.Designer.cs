@@ -7,13 +7,13 @@ namespace BulbaCourses.Podcasts.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class First : IMigrationMetadata
+    public sealed partial class newone : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(First));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(newone));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001191827393_First"; }
+            get { return "202001261623506_newone"; }
         }
         
         string IMigrationMetadata.Source
