@@ -5,6 +5,7 @@ using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -27,6 +28,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         //Role - admin
+        /// <summary>
+        /// Get all bookmarks
+        /// </summary>
+        /// <returns>Returns all bookmarks stored</returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no bookmarks in list")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks were found", typeof(IEnumerable<BookmarkDTO>))]
@@ -36,6 +41,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Get bookmark
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
@@ -58,6 +68,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get user bookmarks
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("user")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid UserId")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark wasn't found")]
@@ -100,6 +114,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         //    return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         //}
 
+        /// <summary>
+        /// Add bookmark
+        /// </summary>
+        /// <param name="bookmark"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
@@ -114,6 +133,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete bookmark
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid ID")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Bookmark doesn't exists")]
@@ -138,6 +162,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         }
 
         //Role - admin
+        /// <summary>
+        /// Delete bookmarks
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmarks removed")]
         public IHttpActionResult ClearAll()
