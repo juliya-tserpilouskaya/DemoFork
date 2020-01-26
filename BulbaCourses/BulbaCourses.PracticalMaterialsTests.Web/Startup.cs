@@ -40,7 +40,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
                         
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
-                {
+               {
                     AuthenticationMode = AuthenticationMode.Active,
 
                     IssuerName = "https://localhost:44382",
@@ -78,7 +78,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
             StandardKernel kernel = new StandardKernel();
 
             // ---------- LayerLogic
-
+ 
             kernel.Bind<IService_Test>().To<Service_Test>();
 
             kernel.Load<ModuleNinject_LogicLayer>();

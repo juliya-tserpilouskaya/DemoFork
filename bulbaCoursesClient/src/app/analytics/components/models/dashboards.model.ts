@@ -3,6 +3,8 @@ export interface Dashboard {
   Name: string;
   ReportId: string;
   ChartId: string;
+  Dates: string[];
+  Values: number[];
 }
 
 export interface DashboardNew {

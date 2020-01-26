@@ -21,11 +21,11 @@ namespace Forecast
         /// <summary>
         /// Gets Date.
         /// </summary>
-        public DateTime Date { get; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Gets Value.
         /// </summary>
-        public double Value { get; }
+        public double Value { get; set; }
     }
 }

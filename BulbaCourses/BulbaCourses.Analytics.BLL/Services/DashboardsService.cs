@@ -28,7 +28,6 @@ namespace BulbaCourses.Analytics.BLL.Services
         {
             _mapper = mapper;
             _repository = repository;
-            // if need adding data to uncomment Seed.SeedDatabase(repository);
         }
 
         /// <summary>
@@ -169,6 +168,20 @@ namespace BulbaCourses.Analytics.BLL.Services
         public async Task<bool> ExistsChartIdAsync(int id)
         {
             return await _repository.ExistsChartAsync(_ => _.Id == id).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ExchangeRatesDto>> GetAnalyticDataAsync()
+        {
+            var ratesDb = await _repository.GetAnalyticDataAsync().ConfigureAwait(false);
+
+            var ratesDtos = _mapper.Map<IEnumerable<ExchangeRatesDto>>(ratesDb);
+
+            return ratesDtos;
         }
 
         private Expression<Func<DashboardDb, bool>> GetSearchNameOptions(string name, Search.StringOption stringOption)

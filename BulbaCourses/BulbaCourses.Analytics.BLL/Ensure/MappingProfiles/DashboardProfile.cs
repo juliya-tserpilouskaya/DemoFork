@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BulbaCourses.Analytics.DAL.Models;
 using BulbaCourses.Analytics.Infrastructure.Models;
 using BulbaCourses.Analytics.Models.V1;
+using Forecast;
 
 namespace BulbaCourses.Analytics.BLL.Ensure.MappingProfiles
 {
@@ -25,6 +27,13 @@ namespace BulbaCourses.Analytics.BLL.Ensure.MappingProfiles
 
             CreateMap<DashboardDto, DashboardNew>();
             CreateMap<DashboardNew, DashboardDto>();
+
+            CreateMap<DashboardDb, DashboardDto>();
+            CreateMap<DashboardDto, DashboardData>();
+
+            CreateMap<ExchangeRatesDb, ExchangeRatesDto>();
+            CreateMap<ExchangeRatesDto, Data>();
+
         }
     }
 }

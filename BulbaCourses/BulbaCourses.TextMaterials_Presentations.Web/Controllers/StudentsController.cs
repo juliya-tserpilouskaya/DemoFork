@@ -102,7 +102,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Update the student presentation account in the database
+        /// Update the student presentation account in the database (PhoneNumber)
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
@@ -130,7 +130,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Student deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeleteStudentAsync(string id)
+        public async Task<IHttpActionResult> DeleteStudentByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -216,7 +216,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        ///  Add the presentation to the list of viewed presentations
+        ///  Add the presentation to the list of watched presentations
         /// </summary>
         /// <param name="idStudent"></param>
         /// <param name="idPresentation"></param>
@@ -224,7 +224,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpPut, Route("{idStudent}/{idPresentation}/viewAdd")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations added", typeof(Boolean))]
-        public async Task<IHttpActionResult> AddViewedPresentationAsync(string idStudent, string idPresentation)
+        public async Task<IHttpActionResult> AddWatchedPresentationAsync(string idStudent, string idPresentation)
         {
             if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
                 || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
@@ -232,13 +232,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            var result = await _studentService.AddViewedPresentationAsync(idStudent, idPresentation);
+            var result = await _studentService.AddWatchedPresentationAsync(idStudent, idPresentation);
 
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         /// <summary>
-        ///  Delete the presentation from the list of viewed presentations
+        ///  Delete the presentation from the list of watched presentations
         /// </summary>
         /// <param name="idStudent"></param>
         /// <param name="idPresentation"></param>
@@ -246,7 +246,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpPut, Route("{idStudent}/{idPresentation}/viewDel")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeleteViewedPresentationAsync(string idStudent, string idPresentation)
+        public async Task<IHttpActionResult> DeleteWatchedPresentationAsync(string idStudent, string idPresentation)
         {
             if (string.IsNullOrEmpty(idStudent) || !Guid.TryParse(idStudent, out var _)
                 || string.IsNullOrEmpty(idPresentation) || !Guid.TryParse(idPresentation, out var _))
@@ -254,13 +254,13 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            var result = await _studentService.DeleteViewedPresentationAsync(idStudent, idPresentation);
+            var result = await _studentService.DeleteWatchedPresentationAsync(idStudent, idPresentation);
 
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         /// <summary>
-        ///  Get all presentations from the list of viewed presentations by the student presentation account ID
+        ///  Get all presentations from the list of watched presentations by the student presentation account ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -269,7 +269,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Student doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetAllViewedPresentationAsync(string id)
+        public async Task<IHttpActionResult> GetAllWatchedPresentationAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -278,7 +278,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = await _studentService.GetAllViewedPresentationAsync(id);
+                var result = await _studentService.GetAllWatchedPresentationAsync(id);
 
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }

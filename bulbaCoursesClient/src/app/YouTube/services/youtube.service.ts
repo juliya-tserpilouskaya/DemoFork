@@ -17,6 +17,9 @@ export class YoutubeService {
   videoSubject = new BehaviorSubject<ResultVideo>(null);
   video$ = this.videoSubject.asObservable();
 
+  storySubject = new BehaviorSubject<SearchStory[]>(null);
+  story$ = this.storySubject.asObservable();
+
   constructor(private client: HttpClient) { }
 
   searchVideo(searchRequest: SearchRequest, user: CustomUser) {

@@ -99,7 +99,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Update the feedback in the database
+        /// Update the feedback in the database (Text, Title)
         /// </summary>
         /// <param name="feedback"></param>
         /// <returns></returns>
@@ -127,7 +127,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedback deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeleteFeedbackAsync(string id)
+        public async Task<IHttpActionResult> DeleteFeedbackByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
