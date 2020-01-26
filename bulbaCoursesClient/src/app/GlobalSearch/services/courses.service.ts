@@ -24,6 +24,7 @@ export interface Course {
     Cost: number;
     Complexity: string;
     Description: string;
+    Language: string;
     Items: {
       Id: string;
       Name: string;
