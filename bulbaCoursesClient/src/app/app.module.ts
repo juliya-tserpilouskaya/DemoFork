@@ -65,6 +65,7 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     YoutubeModule,
     AnalyticsModule,
     NgxUiLoaderModule,
+    PracticalMaterialsTestModule
   ],
   providers: [],
   bootstrap: [AppComponent]

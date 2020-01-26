@@ -26,8 +26,7 @@ export class MenuComponent implements OnInit {
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
 
-  onSearchButtonClicked()
-  {
+  onSearchButtonClicked() {
     window.location.href = '/search/results/' + this.query;
   }
 }
