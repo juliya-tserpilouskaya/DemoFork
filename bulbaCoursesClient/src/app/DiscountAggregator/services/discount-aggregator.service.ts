@@ -9,8 +9,8 @@ import { CustomUser } from 'src/app/auth/models/user';
 })
 export class DiscountAggregatorService {
 
-  // resultSubject = new Subject<Courses[]>();
-  // result$ = this.resultSubject.asObservable();
+   // resultSubject = new Subject<Courses[]>();
+   // result$ = this.client.asObservable();
 
   constructor(private client: HttpClient) { }
 
@@ -29,21 +29,18 @@ export class DiscountAggregatorService {
     return this.client.get<SearchCriteria>('https://localhost:44317/api/criterias/User');
   }
 
-  UpdateSearchCriteria(searchCriteria: SearchCriteria) {
-    console.log('attempt update searchCriteria');
-    console.log(searchCriteria.Id);
-    console.log(searchCriteria.Domains);
-    console.log(searchCriteria.CourseCategories);
-    console.log(searchCriteria.MinPrice);
-    console.log(searchCriteria.MaxPrice);
-    console.log(searchCriteria.MinDiscount);
-    console.log(searchCriteria.MaxDiscount);
-    return this.client.put<SearchCriteria>('https://localhost:44317/api/criterias', searchCriteria);
-    console.log(searchCriteria.MaxPrice);
+  getAllDomains() {
+    console.log('get domains');
+    return this.client.get<Domain[]>('https://localhost:44317/api/domains');
   }
 
-  putSearch(searchCriteria: SearchCriteria, user: CustomUser) {
-    console.log();
+  getAllCategory() {
+    console.log('get category');
+    return this.client.get<Category[]>('https://localhost:44317/api/categories');
+  }
+
+  putUpdateSearchCriteria(searchCriteria: SearchCriteria, user: CustomUser) {
+    console.log('function update searchCriteria');
     return this.client.put<SearchCriteria>('https://localhost:44317/api/criterias', searchCriteria, {
       headers: {
         UserSub: '${user.sub}'

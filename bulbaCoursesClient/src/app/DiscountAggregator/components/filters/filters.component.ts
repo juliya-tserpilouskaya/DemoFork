@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { FormGroup, FormBuilder, NgModel } from '@angular/forms';
-import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
+import { DiscountAggregatorService, Courses, SearchCriteria, Category } from '../../services/discount-aggregator.service';
 import { User, CustomUser } from 'src/app/auth/models/user';
 import { map } from 'rxjs/operators';
 
@@ -16,8 +16,10 @@ export class FiltersComponent implements OnInit {
   user: CustomUser;
   filterForm: FormGroup;
   discountAggregatorService: DiscountAggregatorService;
-  courses: Courses[] = [];
+   courses: Courses[] = [];
   searchCriteria: SearchCriteria;
+  domains: Domain[] = [];
+  category: Category[] = [];
 
   constructor(private service: DiscountAggregatorService, private formBuilder: FormBuilder, private authService: AuthService) {
     /*this.filterForm = formBuilder.group({
@@ -36,13 +38,14 @@ export class FiltersComponent implements OnInit {
    this.service.getSearchCriteria()
     .subscribe(data => this.searchCriteria = data);
    console.log('get criteria good');
+   this.service.getAllCategory().subscribe(data => this.category = data);
+   this.service.getAllDomains().subscribe(data => this.domains = data);
   }
 
   onSubmitCriteria() {
     console.log('press submit criteria');
-    this.service.putSearch(this.searchCriteria, this.user)
+    this.service.putUpdateSearchCriteria(this.searchCriteria, this.user)
       .subscribe(data => this.searchCriteria = data);
-      // .subscribe(data => this.searchCriteria = data);
     console.log('criteria updated');
     this.service.getCoursesForCriteria(/*this.user*/)
     .subscribe(data => this.courses = data);

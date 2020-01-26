@@ -1,29 +1,28 @@
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
   <div class="navbar-collapse collapse" id="navbarsExample06">
-    <input class="form-control" type="text" placeholder="Домен" >
-      <input class="form-control" type="text" placeholder="Категория">
-      <br>
-      <p>MinPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinPrice" >
-      <p>MaxPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxPrice" >
-      <br>
-      <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinDiscount">
-      <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxDiscount">
-      <input type="button" value="Edit" class="btn btn-info" (click)="onSubmitCriteria()" />
-      <button type="submit" class="search btn btn-success " (submit)="onSubmitCriteria()"><span class="glyphicon glyphicon-search" aria-hidden="true">Отправить</span></button>
-    <!-- <form class="form-inline my-2 my-md-0" (submit)="onSubmitCriteria()">
-      <input class="form-control" type="text" placeholder="Домен" >
-      <input class="form-control" type="text" placeholder="Категория">
-      <br>
-      <p>MinPrice</p><input class="form-control" type="text" placeholder={{searchCriteria.MinPrice}} >
-      <p>MaxPrice</p><input class="form-control" type="text" placeholder={{searchCriteria.MaxPrice}} >
+    <!-- <input class="form-control" type="text" placeholder="Домен" >
+    <input class="form-control" type="text" placeholder="Категория"> -->
+     <p><select size="5" multiple name="Domains[]" >
+      <option *ngFor="let item of searchCriteria.Domains" value="{{item.DomainName}}">{{item.DomainName}}</option>
+      </select>
+    </p>
+     <p><select size="5" multiple name="Domains2[]" >
+      <option *ngFor="let item of domains" value="{{item.DomainName}}">{{item.DomainName}}</option>
+      </select>
+    </p>
 
-      <br>
-      <h1>{{searchCriteria.MaxPrice}}</h1>
-      <br>
-      <p>MaxDiscount</p><input class="form-control" type="text" placeholder={{searchCriteria.MinDiscount}}>
-      <p>MaxDiscount</p><input class="form-control" type="text" placeholder={{searchCriteria.MaxDiscount}}>
-      <button type="submit" class="search btn btn-success "><span class="glyphicon glyphicon-search" aria-hidden="true">Отправить</span></button>
-    </form> -->
+     <p><select size="5" multiple name="Category[]">
+       <option *ngFor="let item of category" value="{{item.Title}}">{{item.Title}}</option>
+      </select>
+    </p>
+
+    <br>
+    <p>MinPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinPrice" >
+    <p>MaxPrice</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxPrice" >
+    <br>
+    <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MinDiscount">
+    <p>MaxDiscount</p><input class="form-control" type="text" [(ngModel)]="searchCriteria.MaxDiscount">
+    <input type="button" value=" Получить " class="btn btn-info" (click)="onSubmitCriteria()" />
   </div>
 </nav>
 

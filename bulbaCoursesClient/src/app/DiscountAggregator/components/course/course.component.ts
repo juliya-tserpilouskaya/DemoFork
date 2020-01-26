@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
+import { DiscountAggregatorService, Courses, SearchCriteria, Domain, Category } from '../../services/discount-aggregator.service';
 import { ActivatedRoute } from '@angular/router';
 import { CustomUser } from 'src/app/auth/models/user';
 
@@ -20,12 +20,14 @@ export class CourseComponent implements OnInit {
     console.log('1');
     // this.service.getCourses()
     // .subscribe(data => this.courses = data);
-    this.service.getCoursesForCriteria(/*this.user*/).subscribe(data => this.courses = data);
-    // console.log(this.user.sub);
+    // var coursesd = from([3,4,5]);
+    this.service.getCoursesForCriteria().subscribe(data => this.courses = data);
+
+    // var obs = from(courses);
   }
 
   onSubmitCriteria() {
-    this.service.getCoursesForCriteria(/*this.user*/)
+    this.service.getCoursesForCriteria()
     .subscribe(data => this.courses = data);
   }
 

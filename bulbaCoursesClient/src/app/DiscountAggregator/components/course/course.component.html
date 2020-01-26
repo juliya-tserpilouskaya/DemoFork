@@ -10,12 +10,11 @@
       <h1 class="card-title pricing-card-title" ><small class="text-muted">{{item.Title}} / </small>{{item.Price}} </h1>
         <li>{{item.Domain?.DomainName}}</li>
         <li>{{item.Category?.Title}} </li>
-        <li>{{item.URL}} </li>
+        <a class="btnLink" href={{item.URL}}>Перейти по ссылке</a>
         <li>{{item.Title}} </li>
         <li>{{item.Description}} </li>
         <li>{{item.Price}} BYN | Текущая скидка: {{item.Discount}} </li>
         <li>Предыдущая цена - {{item.OldPrice}}, была изменеа {{item.DateOldPrice}} </li>
-        <li></li>
         <li>Дата начала курса: {{item.DateStartCourse}} </li>
         <!-- <li>{{item.DateChange}} </li> -->
       <button type="button" class="btn btn-lg btn-block btn-outline-primary">Перейти</button>
