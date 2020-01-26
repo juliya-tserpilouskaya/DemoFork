@@ -25,10 +25,11 @@ namespace BulbaCourses.Youtube.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchStory>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-
+            
             //RabbitMQ configuration
             var bus = kernel.Get<IBus>();
             bus.Receive<SearchRequest>("YoutubeQ", m => OnMessage(m));
+            
 
             // Web API routes
             config.MapHttpAttributeRoutes();
