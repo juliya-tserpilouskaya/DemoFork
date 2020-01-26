@@ -20,8 +20,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
 
             CreateMap<MTest_MainInfo, MTest_MainInfoDb>().ReverseMap();
             CreateMap<MReaderChoice_MainInfo, MReaderChoice_MainInfoDb>().ReverseMap();
-
-
+            
             // ----------- Question
 
             CreateMap<MQuestion_ChoosingAnswerFromList, MQuestion_ChoosingAnswerFromListDb>().ReverseMap();            
@@ -35,14 +34,15 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles
             CreateMap<MAnswerVariant_ChoosingAnswerFromList, MAnswerVariant_ChoosingAnswerFromListDb>().ReverseMap();
             CreateMap<MAnswerVariant_SetOrder, MAnswerVariant_SetOrderDb>().ReverseMap();
 
+            // ----------- ReaderChoice
+
             CreateMap<MReaderChoice_ChoosingAnswerFromList, MReaderChoice_ChoosingAnswerFromListDb>().ReverseMap();
-            CreateMap<MReaderChoice_SetOrder, MReaderChoice_SetOrderDb>().ReverseMap();
+            CreateMap<MReaderChoice_SetOrder, MReaderChoice_SetOrderDb>().ReverseMap();                       
 
             // ------------ User
 
             CreateMap<MUser_TestAuthor, MUser_TestAuthorDb>().ReverseMap();
             CreateMap<MUser_TestReader, MUser_TestReaderDb>().ReverseMap();
-
         }
     }
 }

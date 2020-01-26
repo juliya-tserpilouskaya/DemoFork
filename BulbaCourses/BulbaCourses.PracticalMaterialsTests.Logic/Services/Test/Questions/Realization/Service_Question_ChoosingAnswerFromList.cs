@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BulbaCourses.PracticalMaterialsTests.Data.Context;
+using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Questions.Interfaсe;
 using System;
@@ -9,24 +10,9 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realizat
 {
     public class Service_Question_ChoosingAnswerFromList : Service_Base, IService_Question
     {
-        protected Service_Question_ChoosingAnswerFromList(DbContext context, IMapper mapper) : base(context, mapper)
+        public Service_Question_ChoosingAnswerFromList([AttributeDbContext_LocalDb]DbContext context, IMapper mapper) : base(context, mapper)
         {
 
-        }
-
-        public void AddQuestion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DropQuestionById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetQuestonById(int Id)
-        {
-            throw new NotImplementedException();
         }
 
         public int CheckQuestion()

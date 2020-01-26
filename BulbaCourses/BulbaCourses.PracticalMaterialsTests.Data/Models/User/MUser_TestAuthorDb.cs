@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.User
 {
+    /// <summary>
+    /// User who created the test
+    /// </summary>
     public class MUser_TestAuthorDb
     {        
-        public string Id { get; set; }        
+        public string Id { get; set; }
 
         public ICollection<MTest_MainInfoDb> CreateTests { get; set; }
     }

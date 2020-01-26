@@ -61,17 +61,17 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
             // ------------ WorkWithResultTest
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_MainInfoDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_MainInfoDb());
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_ChoosingAnswerFromListDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_ChoosingAnswerFromListDb());
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_SetOrderDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_SetOrderDb());
 
             // ------------ User
 
             modelBuilder.Configurations.Add(new Mapping_User_TestAuthor());
 
-            //modelBuilder.Configurations.Add(new Mapping_User_TestReader());
+            modelBuilder.Configurations.Add(new Mapping_User_TestReader());
         }
     }
 }

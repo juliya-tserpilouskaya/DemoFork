@@ -20,6 +20,9 @@ using FluentValidation.WebApi;
 using FluentValidation;
 using BulbaCourses.PracticalMaterialsTests.Web.App_Start;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Questions.Interfaсe;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realization;
+using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.Test.Questions;
 
 [assembly: OwinStartup(typeof(BulbaCourses.PracticalMaterialsTests.Web.Startup))]
 
@@ -78,7 +81,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
             StandardKernel kernel = new StandardKernel();
 
             // ---------- LayerLogic
-
+ 
             kernel.Bind<IService_Test>().To<Service_Test>();
 
             kernel.Load<ModuleNinject_LogicLayer>();

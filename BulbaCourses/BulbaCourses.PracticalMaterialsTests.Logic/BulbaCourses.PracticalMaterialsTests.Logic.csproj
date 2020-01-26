@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DbContext\AttributeDbContext_LocalDb.cs" />
+    <Compile Include="Attributes\Test\Questions\AttributeQuestion_SetOrder.cs" />
+    <Compile Include="Attributes\Test\Questions\AttributeQuestion_ChoosingAnswerFromList.cs" />
     <Compile Include="AutoMapper\Profiles\AutoMapperProfile_DataLogicLayer.cs" />
     <Compile Include="Models\WorkWithResultTest\MReaderChoice_ChoosingAnswerFromList.cs" />
     <Compile Include="Models\WorkWithResultTest\MReaderChoice_MainInfo.cs" />

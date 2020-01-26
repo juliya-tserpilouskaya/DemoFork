@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest
-{ 
+{
     public class Mapping_ReaderChoice_ChoosingAnswerFromListDb : EntityTypeConfiguration<MReaderChoice_ChoosingAnswerFromListDb>
     {
         public Mapping_ReaderChoice_ChoosingAnswerFromListDb()
@@ -24,12 +24,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest
                 .HasColumnName("Question_ChoosingAnswerFromList_Id")
                 .IsRequired();
 
-            Property(i => i.AnswerVariant_ChoosingAnswerFromListDb_Id)
-                .HasColumnName("AnswerVariant_ChoosingAnswerFromListDb_Id")
-                .IsRequired();            
+            Property(i => i.User_AnswerVariant_ChoosingAnswerFromListDb_Id)
+                .HasColumnName("User_AnswerVariant_ChoosingAnswerFromListDb_Id")
+                .IsRequired();
+
+            Property(i => i.Correct_AnswerVariant_ChoosingAnswerFromListDb_Id)
+                .HasColumnName("Correct_AnswerVariant_ChoosingAnswerFromListDb_Id")
+                .IsRequired();
 
             Property(i => i.IsChoice)
-                .HasColumnName("IsChoice")                
+                .HasColumnName("IsChoice")
                 .IsRequired();
         }
     }
