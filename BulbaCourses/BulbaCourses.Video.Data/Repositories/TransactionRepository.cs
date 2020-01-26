@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
+    /// <summary>
+    /// Provides a mechanism for working transaction repository.
+    /// </summary>
     public class TransactionRepository : BaseRepository, ITransactionRepository
     {
 
@@ -17,6 +20,11 @@ namespace BulbaCourses.Video.Data.Repositories
         {
         }
 
+        /// <summary>
+        /// Create a new transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public void Add(TransactionDb transaction)
         {
             _videoDbContext.Transactions.Add(transaction);
@@ -24,6 +32,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Create a new transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public async Task<TransactionDb> AddAsync(TransactionDb transaction)
         {
             _videoDbContext.Transactions.Add(transaction);
@@ -31,6 +44,10 @@ namespace BulbaCourses.Video.Data.Repositories
             return await Task.FromResult(transaction);
         }
 
+        /// <summary>
+        /// Gets all transactions in repository.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TransactionDb> GetAll()
         {
             var transactionList = _videoDbContext.Transactions.ToList().AsReadOnly();
@@ -38,12 +55,21 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Gets all transactions in repository.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<TransactionDb>> GetAllAsync()
         {
             var transactionList = await _videoDbContext.Transactions.ToListAsync().ConfigureAwait(false);
             return transactionList.AsReadOnly();
         }
 
+        /// <summary>
+        /// Shows transaction details by id in repository.
+        /// </summary>
+        /// <param name="transactionlId"></param>
+        /// <returns></returns>
         public TransactionDb GetById(string transactionlId)
         {
             var transaction = _videoDbContext.Transactions.FirstOrDefault(b => b.TransactionId.Equals(transactionlId));
@@ -51,12 +77,22 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Shows transaction details by id in repository.
+        /// </summary>
+        /// <param name="transactionlId"></param>
+        /// <returns></returns>
         public async Task<TransactionDb> GetByIdAsync(string transactionlId)
         {
             var transaction = await _videoDbContext.Transactions.SingleOrDefaultAsync(b => b.TransactionId.Equals(transactionlId)).ConfigureAwait(false);
             return transaction;
         }
 
+        /// <summary>
+        /// Remove transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public void Remove(TransactionDb transaction)
         {
             _videoDbContext.Transactions.Remove(transaction);
@@ -64,6 +100,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Remove transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public async Task RemoveAsync(TransactionDb transaction)
         {
             if (transaction == null)
@@ -74,6 +115,11 @@ namespace BulbaCourses.Video.Data.Repositories
             await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Remove transaction by id in repository.
+        /// </summary>
+        /// <param name="transactionlId"></param>
+        /// <returns></returns>
         public async Task RemoveAsyncById(string transactionlId)
         {
             var transaction = _videoDbContext.Transactions.SingleOrDefault(b => b.TransactionId.Equals(transactionlId));
@@ -85,6 +131,11 @@ namespace BulbaCourses.Video.Data.Repositories
             await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Update transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public void Update(TransactionDb transaction)
         {
             if (transaction == null)
@@ -96,6 +147,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Update transaction in repository.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns></returns>
         public async Task<TransactionDb> UpdateAsync(TransactionDb transaction)
         {
             if (transaction == null)

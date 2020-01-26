@@ -14,17 +14,29 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working with Courses.
+    /// </summary>
     public class CourseService : ICourseService
     {
         private readonly IMapper _mapper;
         private readonly ICourseRepository _courseRepository;
 
+        /// <summary>
+        /// Creates a new course service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="courseRepository"></param>
         public CourseService(IMapper mapper, ICourseRepository courseRepository)
         {
             _mapper = mapper;
             _courseRepository = courseRepository;
         }
 
+        /// <summary>
+        /// Gets all courses.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CourseInfo> GetAll()
         {
             var courses = _courseRepository.GetAll();
@@ -32,32 +44,56 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Remove course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public void Delete(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
             _courseRepository.Remove(courseDb);
         }
 
+        /// <summary>
+        /// Remove course by id.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         public void DeleteById(string courseId)
         {
             var course = _courseRepository.GetById(courseId);
             _courseRepository.Remove(course);
         }
 
+        /// <summary>
+        /// Updates course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public void Update(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
             _courseRepository.Update(courseDb);
         }
 
+        /// <summary>
+        /// Create a new course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public void AddCourse(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
             _courseRepository.Add(courseDb);
         }
 
-
-
+        /// <summary>
+        /// Add description to course.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public void AddDiscription(string courseId, string description)
         {
             var course = _courseRepository.GetById(courseId);
@@ -66,6 +102,12 @@ namespace BulbaCourses.Video.Logic.Services
 
         }
 
+        /// <summary>
+        /// Add video to course.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public void AddVideoToCourse(string courseId, VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
@@ -73,6 +115,12 @@ namespace BulbaCourses.Video.Logic.Services
             courseVideos.Add(videoDb);
         }
 
+        /// <summary>
+        /// Add tag to course.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public void AddTagToCourse(string courseId, TagInfo tag)
         {
             var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
@@ -80,6 +128,11 @@ namespace BulbaCourses.Video.Logic.Services
             courseTags.Add(tagDb);
         }
 
+        /// <summary>
+        /// Show course details by id.
+        /// </summary>
+        /// /// <param name="courseId"></param>
+        /// <returns></returns>
         public CourseInfo GetCourseById(string courseId)
         {
             var course = _courseRepository.GetById(courseId);
@@ -87,6 +140,11 @@ namespace BulbaCourses.Video.Logic.Services
             return courseInfo;
         }
 
+        /// <summary>
+        /// Show course details by course name.
+        /// </summary>
+        /// /// <param name="courseName"></param>
+        /// <returns></returns>
         public CourseInfo GetCourseByName(string courseName)
         {
             var course = _courseRepository.GetAll().FirstOrDefault(c => c.Name.Equals(courseName));
@@ -94,12 +152,22 @@ namespace BulbaCourses.Video.Logic.Services
             return courseInfo;
         }
 
+        /// <summary>
+        /// Show course level by course id.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         public int GetCourseLevel(string courseId)
         {
             var result = _courseRepository.GetById(courseId).Level;
             return result;
         }
 
+        /// <summary>
+        /// Show all tags from course by course id.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
         public IEnumerable<TagInfo> GetTags(string courseId)
         {
             var courseTags = _courseRepository.GetById(courseId).Tags.ToList().AsReadOnly();
@@ -107,6 +175,12 @@ namespace BulbaCourses.Video.Logic.Services
             return courseTagsInfo;
         }
 
+        /// <summary>
+        /// Show video from course by course id and video order.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="videoOrder"></param>
+        /// <returns></returns>
         public VideoMaterialInfo GetVideoByOrder(string courseId, int videoOrder)
         {
             var course = _courseRepository.GetById(courseId);
@@ -115,6 +189,12 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Update course level by course id and new level.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public void UpdateCourseLevel(string courseId, int level)
         {
             var course = _courseRepository.GetById(courseId);
@@ -122,6 +202,11 @@ namespace BulbaCourses.Video.Logic.Services
             _courseRepository.Update(course);
         }
 
+        /// <summary>
+        /// Show course videos by course id.
+        /// </summary>
+        /// /// <param name="courseId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<VideoMaterialInfo>> GetCourseVideosAsync(string courseId)
         {
             var videos = await _courseRepository.GetCoursesAsync(courseId);
@@ -129,7 +214,10 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
-
+        /// <summary>
+        /// Gets all courses.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<CourseInfo>> GetAllAsync()
         {
             var courses = await _courseRepository.GetAllAsync();
@@ -137,6 +225,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Show course details by id.
+        /// </summary>
+        /// /// <param name="courseId"></param>
+        /// <returns></returns>
         public async Task<CourseInfo> GetCourseByIdAsync(string courseId)
         {
             var course = await _courseRepository.GetByIdAsync(courseId);
@@ -144,6 +237,11 @@ namespace BulbaCourses.Video.Logic.Services
             return courseInfo;
         }
 
+        /// <summary>
+        /// Create a new course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public async Task<Result<CourseInfo>> AddCourseAsync(CourseInfo course)
         {
             var courseDb = _mapper.Map<CourseInfo, CourseDb>(course);
@@ -167,6 +265,11 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Update course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public async Task<Result<CourseInfo>> UpdateAsync(CourseInfo course)
         {
             var courseDb = _courseRepository.GetByIdAsync(course.CourseId).GetAwaiter().GetResult();
@@ -198,17 +301,32 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Remove course by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string id)
         {
             _courseRepository.RemoveAsyncById(id);
             return Task.FromResult(Result.Ok());
         }
 
+        /// <summary>
+        /// Check if course exists with this Name.
+        /// </summary>
+        /// <param name="courseName"></param>
+        /// <returns></returns>
         public async Task<bool> ExistNameAsync(string courseName)
         {
             return await _courseRepository.IsNameExistAsync(courseName);
         }
 
+        /// <summary>
+        /// Show course details by course name.
+        /// </summary>
+        /// /// <param name="courseName"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<CourseInfo>> GetCoursesByNameAsync(string courseName)
         {
             var allCourses = await _courseRepository.GetAllAsync();
@@ -217,6 +335,12 @@ namespace BulbaCourses.Video.Logic.Services
             return coursesInfo;
         }
 
+        /// <summary>
+        /// Add rating to course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="Assessment"></param>
+        /// <returns></returns>
         public Task<Result<CourseInfo>> RateCourse(CourseInfo course, int assessment)
         {
             int newRateCount = course.RateCount++;
@@ -228,6 +352,12 @@ namespace BulbaCourses.Video.Logic.Services
 
         }
 
+        /// <summary>
+        /// Add video to course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public Task<Result> AddVideoAsync(CourseInfo course, VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
@@ -251,6 +381,12 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Add tag to course.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public Task<Result> AddTagAsync(CourseInfo course, TagInfo tag)
         {
             var tagDb = _mapper.Map<TagInfo, TagDb>(tag);
@@ -274,6 +410,12 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Update course level by course and new level.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public Task<Result<CourseInfo>> ChangeLevel(CourseInfo course, int level)
         {
             course.Level = level;

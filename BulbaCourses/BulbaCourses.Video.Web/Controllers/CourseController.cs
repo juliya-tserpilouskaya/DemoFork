@@ -19,18 +19,29 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Courses service.
+    /// </summary>
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
         private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
-
+        /// <summary>
+        /// Creates Courses controller.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="courseService"></param>
         public CourseController(IMapper mapper, ICourseService courseService)
         {
             _mapper = mapper;
             _courseService = courseService;
         }
-
+        /// <summary>
+        /// Shows a course details by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -61,7 +72,10 @@ namespace BulbaCourses.Video.Web.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Gets all courses from the database.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<CourseView>))]
@@ -77,28 +91,42 @@ namespace BulbaCourses.Video.Web.Controllers
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
-
+        /// <summary>
+        /// Add new course to the database.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(SwaggerCourseView))]
         [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        //[Authorize]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator (RuleSet = "AddCourse")]CourseViewInput course)
+        [Authorize] //comment when use swagger.
+        public async Task<IHttpActionResult> Create([FromBody]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
+            string authorName = string.Empty;
+            if (User.Identity.IsAuthenticated)
+            {
+               var sub = (User as ClaimsPrincipal).FindFirst("sub");
+               authorName = sub.Value;
+            }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+            return BadRequest(ModelState);
             }
-
             var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update course in the database.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut, Route("{id}")]
 
         [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
@@ -117,6 +145,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete course by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted")]

@@ -14,23 +14,41 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working with comments.
+    /// </summary>
     public class CommentService : ICommentService
     {
         private readonly IMapper _mapper;
         private readonly ICommentRepository _commentRepository;
 
+        /// <summary>
+        /// Creates a new comment service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="commentRepository"></param>
         public CommentService(IMapper mapper, ICommentRepository commentRepository)
         {
             _mapper = mapper;
             _commentRepository = commentRepository;
         }
 
+        /// <summary>
+        /// Shows comment details by id.
+        /// </summary>
+        /// /// <param name="commentId"></param>
+        /// <returns></returns>
         public CommentInfo GetById(string commentId)
         {
             var comment = _commentRepository.GetById(commentId);
             var result = _mapper.Map<CommentDb, CommentInfo>(comment);
             return result;
         }
+
+        /// <summary>
+        /// Gets all comments.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CommentInfo> GetAll()
         {
             var comments = _commentRepository.GetAll();
@@ -38,29 +56,55 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Create new comment.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Add(CommentInfo comment)
         {
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
             _commentRepository.Add(commentDb);
         }
 
+        /// <summary>
+        /// Remove comment.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Delete(CommentInfo comment)
         {
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
             _commentRepository.Remove(commentDb);
         }
+        /// <summary>
+        /// Remove comment by id.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         public void DeleteById(string commentId)
         {
             var comment = _commentRepository.GetById(commentId);
             _commentRepository.Remove(comment);
         }
 
+        /// <summary>
+        /// Update comment.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Update(CommentInfo comment)
         {
             var commentDb = _mapper.Map<CommentInfo, CommentDb>(comment);
             _commentRepository.Update(commentDb);
         }
 
+        /// <summary>
+        /// Update comment message by new message text and comment id.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// /// <param name="newText"></param>
+        /// <returns></returns>
         public CommentInfo UpdateCommentText(string commentId, string newText)
         {
             var comment = _commentRepository.GetById(commentId);
@@ -70,6 +114,11 @@ namespace BulbaCourses.Video.Logic.Services
             return commentInfo;
         }
 
+        /// <summary>
+        /// Shows comment details by id.
+        /// </summary>
+        /// /// <param name="commentId"></param>
+        /// <returns></returns>
         public async Task<CommentInfo> GetCommentByIdAsync(string commentId)
         {
             var comment = await _commentRepository.GetByIdAsync(commentId);
@@ -77,6 +126,10 @@ namespace BulbaCourses.Video.Logic.Services
             return commentInfo;
         }
 
+        /// <summary>
+        /// Gets all comments.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<CommentInfo>> GetAllAsync()
         {
             var comments = await _commentRepository.GetAllAsync();
@@ -84,6 +137,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Update comment.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public async Task<Result<CommentInfo>> UpdateAsync(CommentInfo comment)
         {
             comment.UpdateDate = DateTime.Now.Date;
@@ -107,6 +165,11 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Create new comment.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public async Task<Result<CommentInfo>> AddAsync(CommentInfo comment)
         {
             comment.Date = DateTime.Now;
@@ -130,6 +193,11 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Remove comment by id.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string commentId)
         {
             _commentRepository.RemoveAsyncById(commentId);
