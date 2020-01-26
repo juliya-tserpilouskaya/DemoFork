@@ -23,7 +23,7 @@ export class ReportsService {
   }
 
   updateReport(report: Report) {
-    return this.httpClient.put(this.updateReportUrl + report.Id, report);
+    return this.httpClient.put(this.updateReportUrl, report);
   }
 
   deleteReport(id: string) {
