@@ -13,20 +13,5 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.AnswerVariant
         {
 
         }
-
-        public void AddAnswer()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DropAnswerById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAnswerById(int Id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

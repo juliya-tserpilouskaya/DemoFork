@@ -7,6 +7,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { RoleService } from '../../services/role.service';
 import { RoleComponent } from '../role/role.component';
 import { Router } from '@angular/router';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +21,8 @@ export class UsersComponent implements OnInit {
   dropdownList = [];
   selectedItems: Array<Role>;
   dropdownSettings: IDropdownSettings;
-  constructor(private serv: UserService, private roleService: RoleService, private router: Router) {
+  constructor(private serv: UserService, private roleService: RoleService, private router: Router,
+              private loader: NgxUiLoaderService) {
     this.users = new Array<User>();
 }
 
@@ -42,17 +44,18 @@ export class UsersComponent implements OnInit {
     //   { item_id: 4, item_text: 'Navsari' },
     //   { item_id: 5, item_text: 'New Delhi' }
     // ];
-    this.selectedItems = [
-      { Id: '1', Name: 'Admin' },
-      { Id: '2', Name: 'test' }
-    ];
+    // this.selectedItems = [
+    //   { Id: '1', Name: 'Admin' },
+    //   { Id: '2', Name: 'test' }
+    // ];
   }
   private loadUsers() {
-
+    this.loader.start();
     this.serv.getUsers().subscribe(
       (data: User[]) => {
             this.users = data;
         });
+    this.loader.stop();
 }
 private loadRoles() {
   this.roleService.getRoles().subscribe((data: Role[]) => {this.dropdownList = data; });
@@ -67,8 +70,12 @@ onSelectAll(items: Role) {
   console.log(items);
 }
 editUser(user: User) {
+  this.router.navigate(['/profile', user.Id]);
   console.log(user.Username);
-  // this.router.navigateByUrl('/login');
 }
-
+deleteUser(user: User) {
+  this.serv.deleteUser(user.Id);
+  console.log('User deleted ' + user.Username);
+  this.loadUsers();
+}
 }

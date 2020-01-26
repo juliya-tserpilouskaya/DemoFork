@@ -101,7 +101,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
         }
 
         /// <summary>
-        /// Update the course in the database
+        /// Update the course in the database (Name)
         /// </summary>
         /// <param name="course"></param>
         /// <returns></returns>

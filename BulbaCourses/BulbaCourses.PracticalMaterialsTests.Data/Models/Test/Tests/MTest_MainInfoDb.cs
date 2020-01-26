@@ -2,6 +2,7 @@
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 using System.Collections.Generic;
+using System;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Test
 {
@@ -10,6 +11,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.Test
         public int Id { get; set; }
 
         public string Name { get; set; }
+        
+        public string Description { get; set; }
+
+        public DateTime DateCreate { get; set; }
 
         // ------------ Content
 

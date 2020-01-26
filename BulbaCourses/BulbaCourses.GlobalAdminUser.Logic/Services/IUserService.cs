@@ -10,8 +10,11 @@ namespace BulbaCourses.GlobalAdminUser.Logic.Services
         Task<UserDTO> GetByIdAsync(string id);
         //IEnumerable<UserDTO> GetAll();
         Task<IEnumerable<UserDTO>> GetAllAsync();
+        Task<string> RegisterUser(RegisterUserDTO registerUser);
         void Add(UserDTO user);
         void Update(UserDTO user);
-        void Delete(UserDTO user);
+        Task<bool> Delete(string id);
+        Task<UserProfileDTO> GetUserProfileAsync(string id);
+        Task<Result> ChangePassword(UserChangePasswordDTO user);
     }
 }

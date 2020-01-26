@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Cors;
 using System.Web.Http;
+using BulbaCourses.Analytics.DAL.Context;
 using BulbaCourses.Analytics.Web.Properties;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Owin;
+using BulbaCourses.Analytics.DAL.Migrations;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Analytics.Web.Startup))]
 
@@ -24,17 +27,16 @@ namespace BulbaCourses.Analytics.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
-
+            
             JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
 
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
                 AuthenticationMode = AuthenticationMode.Active,
-                IssuerName = "http://localhost:44382",
+                IssuerName = Resources.IssuerNameUrl,
                 SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123"),
-                ValidationMode = ValidationMode.Local,
-                
+                ValidationMode = ValidationMode.Local
             })
                 .UseCors(new CorsOptions()
                 {
@@ -43,11 +45,13 @@ namespace BulbaCourses.Analytics.Web
                         PolicyResolver = request => Task.FromResult(new CorsPolicy()
                         {
                             AllowAnyMethod = true,
-                            AllowAnyOrigin = true,
-                            AllowAnyHeader = true
+                            AllowAnyHeader = true,
+                            AllowAnyOrigin = true
                         })
-                    }
+                    },
+                    CorsEngine = new CorsEngine()
                 });
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AnalyticsContext, DAL.Migrations.Configuration>());
         }
     }
 }

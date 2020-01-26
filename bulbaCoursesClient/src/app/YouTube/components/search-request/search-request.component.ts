@@ -87,7 +87,9 @@ export class SearchRequestComponent implements OnInit {
       console.log('Search completed!');
       },
       (error) => console.log('Search exception...'),
-      () => this.youtubeService.getStory(this.user)
+      () => this.youtubeService.getStory(this.user).subscribe(data => {
+        this.youtubeService.storySubject.next(data);
+      })
       );
     }
   }

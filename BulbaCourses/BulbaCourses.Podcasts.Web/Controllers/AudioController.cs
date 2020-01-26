@@ -17,6 +17,9 @@ using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Audio service.
+    /// </summary>
     [RoutePrefix("api/audios")]
     public class AudioController : ApiController
     {
@@ -25,6 +28,13 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IUserService Uservice;
         private readonly IBus bus;
 
+        /// <summary>
+        /// Creates Audio controller.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="mapper"></param>
+        /// <param name="service"></param>
+        /// <param name="userService"></param>
         public AudioController(IMapper mapper, IAudioService service, IBus bus, IUserService userService)
         {
             this.mapper = mapper;
@@ -38,7 +48,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Audio doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio found", typeof(AudioWeb))]
@@ -72,7 +82,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{substring}")]
+        [HttpGet, Route("Search/{substring}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
         public async Task<IHttpActionResult> Search(string substring)
         {
@@ -101,7 +111,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="courseId"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("{courseId}")]
+        [HttpGet, Route("GetFor/{courseId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all audios", typeof(IEnumerable<AudioWeb>))]
         public async Task<IHttpActionResult> GetAll(string courseId)
         {
@@ -131,7 +141,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="audioWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio post", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -181,7 +191,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="audioWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("{id}")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio updated", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -230,7 +240,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="audioWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("{id}")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Audio deleted", typeof(AudioWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]

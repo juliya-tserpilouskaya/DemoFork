@@ -10,6 +10,7 @@ using System.Data.Entity;
 using BulbaCourses.PracticalMaterialsTests.Data.Mapping.User;
 using BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 {
@@ -20,6 +21,10 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
         {
             Database.SetInitializer(new DbUserInitialization_Test());
         }
+
+        // ------------ Users
+
+        public DbSet<MUser_TestReaderDb> User_TestReader { get; set; }
 
         // ------------ Tests
 
@@ -61,17 +66,17 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
 
             // ------------ WorkWithResultTest
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_MainInfoDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_MainInfoDb());
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_ChoosingAnswerFromListDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_ChoosingAnswerFromListDb());
 
-            //modelBuilder.Configurations.Add(new Mapping_ReaderChoice_SetOrderDb());
+            modelBuilder.Configurations.Add(new Mapping_ReaderChoice_SetOrderDb());
 
             // ------------ User
 
             modelBuilder.Configurations.Add(new Mapping_User_TestAuthor());
 
-            //modelBuilder.Configurations.Add(new Mapping_User_TestReader());
+            modelBuilder.Configurations.Add(new Mapping_User_TestReader());
         }
     }
 }

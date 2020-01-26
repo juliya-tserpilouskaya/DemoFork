@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulbaCourses.GlobalAdminUser.Data.Context
+namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
 {
     public class GlobalAdminDbContext : DbContext
     {

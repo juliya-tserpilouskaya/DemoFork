@@ -82,8 +82,6 @@
     <Compile Include="InterfaceServices\ISearchService.cs" />
     <Compile Include="LogicModule.cs" />
     <Compile Include="Models\Author.cs" />
-    <Compile Include="Models\Bookmark.cs" />
-    <Compile Include="Models\BookmarkStorage.cs" />
     <Compile Include="Models\LearningCourse.cs" />
     <Compile Include="Models\LearningCourseItem.cs" />
     <Compile Include="Models\SearchQuery.cs" />
@@ -99,7 +97,6 @@
     <Compile Include="Validators\LearningCourseItemValidator.cs" />
     <Compile Include="Validators\LearningCourseValidator.cs" />
     <Compile Include="Validators\SearchQueryValidator.cs" />
-    <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

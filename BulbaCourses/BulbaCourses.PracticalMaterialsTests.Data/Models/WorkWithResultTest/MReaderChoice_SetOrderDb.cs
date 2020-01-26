@@ -1,4 +1,4 @@
-﻿using System;
+﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest
 {
@@ -12,9 +12,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest
 
         public MReaderChoice_MainInfoDb ReaderChoice_MainInfoDb { get; set; }
 
-        // ------------ Test
-
-        public int Test_MainInfoDb_Id { get; set; }
+        // ------------ Test        
 
         public int Question_SetOrderDb_Id { get; set; }
 

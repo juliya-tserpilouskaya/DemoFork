@@ -61,7 +61,7 @@ namespace BulbaCourses.Podcasts.Web
 
             });
 
-            //SwaggerConfig.Register(config);
+            SwaggerConfig.Register(config);
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }

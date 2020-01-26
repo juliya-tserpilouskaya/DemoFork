@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 
 namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.AnswerVariants
-{   
+{
     public class Mapping_AnswerVariant_ChoosingAnswerFromList : EntityTypeConfiguration<MAnswerVariant_ChoosingAnswerFromListDb>
     {
         public Mapping_AnswerVariant_ChoosingAnswerFromList()
@@ -18,16 +18,20 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.AnswerVariants
                 .IsRequired();
 
             Property(i => i.AnswerText)
-                .HasColumnName("AnswerText")                
-                .HasMaxLength(50)                
+                .HasColumnName("AnswerText")
+                .HasMaxLength(250)
                 .IsRequired();
 
             Property(i => i.SortKey)
-                .HasColumnName("SortKey")                
+                .HasColumnName("SortKey")
                 .IsRequired();
 
             Property(i => i.IsCorrectAnswer)
-                .HasColumnName("IsCorrectAnswer")                
+                .HasColumnName("IsCorrectAnswer")
+                .IsRequired();
+
+            Property(i => i.Question_ChoosingAnswerFromListDb_Id)
+                .HasColumnName("Question_ChoosingAnswerFromListDb_Id")
                 .IsRequired();
         }
     }

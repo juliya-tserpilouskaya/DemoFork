@@ -25,13 +25,16 @@ export class SearchStoryComponent implements OnInit {
   ngOnInit() {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
-
-    this.GetStoryForUser();
+    
+    this.service.story$.subscribe((story) => this.searchStory = story as SearchStory[]);
   }
 
   GetStoryForUser() {
     console.log('Get story..');
-    this.service.getStory(this.user).subscribe(data => this.searchStory = data);
+    this.service.getStory(this.user).subscribe(data => {
+      this.searchStory = data;
+      this.service.storySubject.next(this.searchStory);
+    });
     console.log('Get story completed!');
   }
 

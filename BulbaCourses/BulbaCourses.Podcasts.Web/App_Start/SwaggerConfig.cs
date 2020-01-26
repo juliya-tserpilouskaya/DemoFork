@@ -1,10 +1,7 @@
 using System.Web.Http;
-using WebActivatorEx;
-using BulbaCourses.Podcasts.Web;
 using Swashbuckle.Application;
 using System;
-
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
+using Swashbuckle.Examples;
 
 namespace BulbaCourses.Podcasts.Web
 {
@@ -14,9 +11,34 @@ namespace BulbaCourses.Podcasts.Web
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
-            GlobalConfiguration.Configuration
+            config
                 .EnableSwagger(c =>
                     {
+                        c.BasicAuth("basic").Description("Basic HTTP Authentication");
+                        c.SingleApiVersion("v1", "BulbaCourses.Podcasts.Web");
+                        c.OperationFilter<MarkSecuredMethodsOperationFilter>();
+                        c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.Podcasts.Web.xml"));
+                        c.OAuth2("oauth2")
+                                              .Description("OAuth2 Implicit Grant")
+                                              .Flow("implicit")
+                                              .AuthorizationUrl("http://localhost:44382/connect/authorize")
+                                              //.TokenUrl("http://localhost:44382/connect/token")
+                                              .Scopes(scopes =>
+                                              {
+                                                  scopes.Add("api", "Api scope");
+                                                  //scopes.Add("openid", "Read access to protected resources");
+                                                  //scopes.Add("profile", "Write access to protected resources");
+                                              });
+                    }).EnableSwaggerUi(c =>
+                    {
+                        c.EnableDiscoveryUrlSelector();
+                        c.EnableOAuth2Support(
+                                              clientId: "external_app",
+                                              clientSecret: "secret",
+                                              realm: "test-realm",
+                                              appName: "Swagger UI"
+                                              );
+                    });
                         // By default, the service root url is inferred from the request used to access the docs.
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
@@ -33,7 +55,7 @@ namespace BulbaCourses.Podcasts.Web
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "BulbaCourses.Podcasts.Web");
+                        //c.SingleApiVersion("v1", "BulbaCourses.Podcasts.Web");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
@@ -68,13 +90,18 @@ namespace BulbaCourses.Podcasts.Web
                         //    .Name("apiKey")
                         //    .In("header");
                         //
+                        //c.ApiKey("token")
+                        //    .Description("API Key Authentication")
+                        //    .Name("Bearer")
+                        //    .In("header");
+
                         //c.OAuth2("oauth2")
                         //    .Description("OAuth2 Implicit Grant")
                         //    .Flow("implicit")
-                        //    .AuthorizationUrl("http://petstore.swagger.wordnik.com/api/oauth/dialog")
-                        //    //.TokenUrl("https://tempuri.org/token")
+                        //    .AuthorizationUrl("http://localhost:44382/connect/authorize")
                         //    .Scopes(scopes =>
                         //    {
+                        //        scopes.Add("api", "API access scope");
                         //        scopes.Add("read", "Read access to protected resources");
                         //        scopes.Add("write", "Write access to protected resources");
                         //    });
@@ -102,7 +129,7 @@ namespace BulbaCourses.Podcasts.Web
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.Podcasts.Web.xml"));
+                        //c.IncludeXmlComments(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.Podcasts.Web.xml"));
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -151,7 +178,7 @@ namespace BulbaCourses.Podcasts.Web
                         // Post-modify Operation descriptions once they've been generated by wiring up one or more
                         // Operation filters.
                         //
-                        //c.OperationFilter<AddDefaultResponse>();
+                        //c.OperationFilter<AssignOAuth2SecurityRequirements>();
                         //
                         // If you've defined an OAuth2 flow as described above, you could use a custom filter
                         // to inspect some attribute on each action and infer which (if any) OAuth2 scopes are required
@@ -177,9 +204,9 @@ namespace BulbaCourses.Podcasts.Web
                         // alternative implementation for ISwaggerProvider with the CustomProvider option.
                         //
                         //c.CustomProvider((defaultProvider) => new CachingSwaggerProvider(defaultProvider));
-                    })
-                .EnableSwaggerUi(c =>
-                    {
+                    //})
+                //.EnableSwaggerUi(c =>
+                    //{
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //
@@ -233,24 +260,24 @@ namespace BulbaCourses.Podcasts.Web
                         // a discovery URL for each version. This provides a convenient way for users to browse documentation
                         // for different API versions.
                         //
-                        c.EnableDiscoveryUrlSelector();
+                        //c.EnableDiscoveryUrlSelector();
 
                         // If your API supports the OAuth2 Implicit flow, and you've described it correctly, according to
                         // the Swagger 2.0 specification, you can enable UI support as shown below.
                         //
                         //c.EnableOAuth2Support(
-                        //    clientId: "test-client-id",
+                        //    clientId: "external_app",
                         //    clientSecret: null,
                         //    realm: "test-realm",
                         //    appName: "Swagger UI"
-                        //    //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
+                        //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
                         //);
 
                         // If your API supports ApiKey, you can override the default values.
                         // "apiKeyIn" can either be "query" or "header"
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
-                    });
+                    //});
         }
     }
 }

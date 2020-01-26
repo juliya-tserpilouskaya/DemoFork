@@ -12,7 +12,7 @@ namespace BulbaCourses.GlobalSearch.Data
 {
     public class GlobalSearchContext : DbContext
     {
-        public GlobalSearchContext() : base()
+        public GlobalSearchContext() : base("GlobalSearch")
         {
             Database.Log = s => Debug.WriteLine(s);
             //Database.SetInitializer(new GlobalSearchDbInitializer());

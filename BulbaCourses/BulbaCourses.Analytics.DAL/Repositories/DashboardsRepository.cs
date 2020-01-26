@@ -101,5 +101,11 @@ namespace BulbaCourses.Analytics.DAL.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<IEnumerable<ExchangeRatesDb>> GetAnalyticDataAsync()
+        {
+            return await _context.ExchangeRates
+                .ToListAsync().ConfigureAwait(false);
+        }
     }
 }
