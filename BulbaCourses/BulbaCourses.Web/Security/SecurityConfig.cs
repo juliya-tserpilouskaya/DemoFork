@@ -29,7 +29,7 @@ namespace BulbaCourses.Web.Security
                 Flow = Flows.Implicit,
                 RedirectUris = new List<string>()
                 {
-                    "http://localhost/test/data"
+                    "http://localhost/test/data"    
                 }
             };
 

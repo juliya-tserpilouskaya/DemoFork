@@ -17,7 +17,7 @@ import { SearchComponent } from './GlobalSearch/components/search/search.compone
 import { ResultsComponent } from './GlobalSearch/components/results/results.component';
 import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer.component';
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
-import {MainvideoComponent} from './Video/components/mainvideo/mainvideo.component'
+import {MainvideoComponent} from './Video/components/mainvideo/mainvideo.component';
 import { ProfileComponent } from './GlobalAdminUsers/components/profile/profile.component';
 import { ChangePasswordComponent } from './GlobalAdminUsers/components/change-password/change-password.component';
 import { TestFormComponent } from './PracticalMaterialsTests/components/TestForm/test-form.component';

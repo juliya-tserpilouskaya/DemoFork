@@ -24,7 +24,40 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         public async Task<Result<SearchCriteriaDb>> AddAsync(SearchCriteriaDb criteriaDb)
         {
             try 
-            { 
+            {
+
+                List<CourseCategoryDb> courseCategories = new List<CourseCategoryDb>();
+                List<DomainDb> domains = new List<DomainDb>();
+                CourseCategoryDb categoryDb;
+                DomainDb domainDb;
+
+                foreach (var el in criteriaDb.CourseCategories)
+                {
+                    categoryDb = context.CourseCategories
+                        .FirstOrDefault(x => x.Name == el.Name && x.Title == el.Title);
+                    courseCategories.Add(categoryDb ??
+                        new CourseCategoryDb()
+                        {
+                            Name = el.Name,
+                            Title = el.Title
+                        });
+                }
+
+                foreach (var el in criteriaDb.Domains)
+                {
+                    domainDb = context.Domains
+                        .FirstOrDefault(x => x.DomainURL == el.DomainURL);
+                    domains.Add(domainDb ??
+                        new DomainDb()
+                        {
+                            DomainURL = el.DomainURL,
+                            DomainName = el.DomainName
+                        });
+                }
+                criteriaDb.CourseCategories = courseCategories;
+                criteriaDb.Domains = domains;
+
+
                 context.SearchCriterias.Add(criteriaDb);
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<SearchCriteriaDb>.Ok(criteriaDb);
@@ -77,7 +110,21 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             {
                 context.Entry(criteriaDb).State = EntityState.Modified;
                 await context.SaveChangesAsync().ConfigureAwait(false);
+                //await DeleteAsync(criteriaDb);
+                //await AddAsync(criteriaDb);
                 return Result<SearchCriteriaDb>.Ok(criteriaDb);
+
+                //SearchCriteriaDb criteria = context.SearchCriterias
+                //.FirstOrDefault(c => c.Id == criteriaDb.Id);
+
+                //List<DomainDb> domains = context.Domains.ToList();
+                //List<CourseCategoryDb> categories = context.CourseCategories.ToList();
+
+                //criteria.CourseCategories = categories.Where(x => criteriaDb.CourseCategories.Contains(x));
+
+                //order.Customer = customer;
+
+                //context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException e)
             {
@@ -97,7 +144,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         {
             try
             {
-                context.SearchCriterias.Remove(criteriaDb);
+                context.SearchCriterias.Remove(context.SearchCriterias.FirstOrDefault(x => x.Id ==criteriaDb.Id));
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<SearchCriteriaDb>.Ok(criteriaDb);
             }

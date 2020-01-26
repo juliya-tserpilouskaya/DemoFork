@@ -338,7 +338,6 @@
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="Configuration\Configurtation_Swagger.cs" />
-    <Compile Include="Controllers\ResultTestStatisticController.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

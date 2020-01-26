@@ -104,7 +104,7 @@ namespace BulbaCourses.Analytics.DAL.Repositories
 
         public async Task<IEnumerable<ExchangeRatesDb>> GetAnalyticDataAsync()
         {
-            return await _context.ExchangeRates
+            return await _context.ExchangeRates.OrderBy(_ => _.Date)
                 .ToListAsync().ConfigureAwait(false);
         }
     }

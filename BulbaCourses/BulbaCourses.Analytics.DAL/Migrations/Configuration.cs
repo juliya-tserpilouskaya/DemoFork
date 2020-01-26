@@ -19,9 +19,10 @@ namespace BulbaCourses.Analytics.DAL.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            var reportId = Guid.NewGuid().ToString();
             var report = new ReportDb()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = reportId,
                 Name = "Основной отчет",
                 Description = "Описание основного отчета",
                 Created = DateTime.Now,
@@ -37,11 +38,18 @@ namespace BulbaCourses.Analytics.DAL.Migrations
                         Modified = DateTime.Now,
                         Creator = "Создатель дашборда",
                         Modifier = "Модификатор дашборда",
-                        Name = "Дашборд 1"
+                        Name = "Дашборд 1",
+                        ReportId = reportId
                     }
                 }
             };
+            var cart = new ChartDb()
+            {
+                Id = 1,
+                Name = "Line"
+            };
             context.Reports.Add(report);
+            context.Charts.Add(cart);
             context.SaveChanges();
         }
     } 
