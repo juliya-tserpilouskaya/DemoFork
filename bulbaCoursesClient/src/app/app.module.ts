@@ -22,7 +22,6 @@ import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.compon
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
-import { PodcastsModule } from './podcasts/podcasts.module';
 
 import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
 
@@ -64,8 +63,6 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     YoutubeModule,
     AnalyticsModule,
     NgxUiLoaderModule,
-    PracticalMaterialsTestModule,
-    PodcastsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
