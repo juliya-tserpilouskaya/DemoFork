@@ -11,9 +11,12 @@ import { ButtonModule } from 'primeng/button';
 import { ListboxModule } from 'primeng/listbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmationDialogModule } from './ensure/dialog/confirmdialog/confirmdialog.module';
 import { ConfirmationDialogService } from './ensure/dialog/confirmdialog/confirmdialog.service';
@@ -25,10 +28,13 @@ import { ConfirmationDialogService } from './ensure/dialog/confirmdialog/confirm
     FormsModule,
     BrowserAnimationsModule,
     MessagesModule,
+    MessageModule,
     TableModule,
     ButtonModule,
     ToastModule,
+    DialogModule,
     ListboxModule,
+    InputTextModule,
     DropdownModule,
     SplitButtonModule,
     ConfirmDialogModule,

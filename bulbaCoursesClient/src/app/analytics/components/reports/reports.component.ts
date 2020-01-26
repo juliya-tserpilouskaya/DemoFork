@@ -6,7 +6,7 @@ import { Dropdown } from 'primeng/dropdown/public_api';
 import { Button } from 'primeng/button/button';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ReportsService } from '../../services/reports.service';
-import { ReportShort } from '../models/reportShort';
+import { ReportShort, ReportNew, Report } from '../models/reports.model';
 import { ConfirmationDialogService } from '../../ensure/dialog/confirmdialog/confirmdialog.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -26,6 +26,12 @@ export class ReportsComponent implements OnInit, OnDestroy {
   reportShorts: ReportShort[] = [];
   items: MenuItem[];
 
+  reportNew: ReportNew = {Name: '', Description: ''};
+  isAddingReport: boolean;
+
+  report: Report = {Id: '', Name: '', Description: ''};
+  isDetailsReport: boolean;
+
   constructor(
     private authService: AuthService,
     private reportsService: ReportsService,
@@ -33,6 +39,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
     private confirmationDialogService: ConfirmationDialogService,
     private messageService: MessageService
     ) {
+      this.isAddingReport = false;
   }
 
   ngOnInit() {
@@ -42,12 +49,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.getReports();
 
     this.items = [
+      {label: 'Add', icon: 'pi pi-plus', command: () => {
+        this.showingAddingReport();
+      }},
       {label: 'Delete', icon: 'pi pi-times', command: () => {
           this.deleteReport();
       }},
       {separator: true},
-      {label: 'Edit', icon: 'pi pi-cog', command: () => {
-        this.editReport();
+      {label: 'Details', icon: 'pi pi-cog', command: () => {
+        this.showingDetailsReport();
      }}
     ];
   }
@@ -66,15 +76,100 @@ export class ReportsComponent implements OnInit, OnDestroy {
       );
   }
 
+  detailsReport() {
+    console.log( 'Details ' + this.selectedReport.Id.toString());
+
+    this.reportsService.getReport(this.selectedReport.Id).pipe(first()).subscribe(
+      data => {
+        this.report = data;
+        console.log('Report details loaded');
+        this.isDetailsReport = true;
+      },
+      () => console.log('Error getReports'),
+      () => null
+    );
+  }
+
+  updateReport() {
+    this.hideDetailsReport()
+
+    console.log('Update Report');
+
+    if (this.report.Name.length === 0) {
+      const err = {severity: 'warn', summary: 'Bad Report Name.', detail: 'Report not updated.'};
+      this.messageService.add(err);
+      return;
+    }
+
+    const msg = {severity: 'success', summary: 'Update', detail: this.report.Name};
+    this.reportsService.updateReport(this.report).pipe(first()).subscribe(
+      () => null,
+      () => {
+        console.log('Error updating Report');
+        const err = {severity: 'error', summary: 'Error', detail: 'Report not updated.'};
+        this.messageService.add(err);
+      },
+      () => {
+        this.getReports(
+            () => this.messageService.add(msg)
+          );
+      }
+    );
+
+  }
+
+  hideDetailsReport() {
+    this.isDetailsReport = false;
+  }
+
+  showingDetailsReport() {
+    this.detailsReport();
+  }
+
+  addReport() {
+    this.hideAddingReport();
+
+    console.log('Add Report');
+
+    if (this.reportNew.Name.length === 0) {
+      const err = {severity: 'warn', summary: 'Bad Report Name.', detail: 'Report not created.'};
+      this.messageService.add(err);
+      return;
+    }
+
+    const msg = {severity: 'success', summary: 'Add', detail: this.reportNew.Name};
+    this.reportsService.newReport(this.reportNew).pipe(first()).subscribe(
+      () => null,
+      () => {
+        console.log('Error adding Report');
+        const err = {severity: 'error', summary: 'Report not created', detail: 'A report with the same name already exists.'};
+        this.messageService.add(err);
+      },
+      () => {
+        this.getReports(
+            () => this.messageService.add(msg)
+          );
+      }
+    );
+  }
+
+  showingAddingReport() {
+    this.isAddingReport = true;
+  }
+
+  hideAddingReport() {
+    this.isAddingReport = false;
+  }
+
   deleteReport() {
-    const reportName = this.selectedReport.Name.toString();
-    const reportId = this.selectedReport.Id.toString();
+    const reportName = this.selectedReport.Name;
+    const reportId = this.selectedReport.Id;
 
     this.confirmationDialogService.confirm(
       'Delete Report',
       reportName + '<p>Are you sure you want to delete this report?</p>',
       () => {
-        console.log('Delete');
+        console.log('Delete Report');
         const msg = {severity: 'success', summary: 'Deleted', detail: reportName};
         this.reportsService.deleteReport(reportId).pipe(first()).subscribe(
           () => null,
@@ -86,12 +181,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
           }
         );
       },
-      () => console.log('Cancel delete.'));
-  }
-
-  editReport() {
-    console.log( 'Edit ' + this.selectedReport.Id.toString());
-    return;
+      () => console.log('Cancel delete Report.'));
   }
 
   changeReport() {
