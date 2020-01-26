@@ -14,7 +14,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 {
     public class CourseDbService : ICourseDbService
     {
-        private GlobalSearchContext _context;
+        private readonly GlobalSearchContext _context;
 
         private bool _isDisposed;
 

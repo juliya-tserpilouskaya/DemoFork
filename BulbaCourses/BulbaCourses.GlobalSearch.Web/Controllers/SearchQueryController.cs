@@ -24,6 +24,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             _searchQueryService = searchQueryService;
         }
 
+        /// <summary>
+        /// Get all search queries
+        /// </summary>
+        /// <returns>Search queries</returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no queries stored")]
         [SwaggerResponse(HttpStatusCode.OK, "Queries are found", typeof(IEnumerable<SearchQuery>))]
@@ -33,6 +37,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Get query
+        /// </summary>
+        /// <param name="id">Query id</param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The query doesn't exists")]
@@ -55,6 +64,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get query by user
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns></returns>
         [HttpGet, Route("user/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid user id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User is not found")]
@@ -77,6 +91,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add search query
+        /// </summary>
+        /// <param name="query">Search query</param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The query is added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query data")]
@@ -90,6 +109,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete all search queries
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The queries are removed")]
         public IHttpActionResult ClearAll()
@@ -98,6 +121,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Delete query
+        /// </summary>
+        /// <param name="id">Query id</param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The query doesn't exists")]

@@ -7,13 +7,13 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class deletecategoryidentity : IMigrationMetadata
+    public sealed partial class bookmark_model_changed : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(deletecategoryidentity));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(bookmark_model_changed));
         
         string IMigrationMetadata.Id
         {
-            get { return "201912150953462_deletecategoryidentity"; }
+            get { return "202001261412187_bookmark_model_changed"; }
         }
         
         string IMigrationMetadata.Source

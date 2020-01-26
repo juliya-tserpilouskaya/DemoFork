@@ -13,11 +13,6 @@ namespace BulbaCourses.GlobalSearch.Logic.Validators
         public BookmarkValidator()
         {
             RuleFor(b => b.URL).NotEmpty().WithMessage("Bookmark must have a url");
-
-            RuleSet("BookmarkAdd", () =>
-            {
-                RuleFor(b => b.UserId).NotEmpty().WithMessage("Bookmark must have a user id");
-            });
         }
     }
 }

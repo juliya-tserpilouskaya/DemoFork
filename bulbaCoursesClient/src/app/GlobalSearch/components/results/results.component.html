@@ -5,30 +5,21 @@
         <div class="card" *ngFor="let course of courses | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
           <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
 
-          <div class="card-header">
-            <div class="card-title">Название: {{course.Name}}</div>
-          </div>
           <div class="card-body">
 
-          <h5 class="card-title">id: {{course.Id}}</h5>
+          <a [routerLink]="['course', course.Id]"><h5 class="card-title">{{course.Name}}</h5></a >
 
-          <p class="card-text">Описание: {{course.Description}}</p>
+          <p class="card-text">{{course.Description}}</p>
           <ul class="list-group">
-            <li class="list-group-item">Стоимость: {{course.Cost}}</li>
-            <li class="list-group-item">Сложность: {{course.Complexity}}</li>
+            <li class="list-group-item">Cost: {{course.Cost}}$</li>
           </ul>
 
-          <!-- <div class="card-header">
-            <div class="card-title">Название: {{course.id}}</div>
+          <br>
+          <button *ngIf="isAuthenticated" class="btn btn-outline-success my-2 my-sm-0" (click)="onAddToBookmarks(course.Name, course.Description, course.Id)" type="submit">Add to bookmarks</button >
+          <br>
+          <div class="pt-3">
+            <a [routerLink]="['course', course.Id]" class="card-link">More info</a>
           </div>
-          <div class="card-body"> -->
-          <!-- <h5 class="card-title">id: {{course.Id}}</h5> -->
-          <!-- <p class="card-text">Описание: {{course.title}}</p> -->
-
-          <br>
-          <button class="btn btn-outline-success my-2 my-sm-0" (click)="onAddToBookmarks(course.Name, course.Description, course.Id)" type="submit">В закладки</button>
-          <br>
-          <a [routerLink]="['course', course.Id]" class="card-link">Состав курса</a>
           </div>
         </div>
   </div>
