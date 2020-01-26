@@ -11,7 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("BulbaCourses.Podcasts.Web")]
-namespace BulbaComments.Podcasts.Data.Managers
+namespace BulbaCourses.Podcasts.Data.Managers
 {
     public class ContentManager : IManager<ContentDb>
     {

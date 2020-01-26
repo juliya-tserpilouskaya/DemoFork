@@ -3,7 +3,7 @@ namespace BulbaCourses.Podcasts.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class First : DbMigration
+    public partial class newone : DbMigration
     {
         public override void Up()
         {
@@ -26,7 +26,7 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
                         Raiting = c.Double(nullable: false),
                         Description = c.String(nullable: false, maxLength: 1000),
                         Duration = c.Int(nullable: false),
@@ -47,7 +47,8 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
+                        IsAdmin = c.Boolean(nullable: false),
+                        Name = c.String(maxLength: 20),
                         Description = c.String(maxLength: 510),
                         Email = c.String(),
                         Avatar = c.String(),
@@ -68,7 +69,7 @@ namespace BulbaCourses.Podcasts.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Courses", t => t.Course_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.User_Id)
+                .ForeignKey("dbo.Users", t => t.User_Id, cascadeDelete: true)
                 .Index(t => t.Course_Id)
                 .Index(t => t.User_Id);
             
