@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 using BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
+using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Questions.Interfaсe;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest.Interface;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
@@ -23,9 +25,17 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
     {
         IService_WorkWithResultTest _service_WorkWithResultTest;
 
-        public Service_Test([AttributeDbContext_LocalDb] DbContext context, IMapper mapper, IService_WorkWithResultTest service_WorkWithResultTest) : base(context, mapper)
+        IService_Question _service_Question_ChoosingAnswerFromList;
+
+        IService_Question _service_Question_SetOrder;
+
+        public Service_Test([AttributeDbContext_LocalDb] DbContext context, [AttributeQuestion_ChoosingAnswerFromList]IService_Question service_Question_ChoosingAnswerFromList, [AttributeQuestion_SetOrder]IService_Question service_Question_SetOrder, IService_WorkWithResultTest service_WorkWithResultTest, IMapper mapper) : base(context, mapper)
         {
             _service_WorkWithResultTest = service_WorkWithResultTest;
+
+            _service_Question_ChoosingAnswerFromList = service_Question_ChoosingAnswerFromList;
+
+            _service_Question_SetOrder = service_Question_SetOrder;
         }
 
         // ------------ CRUD
@@ -39,7 +49,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                         .Include(_ => _.Questions_ChoosingAnswerFromList)
                         .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))                                                
                         .Include(_ => _.Questions_SetOrder)
-                        .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
+                        .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))                        
                         .AsNoTracking()
                         .FirstOrDefault(_ => _.Id == Id);
 
@@ -72,6 +82,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
                             .Include(_ => _.Questions_ChoosingAnswerFromList.Select(c => c.AnswerVariants))   
                             .Include(_ => _.Questions_SetOrder)
                             .Include(_ => _.Questions_SetOrder.Select(c => c.AnswerVariants))
+                            .Include(_ => _.User_TestAuthor)
                             .AsNoTracking()
                             .FirstOrDefaultAsync(_ => _.Id == Id)
                             .ConfigureAwait(false);
@@ -275,191 +286,48 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
         }
 
         // ------------ CheckCorrectAnswer
-
-        public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo)
+        
+        public MResultRequest<string> CheckTestAsync(string User_TestReaderr_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo)
         {
-            AddUserPassingTest(User_Test_MainInfo);
-
-            MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
-
-            // Общее количество всех вопросов
-            int CountQuestion = 
-                Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count() + Current_Test_MainInfo.Questions_SetOrder.Count();
-
-            // Количество правильных ответов
-            int CountRightAnswer = 0;
-
-            // Храним номер правильного ответа
-            int Current_Questions_ChoosingAnswerFromList = 0;
-
-            // Получаем номер правильного ответа из базы
-            foreach (var Row in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
-            {
-                Current_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
-            }
-
-            // Храним номер ответа пользователя, который от посчитал правильным
-            int User_Questions_ChoosingAnswerFromList = 0;
-
-            // Получаем ответ пользователя
-            foreach (var Row in User_Test_MainInfo.Questions_ChoosingAnswerFromList)
-            {
-                User_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
-            }
-
-            // Наращиваем счетчик, если номера сошлись
-            if (Current_Questions_ChoosingAnswerFromList == User_Questions_ChoosingAnswerFromList)
-            {
-                CountRightAnswer++;
-            }
-
-            // Список для хранения корректных последовательностей ответов
-            List<int> Current_Questions_SetOrder = new List<int>();
-
-            // Получаем корректную последовательность ответов
-            foreach (var Row in Current_Test_MainInfo.Questions_SetOrder)
-            {
-                Current_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.CorrectOrderKey));
-            }
-
-            // Список для хранения последовательностей ответов пользователя
-            List<int> User_Questions_SetOrder = new List<int>();
-
-            // Получаем пользовательскую последовательность ответов
-            foreach (var Row in User_Test_MainInfo.Questions_SetOrder)
-            {
-                User_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.SortKey));
-            }
-
-            // Результат сверки двух последовательностей
-            var Rezult_Questions_SetOrder = Current_Questions_SetOrder.SequenceEqual(User_Questions_SetOrder);
-
-            // Наращиваем счетчик, если результат True
-            if (Rezult_Questions_SetOrder)
-            {
-                CountRightAnswer++;
-            }
-
-            // Наполняем модель результата прохождения теста, чтобы записать в базу
-            MReaderChoice_MainInfoDb ReaderChoice_MainInfoDb = new MReaderChoice_MainInfoDb()
-            {
-                ResultTest = $"Количество правильных ответов: {CountRightAnswer} из {CountQuestion}.",
-                Test_MainInfoDb_Id = 1,
-                User_TestReaderDb_Id = "one-two-three-four"
-            };
-
-
-            return
-                _service_WorkWithResultTest.Add(ReaderChoice_MainInfoDb);
-        }
-
-        // ------------ AddPassingTest
-
-        public void AddUserPassingTest(MTest_MainInfo User_Test_MainInfo)
-        {
-            // Наполнение данными
-            List<MReaderChoice_ChoosingAnswerFromList> LReaderChoice_ChoosingAnswerFromList = 
-                new List<MReaderChoice_ChoosingAnswerFromList>();
-
-            List<MReaderChoice_SetOrder> LReaderChoice_SetOrderDb = 
-                new List<MReaderChoice_SetOrder>();
-
-            int Question_Choise = 1;
-
-            // Получение данных и запись в экземпляр
-            foreach (var Row in User_Test_MainInfo.Questions_ChoosingAnswerFromList)
-            {
-                MReaderChoice_ChoosingAnswerFromList ReaderChoice_ChoosingAnswerFromList =
-                    new MReaderChoice_ChoosingAnswerFromList();
-
-                ReaderChoice_ChoosingAnswerFromList.ReaderChoice_MainInfoDb_Id = 1;
-
-                ReaderChoice_ChoosingAnswerFromList.Test_MainInfoDb_Id = 1;
-
-                ReaderChoice_ChoosingAnswerFromList.Question_ChoosingAnswerFromList_Id = Question_Choise++;
-
-                foreach (var X in Row.AnswerVariants)
-                {
-                    ReaderChoice_ChoosingAnswerFromList.AnswerVariant_ChoosingAnswerFromListDb_Id = X.SortKey;
-
-                    ReaderChoice_ChoosingAnswerFromList.IsChoice = X.IsCorrectAnswer;
-
-                    LReaderChoice_ChoosingAnswerFromList.Add(ReaderChoice_ChoosingAnswerFromList);
-                }
-            }
-
-            int Answer_SetOrder = 1;
-
-            int Question_SetOrder = 1;
-
-            foreach (var Row in User_Test_MainInfo.Questions_SetOrder)
-            {
-                MReaderChoice_SetOrder ReaderChoice_SetOrder =
-                    new MReaderChoice_SetOrder();
-
-                ReaderChoice_SetOrder.ReaderChoice_MainInfoDb_Id = 1;
-
-                ReaderChoice_SetOrder.Test_MainInfoDb_Id = 1;
-
-                ReaderChoice_SetOrder.Question_SetOrderDb_Id = Question_SetOrder++;
-
-                foreach (var X in Row.AnswerVariants)
-                {
-                    ReaderChoice_SetOrder.AnswerVariant_SetOrderDb_Id = Answer_SetOrder++;
-
-                    ReaderChoice_SetOrder.OrderKey = X.SortKey;
-
-                    LReaderChoice_SetOrderDb.Add(ReaderChoice_SetOrder);
-                }                
-            }
-
-            // Подготовка к записи
-            foreach (var Result in LReaderChoice_ChoosingAnswerFromList)
-            {
-                var ReaderChoice_ChoosingAnswerFromListDb =
-                    _context.Set<MReaderChoice_ChoosingAnswerFromListDb>();
-
-                ReaderChoice_ChoosingAnswerFromListDb.Add(new MReaderChoice_ChoosingAnswerFromListDb
-                {
-                    ReaderChoice_MainInfoDb_Id = Result.ReaderChoice_MainInfoDb_Id,
-                    Test_MainInfoDb_Id = Result.Test_MainInfoDb_Id,
-                    Question_ChoosingAnswerFromList_Id = Result.Question_ChoosingAnswerFromList_Id,
-                    AnswerVariant_ChoosingAnswerFromListDb_Id = Result.AnswerVariant_ChoosingAnswerFromListDb_Id,
-                    IsChoice = Result.IsChoice
-                });
-            }
-
-            foreach (var Result in LReaderChoice_SetOrderDb)
-            {
-                var ReaderChoice_SetOrderDb =
-                    _context.Set<MReaderChoice_SetOrderDb>();
-
-                ReaderChoice_SetOrderDb.Add(new MReaderChoice_SetOrderDb
-                {
-                    ReaderChoice_MainInfoDb_Id = Result.ReaderChoice_MainInfoDb_Id,
-                    Test_MainInfoDb_Id = Result.Test_MainInfoDb_Id,
-                    Question_SetOrderDb_Id = Result.Question_SetOrderDb_Id,
-                    AnswerVariant_SetOrderDb_Id = Result.AnswerVariant_SetOrderDb_Id,
-                    OrderKey = Result.OrderKey
-                });
-            }
-
             try
             {
-                _context.SaveChanges();
+                MTest_MainInfo Current_Test_MainInfo =
+                    GetById(ReaderChoice_MainInfo.Test_MainInfoDb_Id).Data;
+
+                int NumberOfCorrectAnswer = 0;
+
+                NumberOfCorrectAnswer +=
+                    _service_Question_ChoosingAnswerFromList.CheckQuestion(Current_Test_MainInfo, ReaderChoice_MainInfo);
+
+                NumberOfCorrectAnswer +=
+                    _service_Question_SetOrder.CheckQuestion(Current_Test_MainInfo, ReaderChoice_MainInfo);
+
+                int NumberOfAttempt = 1;
+
+                if (_context.Set<MReaderChoice_MainInfoDb>().Any(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfoDb_Id && c.User_TestReaderDb_Id == User_TestReaderr_Id))
+                {
+                    NumberOfAttempt =
+                        _context.Set<MReaderChoice_MainInfoDb>()
+                            .Where(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfoDb_Id && c.User_TestReaderDb_Id == User_TestReaderr_Id)
+                            .Select(c => c.NumberOfAttempt)
+                            .Max() + 1;
+                }
+
+                ReaderChoice_MainInfo.User_TestReaderDb_Id = User_TestReaderr_Id;
+
+                ReaderChoice_MainInfo.NumberOfAttempt = NumberOfAttempt;
+
+                ReaderChoice_MainInfo.ResultTest =
+                    $@"{NumberOfCorrectAnswer} из {((Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Any()) ? Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count : 0)}";
+
+                return
+                    MResultRequest<string>.Ok(ReaderChoice_MainInfo.ResultTest);
             }
-            catch (DbUpdateConcurrencyException e)
+            catch (Exception e)
             {
-                throw new DbUpdateConcurrencyException();
-            }
-            catch (DbUpdateException e)
-            {
-                throw new DbUpdateException();
-            }
-            catch (DbEntityValidationException e)
-            {
-                throw new DbEntityValidationException();
-            }
+                return
+                    (MResultRequest<string>)MResultRequest<string>.Fail<string>(e.Message);
+            }            
         }
     }
 }

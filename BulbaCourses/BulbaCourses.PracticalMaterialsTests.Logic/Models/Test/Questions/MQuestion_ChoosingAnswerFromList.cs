@@ -8,9 +8,13 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.Test.Questions
     /// </summary>
     public class MQuestion_ChoosingAnswerFromList
     {
+        public int Id { get; set; }
+
         public string QuestionText { get; set; }
 
-        public int SortKey { get; set; }                
+        public int SortKey { get; set; }
+
+        public string Description { get; set; }
 
         public ICollection<MAnswerVariant_ChoosingAnswerFromList> AnswerVariants { get; set; }        
     }

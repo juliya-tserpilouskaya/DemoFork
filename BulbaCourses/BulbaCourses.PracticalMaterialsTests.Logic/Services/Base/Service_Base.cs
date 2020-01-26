@@ -15,6 +15,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Base
         protected Service_Base(DbContext context, IMapper mapper)
         {
             _context = context;
+
             _mapper = mapper;
         }
 

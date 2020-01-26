@@ -24,6 +24,8 @@ import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
 import { PodcastsModule } from './podcasts/podcasts.module';
 
+import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
+
 // import { BookmarksComponent } from './GlobalSearch/components/bookmarks/bookmarks.component';
 
 @NgModule({
@@ -62,10 +64,10 @@ import { PodcastsModule } from './podcasts/podcasts.module';
     YoutubeModule,
     AnalyticsModule,
     NgxUiLoaderModule,
+    PracticalMaterialsTestModule,
     PodcastsModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: []
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

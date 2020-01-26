@@ -4,10 +4,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.AnswerVariant
 {
     public interface IService_AnswerVariant : IDisposable
     {
-        void GetAnswerById(int Id);
 
-        void AddAnswer();
-
-        void DropAnswerById(int Id);
     }
 }

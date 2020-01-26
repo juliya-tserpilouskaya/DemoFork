@@ -60,15 +60,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
         }
 
         [Test]
-        public async Task AddAsyncTest()
-        {
-            //var HasAdd = 
-            //    await _service_Test.AddAsync(Generator_TestModels.Generate_MTest_MainInfo(1, 4, 4, new MUser_TestAuthor()).FirstOrDefault());
-
-            //Assert.Warn($@"ResultId: {HasAdd.Data.Id} || {HasAdd.Data.Name}");
-        }
-
-        [Test]
         public void Update()
         {
             MTest_MainInfo TestData =
@@ -223,8 +214,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
 
             //Assert.Warn($@"{Test_MainInfo.Data.Name}");
         }
-
-
+        
         [Test]
         public void DeleteById()
         {
@@ -242,9 +232,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Tests.Layers.Logic.Services
 
             Assert.Warn($@"{Test_MainInfo.IsSuccess}");
         }
-
-       
-
+        
         [Test]
         public void Check()
         {
