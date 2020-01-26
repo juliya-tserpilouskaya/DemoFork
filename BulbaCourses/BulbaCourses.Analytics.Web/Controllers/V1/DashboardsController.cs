@@ -119,21 +119,22 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
                 if (!dashboardDtos.Any()) { return NotFound(); }
                 var Dashboardshorts = _mapper.Map<IEnumerable<DashboardData>>(dashboardDtos);
 
-                var dataDtos = await _Dashboardservice.GetAnalyticDataAsync();
+                var dataTempDtos = await _Dashboardservice.GetAnalyticDataAsync();
+                var dataDtos = dataTempDtos.ToArray().OrderBy(_ => _.Date).ToArray();
                 foreach (var item in dataDtos)
                 {
                     item.Value = item.KursDollarValue;
                 }
                 var dataForecastData = _mapper.Map<IEnumerable<Data>>(dataDtos);
 
-                IForecastModel forecastModel = new ForecastModel(dataForecastData, 12, 12, Scheme.Period.Month);
+                IForecastModel forecastModel = new ForecastModel(dataForecastData, 12, 40, Scheme.Period.Day);
 
                 var dashboard =  Dashboardshorts.FirstOrDefault();
                 
                 var data = forecastModel.GetData().ToArray();
                 //var dataCount = dat.Length - 15;
                 //var data = dat.Skip(dataCount);
-                var dataForecast   = data.GetOnlyForecast(12).ToArray();
+                var dataForecast   = data.GetOnlyForecastPessimistic(40).ToArray();
                 //var dataCount = dat.Length - 15;
                 //var data = dat.Skip(dataCount);
 

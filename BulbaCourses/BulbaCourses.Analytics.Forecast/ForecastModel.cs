@@ -126,7 +126,7 @@ namespace Forecast
             for (var i = 0; i < _season; i++)
             {
                 var eachSum = SumEach(SeasonHistory, i, countSeason);
-                var coefficient = (eachSum / sumSeason) * 12;
+                var coefficient = (eachSum / sumSeason) * _season;
                 coefficients.Add(coefficient);
             }
 
