@@ -18,7 +18,6 @@ import { CoursesService } from './services/courses.service';
 import { HttpCourseService } from './services/httpcourse.service';
 
 
-
 @NgModule({
   declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent,
     ResultsComponent, SearchCourseComponent],

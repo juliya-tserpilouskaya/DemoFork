@@ -13,7 +13,7 @@ import { HttpCourseService } from '../../services/httpcourse.service';
 export class SearchComponent {
 
   query: string = "";
-  public isCollapsed = false;
+  public isCollapsed = true;
   public myForm: FormGroup;
   model: Course;
   receivedString: string;
@@ -22,8 +22,8 @@ export class SearchComponent {
   constructor(private _fb: FormBuilder, private client: HttpClient, private service: HttpCourseService) {
     this.myForm = this._fb.group({
       Name: ['', [Validators.required, Validators.minLength(5)]],
-      Description: [''],
-      Cost: [''],
+      Description: ['', [Validators.required, Validators.minLength(10)]],
+      Cost: ['', [Validators.required]],
       Complexity: [''],
       Language: [''],
       Items: this._fb.array([
@@ -32,20 +32,26 @@ export class SearchComponent {
   });
   }
 
+  getFormData()
+  {
+    return this.myForm.get('Items');
+  }
+
+
   initItem() {
     return this._fb.group({
-        Name: ['', Validators.required],
-        Description: ['']
+        Name: ['', [Validators.required, Validators.minLength(5)]],
+        Description: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
   addItem() {
-    const control = <FormArray>this.myForm.controls['items'];
+    const control = <FormArray>this.myForm.controls['Items'];
     control.push(this.initItem());
   }
 
   removeItem(i: number) {
-    const control = <FormArray>this.myForm.controls['items'];
+    const control = <FormArray>this.myForm.controls['Items'];
     control.removeAt(i);
   }
 
@@ -65,6 +71,7 @@ export class SearchComponent {
     );
   }
 }
+
 
 export interface Course {
   Name: string;
