@@ -15,7 +15,7 @@
           </ul>
 
           <br>
-          <button class="btn btn-outline-success my-2 my-sm-0" (click)="onAddToBookmarks(course.Name, course.Description, course.Id)" type="submit">Add to bookmarks</button>
+          <button *ngIf="isAuthenticated" class="btn btn-outline-success my-2 my-sm-0" (click)="onAddToBookmarks(course.Name, course.Description, course.Id)" type="submit">Add to bookmarks</button >
           <br>
           <div class="pt-3">
             <a [routerLink]="['course', course.Id]" class="card-link">More info</a>
