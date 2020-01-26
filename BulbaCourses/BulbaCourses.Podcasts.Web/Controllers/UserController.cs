@@ -17,6 +17,9 @@ using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful User service.
+    /// </summary>
     [RoutePrefix("api/users")]
     public class UserController : ApiController
     {
@@ -24,6 +27,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IUserService service;
         private readonly IBus bus;
 
+        /// <summary>
+        /// Creates Audio controller.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="mapper"></param>
+        /// <param name="userService"></param>
         public UserController(IMapper mapper, IUserService userService, IBus bus)
         {
             this.mapper = mapper;
@@ -37,7 +46,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "User doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
@@ -74,7 +83,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        [HttpGet, Route("{substring}")]
+        [HttpGet, Route("Search/{substring}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all users", typeof(IEnumerable<UserWeb>))]
         public async Task<IHttpActionResult> Search(string substring)
         {
@@ -104,7 +113,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("")]
+        [HttpGet, Route("GetFor/{name}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all courses", typeof(IEnumerable<UserWeb>))]
         public async Task<IHttpActionResult> GetAll(string name)
         {
@@ -134,7 +143,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="userWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User post", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -179,12 +188,12 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         }
 
         /// <summary>
-        /// Deletes user in the database
+        /// Updates user in the database
         /// </summary>
         /// <param name="userWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User updated", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
@@ -232,7 +241,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="userWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
@@ -281,7 +290,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("")]
+        [HttpGet, Route("GetMe")]
         [SwaggerResponse(HttpStatusCode.OK, "User found", typeof(UserWeb))]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]

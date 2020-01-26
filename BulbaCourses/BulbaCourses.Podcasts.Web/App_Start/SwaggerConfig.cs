@@ -64,16 +64,15 @@ namespace BulbaCourses.Podcasts.Web
                         //    .Name("apiKey")
                         //    .In("header");
                         //
-                        //c.OAuth2("oauth2")
-                        //    .Description("OAuth2 Implicit Grant")
-                        //    .Flow("implicit")
-                        //    .AuthorizationUrl("http://petstore.swagger.wordnik.com/api/oauth/dialog")
-                        //    //.TokenUrl("https://tempuri.org/token")
-                        //    .Scopes(scopes =>
-                        //    {
-                        //        scopes.Add("read", "Read access to protected resources");
-                        //        scopes.Add("write", "Write access to protected resources");
-                        //    });
+                        c.OAuth2("oauth2")
+                            .Description("OAuth2 Implicit Grant")
+                            .Flow("implicit")
+                            .AuthorizationUrl(Helpers.GetIssuerUri() + "/connect/authorize")
+                            //.TokenUrl("https://tempuri.org/token")
+                            .Scopes(scopes =>
+                            {
+                                scopes.Add("api", "api scope");
+                            });
 
                         // Set this flag to omit descriptions for any actions decorated with the Obsolete attribute
                         //c.IgnoreObsoleteActions();

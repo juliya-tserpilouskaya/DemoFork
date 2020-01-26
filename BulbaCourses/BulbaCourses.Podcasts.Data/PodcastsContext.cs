@@ -4,6 +4,8 @@ using System.Data.Entity;
 
 namespace BulbaCourses.Podcasts.Data
 {
+
+    [DbConfigurationType(typeof(DbConfig))]
     public class PodcastsContext : DbContext
     {
         public PodcastsContext() : base("PodcastsDbConnection")
