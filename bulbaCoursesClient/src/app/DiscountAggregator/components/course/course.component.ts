@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { DiscountAggregatorService, Courses, SearchCriteria, Domain, Category } from '../../services/discount-aggregator.service';
 import { ActivatedRoute } from '@angular/router';
 import { CustomUser } from 'src/app/auth/models/user';
+import { from } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-course',
@@ -14,19 +19,12 @@ export class CourseComponent implements OnInit {
   courses: Courses[] = [];
 
   constructor(private service: DiscountAggregatorService) {
+    this.service.getCoursesForCriteria().subscribe(data => this.courses = data);
    }
 
   ngOnInit() {
-    console.log('1');
-    // this.service.getCourses()
-    // .subscribe(data => this.courses = data);
-    this.service.getCoursesForCriteria(/*this.user*/).subscribe(data => this.courses = data);
-    // console.log(this.user.sub);
+    console.log('first load courses');
+    // var coursesall = from(this.courses);
+    this.service.getCoursesForCriteria().subscribe(data => this.courses = data);
   }
-
-  onSubmitCriteria() {
-    this.service.getCoursesForCriteria(/*this.user*/)
-    .subscribe(data => this.courses = data);
-  }
-
 }
