@@ -15,15 +15,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchCourseComponent } from './components/course/course.component';
 import { CourseComponent } from '../DiscountAggregator/components/course/course.component';
 import { CoursesService } from './services/courses.service';
+import { HttpCourseService } from './services/httpcourse.service';
 
 
 
 @NgModule({
-  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, ResultsComponent, SearchCourseComponent],
+  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent,
+    ResultsComponent, SearchCourseComponent],
   imports: [
     CommonModule, NgbModule, RouterModule, FormsModule, ReactiveFormsModule
   ],
-  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService, CourseComponent, CoursesService],
+  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService, CourseComponent, CoursesService, HttpCourseService],
   exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, SearchCourseComponent]
 })
 export class GlobalSearchModule { }
