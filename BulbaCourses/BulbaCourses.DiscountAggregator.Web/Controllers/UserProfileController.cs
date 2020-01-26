@@ -23,10 +23,14 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this._userProfileService = userProfileService;
         }
 
+        /// <summary>
+        /// Get all user profiles
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
-        [Description("Get all search Profiles")]
+        [Description("Get all Profiles")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Search profiles doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Search profiles doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Search profiles found", typeof(IEnumerable<UserProfile>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetAll()
@@ -35,10 +39,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
-        [HttpGet, Route("{id}")]//можно указать какой тип id
-        [Description("Get profile by Id")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Profile doesn't exists")]
+        /// <summary>
+        /// Get user profile by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, Route("{id}")]
+        [Description("Get profile by Id")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Profile doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile found", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
@@ -58,10 +67,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add user profile
+        /// </summary>
+        /// <param name="userProfile"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [Description("Add new profile")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(UserProfile))]
+        [SwaggerResponse(HttpStatusCode.OK, "User profile added", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet="*")]UserProfile userProfile)
         {
@@ -74,6 +88,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
+        /// <summary>
+        /// Update user profile
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile updated", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]        
@@ -89,6 +108,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsSuccess ? (IHttpActionResult)Ok(result.Data) : BadRequest(result.Message);
         }
 
+        /// <summary>
+        /// Delete user profile by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile deleted", typeof(UserProfile))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]

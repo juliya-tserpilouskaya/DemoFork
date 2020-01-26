@@ -22,6 +22,10 @@ using System.Collections.Concurrent;
 using Microsoft.Owin.Cors;
 using System.Web.Cors;
 using Microsoft.Owin.Security;
+using System.Web.Http.Description;
+using Swashbuckle.Examples;
+using Microsoft.Web.Http.Routing;
+using System.Web.Http.Routing;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Youtube.Web.Startup))]
 
@@ -34,7 +38,7 @@ namespace BulbaCourses.Youtube.Web
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
 
             var config = new HttpConfiguration();
-            config.MapHttpAttributeRoutes();
+            //config.MapHttpAttributeRoutes();
 
             app.UseCors(new CorsOptions()
             {
@@ -44,7 +48,8 @@ namespace BulbaCourses.Youtube.Web
                     {
                         AllowAnyHeader = true,
                         AllowAnyMethod = true,
-                        AllowAnyOrigin = true
+                        Origins = { "http://localhost:4200" },
+                        SupportsCredentials = true
                     })
                 },
                 CorsEngine = new CorsEngine()
@@ -56,9 +61,7 @@ namespace BulbaCourses.Youtube.Web
                 , "bulbacourses.pfx");
             var cert = File.ReadAllBytes(path);
 
-
-            config.EnableSwagger(c => { c.SingleApiVersion("v1", "BulbaCourses.Youtube.Web"); })
-                .EnableSwaggerUi();
+            config.CreateSwagger();
 
             JwtSecurityTokenHandler.InboundClaimTypeMap = new ConcurrentDictionary<string, string>();
             JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
@@ -83,9 +86,8 @@ namespace BulbaCourses.Youtube.Web
             //FluentValidation configuration
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));
-            
 
-            //
+            //EasyNetQ
             kernel.RegisterEasyNetQ("host=localhost");
 
             return kernel;

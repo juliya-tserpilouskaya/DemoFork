@@ -27,6 +27,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get all presentations from the database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentations doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentations found", typeof(IEnumerable<Presentation>))]
@@ -45,6 +49,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get presentation from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
@@ -69,6 +78,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new presentation to the database
+        /// </summary>
+        /// <param name="presentation"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation added", typeof(Presentation))]
@@ -85,6 +99,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update the presentation in the database (Title, IsAccessible, TeacherDB, CourseDB)
+        /// </summary>
+        /// <param name="presentation"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation updated", typeof(Presentation))]
@@ -101,11 +120,16 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete the presentation from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Presentation deleted", typeof(Boolean))]
-        public async Task<IHttpActionResult> DeletePresentationAsync(string id)
+        public async Task<IHttpActionResult> DeletePresentationByIdAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -117,12 +141,17 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
+        /// <summary>
+        /// Get all students who watched this presentation by presentation ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/viewed")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Students found", typeof(IEnumerable<Student>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> GetAllWhoViewedThisPresentationAsync(string id)
+        public async Task<IHttpActionResult> GetAllWhoWatchedThisPresentationAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -131,7 +160,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
 
             try
             {
-                var result = await _presentationsBase.GetAllWhoViewedThisPresentationAsync(id);
+                var result = await _presentationsBase.GetAllWhoWatchedThisPresentationAsync(id);
 
                 return result == null ? NotFound() : (IHttpActionResult)Ok(result);
             }
@@ -141,6 +170,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all students who like this presentation by presentation ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/like")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]
@@ -165,6 +199,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all feedbacks for this presentation by presentation ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}/feedbacks")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Presentation doesn't exists")]

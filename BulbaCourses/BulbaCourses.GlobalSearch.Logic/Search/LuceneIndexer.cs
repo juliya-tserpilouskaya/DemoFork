@@ -40,11 +40,13 @@ namespace BulbaCourses.GlobalSearch.Logic.Search
         private void _addToLuceneIndex(LearningCourseDTO courseData, IndexWriter writer)
         {
             // remove older index entry
-            var searchQuery = new TermQuery(new Term("Id", courseData.Id.ToString()));
-            writer.DeleteDocuments(searchQuery);
+            if (courseData.Id != null)
+            {
+                var searchQuery = new TermQuery(new Term("Id", courseData.Id.ToString()));
+                writer.DeleteDocuments(searchQuery);
 
-            // add new index entry
-            var doc = new Document();
+                // add new index entry
+                var doc = new Document();
 
             // add lucene fields mapped to db fields
             doc.Add(new Field("Id", courseData.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -52,12 +54,13 @@ namespace BulbaCourses.GlobalSearch.Logic.Search
             doc.Add(new Field("Name", courseData.Name.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("Category", courseData.Category.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("Cost", courseData.Cost.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field("Complexity", courseData.Complexity.ToString(), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field("Language", courseData.Language.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            //doc.Add(new Field("Complexity", courseData.Complexity.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            //doc.Add(new Field("Language", courseData.Language.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("AuthorId", courseData.AuthorId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
-            // add entry to index
-            writer.AddDocument(doc);
+                // add entry to index
+                writer.AddDocument(doc);
+            }
         }
 
         /// <summary>

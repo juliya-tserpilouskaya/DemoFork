@@ -55,12 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\AnalyticsContext.cs" />
+    <Compile Include="Context\Configurations\ExchangeRateConfigurations.cs" />
     <Compile Include="Context\Configurations\ChartConfigurations.cs" />
     <Compile Include="Context\Configurations\DashboardConfigurations.cs" />
     <Compile Include="Context\Configurations\ReportConfigurations.cs" />
     <Compile Include="DbConfig.cs" />
     <Compile Include="Interface\IDashboardsRepository.cs" />
     <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Migrations\202001261611143_One.cs" />
+    <Compile Include="Migrations\202001261611143_One.Designer.cs">
+      <DependentUpon>202001261611143_One.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ExchangeRatesDb.cs" />
     <Compile Include="Models\ChartDb.cs" />
     <Compile Include="Models\DashboardDb.cs" />
     <Compile Include="Models\ReportDb.cs" />
@@ -73,6 +80,10 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001261611143_One.resx">
+      <DependentUpon>202001261611143_One.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

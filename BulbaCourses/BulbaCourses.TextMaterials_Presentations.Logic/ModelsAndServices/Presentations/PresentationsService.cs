@@ -151,9 +151,9 @@ namespace Presentations.Logic.Services
             _uow.Dispose();
         }
 
-        public async Task<IEnumerable<Student>> GetAllWhoViewedThisPresentationAsync(string id)
+        public async Task<IEnumerable<Student>> GetAllWhoWatchedThisPresentationAsync(string id)
         {
-            var presentation = await _uow.PresentationsLoading.GetAllWhoViewedThisPresentationAsync(id);
+            var presentation = await _uow.PresentationsLoading.GetAllWhoWatchedThisPresentationAsync(id);
             return _mapper.Map<IEnumerable<StudentDB>, IEnumerable<Student>>(presentation.ViewedByStudents);
         }
 

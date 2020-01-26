@@ -8,10 +8,25 @@ namespace BulbaCourses.TextMaterials_Presentations.Data.Interfaces
 {
     public interface IPresentationsLoadingRepository
     {
-        Task<PresentationDB> GetAllWhoViewedThisPresentationAsync(string id);
+        /// <summary>
+        /// Get the presentation by id with all the students who watched it
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<PresentationDB> GetAllWhoWatchedThisPresentationAsync(string id);
 
+        /// <summary>
+        /// Get the presentation by id with all the students who like it
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<PresentationDB> GetAllWhoLikeThisPresentationAsync(string id);
 
+        /// <summary>
+        /// Get the presentation by id with feedbacks
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<PresentationDB> GetAllFeedbacksPresentationAsync(string id);
     }
 }

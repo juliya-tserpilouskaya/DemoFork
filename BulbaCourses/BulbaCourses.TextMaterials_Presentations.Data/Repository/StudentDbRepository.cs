@@ -73,12 +73,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         public void DeleteById(string id)
         {
             _db.Entry(new StudentDB() { Id = id }).State = EntityState.Deleted;
-            _db.Database.ExecuteSqlCommand(
-                "ALTER TABLE dbo.Feedbacks " +
-                "ADD CONSTRAINT Feedbacks_Students " +
-                "FOREIGN KEY (StudentDBId) " +
-                "REFERENCES dbo.Students (Id) " +
-                "ON DELETE SET NULL");
         }
 
         public void AddLovedPresentationAsync(string idStudent, string idPresentation)
@@ -105,7 +99,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             return await query.AsNoTracking().Include(_ => _.FavoritePresentations).FirstOrDefaultAsync(_ => _.Id.Equals(id));
         }
 
-        public void AddViewedPresentationAsync(string idStudent, string idPresentation)
+        public void AddWatchedPresentationAsync(string idStudent, string idPresentation)
         {
             var user = _db.Students.Include(_ => _.ViewedPresentations).Single(_ => _.Id == idStudent);
             var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
@@ -114,7 +108,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             _db.Entry(user).State = EntityState.Modified;
         }
 
-        public void DeleteViewedPresentationAsync(string idStudent, string idPresentation)
+        public void DeleteWatchedPresentationAsync(string idStudent, string idPresentation)
         {
             var user = _db.Students.Include(_ => _.ViewedPresentations).Single(_ => _.Id == idStudent);
             var presentation = _db.Presentations.Single(_ => _.Id == idPresentation);
@@ -123,7 +117,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             _db.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task<StudentDB> GetAllViewedPresentationAsync(string id)
+        public async Task<StudentDB> GetAllWatchedPresentationAsync(string id)
         {
             var query = from student in _db.Students select student;
             return await query.AsNoTracking().Include(_ => _.ViewedPresentations).FirstOrDefaultAsync(_ => _.Id.Equals(id));

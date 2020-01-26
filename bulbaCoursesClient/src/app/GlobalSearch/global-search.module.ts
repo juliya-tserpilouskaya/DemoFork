@@ -11,18 +11,20 @@ import { SearchService } from './services/search.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ResultsComponent } from './components/results/results.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchCourseComponent } from './components/course/course.component';
 import { CourseComponent } from '../DiscountAggregator/components/course/course.component';
 import { CoursesService } from './services/courses.service';
+import { HttpCourseService } from './services/httpcourse.service';
 
 
 @NgModule({
-  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, ResultsComponent, SearchCourseComponent],
+  declarations: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent,
+    ResultsComponent, SearchCourseComponent],
   imports: [
-    CommonModule, NgbModule, RouterModule, FormsModule
+    CommonModule, NgbModule, RouterModule, FormsModule, ReactiveFormsModule
   ],
-  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService, CourseComponent, CoursesService],
+  providers: [BookmarksService, QueryResultService, CourseItemService, SearchService, CourseComponent, CoursesService, HttpCourseService],
   exports: [QueryResultComponent, BookmarksComponent, CourseItemComponent, SearchComponent, SearchCourseComponent]
 })
 export class GlobalSearchModule { }

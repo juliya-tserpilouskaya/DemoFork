@@ -1,8 +1,17 @@
-<p>bookmarks works!</p>
-<ul>
-  <li *ngFor="let item of bookmarks">
+<div class="card" *ngFor="let item of bookmarks">
+  <h5 class="card-header">{{item.Title}}</h5>
+  <div class="card-body">
+    <div class="col-12 col-md-12 col-lg-12 row">
+      <div class="col-4 col-md-4 col-lg-4">
+        <!-- <a href={{parseUrl(item.URL)}}>{{item.URL}}</a> -->
+        <a [routerLink]="['course', item.URL]">Course page</a>
+      </div>
+      <div class="col-4 col-md-4 col-lg-4">
+        {{item.Id}}
+      </div>
+      <div class="col-4 col-md-4 col-lg-4">
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="onDelete(item.Id)" type="submit">Delete</button>
+      </div>
+    </div>
+  </div>
 
-   {{item.Id}} | {{item.Title}} | {{item.URL}} | {{item.UserId}}
-   <!-- {{item.Cur_Code}} {{item.Cur_Name}}-->
-  </li>
-</ul>

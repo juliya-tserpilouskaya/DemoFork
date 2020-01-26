@@ -19,6 +19,8 @@ namespace BulbaCourses.Analytics.DAL.Context
         public DbSet<DashboardDb> Dashboards { get; set; }
 
         public DbSet<ChartDb> Charts { get; set; }
+        
+        public DbSet<ExchangeRatesDb> ExchangeRates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,6 +33,7 @@ namespace BulbaCourses.Analytics.DAL.Context
             modelBuilder.Configurations.Add(new ReportConfigurations());
             modelBuilder.Configurations.Add(new DashboardConfigurations());
             modelBuilder.Configurations.Add(new ChartConfigurations());
+            modelBuilder.Configurations.Add(new ExchangeRateConfigurations());
 
             Debug.WriteLine("+++++++++++++ AnalyticsContext OnModelCreating +++++++++++++");
         }
