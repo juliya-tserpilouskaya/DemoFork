@@ -19,11 +19,12 @@ namespace Forecast
         /// Creates ForecastModel.
         /// </summary>
         /// <param name="baseData"></param>
+        /// <param name="season"></param>
         /// <param name="intervalForecast"></param>
         /// <param name="period"></param>
-        public ForecastModel(IEnumerable<Data> baseData, int intervalForecast, Period period)
+        public ForecastModel(IEnumerable<Data> baseData, int season, int intervalForecast, Period period)
         {
-            _season = 12;
+            _season = season;
             _period = period;
             _baseData = baseData;
             _intervalForecast = intervalForecast;

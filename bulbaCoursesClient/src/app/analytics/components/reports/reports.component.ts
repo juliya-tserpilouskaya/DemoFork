@@ -252,19 +252,13 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   getCharts() {
     return {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: this.dashboards[0].Dates,
       datasets: [
           {
-              label: 'First Dataset',
-              data: [65, 59, 80, 81, 56, 55, 40],
+              label: 'Exchange Rates',
+              data: this.dashboards[0].Values,
               fill: false,
               borderColor: '#4bc0c0'
-          },
-          {
-              label: 'Second Dataset',
-              data: [28, 48, 40, 19, 86, 27, 90],
-              fill: false,
-              borderColor: '#565656'
           }
       ]
     };

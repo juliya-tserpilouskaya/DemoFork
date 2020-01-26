@@ -50,6 +50,10 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BulbaCourses.Analytics.BLL\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
@@ -132,8 +136,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -146,9 +150,6 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.Owin, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.7\lib\net45\System.Web.Http.Owin.dll</HintPath>
@@ -240,6 +241,14 @@
     <ProjectReference Include="..\BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj">
       <Project>{09826433-98bd-45c2-af11-1779cdfabe25}</Project>
       <Name>BulbaCourses.Analytics.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj">
+      <Project>{53FA5E2C-5698-4F83-B190-71AA652DAE01}</Project>
+      <Name>BulbaCourses.Analytics.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.Forecast\BulbaCourses.Analytics.Forecast.csproj">
+      <Project>{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}</Project>
+      <Name>BulbaCourses.Analytics.Forecast</Name>
     </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj">
       <Project>{12B86A99-3216-441C-BDAC-C8CD95DA5189}</Project>
