@@ -3,6 +3,7 @@ using BulbaCourses.Analytics.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BulbaCourses.Analytics.DAL.Models;
 
 namespace BulbaCourses.Analytics.BLL.Interface
 {
@@ -70,5 +71,11 @@ namespace BulbaCourses.Analytics.BLL.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         Task<bool> ExistsChartIdAsync(int id);
+
+        /// <summary>
+        /// Gets all Data.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<ExchangeRatesDto>> GetAnalyticDataAsync();
     }
 }
