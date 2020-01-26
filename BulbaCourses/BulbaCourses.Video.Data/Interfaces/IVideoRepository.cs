@@ -21,5 +21,7 @@ namespace BulbaCourses.Video.Data.Interfaces
         Task<VideoMaterialDb> UpdateAsync(VideoMaterialDb videoDb);
         Task RemoveAsync(VideoMaterialDb video);
         Task RemoveAsyncById(string videoId);
+
+        Task<CommentDb> AddComment(string userId, CommentDb commentDb);
     }
 }

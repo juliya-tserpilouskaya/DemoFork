@@ -97,6 +97,31 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         /// <summary>
+        /// Add new comment to video to the database.
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <param name="userId"></param>
+        /// <param name="commentText"></param>
+        /// <returns></returns>
+        [HttpPost, Route("addcomment")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.OK, "video post", typeof(VideoView))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> AddComment(string videoId, string userId, string commentText)
+        {
+
+            try
+            {
+                var video = await _videoService.AddComment(videoId, userId, commentText);
+                return video == null ? NotFound() : (IHttpActionResult)Ok(video);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        /// <summary>
         /// Update video in the database.
         /// </summary>
         /// <param name="video"></param>

@@ -106,5 +106,15 @@ namespace BulbaCourses.Video.Data.Repositories
             await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
             return await Task.FromResult(video);
         }
+
+        public async Task<CommentDb> AddComment(string userId, CommentDb commentDb)
+        {
+            var user = _videoDbContext.Users.FirstOrDefault(c => c.UserId.Equals(userId));
+            commentDb.UserId = user;
+            _videoDbContext.Comments.Add(commentDb);
+            await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
+            var result = await Task.FromResult(commentDb);
+            return result;
+        }
     }
 }

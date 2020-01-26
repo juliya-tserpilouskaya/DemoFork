@@ -75,7 +75,7 @@ namespace BulbaCourses.Video.Web.Controllers
         }
 
         /// <summary>
-        /// /// Shows all author courses by author id from the database.
+        /// Shows all author courses by author id from the database.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

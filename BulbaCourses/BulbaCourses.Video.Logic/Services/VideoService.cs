@@ -128,9 +128,9 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
-        public Task<Result> AddComment(VideoMaterialInfo video, string comment)
+        public Task<Result> AddComment(string videoId, string userId, string comment)
         {
-            var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
+            var videoDb = _videoRepository.GetById(videoId);
             var commentDb = new CommentDb() { 
                 CommentId = Guid.NewGuid().ToString(), 
                 Date = DateTime.Now, 
@@ -139,6 +139,7 @@ namespace BulbaCourses.Video.Logic.Services
             };
             try
             {
+                _videoRepository.AddComment(userId, commentDb);
                 videoDb.Comments.Add(commentDb);
                 return Task.FromResult(Result.Ok());
             }
