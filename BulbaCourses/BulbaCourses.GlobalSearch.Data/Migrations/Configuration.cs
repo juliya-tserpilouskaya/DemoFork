@@ -266,18 +266,18 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
-                Title = "Develop and Deploy Windows Applications on Google Cloud Platform",
-                Description = "Learn to deploy and run Microsoft Windows applications on Google Cloud Platform (GCP).",
-                URL = "ru.coursera.org/learn/develop-windows-apps-gcp"
+                Title = courseG.Name,
+                Description = courseG.Description,
+                URL = courseG.Id
             };
 
             var bookmark2 = new BookmarkDB()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
-                Title = "Data Structures and Design Patterns for Game Developers",
-                Description = "This course assumes you have the prerequisite knowledge from the previous three courses in the specialization. You should make sure you have that knowledge, either by taking those previous courses or from personal experience, before tackling this course.",
-                URL = "ru.coursera.org/learn/data-structures-design-patterns"
+                Title = courseData.Name,
+                Description = courseData.Description,
+                URL = courseData.Id
             };
 
             var bookmark3 = new BookmarkDB()
