@@ -43,7 +43,7 @@ namespace BulbaCourses.Web
                     {
                         AllowAnyHeader = true,
                         AllowAnyMethod = true,
-                        Origins = { "http://localhost:4200", "http://localhost:44352", "http://localhost:44382" },
+                        Origins = { "http://localhost:4200" /*, "http://localhost:44352", "http://localhost:44382" */},
                         SupportsCredentials = true
                     })
                 },

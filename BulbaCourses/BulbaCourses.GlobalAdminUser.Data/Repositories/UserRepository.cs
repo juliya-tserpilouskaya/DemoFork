@@ -1,4 +1,4 @@
-﻿using BulbaCourses.GlobalAdminUser.Data.Context;
+﻿using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Models;
 using System;
@@ -68,7 +68,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Repositories
         }
         public async Task<IEnumerable<RoleDb>> GetRolesAsync()
         {
-            return await _usersContext.GetRolesAsync();
+            return await _usersContext.GetRoles();
         }
 
     }

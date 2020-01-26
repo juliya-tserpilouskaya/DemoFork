@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulbaCourses.GlobalAdminUser.Data.Context
+namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
 {
     public class UsersContext : IUsersContext
     {
@@ -46,17 +46,25 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
             return user;
         }
 
-        public async Task ChangePassword(UserChangePassword user)
+        public async Task<string> RegisterUser(RegisterUserDb user)
+        {
+            string json = JsonConvert.SerializeObject(user);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PostAsync("api/users/register", httpContent);
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<bool> ChangePassword(UserChangePassword user)
         {
             string json = JsonConvert.SerializeObject(user);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var httpResponse = await _client.PostAsync("api/admin", httpContent);
+            return httpResponse.IsSuccessStatusCode;
+            
         }
-
-
-
+       
         #region roles
-        public async Task<IEnumerable<RoleDb>> GetRolesAsync()
+        public async Task<IEnumerable<RoleDb>> GetRoles()
         {
             IEnumerable<RoleDb> roles = null;
             HttpResponseMessage response = await _client.GetAsync("api/admin/roles");
@@ -65,6 +73,12 @@ namespace BulbaCourses.GlobalAdminUser.Data.Context
                 roles = await response.Content.ReadAsAsync<IEnumerable<RoleDb>>();
             }
             return roles;
+        }
+
+        public async Task<bool> Remove(string id)
+        {
+            HttpResponseMessage response = await _client.DeleteAsync($"api/admin/id?id={id}");
+            return response.IsSuccessStatusCode;
         }
         #endregion
     }
