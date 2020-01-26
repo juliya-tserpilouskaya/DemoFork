@@ -28,7 +28,13 @@ namespace BulbaCourses.Analytics.BLL.Interface
         /// Shows a dashboard details by id.
         /// </summary>
         /// <returns></returns>
-        Task<DashboardDto> GetByIdAsync(string id);        
+        Task<DashboardDto> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Shows a dashboard details by report id.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<DashboardDto>> GetByReportIdAsync(string id);
 
         /// <summary>
         /// Updates a dashboard.
