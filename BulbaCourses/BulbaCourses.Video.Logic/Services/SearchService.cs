@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working with Search courses.
+    /// </summary>
     public class SearchService : ISearchService
     {
         private readonly IMapper _mapper;
@@ -19,6 +22,13 @@ namespace BulbaCourses.Video.Logic.Services
         private readonly ITegRepository _tegRepository;
         private readonly IAuthorRepository _authorRepository;
 
+        /// <summary>
+        /// Creates a new Search service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="courseRepository"></param>
+        /// <param name="tegRepository"></param>
+        /// <param name="authorRepository"></param>
         public SearchService(IMapper mapper, ICourseRepository courseRepository, ITegRepository tegRepository, IAuthorRepository authorRepository)
         {
             _mapper = mapper;
@@ -26,6 +36,13 @@ namespace BulbaCourses.Video.Logic.Services
             _tegRepository = tegRepository;
             _authorRepository = authorRepository;
         }
+
+        /// <summary>
+        /// Shows all courses by search request and search variant from the database.
+        /// </summary>
+        /// <param name="searchRequest"></param>
+        /// <param name="variant"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<CourseInfo>> GetSearchCourses(string searchRequest, SearchVariant variant)
         {
             IEnumerable<CourseInfo> coursesInfo = null;

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Data.Repositories
 {
+    /// <summary>
+    /// Provides a mechanism for working comment repository.
+    /// </summary>
     public class CommentRepository : BaseRepository, ICommentRepository
     {
 
@@ -17,6 +20,11 @@ namespace BulbaCourses.Video.Data.Repositories
         {
         }
 
+        /// <summary>
+        /// Create a new comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Add(CommentDb comment)
         {
             _videoDbContext.Comments.Add(comment);
@@ -24,6 +32,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Create a new comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public async Task<CommentDb> AddAsync(CommentDb comment)
         {
             _videoDbContext.Comments.Add(comment);
@@ -31,6 +44,10 @@ namespace BulbaCourses.Video.Data.Repositories
             return await Task.FromResult(comment);
         }
 
+        /// <summary>
+        /// Gets all comments in repository.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<CommentDb> GetAll()
         {
             var commentList = _videoDbContext.Comments.ToList().AsReadOnly();
@@ -38,12 +55,21 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Gets all comments in repository.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<CommentDb>> GetAllAsync()
         {
             var commentList = await _videoDbContext.Comments.ToListAsync().ConfigureAwait(false);
             return commentList.AsReadOnly();
         }
 
+        /// <summary>
+        /// Shows comment details by id in repository.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         public CommentDb GetById(string commentId)
         {
             var comment = _videoDbContext.Comments.FirstOrDefault(b => b.CommentId.Equals(commentId));
@@ -51,12 +77,22 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Shows comment details by id in repository.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         public async Task<CommentDb> GetByIdAsync(string commentId)
         {
             var comment = await _videoDbContext.Comments.SingleOrDefaultAsync(b => b.CommentId.Equals(commentId)).ConfigureAwait(false);
             return comment;
         }
 
+        /// <summary>
+        /// Remove comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Remove(CommentDb comment)
         {
             _videoDbContext.Comments.Remove(comment);
@@ -64,6 +100,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Remove comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public async Task RemoveAsync(CommentDb comment)
         {
             if (comment == null)
@@ -74,6 +115,11 @@ namespace BulbaCourses.Video.Data.Repositories
             await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Remove comment by id in repository.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
         public async Task RemoveAsyncById(string commentId)
         {
             var comment = _videoDbContext.Comments.SingleOrDefault(b => b.CommentId.Equals(commentId));
@@ -85,6 +131,11 @@ namespace BulbaCourses.Video.Data.Repositories
             await _videoDbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Update comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public void Update(CommentDb comment)
         {
             if (comment == null)
@@ -96,6 +147,11 @@ namespace BulbaCourses.Video.Data.Repositories
 
         }
 
+        /// <summary>
+        /// Update comment in repository.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public async Task<CommentDb> UpdateAsync(CommentDb comment)
         {
             if (comment == null)

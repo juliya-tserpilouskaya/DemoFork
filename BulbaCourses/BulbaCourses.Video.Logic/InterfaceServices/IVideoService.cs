@@ -23,6 +23,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         Task<Result<VideoMaterialInfo>> AddAsync(VideoMaterialInfo video, string courseId);
         Task<Result> DeleteByIdAsync(string videoId);
 
-        Task<Result> AddComment(VideoMaterialInfo video, string comment);
+        Task<Result> AddComment(string videoId, string userId, string comment);
     }
 }

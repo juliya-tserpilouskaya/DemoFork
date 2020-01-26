@@ -21,7 +21,7 @@ export class VideoplayerComponent implements OnInit {
     },
     {
         title: 'Big Buck Bunny',
-        src: 'http://static.videogular.com/assets/videos/big_buck_bunny_720p_h264.mov',
+        src: 'http://localhost:50401/Temp1/Landscape-757.mp4',
         type: 'video/mp4'
     },
     {

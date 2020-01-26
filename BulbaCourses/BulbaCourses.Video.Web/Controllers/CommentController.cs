@@ -13,18 +13,31 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Comments service.
+    /// </summary>
     [RoutePrefix("api/comments")]
     public class CommentController : ApiController
     {
         private readonly IMapper _mapper;
         private readonly ICommentService _commentService;
 
+        /// <summary>
+        /// Creates Comments controller.
+        /// </summary>
+        /// <param name="commentService"></param>
+        /// <param name="mapper"></param>
         public CommentController(IMapper mapper, ICommentService commentService)
         {
             _mapper = mapper;
             _commentService = commentService;
         }
 
+        /// <summary>
+        /// Shows a comment details by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
@@ -48,6 +61,10 @@ namespace BulbaCourses.Video.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Gets all comments from the database.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentView>))]
         public async Task<IHttpActionResult> GetAll()
@@ -57,6 +74,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Add new comment to the database.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentView))]
@@ -73,6 +95,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update comment in the database.
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         [HttpPut, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentView))]
@@ -94,6 +121,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete comment by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentView))]

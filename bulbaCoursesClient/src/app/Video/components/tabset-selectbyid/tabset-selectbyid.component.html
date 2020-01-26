@@ -1,0 +1,36 @@
+<ngb-tabset #t="ngbTabset">
+    <ngb-tab id="tab-selectbyid1" >
+      <ng-template ngbTabTitle> Add cours.</ng-template>
+      <ng-template ngbTabContent>
+        <app-add-course></app-add-course>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid2">
+      <ng-template ngbTabTitle> Courses.</ng-template>
+      <ng-template ngbTabContent>List of courses.
+        <app-course></app-course>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid5">
+      <ng-template ngbTabTitle> Add video profile.</ng-template>
+      <ng-template ngbTabContent>Profile.
+        <app-add-video-prof></app-add-video-prof>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid3">
+      <ng-template ngbTabTitle> Add video.</ng-template>
+      <ng-template ngbTabContent>Add video.
+        <upload-video></upload-video>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid4">
+      <ng-template ngbTabTitle> Player.</ng-template>
+      <ng-template ngbTabContent>Player.
+        <app-videoplayer></app-videoplayer>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  
+  <p>
+    <button class="btn btn-outline-primary" (click)="t.select('tab-selectbyid2')">Show courses list.</button>
+  </p>
