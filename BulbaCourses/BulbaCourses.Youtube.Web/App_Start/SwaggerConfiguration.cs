@@ -84,8 +84,8 @@ namespace BulbaCourses.Youtube.Web.App_Start
                         .TokenUrl("http://localhost:44382/connect/token")
                         .Scopes(scopes =>
                         {
-                            scopes.Add("api", "API access scope");
-                            //scopes.Add("profile", "Write access to protected resources");
+                            scopes.Add("openid", "Read access to protected resources");
+                            scopes.Add("profile", "Write access to protected resources");
                         });
                     swagger.OperationFilter<AssignOAuth2SecurityRequirements>();
 
@@ -93,7 +93,12 @@ namespace BulbaCourses.Youtube.Web.App_Start
                 .EnableSwaggerUi(swagger =>
                 {
                     swagger.EnableDiscoveryUrlSelector();
-                    swagger.EnableOAuth2Support("external_app", "test_realm", "Swagger UI");
+                    swagger.EnableOAuth2Support(
+                        clientId: "external_app",
+                        clientSecret: null,
+                        realm: "test-realm",
+                        appName: "Swagger UI"
+                    );
 
                 });
 

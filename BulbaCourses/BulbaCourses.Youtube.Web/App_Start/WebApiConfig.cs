@@ -8,6 +8,8 @@ using BulbaCourses.Youtube.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.App_Start;
 using EasyNetQ;
+using Microsoft.Owin.Security.OAuth;
+using System.Web.Http.ExceptionHandling;
 
 namespace BulbaCourses.Youtube.Web
 {
@@ -29,7 +31,6 @@ namespace BulbaCourses.Youtube.Web
             //RabbitMQ configuration
             var bus = kernel.Get<IBus>();
             bus.Receive<SearchRequest>("YoutubeQ", m => OnMessage(m));
-            
 
             // Web API routes
             config.MapHttpAttributeRoutes();
