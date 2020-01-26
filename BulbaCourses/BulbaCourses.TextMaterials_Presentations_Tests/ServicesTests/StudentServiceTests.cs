@@ -57,9 +57,9 @@ namespace TextMaterials_Presentations_Tests.ServicesTest
 
             _listStudentAdd_DTO = new List<UserAdd_DTO>()
             {
-                new UserAdd_DTO(){ PhoneNumber = "4", Created = DateTime.Now},
-                new UserAdd_DTO(){ PhoneNumber = "5", Created = DateTime.Now},
-                new UserAdd_DTO(){ PhoneNumber = "6", Created = DateTime.Now}
+                new UserAdd_DTO(){ PhoneNumber = "4"},
+                new UserAdd_DTO(){ PhoneNumber = "5"},
+                new UserAdd_DTO(){ PhoneNumber = "6"}
             };
         }
 

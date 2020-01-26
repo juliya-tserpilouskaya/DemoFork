@@ -25,7 +25,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
             RuleFor(x => x.Discount).GreaterThan(0);
             RuleFor(x => x.Title).NotEmpty().MinimumLength(5).WithMessage("Title must be not empty");
             RuleFor(x => x.URL).NotEmpty().NotNull().MinimumLength(5).WithMessage("URL must be not empty or null");
-   
+            RuleFor(x => x.Discount).LessThan(100).GreaterThanOrEqualTo(0).WithMessage("Dicount must be greater or equal than 0");
         }
     }
 }

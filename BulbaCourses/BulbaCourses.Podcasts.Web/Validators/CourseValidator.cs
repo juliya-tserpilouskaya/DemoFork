@@ -22,24 +22,25 @@ namespace BulbaCourses.Podcasts.Web.Validators
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
 
-                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsAsync(title)))).WithMessage("Name already taken.");
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
+                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsNameAsync(title)))).WithMessage("Name already taken.");
                 RuleFor(c => c.Name).NotEmpty().MinimumLength(2).MaximumLength(32).WithMessage("Course name is required.");
                 RuleFor(c => c.Price).GreaterThan(0).WithMessage("Course price must be greater than 0.");
 
-                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsAsync(title)))).WithMessage("Course already exists.");
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title)))).WithMessage("Course already exists.");
             });
             RuleSet("UpdateCourse", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
                 RuleFor(c => c.Price).GreaterThan(0).WithMessage("Course price must be greater than 0.");
 
-                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsAsync(title)))).WithMessage("Course not exists.");
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title)))).WithMessage("Course not exists.");
             });
             RuleSet("DeleteCourse", () =>
             {
                 RuleFor(x => x.Id).NotEmpty();
 
-            RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsAsync(title)))).WithMessage("Course not exists.");
+            RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title)))).WithMessage("Course not exists.");
             });
         }
     }

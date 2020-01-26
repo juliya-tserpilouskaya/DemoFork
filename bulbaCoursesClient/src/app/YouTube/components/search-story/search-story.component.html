@@ -1,19 +1,19 @@
-<p>search-story works!</p>
 <input type="checkbox" id="story-checkbox">
-<label class="btn btn-primary" for="story-checkbox">⌚ История&#x25BC;</label>
+<label class="btn btn-primary" for="story-checkbox" (click)="GetStoryForUser()">⌚ Search story &#x25BC;</label>
 
 <!-- <span *ngIf="isAuthenticated">Welcom to story</!-->
   <ul>
-    <li *ngFor="let story of searchStory">
+    <li *ngFor="let story of searchStory | paginate: { itemsPerPage: 10, currentPage: pgNumber, totalItems: totalItems, id: 'second'}">
       <div class="story-info">
         <div class="info">
           <h4>{{story.SearchRequest.Title}}</h4>
           {{story.SearchDate | searchDate}}
         </div>
         <div class="delete-button">
-          <button (click)="DeleteByStoryId(story.Id)">X</button>
+          <button (click)="DeleteByStoryId(story)">X</button>
         </div>
       </div>
       <hr>
     </li>
+    <pagination-controls id="second" [autoHide]="true" (pageChange)="pgNumber = $event"></pagination-controls>
   </ul>

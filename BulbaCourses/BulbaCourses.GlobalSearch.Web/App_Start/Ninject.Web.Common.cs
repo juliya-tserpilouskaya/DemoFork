@@ -15,6 +15,7 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
     using BulbaCourses.GlobalSearch.Logic;
     using System.Web.Http;
     using Ninject.Web.WebApi;
+    using EasyNetQ;
 
     public static class NinjectWebCommon 
     {
@@ -67,6 +68,7 @@ namespace BulbaCourses.GlobalSearch.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load<LogicModule>();
+            kernel.RegisterEasyNetQ("host=localhost");
         }
     }
 }

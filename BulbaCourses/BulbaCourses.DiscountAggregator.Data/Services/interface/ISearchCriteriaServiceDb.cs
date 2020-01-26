@@ -11,6 +11,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         Task<Result<SearchCriteriaDb>> DeleteAsync(SearchCriteriaDb criteria);
         Task<IEnumerable<SearchCriteriaDb>> GetAllAsync();
         Task<SearchCriteriaDb> GetByIdAsync(string id);
+        Task<SearchCriteriaDb> GetByUserIdAsync(string userId);
         Task<Result<SearchCriteriaDb>> UpdateAsync(SearchCriteriaDb criteria);
     }
 }

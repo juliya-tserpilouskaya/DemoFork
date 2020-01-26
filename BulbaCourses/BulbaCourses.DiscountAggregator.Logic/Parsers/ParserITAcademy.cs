@@ -40,7 +40,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                     URL = CommonValues.hostItAcademy + node.Attributes["href"].Value,
                     Title = node.ChildNodes["div"].ChildNodes["h3"].InnerHtml
                 };
-                if (listCourses.Where(x => x.URL.Equals(currentCourse.URL)).FirstOrDefault() == null)
+                if (!listCourses.Any(x => x.URL.Equals(currentCourse.URL)))
                 {
                     SetFieldsCourse(currentCourse);
                     listCourses.Add(currentCourse);
@@ -57,6 +57,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             var htmlNodesDiscount = doc.DocumentNode.SelectNodes("//span[@class='discount']");
             var htmlNodesNewPrice = doc.DocumentNode.SelectNodes("//span[@class='price price_new']");
             var htmlNodesDescription = doc.DocumentNode.SelectNodes("//div[@class='main-section-top__txt']");
+            var htmlNodesDateStart = doc.DocumentNode.SelectNodes("//div[@class='course-item__date']");
 
             if (htmlNodesDiscount is null)
             {
@@ -71,6 +72,12 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
                     .Match(htmlNodesDiscount.FirstOrDefault().InnerHtml, @"[\d]+").ToString());
             }
             course.Description = htmlNodesDescription.FirstOrDefault().ChildNodes[4].InnerText;
+            var dateStartCourse = htmlNodesDateStart.FirstOrDefault().InnerText.Trim();
+            Match match = Regex.Match(dateStartCourse, @"\d\d[.]\d\d[.]\d\d\d\d");
+            if (match.Success)
+            {
+                course.DateStartCourse = Convert.ToDateTime(match.Captures[0].Value);
+            }
         }
 
         public List<CourseCategory> GetCategories()

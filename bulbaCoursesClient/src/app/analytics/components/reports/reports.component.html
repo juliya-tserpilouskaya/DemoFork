@@ -1,2 +1,21 @@
 <p>reports works!</p>
-<p>{{user.sub}}</p>
+<p *ngIf="user">UserID is {{user.sub}}</p>
+
+<h3 class="first">Reports</h3>
+<div class="row mb-3">
+  <div class="col-md-10 themed-grid-col">
+    <p-dropdown #ddReports [options]="reportShorts"
+    [(ngModel)]="selectedReport"
+    placeholder="Select a Report"
+    showClear="true"
+    [filter]="true" filterBy="value.Name" optionLabel="Name" (onChange)="changeReport()"></p-dropdown>
+  </div>
+  <div class="col-6 col-md-2 themed-grid-col">
+    <p-splitButton *ngIf="selectedReport" label="Update" icon="pi pi-file" (onClick)="getReports()" [model]="items" styleClass="ui-button-secondary"></p-splitButton>
+  </div>
+</div>
+
+<div class="content-section implementation">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+  <p-toast></p-toast>
+</div>

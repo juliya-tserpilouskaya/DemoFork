@@ -36,6 +36,13 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
+        public async Task<SearchCriteria> GetByUserIdAsync(string userId)
+        {
+            var criteria = await _criteriaServiceDb.GetByUserIdAsync(userId);
+            var result = _mapper.Map<SearchCriteriaDb, SearchCriteria>(criteria);
+            return result;
+        }
+
         public async Task<Result<SearchCriteria>> AddAsync(SearchCriteria criteria)
         {
             criteria.Id = Guid.NewGuid().ToString();
