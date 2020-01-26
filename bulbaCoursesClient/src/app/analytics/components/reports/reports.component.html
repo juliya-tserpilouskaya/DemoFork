@@ -56,3 +56,15 @@
         <button type="button" pButton icon="pi pi-times" (click)="hideDetailsReport()" label="Cancel" class="ui-button-secondary"></button>
     </p-footer>
 </p-dialog>
+
+<span *ngIf="selectedReport">
+  <span *ngFor="let dashboard of dashboards">
+    <p-panel>
+      <p-header (click)="selectDashboard(dashboard)">
+        {{dashboard.Name}}
+      </p-header>
+      ReportId: {{dashboard.ReportId}}
+    </p-panel>
+    &nbsp;
+  </span>
+<span>

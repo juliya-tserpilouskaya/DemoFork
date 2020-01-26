@@ -6,7 +6,9 @@ import { Dropdown } from 'primeng/dropdown/public_api';
 import { Button } from 'primeng/button/button';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ReportsService } from '../../services/reports.service';
+import { DashboardsService } from '../../services/dashboards.service';
 import { ReportShort, ReportNew, Report } from '../models/reports.model';
+import { Dashboard } from '../models/dashboards.model';
 import { ConfirmationDialogService } from '../../ensure/dialog/confirmdialog/confirmdialog.service';
 import { Subscription } from 'rxjs';
 
@@ -31,9 +33,12 @@ export class ReportsComponent implements OnInit, OnDestroy {
   report: Report = {Id: '', Name: '', Description: ''};
   isDetailsReport: boolean;
 
+  dashboards: Dashboard[] = [];
+
   constructor(
     private authService: AuthService,
     private reportsService: ReportsService,
+    private dashboardsService: DashboardsService,
     private loader: NgxUiLoaderService,
     private confirmationDialogService: ConfirmationDialogService,
     private messageService: MessageService
@@ -46,6 +51,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.subscription$.add( this.authService.user$.subscribe((user) => this.user = user as CustomUser) );
 
     this.getReports();
+    this.getDashboards();
 
     this.items = [
       {label: 'Add', icon: 'pi pi-plus', command: () => {
@@ -60,7 +66,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
      }}
     ];
   }
-
+// REPORTS
   getReports( complited: CallableFunction = null) {
       console.log('Get Reports');
       if (complited == null) { this.loader.start(); }
@@ -90,7 +96,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
   updateReport() {
-    this.hideDetailsReport()
+    this.hideDetailsReport();
 
     console.log('Update Report');
 
@@ -186,11 +192,34 @@ export class ReportsComponent implements OnInit, OnDestroy {
   changeReport() {
     if (this.selectedReport == null) { return; }
     console.log('Select Report.');
+    this.getDashboards();
   }
 
   clearFilter(dropdown: Dropdown, button: Button) {
     dropdown.resetFilter();
     button.disabled = true;
+  }
+
+// DASHBOARDS
+  getDashboards() {
+    console.log('Get Dashboards');
+
+    if (this.selectedReport == null) { return; }
+
+    this.dashboardsService.getDashboards(this.selectedReport.Id).subscribe(
+      data => {
+        this.dashboards = data;
+        console.log('Data loaded');
+      },
+      () => {
+        this.dashboards = [];
+        console.log('Error getDashboards. Not found.');
+      }
+    );
+  }
+
+  selectDashboard(dashboard: Dashboard ) {
+      console.log('DashboardId ' + dashboard.Id + ' ReportId ' + dashboard.ReportId);
   }
 
   ngOnDestroy() {
