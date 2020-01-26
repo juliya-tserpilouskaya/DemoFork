@@ -46,6 +46,7 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     GlobalSearchModule,
     FormsModule,
     ReactiveFormsModule,
+    PracticalMaterialsTestModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,

@@ -255,11 +255,43 @@ export class ReportsComponent implements OnInit, OnDestroy {
       labels: this.dashboards[0].Dates,
       datasets: [
           {
-              label: 'Exchange Rates',
+              label: 'Forcast Exchange Rates',
               data: this.dashboards[0].Values,
               fill: false,
               borderColor: '#4bc0c0'
-          }
+          },
+          {
+            label: 'Fact Exchange Rates',
+            data: [2.1085,
+              2.1085,
+              2.1085,
+              2.1098,
+              2.1098,
+              2.1098,
+              2.1098,
+              2.1098,
+              2.1138,
+              2.1159,
+              2.1193,
+              2.1193,
+              2.1193,
+              2.1128,
+              2.1203,
+              2.1248,
+              2.1247,
+              2.1228,
+              2.1228,
+              2.1228,
+              2.1205,
+              2.1195,
+              2.1156,
+              2.1137,
+              2.1130,
+              2.1130,
+              2.1130],
+            fill: false,
+            borderColor: '#565656'
+        }
       ]
     };
   }
