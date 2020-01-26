@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.Analytics.BLL.Ensure.Validators;
 using BulbaCourses.Analytics.Web.Ensure;
+using BulbaCourses.Analytics.Web.Properties;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Microsoft.Web.Http.Routing;
@@ -17,6 +18,17 @@ namespace BulbaCourses.Analytics.Web.App_Start
     /// </summary>
     public static class ConfigurationHelper
     {
+        private const string API_VERSION = "apiVersion";
+        private const string GROUP_NAME_FORMAT = "'v'VVV";
+        private const string ROUT_TEMPLATE = "swagger/{apiVersion}";
+        private const string O_AUTH2 = "oauth2";
+        private const string O_AUTH2_FLOW = "implicit";
+        private const string OPEN_ID = "openid";
+        private const string PROFILE = "profile";
+        private const string CLIENT_ID = "external_app";
+        private const string REALM = "test-realm";
+        private const string APP_NAME = "Swagger UI";
+
         /// <summary>
         /// Creates Validators Configuration.
         /// </summary>
@@ -48,7 +60,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
             {
                 ConstraintMap =
                         {
-                            ["apiVersion"] = typeof( ApiVersionRouteConstraint )
+                            [API_VERSION] = typeof( ApiVersionRouteConstraint )
                         }
             };
             // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
@@ -71,7 +83,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
             var apiExplorer = configuration.AddVersionedApiExplorer(
                 options =>
                 {
-                    options.GroupNameFormat = "'v'VVV";
+                    options.GroupNameFormat = GROUP_NAME_FORMAT;
 
                     // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                     // can also be used to control the format of the API version in route templates
@@ -79,7 +91,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
                 });
 
             configuration.EnableSwagger(
-                "swagger/{apiVersion}",
+                    ROUT_TEMPLATE,
                 swagger =>
                 {
                     // build a swagger document and endpoint for each discovered API version
@@ -89,18 +101,19 @@ namespace BulbaCourses.Analytics.Web.App_Start
                         {
                             foreach (var group in apiExplorer.ApiDescriptions)
                             {
-                                var description = "Analytics.";
+                                var description = Resources.NameDomain;
+                                description += Resources.DescriptionDomain;
 
                                 if (group.IsDeprecated)
                                 {
-                                    description += " This API version has been deprecated.";
+                                    description += Resources.DeprecatedAPI;
                                 }
 
-                                info.Version(group.Name, $"API {group.ApiVersion}")
-                                    .Contact(c => c.Name("Dmitriy Bulova").Email("dm.bu@lova.com"))
+                                info.Version(group.Name, $"{Resources.API} {group.ApiVersion}")
+                                    .Contact(c => c.Name(Resources.NameDeveloper).Email(Resources.NameDeveloper))
                                     .Description(description)
-                                    .License(l => l.Name("MIT").Url("https://opensource.org/licenses/MIT"))
-                                    .TermsOfService("Shareware");
+                                    .License(l => l.Name(Resources.MIT).Url(Resources.UrlMIT))
+                                    .TermsOfService(Resources.TermsOfService);
                             }
                         });
 
@@ -110,15 +123,16 @@ namespace BulbaCourses.Analytics.Web.App_Start
 
                     // integrate xml comments
                     swagger.IncludeXmlComments(Paths.XmlCommentsFilePath);
-                    swagger.OAuth2("oauth2")
-                        .Description("OAuth2 Implicit Grant")
-                        .Flow("implicit")
-                        .AuthorizationUrl("http://localhost:44382/connect/authorize")
-                        .TokenUrl("http://localhost:44382/connect/token")
+                    
+                    swagger.OAuth2(O_AUTH2)
+                        .Description(Resources.OAuth2Description)
+                        .Flow(O_AUTH2_FLOW)
+                        .AuthorizationUrl(Resources.AuthorizationUrl)
+                        .TokenUrl(Resources.TokenUrl)
                         .Scopes(scopes =>
                         {
-                            scopes.Add("openid", "Read access to protected resources");
-                            scopes.Add("profile", "Write access to protected resources");
+                            scopes.Add(OPEN_ID, Resources.OpenIdDescription);
+                            scopes.Add(PROFILE, Resources.ProfileDescription);
                         });
 
                 })
@@ -126,11 +140,10 @@ namespace BulbaCourses.Analytics.Web.App_Start
                 {
                     swagger.EnableDiscoveryUrlSelector();
                     swagger.EnableOAuth2Support(
-                        clientId: "external_app",
+                        clientId: CLIENT_ID,
                         clientSecret: null,
-                        realm: "test-realm",
-                        appName: "Swagger UI"
-                    //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
+                        realm: REALM,
+                        appName: APP_NAME
                     );
                 });
 

@@ -33,6 +33,12 @@ namespace BulbaCourses.Youtube.Logic.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Algorithm search video 
+        /// </summary>
+        /// <param name="searchRequest"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<ResultVideo>> SearchRunAsync(SearchRequest searchRequest, string userId)
         {
             var result = _validator.Validate(searchRequest, ruleSet: "AddRequest, Search");
@@ -97,6 +103,11 @@ namespace BulbaCourses.Youtube.Logic.Services
             return resultVideos.AsReadOnly();
         }
 
+        /// <summary>
+        /// Search video in youtube
+        /// </summary>
+        /// <param name="searchRequest"></param>
+        /// <returns></returns>
         private async Task<List<ResultVideo>> SearchInYoutubeAsync(SearchRequest searchRequest)
         {
             var channelService = _serviceFactory.CreateChannelService();
@@ -163,6 +174,12 @@ namespace BulbaCourses.Youtube.Logic.Services
             }
             return resultVideos;
         }
+
+        /// <summary>
+        /// Generate CacheId
+        /// </summary>
+        /// <param name="searchRequestDb"></param>
+        /// <returns></returns>
         private string GenerateCacheId(SearchRequest searchRequestDb)
         {
             var cacheId = searchRequestDb.PublishedAfter.ToString()

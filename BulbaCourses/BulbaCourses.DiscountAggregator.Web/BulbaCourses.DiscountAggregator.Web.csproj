@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\BulbaCourses.DiscountAggregator.Web.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -361,6 +362,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filters\MarkSecuredMethodsOperationFilter.cs" />
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\NinjectValidationFactory.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
@@ -371,7 +373,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseITAcademyController.cs" />
     <Compile Include="Controllers\CourseUdemyController.cs" />
-    <Compile Include="Controllers\DomianController.cs" />
+    <Compile Include="Controllers\DomainController.cs" />
     <Compile Include="Controllers\SearchCriteriaController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Filters\BadRequestFilterAttribute.cs" />

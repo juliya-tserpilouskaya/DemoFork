@@ -12,11 +12,13 @@ namespace BulbaCourses.Video.Web.Infrastructure
     {
         public MapperWebProfile()
         {
-            CreateMap<UserProfileView, UserInfo>().ReverseMap();
+            CreateMap<UserProfileView, UserInfo>(
+                ).ReverseMap();
             CreateMap<CourseView, CourseInfo>().ReverseMap();
             CreateMap<CommentView, CommentInfo>().ReverseMap();
             CreateMap<VideoView, VideoMaterialInfo>().ReverseMap();
             CreateMap<AuthorView, AuthorInfo>().ReverseMap();
+            CreateMap<CourseViewInput, CourseInfo>().ReverseMap();
         }
     }
 }

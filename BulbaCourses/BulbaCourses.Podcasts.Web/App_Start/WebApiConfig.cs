@@ -1,8 +1,10 @@
 ﻿using BulbaCourses.Podcasts.Web.App_Start;
 using BulbaCourses.Podcasts.Web.Models;
+using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using Ninject;
+using System;
 using System.Web.Http;
 
 namespace BulbaCourses.Podcasts.Web
@@ -21,7 +23,7 @@ namespace BulbaCourses.Podcasts.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<CourseWeb>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-            
+
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 
@@ -29,6 +31,7 @@ namespace BulbaCourses.Podcasts.Web
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+
             );
         }
     }

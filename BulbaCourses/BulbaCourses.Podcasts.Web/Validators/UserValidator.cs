@@ -20,7 +20,8 @@ namespace BulbaCourses.Podcasts.Web.Validators
             RuleSet("AddUser", () =>
             {
                 RuleFor(x => x.Id).Must(x => string.IsNullOrEmpty(x));
-                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsAsync(title))));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
+                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsNameAsync(title))));
                 RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
                 RuleFor(c => c.Name).MinimumLength(5).WithMessage("Login must contain minimum 5 characters.");
                 RuleFor(c => c.Name).MaximumLength(20).WithMessage("Login must contain maximum 20 characters.");
@@ -28,13 +29,13 @@ namespace BulbaCourses.Podcasts.Web.Validators
             RuleSet("UpdateUser", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
-                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsAsync(title))));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
                 RuleFor(c => c.Name).NotEmpty().WithMessage("User login is required.");
             });
             RuleSet("DeleteUser", () =>
             {
                 RuleFor(x => x.Id).NotEmpty().WithMessage("Id must be empty or null");
-                RuleFor(c => c.Name).MustAsync((async (title, token) => !(await service.ExistsAsync(title))));
+                RuleFor(c => c.Id).MustAsync((async (title, token) => !(await service.ExistsIdAsync(title))));
             });
         }
     }

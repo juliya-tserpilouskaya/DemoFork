@@ -43,16 +43,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001191827393_First.resx">
-      <DependentUpon>202001191827393_First.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="DbConfig.cs" />
     <Compile Include="Managers\ContentManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
-    <Compile Include="Migrations\202001191827393_First.cs" />
-    <Compile Include="Migrations\202001191827393_First.Designer.cs">
-      <DependentUpon>202001191827393_First.cs</DependentUpon>
+    <Compile Include="Migrations\202001261623506_newone.cs" />
+    <Compile Include="Migrations\202001261623506_newone.Designer.cs">
+      <DependentUpon>202001261623506_newone.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ContentDb.cs" />
@@ -79,6 +75,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001261623506_newone.resx">
+      <DependentUpon>202001261623506_newone.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

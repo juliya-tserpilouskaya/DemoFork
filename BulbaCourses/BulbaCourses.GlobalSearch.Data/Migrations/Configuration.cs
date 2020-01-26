@@ -18,22 +18,22 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
         protected override void Seed(BulbaCourses.GlobalSearch.Data.GlobalSearchContext context)
         {
             //  This method will be called after migrating to the latest version.
-            var user1 = new UserDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Authorization = true,
-            };
+            //var user1 = new UserDB()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Authorization = true,
+            //};
 
-            var user2 = new UserDB()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Authorization = false,
-            };
+            //var user2 = new UserDB()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    Authorization = false,
+            //};
 
-            #region Users
-            context.Users.Add(user1);
-            context.Users.Add(user2);
-            #endregion
+            //#region Users
+            //context.Users.Add(user1);
+            //context.Users.Add(user2);
+            //#endregion
 
             #region SearchQueriesSeed
             context.SearchQueries.AddOrUpdate(x => x.Id,
@@ -42,35 +42,35 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                     Id = Guid.NewGuid().ToString(),
                     Query = "basics of c#",
                     Created = DateTime.Now,
-                    UserId = user1.Id
+                    UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5" //user test@test.com
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "c# advanced",
                     Created = DateTime.Now,
-                    UserId = user1.Id
+                    UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5" //user test@test.com
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "php 9 podcast",
                     Created = DateTime.Now,
-                    UserId = user2.Id
+                    UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5" //user test@test.com
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "develop c++",
                     Created = DateTime.Now,
-                    UserId = user2.Id
+                    UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5" //user test@test.com
                 },
                 new SearchQueryDB
                 {
                     Id = Guid.NewGuid().ToString(),
                     Query = "terminator 3",
                     Created = DateTime.Now,
-                    UserId = user2.Id,
+                    UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5" //user test@test.com
                 }
             );
             #endregion
@@ -155,16 +155,27 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             var bookmark1 = new BookmarkDB()
             {
                 Id = Guid.NewGuid().ToString(),
-                UserId = user1.Id.ToString(),
-                Title = "Best course ever5",
+                UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
+                Title = "C# in London University",
+                Category = "Video",
                 URL = "https://sdf.com"
             };
 
             var bookmark2 = new BookmarkDB()
             {
                 Id = Guid.NewGuid().ToString(),
-                UserId = user1.Id.ToString(),
-                Title = "Best course ever 7",
+                UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
+                Title = "C# in Boston University",
+                Category = "Video",
+                URL = "https://sdf.com"
+            };
+
+            var bookmark3 = new BookmarkDB()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
+                Title = "C# in Moscow University",
+                Category = "Presentation",
                 URL = "https://sdf.com"
             };
 
@@ -203,9 +214,10 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
             #region Bookmarks
             context.Bookmarks.Add(bookmark1);
             context.Bookmarks.Add(bookmark2);
+            context.Bookmarks.Add(bookmark3);
             #endregion
 
-            
+
 
             //#region SearchQueries
             //context.SearchQueries.Add(searchQuery1);

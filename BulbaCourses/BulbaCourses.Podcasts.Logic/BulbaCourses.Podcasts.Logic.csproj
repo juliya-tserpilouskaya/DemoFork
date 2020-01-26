@@ -43,6 +43,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DataModule.cs" />
     <Compile Include="Infrastructure\MapperLogicProfile.cs" />
     <Compile Include="Interfaces\IContentService.cs" />
     <Compile Include="Interfaces\IBaseService.cs" />
