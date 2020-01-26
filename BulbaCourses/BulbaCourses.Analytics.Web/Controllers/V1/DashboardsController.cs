@@ -5,6 +5,7 @@ using BulbaCourses.Analytics.BLL.Models.V1.SwaggerExamples;
 using BulbaCourses.Analytics.Infrastructure.Models;
 using BulbaCourses.Analytics.Models.V1;
 using FluentValidation.WebApi;
+using Forecast;
 using Microsoft.Web.Http;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
@@ -108,17 +109,40 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
         [HttpGet, Route("reportId/{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Dashboard doesn`t exists.")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [SwaggerResponse(HttpStatusCode.OK, "Dashboard founds.", typeof(DashboardShort))]
-        [SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardShortExample))]
+        [SwaggerResponse(HttpStatusCode.OK, "Dashboard founds.", typeof(DashboardData))]
+        //[SwaggerResponseExample(HttpStatusCode.OK, typeof(DashboardDataExample))]
         public async Task<IHttpActionResult> GetByReportId(string id)
         {
             try
             {
                 var dashboardDtos = await _Dashboardservice.GetByReportIdAsync(id);
                 if (!dashboardDtos.Any()) { return NotFound(); }
-                var Dashboardshorts = _mapper.Map<IEnumerable<DashboardShort>>(dashboardDtos);
+                var Dashboardshorts = _mapper.Map<IEnumerable<DashboardData>>(dashboardDtos);
 
-                return Ok(Dashboardshorts);
+                var dataDtos = await _Dashboardservice.GetAnalyticDataAsync();
+                foreach (var item in dataDtos)
+                {
+                    item.Value = item.KursDollarValue;
+                }
+                var dataForecastData = _mapper.Map<IEnumerable<Data>>(dataDtos);
+
+                IForecastModel forecastModel = new ForecastModel(dataForecastData, 12, 12, Scheme.Period.Day);
+
+                var dashboard =  Dashboardshorts.FirstOrDefault();
+                
+                var data = forecastModel.GetData().OrderBy( _ => _.Date).ToArray();
+                //var dataCount = dat.Length - 15;
+                //var data = dat.Skip(dataCount);
+                var dataForecast   = data.GetOnlyForecast(3).ToArray();
+                //var dataCount = dat.Length - 15;
+                //var data = dat.Skip(dataCount);
+
+                dashboard.Dates = dataForecast.Select(_ => _.Date.ToString("d"));
+                dashboard.Values = dataForecast.Select(_ => _.Value);
+
+                DashboardData[] dashboardDatas = new[] {dashboard};
+
+                return Ok(dashboardDatas);
             }
             catch (InvalidOperationException ioe)
             {
