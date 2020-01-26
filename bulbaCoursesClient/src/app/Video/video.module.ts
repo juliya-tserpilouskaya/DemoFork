@@ -16,8 +16,13 @@ import { AddCourseComponent } from './components/add-course/add-course.component
 //import { NgForm} from '@angular/forms';
 import { FormsModule }   from '@angular/forms';
 import { AddVideoComponent } from './components/add-video/add-video.component';
-import { TabsetComponent } from 'ngx-bootstrap';
+import { NgbdTabsetSelectbyid } from './components/tabset-selectbyid/tabset-selectbyid.component';
+//import { TabsetComponent } from 'ngx-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 
+//import { NgbdTabsetSelectbyid } from './tabset-selectbyid';
 @NgModule({
   declarations: [
     CourseComponent,
@@ -28,6 +33,9 @@ import { TabsetComponent } from 'ngx-bootstrap';
     MainvideoComponent,
     AddCourseComponent,
     AddVideoComponent,
+    NgbdTabsetSelectbyid,
+    UploadVideoComponent,
+    //TabsetSelectbyidComponent,
     
     ],
   imports: [
@@ -35,16 +43,16 @@ import { TabsetComponent } from 'ngx-bootstrap';
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserModule,
-    
+    NgbModule,
     VgCoreModule,
     VgControlsModule,
-    
+    HttpClientModule,
     FormsModule
-  ],bootstrap: [TabsetComponent],
+  ],//bootstrap: [TabsetComponent],
  
   providers: [
     //VideoService
   ],
- // exports: [SearchCoursesComponent]
+ exports: [NgbdTabsetSelectbyid]
 })
 export class VideoModule { }

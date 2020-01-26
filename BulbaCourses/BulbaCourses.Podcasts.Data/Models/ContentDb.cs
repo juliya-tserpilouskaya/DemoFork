@@ -6,6 +6,7 @@ using System.Web;
 
 namespace BulbaCourses.Podcasts.Data.Models
 {
+    [Serializable]
     public class ContentDb
     {
         public string Id { get; set; }

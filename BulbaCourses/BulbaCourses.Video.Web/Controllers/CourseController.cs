@@ -106,7 +106,13 @@ namespace BulbaCourses.Video.Web.Controllers
         public async Task<IHttpActionResult> Create([FromBody]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
-          //  user.Claims[sub]
+            //  user.Claims[sub]
+            if (User.Identity.IsAuthenticated)
+            {
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+            }
+
             if (!ModelState.IsValid)//, CustomizeValidator (RuleSet = "AddCourse")
             {
             return BadRequest(ModelState);

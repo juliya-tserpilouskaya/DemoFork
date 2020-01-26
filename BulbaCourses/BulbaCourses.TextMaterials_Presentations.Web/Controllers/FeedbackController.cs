@@ -26,6 +26,10 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Get all feedbacks from the database 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Feedbacks doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedbacks found", typeof(IEnumerable<Feedback>))]
@@ -44,6 +48,11 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get feedback from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Feedback doesn't exists")]
@@ -68,34 +77,35 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new feedback to the database
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedback added", typeof(Feedback))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> CreateFeedbackAsync
-            ([FromBody, CustomizeValidator(RuleSet = "AddFeedback, default")]FeedbackAdd_DTO feedback)
+            ([FromBody, CustomizeValidator]FeedbackAdd_DTO feedback)
         {
             if (feedback is null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _feedbackBase.AddFeedbackAsync(feedback);
+            var result = await _feedbackBase.AddFeedbackAsync(feedback);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update the feedback in the database
+        /// </summary>
+        /// <param name="feedback"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedback updated", typeof(Feedback))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> UpdateFeedbackAsync
             ([FromBody, CustomizeValidator(RuleSet = "UpdateFeedback, default")]Feedback feedback)
         {
@@ -104,22 +114,19 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _feedbackBase.UpdateFeedbackAsync(feedback);
+            var result = await _feedbackBase.UpdateFeedbackAsync(feedback);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete the feedback from the database by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid parameter format")]
         [SwaggerResponse(HttpStatusCode.OK, "Feedback deleted", typeof(Boolean))]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> DeleteFeedbackAsync(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
@@ -127,16 +134,9 @@ namespace BulbaCourses.TextMaterials_Presentations.Web.Controllers
                 return BadRequest();
             }
 
-            try
-            {
-                var result = await _feedbackBase.DeleteFeedbackByIdAsync(id);
+            var result = await _feedbackBase.DeleteFeedbackByIdAsync(id);
 
-                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return InternalServerError(ex);
-            }
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
     }
 }

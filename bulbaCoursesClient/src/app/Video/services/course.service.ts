@@ -15,16 +15,17 @@ export class CourseService {
   user:CustomUser
   constructor(private client: HttpClient) { }
   setCourse( course :CourseShortInput) {
-    //this.authService.user$
-
     return this.client.post('https://localhost:44369/api/courses',course);
-    
   }
   getCourse() {
     return this.client.get<CourseShort[]>('https://localhost:44369/api/courses');
   }
-  
-
+  deleteCourse(courseId:string){
+    return this.client.delete('https://localhost:44369/api/courses/'+courseId);
+  }
+  infoCourse(courseId:string) {
+    return this.client.get('https://localhost:44369/api/courses/'+courseId);
+  }
 
 }
 

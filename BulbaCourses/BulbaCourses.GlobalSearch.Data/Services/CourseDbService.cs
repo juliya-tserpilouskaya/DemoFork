@@ -313,6 +313,11 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             try
             {
                 course.Id = Guid.NewGuid().ToString();
+                foreach (var item in course.Items)
+                {
+                    item.Id = Guid.NewGuid().ToString();
+                }
+
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<CourseDB>.Ok(course);

@@ -28,9 +28,14 @@ export class CourseComponent implements OnInit {
     // this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     // this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
-  addUser(asd:string){
+  
+  infoCourse(asd:string){
     this.service.courseId=asd;
+    this.service.infoCourse(asd).subscribe(data=>console.log(data));
     console.log(this.service.courseId);
+  }
+  deleteCourse(asd:string){
+    this.service.deleteCourse(asd).subscribe(data=>console.log(data));
   }
 
 }

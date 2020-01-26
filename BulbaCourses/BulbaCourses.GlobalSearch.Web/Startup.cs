@@ -24,6 +24,8 @@ using System.Web.Cors;
 using System.Reflection;
 using BulbaCourses.GlobalSearch.Web.Properties;
 using Microsoft.Owin.Security;
+using EasyNetQ;
+using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 
 [assembly: OwinStartup(typeof(BulbaCourses.GlobalSearch.Web.Startup))]
 
@@ -31,6 +33,8 @@ namespace BulbaCourses.GlobalSearch.Web
 {
     public class Startup
     {
+        private static IBus bus;
+
         public void Configuration(IAppBuilder app)
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
@@ -81,6 +85,14 @@ namespace BulbaCourses.GlobalSearch.Web
             var kernel = new StandardKernel(new LogicModule());
             kernel.Load<AutoMapperModule>();
 
+            var _searchService = kernel.Get<ISearchService>();
+            //bus = kernel.Get<IBus>();
+            bus = RabbitHutch.CreateBus("host=localhost");
+
+            bus.Receive<LearningCourseDTO>("IndexService", b => _searchService.IndexCourse(b));
+            //bus.Advanced.Consume(bus.Advanced.QueueDeclare("BookService"), OnMessage);
+
+
             FluentValidationModelValidatorProvider
                 .Configure(config, cfg => cfg.ValidatorFactory =
                 new NinjectValidationFactory(kernel));
@@ -89,8 +101,13 @@ namespace BulbaCourses.GlobalSearch.Web
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                 .To(result.ValidatorType));
 
-            kernel.RegisterEasyNetQ("host=127.0.0.1");
+            kernel.RegisterEasyNetQ("host=localhost");
             return kernel;
         }
+        //private static void OnMessage(byte[] arg1, MessageProperties arg2, MessageReceivedInfo arg3)
+        //{
+        //    var book = JsonConvert.DeserializeObject<Book>(Encoding.UTF8.GetString(arg1));
+        //    BookStorage.Add(book);
+        //}
     }
 }
