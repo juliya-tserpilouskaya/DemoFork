@@ -32,6 +32,7 @@ export class CourseComponent implements OnInit {
   infoCourse(asd:string){
     this.service.courseId=asd;
     this.service.infoCourse(asd).subscribe(data=>console.log(data));
+    this.service.courseId=asd;
     console.log(this.service.courseId);
   }
   deleteCourse(asd:string){

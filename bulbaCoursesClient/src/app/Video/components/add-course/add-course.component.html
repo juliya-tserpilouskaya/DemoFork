@@ -4,13 +4,12 @@
         <input class="form-control" name="name" [(ngModel)]='course.name' required />
     </div>
     <div class="form-group">
-        <label>Level     </label>
-        <!-- <select [(ngModel)]='course.level'>
-            <option value="">Beginner
+        <label>Level    :</label>
+        <select [(ngModel)]='course.level'>
             <option value='1'>Beginner
             <option value='2'>Intermediate
             <option value='3'>Advanced
-        </select> -->
+        </select>
      <input class="form-control" name="level" [(ngModel)]='course.level' ngModel  required  />
     </div>
     <div class="form-group">
@@ -25,6 +24,6 @@
     </div>
     <div class="form-group">
         <button 
-            class="btn btn-default" [disabled]="myForm.invalid" (click)="submit()">Add</button>
+            class="btn btn-outline-primary" [disabled]="myForm.invalid" (click)="submit()">Add</button>
     </div>
 </form>

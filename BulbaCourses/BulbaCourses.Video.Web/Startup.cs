@@ -82,7 +82,7 @@ namespace BulbaCourses.Video.Web
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });
-
+            
             SwaggerConfig.Register(config);
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }

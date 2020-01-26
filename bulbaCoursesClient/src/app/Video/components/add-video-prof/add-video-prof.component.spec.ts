@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddVideoComponent } from './add-video.component';
+import { AddVideoProfComponent } from './add-video-prof.component';
 
-describe('AddVideoComponent', () => {
-  let component: AddVideoComponent;
-  let fixture: ComponentFixture<AddVideoComponent>;
+describe('AddVideoProfComponent', () => {
+  let component: AddVideoProfComponent;
+  let fixture: ComponentFixture<AddVideoProfComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddVideoComponent ]
+      declarations: [ AddVideoProfComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddVideoComponent);
+    fixture = TestBed.createComponent(AddVideoProfComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

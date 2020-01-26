@@ -11,9 +11,20 @@ namespace BulbaCourses.Video.Web
 {
     public class SwaggerConfig
     {
+        private const string API_VERSION = "apiVersion";
+        private const string GROUP_NAME_FORMAT = "'v'VVV";
+        private const string ROUT_TEMPLATE = "swagger/{apiVersion}";
+        private const string O_AUTH2 = "oauth2";
+        private const string O_AUTH2_FLOW = "implicit";
+        private const string OPEN_ID = "openid";
+        private const string PROFILE = "profile";
+        private const string CLIENT_ID = "external_app";
+        private const string REALM = "test-realm";
+        private const string APP_NAME = "Swagger UI";
         public static void Register(HttpConfiguration config)
         {
-            var thisAssembly = typeof(SwaggerConfig).Assembly;
+            
+        var thisAssembly = typeof(SwaggerConfig).Assembly;
 
             config.EnableSwagger(c =>
             {
@@ -59,8 +70,8 @@ namespace BulbaCourses.Video.Web
                 // you'll need to implement a custom IDocumentFilter and/or IOperationFilter to set these properties
                 // according to your specific authorization implementation
                 //
-                c.BasicAuth("basic")
-                    .Description("Basic HTTP Authentication");
+                //c.BasicAuth("basic")
+                //    .Description("Basic HTTP Authentication");
                 //
                 // NOTE: You must also configure 'EnableApiKeySupport' below in the SwaggerUI section
                 //c.ApiKey("apiKey")
@@ -180,6 +191,10 @@ namespace BulbaCourses.Video.Web
                     })
                 .EnableSwaggerUi(c =>
                     {
+
+
+                        c.EnableDiscoveryUrlSelector();
+                        c.EnableOAuth2Support(clientId: CLIENT_ID, clientSecret: null, realm: REALM, appName: APP_NAME);
                         // Use the "DocumentTitle" option to change the Document title.
                         // Very helpful when you have multiple Swagger pages open, to tell them apart.
                         //

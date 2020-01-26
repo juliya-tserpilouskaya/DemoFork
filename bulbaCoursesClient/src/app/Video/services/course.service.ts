@@ -5,6 +5,7 @@ import{CourseShortInput} from '../components/add-course/add-course.component'
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { CustomUser } from 'src/app/auth/models/user';
+import { VideoInput } from '../components/add-video-prof/add-video-prof.component';
 //import {}
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,9 @@ export class CourseService {
   infoCourse(courseId:string) {
     return this.client.get('https://localhost:44369/api/courses/'+courseId);
   }
-
+  addVideoView(video:VideoInput){
+    return this.client.post('https://localhost:44369/api/courses/'+this.courseId+'/videos/',video);
+  }
 }
 
  export interface  CourseShort {

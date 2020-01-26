@@ -102,24 +102,22 @@ namespace BulbaCourses.Video.Web.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course post", typeof(CourseView))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        [Authorize]
+        [Authorize] //comment when use swagger.
         public async Task<IHttpActionResult> Create([FromBody]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
-            //  user.Claims[sub]
+            string authorName = string.Empty;
             if (User.Identity.IsAuthenticated)
             {
-                var sub = (User as ClaimsPrincipal).FindFirst("sub");
-
+               var sub = (User as ClaimsPrincipal).FindFirst("sub");
+               authorName = sub.Value;
             }
 
-            if (!ModelState.IsValid)//, CustomizeValidator (RuleSet = "AddCourse")
+            if (!ModelState.IsValid)
             {
             return BadRequest(ModelState);
             }
-            //user.Claims.
-            //user.Identities.
-                var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
+            var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
