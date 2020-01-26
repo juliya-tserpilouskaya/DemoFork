@@ -34,8 +34,7 @@ namespace BulbaCourses.DiscountAggregator.Web
             var config = new HttpConfiguration();
             
             SwaggerConfig.Register(config);
-            //config.Filters.Add(new BasicAuthenticationFilter()); // реализация IAuthenticationFilter
-            //config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new AuthorizeAttribute());
             config.MapHttpAttributeRoutes();
             config.Filters.Add(new BadRequestFilterAttribute());
 

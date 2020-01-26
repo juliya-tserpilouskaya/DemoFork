@@ -19,7 +19,7 @@ using BulbaCourses.DiscountAggregator.Web.SwaggerExamples;
 namespace BulbaCourses.DiscountAggregator.Web.Controllers
 {
     [RoutePrefix("api/courses")]
-    //[Authorize]
+    [Authorize]
     public class CourseController : ApiController
     {
         private readonly ICourseServices _courseService;

@@ -76,7 +76,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             Match match = Regex.Match(dateStartCourse, @"\d\d[.]\d\d[.]\d\d\d\d");
             if (match.Success)
             {
-                course.DateStartCourse = Convert.ToDateTime(match.Captures[0].Value);
+                course.DateStartCourse = DateTime.Now;//Convert.ToDateTime(match.Captures[0].Value);
             }
         }
 
