@@ -68,10 +68,10 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
-        public IEnumerable<CourseInfo> GetAllCourses(AuthorInfo author)
+        public async Task<IEnumerable<CourseInfo>> GetAllCourses(string id)
         {
-            var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);
-            var courses = authorDb.AuthorCourses;
+            //var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);
+            var courses = await _authorRepository.GetCoursesAsync(id);
             var result = _mapper.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(courses);
             return result;
         }

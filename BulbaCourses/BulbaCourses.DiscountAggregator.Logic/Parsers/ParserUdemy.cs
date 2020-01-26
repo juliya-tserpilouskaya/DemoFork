@@ -17,8 +17,6 @@ namespace BulbaCourses.DiscountAggregator.Logic.Parsers
             var htmlDoc = web.Load(html);
             List<CoursesUdemy> listCourses = new List<CoursesUdemy>();
             var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='main-content']/script");
-            //var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='curriculum-course-card--container--1ZgwU']");
-            //var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='ud-app-loader ud-component--browse--app']");
             if (htmlNodes is null) return listCourses;    // TODO
             foreach (var node in htmlNodes)
             {

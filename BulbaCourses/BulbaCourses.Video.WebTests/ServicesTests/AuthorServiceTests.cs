@@ -49,9 +49,9 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
         public void InitMock()
         {
             _coursesDb = new List<CourseDb>() {
-                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Duration = 15, Level = 1, Raiting = 5 },
-                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Duration = 25, Level = 2, Raiting = 4 },
-                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Duration = 35, Level = 2, Raiting = 3 }
+                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Level = 1, Raiting = 5 },
+                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Level = 2, Raiting = 4 },
+                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Level = 2, Raiting = 3 }
             };
 
             _coursesInfo = new List<CourseInfo>() {
@@ -82,22 +82,6 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
             _mockSet.As<IQueryable<AuthorDb>>().Setup(m => m.GetEnumerator()).Returns(_autorsDb.GetEnumerator());
             _mockContext = new Mock<VideoDbContext>();
             _mockMapper = new Mock<IMapper>();
-        }
-
-        [Test]
-        public void Test_GetAll_Authors_Courses()
-        {
-            _mockSet.As<IQueryable<AuthorDb>>().Setup(m => m.Provider).Returns(_autorsDb.Provider);
-
-            _mockContext.Setup(c => c.Authors).Returns(_mockSet.Object);
-            _mockRepo = new AuthorRepository(_mockContext.Object);
-            _mockMapper.Setup(m => m.Map<AuthorInfo, AuthorDb>(_authorsInfo.First())).Returns(_autorsDb.First());
-            _mockMapper.Setup(m => m.Map<IEnumerable<CourseDb>, IEnumerable<CourseInfo>>(_coursesDb)).Returns(_coursesInfo);
-            _service = new AuthorService(_mockMapper.Object, _mockRepo);
-            var courses = _service.GetAllCourses(_authorsInfo.First());
-            courses.Count().Should().Be(_coursesDb.Count);
-            courses.First().Should().Be(_coursesInfo.First());
-            courses.Should().BeEquivalentTo(_coursesInfo);
         }
 
         [Test]

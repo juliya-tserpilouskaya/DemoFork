@@ -1,2 +1,78 @@
 <p>reports works!</p>
-<p>{{user.sub}}</p>
+<p *ngIf="user">UserID is {{user.sub}}</p>
+
+<h3 class="first">Reports</h3>
+<div class="row mb-3">
+  <div class="col-md-10 themed-grid-col">
+    <p-dropdown #ddReports [options]="reportShorts"
+    [(ngModel)]="selectedReport"
+    placeholder="Select a Report"
+    showClear="true"
+    [filter]="true" filterBy="value.Name" optionLabel="Name" (onChange)="changeReport()"></p-dropdown>
+  </div>
+  <div class="col-6 col-md-2 themed-grid-col">
+    <p-splitButton *ngIf="selectedReport" label="Reload" icon="pi pi-refresh" (onClick)="getReports()" [model]="items" styleClass="ui-button-secondary"></p-splitButton>
+    <button *ngIf="!selectedReport" pButton type="button" label="Add" icon="pi pi-plus" class="ui-button-secondary" (click)="showingAddingReport()"></button>
+  </div>
+</div>
+
+<div class="content-section implementation">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+  <p-toast></p-toast>
+</div>
+
+<p-dialog header="New Report" [(visible)]="isAddingReport" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000"
+[draggable]="false" [resizable]="false">
+    <div class="card p-2">
+      <label>Name</label>
+      <input class="form-control"  pInputText placeholder="Report Name" class="ng-dirty" [(ngModel)]="reportNew.Name">
+      <small *ngIf="reportNew.Name==''" class="text-danger">
+        Field is required.
+      </small>
+      <label>Description</label>
+      <input type="text" pInputText placeholder="Report Description" class="ng-dirty" [(ngModel)]="reportNew.Description">
+    </div>
+    <p></p>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="addReport()" label="Add"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="hideAddingReport()" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Report Details" [(visible)]="isDetailsReport" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000"
+[draggable]="false" [resizable]="false">
+    <div class="card p-2">
+      <label>Name</label>
+      <input class="form-control"  pInputText placeholder="Report Name" class="ng-dirty" [(ngModel)]="report.Name">
+      <small *ngIf="report.Name==''" class="text-danger">
+        Field is required.
+      </small>
+      <label>Description</label>
+      <input type="text" pInputText placeholder="Report Description" class="ng-dirty" [(ngModel)]="report.Description">
+    </div>
+    <p></p>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="updateReport()" label="Update"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="hideDetailsReport()" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+<span *ngIf="selectedReport">
+  <span *ngFor="let dashboard of dashboards">
+    <p-panel>
+      <p-header (click)="selectDashboard(dashboard)">
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:14px;display:inline-block;margin-top:2px">
+              {{dashboard.Name}}
+            </span>
+       </div>
+      </p-header>
+      ReportId: {{dashboard.ReportId}}
+      <p-chart type="line" [data]="dataCharts[0]"></p-chart>
+      <p-footer>
+        <p-button label="Delete" icon="pi pi-minus" (onClick)="deleteDashboard(dashboard)" styleClass="ui-button-secondary"></p-button>
+      </p-footer>
+    </p-panel>
+    &nbsp;
+  </span>
+<span>

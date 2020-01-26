@@ -1,4 +1,10 @@
-﻿using System;
+﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Web.App_Start;
+using EasyNetQ;
+using FluentValidation;
+using FluentValidation.WebApi;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -7,11 +13,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 {
     public static class WebApiConfig
     {
+        private static IBus bus;
+
         public static void Register(HttpConfiguration config)
         {
-            // Конфигурация и службы веб-API
+            IKernel kernel = (IKernel)config.DependencyResolver.GetService(typeof(IKernel));
 
-            // Маршруты веб-API
+            bus = kernel.Get<IBus>();
+
+            bus.Receive("BookService", null);
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

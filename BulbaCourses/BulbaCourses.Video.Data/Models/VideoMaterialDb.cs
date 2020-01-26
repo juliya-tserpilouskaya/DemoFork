@@ -11,7 +11,6 @@ namespace BulbaCourses.Video.Data.Models
         public string VideoId { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; }
         public string Url { get; set; }
-        public int Duration { get; set; }
         public DateTime Created { get; set; }
         public int NumberOfViews { get; set; }
         public double Raiting { get; set; }

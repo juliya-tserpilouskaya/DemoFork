@@ -31,7 +31,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             HasOptional<CourseDB>(_ => _.CourseDB).WithMany(_ => _.CoursePresentations);
 
-            HasMany<FeedbackDB>(_ => _.Feedbacks);
+            HasMany<FeedbackDB>(_ => _.Feedbacks).WithOptional(_ => _.PresentationDB).HasForeignKey(_ => _.PresentationDBId);
 
             HasMany<StudentDB>(_ => _.Students).WithMany(_ => _.FavoritePresentations)
                                                .Map(_=>_.ToTable("Favorite"));

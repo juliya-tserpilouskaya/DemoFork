@@ -12,9 +12,7 @@ namespace BulbaCourses.GlobalSearch.Logic.Validators
     {
         public LearningCourseItemValidator()
         {
-            //RuleFor(x => x.Id).Null().WithMessage("Id must be empty or null");
-            //RuleFor(x => x.AuthorId).NotEmpty().WithMessage("Learning course must have an author");
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Course item must have a name");
+            RuleFor(_ => _.Name).NotNull().MinimumLength(5).WithMessage("Name of an item must be more than 5 characters");
         }
     }
 }

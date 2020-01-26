@@ -1,9 +1,12 @@
 ﻿using BulbaCourses.Youtube.Logic.Models;
+using BulbaCourses.Youtube.Logic.Models.SwaggerExamples.SearchRequests;
 using BulbaCourses.Youtube.Logic.Services;
 using EasyNetQ;
 using EasyNetQ.Consumer;
 using FluentValidation.WebApi;
+using Microsoft.Web.Http;
 using Newtonsoft.Json;
+using Swashbuckle.Examples;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -17,8 +20,11 @@ using System.Web.Http;
 
 namespace BulbaCourses.Youtube.Web.Controllers
 {
-    [RoutePrefix("api/SearchRequest")]
-    //[Authorize]
+    /// <summary>
+    /// Represents a RESTful YoutubeSearch service.
+    /// </summary>
+    [ApiVersion("1.0")]
+    [RoutePrefix("api/v{version:apiVersion}/SearchRequest")]
     public class SearchRequestController : ApiController
     {
         private readonly ILogicService _logicService;
@@ -30,24 +36,32 @@ namespace BulbaCourses.Youtube.Web.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Search video in youtube
+        /// </summary>
+        /// <param name="searchRequest"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "SearchRequest validation failed")]
         [SwaggerResponse(HttpStatusCode.NotFound, "ResultVideo list not found")]
         [SwaggerResponse(HttpStatusCode.OK, "ResultVideo list found", typeof(IEnumerable<ResultVideo>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(SearchRequestExample))]
         public async Task<IHttpActionResult> SearchRun([FromBody]SearchRequest searchRequest)
         {
-            var userId = this.Request.Headers.GetValues("UserSub").FirstOrDefault();
             //var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-
-            if (userId == null)
+            var userId = String.Empty;
+            if (this.Request.Headers.Contains("UserSub"))
+                userId = this.Request.Headers.GetValues("UserSub").FirstOrDefault();
+            else
                 userId = "guest";
+
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _bus.SendAsync("YoutubeQ", searchRequest);
-            await _bus.SendAsync("YoutubeQ", JsonConvert.SerializeObject(userId));
+            //await _bus.SendAsync("YoutubeQ", searchRequest);
+            //await _bus.SendAsync("YoutubeQ", JsonConvert.SerializeObject(userId));
 
             //_bus.Advanced.Consume("YoutubeQ", 
             //    (data,props,info) =>

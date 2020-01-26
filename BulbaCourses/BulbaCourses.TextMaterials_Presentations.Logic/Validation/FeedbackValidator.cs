@@ -19,11 +19,6 @@ namespace Presentations.Logic.Validation
             RuleFor(_ => _.Text).NotEmpty().MinimumLength(5).WithMessage("Feedback must be more than 5 characters");
             RuleFor(_ => _.PresentationDBId).NotEmpty();
 
-            RuleSet("AddFeedback", () =>
-            {
-                RuleFor(_ => _.StudentDBId).NotEmpty();
-            });
-
             RuleSet("UpdateFeedback", () =>
             {
                 RuleFor(_ => _.Id).Must(id => !string.IsNullOrEmpty(id)).WithMessage("Id must not be Empty or null");

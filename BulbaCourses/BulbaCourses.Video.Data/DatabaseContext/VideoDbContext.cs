@@ -13,7 +13,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
     {
         public VideoDbContext() : base("VideoConnect")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<VideoDbContext, Configuration>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<VideoDbContext>());
         }
         public DbSet<UserDb> Users { get; set; }
         public virtual DbSet<AuthorDb> Authors { get; set; }
@@ -50,9 +50,7 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityCourses = modelBuilder.Entity<CourseDb>();
             entityCourses.HasKey(b => b.CourseId);
             entityCourses.Property(b => b.Name).IsRequired().IsUnicode();
-            //entityCourses.HasIndex(b => b.Name).IsUnique(true);
             entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1024);
-            entityCourses.Property(b => b.Duration).IsRequired();
             entityCourses.Property(b => b.Price).IsRequired();
             entityCourses.HasOptional<AuthorDb>(b => b.Author).WithMany(t => t.AuthorCourses).Map(m => m.MapKey("CourseAuthorId"));
 
@@ -60,7 +58,6 @@ namespace BulbaCourses.Video.Data.DatabaseContext
             var entityVideo = modelBuilder.Entity<VideoMaterialDb>();
             entityVideo.HasKey(b => b.VideoId);
             entityVideo.Property(b => b.Name).IsRequired().HasMaxLength(255).IsUnicode();
-            entityVideo.Property(b => b.Duration).IsRequired();
             entityVideo.Property(b => b.Created).IsRequired();
             entityVideo.Property(b => b.Order).IsRequired();
             entityVideo.Property(b => b.CourseId).IsRequired();

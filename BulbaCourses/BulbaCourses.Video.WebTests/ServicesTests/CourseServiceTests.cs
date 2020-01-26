@@ -61,11 +61,11 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
             };
 
             _coursesDb = new List<CourseDb>() {
-                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Duration = 15, Level = 1, Raiting = 5, RateCount = 3, Tags = _tagDbFirst },
-                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Duration = 25, Level = 2, Raiting = 4, RateCount = 10, Tags = _tagDbSecond },
-                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Duration = 35, Level = 2, Raiting = 3, RateCount = 15, Tags = _tagDbSecond},
-                new CourseDb(){ CourseId = "idCourse4", Name = "Course4", Price = 40, Date = DateTime.Now, Description = "Description4", Duration = 45, Level = 1, Raiting = 2, RateCount = 12, Tags = _tagDbFirst  },
-                new CourseDb(){ CourseId = "idCourse5", Name = "Course5", Price = 50, Date = DateTime.Now, Description = "Description5", Duration = 55, Level = 2, Raiting = 3, RateCount = 24, Tags = _tagDbFirst  },
+                new CourseDb(){ CourseId = "idCourse1", Name = "Course1", Price = 10, Date = DateTime.Now, Description = "Description1", Level = 1, Raiting = 5, RateCount = 3, Tags = _tagDbFirst },
+                new CourseDb(){ CourseId = "idCourse2", Name = "Course2", Price = 20, Date = DateTime.Now, Description = "Description2", Level = 2, Raiting = 4, RateCount = 10, Tags = _tagDbSecond },
+                new CourseDb(){ CourseId = "idCourse3", Name = "Course3", Price = 30, Date = DateTime.Now, Description = "Description3", Level = 2, Raiting = 3, RateCount = 15, Tags = _tagDbSecond},
+                new CourseDb(){ CourseId = "idCourse4", Name = "Course4", Price = 40, Date = DateTime.Now, Description = "Description4", Level = 1, Raiting = 2, RateCount = 12, Tags = _tagDbFirst  },
+                new CourseDb(){ CourseId = "idCourse5", Name = "Course5", Price = 50, Date = DateTime.Now, Description = "Description5", Level = 2, Raiting = 3, RateCount = 24, Tags = _tagDbFirst  },
             }.AsQueryable();
 
             _coursesInfo = new List<CourseInfo>() {
@@ -76,7 +76,7 @@ namespace BulbaCourses.Video.WebTests.ServicesTests
                 new CourseInfo(){ Name = "Course5", Price = 50, Description = "Description5", Duration = 55, Level = 2, Raiting = 3 }
             }.AsQueryable();
 
-            _oneCourseDb = new CourseDb() { CourseId = "idCourseFirst", Name = "CourseFirst", Price = 40, Date = DateTime.Now, Description = "DescriptionFirst", Duration = 45, Level = 1, Raiting = 5 };
+            _oneCourseDb = new CourseDb() { CourseId = "idCourseFirst", Name = "CourseFirst", Price = 40, Date = DateTime.Now, Description = "DescriptionFirst", Level = 1, Raiting = 5 };
             _oneCourseInfo = new CourseInfo() { Name = "CourseFirst", Price = 40, Description = "DescriptionFirst", Duration = 45, Level = 1, Raiting = 5 };
             
             //_autorsDb = new List<AuthorDb>() {

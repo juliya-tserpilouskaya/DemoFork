@@ -32,7 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,11 +52,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\ETestType.cs" />
-    <Compile Include="Enum\EUserRole.cs" />
-    <Compile Include="Models\UserRole.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Config\DbConfig_LocalDb_Test.cs" />
+    <Compile Include="Context\DbContext_LocalDb_Test.cs" />
+    <Compile Include="Initialization\DbUserInitialization_Test.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_SetOrderDb.cs" />
+    <Compile Include="Mapping\WorkWithResultTest\Mapping_ReaderChoice_MainInfoDb.cs" />
+    <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Mapping\Test\AnswerVariants\Mapping_AnswerVariant_SetOrder.cs" />
+    <Compile Include="Mapping\Test\Questions\Mapping_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Mapping\Test\Questions\Mapping_Question_SetOrder.cs" />
+    <Compile Include="Mapping\Test\Tests\Mapping_Test_MainInfo.cs" />
+    <Compile Include="Mapping\User\Mapping_User_TestReader.cs" />
+    <Compile Include="Mapping\User\Mapping_User_TestAuthor.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_SetOrderDb.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_MainInfoDb.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetOrderDb.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_ChoosingAnswerFromListDb.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_SetOrderDb.cs" />
+    <Compile Include="Models\Test\Tests\MTest_MainInfoDb.cs" />
+    <Compile Include="Models\User\MUser_TestReaderDb.cs" />
+    <Compile Include="Models\User\MUser_TestAuthorDb.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_ChoosingAnswerFromListDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

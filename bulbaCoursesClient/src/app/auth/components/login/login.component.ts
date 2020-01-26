@@ -1,6 +1,7 @@
 import { Component, OnInit, SkipSelf } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,10 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(@SkipSelf() private authService: AuthService, fb: FormBuilder) {
+  constructor(
+    @SkipSelf() private authService: AuthService,
+    fb: FormBuilder,
+    private loader: NgxUiLoaderService) {
     this.loginForm = fb.group({
       name: [''],
       password: ['']
@@ -24,7 +28,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       const data = this.loginForm.value;
+
+      this.loader.start();
       this.authService.login(data.name, data.password);
+      this.loader.stop();
     }
   }
 

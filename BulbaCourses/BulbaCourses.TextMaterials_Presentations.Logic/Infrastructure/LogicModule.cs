@@ -17,6 +17,8 @@ namespace Presentations.Logic
             Bind<IPresentationsService> ().To<PresentationsService>();
             Bind<IStudentService>().To<StudentService>(); 
             Bind<ITeacherService>().To<TeacherService>();
+
+            this.Kernel?.Load(new[] { new DbModule() });
         }
     }
 }

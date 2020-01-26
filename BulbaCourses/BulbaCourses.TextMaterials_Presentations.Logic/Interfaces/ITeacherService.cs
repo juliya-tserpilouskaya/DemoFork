@@ -16,7 +16,7 @@ namespace Presentations.Logic.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<Result<Teacher>> AddTeacherAsync(UserAdd_DTO model);
+        Task<Result<Teacher>> AddTeacherAsync(TeacherAdd_DTO model);
 
         /// <summary>
         /// Map TeacherDB to Teacher, passes to GetByIdAsync DB-method the id for getting teacher
@@ -47,8 +47,18 @@ namespace Presentations.Logic.Interfaces
 
         Task<bool> ExistTeacherAsync(string userIdIdentity);
 
+        /// <summary>
+        /// Gel all feedbacks of this teacher by teacher id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Feedback>> GetAllFeedbacksFromTeacherAsync(string id);
 
+        /// <summary>
+        /// Gel all presentations of teacher by teacher id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Presentation>> GetAllChangedPresentationsAsync(string id);
     }
 }

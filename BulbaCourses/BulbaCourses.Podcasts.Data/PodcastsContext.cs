@@ -4,6 +4,8 @@ using System.Data.Entity;
 
 namespace BulbaCourses.Podcasts.Data
 {
+
+    [DbConfigurationType(typeof(DbConfig))]
     public class PodcastsContext : DbContext
     {
         public PodcastsContext() : base("PodcastsDbConnection")
@@ -24,6 +26,7 @@ namespace BulbaCourses.Podcasts.Data
             modelBuilder.Entity<UserDb>().ToTable("Users");
             var entityUser = modelBuilder.Entity<UserDb>();
             entityUser.HasKey(b => b.Id);
+            entityUser.Property(b => b.Name).HasMaxLength(20);
             entityUser.Property(b => b.Description).IsOptional().HasMaxLength(510).IsUnicode();
             entityUser.HasIndex(b => b.Name).IsUnique(true);
 
@@ -31,6 +34,7 @@ namespace BulbaCourses.Podcasts.Data
             var entityCourses = modelBuilder.Entity<CourseDb>();
             entityCourses.HasKey(b => b.Id);
             entityCourses.Property(b => b.Name).IsRequired().IsUnicode();
+            entityCourses.Property(b => b.Name).HasMaxLength(50);
             entityCourses.HasIndex(b => b.Name).IsUnique(true);
             entityCourses.Property(b => b.Description).IsRequired().HasMaxLength(1000);
             entityCourses.Property(b => b.Price).IsRequired();

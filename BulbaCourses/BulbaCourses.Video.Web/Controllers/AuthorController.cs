@@ -59,10 +59,9 @@ namespace BulbaCourses.Video.Web.Controllers
 
         [HttpGet, Route("courses")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all author courses", typeof(AuthorView))]
-        public IHttpActionResult GetAllAuthorCourses(AuthorView author)
+        public async Task<IHttpActionResult> GetAllAuthorCourses(string id)
         {
-            var authorInfo = _mapper.Map<AuthorView, AuthorInfo>(author);
-            var courses = _authorService.GetAllCourses(authorInfo);
+            var courses = await _authorService.GetAllCourses(id);
             var result = _mapper.Map<IEnumerable<CourseInfo>, IEnumerable<CourseView>>(courses);
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }

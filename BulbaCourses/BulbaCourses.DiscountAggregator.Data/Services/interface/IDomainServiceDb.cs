@@ -10,8 +10,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
         Task<IEnumerable<DomainDb>> GetAllAsync();
         Task<DomainDb> GetByIdAsync(string id);
         Task<Result<DomainDb>> AddAsync(DomainDb courseCategoryDb);
-        Task <Result<DomainDb>> DeleteAsync(DomainDb courseCategoryDb);
-        Task DeleteByIdAsync(string id);
+        Task<Result<DomainDb>> DeleteAsync(DomainDb courseCategoryDb);
+        Task<Result<DomainDb>> DeleteByIdAsync(string id);
         Task<Result<DomainDb>> UpdateAsync(DomainDb courseCategoryDb);
     }
 }
