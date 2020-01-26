@@ -68,6 +68,7 @@
        </div>
       </p-header>
       ReportId: {{dashboard.ReportId}}
+      <p-chart type="line" [data]="dataCharts[0]"></p-chart>
       <p-footer>
         <p-button label="Delete" icon="pi pi-minus" (onClick)="deleteDashboard(dashboard)" styleClass="ui-button-secondary"></p-button>
       </p-footer>

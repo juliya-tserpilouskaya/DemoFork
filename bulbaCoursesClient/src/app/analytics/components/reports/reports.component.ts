@@ -35,6 +35,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
   dashboards: Dashboard[] = [];
 
+  dataCharts: any = [];
+
   constructor(
     private authService: AuthService,
     private reportsService: ReportsService,
@@ -209,10 +211,12 @@ export class ReportsComponent implements OnInit, OnDestroy {
     this.dashboardsService.getDashboards(this.selectedReport.Id).subscribe(
       data => {
         this.dashboards = data;
+        this.dataCharts[0] = this.getCharts();
         console.log('Data loaded');
       },
       () => {
         this.dashboards = [];
+        this.dataCharts = [];
         console.log('Error getDashboards. Not found.');
       },
       () => complited == null ? null : complited()
@@ -244,6 +248,26 @@ export class ReportsComponent implements OnInit, OnDestroy {
         );
       },
       () => console.log('Cancel delete Report.'));
+  }
+
+  getCharts() {
+    return {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+          {
+              label: 'First Dataset',
+              data: [65, 59, 80, 81, 56, 55, 40],
+              fill: false,
+              borderColor: '#4bc0c0'
+          },
+          {
+              label: 'Second Dataset',
+              data: [28, 48, 40, 19, 86, 27, 90],
+              fill: false,
+              borderColor: '#565656'
+          }
+      ]
+    };
   }
 
   ngOnDestroy() {

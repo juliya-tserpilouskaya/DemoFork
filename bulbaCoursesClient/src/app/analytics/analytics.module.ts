@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
+import { ChartModule } from 'primeng/chart';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmationDialogModule } from './ensure/dialog/confirmdialog/confirmdialog.module';
 import { ConfirmationDialogService } from './ensure/dialog/confirmdialog/confirmdialog.service';
@@ -35,6 +36,7 @@ import { ConfirmationDialogService } from './ensure/dialog/confirmdialog/confirm
     ButtonModule,
     ToastModule,
     PanelModule,
+    ChartModule,
     DialogModule,
     ListboxModule,
     InputTextModule,
