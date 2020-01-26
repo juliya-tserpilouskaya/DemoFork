@@ -14,16 +14,29 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Search service.
+    /// </summary>
     [RoutePrefix("api/search")]
     public class SearchController : ApiController
     {
         private readonly ISearchService _searchService;
 
+        /// <summary>
+        /// Creates search controller.
+        /// </summary>
+        /// <param name="searchService"></param>
         public SearchController(ISearchService searchService)
         {
             _searchService = searchService;
         }
 
+        /// <summary>
+        /// Shows all courses by request and search variant from the database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="variant"></param>
+        /// <returns></returns>
         [HttpGet, Route("{request}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]

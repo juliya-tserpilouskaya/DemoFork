@@ -19,13 +19,16 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Courses service.
+    /// </summary>
     [RoutePrefix("api/courses")]
     public class CourseController : ApiController
     {
         private readonly IMapper _mapper;
         private readonly ICourseService _courseService;
         /// <summary>
-        /// Course Controller.
+        /// Creates Courses controller.
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="courseService"></param>
@@ -35,7 +38,7 @@ namespace BulbaCourses.Video.Web.Controllers
             _courseService = courseService;
         }
         /// <summary>
-        /// Get course info.
+        /// Shows a course details by id from the database.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -70,7 +73,7 @@ namespace BulbaCourses.Video.Web.Controllers
 
         }
         /// <summary>
-        /// Get all courses.
+        /// Gets all courses from the database.
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("")]
@@ -89,7 +92,7 @@ namespace BulbaCourses.Video.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
         /// <summary>
-        /// Post new course.
+        /// Add new course to the database.
         /// </summary>
         /// <param name="course"></param>
         /// <returns></returns>
@@ -115,6 +118,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update course in the database.
+        /// </summary>
+        /// <param name="course"></param>
+        /// <returns></returns>
         [HttpPut, Route("{id}")]
 
         [SwaggerRequestExample(typeof(CourseViewInput), typeof(SwaggerCourseViewInput))]
@@ -133,6 +141,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete course by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted")]

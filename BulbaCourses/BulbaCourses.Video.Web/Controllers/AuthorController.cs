@@ -14,18 +14,31 @@ using System.Web.Http;
 
 namespace BulbaCourses.Video.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Authors service.
+    /// </summary>
     [RoutePrefix("api/authors")]
     public class AuthorController : ApiController
     {
         private readonly IMapper _mapper;
         private readonly IAuthorService _authorService;
 
+        /// <summary>
+        /// Creates Authors controller.
+        /// </summary>
+        /// <param name="authorService"></param>
+        /// <param name="mapper"></param>
         public AuthorController(IMapper mapper, IAuthorService authorService)
         {
             _mapper = mapper;
             _authorService = authorService;
         }
 
+        /// <summary>
+        /// Shows a author details by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Author doesn't exists")]
@@ -48,6 +61,10 @@ namespace BulbaCourses.Video.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all authors from the database.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all authors", typeof(IEnumerable<AuthorView>))]
         public async Task<IHttpActionResult> GetAll()
@@ -57,6 +74,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// /// Shows all author courses by author id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet, Route("courses")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all author courses", typeof(AuthorView))]
         public async Task<IHttpActionResult> GetAllAuthorCourses(string id)
@@ -66,6 +88,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Add new author to the database.
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Author post", typeof(AuthorView))]
@@ -82,6 +109,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Update author in the database.
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Author updated", typeof(AuthorView))]
@@ -93,6 +125,11 @@ namespace BulbaCourses.Video.Web.Controllers
             return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
         }
 
+        /// <summary>
+        /// Delete author by id from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Author deleted", typeof(AuthorView))]
