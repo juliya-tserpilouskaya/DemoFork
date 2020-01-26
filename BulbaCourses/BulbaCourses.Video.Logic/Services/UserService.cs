@@ -161,7 +161,7 @@ namespace BulbaCourses.Video.Logic.Services
 
                 if (pay == true)
                 {
-                    userDb.Transactions.Add(transaction);
+                    _userRepository.AddTransaction(transaction);
                 }
                 
                 return Task.FromResult(Result.Ok());
@@ -189,8 +189,7 @@ namespace BulbaCourses.Video.Logic.Services
 
             if (pay == true)
             {
-                userDb.Transactions.Add(transaction);
-                userDb.Courses.Add(courseDb);
+                _userRepository.AddTransaction(transaction);
             }
 
             return Task.FromResult(Result.Ok());

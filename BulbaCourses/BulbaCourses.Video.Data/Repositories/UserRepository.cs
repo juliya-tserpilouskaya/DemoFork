@@ -101,5 +101,12 @@ namespace BulbaCourses.Video.Data.Repositories
             _videoDbContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             return await Task.FromResult(user);
         }
+
+        public async Task<TransactionDb> AddTransaction(TransactionDb transaction)
+        {
+            _videoDbContext.Transactions.Add(transaction);
+            _videoDbContext.SaveChangesAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            return await Task.FromResult(transaction);
+        }
     }
 }

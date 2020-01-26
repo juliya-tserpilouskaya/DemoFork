@@ -112,10 +112,10 @@ namespace BulbaCourses.Video.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            subscription = user.SubscriptionType;
             var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
             var result = await _userService.BuySubscription(userInfo, subscription);
-            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace BulbaCourses.Video.Web.Controllers
             var userInfo = _mapper.Map<UserProfileView, UserInfo>(user);
             var courseInfo = _mapper.Map<CourseView, CourseInfo>(course);
             var result = await _userService.BuySingleCourse(userInfo, courseInfo);
-            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok();
+            return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
         }
 
         /// <summary>
