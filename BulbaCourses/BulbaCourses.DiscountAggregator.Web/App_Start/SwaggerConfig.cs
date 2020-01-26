@@ -29,11 +29,12 @@ namespace BulbaCourses.DiscountAggregator.Web
                                       .Description("OAuth2 Implicit Grant")
                                       .Flow("implicit")
                                       .AuthorizationUrl("http://localhost:44382/connect/authorize")
-                                      .TokenUrl("http://localhost:44382/connect/token")
+                                      //.TokenUrl("http://localhost:44382/connect/token")
                                       .Scopes(scopes =>
                                       {
-                                          scopes.Add("openid", "Read access to protected resources");
-                                          scopes.Add("profile", "Write access to protected resources");
+                                          scopes.Add("api", "API access scope");
+                                          //scopes.Add("openid", "Read access to protected resources");
+                                          //scopes.Add("profile", "Write access to protected resources");
                                       });
             }).EnableSwaggerUi(c =>
             {
@@ -46,6 +47,10 @@ namespace BulbaCourses.DiscountAggregator.Web
                                       );
                                       //additionalQueryStringParams: new Dictionary<string, string>() { { "foo", "bar" } }
             });
+
+
+
+
       //          .EnableSwagger(c =>
       //              {
       //                  // By default, the service root url is inferred from the request used to access the docs.
