@@ -68,7 +68,7 @@ namespace Forecast
             {
                 newDate = GetNewDate(newDate);
 
-                var forecast = Math.Round((a + b * newDate.ToOADate()) * coefficients[newDate.Month - 1]);
+                var forecast = Math.Round(((a + b * newDate.ToOADate()) * coefficients[newDate.Month - 1])*10000)/10000;
 
                 baseForecastData.Add(new ForecastData(newDate, 0, forecast, null, null));
             }
@@ -79,8 +79,8 @@ namespace Forecast
 
             foreach (var forecastData in baseForecastData.Where(x => x.Value == 0))
             {
-                forecastData.ForecastOptimistic = Math.Round((forecastData.Forecast ?? 0) + deviation.Value);
-                forecastData.ForecastPessimistic = Math.Round((forecastData.Forecast ?? 0) - deviation.Value);
+                forecastData.ForecastOptimistic = Math.Round(((forecastData.Forecast ?? 0) + deviation.Value)*10000)/10000;
+                forecastData.ForecastPessimistic = Math.Round(((forecastData.Forecast ?? 0) - deviation.Value)*10000)/10000;
             }
 
             return baseForecastData;
