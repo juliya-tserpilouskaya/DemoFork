@@ -19,11 +19,9 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class BookmarkController : ApiController
     {
         private readonly IBookmarkService _bookmarkService;
-        //private readonly ILearningCourseService _learningCourseService;
-        public BookmarkController(IBookmarkService bookmarkService/*, ILearningCourseService learningCourseService*/)
+        public BookmarkController(IBookmarkService bookmarkService)
         {
             _bookmarkService = bookmarkService;
-            //_learningCourseService = learningCourseService;
         }
 
         //Role - admin
@@ -69,7 +67,6 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             {
                 try
                 {
-                    //var sub = (User as ClaimsPrincipal).FindFirst("sub");
                     string UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
                     var result = await _bookmarkService.GetByUserIdAsync(UserId);
                     return result == null ? NotFound() : (IHttpActionResult)Ok(result);
@@ -85,25 +82,10 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
-        //[HttpPost, Route("")]
-        //[SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
-        //[SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
-        //public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]BookmarkDTO bookmark)
-        //{
-        //    bookmark.UserId = (User as ClaimsPrincipal).FindFirst("sub").ToString().ToString().Replace("sub: ", "");
-        //    bookmark.Id = Guid.NewGuid().ToString();
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-        //    var result = await _bookmarkService.AddAsync(bookmark);
-        //    return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
-        //}
-
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Bookmark added")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid bookmark data")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "default,UpdateCourse")]BookmarkDTO bookmark)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]BookmarkDTO bookmark)
         {
             if (!ModelState.IsValid)
             {
