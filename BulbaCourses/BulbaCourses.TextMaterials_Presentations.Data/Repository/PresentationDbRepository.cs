@@ -73,12 +73,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
         public void DeleteById(string id)
         {
             _db.Entry(new PresentationDB() { Id = id }).State = EntityState.Deleted;
-            _db.Database.ExecuteSqlCommand(
-                "ALTER TABLE dbo.Feedbacks " +
-                "ADD CONSTRAINT Feedbacks_Presentations " +
-                "FOREIGN KEY (PresentationDBId) " +
-                "REFERENCES dbo.Presentations (Id) " +
-                "ON DELETE SET NULL");
         }
 
         public async Task<PresentationDB> GetAllWhoViewedThisPresentationAsync(string id)

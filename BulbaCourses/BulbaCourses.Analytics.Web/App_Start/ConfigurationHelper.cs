@@ -123,6 +123,7 @@ namespace BulbaCourses.Analytics.Web.App_Start
 
                     // integrate xml comments
                     swagger.IncludeXmlComments(Paths.XmlCommentsFilePath);
+                    
                     swagger.OAuth2(O_AUTH2)
                         .Description(Resources.OAuth2Description)
                         .Flow(O_AUTH2_FLOW)

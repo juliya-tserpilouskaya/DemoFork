@@ -17,6 +17,9 @@ using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Content service.
+    /// </summary>
     [RoutePrefix("api/contents")]
     public class ContentController : ApiController
     {
@@ -24,10 +27,16 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         private readonly IContentService service;
         private readonly IUserService Uservice;
 
-        public ContentController(IMapper mapper, IContentService contentService, IUserService userService)
+        /// <summary>
+        /// Creates Content controller.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="service"></param>
+        /// <param name="userService"></param>
+        public ContentController(IMapper mapper, IContentService service, IUserService userService)
         {
             this.mapper = mapper;
-            this.service = contentService;
+            this.service = service;
             this.Uservice = userService;
         }
 
@@ -37,7 +46,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet, Route("{id}")]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Content doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Content found", typeof(ContentWeb))]
@@ -87,7 +96,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="contentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Content post", typeof(ContentWeb))]
@@ -136,7 +145,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="contentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Content updated", typeof(ContentWeb))]
@@ -185,7 +194,7 @@ namespace BulbaCourses.Podcasts.Web.Controllers
         /// <param name="contentWeb"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("{id})")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.OK, "Content deleted", typeof(ContentWeb))]
