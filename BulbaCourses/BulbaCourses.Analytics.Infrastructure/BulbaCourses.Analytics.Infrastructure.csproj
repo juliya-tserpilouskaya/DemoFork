@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Models\ChartDto.cs" />
     <Compile Include="Models\DashboardDto.cs" />
+    <Compile Include="Models\ExchangeRatesDto.cs" />
     <Compile Include="Models\ReportDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

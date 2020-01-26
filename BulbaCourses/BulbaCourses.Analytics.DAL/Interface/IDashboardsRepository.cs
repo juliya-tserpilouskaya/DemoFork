@@ -28,5 +28,11 @@ namespace BulbaCourses.Analytics.DAL.Interface
         /// <returns></returns>
         Task<bool> ExistsReportAsync(
             Expression<Func<ReportDb, bool>> anyAsyncCondition);
+
+        /// <summary>
+        /// Gets analytics data.
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<ExchangeRatesDb>> GetAnalyticDataAsync();
     }
 }
