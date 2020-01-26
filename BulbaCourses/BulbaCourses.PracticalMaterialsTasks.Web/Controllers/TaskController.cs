@@ -53,7 +53,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         public async Task<IHttpActionResult> GetTaskAsync(string id)
         {
             
-            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
+            if (string.IsNullOrEmpty(id))
             {
                 return BadRequest();
             }
@@ -77,6 +77,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         //[OverrideActionFilters]
         //[BadRequestFilter]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Task doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Search profile added", typeof(TaskDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> AddTask([FromBody, CustomizeValidator(RuleSet = "*")]TaskDTO task)
@@ -103,7 +104,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> EditItem(string id, [FromBody, CustomizeValidator(RuleSet = "*")] TaskDTO task)
         {
-            if (!ModelState.IsValid) /*|| !Guid.TryParse(id, out var _)*/
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -126,7 +127,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteItem(string id)
         {
-            if (string.IsNullOrEmpty(id) /*|| !Guid.TryParse(id, out var _)*/)
+            if (string.IsNullOrEmpty(id))
             {
                 return BadRequest();
             }
