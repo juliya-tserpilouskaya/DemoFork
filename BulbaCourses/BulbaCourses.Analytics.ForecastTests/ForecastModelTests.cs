@@ -19,40 +19,40 @@ namespace Forecast.Tests
         public void GetDataHistoricTest()
         {
             
-            IForecastModel forecastModel = new ForecastModel(_data, 12, Scheme.Period.Month);
+            IForecastModel forecastModel = new ForecastModel(_data, 12, 12, Scheme.Period.Month);
 
-            var data = forecastModel.GetData().GetOnlyHistoric().Sum(_ =>_.Value);
-            data.Should().Be(2277832);
+            var data = forecastModel.GetData().GetOnlyHistoric(3).Sum(_ =>_.Value);
+            data.Should().Be(292594);
         }
 
         [Test()]
         public void GetDataForecastTest()
         {
 
-            IForecastModel forecastModel = new ForecastModel(_data, 12, Scheme.Period.Month);
+            IForecastModel forecastModel = new ForecastModel(_data, 12, 12, Scheme.Period.Month);
 
-            var data = forecastModel.GetData().GetOnlyForecast().Sum(_ => _.Value);
-            data.Should().Be(1190393);
+            var data = forecastModel.GetData().GetOnlyForecast(3).Sum(_ => _.Value);
+            data.Should().Be(290160);
         }
 
         [Test()]
         public void GetDataForecastOptimisticTest()
         {
 
-            IForecastModel forecastModel = new ForecastModel(_data, 12, Scheme.Period.Month);
+            IForecastModel forecastModel = new ForecastModel(_data,12, 12, Scheme.Period.Month);
 
-            var data = forecastModel.GetData().GetOnlyForecastOptimistic().Sum(_ => _.Value);
-            data.Should().Be(1240085);
+            var data = forecastModel.GetData().GetOnlyForecastOptimistic(3).Sum(_ => _.Value);
+            data.Should().Be(302583);
         }
 
         [Test()]
         public void GetDataForecastPessimisticTest()
         {
 
-            IForecastModel forecastModel = new ForecastModel(_data, 12, Scheme.Period.Month);
+            IForecastModel forecastModel = new ForecastModel(_data, 12,12, Scheme.Period.Month);
 
-            var data = forecastModel.GetData().GetOnlyForecastPessimistic().Sum(_ => _.Value);
-            data.Should().Be(1140701);
+            var data = forecastModel.GetData().GetOnlyForecastPessimistic(3).Sum(_ => _.Value);
+            data.Should().Be(277737);
         }
     }
 }

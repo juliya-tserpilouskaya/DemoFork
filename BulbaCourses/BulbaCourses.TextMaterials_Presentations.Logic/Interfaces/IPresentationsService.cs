@@ -45,10 +45,25 @@ namespace Presentations.Logic.Interfaces
 
         Task<bool> ExistPresentationAsync(string title);
 
-        Task<IEnumerable<Student>> GetAllWhoViewedThisPresentationAsync(string id);
+        /// <summary>
+        /// Get the students who watched the presentation by presentation id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Student>> GetAllWhoWatchedThisPresentationAsync(string id);
 
+        /// <summary>
+        /// Get the students who like the presentation by presentation id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Student>> GetAllWhoLikeThisPresentationAsync(string id);
 
+        /// <summary>
+        /// Get the feedbacks of the presentation by presentation id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Feedback>> GetAllFeedbacksPresentationAsync(string id);
     }
 }

@@ -45,16 +45,65 @@ namespace Presentations.Logic.Interfaces
 
         Task<bool> ExistStudentAsync(string userIdIdentity);
 
+        /// <summary>
+        /// Add favorite presentation to the collection of favorite
+        /// </summary>
+        /// <param name="idStudent"></param>
+        /// <param name="idPresentation"></param>
+        /// <returns></returns>
         Task<Result> AddLovedPresentationAsync(string idStudent, string idPresentation);
+
+        /// <summary>
+        /// Delete favorite presentation from the collection of favorite
+        /// </summary>
+        /// <param name="idStudent"></param>
+        /// <param name="idPresentation"></param>
+        /// <returns></returns>
         Task<Result> DeleteLovedPresentationAsync(string idStudent, string idPresentation);
+
+        /// <summary>
+        /// Gel all presentations from the collection of favorite by student id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Presentation>> GetAllLovedPresentationAsync(string id);
 
-        Task<Result> AddViewedPresentationAsync(string idStudent, string idPresentation);
-        Task<Result> DeleteViewedPresentationAsync(string idStudent, string idPresentation);
-        Task<IEnumerable<Presentation>> GetAllViewedPresentationAsync(string id);
+        /// <summary>
+        /// Add watched presentation to the collection of watched
+        /// </summary>
+        /// <param name="idStudent"></param>
+        /// <param name="idPresentation"></param>
+        /// <returns></returns>
+        Task<Result> AddWatchedPresentationAsync(string idStudent, string idPresentation);
 
+        /// <summary>
+        /// Delete watched presentation from the collection of watched
+        /// </summary>
+        /// <param name="idStudent"></param>
+        /// <param name="idPresentation"></param>
+        /// <returns></returns>
+        Task<Result> DeleteWatchedPresentationAsync(string idStudent, string idPresentation);
+
+        /// <summary>
+        /// Gel all presentations from the collection of watched by student id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Presentation>> GetAllWatchedPresentationAsync(string id);
+
+        /// <summary>
+        /// Update the payment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="hasPayment"></param>
+        /// <returns></returns>
         Task<Result> UpdateIsPaidAsync(string id, bool hasPayment);
 
+        /// <summary>
+        /// Gel all feedbacks of this student by student id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Feedback>> GetAllFeedbacksFromStudentAsync(string id);
 
     }

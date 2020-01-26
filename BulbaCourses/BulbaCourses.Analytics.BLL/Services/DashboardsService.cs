@@ -28,7 +28,6 @@ namespace BulbaCourses.Analytics.BLL.Services
         {
             _mapper = mapper;
             _repository = repository;
-            // if need adding data to uncomment Seed.SeedDatabase(repository);
         }
 
         /// <summary>
@@ -79,6 +78,19 @@ namespace BulbaCourses.Analytics.BLL.Services
             var dashboardDto = _mapper.Map<DashboardDto>(dashboardDb);
 
             return dashboardDto;
+        }
+
+        /// <summary>
+        /// Shows a dashboard details by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DashboardDto>> GetByReportIdAsync(string id)
+        {
+            var dashboardDbs = await _repository.ReadAllAsync( _ => _.ReportId == id,_ => _.Name).ConfigureAwait(false);
+            var dashboardDtos = _mapper.Map<List<DashboardDto>>(dashboardDbs);
+
+            return dashboardDtos;
         }
 
         /// <summary>
@@ -156,6 +168,20 @@ namespace BulbaCourses.Analytics.BLL.Services
         public async Task<bool> ExistsChartIdAsync(int id)
         {
             return await _repository.ExistsChartAsync(_ => _.Id == id).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks if a report exists by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ExchangeRatesDto>> GetAnalyticDataAsync()
+        {
+            var ratesDb = await _repository.GetAnalyticDataAsync().ConfigureAwait(false);
+
+            var ratesDtos = _mapper.Map<IEnumerable<ExchangeRatesDto>>(ratesDb);
+
+            return ratesDtos;
         }
 
         private Expression<Func<DashboardDb, bool>> GetSearchNameOptions(string name, Search.StringOption stringOption)

@@ -57,6 +57,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             item.Date = DateTime.Now;
             _db.Feedbacks.Attach(item);
 
+            _db.Entry(item).Property(c => c.Title).IsModified = true;
             _db.Entry(item).Property(c => c.Text).IsModified = true;
             _db.Entry(item).Property(c => c.Date).IsModified = true;
         }

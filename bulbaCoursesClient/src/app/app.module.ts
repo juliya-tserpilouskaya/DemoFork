@@ -1,7 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,9 +8,12 @@ import { AuthSharedModule } from './auth/auth-shared.module';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseComponent } from './DiscountAggregator/components/course/course.component';
+import { FiltersComponent } from './DiscountAggregator/components/filters/filters.component';
+import { DiscountAggregatorService } from './DiscountAggregator/services/discount-aggregator.service';
 import { YoutubeModule } from './YouTube/youtube.module';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 import { VideoModule } from './Video/video.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AnalyticsModule } from './analytics/analytics.module';
 import { GlobalAdminUsersModule } from './GlobalAdminUsers/global-admin-users/global-admin-users.module';
@@ -22,6 +22,7 @@ import { PagenotfoundComponent } from './ensure/pagenotfound/pagenotfound.compon
 import { GlobalSearchModule } from './GlobalSearch/global-search.module';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsConstants } from './analytics/components/constants/analytics.constant';
+import { PodcastsModule } from './podcasts/podcasts.module';
 
 import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/practical-materials-test.module';
 
@@ -31,14 +32,12 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
   declarations: [
     AppComponent,
     MenuComponent,
+    PagenotfoundComponent,
     CourseComponent,
-    PagenotfoundComponent
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    TableModule,
-    ButtonModule,
     AppRoutingModule,
     SampleModule,
     AuthSharedModule,
@@ -47,6 +46,7 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     RegisterModule,
     GlobalSearchModule,
     FormsModule,
+    ReactiveFormsModule,
     OAuthModule.forRoot({
       resourceServer: {
         sendAccessToken: true,
@@ -64,7 +64,8 @@ import { PracticalMaterialsTestModule } from './PracticalMaterialsTests/modules/
     YoutubeModule,
     AnalyticsModule,
     NgxUiLoaderModule,
-    PracticalMaterialsTestModule
+    PracticalMaterialsTestModule,
+    PodcastsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

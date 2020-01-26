@@ -75,7 +75,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             _db.Entry(new PresentationDB() { Id = id }).State = EntityState.Deleted;
         }
 
-        public async Task<PresentationDB> GetAllWhoViewedThisPresentationAsync(string id)
+        public async Task<PresentationDB> GetAllWhoWatchedThisPresentationAsync(string id)
         {
             var query = from presentation in _db.Presentations select presentation;
             return await query.AsNoTracking().Include(_=>_.ViewedByStudents).FirstOrDefaultAsync(_ => _.Id.Equals(id));

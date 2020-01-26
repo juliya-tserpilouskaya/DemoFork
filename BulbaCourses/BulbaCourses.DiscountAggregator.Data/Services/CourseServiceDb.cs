@@ -45,41 +45,68 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         public IEnumerable<CourseDb> GetAll()
         {
-            var coursesList = context.Courses.Include(x => x.Domain).Include(y => y.Category).ToList().AsReadOnly();
+            var coursesList = context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).ToList().AsReadOnly();
             return coursesList;
         }
         
         public async Task<IEnumerable<CourseDb>> GetAllAsync()
         {
-            var coursesList = await context.Courses.ToListAsync().ConfigureAwait(false);
+            var coursesList = await context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).ToListAsync().ConfigureAwait(false);
             return coursesList.AsReadOnly();
         }
 
         public CourseDb GetById(string id)
         {
-            var course = context.Courses.FirstOrDefault(c => c.Id.Equals(id));
+            var course = context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).FirstOrDefault(c => c.Id.Equals(id));
             return course;
         }
         
         public async Task<CourseDb> GetByIdAsync(string id)
         {
-            var course = await context.Courses.SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
+            var course = await context.Courses
+                .Include(x => x.Domain)
+                .Include(y => y.Category).SingleOrDefaultAsync(c => c.Id.Equals(id)).ConfigureAwait(false);
             return course;
         }
 
-        public async Task<IEnumerable<CourseDb>> GetByIdCriteriaAsync(string idSearch)
+        public async Task<IEnumerable<CourseDb>> GetByIdUserAsync(string idUser)
         {
-            //TODO domain and category
-            var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
+            var criteria = context.Profiles.Include(x => x.SearchCriteria)
+                .Include(x => x.SearchCriteria.Domains)
+                .Include(x => x.SearchCriteria.CourseCategories)
+                .Where(p => p.Id == idUser).FirstOrDefault();
+
+            //var domain = (IEnumerable<DomainDb>)criteria.SearchCriteria.Domains;
+
             var courses = await context.Courses
-                .Where(x => x.Price >= searchCriteriaDb.MinPrice 
-                && x.Price <= searchCriteriaDb.MaxPrice 
-                //&& x.Domain == searchCriteriaDb.Domains
-                //&& x.Category == searchCriteriaDb.CourseCategories
-                && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+                .Include(i => i.Domain)
+                .Include(c => c.Category)
+                .Where(x => x.Price >= criteria.SearchCriteria.MinPrice
+                && x.Price <= criteria.SearchCriteria.MaxPrice
+                //&& domain.Any(y => y.DomainURL == x.Domain.DomainURL)//   criteria.SearchCriteria.Domains.Contains(x.Domain)
+                //&& criteria.SearchCriteria.CourseCategories.Contains(x.Category)
+                //&& domain.Any(a => a.DomainURL == x.Domain.DomainURL)
+                //&& x.Domain == context.Domains.FirstOrDefault(f => f.DomainURL == @"/specialization/web-dizayn/")
+                && x.Discount >= criteria.SearchCriteria.MinDiscount && x.Discount <= criteria.SearchCriteria.MaxDiscount)
                 .ToListAsync()
                 .ConfigureAwait(false);
-            
+            //TODO domain and category
+            //var searchCriteriaDb = context.SearchCriterias.Find(idSearch);
+            //var courses = await context.Courses
+            //    .Where(x => x.Price >= searchCriteriaDb.MinPrice 
+            //    && x.Price <= searchCriteriaDb.MaxPrice 
+            //    //&& x.Domain == searchCriteriaDb.Domains
+            //    //&& x.Category == searchCriteriaDb.CourseCategories
+            //    && x.Discount >= searchCriteriaDb.MinDiscount && x.Discount <= searchCriteriaDb.MaxDiscount)
+            //    .ToListAsync()
+            //    .ConfigureAwait(false);
+
             return courses;
         }
 
@@ -101,21 +128,31 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             }
         }
         
-        public async Task DeleteByIdAsync(string id)
+        public async Task<Result<CourseDb>> DeleteByIdAsync(string id)
         {
-            var course = context.Courses.SingleOrDefault(c => c.Id.Equals(id));
-            context.Courses.Remove(course);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                var course = context.Courses
+                    .Include(x => x.Domain)
+                    .Include(y => y.Category).SingleOrDefault(c => c.Id.Equals(id));
+                context.Courses.Remove(course);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseDb>.Ok(course);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Course not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseDb>.Fail<CourseDb>($"Invalid profile. {e.Message}");
+            }
         }
 
         public async Task<Result<CourseDb>> UpdateAsync(CourseDb course)
         {
             try
             {
-                if (course == null)
-                {
-                    throw new ArgumentNullException("course");
-                }
                 context.Entry(course).State = EntityState.Modified;
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<CourseDb>.Ok(course);

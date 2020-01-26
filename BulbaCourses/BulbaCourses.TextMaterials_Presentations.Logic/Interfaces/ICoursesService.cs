@@ -50,6 +50,11 @@ namespace Presentations.Logic.Interfaces
         /// <returns></returns>
         Task<bool> ExistCourseAsync(string title);
 
+        /// <summary>
+        /// Get the presentations from the course by course id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<IEnumerable<Presentation>> GetAllPresentationsFromCourseAsync(string id);
     }
 }

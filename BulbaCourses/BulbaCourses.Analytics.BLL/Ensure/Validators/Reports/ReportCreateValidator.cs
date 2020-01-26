@@ -12,7 +12,7 @@ namespace BulbaCourses.Analytics.BLL.Ensure.Validators
         /// <summary>
         /// Validates the report when created.
         /// </summary>
-        public ReportCreateValidator()
+        public ReportCreateValidator(IReportsService service)
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
@@ -23,7 +23,8 @@ namespace BulbaCourses.Analytics.BLL.Ensure.Validators
                     .NotEmpty()
                     .MinimumLength(3)
                     .MaximumLength(128)
-                    .Matches(@"^[а-яА-ЯёЁa-zA-Z0-9.,:;&$%()-+ ]+$");
+                    .Matches(@"^[а-яА-ЯёЁa-zA-Z0-9.,:;&$%()-+ ]+$")
+                    .MustAsync((async (name, token) => !(await service.ExistsNameAsync(name).ConfigureAwait(false))));
 
                 RuleFor(x => x.Description)
                     .Transform(d => d.SpaceFix())

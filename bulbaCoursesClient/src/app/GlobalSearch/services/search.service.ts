@@ -9,26 +9,21 @@ import {Subject} from 'rxjs';
 })
 export class SearchService {
 
-  public query: string = "";
+  public query: string;
   url: string;
   constructor(private client: HttpClient) {}
 
   search(qry: string) {
-    // return this.client.get<Courses[]>('https://my-json-server.typicode.com/typicode/demo/posts');
-    return this.client.get<Courses[]>('https://localhost:44320/api/search/' + qry)
+    return this.client.get<Courses[]>('https://localhost:44320/api/search/' + qry);
   }
 }
 
-// export interface Courses {
-//   id: string;
-//   title: string;
-// }
-
-export interface Courses
-{
+export interface Courses {
     Id: string;
     Name: string;
     Cost: number;
     Complexity: string;
+    Language: string;
     Description: string;
+    Category: number;
 }

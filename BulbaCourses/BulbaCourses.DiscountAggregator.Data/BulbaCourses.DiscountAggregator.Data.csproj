@@ -50,13 +50,9 @@
   <ItemGroup>
     <Compile Include="Context\DAContext.cs" />
     <Compile Include="HashingPassword.cs" />
-    <Compile Include="Migrations\201912191112145_InitialCreateTables.cs" />
-    <Compile Include="Migrations\201912191112145_InitialCreateTables.Designer.cs">
-      <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001201239191_UpdateMigrations.cs" />
-    <Compile Include="Migrations\202001201239191_UpdateMigrations.Designer.cs">
-      <DependentUpon>202001201239191_UpdateMigrations.cs</DependentUpon>
+    <Compile Include="Migrations\202001251455130_First.cs" />
+    <Compile Include="Migrations\202001251455130_First.Designer.cs">
+      <DependentUpon>202001251455130_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsConfigurations\BookmarkConfigurations.cs" />
@@ -92,18 +88,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201912191112145_InitialCreateTables.resx">
-      <DependentUpon>201912191112145_InitialCreateTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001201239191_UpdateMigrations.resx">
-      <DependentUpon>202001201239191_UpdateMigrations.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.DiscountAggregator.Infrastructure\BulbaCourses.DiscountAggregator.Infrastructure.csproj">
       <Project>{BEE48F9D-0C56-4385-A217-C405C7721F20}</Project>
       <Name>BulbaCourses.DiscountAggregator.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001251455130_First.resx">
+      <DependentUpon>202001251455130_First.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

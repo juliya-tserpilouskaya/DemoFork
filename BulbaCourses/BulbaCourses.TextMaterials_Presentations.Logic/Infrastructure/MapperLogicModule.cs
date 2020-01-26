@@ -32,7 +32,7 @@ namespace Presentations.Logic
                 cfg.CreateMap<Student, StudentDB>()
                     .ReverseMap();
 
-                cfg.CreateMap<UserAdd_DTO, TeacherDB>();
+                cfg.CreateMap<TeacherAdd_DTO, TeacherDB>();
                 cfg.CreateMap<Teacher, TeacherDB>()
                     .ReverseMap();
             });

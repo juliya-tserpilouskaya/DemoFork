@@ -13,7 +13,7 @@ namespace BulbaCourses.DiscountAggregator.Logic.Validators
     {
         public CourseBookmarkValidator(ICourseBookmarkServices courseBookmarkService)
         {
-            RuleSet("AddProfile", () =>
+            RuleSet("AddBookmark", () =>
             {
             });
 
