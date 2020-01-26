@@ -41,8 +41,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Web
                             .Url("https://www.linkedin.com/in/denis-makarchuk-1816b0177/")
                             .Email("hiedmant@gmail.com"))
                         .License(_=>_
-                            .Name("json")
-                            .Url("https://localhost:44349/swagger/docs/v1"));
+                            .Name("LinkedIn")
+                            .Url("https://www.linkedin.com/in/denis-makarchuk-1816b0177/"));
 
                         c.IncludeXmlComments(System.IO.Path.Combine
                             (AppDomain.CurrentDomain.BaseDirectory, @"bin\BulbaCourses.TextMaterials_Presentations.Web.xml"));

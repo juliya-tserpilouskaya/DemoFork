@@ -198,9 +198,9 @@ namespace Presentations.Logic.Services
             return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(student.FavoritePresentations);
         }
 
-        public async Task<Result> AddViewedPresentationAsync(string idStudent, string idPresentation)
+        public async Task<Result> AddWatchedPresentationAsync(string idStudent, string idPresentation)
         {
-            _uow.StudentLoading.AddViewedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.AddWatchedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -221,9 +221,9 @@ namespace Presentations.Logic.Services
             }
         }
 
-        public async Task<Result> DeleteViewedPresentationAsync(string idStudent, string idPresentation)
+        public async Task<Result> DeleteWatchedPresentationAsync(string idStudent, string idPresentation)
         {
-            _uow.StudentLoading.DeleteViewedPresentationAsync(idStudent, idPresentation);
+            _uow.StudentLoading.DeleteWatchedPresentationAsync(idStudent, idPresentation);
 
             try
             {
@@ -244,9 +244,9 @@ namespace Presentations.Logic.Services
             }
         }
 
-        public async Task<IEnumerable<Presentation>> GetAllViewedPresentationAsync(string id)
+        public async Task<IEnumerable<Presentation>> GetAllWatchedPresentationAsync(string id)
         {
-            var student = await _uow.StudentLoading.GetAllViewedPresentationAsync(id);
+            var student = await _uow.StudentLoading.GetAllWatchedPresentationAsync(id);
             return _mapper.Map<IEnumerable<PresentationDB>, IEnumerable<Presentation>>(student.ViewedPresentations);
         }
 
