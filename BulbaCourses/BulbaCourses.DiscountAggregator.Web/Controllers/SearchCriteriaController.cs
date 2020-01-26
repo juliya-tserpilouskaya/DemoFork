@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.DiscountAggregator.Logic.Models;
 using BulbaCourses.DiscountAggregator.Logic.Services;
+using FluentValidation.WebApi;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -22,11 +24,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this._searchCriteriaService = searchCriteriaServices;
         }
 
+        /// <summary>
+        /// Get all search criterias
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [Description("Get all search criterias")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.NotFound, "Search criterias doesn't exists")]
-        [SwaggerResponse(HttpStatusCode.OK, "Search criterias found", typeof(IEnumerable<SearchCriteria>))]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Search criterias doesn't exist")]
+        [SwaggerResponse(HttpStatusCode.OK, "Search criterias founded", typeof(IEnumerable<SearchCriteria>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetAll()
         {
@@ -34,10 +40,15 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
-        [HttpGet, Route("{userId}")]//можно указать какой тип id
-        [Description("Get criterias by UserId")]// для описания ,но в данном примере не работает...
-        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Criteria doesn't exists")]
+        /// <summary>
+        /// Get criterias by user ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet, Route("{id}")]
+        [Description("Get criterias by UserId")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Criteria doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Criteria found", typeof(SearchCriteria))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetById(string id)
@@ -58,12 +69,46 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
 
         }
 
+        /// <summary>
+        /// Get criterias for user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route("User")]
+        [Description("Get criterias for User")]
+        [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Criteria doesn't exist")]
+        [SwaggerResponse(HttpStatusCode.OK, "Criteria found", typeof(SearchCriteria))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
+        public async Task<IHttpActionResult> GetByUser()
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                    var result = await _searchCriteriaService.GetByUserIdAsync(sub.Value);
+                    return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                }
+                return BadRequest();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return InternalServerError(ex);
+            }
+
+        }
+
+        /// <summary>
+        /// Add new criteria
+        /// </summary>
+        /// <param name="searchCriteria"></param>
+        /// <returns></returns>
         [HttpPost, Route("")]
-        [Description("Add new critria")]
+        [Description("Add new criteria")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Search criteria added", typeof(IEnumerable<SearchCriteria>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Add([FromBody]SearchCriteria searchCriteria)
+        public async Task<IHttpActionResult> Add([FromBody, CustomizeValidator(RuleSet = "*")]SearchCriteria searchCriteria)
         {
             if (searchCriteria == null)
             {
@@ -74,6 +119,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsSuccess ? Ok(result.Data) : (IHttpActionResult)BadRequest(result.Message);
         }
 
+        /// <summary>
+        /// Update search criteria
+        /// </summary>
+        /// <param name="searchCriteria"></param>
+        /// <returns></returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "Search criteria updated", typeof(SearchCriteria))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
@@ -89,6 +139,11 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result.IsSuccess ? Ok(result.Data) : (IHttpActionResult)BadRequest(result.Message);
         }
 
+        /// <summary>
+        /// Delete search criteria by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete, Route("{id})")]
         [SwaggerResponse(HttpStatusCode.OK, "Profile deleted", typeof(SearchCriteria))]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]

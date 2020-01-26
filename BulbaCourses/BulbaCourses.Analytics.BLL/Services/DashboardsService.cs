@@ -82,6 +82,19 @@ namespace BulbaCourses.Analytics.BLL.Services
         }
 
         /// <summary>
+        /// Shows a dashboard details by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<DashboardDto>> GetByReportIdAsync(string id)
+        {
+            var dashboardDbs = await _repository.ReadAllAsync( _ => _.ReportId == id,_ => _.Name).ConfigureAwait(false);
+            var dashboardDtos = _mapper.Map<List<DashboardDto>>(dashboardDbs);
+
+            return dashboardDtos;
+        }
+
+        /// <summary>
         /// Shows a Dashboards details by name.
         /// </summary>
         /// <param name="name"></param>

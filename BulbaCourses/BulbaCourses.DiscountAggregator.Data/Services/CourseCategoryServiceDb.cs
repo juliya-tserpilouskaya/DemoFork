@@ -73,11 +73,23 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
 
         }
 
-        public async Task DeleteByIdAsync(string id)
+        public async Task<Result<CourseCategoryDb>> DeleteByIdAsync(string id)
         {
-            var category = context.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
-            context.CourseCategories.Remove(category);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            try
+            {
+                var categoryDb = context.CourseCategories.SingleOrDefault(c => c.Id.Equals(id));
+                context.CourseCategories.Remove(categoryDb);
+                await context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<CourseCategoryDb>.Ok(categoryDb);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Category not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<CourseCategoryDb>.Fail<CourseCategoryDb>($"Invalid category. {e.Message}");
+            }
         }
 
         public async Task<Result<CourseCategoryDb>> UpdateAsync(CourseCategoryDb categoryDb)

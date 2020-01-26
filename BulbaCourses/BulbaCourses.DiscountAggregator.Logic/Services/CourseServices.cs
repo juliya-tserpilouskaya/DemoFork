@@ -53,9 +53,9 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
             return result;
         }
 
-        public async Task<IEnumerable<Course>> GetByIdCriteriaAsync(string idSearch)
+        public async Task<IEnumerable<Course>> GetByIdUserAsync(string idUser)
         {
-            var courses = await _courseService.GetByIdCriteriaAsync(idSearch);
+            var courses = await _courseService.GetByIdUserAsync(idUser);
             var result = _mapper.Map<IEnumerable<Course>>(courses);
             return result;
         }
@@ -72,10 +72,11 @@ namespace BulbaCourses.DiscountAggregator.Logic.Services
 
         }
 
-        public Task<Result> DeleteByIdAsync(string id)
+        public async Task<Result<Course>> DeleteByIdAsync(string id)
         {
-            _courseService.DeleteByIdAsync(id);
-            return Task.FromResult(Result.Ok());
+            var result = await _courseService.DeleteByIdAsync(id);
+            return result.IsSuccess ? Result<Course>.Ok(_mapper.Map<Course>(result.Data))
+                : (Result<Course>)Result.Fail(result.Message);
         }
 
         public async Task<Result<Course>> UpdateAsync(Course course)
