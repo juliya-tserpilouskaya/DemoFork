@@ -1,22 +1,38 @@
-<p>Discount Aggregator course works!</p>
+<h2 class="modnews">Агрегатор скидок! Собирает информацию с ресурсов для вас!</h2>
 
 <app-filters></app-filters>
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Курсы</h4>
+    </div>
+      <ol class="rounded">
+        <li *ngFor="let item of courses"><a href={{item.URL}}>{{item.Title}}</a>
+          <div class="card-body">
+            <p>{{item.Domain?.DomainName}} | {{item.Category?.Title}}</p>
+            <!-- <a class="btnLink" href={{item.URL}}>Перейти по ссылке</a> -->
+            <p>{{item.Description}} </p>
+            <p>{{item.Price}} BYN | Текущая скидка: {{item.Discount}} </p>
+            <p>Предыдущая цена - {{item.OldPrice}}, была изменеа {{item.DateOldPrice}} </p>
+            <p>Дата начала курса: {{item.DateStartCourse}} </p>
+          </div>
+        </li>
+      </ol>
+    </div>
 
- <div class="card mb-4 shadow-sm">
+
+
+
+    <!-- <div class="card mb-4 shadow-sm">
     <div class="card-header">
       <h4 class="my-0 font-weight-normal">Курсы</h4>
     </div>
     <div class="card-body" *ngFor="let item of courses">
-      <h1 class="card-title pricing-card-title" ><small class="text-muted">{{item.Title}} / </small>{{item.Price}} </h1>
-        <li>{{item.Domain?.DomainName}}</li>
-        <li>{{item.Category?.Title}} </li>
-        <a class="btnLink" href={{item.URL}}>Перейти по ссылке</a>
-        <li>{{item.Title}} </li>
+      <h1 class="card-title pricing-card-title" ><small class="text-muted"><a href={{item.URL}}>{{item.Title}} </a>/ </small>{{item.Price}}</h1>
+        <li>{{item.Domain?.DomainName}} | {{item.Category?.Title}}</li>
         <li>{{item.Description}} </li>
         <li>{{item.Price}} BYN | Текущая скидка: {{item.Discount}} </li>
         <li>Предыдущая цена - {{item.OldPrice}}, была изменеа {{item.DateOldPrice}} </li>
         <li>Дата начала курса: {{item.DateStartCourse}} </li>
-        <!-- <li>{{item.DateChange}} </li> -->
       <button type="button" class="btn btn-lg btn-block btn-outline-primary">Перейти</button>
     </div>
-  </div>
+  </div> -->
