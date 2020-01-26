@@ -61,9 +61,16 @@
   <span *ngFor="let dashboard of dashboards">
     <p-panel>
       <p-header (click)="selectDashboard(dashboard)">
-        {{dashboard.Name}}
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:14px;display:inline-block;margin-top:2px">
+              {{dashboard.Name}}
+            </span>
+       </div>
       </p-header>
       ReportId: {{dashboard.ReportId}}
+      <p-footer>
+        <p-button label="Delete" icon="pi pi-minus" (onClick)="deleteDashboard(dashboard)" styleClass="ui-button-secondary"></p-button>
+      </p-footer>
     </p-panel>
     &nbsp;
   </span>

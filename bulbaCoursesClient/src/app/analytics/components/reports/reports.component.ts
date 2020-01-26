@@ -222,6 +222,27 @@ export class ReportsComponent implements OnInit, OnDestroy {
       console.log('DashboardId ' + dashboard.Id + ' ReportId ' + dashboard.ReportId);
   }
 
+  deleteDashboard(dashboard: Dashboard) {
+    console.log('Delete Dashboard.');
+
+    const dashboardName = dashboard.Name;
+    const dashboardId = dashboard.Id;
+
+    this.confirmationDialogService.confirm(
+      'Delete Dashboard',
+      dashboardName + '<p>Are you sure you want to delete this dashboard?</p>',
+      () => {
+        console.log('Delete Dashboard');
+        const msg = {severity: 'success', summary: 'Deleted', detail: dashboardName};
+        this.dashboardsService.deleteDashboard(dashboardId).subscribe(
+          () => null,
+          () => console.log('Error delete Dashboard'),
+          () => this.getDashboards()
+        );
+      },
+      () => console.log('Cancel delete Report.'));
+  }
+
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
