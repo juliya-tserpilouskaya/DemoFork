@@ -19,6 +19,7 @@ import { VideoplayerComponent } from './Video/components/videoplayer/videoplayer
 import { SearchCourseComponent } from './GlobalSearch/components/course/course.component';
 import { ProfileComponent } from './GlobalAdminUsers/components/profile/profile.component';
 import { ChangePasswordComponent } from './GlobalAdminUsers/components/change-password/change-password.component';
+import { TestFormComponent } from './PracticalMaterialsTests/components/TestForm/test-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
   { path: 'bookmarks/course/:id', component: SearchCourseComponent },
   { path: 'youtubevideo/:id', component: VideoComponent },
+  { path: 'testform', component: TestFormComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
 ];

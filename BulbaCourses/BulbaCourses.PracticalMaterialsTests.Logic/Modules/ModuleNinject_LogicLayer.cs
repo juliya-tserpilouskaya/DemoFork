@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using BulbaCourses.PracticalMaterialsTests.Data.Context;
 using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.DbContext;
+using BulbaCourses.PracticalMaterialsTests.Logic.Attributes.Test.Questions;
 using BulbaCourses.PracticalMaterialsTests.Logic.AutoMapper.Profiles;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Questions.Realization;
+using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Questions.Interfaсe;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.WorkWithResultTest.Interface;
 using Ninject.Modules;
 using System.Data.Entity;
@@ -14,11 +17,22 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Modules
         {
             // ---------- DbContext
 
-            Bind<DbContext>().To<DbContext_LocalDb_Test>().WhenTargetHas<AttributeDbContext_LocalDb>();
+            Bind<DbContext>()
+                .To<DbContext_LocalDb_Test>()
+                .WhenTargetHas<AttributeDbContext_LocalDb>();
 
             // ---------- IService
 
-            Bind<IService_WorkWithResultTest>().To<Service_WorkWithResultTest>();
+            Bind<IService_Question>()
+                .To<Service_Question_ChoosingAnswerFromList>()
+                .WhenTargetHas<AttributeQuestion_ChoosingAnswerFromList>();
+
+            Bind<IService_Question>()
+                .To<Service_Question_SetOrder>()
+                .WhenTargetHas<AttributeQuestion_SetOrder>();
+
+            Bind<IService_WorkWithResultTest>()
+                .To<Service_WorkWithResultTest>();
 
             // ---------- AutoMapper
 

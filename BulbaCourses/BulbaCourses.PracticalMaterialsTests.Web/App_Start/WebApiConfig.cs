@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
 using BulbaCourses.PracticalMaterialsTests.Web.App_Start;
+using BulbaCourses.PracticalMaterialsTests.Web.Configuration;
 using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
@@ -21,9 +22,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Web
 
             bus = kernel.Get<IBus>();
 
-            bus.Receive("BookService", null);
+            bus.Receive("TestService", null);
 
-            config.MapHttpAttributeRoutes();
+            config
+                .CreateSwagger()
+                .MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

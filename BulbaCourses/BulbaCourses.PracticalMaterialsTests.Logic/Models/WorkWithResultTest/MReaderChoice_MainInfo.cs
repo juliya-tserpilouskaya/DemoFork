@@ -1,12 +1,22 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Data.Models.User;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.User;
+using System;
 using System.Collections.Generic;
 
 namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest
 {
     public class MReaderChoice_MainInfo
     {
+        public int Id { get; set; }
+
+        // ------------ CommonInformation
+
+        public int NumberOfAttempt { get; set; }
+
         public string ResultTest { get; set; }
+
+        public DateTime DatePassed { get; set; }
 
         // ------------ Test
 
@@ -24,6 +34,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest
 
         public ICollection<MReaderChoice_ChoosingAnswerFromList> ReaderChoices_ChoosingAnswerFromList { get; set; }
 
-        public ICollection<MReaderChoice_SetOrder> MReaderChoices_SetOrder { get; set; }
+        public ICollection<MReaderChoice_SetOrder> ReaderChoices_SetOrder { get; set; }
     }
 }

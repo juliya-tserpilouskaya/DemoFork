@@ -19,12 +19,16 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.Test.Questions
 
             Property(i => i.QuestionText)
                 .HasColumnName("QuestionText")
-                .HasMaxLength(50)                
+                .HasMaxLength(250)
                 .IsRequired();
 
             Property(i => i.SortKey)
-                .HasColumnName("SortKey")                
+                .HasColumnName("SortKey")
                 .IsRequired();
+
+            Property(i => i.Description)
+                .HasColumnName("Description")
+                .HasMaxLength(500);
 
             this.HasMany(g => g.AnswerVariants)
                 .WithRequired(s => s.Question_ChoosingAnswerFromListDb)
