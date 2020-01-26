@@ -11,7 +11,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.DAL.Context
     public class TasksContext : DbContext
     {
         
-        public DbSet<UserDb> Users { get; set; }
+        public  DbSet<UserDb> Users { get; set; }
         public DbSet<TaskDb> Tasks { get; set; }
 
         public TasksContext() { }
