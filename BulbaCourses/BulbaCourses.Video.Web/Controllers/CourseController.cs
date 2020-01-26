@@ -103,11 +103,12 @@ namespace BulbaCourses.Video.Web.Controllers
         public async Task<IHttpActionResult> Create([FromBody]CourseViewInput course)
         {
             var user = this.User as ClaimsPrincipal;
-
+          //  user.Claims[sub]
             if (!ModelState.IsValid)//, CustomizeValidator (RuleSet = "AddCourse")
             {
             return BadRequest(ModelState);
             }
+            //user.Claims.
             //user.Identities.
                 var courseInfo = _mapper.Map<CourseViewInput, CourseInfo>(course);
             var result = await _courseService.AddCourseAsync(courseInfo);

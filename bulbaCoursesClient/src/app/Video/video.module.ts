@@ -12,8 +12,9 @@ import { AppRoutingModule } from '../app-routing.module';
 import{UploadComponent} from './components/upload/upload.component'
 import { FileSelectDirective } from 'ng2-file-upload';
 import { MainvideoComponent } from './components/mainvideo/mainvideo.component';
-
-
+import { AddCourseComponent } from './components/add-course/add-course.component';
+//import { NgForm} from '@angular/forms';
+import { FormsModule }   from '@angular/forms';
 @NgModule({
   declarations: [
     CourseComponent,
@@ -21,7 +22,8 @@ import { MainvideoComponent } from './components/mainvideo/mainvideo.component';
    // SearchCoursesComponent,
     UploadComponent,
     FileSelectDirective,
-    MainvideoComponent
+    MainvideoComponent,
+    AddCourseComponent
     ],
   imports: [
     CommonModule,
@@ -30,6 +32,8 @@ import { MainvideoComponent } from './components/mainvideo/mainvideo.component';
     BrowserModule,
     VgCoreModule,
     VgControlsModule,
+    //NgForm,
+    FormsModule
   ],
   providers: [
     //VideoService
