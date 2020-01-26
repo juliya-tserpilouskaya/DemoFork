@@ -83,7 +83,7 @@ namespace Forecast
                 forecastData.ForecastPessimistic = Math.Round(((forecastData.Forecast ?? 0) - deviation.Value)*10000)/10000;
             }
 
-            return baseForecastData;
+            return baseForecastData.ToArray();
         }
 
         private DateTime GetNewDate(DateTime newDate)
@@ -126,7 +126,7 @@ namespace Forecast
             for (var i = 0; i < _season; i++)
             {
                 var eachSum = SumEach(SeasonHistory, i, countSeason);
-                var coefficient = (eachSum / sumSeason) * 12;
+                var coefficient = (eachSum / sumSeason) * _season;
                 coefficients.Add(coefficient);
             }
 
