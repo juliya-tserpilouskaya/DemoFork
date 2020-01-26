@@ -126,14 +126,14 @@ namespace BulbaCourses.Analytics.Web.Controllers.V1
                 }
                 var dataForecastData = _mapper.Map<IEnumerable<Data>>(dataDtos);
 
-                IForecastModel forecastModel = new ForecastModel(dataForecastData, 12, 12, Scheme.Period.Day);
+                IForecastModel forecastModel = new ForecastModel(dataForecastData, 12, 12, Scheme.Period.Month);
 
                 var dashboard =  Dashboardshorts.FirstOrDefault();
                 
-                var data = forecastModel.GetData().OrderBy( _ => _.Date).ToArray();
+                var data = forecastModel.GetData().ToArray();
                 //var dataCount = dat.Length - 15;
                 //var data = dat.Skip(dataCount);
-                var dataForecast   = data.GetOnlyForecast(3).ToArray();
+                var dataForecast   = data.GetOnlyForecast(12).ToArray();
                 //var dataCount = dat.Length - 15;
                 //var data = dat.Skip(dataCount);
 

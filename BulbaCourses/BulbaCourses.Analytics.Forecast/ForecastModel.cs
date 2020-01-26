@@ -83,7 +83,7 @@ namespace Forecast
                 forecastData.ForecastPessimistic = Math.Round(((forecastData.Forecast ?? 0) - deviation.Value)*10000)/10000;
             }
 
-            return baseForecastData;
+            return baseForecastData.ToArray();
         }
 
         private DateTime GetNewDate(DateTime newDate)
