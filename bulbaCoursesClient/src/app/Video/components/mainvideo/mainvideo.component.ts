@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, ViewChild } from '@angular/core';
+import { TabsetComponent } from 'ngx-bootstrap';
+ 
 @Component({
-  selector: 'app-mainvideo',
-  templateUrl: './mainvideo.component.html',
-  styleUrls: ['./mainvideo.component.scss']
+  selector: 'demo-tabs-disabled',
+  templateUrl: './mainvideo.component.html'
 })
-export class MainvideoComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+export class MainvideoComponent {
+  @ViewChild('staticTabs', { static: false }) staticTabs: TabsetComponent;
+ 
+  disableEnable() {
+    this.staticTabs.tabs[2].disabled = !this.staticTabs.tabs[2].disabled;
   }
-
 }

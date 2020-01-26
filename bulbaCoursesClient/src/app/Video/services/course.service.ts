@@ -10,6 +10,7 @@ import { CustomUser } from 'src/app/auth/models/user';
   providedIn: 'root'
 })
 export class CourseService {
+  courseId:string;
   authService: AuthService;
   user:CustomUser
   constructor(private client: HttpClient) { }
@@ -22,6 +23,9 @@ export class CourseService {
   getCourse() {
     return this.client.get<CourseShort[]>('https://localhost:44369/api/courses');
   }
+  
+
+
 }
 
  export interface  CourseShort {

@@ -15,18 +15,21 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">#</th>
+    <th scope="col">Id</th>
     <th scope="col">Name</th>
     <th scope="col">Description</th>
     <th scope="col">Price</th>
+    <th scope="col">Info</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let course of course">
+    <td>{{ course.CourseId}} </td>
     <td>{{ course.Name}}</td>
     <td>{{ course.Level}}</td>
     <td>{{ course.Description}}</td>
     <td>{{ course.Price}}</td>
+    <td><input type="button" value="Добавить" class="btn btn-default" (click)="addUser(course.CourseId)"/></td>
   </tr>
   </tbody>
 </table>

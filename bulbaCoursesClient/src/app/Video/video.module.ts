@@ -9,32 +9,39 @@ import { VgControlsModule } from 'videogular2/compiled/controls';
 //import { SearchCoursesComponent } from './components/search-courses/search-courses.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from '../app-routing.module';
-import{UploadComponent} from './components/upload/upload.component'
-import { FileSelectDirective } from 'ng2-file-upload';
+// import{UploadComponent} from './components/upload/upload.component'
+// import { FileSelectDirective } from 'ng2-file-upload';
 import { MainvideoComponent } from './components/mainvideo/mainvideo.component';
 import { AddCourseComponent } from './components/add-course/add-course.component';
 //import { NgForm} from '@angular/forms';
 import { FormsModule }   from '@angular/forms';
+import { AddVideoComponent } from './components/add-video/add-video.component';
+import { TabsetComponent } from 'ngx-bootstrap';
+
 @NgModule({
   declarations: [
     CourseComponent,
     VideoplayerComponent,
    // SearchCoursesComponent,
-    UploadComponent,
-    FileSelectDirective,
+    //UploadComponent,
+    //FileSelectDirective,
     MainvideoComponent,
-    AddCourseComponent
+    AddCourseComponent,
+    AddVideoComponent,
+    
     ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserModule,
+    
     VgCoreModule,
     VgControlsModule,
-    //NgForm,
+    
     FormsModule
-  ],
+  ],bootstrap: [TabsetComponent],
+ 
   providers: [
     //VideoService
   ],

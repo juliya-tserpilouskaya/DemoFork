@@ -25,24 +25,12 @@ export class CourseComponent implements OnInit {
     this.service.getCourse()
       .subscribe(data => this.course = data);
      //this.service.getCourse().subscribe(data => this.couresInput) 
-    this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
-    this.authService.user$.subscribe((user) => this.user = user as CustomUser);
+    // this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
+    // this.authService.user$.subscribe((user) => this.user = user as CustomUser);
   }
-  addUser(){
-    // this.couresInput = new CourseShortInput();
-    // //this.authService.user$.subscribe((user) => this.user = user as CustomUser);
-      
-    
-    
-    // this.couresInput.Description = "11111";
-    
-    // this.couresInput.Level=2;
-    // this.couresInput.Name = 'ttttt';
-    // this.couresInput.Price=10;
-    // this.service.setCourse(this.couresInput).subscribe(data => console.log('success', data),
-    //   error => console.log('oops', error)
-    // );
-    //this.service.setCourse();
+  addUser(asd:string){
+    this.service.courseId=asd;
+    console.log(this.service.courseId);
   }
 
 }

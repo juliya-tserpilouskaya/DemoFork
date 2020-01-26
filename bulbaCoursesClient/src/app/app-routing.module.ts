@@ -33,9 +33,9 @@ const routes: Routes = [
   { path: 'query-result', component: QueryResultComponent},
   { path: 'course-items', component: CourseItemComponent},
   { path: 'search', component: SearchComponent},
-    { path: 'results/:query', component: ResultsComponent },
-    { path: 'search/results/:query', component: ResultsComponent },
-    { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
+  { path: 'results/:query', component: ResultsComponent },
+  { path: 'search/results/:query', component: ResultsComponent },
+  { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
   // { path: 'bookmarks/:id', component: BookmarksComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }
