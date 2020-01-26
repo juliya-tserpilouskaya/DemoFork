@@ -28,7 +28,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             //_validator = validator;
         }
         /// <summary>
-        /// Get all Tasks
+        /// This will list of all tasks
         /// </summary>
         /// <returns></returns>
         [HttpGet,Route("")]
@@ -41,7 +41,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
         /// <summary>
-        /// Get one Task
+        /// This will provide details of task by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -69,7 +69,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
             }
         }
         /// <summary>
-        /// Add Task
+        /// This will allow you to add a new task
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
@@ -91,7 +91,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
            
         }
         /// <summary>
-        /// Update Task
+        /// This will update the task information
         /// </summary>
         /// <param name="id"></param>
         /// <param name="task"></param>
@@ -119,7 +119,7 @@ namespace BulbaCourses.PracticalMaterialsTasks.WEB.Controllers
 
         }
         /// <summary>
-        /// Delete Task
+        /// This will delete task by ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
