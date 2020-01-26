@@ -201,7 +201,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 
 // DASHBOARDS
-  getDashboards() {
+  getDashboards(complited: CallableFunction = null) {
     console.log('Get Dashboards');
 
     if (this.selectedReport == null) { return; }
@@ -214,7 +214,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
       () => {
         this.dashboards = [];
         console.log('Error getDashboards. Not found.');
-      }
+      },
+      () => complited == null ? null : complited()
     );
   }
 
@@ -237,7 +238,9 @@ export class ReportsComponent implements OnInit, OnDestroy {
         this.dashboardsService.deleteDashboard(dashboardId).subscribe(
           () => null,
           () => console.log('Error delete Dashboard'),
-          () => this.getDashboards()
+          () => this.getDashboards(
+            () => this.messageService.add(msg)
+          )
         );
       },
       () => console.log('Cancel delete Report.'));
