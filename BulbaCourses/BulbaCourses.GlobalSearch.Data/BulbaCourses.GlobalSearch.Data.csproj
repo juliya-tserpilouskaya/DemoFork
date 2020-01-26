@@ -117,17 +117,9 @@
     <Compile Include="Migrations\201912141611485_coursecategoryrefactored.Designer.cs">
       <DependentUpon>201912141611485_coursecategoryrefactored.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912141613028_renamefeatures.cs" />
-    <Compile Include="Migrations\201912141613028_renamefeatures.Designer.cs">
-      <DependentUpon>201912141613028_renamefeatures.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201912141616049_addauthordbid.cs" />
     <Compile Include="Migrations\201912141616049_addauthordbid.Designer.cs">
       <DependentUpon>201912141616049_addauthordbid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912141625265_addauthordbid2.cs" />
-    <Compile Include="Migrations\201912141625265_addauthordbid2.Designer.cs">
-      <DependentUpon>201912141625265_addauthordbid2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912141627174_addauthordbid2a.cs" />
     <Compile Include="Migrations\201912141627174_addauthordbid2a.Designer.cs">
@@ -136,30 +128,6 @@
     <Compile Include="Migrations\201912150805190_courseitemfix.cs" />
     <Compile Include="Migrations\201912150805190_courseitemfix.Designer.cs">
       <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912150941232_dbgeneratedoptionforcourse.cs" />
-    <Compile Include="Migrations\201912150941232_dbgeneratedoptionforcourse.Designer.cs">
-      <DependentUpon>201912150941232_dbgeneratedoptionforcourse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912150953462_deletecategoryidentity.cs" />
-    <Compile Include="Migrations\201912150953462_deletecategoryidentity.Designer.cs">
-      <DependentUpon>201912150953462_deletecategoryidentity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912150954422_deletecategoryidentity2.cs" />
-    <Compile Include="Migrations\201912150954422_deletecategoryidentity2.Designer.cs">
-      <DependentUpon>201912150954422_deletecategoryidentity2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912151000361_optionNone.cs" />
-    <Compile Include="Migrations\201912151000361_optionNone.Designer.cs">
-      <DependentUpon>201912151000361_optionNone.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201912151001511_optionNone2.cs" />
-    <Compile Include="Migrations\201912151001511_optionNone2.Designer.cs">
-      <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.cs" />
-    <Compile Include="Migrations\202001101209448_DBGenerationOptionNull.Designer.cs">
-      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202001101429115_addbookmark.cs" />
     <Compile Include="Migrations\202001101429115_addbookmark.Designer.cs">
@@ -219,38 +187,14 @@
     <EmbeddedResource Include="Migrations\201912141611485_coursecategoryrefactored.resx">
       <DependentUpon>201912141611485_coursecategoryrefactored.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912141613028_renamefeatures.resx">
-      <DependentUpon>201912141613028_renamefeatures.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912141616049_addauthordbid.resx">
       <DependentUpon>201912141616049_addauthordbid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912141625265_addauthordbid2.resx">
-      <DependentUpon>201912141625265_addauthordbid2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912141627174_addauthordbid2a.resx">
       <DependentUpon>201912141627174_addauthordbid2a.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912150805190_courseitemfix.resx">
       <DependentUpon>201912150805190_courseitemfix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912150941232_dbgeneratedoptionforcourse.resx">
-      <DependentUpon>201912150941232_dbgeneratedoptionforcourse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912150953462_deletecategoryidentity.resx">
-      <DependentUpon>201912150953462_deletecategoryidentity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912150954422_deletecategoryidentity2.resx">
-      <DependentUpon>201912150954422_deletecategoryidentity2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912151000361_optionNone.resx">
-      <DependentUpon>201912151000361_optionNone.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912151001511_optionNone2.resx">
-      <DependentUpon>201912151001511_optionNone2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202001101209448_DBGenerationOptionNull.resx">
-      <DependentUpon>202001101209448_DBGenerationOptionNull.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001101429115_addbookmark.resx">
       <DependentUpon>202001101429115_addbookmark.cs</DependentUpon>
