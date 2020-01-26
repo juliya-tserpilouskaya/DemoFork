@@ -191,6 +191,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AnalyticsDb.mdf" />
+    <Content Include="App_Data\AnalyticsDb_log.ldf">
+      <DependentUpon>AnalyticsDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -231,9 +235,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BulbaCourses.Analytics.BLL\BulbaCourses.Analytics.BLL.csproj">
       <Project>{09826433-98bd-45c2-af11-1779cdfabe25}</Project>
