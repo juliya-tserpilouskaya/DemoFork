@@ -15,35 +15,62 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working with Users.
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
+        /// <summary>
+        /// Creates new user service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="userRepository"></param>
         public UserService(IMapper mapper, IUserRepository userRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Create a new user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public void Add(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
             _userRepository.Add(userDb);
         }
 
+        /// <summary>
+        /// Remove user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public void Delete(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
             _userRepository.Remove(userDb);
         }
 
+        /// <summary>
+        /// Remove user by id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public void DeleteById(string userId)
         {
             var user = _userRepository.GetById(userId);
             _userRepository.Remove(user);
         }
 
+        /// <summary>
+        /// Gets all users.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<UserInfo> GetAll()
         {
             var users = _userRepository.GetAll();
@@ -51,6 +78,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Show user details by id.
+        /// </summary>
+        /// /// <param name="id"></param>
+        /// <returns></returns>
         public UserInfo GetUserById(string id)
         {
             var user = _userRepository.GetById(id);
@@ -58,24 +90,45 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public void Update(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
             _userRepository.Update(userDb);
         }
 
+        /// <summary>
+        /// Show user details by id.
+        /// </summary>
+        /// /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<UserInfo> GetUserByIdAsync(string userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             var userInfo = _mapper.Map<UserDb, UserInfo>(user);
             return userInfo;
         }
+
+        /// <summary>
+        /// Gets all users.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<UserInfo>> GetAllAsync()
         {
             var users = await _userRepository.GetAllAsync();
             var result = _mapper.Map<IEnumerable<UserDb>, IEnumerable<UserInfo>>(users);
             return result;
         }
+
+        // <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<Result<UserInfo>> UpdateAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
@@ -97,6 +150,12 @@ namespace BulbaCourses.Video.Logic.Services
                 return (Result<UserInfo>)Result<UserInfo>.Fail($"Invalid user. {e.Message}");
             }
         }
+
+        /// <summary>
+        /// Create a new user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<Result<UserInfo>> AddAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
@@ -118,11 +177,23 @@ namespace BulbaCourses.Video.Logic.Services
                 return (Result<UserInfo>)Result<UserInfo>.Fail($"Invalid user. {e.Message}");
             }
         }
+
+        /// <summary>
+        /// Remove user by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string id)
         {
             _userRepository.RemoveAsyncById(id);
             return Task.FromResult(Result.Ok());
         }
+
+        /// <summary>
+        /// Remove user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public Task<Result> DeleteAsync(UserInfo user)
         {
             var userDb = _mapper.Map<UserInfo, UserDb>(user);
@@ -130,6 +201,12 @@ namespace BulbaCourses.Video.Logic.Services
             return Task.FromResult(Result.Ok());
         }
 
+        /// <summary>
+        /// Add Subscription to user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="subscription"></param>
+        /// <returns></returns>
         public Task<Result> BuySubscription(UserInfo user, Subscription subscription)
         {
             double price = 0;
@@ -172,6 +249,12 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Add purchased courses to user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="course"></param>
+        /// <returns></returns>
         public Task<Result> BuySingleCourse(UserInfo user, CourseInfo course)
         {
             double price = course.Price;

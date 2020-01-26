@@ -15,17 +15,30 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working Author.
+    /// </summary>
     public class AuthorService : IAuthorService
     {
         private readonly IMapper _mapper;
         private readonly IAuthorRepository _authorRepository;
 
+        /// <summary>
+        /// Creates a new dashboard service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="authorRepository"></param>
         public AuthorService(IMapper mapper, IAuthorRepository authorRepository)
         {
             _mapper = mapper;
             _authorRepository = authorRepository;
         }
 
+        /// <summary>
+        /// Create a new author.
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         public async Task<Result<AuthorInfo>> AddAsync(AuthorInfo author)
         {
             var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);
@@ -48,6 +61,11 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Remove author.
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         public Task<Result> DeleteAsync(AuthorInfo author)
         {
             var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);
@@ -55,12 +73,21 @@ namespace BulbaCourses.Video.Logic.Services
             return Task.FromResult(Result.Ok());
         }
 
+        /// <summary>
+        /// Remove author by id.
+        /// </summary>
+        /// <param name="authorId"></param>
+        /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string authorId)
         {
             _authorRepository.RemoveAsyncById(authorId);
             return Task.FromResult(Result.Ok());
         }
 
+        /// <summary>
+        /// Gets all authors.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<AuthorInfo>> GetAllAsync()
         {
             var authors = await _authorRepository.GetAllAsync();
@@ -68,6 +95,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Shows all author courses by author id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<CourseInfo>> GetAllCourses(string id)
         {
             //var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);
@@ -76,6 +108,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Shows author details by id.
+        /// </summary>
+        /// /// <param name="authorId"></param>
+        /// <returns></returns>
         public async Task<AuthorInfo> GetByIdAsync(string authorId)
         {
             var author = await _authorRepository.GetByIdAsync(authorId);
@@ -83,6 +120,11 @@ namespace BulbaCourses.Video.Logic.Services
             return authorInfo;
         }
 
+        /// <summary>
+        /// Update author.
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         public async Task<Result<AuthorInfo>> UpdateAsync(AuthorInfo author)
         {
             var authorDb = _mapper.Map<AuthorInfo, AuthorDb>(author);

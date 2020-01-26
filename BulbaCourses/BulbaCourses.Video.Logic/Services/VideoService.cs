@@ -14,22 +14,40 @@ using System.Threading.Tasks;
 
 namespace BulbaCourses.Video.Logic.Services
 {
+    /// <summary>
+    /// Provides a mechanism for working with Videos.
+    /// </summary>
     public class VideoService : IVideoService
     {
         private readonly IMapper _mapper;
         private readonly IVideoRepository _videoRepository;
 
+        /// <summary>
+        /// Creates a new video service.
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="videoRepository"></param>
         public VideoService(IMapper mapper, IVideoRepository videoRepository)
         {
             _mapper = mapper;
             _videoRepository = videoRepository;
         }
+        /// <summary>
+        /// Create a new video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public void Add(VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
             _videoRepository.Add(videoDb);
         }
 
+        /// <summary>
+        /// Create a new video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public async Task<Result<VideoMaterialInfo>> AddAsync(VideoMaterialInfo video, string courseId)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
@@ -54,24 +72,43 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Remove video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public void Delete(VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
             _videoRepository.Remove(videoDb);
         }
 
+        /// <summary>
+        /// Remove video by id.
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <returns></returns>
         public void DeleteById(string videoId)
         {
             var video = _videoRepository.GetById(videoId);
             _videoRepository.Remove(video);
         }
 
+        /// <summary>
+        /// Remove video by id.
+        /// </summary>
+        /// <param name="videoId"></param>
+        /// <returns></returns>
         public Task<Result> DeleteByIdAsync(string videoId)
         {
             _videoRepository.RemoveAsyncById(videoId);
             return Task.FromResult(Result.Ok());
         }
 
+        /// <summary>
+        /// Gets all videos.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<VideoMaterialInfo> GetAll()
         {
             var videos = _videoRepository.GetAll();
@@ -79,6 +116,10 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Gets all videos.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<VideoMaterialInfo>> GetAllAsync()
         {
             var videos = await _videoRepository.GetAllAsync();
@@ -86,6 +127,11 @@ namespace BulbaCourses.Video.Logic.Services
             return result;
         }
 
+        /// <summary>
+        /// Show video details by id.
+        /// </summary>
+        /// /// <param name="videoId"></param>
+        /// <returns></returns>
         public VideoMaterialInfo GetById(string videoId)
         {
             var video = _videoRepository.GetById(videoId);
@@ -93,6 +139,11 @@ namespace BulbaCourses.Video.Logic.Services
             return videoInfo;
         }
 
+        /// <summary>
+        /// Show video details by id.
+        /// </summary>
+        /// /// <param name="videoId"></param>
+        /// <returns></returns>
         public async Task<VideoMaterialInfo> GetByIdAsync(string videoId)
         {
             var video = await _videoRepository.GetByIdAsync(videoId);
@@ -100,12 +151,22 @@ namespace BulbaCourses.Video.Logic.Services
             return videoInfo;
         }
 
+        /// <summary>
+        /// Update video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public void Update(VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
             _videoRepository.Update(videoDb);
         }
 
+        /// <summary>
+        /// Update video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <returns></returns>
         public async Task<Result<VideoMaterialInfo>> UpdateAsync(VideoMaterialInfo video)
         {
             var videoDb = _mapper.Map<VideoMaterialInfo, VideoMaterialDb>(video);
@@ -128,6 +189,12 @@ namespace BulbaCourses.Video.Logic.Services
             }
         }
 
+        /// <summary>
+        /// Add new comment to video.
+        /// </summary>
+        /// <param name="video"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
         public Task<Result> AddComment(string videoId, string userId, string comment)
         {
             var videoDb = _videoRepository.GetById(videoId);
@@ -140,7 +207,6 @@ namespace BulbaCourses.Video.Logic.Services
             try
             {
                 _videoRepository.AddComment(userId, commentDb);
-                videoDb.Comments.Add(commentDb);
                 return Task.FromResult(Result.Ok());
             }
             catch (DbUpdateConcurrencyException e)
