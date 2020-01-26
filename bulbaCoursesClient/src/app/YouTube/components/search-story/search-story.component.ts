@@ -18,23 +18,32 @@ export class SearchStoryComponent implements OnInit {
   user: CustomUser;
   searchStory: SearchStory[] = [];
   story: SearchStory;
+  totalItems = this.searchStory.length;
 
   constructor(private authService: AuthService, private service: YoutubeService) { }
 
   ngOnInit() {
     this.authService.isAuthenticated$.subscribe((flag) => this.isAuthenticated = flag);
     this.authService.user$.subscribe((user) => this.user = user as CustomUser);
-
-    console.log('Get story..');
-    this.service.getStory(this.user).subscribe(data => this.searchStory = data);
+    
+    this.service.story$.subscribe((story) => this.searchStory = story as SearchStory[]);
   }
 
-  DeleteByStoryId(storyId: number) {
+  GetStoryForUser() {
+    console.log('Get story..');
+    this.service.getStory(this.user).subscribe(data => {
+      this.searchStory = data;
+      this.service.storySubject.next(this.searchStory);
+    });
+    console.log('Get story completed!');
+  }
+
+  DeleteByStoryId(story: SearchStory) {
     console.log('Del story..');
-    this.service.delStoryById(storyId).subscribe(data => {
-      console.log('Deleted story..');
+    this.service.delStoryById(story).subscribe(data => {
     },
-    (error) => console.log(error)
+    (error) => console.log(error),
+    () => this.GetStoryForUser()
     );
   }
 

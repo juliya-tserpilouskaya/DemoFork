@@ -22,7 +22,7 @@ namespace BulbaCourses.Web.Controllers
 
         [Required]
         public string LastName { get; set; }
-        
+
         [Required]
         public string Email { get; set; }
 

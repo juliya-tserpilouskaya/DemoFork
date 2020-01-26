@@ -1,1 +1,24 @@
-<!--component html goes here -->
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Name</th>
+    <th scope="col">Description</th>
+    <th scope="col">Price</th>
+    <th scope="col">Info</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let course of course">
+    <td>{{ course.CourseId}} </td>
+    <td>{{ course.Name}}</td>
+    <td>{{ course.Level}}</td>
+    <td>{{ course.Description}}</td>
+    <td>{{ course.Price}}</td>
+    <td><input type="button" value="Info" class="btn btn-default" (click)="infoCourse(course.CourseId)"/></td>
+    <td><input type="button" value="Delete" class="btn btn-default" (click)="deleteCourse(course.CourseId)"/></td>
+  </tr>
+  </tbody>
+</table>
+
+

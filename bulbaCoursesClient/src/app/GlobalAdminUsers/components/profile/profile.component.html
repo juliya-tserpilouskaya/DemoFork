@@ -1,0 +1,74 @@
+<h1>Users</h1>
+<img src="../../../../assets/profilePicture.png" height="40" width="40"/>
+<img src="https://codingtip.com/images/users/user-thumb1.png" height="80" width="80"/>
+
+<!--<input type="button" value="Добавить" class="btn btn-default" (click)="addUser()" /> -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td> </td>
+            <td> </td>
+        </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          FamilyName
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.FamilyName" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          GivenName
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.GivenName" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Email
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.Email" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Address
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.Address" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Gender
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.Gender" class="form-control" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          BirthDate
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="userProfile.BirthDate" class="form-control" />
+        </td>
+      </tr>
+<tr>
+        <td>
+          Password
+        </td>
+        <td>
+           <input type="button" value="ChangePassword" (click)="changePassword(this.id)" class="btn btn-info"/>
+        </td>
+      </tr>
+    </tbody>
+    <div style="text-align:right;">
+      <input type="button" value="Save" class="btn btn-info" style="width: 150px;" (click)="saveUserProfile(userProfile)" />
+      </div>
+</table>

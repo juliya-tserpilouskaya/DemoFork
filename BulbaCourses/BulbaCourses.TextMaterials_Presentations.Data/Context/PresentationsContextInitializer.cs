@@ -27,7 +27,8 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
                                                                   .RuleFor(x => x.Created, DateTime.Now);
 
             Faker<TeacherDB> _fakeTeacher = new Faker<TeacherDB>().RuleFor(x => x.PhoneNumber, y => y.Phone.PhoneNumber())
-                                                                  .RuleFor(x => x.Created, DateTime.Now);
+                                                                  .RuleFor(x => x.Created, DateTime.Now)
+                                                                  .RuleFor(x=>x.Position,y=>y.Company.CompanyName());
 
             List<CourseDB> _fakeCourseDB = _fakeCourse.Generate(3);
             context.Courses.AddRange(_fakeCourseDB);
@@ -43,6 +44,37 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             List<TeacherDB> _fakeTeachers = _fakeTeacher.Generate(3);
             context.Teachers.AddRange(_fakeTeachers);
+
+            context.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Feedbacks " +
+                "ADD CONSTRAINT Feedbacks_Teachers " +
+                "FOREIGN KEY (TeacherDBId) " +
+                "REFERENCES dbo.Teachers (Id) " +
+                "ON DELETE SET NULL");
+            context.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Presentations " +
+                "ADD CONSTRAINT Presentations_Teachers " +
+                "FOREIGN KEY (TeacherDBId) " +
+                "REFERENCES dbo.Teachers (Id) " +
+                "ON DELETE SET NULL");
+            context.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Presentations " +
+                "ADD CONSTRAINT Presentations_Courses " +
+                "FOREIGN KEY (CourseDBId) " +
+                "REFERENCES dbo.Courses (Id) " +
+                "ON DELETE SET NULL");
+            context.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Feedbacks " +
+                "ADD CONSTRAINT Feedbacks_Students " +
+                "FOREIGN KEY (StudentDBId) " +
+                "REFERENCES dbo.Students (Id) " +
+                "ON DELETE SET NULL");
+            context.Database.ExecuteSqlCommand(
+                "ALTER TABLE dbo.Feedbacks " +
+                "ADD CONSTRAINT Feedbacks_Presentations " +
+                "FOREIGN KEY (PresentationDBId) " +
+                "REFERENCES dbo.Presentations (Id) " +
+                "ON DELETE SET NULL");
 
             context.SaveChanges();
         }

@@ -1,8 +1,11 @@
 ﻿using BulbaCourses.GlobalSearch.Data.Models;
 using BulbaCourses.GlobalSearch.Data.Services.Interfaces;
+using BulbaCourses.GlobalSearch.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,18 +14,18 @@ namespace BulbaCourses.GlobalSearch.Data.Services
 {
     public class BookmarkDbService : IBookmarkDbService
     {
-        private GlobalSearchContext _context;
+        private readonly GlobalSearchContext _context;
 
         private bool _isDisposed;
 
         public BookmarkDbService()
         {
-            _context = new GlobalSearchContext();
+            this._context = new GlobalSearchContext();
         }
 
         public BookmarkDbService(GlobalSearchContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         /// <returns></returns>
         public async Task<BookmarkDB> GetByIdAsync(string id)
         {
-            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            return await _context.Bookmarks.SingleOrDefaultAsync(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -95,6 +98,29 @@ namespace BulbaCourses.GlobalSearch.Data.Services
             return bookmark;
         }
 
+        public async Task<Result<BookmarkDB>> AddAsync(BookmarkDB bookmark)
+        {
+            try
+            {
+                bookmark.Id = Guid.NewGuid().ToString();
+                _context.Bookmarks.Add(bookmark);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<BookmarkDB>.Ok(bookmark);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<BookmarkDB>.Fail<BookmarkDB>($"Cannot save bookmark. {e.Message}");
+            }
+            catch (DbUpdateException e)
+            {
+                return Result<BookmarkDB>.Fail<BookmarkDB>($"Cannot save bookmark. Duplicate field. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<BookmarkDB>.Fail<BookmarkDB>($"Invalid bookmark. {e.Message}");
+            }
+        }
+
         /// <summary>
         /// Removes bookmarks by id
         /// </summary>
@@ -104,6 +130,30 @@ namespace BulbaCourses.GlobalSearch.Data.Services
         {
             var bookmark = _context.Bookmarks.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
             _context.Bookmarks.Remove(bookmark);
+        }
+
+        /// <summary>
+        /// Removes bookmarks by id
+        /// </summary>
+        /// <param name="id">Bookmark id</param>
+        /// <returns></returns>
+        public async Task<Result<BookmarkDB>> RemoveByIdAsync(string id)
+        {
+            try
+            {
+                var bookmark = _context.Bookmarks.SingleOrDefault(b => b.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+                _context.Bookmarks.Remove(bookmark);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return Result<BookmarkDB>.Ok(bookmark);
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return Result<BookmarkDB>.Fail<BookmarkDB>($"Bookmark not deleted. {e.Message}");
+            }
+            catch (DbEntityValidationException e)
+            {
+                return Result<BookmarkDB>.Fail<BookmarkDB>($"Bookmark SearchCriteria. {e.Message}");
+            }
         }
 
         /// <summary>

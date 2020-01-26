@@ -60,7 +60,7 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
             _db.Teachers.Attach(item);
 
             _db.Entry(item).Property(c => c.PhoneNumber).IsModified = true;
-
+            _db.Entry(item).Property(c => c.Position).IsModified = true;
             _db.Entry(item).Property(c => c.Modified).IsModified = true;
         }
 

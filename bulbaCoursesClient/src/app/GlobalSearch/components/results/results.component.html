@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-10 col-lg-8">
+    <h2>Search results for "{{parameter}}"</h2>
+      <br>
+        <div class="card" *ngFor="let course of courses | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+
+          <div class="card-body">
+
+          <a [routerLink]="['course', course.Id]"><h5 class="card-title">{{course.Name}}</h5></a >
+
+          <p class="card-text">{{course.Description}}</p>
+          <ul class="list-group">
+            <li class="list-group-item">Cost: {{course.Cost}}$</li>
+          </ul>
+
+          <br>
+          <button *ngIf="isAuthenticated" class="btn btn-outline-success my-2 my-sm-0" (click)="onAddToBookmarks(course.Name, course.Description, course.Id)" type="submit">Add to bookmarks</button >
+          <br>
+          <div class="pt-3">
+            <a [routerLink]="['course', course.Id]" class="card-link">More info</a>
+          </div>
+          </div>
+        </div>
+  </div>
+</div>
+<br/>
+<div class="row justify-content-center">
+  <ngb-pagination
+  [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="courses.length"></ngb-pagination>
+</div>

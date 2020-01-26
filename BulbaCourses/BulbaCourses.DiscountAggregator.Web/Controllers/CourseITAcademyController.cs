@@ -22,10 +22,14 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this.courseService = courseService;
         }
 
+        /// <summary>
+        /// Get all courses from IT-Academy (without writing to the database)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> GetAll()
@@ -34,10 +38,14 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Add courses IT-Academy
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, Route("")]
         [Description("Add courses")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
-        [SwaggerResponse(HttpStatusCode.OK, "Courses IT Academy added", typeof(IEnumerable<Course>))]
+        [SwaggerResponse(HttpStatusCode.OK, "Courses IT-Academy added", typeof(IEnumerable<Course>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> AddRangeAsync()
         {

@@ -10,6 +10,9 @@ using Swashbuckle.Swagger.Annotations;
 using BulbaCourses.GlobalSearch.Logic.InterfaceServices;
 using System.Threading.Tasks;
 using BulbaCourses.GlobalSearch.Logic.DTO;
+using System.Security.Claims;
+using FluentValidation.WebApi;
+using EasyNetQ;
 
 namespace BulbaCourses.GlobalSearch.Web.Controllers
 {
@@ -18,11 +21,20 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
     public class LearningCourseController : ApiController
     {
         private readonly ILearningCourseService _learningCourseService;
-        public LearningCourseController(ILearningCourseService learningCourseService)
+        private readonly IBus _bus;
+
+
+        public LearningCourseController(ILearningCourseService learningCourseService, IBus bus)
         {
             _learningCourseService = learningCourseService;
+            _bus = bus;
         }
 
+        /// <summary>
+        /// Get course
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Learning course</returns>
         [HttpGet, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The course doesn't exists")]
@@ -44,15 +56,30 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// Get all courses
+        /// </summary>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses found")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses are found", typeof(IEnumerable<LearningCourse>))]
         public async Task<IHttpActionResult> GetAll()
         {
+            if (User.Identity.IsAuthenticated)
+                {
+                    var sub = (User as ClaimsPrincipal).FindFirst("sub");
+
+                }
             var result = await _learningCourseService.GetAllCoursesAsync();
             return result == null ? NotFound() : (IHttpActionResult)Ok(result);
         }
 
+        /// <summary>
+        /// Get courses by category
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("category/{domain}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid domain")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses in that category")]
@@ -75,6 +102,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course by author
+        /// </summary>
+        /// <param name="id">Author id</param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("author/{id:int}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid author id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "There are no courses of author found")]
@@ -97,6 +129,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get course items
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns>Learning course items</returns>
         [HttpGet, Route("{id}/items")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid course id")]
         [SwaggerResponse(HttpStatusCode.NotFound, "The course is not found")]
@@ -119,6 +156,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get courses by complexity
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("complexity/{level}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid complexity level parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
@@ -141,6 +183,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get courses by language
+        /// </summary>
+        /// <param name="lang"></param>
+        /// <returns>Learning courses</returns>
         [HttpGet, Route("language/{lang}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid language parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]
@@ -166,24 +213,24 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
         /// <summary>
         /// Update course
         /// </summary>
-        /// <param name="course"></param>
-        /// <returns></returns>
+        /// <param name="course">Learning course</param>
+        /// <returns>Learning course</returns>
         [HttpPut, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course updated", typeof(LearningCourseDTO))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult Update([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Update([FromBody, CustomizeValidator(RuleSet = "default,UpdateCourse")]LearningCourseDTO course)
         {
 
-            if (!ModelState.IsValid)
+            if (course is null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             try
             {
-                var result = _learningCourseService.Update(course);
-                return result == null ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _learningCourseService.UpdateAsync(course);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.Data);
             }
             catch (InvalidOperationException ex)
             {
@@ -191,23 +238,43 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new course
+        /// </summary>
+        /// <param name="course">Learning course</param>
+        /// <returns>Learning course</returns>
         [HttpPost, Route("")]
         [SwaggerResponse(HttpStatusCode.OK, "The course is added")]
-        public IHttpActionResult Create([FromBody]LearningCourseDTO course)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator]LearningCourseDTO course)
         {
-            if (!ModelState.IsValid)
+            if (course is null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(_learningCourseService.Add(course));
+
+            var result = await _learningCourseService.AddAsync(course);
+            if (result.IsError)
+            {
+                return BadRequest(result.Message);
+            }
+            else
+            {
+                await _bus.SendAsync("IndexService", result.Data);
+                return (IHttpActionResult)Ok(result.Data);
+            }
         }
 
+        /// <summary>
+        /// Delete course
+        /// </summary>
+        /// <param name="id">Course id</param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Course doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Course deleted", typeof(Boolean))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something went wrong")]
-        public IHttpActionResult Delete(string id)
+        public async Task<IHttpActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id) || !Guid.TryParse(id, out var _))
             {
@@ -216,8 +283,8 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
 
             try
             {
-                var result = _learningCourseService.DeleteById(id);
-                return result == false ? NotFound() : (IHttpActionResult)Ok(result);
+                var result = await _learningCourseService.DeleteByIdAsync(id);
+                return result.IsError ? BadRequest(result.Message) : (IHttpActionResult)Ok(result.IsSuccess);
             }
             catch (InvalidOperationException ex)
             {
@@ -225,6 +292,11 @@ namespace BulbaCourses.GlobalSearch.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Obsolete search
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet, Route("search/{query}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid query parameter format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Courses are not found")]

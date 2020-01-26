@@ -1,4 +1,4 @@
-﻿using BulbaCourses.GlobalAdminUser.Data.Context;
+﻿using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Interfaces;
 using BulbaCourses.GlobalAdminUser.Data.Models;
 using System;

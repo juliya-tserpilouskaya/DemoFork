@@ -1,0 +1,25 @@
+<form #myForm="ngForm" novalidate>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" name="name" [(ngModel)]='video.name' required />
+    </div>
+    <div class="form-group">
+        <label>Url</label>  
+     <input class="form-control" name="url" [(ngModel)]='video.url' ngModel  required  />
+     
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input class="form-control" name="description" [(ngModel)]='video.description' 
+            required  />
+    </div>
+    <div class="form-group">
+        <label>Order</label>
+        <input class="form-control" name="order" [(ngModel)]='video.order' 
+            required  />
+    </div>
+    <div class="form-group">
+        <button 
+            class="btn  btn-outline-primary" [disabled]="myForm.invalid" (click)="submit()">Add</button>
+    </div>
+</form>

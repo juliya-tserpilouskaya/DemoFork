@@ -13,24 +13,43 @@ using EasyNetQ;
 using FluentValidation;
 using FluentValidation.WebApi;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace BulbaCourses.Podcasts.Web.Controllers
 {
+    /// <summary>
+    /// Represents a RESTful Comment service.
+    /// </summary>
     [RoutePrefix("api/comments")]
     public class CommentController : ApiController
     {
         private readonly IMapper mapper;
         private readonly ICommentService service;
         private readonly IBus bus;
+        private readonly IUserService Uservice;
 
-        public CommentController(IMapper mapper, ICommentService service, IBus bus)
+        /// <summary>
+        /// Creates Comment controller.
+        /// </summary>
+        /// <param name="bus"></param>
+        /// <param name="mapper"></param>
+        /// <param name="service"></param>
+        /// <param name="user"></param>
+        public CommentController(IMapper mapper, ICommentService service, IBus bus, IUserService user)
         {
             this.mapper = mapper;
             this.service = service;
+            this.Uservice = user;
             this.bus = bus;
         }
 
-        [HttpGet, Route("{id}")]
+        /// <summary>
+        /// Gets comment by id from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet, Route("Get/{id}")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Comment doesn't exists")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment found", typeof(CommentWeb))]
@@ -58,14 +77,19 @@ namespace BulbaCourses.Podcasts.Web.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet, Route("")]
+        /// <summary>
+        /// Gets all comments for course in the database
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet, Route("GetFor/{courseId}")]
         [SwaggerResponse(HttpStatusCode.OK, "Found all comments", typeof(IEnumerable<CommentWeb>))]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAll(string courseId)
         {
             try
             {
-                var result = await service.GetAllAsync();
+                var result = await service.GetAllAsync(courseId);
                 if (result.IsSuccess == true)
                 {
                     var commentLogic = result.Data;
@@ -83,12 +107,18 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Adds comment to the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
-        [HttpPost, Route("")]
+        [HttpPost, Route("Create")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment post", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddComment, default")] CommentWeb commentWeb, CourseWeb courseWeb)
+        public async Task<IHttpActionResult> Create([FromBody, CustomizeValidator(RuleSet = "AddComment, default")] CommentWeb commentWeb)
         {
             if (!ModelState.IsValid)
             {
@@ -96,18 +126,31 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var courselogic = mapper.Map<CourseWeb, CourseLogic>(courseWeb);
-                var result = await service.AddAsync(commentlogic, courselogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    await bus.SendAsync("Podcasts", $"Added Comment to {courseWeb.Name}");
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    commentlogic.User = userId;
+                    var result = await service.AddAsync(commentlogic);
+                    if (result.IsSuccess == true)
+                    {
+                        await bus.SendAsync("Podcasts", $"Added Comment to {commentlogic.Course.Name} by {userId.Name}");
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return Unauthorized();
                 }
+                
             }
             catch (Exception ex)
             {
@@ -115,10 +158,16 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates comment in the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
-        [HttpPut, Route("{id}")]
+        [HttpPut, Route("Update")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment updated", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Update(string id, [FromBody, CustomizeValidator(RuleSet = "UpdateComment, default")]CommentWeb commentWeb)
         {
@@ -128,16 +177,29 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.UpdateAsync(commentlogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    var result = await service.UpdateAsync(commentlogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return Unauthorized();
                 }
+                
             }
             catch (Exception ex)
             {
@@ -145,10 +207,16 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes comment in the database
+        /// </summary>
+        /// <param name="commentWeb"></param>
+        /// <returns></returns>
         [Authorize]
-        [HttpDelete, Route("{id}")]
+        [HttpDelete, Route("Delete")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse(HttpStatusCode.OK, "Comment deleted", typeof(CommentWeb))]
+        [SwaggerResponse(HttpStatusCode.Unauthorized, "Unregistered User")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task<IHttpActionResult> Delete([FromBody, CustomizeValidator(RuleSet = "DeleteComment, default")]CommentWeb commentWeb)
         {
@@ -158,15 +226,27 @@ namespace BulbaCourses.Podcasts.Web.Controllers
             }
             try
             {
-                var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
-                var result = await service.DeleteAsync(commentlogic);
-                if (result.IsSuccess == true)
+                var sub = (User as ClaimsPrincipal).FindFirst("sub");
+                string subString = sub.Value;
+                var user = (await Uservice.GetByIdAsync(subString));
+                if (user.IsSuccess == true)
                 {
-                    return Ok(commentlogic);
+                    var userId = user.Data;
+
+                    var commentlogic = mapper.Map<CommentWeb, CommentLogic>(commentWeb);
+                    var result = service.DeleteAsync(commentlogic, userId);
+                    if (result.IsSuccess == true)
+                    {
+                        return Ok(commentlogic);
+                    }
+                    else
+                    {
+                        return BadRequest(result.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(result.Message);
+                    return Unauthorized();
                 }
             }
             catch (Exception ex)

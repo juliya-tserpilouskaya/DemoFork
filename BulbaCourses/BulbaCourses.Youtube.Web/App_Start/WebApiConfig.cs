@@ -8,6 +8,8 @@ using BulbaCourses.Youtube.Logic.Models;
 using Ninject;
 using BulbaCourses.Youtube.Web.App_Start;
 using EasyNetQ;
+using Microsoft.Owin.Security.OAuth;
+using System.Web.Http.ExceptionHandling;
 
 namespace BulbaCourses.Youtube.Web
 {
@@ -25,7 +27,7 @@ namespace BulbaCourses.Youtube.Web
             AssemblyScanner.FindValidatorsInAssemblyContaining<SearchStory>()
                 .ForEach(result => kernel.Bind(result.InterfaceType)
                     .To(result.ValidatorType));
-
+            
             //RabbitMQ configuration
             var bus = kernel.Get<IBus>();
             bus.Receive<SearchRequest>("YoutubeQ", m => OnMessage(m));

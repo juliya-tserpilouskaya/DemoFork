@@ -1,5 +1,4 @@
-﻿using BulbaCourses.GlobalAdminUser.Data.Models.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +22,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Models
 
         public bool LockoutEnabled { get; set; }
         public IEnumerable<Role> Roles { get; set; }
+
+        public IEnumerable<Claim> Claims { get; set; }
     }
 }

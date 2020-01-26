@@ -21,10 +21,14 @@ namespace BulbaCourses.DiscountAggregator.Web.Controllers
             this.courseService = courseService;
         }
 
+        /// <summary>
+        /// Get courses from Udemy
+        /// </summary>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [Description("Get all courses")]// для описания ,но в данном примере не работает...
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid paramater format")]// описать возможные ответы от сервиса, может быть Ок, badrequest, internalServer error...
-        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exists")]
+        [SwaggerResponse(HttpStatusCode.NotFound, "Courses doesn't exist")]
         [SwaggerResponse(HttpStatusCode.OK, "Courses found", typeof(IEnumerable<CoursesUdemy>))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
         public IHttpActionResult GetAll()

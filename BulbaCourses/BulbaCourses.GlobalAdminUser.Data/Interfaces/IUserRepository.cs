@@ -12,7 +12,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
         UserDb GetById(string id);
         Task<UserDb> GetByIdAsync(string id);
         Task<IEnumerable<UserDb>> GetAllAsync();
-
+              
         Task ChangePassword(UserChangePassword user);
 
         void Add(UserDb user);

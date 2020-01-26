@@ -6,18 +6,28 @@ using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.StaticFiles;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+//using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Cors;
 using System.Web.Http;
 
+//using IdentityServer3.AccessTokenValidation;
 [assembly: OwinStartup(typeof(BulbaCourses.Video.Web.Startup))]
 namespace BulbaCourses.Video.Web
 {
@@ -30,20 +40,49 @@ namespace BulbaCourses.Video.Web
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
 
+            //Owin middleware for static files
+            string root = AppDomain.CurrentDomain.BaseDirectory;
+            var physicalFileSystem = new PhysicalFileSystem(Path.Combine(root, "Static"));
+            var fileServerOptions = new FileServerOptions
+            {
+                RequestPath = PathString.Empty,
+                EnableDefaultFiles = true,
+                FileSystem = physicalFileSystem,
+                EnableDirectoryBrowsing = false
+            };
+            fileServerOptions.StaticFileOptions.ServeUnknownFileTypes = false;
+            app.UseFileServer(fileServerOptions);
+            app.UseCors(new CorsOptions()
+            {
+                PolicyProvider = new CorsPolicyProvider()
+                {
+                    PolicyResolver = request => Task.FromResult(new CorsPolicy()
+                    {
+                        AllowAnyHeader = true,
+                        AllowAnyMethod = true,
+                        AllowAnyOrigin = true
+                    })
+                },
+                CorsEngine = new CorsEngine()
+            });
+
+
+
+
             //config.Filters.Add(new BadRequestFilterAttribute());
 
             var data = File.ReadAllBytes(
-                @"D:\bulbacourses.pfx");
-
-
+                @"c:\bulbacourses.pfx");
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
                 IssuerName = "http://localhost:44382",
-                Authority = "http://localhost:44382",
+                AuthenticationMode = AuthenticationMode.Active,
                 ValidationMode = ValidationMode.Local,
                 SigningCertificate = new X509Certificate2(data, "123")
             });
-
+            
             SwaggerConfig.Register(config);
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
@@ -61,7 +100,7 @@ namespace BulbaCourses.Video.Web
                     .To(result.ValidatorType));
 
 
-            //kernel.RegisterEasyNetQ("host=10.211.55.2");
+            kernel.RegisterEasyNetQ("host=localhost");
             return kernel;
         }
 

@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BulbaCourses.PracticalMaterialsTests.Logic</RootNamespace>
     <AssemblyName>BulbaCourses.PracticalMaterialsTests.Logic</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +33,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.ValidatorAttribute, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.ValidatorAttribute.8.6.0\lib\net45\FluentValidation.ValidatorAttribute.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,7 +68,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\DbContext\AttributeDbContext_LocalDb.cs" />
+    <Compile Include="Attributes\Test\Questions\AttributeQuestion_SetOrder.cs" />
+    <Compile Include="Attributes\Test\Questions\AttributeQuestion_ChoosingAnswerFromList.cs" />
+    <Compile Include="AutoMapper\Profiles\AutoMapperProfile_DataLogicLayer.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_MainInfo.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\Test\AnswerVariants\MAnswerVariant_SetOrder.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_ChoosingAnswerFromList.cs" />
+    <Compile Include="Models\Test\Questions\MQuestion_SetOrder.cs" />
+    <Compile Include="Models\Base\MResultRequest.cs" />
+    <Compile Include="Models\Test\Tests\MTest_MainInfo.cs" />
+    <Compile Include="Models\User\MUser_TestAuthor.cs" />
+    <Compile Include="Models\User\MUser_TestReader.cs" />
+    <Compile Include="Models\WorkWithResultTest\MReaderChoice_SetOrder.cs" />
+    <Compile Include="Modules\ModuleNinject_LogicLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WorkWithResultTest\Interface\IService_WorkWithResultTest.cs" />
+    <Compile Include="Services\Test\AnswerVariants\Interfaсe\IService_AnswerVariant.cs" />
+    <Compile Include="Services\Test\AnswerVariants\Realization\Service_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Services\Test\AnswerVariants\Realization\Service_AnswerVariant_SetOrder.cs" />
+    <Compile Include="Services\Base\Service_Base.cs" />
+    <Compile Include="Services\Test\Questions\Interfaсe\IService_Question.cs" />
+    <Compile Include="Services\Test\Questions\Realization\Service_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Services\Test\Questions\Realization\Service_Question_SetOrder.cs" />
+    <Compile Include="Services\Test\Tests\Interface\IService_Test.cs" />
+    <Compile Include="Services\Test\Tests\Realization\Service_Test.cs" />
+    <Compile Include="Services\WorkWithResultTest\Realization\Service_WorkWithResultTest.cs" />
+    <Compile Include="Validators\Test\AnswerVariants\Validator_AnswerVariant_ChoosingAnswerFromList.cs" />
+    <Compile Include="Validators\Test\AnswerVariants\Validator_AnswerVariant_SetOrder.cs" />
+    <Compile Include="Validators\Test\Questions\Validator_Question_ChoosingAnswerFromList.cs" />
+    <Compile Include="Validators\Test\Questions\Validator_Question_SetOrder.cs" />
+    <Compile Include="Validators\Test\Tests\Validator_Test_MainInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulbaCourses.PracticalMaterialsTests.Data\BulbaCourses.PracticalMaterialsTests.Data.csproj">
+      <Project>{4ab20b3a-6e96-4f8a-b5e1-d59bd28de331}</Project>
+      <Name>BulbaCourses.PracticalMaterialsTests.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

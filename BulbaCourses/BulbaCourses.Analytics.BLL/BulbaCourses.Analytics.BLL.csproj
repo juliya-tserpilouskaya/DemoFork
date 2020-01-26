@@ -94,6 +94,7 @@
     <Compile Include="Interface\IReportsService.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\V1\Dashboards\DashboardNew.cs" />
+    <Compile Include="Models\V1\Dashboards\DashboardData.cs" />
     <Compile Include="Models\V1\Dashboards\DashboardShort.cs" />
     <Compile Include="Models\V1\Reports\ReportNew.cs" />
     <Compile Include="Models\V1\Reports\ReportShort.cs" />
@@ -121,6 +122,10 @@
     <ProjectReference Include="..\BulbaCourses.Analytics.DAL\BulbaCourses.Analytics.DAL.csproj">
       <Project>{53fa5e2c-5698-4f83-b190-71aa652dae01}</Project>
       <Name>BulbaCourses.Analytics.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BulbaCourses.Analytics.Forecast\BulbaCourses.Analytics.Forecast.csproj">
+      <Project>{475A6B9C-3354-4698-A6B7-31FF6FC1D6C7}</Project>
+      <Name>BulbaCourses.Analytics.Forecast</Name>
     </ProjectReference>
     <ProjectReference Include="..\BulbaCourses.Analytics.Infrastructure\BulbaCourses.Analytics.Infrastructure.csproj">
       <Project>{12B86A99-3216-441C-BDAC-C8CD95DA5189}</Project>

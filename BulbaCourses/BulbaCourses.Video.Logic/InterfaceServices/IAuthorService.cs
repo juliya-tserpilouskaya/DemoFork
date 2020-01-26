@@ -17,6 +17,6 @@ namespace BulbaCourses.Video.Logic.InterfaceServices
         Task<Result> DeleteByIdAsync(string authorId);
         Task<Result> DeleteAsync(AuthorInfo author);
 
-        IEnumerable<CourseInfo> GetAllCourses(AuthorInfo author);
+        Task<IEnumerable<CourseInfo>> GetAllCourses(string id);
     }
 }

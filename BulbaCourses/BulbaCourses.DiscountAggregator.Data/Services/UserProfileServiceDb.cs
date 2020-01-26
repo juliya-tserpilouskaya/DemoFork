@@ -39,8 +39,7 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 foreach (var el in profileDb.SearchCriteria.CourseCategories)
                 {
                     categoryDb = context.CourseCategories
-                        .Where(x => x.Name == el.Name)
-                        .Where(y => y.Title == el.Title).FirstOrDefault();
+                        .FirstOrDefault(x => x.Name == el.Name && x.Title == el.Title);
                     courseCategories.Add(categoryDb ??
                         new CourseCategoryDb()
                         {
@@ -51,8 +50,8 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                 
                 foreach (var el in profileDb.SearchCriteria.Domains)
                 {
-                    domainDb = context.Domains.Where(x => x.DomainURL == el.DomainURL)
-                        .FirstOrDefault();
+                    domainDb = context.Domains
+                        .FirstOrDefault(x => x.DomainURL == el.DomainURL);
                     domains.Add(domainDb ?? 
                         new DomainDb()
                         {
@@ -60,12 +59,10 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
                             DomainName = el.DomainName
                         });
                 }
-                //domains.Add(context.Domains.Find(el.Id) ?? el);
                 profileDb.SearchCriteria.CourseCategories = courseCategories;
                 profileDb.SearchCriteria.Domains = domains;
 
                 context.Profiles.Add(profileDb);
-
                 await context.SaveChangesAsync().ConfigureAwait(false);
                 return Result<UserProfileDb>.Ok(profileDb);
             }
@@ -106,9 +103,11 @@ namespace BulbaCourses.DiscountAggregator.Data.Services
             return profileDb;
         }
 
-        public void Delete(UserProfileDb profile)
+        public void Delete(UserProfileDb profileDb)
         {
-            context.Profiles.Remove(profile);
+
+            context.SearchCriterias.Remove(context.SearchCriterias.Find(profileDb.SearchCriteria.Id));
+            context.Profiles.Remove(profileDb);
             context.SaveChanges();
         }
 

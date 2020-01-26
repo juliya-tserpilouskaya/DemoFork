@@ -8,7 +8,8 @@ import { YoutubeService } from './services/youtube.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxYoutubePlayerModule } from 'ngx-youtube-player';
 import { AppRoutingModule } from '../app-routing.module';
-import { ApiModule } from './youtube-client-generated';
+import { NgxLoadingModule } from 'ngx-loading';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -25,10 +26,11 @@ import { ApiModule } from './youtube-client-generated';
     ReactiveFormsModule,
     AppRoutingModule,
     NgxYoutubePlayerModule.forRoot(),
-    ApiModule.forRoot(null),
+    NgxLoadingModule,
+    NgxPaginationModule
   ],
   providers: [YoutubeService],
-  exports: [SearchRequestComponent, ApiModule]
+  exports: [SearchRequestComponent]
 })
 export class YoutubeModule { }
 

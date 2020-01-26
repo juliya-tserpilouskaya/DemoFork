@@ -1,19 +1,26 @@
 ﻿using BulbaCourses.Podcasts.Logic;
 using BulbaCourses.Podcasts.Web.App_Start;
+using BulbaCourses.Podcasts.Web.Infrastructure;
+using BulbaCourses.Podcasts.Web.Properties;
 using FluentValidation;
 using FluentValidation.WebApi;
 using IdentityServer3.AccessTokenValidation;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.Jwt;
 using Ninject;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Cors;
 using System.Web.Http;
+using System.Collections.Concurrent;
 
 [assembly: OwinStartup(typeof(BulbaCourses.Podcasts.Web.Startup))]
 
@@ -27,35 +34,43 @@ namespace BulbaCourses.Podcasts.Web
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
-            //config.Filters.Add(new BadRequestFilterAttribute());
-            var data = File.ReadAllBytes(
-                @"C:\Users\Master\source\repos\Sample.Web\Sample.SelfHosted\bin\Debug\cert.pfx");
+
             app.UseCors(new CorsOptions()
             {
                 PolicyProvider = new CorsPolicyProvider()
                 {
                     PolicyResolver = request => Task.FromResult(new CorsPolicy()
                     {
-                        AllowAnyHeader = true,
                         AllowAnyMethod = true,
-                        AllowAnyOrigin = true
+                        AllowAnyOrigin = true,
+                        AllowAnyHeader = true
                     })
-                },
-                CorsEngine = new CorsEngine()
+                }
             });
+
+
+            JwtSecurityTokenHandler.InboundClaimTypeMap.Clear();
+            JwtSecurityTokenHandler.InboundClaimFilter = new HashSet<string>();
+
             app.UseIdentityServerBearerTokenAuthentication(new IdentityServerBearerTokenAuthenticationOptions()
             {
+                AuthenticationMode = Microsoft.Owin.Security.AuthenticationMode.Active,
                 IssuerName = "http://localhost:44382",
+                SigningCertificate = new X509Certificate2(Resources.bulbacourses, "123"),
                 ValidationMode = ValidationMode.Local,
-                SigningCertificate = new X509Certificate2(data, "123")
+
             });
+
+            SwaggerConfig.Register(config);
 
             app.UseNinjectMiddleware(() => ConfigureValidation(config)).UseNinjectWebApi(config);
         }
 
         private IKernel ConfigureValidation(HttpConfiguration config)
         {
-            var kernel = new StandardKernel(new LogicModule());
+            
+            var kernel = new StandardKernel(new LogicModule(), new DataModule());
+            kernel.Load<MapperLoadModule>();
 
             FluentValidationModelValidatorProvider.Configure(config,
                 cfg => cfg.ValidatorFactory = new NinjectValidationFactory(kernel));

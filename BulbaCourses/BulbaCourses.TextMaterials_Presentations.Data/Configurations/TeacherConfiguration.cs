@@ -17,13 +17,15 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
 
             Property(x => x.PhoneNumber).IsRequired().HasMaxLength(25);
 
+            Property(x => x.Position).IsRequired().HasMaxLength(50);
+
             Property(_ => _.Created).IsRequired();
 
             Property(_ => _.Modified).IsOptional();
 
-            HasMany<PresentationDB>(_ => _.ChangedPresentatons);
+            HasMany<PresentationDB>(_ => _.ChangedPresentatons).WithOptional(_ => _.TeacherDB).HasForeignKey(_ => _.TeacherDBId);
 
-            HasMany<FeedbackDB>(_ => _.Feedbacks);
+            HasMany<FeedbackDB>(_ => _.Feedbacks).WithOptional(_ => _.TeacherDB).HasForeignKey(_ => _.TeacherDBId);
         }
     }
 }
