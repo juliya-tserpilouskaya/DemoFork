@@ -157,7 +157,7 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 Id = Guid.NewGuid().ToString(),
                 UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
                 Title = "C# in London University",
-                Category = "Video",
+                Description = "Video",
                 URL = "https://sdf.com"
             };
 
@@ -166,7 +166,7 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 Id = Guid.NewGuid().ToString(),
                 UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
                 Title = "C# in Boston University",
-                Category = "Video",
+                Description = "Video",
                 URL = "https://sdf.com"
             };
 
@@ -175,7 +175,7 @@ namespace BulbaCourses.GlobalSearch.Data.Migrations
                 Id = Guid.NewGuid().ToString(),
                 UserId = "bd419aca-497f-4ff8-aaf2-53bcaf6131f5", //user test@test.com
                 Title = "C# in Moscow University",
-                Category = "Presentation",
+                Description = "Presentation",
                 URL = "https://sdf.com"
             };
 
