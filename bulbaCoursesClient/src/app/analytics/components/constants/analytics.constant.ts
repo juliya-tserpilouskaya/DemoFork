@@ -19,9 +19,25 @@ export class AnalyticsConstants {
     return url;
   }
 
+  public static get ANALYTICS_URL_REPORT(): string {
+    const id = 'id/';
+    const url = this.ANALYTICS_URL_REPORTS + id;
+    return url;
+  }
+
   public static get ANALYTICS_URL_REPORTS_DELETE(): string {
     const id = 'id/';
     const url = this.ANALYTICS_URL_REPORTS + id;
+    return url;
+  }
+
+  public static get ANALYTICS_URL_REPORTS_NEW(): string {
+    const url = this.ANALYTICS_URL_REPORTS;
+    return url;
+  }
+
+  public static get ANALYTICS_URL_REPORTS_UPDATE(): string {
+    const url = this.ANALYTICS_URL_REPORTS;
     return url;
   }
 }

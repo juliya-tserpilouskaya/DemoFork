@@ -136,6 +136,9 @@
   <data name="EmailDeveloper" xml:space="preserve">
     <value>dmitriy@bulova.com</value>
   </data>
+  <data name="IssuerNameUrl" xml:space="preserve">
+    <value>http://localhost:44382</value>
+  </data>
   <data name="MIT" xml:space="preserve">
     <value>MIT</value>
   </data>
@@ -150,6 +153,9 @@
   </data>
   <data name="OpenIdDescription" xml:space="preserve">
     <value>Represents openId</value>
+  </data>
+  <data name="OriginsUrl" xml:space="preserve">
+    <value>http://localhost:4200</value>
   </data>
   <data name="ProfileDescription" xml:space="preserve">
     <value>Represents profile</value>
