@@ -20,7 +20,7 @@ export class SearchCourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getCourses(this.query, this.id)
+    this.service.getCourses(this.id)
     .subscribe(data => this.course = data);
   }
 }

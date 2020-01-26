@@ -33,6 +33,7 @@ const routes: Routes = [
   { path: 'results/:query', component: ResultsComponent },
   { path: 'search/results/:query', component: ResultsComponent },
   { path: 'search/results/:query/course/:id', component: SearchCourseComponent },
+  { path: 'bookmarks/course/:id', component: SearchCourseComponent },
   { path: 'youtubevideo/:id', component: VideoComponent },
   { path: '', component: SampleComponent, pathMatch: 'full' },
   { path: '**', component: PagenotfoundComponent }

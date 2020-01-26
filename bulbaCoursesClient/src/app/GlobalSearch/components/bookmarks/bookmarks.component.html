@@ -3,10 +3,11 @@
   <div class="card-body">
     <div class="col-12 col-md-12 col-lg-12 row">
       <div class="col-4 col-md-4 col-lg-4">
-        <a href={{parseUrl(item.URL)}}>{{item.URL}}</a>
+        <!-- <a href={{parseUrl(item.URL)}}>{{item.URL}}</a> -->
+        <a [routerLink]="['course', item.URL]">Course page</a>
       </div>
       <div class="col-4 col-md-4 col-lg-4">
-        category
+        {{item.Id}}
       </div>
       <div class="col-4 col-md-4 col-lg-4">
         <button class="btn btn-outline-success my-2 my-sm-0" (click)="onDelete(item.Id)" type="submit">Delete</button>
