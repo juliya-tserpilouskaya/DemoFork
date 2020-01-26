@@ -9,7 +9,6 @@ import { ReportsService } from '../../services/reports.service';
 import { ReportShort, ReportNew, Report } from '../models/reports.model';
 import { ConfirmationDialogService } from '../../ensure/dialog/confirmdialog/confirmdialog.service';
 import { Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reports',
@@ -65,7 +64,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   getReports( complited: CallableFunction = null) {
       console.log('Get Reports');
       if (complited == null) { this.loader.start(); }
-      this.reportsService.getReports().pipe(first()).subscribe(
+      this.reportsService.getReports().subscribe(
         data => {
           this.reportShorts = data;
           console.log('Data loaded');
@@ -79,7 +78,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
   detailsReport() {
     console.log( 'Details ' + this.selectedReport.Id.toString());
 
-    this.reportsService.getReport(this.selectedReport.Id).pipe(first()).subscribe(
+    this.reportsService.getReport(this.selectedReport.Id).subscribe(
       data => {
         this.report = data;
         console.log('Report details loaded');
@@ -102,7 +101,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
     }
 
     const msg = {severity: 'success', summary: 'Update', detail: this.report.Name};
-    this.reportsService.updateReport(this.report).pipe(first()).subscribe(
+    this.reportsService.updateReport(this.report).subscribe(
       () => null,
       () => {
         console.log('Error updating Report');
@@ -138,7 +137,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
     }
 
     const msg = {severity: 'success', summary: 'Add', detail: this.reportNew.Name};
-    this.reportsService.newReport(this.reportNew).pipe(first()).subscribe(
+    this.reportsService.newReport(this.reportNew).subscribe(
       () => null,
       () => {
         console.log('Error adding Report');
@@ -171,7 +170,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
       () => {
         console.log('Delete Report');
         const msg = {severity: 'success', summary: 'Deleted', detail: reportName};
-        this.reportsService.deleteReport(reportId).pipe(first()).subscribe(
+        this.reportsService.deleteReport(reportId).subscribe(
           () => null,
           () => console.log('Error delete Report'),
           () => {
