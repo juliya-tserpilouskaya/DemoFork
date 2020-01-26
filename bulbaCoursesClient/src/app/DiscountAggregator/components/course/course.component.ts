@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountAggregatorService, Domains } from '../../services/discount-aggregator.service';
+import { DiscountAggregatorService, Courses, SearchCriteria } from '../../services/discount-aggregator.service';
+import { ActivatedRoute } from '@angular/router';
+import { CustomUser } from 'src/app/auth/models/user';
 
 @Component({
   selector: 'app-course',
@@ -8,13 +10,23 @@ import { DiscountAggregatorService, Domains } from '../../services/discount-aggr
 })
 export class CourseComponent implements OnInit {
 
-  domains: Domains[] = [];
+  user: CustomUser;
+  courses: Courses[] = [];
 
-  constructor(private service : DiscountAggregatorService) { }
+  constructor(private service: DiscountAggregatorService) {
+   }
 
   ngOnInit() {
-    this.service.getCourses()
-    .subscribe(data => this.domains = data);
+    console.log('1');
+    // this.service.getCourses()
+    // .subscribe(data => this.courses = data);
+    this.service.getCoursesForCriteria(/*this.user*/).subscribe(data => this.courses = data);
+    // console.log(this.user.sub);
+  }
+
+  onSubmitCriteria() {
+    this.service.getCoursesForCriteria(/*this.user*/)
+    .subscribe(data => this.courses = data);
   }
 
 }

@@ -35,6 +35,10 @@
         <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/video']" routerLinkActive="active">Video</a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isAuthenticated" [routerLink]="['/discount-aggregator']" routerLinkActive="active">Discount Aggregator</a>
+      </li>
+
       <li class="nav-item" *ngIf="!isAuthenticated">
         <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
       </li>
