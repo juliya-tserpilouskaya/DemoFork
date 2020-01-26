@@ -76,7 +76,6 @@ namespace BulbaCourses.TextMaterials_Presentations.Data
                 "REFERENCES dbo.Presentations (Id) " +
                 "ON DELETE SET NULL");
 
-
             context.SaveChanges();
         }
     }
