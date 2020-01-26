@@ -1,4 +1,5 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest;
 using BulbaCourses.PracticalMaterialsTests.Logic.Modules;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface;
 using BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization;
@@ -102,17 +103,18 @@ namespace BulbaCourses.PracticalMaterialsTests.Web.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "Test check")]
         [SwaggerResponse(HttpStatusCode.NotFound, "Test not found")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Something wrong")]
-        public IHttpActionResult CheckTest([FromBody]MTest_MainInfo Test_MainInfo)
+        public IHttpActionResult CheckTest([FromBody]MReaderChoice_MainInfo ReaderChoice_MainInfo)
         {
-            var result = _validator.Validate(Test_MainInfo);
+            //var result = _validator.Validate(Test_MainInfo);
 
-            if (!result.IsValid)
-            {
-                return
-                    BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
-            }
+            //if (!result.IsValid)
+            //{
+            //    return
+            //        BadRequest(result.Errors.Select(_ => _.ErrorMessage).Aggregate((a, b) => $"{a} {b}"));
+            //}            
+
             return 
-                Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", Test_MainInfo));
+                Ok(_service_Test.CheckTestAsync("5012f850-9c59-4fd9-9e50-4d93ecac03fb", ReaderChoice_MainInfo).Data);
         }
     }
 }

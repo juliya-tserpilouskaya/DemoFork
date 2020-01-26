@@ -286,83 +286,125 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
         }
 
         // ------------ CheckCorrectAnswer
+        
+        public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo)
+        {            
+            MTest_MainInfo Current_Test_MainInfo =
+                GetById(ReaderChoice_MainInfo.Test_MainInfo_Id).Data;
 
-        public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo)
-        {
-            AddUserPassingTest(User_Test_MainInfo);
+            int NumberOfCorrectAnswer = 0;
 
-            MTest_MainInfo Current_Test_MainInfo = GetById(User_Test_MainInfo.Id).Data;
+            NumberOfCorrectAnswer +=
+                _service_Question_ChoosingAnswerFromList.CheckQuestion(Current_Test_MainInfo, ReaderChoice_MainInfo);
 
-            // Общее количество всех вопросов
-            int CountQuestion = 
-                Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count() + Current_Test_MainInfo.Questions_SetOrder.Count();
+            NumberOfCorrectAnswer +=
+                _service_Question_SetOrder.CheckQuestion(Current_Test_MainInfo, ReaderChoice_MainInfo);
 
-            // Количество правильных ответов
-            int CountRightAnswer = 0;
+            int NumberOfAttempt = 1;
 
-            // Храним номер правильного ответа
-            int Current_Questions_ChoosingAnswerFromList = 0;
-
-            // Получаем номер правильного ответа из базы
-            foreach (var Row in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
+            if (_context.Set<MReaderChoice_MainInfoDb>().Any(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfo_Id && c.User_TestReaderDb_Id == User_TestAuthor_Id))
             {
-                Current_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
+                NumberOfAttempt =
+                    _context.Set<MReaderChoice_MainInfoDb>()
+                        .Where(c => c.Test_MainInfoDb_Id == ReaderChoice_MainInfo.Test_MainInfo_Id && c.User_TestReaderDb_Id == User_TestAuthor_Id)
+                        .Select(c => c.NumberOfAttempt)
+                        .Max() + 1;
             }
 
-            // Храним номер ответа пользователя, который от посчитал правильным
-            int User_Questions_ChoosingAnswerFromList = 0;
+            ReaderChoice_MainInfo.NumberOfAttempt = NumberOfAttempt;
 
-            // Получаем ответ пользователя
-            foreach (var Row in User_Test_MainInfo.Questions_ChoosingAnswerFromList)
-            {
-                User_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
-            }
-
-            // Наращиваем счетчик, если номера сошлись
-            if (Current_Questions_ChoosingAnswerFromList == User_Questions_ChoosingAnswerFromList)
-            {
-                CountRightAnswer++;
-            }
-
-            // Список для хранения корректных последовательностей ответов
-            List<int> Current_Questions_SetOrder = new List<int>();
-
-            // Получаем корректную последовательность ответов
-            foreach (var Row in Current_Test_MainInfo.Questions_SetOrder)
-            {
-                Current_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.CorrectOrderKey));
-            }
-
-            // Список для хранения последовательностей ответов пользователя
-            List<int> User_Questions_SetOrder = new List<int>();
-
-            // Получаем пользовательскую последовательность ответов
-            foreach (var Row in User_Test_MainInfo.Questions_SetOrder)
-            {
-                User_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.SortKey));
-            }
-
-            // Результат сверки двух последовательностей
-            var Rezult_Questions_SetOrder = Current_Questions_SetOrder.SequenceEqual(User_Questions_SetOrder);
-
-            // Наращиваем счетчик, если результат True
-            if (Rezult_Questions_SetOrder)
-            {
-                CountRightAnswer++;
-            }
-
-            // Наполняем модель результата прохождения теста, чтобы записать в базу
-            MReaderChoice_MainInfoDb ReaderChoice_MainInfoDb = new MReaderChoice_MainInfoDb()
-            {
-                ResultTest = $"Количество правильных ответов: {CountRightAnswer} из {CountQuestion}.",
-                Test_MainInfoDb_Id = 1,
-                User_TestReaderDb_Id = "one-two-three-four"
-            };
-
+            ReaderChoice_MainInfo.ResultTest = $@"{NumberOfCorrectAnswer} из {Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count + Current_Test_MainInfo.Questions_SetOrder.Count}";
 
             return
-                _service_WorkWithResultTest.Add(ReaderChoice_MainInfoDb);
+                MResultRequest<string>.Ok(ReaderChoice_MainInfo.ResultTest);
         }
+
+        //public MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo)
+        //{    
+        //    // Get Current Row for Validation
+        //    MTest_MainInfo Current_Test_MainInfo = 
+        //        GetById(ReaderChoice_MainInfo.Test_MainInfo_Id).Data;
+
+        //    int NumberOfCorrectAnswer = 0;
+
+        //    NumberOfCorrectAnswer = 
+        //        _service_Question_ChoosingAnswerFromList.CheckQuestion(Current_Test_MainInfo.Questions_ChoosingAnswerFromList);
+
+
+        //    //AddUserPassingTest(User_Test_MainInfo);
+
+
+
+        //    // Общее количество всех вопросов
+        //    int CountQuestion = 
+        //        Current_Test_MainInfo.Questions_ChoosingAnswerFromList.Count() + Current_Test_MainInfo.Questions_SetOrder.Count();
+
+        //    // Количество правильных ответов
+        //    int CountRightAnswer = 0;
+
+        //    // Храним номер правильного ответа
+        //    int Current_Questions_ChoosingAnswerFromList = 0;
+
+        //    // Получаем номер правильного ответа из базы
+        //    foreach (var Row in Current_Test_MainInfo.Questions_ChoosingAnswerFromList)
+        //    {
+        //        Current_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
+        //    }
+
+        //    // Храним номер ответа пользователя, который от посчитал правильным
+        //    int User_Questions_ChoosingAnswerFromList = 0;
+
+        //    // Получаем ответ пользователя
+        //    foreach (var Row in User_Test_MainInfo.Questions_ChoosingAnswerFromList)
+        //    {
+        //        User_Questions_ChoosingAnswerFromList = Row.AnswerVariants.FirstOrDefault(f => f.IsCorrectAnswer).SortKey;
+        //    }
+
+        //    // Наращиваем счетчик, если номера сошлись
+        //    if (Current_Questions_ChoosingAnswerFromList == User_Questions_ChoosingAnswerFromList)
+        //    {
+        //        CountRightAnswer++;
+        //    }
+
+        //    // Список для хранения корректных последовательностей ответов
+        //    List<int> Current_Questions_SetOrder = new List<int>();
+
+        //    // Получаем корректную последовательность ответов
+        //    foreach (var Row in Current_Test_MainInfo.Questions_SetOrder)
+        //    {
+        //        Current_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.CorrectOrderKey));
+        //    }
+
+        //    // Список для хранения последовательностей ответов пользователя
+        //    List<int> User_Questions_SetOrder = new List<int>();
+
+        //    // Получаем пользовательскую последовательность ответов
+        //    foreach (var Row in User_Test_MainInfo.Questions_SetOrder)
+        //    {
+        //        User_Questions_SetOrder.AddRange(Row.AnswerVariants.Select(s => s.SortKey));
+        //    }
+
+        //    // Результат сверки двух последовательностей
+        //    var Rezult_Questions_SetOrder = Current_Questions_SetOrder.SequenceEqual(User_Questions_SetOrder);
+
+        //    // Наращиваем счетчик, если результат True
+        //    if (Rezult_Questions_SetOrder)
+        //    {
+        //        CountRightAnswer++;
+        //    }
+
+        //    // Наполняем модель результата прохождения теста, чтобы записать в базу
+        //    MReaderChoice_MainInfoDb ReaderChoice_MainInfoDb = new MReaderChoice_MainInfoDb()
+        //    {
+        //        ResultTest = $"Количество правильных ответов: {CountRightAnswer} из {CountQuestion}.",
+        //        Test_MainInfoDb_Id = 1,
+        //        User_TestReaderDb_Id = "one-two-three-four"
+        //    };
+
+
+        //    return
+        //        _service_WorkWithResultTest.Add(ReaderChoice_MainInfoDb);
+        //}
 
         // ------------ AddPassingTest
 
@@ -472,5 +514,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Realization
             //    throw new DbEntityValidationException();
             //}
         }
+
     }
 }

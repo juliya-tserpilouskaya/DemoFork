@@ -16,10 +16,6 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest
                 .HasColumnName("ReaderChoice_MainInfoDb_Id")
                 .IsRequired();
 
-            Property(i => i.Test_MainInfoDb_Id)
-                .HasColumnName("Test_MainInfoDb_Id")
-                .IsRequired();
-
             Property(i => i.Question_SetOrderDb_Id)
                 .HasColumnName("Question_SetOrderDb_Id")
                 .IsRequired();

@@ -1,5 +1,6 @@
 ﻿using BulbaCourses.PracticalMaterialsTests.Logic.Models.Base;
 using BulbaCourses.PracticalMaterialsTests.Logic.Models.Test;
+using BulbaCourses.PracticalMaterialsTests.Logic.Models.WorkWithResultTest;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -26,10 +27,8 @@ namespace BulbaCourses.PracticalMaterialsTests.Logic.Services.Test.Interface
 
         Task<MResultRequest> DeleteByIdAsync(int Id);
 
-        // ------------ Check
+        // ------------ CheckCorrectAnswer
 
-        MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MTest_MainInfo User_Test_MainInfo);
-
-        void AddUserPassingTest(MTest_MainInfo User_Test_MainInfo);
+        MResultRequest<string> CheckTestAsync(string User_TestAuthor_Id, MReaderChoice_MainInfo ReaderChoice_MainInfo);        
     }
 }

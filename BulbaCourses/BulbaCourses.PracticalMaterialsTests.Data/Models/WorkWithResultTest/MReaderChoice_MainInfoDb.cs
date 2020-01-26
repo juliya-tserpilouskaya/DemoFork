@@ -11,11 +11,11 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest
 
         // ------------ CommonInformation
 
+        public int NumberOfAttempt { get; set; }
+
         public string ResultTest { get; set; }
 
-        public int CountRightAnswer { get; set; }
-
-        public int CountQuestion { get; set; }
+        public DateTime DatePassed { get; set; }
 
         // ------------ Test
 
@@ -27,20 +27,12 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Models.WorkWithResultTest
 
         public string User_TestReaderDb_Id { get; set; }
 
-        public MUser_TestReaderDb User_TestReader { get; set; }
-
-        public DateTime DatePassed { get; set; }
-
-        public string TimeSpent { get; set; }
-
-        public int HasPassed { get; set; }
-
-        public int IsRepeat { get; set; }
+        public MUser_TestReaderDb User_TestReader { get; set; }        
 
         // ------------ ResultOfTheTest
 
         public ICollection<MReaderChoice_ChoosingAnswerFromListDb> ReaderChoices_ChoosingAnswerFromListDb { get; set; }
 
-        public ICollection<MReaderChoice_SetOrderDb> MReaderChoices_SetOrderDb { get; set; }
+        public ICollection<MReaderChoice_SetOrderDb> ReaderChoices_SetOrderDb { get; set; }
     }
 }

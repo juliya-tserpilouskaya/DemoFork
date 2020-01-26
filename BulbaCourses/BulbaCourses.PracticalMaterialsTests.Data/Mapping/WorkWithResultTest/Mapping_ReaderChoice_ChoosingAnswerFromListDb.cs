@@ -14,26 +14,14 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Mapping.WorkWithResultTest
 
             Property(i => i.ReaderChoice_MainInfoDb_Id)
                 .HasColumnName("ReaderChoice_MainInfoDb_Id")
-                .IsRequired();
-
-            Property(i => i.Test_MainInfoDb_Id)
-                .HasColumnName("Test_MainInfoDb_Id")
-                .IsRequired();
+                .IsRequired();   
 
             Property(i => i.Question_ChoosingAnswerFromList_Id)
                 .HasColumnName("Question_ChoosingAnswerFromList_Id")
                 .IsRequired();
 
-            Property(i => i.User_AnswerVariant_ChoosingAnswerFromListDb_Id)
-                .HasColumnName("User_AnswerVariant_ChoosingAnswerFromListDb_Id")
-                .IsRequired();
-
-            Property(i => i.Correct_AnswerVariant_ChoosingAnswerFromListDb_Id)
-                .HasColumnName("Correct_AnswerVariant_ChoosingAnswerFromListDb_Id")
-                .IsRequired();
-
-            Property(i => i.IsChoice)
-                .HasColumnName("IsChoice")
+            Property(i => i.AnswerVariant_ChoosingAnswerFromList_Id)
+                .HasColumnName("AnswerVariant_ChoosingAnswerFromList_Id")
                 .IsRequired();
         }
     }
