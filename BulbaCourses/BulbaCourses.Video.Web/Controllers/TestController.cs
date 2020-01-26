@@ -20,6 +20,7 @@ namespace MvcApplication1.Controllers
             var httpRequest = HttpContext.Current.Request;
             //Upload Image    
             System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
+            string ff = "";
             try
             {
                 for (int iCnt = 0; iCnt <= hfc.Count - 1; iCnt++)
@@ -28,10 +29,11 @@ namespace MvcApplication1.Controllers
                     if (hpf.ContentLength > 0)
                     {
                         var filename = (Path.GetFileName(hpf.FileName));
-                        var filePath = HttpContext.Current.Server.MapPath("~/Temp1/" + filename);
+                        var filePath = HttpContext.Current.Server.MapPath("~/Static/" + filename);
                         hpf.SaveAs(filePath);
                         //VideoMaster obj = new VideoMaster();
-                        //obj.Videos = "http://localhost:50401/Vedios/" + filename;
+                        ff = filePath + filename;
+                    //obj.Videos = "http://localhost:50401/Vedios/" + filename;
                         //wmsEN.VideoMasters.Add(obj);
                         //wmsEN.SaveChanges();
                     }
@@ -40,7 +42,8 @@ namespace MvcApplication1.Controllers
             }
             catch (Exception ex)
             { }
-            return Request.CreateResponse(HttpStatusCode.Created, @"http://localhost:50401/Temp1/" +);
+            var rq = Request.CreateResponse<string>(HttpStatusCode.Created, ff);
+            return rq;
         }
 
         //[HttpPost]

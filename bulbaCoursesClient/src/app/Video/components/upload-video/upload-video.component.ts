@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
- 	
+import { CourseService, CourseShort  } from 'src/app/Video/services/course.service'; 	
 
 @Component({
   selector: 'upload-video',
@@ -14,8 +14,8 @@ export class UploadVideoComponent implements OnInit {
   previewUrl:any = null;
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
-  constructor(private http: HttpClient) { }
-   
+  constructor(private http: HttpClient,private service: CourseService) { }
+  
   ngOnInit() {
   }
    
@@ -54,8 +54,9 @@ export class UploadVideoComponent implements OnInit {
         console.log(this.fileUploadProgress);
       } else if(events.type === HttpEventType.Response) {
         this.fileUploadProgress = '';
-        console.log(events.body);          
-        alert('SUCCESS !!');
+        console.log(events.body);
+        this.service.courseId = <string>events.body;          
+        alert(this.service.courseId);
       }
          
     }) 
