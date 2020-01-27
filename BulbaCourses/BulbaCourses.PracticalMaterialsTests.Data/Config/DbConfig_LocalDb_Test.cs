@@ -7,7 +7,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Config
 {
     public class DbConfig_LocalDb_Test : DbConfiguration
     {
-        private const string CONNECTION_NAME = "mssqllocaldb";
+        private const string CONNECTION_NAME = "PracticalMaterialTestDbConnection";
 
         public DbConfig_LocalDb_Test()
         {            

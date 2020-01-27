@@ -17,7 +17,7 @@ namespace BulbaCourses.PracticalMaterialsTests.Data.Context
     [DbConfigurationType(typeof(DbConfig_LocalDb_Test))]
     public class DbContext_LocalDb_Test : DbContext
     {
-        public DbContext_LocalDb_Test()
+        public DbContext_LocalDb_Test() : base(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PracticalMaterialTestDbConnection;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
         {
             Database.SetInitializer(new DbUserInitialization_Test());
         }
