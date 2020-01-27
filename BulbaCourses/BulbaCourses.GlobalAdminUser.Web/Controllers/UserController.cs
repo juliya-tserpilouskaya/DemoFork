@@ -209,11 +209,11 @@ namespace BulbaCourses.GlobalAdminUser.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete, Route("{id}")]
+        [HttpDelete, Route("")]
         [SwaggerResponse(HttpStatusCode.BadRequest, "Invalid format")]
         [SwaggerResponse(HttpStatusCode.OK, "User deleted")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, "Internal Server Error")]
-        public async Task<IHttpActionResult> Remove(string id)
+        public async Task<IHttpActionResult> DeleteByIdAsync(string id)
         {
             try
             {

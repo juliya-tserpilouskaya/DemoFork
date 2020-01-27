@@ -1,11 +1,14 @@
 ﻿using BulbaCourses.Web.Data;
 using BulbaCourses.Web.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -70,7 +73,7 @@ namespace BulbaCourses.Web.Controllers
                 return InternalServerError(ex);
             }
 
-        }
+        }      
 
         [HttpGet, Route("roles")]
         public async Task<IHttpActionResult> GetAllRoles()

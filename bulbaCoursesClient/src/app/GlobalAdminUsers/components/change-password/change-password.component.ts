@@ -14,21 +14,24 @@ constructor(
   @SkipSelf()  fb: FormBuilder,
   private loader: NgxUiLoaderService,
   route: ActivatedRoute) {
+    this.loader.start();
+
     route.params.subscribe(params => this.id = params['id']),
   this.loginForm = fb.group({
     oldPassword: [''],
     newPassword: [''],
     newPasswordConfirm: ['']
   });
+    this.loader.stop();
+
 }
 
   ngOnInit() {
   }
   onSubmit() {
+    this.loader.start();
     if (this.loginForm.valid) {
       const data = this.loginForm.value;
-
-      this.loader.start();
       this.loader.stop();
     }
   }

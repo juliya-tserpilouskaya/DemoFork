@@ -77,7 +77,7 @@ namespace BulbaCourses.GlobalAdminUser.Data.Interfaces
 
         public async Task<bool> Remove(string id)
         {
-            HttpResponseMessage response = await _client.DeleteAsync($"api/admin/id?id={id}");
+            HttpResponseMessage response = await _client.DeleteAsync($"api/admin/{id}");
             return response.IsSuccessStatusCode;
         }
         #endregion

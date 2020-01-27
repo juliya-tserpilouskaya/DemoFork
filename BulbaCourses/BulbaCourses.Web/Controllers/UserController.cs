@@ -39,8 +39,8 @@ namespace BulbaCourses.Web.Controllers
         {
             _userManager = userManager;
         }
-
        
+
         [HttpPost, Route("register")]        
         public async Task<IHttpActionResult> Register([FromBody] RegisterUserModel model)
         {
